@@ -34,16 +34,18 @@ const accountTypeColors: Record<string, string> = {
   expense: 'from-amber-500/20 to-amber-600/5 border-amber-500/30',
 };
 
+interface AccountData {
+  id: string;
+  name: string;
+  accountNumber: string;
+  type: string;
+  balance: number;
+  currency: string;
+  children?: AccountData[];
+}
+
 interface AccountRowProps {
-  account: {
-    id: string;
-    name: string;
-    code: string;
-    type: string;
-    balance: number;
-    currency: string;
-    children?: typeof account[];
-  };
+  account: AccountData;
   level?: number;
 }
 
@@ -79,7 +81,7 @@ function AccountRow({ account, level = 0 }: AccountRowProps) {
             </div>
             <div>
               <p className="font-medium text-white">{account.name}</p>
-              <p className="text-xs text-gray-500">{account.code}</p>
+              <p className="text-xs text-gray-500">{account.accountNumber}</p>
             </div>
           </div>
         </td>

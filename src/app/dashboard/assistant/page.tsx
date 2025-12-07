@@ -49,7 +49,7 @@ const initialMessages: Message[] = [
 ];
 
 export default function AssistantPage() {
-  const { aiMessages } = useStore();
+  const { chatMessages } = useStore();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);

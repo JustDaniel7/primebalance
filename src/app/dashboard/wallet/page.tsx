@@ -34,16 +34,16 @@ const tokenColors: Record<string, string> = {
 };
 
 export default function WalletPage() {
-  const { tokens } = useStore();
+  const { cryptoTokens } = useStore();
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<'tokens' | 'transactions' | 'settings'>('tokens');
+  const [activeTab, setActiveTab] = useState<'cryptoTokens' | 'transactions' | 'settings'>('cryptoTokens');
   const [showSendModal, setShowSendModal] = useState(false);
   const [showReceiveModal, setShowReceiveModal] = useState(false);
 
   const walletAddress = '0x7a3B...8f4D';
   const fullAddress = '0x7a3B4c5D6E7F8a9B0C1d2E3f4A5b6C7D8E9f8f4D';
 
-  const totalValue = tokens.reduce((sum, t) => sum + t.usdValue, 0);
+  const totalValue = cryptoTokens.reduce((sum, t) => sum + t.usdValue, 0);
 
   const recentWalletTxs = [
     { id: '1', type: 'receive', token: 'ETH', amount: 0.5, from: '0x1234...5678', timestamp: '2 hours ago', status: 'confirmed' },
@@ -147,7 +147,7 @@ export default function WalletPage() {
 
       {/* Tabs */}
       <div className="flex items-center gap-1 p-1 bg-white/5 rounded-xl w-fit">
-        {['tokens', 'transactions', 'settings'].map((tab) => (
+        {['cryptoTokens', 'transactions', 'settings'].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab as typeof activeTab)}
@@ -163,9 +163,9 @@ export default function WalletPage() {
       </div>
 
       {/* Tokens Tab */}
-      {activeTab === 'tokens' && (
+      {activeTab === 'cryptoTokens' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tokens.map((token, index) => (
+          {cryptoTokens.map((token, index) => (
             <motion.div
               key={token.symbol}
               initial={{ opacity: 0, y: 20 }}
@@ -208,7 +208,7 @@ export default function WalletPage() {
                   <div className="flex justify-between items-baseline">
                     <span className="text-gray-400 text-sm">Price</span>
                     <span className="font-mono text-gray-400 text-sm">
-                      ${token.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                      ${(token.usdValue / token.balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export default function WalletPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: tokens.length * 0.1 }}
+            transition={{ delay: cryptoTokens.length * 0.1 }}
           >
             <Card className="h-full min-h-[220px] flex flex-col items-center justify-center border-dashed border-white/10 hover:border-emerald-500/30 cursor-pointer transition-colors group">
               <div className="w-12 h-12 rounded-xl bg-white/5 group-hover:bg-emerald-500/10 flex items-center justify-center mb-3 transition-colors">
@@ -397,7 +397,7 @@ export default function WalletPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Token</label>
                   <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
-                    {tokens.map(t => (
+                    {cryptoTokens.map(t => (
                       <option key={t.symbol} value={t.symbol}>{t.symbol} - {t.balance} available</option>
                     ))}
                   </select>
