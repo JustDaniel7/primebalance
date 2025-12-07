@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import '../ui/globals.css'
+import '../components/ui/globals.css'
 import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
