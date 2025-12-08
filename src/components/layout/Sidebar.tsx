@@ -76,13 +76,13 @@ export default function Sidebar() {
           {/* Logo */}
           <div className="flex items-center gap-3 px-6 h-20 border-b border-surface-800/50">
             <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
-              <span className="text-xl font-bold text-surface-950">F</span>
+              <span className="text-xl font-bold text-surface-950">P</span>
               <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent-500 flex items-center justify-center">
                 <SparklesIcon size={10} className="text-surface-950" />
               </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-surface-100 font-display">FinBook</h1>
+              <h1 className="text-xl font-bold text-surface-100 font-display">PrimeBalance</h1>
               <p className="text-xs text-surface-500">AI-Powered Accounting</p>
             </div>
           </div>

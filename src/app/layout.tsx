@@ -3,10 +3,10 @@ import '../components/ui/globals.css'
 import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
-  title: 'FinBook | Next-Gen Accounting Platform',
+  title: 'PrimeBalance | Next-Gen Accounting Platform',
   description: 'AI-powered accounting software with blockchain integration for modern businesses',
   keywords: ['accounting', 'bookkeeping', 'fintech', 'blockchain', 'crypto', 'AI', 'automation'],
-  authors: [{ name: 'FinBook Team' }],
+  authors: [{ name: 'PrimeBalance Team' }],
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'FinBook | Next-Gen Accounting Platform',
+    title: 'PrimeBalance | Next-Gen Accounting Platform',
     description: 'AI-powered accounting software with blockchain integration',
-    url: 'https://finbook.app',
-    siteName: 'FinBook',
+    url: 'https://primebalance.app',
+    siteName: 'PrimeBalance',
     locale: 'en_US',
     type: 'website',
   },

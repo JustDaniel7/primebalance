@@ -339,7 +339,7 @@ export const useStore = create<AppState>()(
       // User (null until logged in)
       user: {
         id: '1',
-        email: 'demo@finbook.app',
+        email: 'demo@primebalance.app',
         name: 'Demo User',
         role: 'owner',
         preferences: {
@@ -430,7 +430,7 @@ export const useStore = create<AppState>()(
         })),
     }),
     {
-      name: 'finbook-storage',
+      name: 'primebalance-storage',
       partialize: (state) => ({
         sidebarOpen: state.sidebarOpen,
         user: state.user,
