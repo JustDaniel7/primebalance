@@ -1,4 +1,3 @@
-// Transaction types
 export interface Transaction {
   id: string
   date: string
@@ -44,7 +43,6 @@ export interface ReceiptItem {
   total: number
 }
 
-// Account types
 export interface Account {
   id: string
   name: string
@@ -68,7 +66,6 @@ export type AccountType =
   | 'bank' 
   | 'crypto'
 
-// Currency types
 export type Currency = 
   | 'USD' 
   | 'EUR' 
@@ -86,11 +83,11 @@ export interface CryptoToken {
   balance: number
   usdValue: number
   change24h: number
+  price: number
   address?: string
   network: 'ethereum' | 'polygon' | 'solana' | 'arbitrum'
 }
 
-// Wallet types
 export interface Wallet {
   id: string
   name: string
@@ -102,7 +99,6 @@ export interface Wallet {
   provider?: string
 }
 
-// Financial metrics
 export interface FinancialMetrics {
   totalRevenue: number
   totalExpenses: number
@@ -130,7 +126,6 @@ export interface ChartData {
   }[]
 }
 
-// AI Assistant types
 export interface ChatMessage {
   id: string
   role: 'user' | 'assistant' | 'system'
@@ -156,7 +151,6 @@ export interface AISuggestion {
   actions: AIAction[]
 }
 
-// User & Settings types
 export interface User {
   id: string
   email: string
@@ -195,7 +189,6 @@ export interface Organization {
   defaultCurrency: Currency
 }
 
-// Tax types
 export interface TaxJurisdiction {
   id: string
   country: string
@@ -218,7 +211,6 @@ export interface FilingDeadline {
   status: 'upcoming' | 'due_soon' | 'overdue' | 'filed'
 }
 
-// Team & Chat types
 export interface TeamMember {
   id: string
   user: User
@@ -236,7 +228,6 @@ export interface ChatRoom {
   createdAt: string
 }
 
-// Report types
 export interface Report {
   id: string
   name: string
@@ -256,7 +247,6 @@ export type ReportType =
   | 'tax_summary'
   | 'custom'
 
-// Integration types
 export interface Integration {
   id: string
   name: string
