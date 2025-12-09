@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import '../components/ui/globals.css'
+import './globals.css'
 import { Toaster } from 'react-hot-toast'
+import AuthProvider from '@/components/providers/AuthProvider'
 
 export const metadata: Metadata = {
   title: 'PrimeBalance | Next-Gen Accounting Platform',
@@ -42,32 +43,34 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="noise-overlay">
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: 'rgba(52, 58, 70, 0.95)',
-              color: '#f6f7f9',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              borderRadius: '12px',
-              backdropFilter: 'blur(10px)',
-            },
-            success: {
-              iconTheme: {
-                primary: '#14d47a',
-                secondary: '#0f1115',
+        <AuthProvider>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'rgba(52, 58, 70, 0.95)',
+                color: '#f6f7f9',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '12px',
+                backdropFilter: 'blur(10px)',
               },
-            },
-            error: {
-              iconTheme: {
-                primary: '#ef4444',
-                secondary: '#0f1115',
+              success: {
+                iconTheme: {
+                  primary: '#14d47a',
+                  secondary: '#0f1115',
+                },
               },
-            },
-          }}
-        />
-        {children}
+              error: {
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#0f1115',
+                },
+              },
+            }}
+          />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useStore } from '@/index'
+import { useStore } from '@/store'
 import Sidebar from './Sidebar'
 import Header from './Header'
 
@@ -9,18 +9,13 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { sidebarOpen } = useStore()
-
   return (
     <div className="min-h-screen bg-surface-950">
       <Sidebar />
-      <div
-        className={`transition-all duration-300 ${
-          sidebarOpen ? 'lg:ml-72' : ''
-        }`}
-      >
+      {/* ml-0 on mobile, ml-[70px] on tablet, ml-72 on desktop */}
+      <div className="ml-0 lg:ml-72 transition-all duration-300">
         <Header />
-        <main className="p-4 lg:p-8">{children}</main>
+        <main className="p-4 lg:p-8 pt-20 lg:pt-8">{children}</main>
       </div>
     </div>
   )
