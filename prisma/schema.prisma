@@ -1,4 +1,6 @@
 // prisma/schema.prisma
+// CHANGE: Extended with all business models, organization-scoped
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,6 +8,32 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// NEXTAUTH MODELS (existing, modified)
+// =============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("member") // owner, admin, member
+  
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  settings      UserSettings?
+  wallets       Wallet[]
+  chatMessages  ChatMessage[]
+  aiSuggestions AISuggestion[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Account {
@@ -35,20 +63,245 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-}
-
 model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// =============================================================================
+// ORGANIZATION
+// =============================================================================
+
+model Organization {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  country         String   @default("CH")
+  industry        String?
+  fiscalYearEnd   String   @default("12-31") // MM-DD
+  defaultCurrency String   @default("USD")
+  taxId           String?
+  
+  // Relations
+  users           User[]
+  transactions    Transaction[]
+  financialAccounts FinancialAccount[]
+  receipts        Receipt[]
+  chatChannels    ChatChannel[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// =============================================================================
+// FINANCIAL ACCOUNTS (Chart of Accounts)
+// =============================================================================
+
+model FinancialAccount {
+  id            String   @id @default(cuid())
+  name          String
+  accountNumber String
+  type          String   // asset, liability, equity, revenue, expense, bank, crypto
+  balance       Float    @default(0)
+  currency      String   @default("USD")
+  isActive      Boolean  @default(true)
+  description   String?
+  
+  // Hierarchy
+  parentId      String?
+  parent        FinancialAccount?  @relation("AccountHierarchy", fields: [parentId], references: [id])
+  children      FinancialAccount[] @relation("AccountHierarchy")
+  
+  // Organization scope
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  transactions  Transaction[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@unique([organizationId, accountNumber])
+}
+
+// =============================================================================
+// TRANSACTIONS
+// =============================================================================
+
+model Transaction {
+  id          String   @id @default(cuid())
+  date        DateTime
+  description String
+  amount      Float
+  currency    String   @default("USD")
+  type        String   // income, expense, transfer
+  category    String?
+  status      String   @default("pending") // pending, completed, cancelled
+  tags        String[] // PostgreSQL array
+  
+  // Blockchain
+  tokenized   Boolean  @default(false)
+  txHash      String?
+  
+  // Relations
+  accountId   String
+  account     FinancialAccount @relation(fields: [accountId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  receipts    Receipt[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([organizationId, date])
+  @@index([organizationId, type])
+  @@index([organizationId, status])
+}
+
+// =============================================================================
+// RECEIPTS
+// =============================================================================
+
+model Receipt {
+  id            String   @id @default(cuid())
+  fileName      String
+  fileUrl       String
+  fileType      String   // pdf, image, etc.
+  fileSize      Int
+  
+  // OCR/AI extracted data
+  vendor        String?
+  amount        Float?
+  date          DateTime?
+  extractedText String?  @db.Text
+  confidence    Float?   // AI confidence score
+  
+  // Relations
+  transactionId String?
+  transaction   Transaction? @relation(fields: [transactionId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([organizationId])
+}
+
+// =============================================================================
+// TEAM CHAT
+// =============================================================================
+
+model ChatChannel {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        String   @default("public") // public, private, direct
+  
+  // Organization scope
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  messages    ChatMessage[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([organizationId, name])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  
+  // Relations
+  channelId String
+  channel   ChatChannel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([channelId, createdAt])
+}
+
+// =============================================================================
+// USER SETTINGS
+// =============================================================================
+
+model UserSettings {
+  id          String  @id @default(cuid())
+  
+  // Preferences
+  language    String  @default("en")
+  timezone    String  @default("Europe/Zurich")
+  currency    String  @default("USD")
+  dateFormat  String  @default("DD.MM.YYYY")
+  theme       String  @default("dark")
+  
+  // Notifications
+  emailNotifications       Boolean @default(true)
+  pushNotifications        Boolean @default(true)
+  transactionNotifications Boolean @default(true)
+  reportNotifications      Boolean @default(true)
+  aiSuggestionNotifications Boolean @default(true)
+  
+  // Relations
+  userId      String  @unique
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// =============================================================================
+// CRYPTO WALLETS
+// =============================================================================
+
+model Wallet {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  network   String   // ethereum, solana, bitcoin
+  provider  String?  // metamask, phantom, etc.
+  isActive  Boolean  @default(true)
+  
+  // Relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, address])
+}
+
+// =============================================================================
+// AI SUGGESTIONS
+// =============================================================================
+
+model AISuggestion {
+  id          String   @id @default(cuid())
+  type        String   // tax_optimization, categorization, anomaly, insight
+  title       String
+  description String   @db.Text
+  impact      String?
+  priority    String   @default("medium") // low, medium, high
+  status      String   @default("pending") // pending, accepted, dismissed
+  metadata    Json?    // Additional context
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([userId, status])
 }

@@ -1,3 +1,6 @@
+// src/store/index.ts
+// CHANGE: Complete rewrite - API-backed instead of mock data
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { 
@@ -11,119 +14,410 @@ import type {
   CryptoToken
 } from '@/types'
 
-const generateMockTransactions = (): Transaction[] => [
-  { id: '1', date: '2025-12-06', description: 'Client Payment - Acme Corp', amount: 15000, currency: 'USD', type: 'income', category: 'Sales Revenue', account: 'Business Checking', status: 'completed', tags: ['client'], tokenized: false, createdAt: '2025-12-06T10:00:00Z', updatedAt: '2025-12-06T10:00:00Z' },
-  { id: '2', date: '2025-12-05', description: 'AWS Cloud Services', amount: -2340.50, currency: 'USD', type: 'expense', category: 'Cloud Infrastructure', account: 'Business Checking', status: 'completed', tags: ['infrastructure'], tokenized: true, txHash: '0x1234...5678', createdAt: '2025-12-05T14:30:00Z', updatedAt: '2025-12-05T14:30:00Z' },
-  { id: '3', date: '2025-12-04', description: 'Freelancer Payment - Design', amount: -3500, currency: 'USD', type: 'expense', category: 'Professional Services', account: 'Business Checking', status: 'pending', tags: ['contractor'], tokenized: false, createdAt: '2025-12-04T09:15:00Z', updatedAt: '2025-12-04T09:15:00Z' },
-  { id: '4', date: '2025-12-03', description: 'Subscription Revenue - December', amount: 8750, currency: 'USD', type: 'income', category: 'Subscription Revenue', account: 'Stripe Account', status: 'completed', tags: ['saas'], tokenized: false, createdAt: '2025-12-03T00:00:00Z', updatedAt: '2025-12-03T00:00:00Z' },
-  { id: '5', date: '2025-12-02', description: 'Office Supplies', amount: -234.99, currency: 'USD', type: 'expense', category: 'Office Expenses', account: 'Business Credit Card', status: 'completed', tags: ['supplies'], tokenized: false, createdAt: '2025-12-02T16:45:00Z', updatedAt: '2025-12-02T16:45:00Z' },
-  { id: '6', date: '2025-12-01', description: 'ETH to USDC Conversion', amount: 5000, currency: 'USDC', type: 'transfer', category: 'Crypto Exchange', account: 'Crypto Wallet', status: 'completed', tags: ['crypto'], tokenized: true, txHash: '0xabcd...efgh', createdAt: '2025-12-01T11:20:00Z', updatedAt: '2025-12-01T11:20:00Z' },
-]
+// =============================================================================
+// API HELPERS
+// =============================================================================
 
-const generateMockAccounts = (): Account[] => [
-  { id: '1000', name: 'Assets', accountNumber: '1000', type: 'asset', balance: 245000, currency: 'USD', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '1100', name: 'Cash & Bank', accountNumber: '1100', type: 'bank', balance: 125000, currency: 'USD', parentId: '1000', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '1110', name: 'Business Checking', accountNumber: '1110', type: 'bank', balance: 87500, currency: 'USD', parentId: '1100', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '1150', name: 'Crypto Holdings', accountNumber: '1150', type: 'crypto', balance: 45000, currency: 'USD', parentId: '1000', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '2000', name: 'Liabilities', accountNumber: '2000', type: 'liability', balance: 35000, currency: 'USD', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '3000', name: 'Equity', accountNumber: '3000', type: 'equity', balance: 210000, currency: 'USD', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '4000', name: 'Revenue', accountNumber: '4000', type: 'revenue', balance: 156000, currency: 'USD', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-  { id: '5000', name: 'Expenses', accountNumber: '5000', type: 'expense', balance: 45000, currency: 'USD', isActive: true, createdAt: '2025-01-01T00:00:00Z' },
-]
+async function api<T>(url: string, options?: RequestInit): Promise<T> {
+  const res = await fetch(url, {
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    ...options,
+  })
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ error: 'Request failed' }))
+    throw new Error(error.error || 'Request failed')
+  }
+  return res.json()
+}
 
-const generateMockMetrics = (): FinancialMetrics => ({
-  totalRevenue: 156000, totalExpenses: 45000, netIncome: 111000, grossMargin: 0.72, operatingMargin: 0.65,
-  cashFlow: 87500, accountsReceivable: 23500, accountsPayable: 15000, currentRatio: 2.4, quickRatio: 1.8,
-  debtToEquity: 0.17, returnOnAssets: 0.45, returnOnEquity: 0.53,
-})
+// =============================================================================
+// TYPES
+// =============================================================================
 
-const generateMockCryptoTokens = (): CryptoToken[] => [
-  { symbol: 'ETH', name: 'Ethereum', balance: 12.5, usdValue: 25000, change24h: 2.5, price: 2000, network: 'ethereum' },
-  { symbol: 'USDC', name: 'USD Coin', balance: 15000, usdValue: 15000, change24h: 0, price: 1, network: 'ethereum' },
-  { symbol: 'SOL', name: 'Solana', balance: 45, usdValue: 5000, change24h: -1.2, price: 111.11, network: 'solana' },
-  { symbol: 'USDT', name: 'Tether', balance: 8000, usdValue: 8000, change24h: 0, price: 1, network: 'ethereum' },
-  { symbol: 'BTC', name: 'Bitcoin', balance: 0.15, usdValue: 6750, change24h: 1.8, price: 45000, network: 'ethereum' },
-]
+interface ChatChannel {
+  id: string
+  name: string
+  description?: string
+  type: string
+  _count?: { messages: number }
+}
 
 interface AppState {
+  // UI State
   sidebarOpen: boolean
   activeTab: string
   isLoading: boolean
+  error: string | null
+  
+  // Data
   transactions: Transaction[]
   accounts: Account[]
   wallets: Wallet[]
-  metrics: FinancialMetrics
+  metrics: FinancialMetrics | null
   cryptoTokens: CryptoToken[]
-  tokens: CryptoToken[]
-  chatMessages: ChatMessage[]
+  
+  // Chat
+  chatChannels: ChatChannel[]
+  activeChannelId: string | null
+  channelMessages: Record<string, ChatMessage[]>
+  
+  // AI Assistant
+  aiChatMessages: ChatMessage[]
   aiSuggestions: AISuggestion[]
-  aiMessages: ChatMessage[]
   isAIProcessing: boolean
+  
+  // User
   user: User | null
+  
+  // UI Actions
   setSidebarOpen: (open: boolean) => void
   setActiveTab: (tab: string) => void
   setLoading: (loading: boolean) => void
-  addTransaction: (transaction: Transaction) => void
-  updateTransaction: (id: string, updates: Partial<Transaction>) => void
-  deleteTransaction: (id: string) => void
-  addAccount: (account: Account) => void
-  updateAccount: (id: string, updates: Partial<Account>) => void
-  deleteAccount: (id: string) => void
-  addChatMessage: (message: ChatMessage) => void
-  clearChat: () => void
+  setError: (error: string | null) => void
+  
+  // Transaction actions
+  fetchTransactions: () => Promise<void>
+  addTransaction: (transaction: Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>) => Promise<Transaction>
+  updateTransaction: (id: string, updates: Partial<Transaction>) => Promise<void>
+  deleteTransaction: (id: string) => Promise<void>
+  
+  // Account actions
+  fetchAccounts: () => Promise<void>
+  addAccount: (account: Omit<Account, 'id' | 'createdAt'>) => Promise<Account>
+  updateAccount: (id: string, updates: Partial<Account>) => Promise<void>
+  deleteAccount: (id: string) => Promise<void>
+  
+  // Chat channel actions
+  fetchChannels: () => Promise<void>
+  setActiveChannel: (id: string | null) => void
+  createChannel: (name: string, description?: string) => Promise<ChatChannel>
+  fetchChannelMessages: (channelId: string) => Promise<void>
+  sendChannelMessage: (channelId: string, content: string) => Promise<void>
+  
+  // AI Chat actions (local, calls AI API separately)
+  addAIChatMessage: (message: ChatMessage) => void
+  clearAIChat: () => void
   setAIProcessing: (processing: boolean) => void
+  
+  // Wallet actions (local for now, crypto integration later)
   connectWallet: (wallet: Wallet) => void
   disconnectWallet: (id: string) => void
+  
+  // Initialize
+  initializeStore: () => Promise<void>
 }
 
-const mockCryptoTokens = generateMockCryptoTokens()
+// =============================================================================
+// STORE
+// =============================================================================
 
 export const useStore = create<AppState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
+      // ---------------------------------------------------------------------
+      // Initial State
+      // ---------------------------------------------------------------------
       sidebarOpen: true,
       activeTab: 'dashboard',
       isLoading: false,
-      transactions: generateMockTransactions(),
-      accounts: generateMockAccounts(),
-      wallets: [],
-      metrics: generateMockMetrics(),
-      cryptoTokens: mockCryptoTokens,
-      tokens: mockCryptoTokens,
-      chatMessages: [{
-        id: '1',
-        role: 'assistant',
-        content: 'Hello! I\'m your AI accounting assistant. I can help you with bookkeeping, tax optimization, categorizing transactions, and generating reports. How can I help you today?',
-        timestamp: new Date().toISOString(),
-        suggestions: ['Categorize my recent transactions', 'Show me tax optimization tips', 'Generate a monthly report'],
-      }],
-      aiMessages: [],
-      aiSuggestions: [
-        { id: '1', type: 'tax_optimization', title: 'Tax Deduction Opportunity', description: 'Your home office expenses may qualify for additional deductions.', impact: 'Potential savings: $2,400/year', priority: 'high', actions: [{ type: 'suggestion', label: 'Set up tracking', payload: { category: 'home_office' } }] },
-        { id: '2', type: 'categorization', title: 'Uncategorized Transactions', description: '5 transactions from the last week need categorization.', priority: 'medium', actions: [{ type: 'categorize', label: 'Review now', payload: { count: 5 } }] },
-      ],
-      isAIProcessing: false,
-      user: { id: '1', email: 'demo@primebalance.app', name: 'Demo User', role: 'owner', preferences: { language: 'en', timezone: 'Europe/Zurich', currency: 'USD', dateFormat: 'DD.MM.YYYY', theme: 'dark', notifications: { email: true, push: true, transactions: true, reports: true, aiSuggestions: true } }, organization: { id: '1', name: 'Demo Company', country: 'CH', industry: 'Technology', fiscalYearEnd: '12-31', defaultCurrency: 'USD' } },
+      error: null,
       
+      transactions: [],
+      accounts: [],
+      wallets: [],
+      metrics: null,
+      cryptoTokens: [],
+      
+      chatChannels: [],
+      activeChannelId: null,
+      channelMessages: {},
+      
+      aiChatMessages: [
+        {
+          id: '1',
+          role: 'assistant',
+          content: "Hello! I'm your AI accounting assistant. I can help you with bookkeeping, tax optimization, categorizing transactions, and generating reports. How can I help you today?",
+          timestamp: new Date().toISOString(),
+          suggestions: [
+            'Categorize my recent transactions',
+            'Show me tax optimization tips',
+            'Generate a monthly report',
+          ],
+        },
+      ],
+      aiSuggestions: [],
+      isAIProcessing: false,
+      
+      user: null,
+
+      // ---------------------------------------------------------------------
+      // UI Actions
+      // ---------------------------------------------------------------------
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
       setActiveTab: (tab) => set({ activeTab: tab }),
       setLoading: (loading) => set({ isLoading: loading }),
-      
-      addTransaction: (transaction) => set((state) => ({ transactions: [transaction, ...state.transactions] })),
-      updateTransaction: (id, updates) => set((state) => ({ transactions: state.transactions.map((t) => t.id === id ? { ...t, ...updates, updatedAt: new Date().toISOString() } : t) })),
-      deleteTransaction: (id) => set((state) => ({ transactions: state.transactions.filter((t) => t.id !== id) })),
-      
-      addAccount: (account) => set((state) => ({ accounts: [...state.accounts, account] })),
-      updateAccount: (id, updates) => set((state) => ({ accounts: state.accounts.map((a) => a.id === id ? { ...a, ...updates } : a) })),
-      deleteAccount: (id) => set((state) => ({ accounts: state.accounts.filter((a) => a.id !== id && a.parentId !== id) })),
-      
-      addChatMessage: (message) => set((state) => ({ chatMessages: [...state.chatMessages, message] })),
-      clearChat: () => set({ chatMessages: [{ id: Date.now().toString(), role: 'assistant', content: 'Chat cleared. How can I help you?', timestamp: new Date().toISOString() }] }),
+      setError: (error) => set({ error }),
+
+      // ---------------------------------------------------------------------
+      // Transaction Actions
+      // ---------------------------------------------------------------------
+      fetchTransactions: async () => {
+        try {
+          set({ isLoading: true, error: null })
+          const data = await api<{ transactions: Transaction[] }>('/api/transactions')
+          set({ transactions: data.transactions })
+        } catch (e: any) {
+          set({ error: e.message })
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      addTransaction: async (transaction) => {
+        set({ isLoading: true, error: null })
+        try {
+          const created = await api<Transaction>('/api/transactions', {
+            method: 'POST',
+            body: JSON.stringify(transaction),
+          })
+          set((state) => ({ transactions: [created, ...state.transactions] }))
+          return created
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      updateTransaction: async (id, updates) => {
+        set({ isLoading: true, error: null })
+        try {
+          const updated = await api<Transaction>(`/api/transactions/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updates),
+          })
+          set((state) => ({
+            transactions: state.transactions.map((t) => (t.id === id ? { ...t, ...updated } : t)),
+          }))
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      deleteTransaction: async (id) => {
+        set({ isLoading: true, error: null })
+        try {
+          await api(`/api/transactions/${id}`, { method: 'DELETE' })
+          set((state) => ({
+            transactions: state.transactions.filter((t) => t.id !== id),
+          }))
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      // ---------------------------------------------------------------------
+      // Account Actions
+      // ---------------------------------------------------------------------
+      fetchAccounts: async () => {
+        try {
+          set({ isLoading: true, error: null })
+          const accounts = await api<Account[]>('/api/accounts')
+          set({ accounts })
+        } catch (e: any) {
+          set({ error: e.message })
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      addAccount: async (account) => {
+        set({ isLoading: true, error: null })
+        try {
+          const created = await api<Account>('/api/accounts', {
+            method: 'POST',
+            body: JSON.stringify(account),
+          })
+          set((state) => ({ accounts: [...state.accounts, created] }))
+          return created
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      updateAccount: async (id, updates) => {
+        set({ isLoading: true, error: null })
+        try {
+          const updated = await api<Account>(`/api/accounts/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(updates),
+          })
+          set((state) => ({
+            accounts: state.accounts.map((a) => (a.id === id ? { ...a, ...updated } : a)),
+          }))
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      deleteAccount: async (id) => {
+        set({ isLoading: true, error: null })
+        try {
+          await api(`/api/accounts/${id}`, { method: 'DELETE' })
+          set((state) => ({
+            accounts: state.accounts.filter((a) => a.id !== id && a.parentId !== id),
+          }))
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
+      // ---------------------------------------------------------------------
+      // Chat Channel Actions
+      // ---------------------------------------------------------------------
+      fetchChannels: async () => {
+        try {
+          const channels = await api<ChatChannel[]>('/api/chat/channels')
+          set({ chatChannels: channels })
+          // Set first channel as active if none selected
+          if (channels.length > 0 && !get().activeChannelId) {
+            set({ activeChannelId: channels[0].id })
+          }
+        } catch (e: any) {
+          set({ error: e.message })
+        }
+      },
+
+      setActiveChannel: (id) => {
+        set({ activeChannelId: id })
+        if (id) get().fetchChannelMessages(id)
+      },
+
+      createChannel: async (name, description) => {
+        try {
+          const channel = await api<ChatChannel>('/api/chat/channels', {
+            method: 'POST',
+            body: JSON.stringify({ name, description }),
+          })
+          set((state) => ({ chatChannels: [...state.chatChannels, channel] }))
+          return channel
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        }
+      },
+
+      fetchChannelMessages: async (channelId) => {
+        try {
+          const messages = await api<ChatMessage[]>(`/api/chat/channels/${channelId}/messages`)
+          set((state) => ({
+            channelMessages: { ...state.channelMessages, [channelId]: messages },
+          }))
+        } catch (e: any) {
+          set({ error: e.message })
+        }
+      },
+
+      sendChannelMessage: async (channelId, content) => {
+        try {
+          const message = await api<ChatMessage>(`/api/chat/channels/${channelId}/messages`, {
+            method: 'POST',
+            body: JSON.stringify({ content }),
+          })
+          set((state) => ({
+            channelMessages: {
+              ...state.channelMessages,
+              [channelId]: [...(state.channelMessages[channelId] || []), message],
+            },
+          }))
+        } catch (e: any) {
+          set({ error: e.message })
+          throw e
+        }
+      },
+
+      // ---------------------------------------------------------------------
+      // AI Chat Actions (local state, AI calls handled separately)
+      // ---------------------------------------------------------------------
+      addAIChatMessage: (message) =>
+        set((state) => ({ aiChatMessages: [...state.aiChatMessages, message] })),
+
+      clearAIChat: () =>
+        set({
+          aiChatMessages: [
+            {
+              id: Date.now().toString(),
+              role: 'assistant',
+              content: 'Chat cleared. How can I help you?',
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        }),
+
       setAIProcessing: (processing) => set({ isAIProcessing: processing }),
-      
-      connectWallet: (wallet) => set((state) => ({ wallets: [...state.wallets, wallet] })),
-      disconnectWallet: (id) => set((state) => ({ wallets: state.wallets.filter((w) => w.id !== id) })),
+
+      // ---------------------------------------------------------------------
+      // Wallet Actions (local for now)
+      // ---------------------------------------------------------------------
+      connectWallet: (wallet) =>
+        set((state) => ({ wallets: [...state.wallets, wallet] })),
+
+      disconnectWallet: (id) =>
+        set((state) => ({ wallets: state.wallets.filter((w) => w.id !== id) })),
+
+      // ---------------------------------------------------------------------
+      // Initialize Store
+      // ---------------------------------------------------------------------
+      initializeStore: async () => {
+        const { fetchTransactions, fetchAccounts, fetchChannels } = get()
+        set({ isLoading: true })
+        try {
+          await Promise.all([
+            fetchTransactions(),
+            fetchAccounts(),
+            fetchChannels(),
+          ])
+        } catch (e: any) {
+          set({ error: e.message })
+        } finally {
+          set({ isLoading: false })
+        }
+      },
     }),
-    { name: 'primebalance-storage', partialize: (state) => ({ sidebarOpen: state.sidebarOpen, user: state.user }) }
+    {
+      name: 'primebalance-storage',
+      partialize: (state) => ({
+        sidebarOpen: state.sidebarOpen,
+        activeChannelId: state.activeChannelId,
+      }),
+    }
   )
 )
+
+// =============================================================================
+// COMPUTED SELECTORS
+// =============================================================================
+
+export const useTransactions = () => useStore((s) => s.transactions)
+export const useAccounts = () => useStore((s) => s.accounts)
+export const useActiveChannelMessages = () => {
+  const activeChannelId = useStore((s) => s.activeChannelId)
+  const channelMessages = useStore((s) => s.channelMessages)
+  return activeChannelId ? channelMessages[activeChannelId] || [] : []
+}

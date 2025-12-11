@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "npx tsx prisma/seed.ts",
+    "prisma:reset": "prisma migrate reset",
+    "db:setup": "npm run prisma:generate && npm run prisma:push && npm run prisma:seed"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
