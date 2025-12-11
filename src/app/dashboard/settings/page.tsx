@@ -3,6 +3,15 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui';
+import { 
+  useThemeStore, 
+  accentColors, 
+  languages,
+  ThemeMode, 
+  AccentColor, 
+  SidebarMode,
+  Language,
+} from '@/store/theme-store';
 import {
   Cog6ToothIcon,
   UserCircleIcon,
@@ -12,25 +21,22 @@ import {
   CreditCardIcon,
   LinkIcon,
   PaintBrushIcon,
-  GlobeAltIcon,
-  KeyIcon,
-  DevicePhoneMobileIcon,
-  CloudIcon,
   ArrowPathIcon,
   CheckIcon,
+  SunIcon,
+  MoonIcon,
+  ComputerDesktopIcon,
+  GlobeAltIcon,
 } from '@heroicons/react/24/outline';
+import { 
+  PanelLeft, 
+  PanelLeftClose, 
+  PanelLeftInactive,
+  Check,
+  Globe,
+} from 'lucide-react';
 
 type SettingsTab = 'profile' | 'organization' | 'notifications' | 'security' | 'billing' | 'integrations' | 'appearance';
-
-const tabs = [
-  { id: 'profile', label: 'Profile', icon: UserCircleIcon },
-  { id: 'organization', label: 'Organization', icon: BuildingOfficeIcon },
-  { id: 'notifications', label: 'Notifications', icon: BellIcon },
-  { id: 'security', label: 'Security', icon: ShieldCheckIcon },
-  { id: 'billing', label: 'Billing', icon: CreditCardIcon },
-  { id: 'integrations', label: 'Integrations', icon: LinkIcon },
-  { id: 'appearance', label: 'Appearance', icon: PaintBrushIcon },
-];
 
 const integrations = [
   { id: 'quickbooks', name: 'QuickBooks', description: 'Import transactions and sync data', connected: true, logo: '📊' },
@@ -44,35 +50,70 @@ const integrations = [
 ];
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
+  const [activeTab, setActiveTab] = useState<SettingsTab>('appearance');
   const [saved, setSaved] = useState(false);
+  
+  const { 
+    themeMode, 
+    accentColor, 
+    sidebarMode,
+    language,
+    setThemeMode, 
+    setAccentColor, 
+    setSidebarMode,
+    setLanguage,
+    resolvedTheme,
+    t,
+  } = useThemeStore();
 
   const handleSave = () => {
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const tabs = [
+    { id: 'profile', labelKey: 'settings.tabs.profile', icon: UserCircleIcon },
+    { id: 'organization', labelKey: 'settings.tabs.organization', icon: BuildingOfficeIcon },
+    { id: 'notifications', labelKey: 'settings.tabs.notifications', icon: BellIcon },
+    { id: 'security', labelKey: 'settings.tabs.security', icon: ShieldCheckIcon },
+    { id: 'billing', labelKey: 'settings.tabs.billing', icon: CreditCardIcon },
+    { id: 'integrations', labelKey: 'settings.tabs.integrations', icon: LinkIcon },
+    { id: 'appearance', labelKey: 'settings.tabs.appearance', icon: PaintBrushIcon },
+  ];
+
+  const themeModes: { id: ThemeMode; nameKey: string; icon: any; descKey: string }[] = [
+    { id: 'light', nameKey: 'appearance.light', icon: SunIcon, descKey: 'appearance.lightDesc' },
+    { id: 'dark', nameKey: 'appearance.dark', icon: MoonIcon, descKey: 'appearance.darkDesc' },
+    { id: 'system', nameKey: 'appearance.system', icon: ComputerDesktopIcon, descKey: 'appearance.systemDesc' },
+  ];
+
+  const sidebarModes: { id: SidebarMode; nameKey: string; icon: any; descKey: string }[] = [
+    { id: 'expanded', nameKey: 'appearance.expanded', icon: PanelLeft, descKey: 'appearance.expandedDesc' },
+    { id: 'collapsed', nameKey: 'appearance.collapsed', icon: PanelLeftClose, descKey: 'appearance.collapsedDesc' },
+    { id: 'autohide', nameKey: 'appearance.autohide', icon: PanelLeftInactive, descKey: 'appearance.autohideDesc' },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-gray-500/20 to-gray-600/10 border border-gray-500/20">
-              <Cog6ToothIcon className="w-6 h-6 text-gray-400" />
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-gray-500/20 to-gray-600/10 border border-gray-300 dark:border-gray-500/20">
+              <Cog6ToothIcon className="w-6 h-6 text-gray-600 dark:text-gray-400" />
             </div>
-            Settings
+            {t('settings.title')}
           </h1>
-          <p className="text-gray-400 mt-1">Manage your account and preferences</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('settings.subtitle')}</p>
         </div>
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSave}
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl font-medium text-white shadow-lg shadow-emerald-500/25"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 rounded-xl font-medium text-white shadow-lg transition-opacity"
         >
           {saved ? <CheckIcon className="w-5 h-5" /> : <ArrowPathIcon className="w-5 h-5" />}
-          {saved ? 'Saved!' : 'Save Changes'}
+          {saved ? t('settings.saved') : t('settings.save')}
         </motion.button>
       </div>
 
@@ -87,12 +128,12 @@ export default function SettingsPage() {
                 onClick={() => setActiveTab(tab.id as SettingsTab)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                   activeTab === tab.id
-                    ? 'bg-white/10 text-white'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    ? 'bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
                 <Icon className="w-5 h-5" />
-                {tab.label}
+                {t(tab.labelKey)}
               </button>
             );
           })}
@@ -108,41 +149,41 @@ export default function SettingsPage() {
               className="space-y-6"
             >
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Personal Information</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('profile.personalInfo')}</h3>
                 <div className="flex items-start gap-6 mb-6">
                   <div className="relative">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-3xl font-bold text-white">
+                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-primary-hover)] flex items-center justify-center text-3xl font-bold text-white">
                       JD
                     </div>
-                    <button className="absolute -bottom-2 -right-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors">
+                    <button className="absolute -bottom-2 -right-2 p-2 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 rounded-lg text-gray-700 dark:text-white transition-colors">
                       <PaintBrushIcon className="w-4 h-4" />
                     </button>
                   </div>
                   <div className="flex-1 space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">First Name</label>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('profile.firstName')}</label>
                         <input
                           type="text"
                           defaultValue="John"
-                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                          className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">Last Name</label>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('profile.lastName')}</label>
                         <input
                           type="text"
                           defaultValue="Doe"
-                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                          className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                      <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('profile.email')}</label>
                       <input
                         type="email"
                         defaultValue="john.doe@company.com"
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                        className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
                       />
                     </div>
                   </div>
@@ -150,61 +191,21 @@ export default function SettingsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Phone Number</label>
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('profile.phone')}</label>
                     <input
                       type="tel"
                       defaultValue="+1 (555) 123-4567"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                      className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Timezone</label>
-                    <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('profile.timezone')}</label>
+                    <select className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50">
                       <option>Pacific Time (PT)</option>
                       <option>Mountain Time (MT)</option>
                       <option>Central Time (CT)</option>
                       <option>Eastern Time (ET)</option>
-                    </select>
-                  </div>
-                </div>
-              </Card>
-
-              <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Preferences</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
-                    <div>
-                      <p className="font-medium text-white">Language</p>
-                      <p className="text-sm text-gray-500">Choose your preferred language</p>
-                    </div>
-                    <select className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:outline-none">
-                      <option>English (US)</option>
-                      <option>Deutsch</option>
-                      <option>Español</option>
-                      <option>Français</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
-                    <div>
-                      <p className="font-medium text-white">Currency</p>
-                      <p className="text-sm text-gray-500">Default display currency</p>
-                    </div>
-                    <select className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:outline-none">
-                      <option>USD ($)</option>
-                      <option>EUR (€)</option>
-                      <option>GBP (£)</option>
-                      <option>CHF (Fr)</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
-                    <div>
-                      <p className="font-medium text-white">Date Format</p>
-                      <p className="text-sm text-gray-500">How dates are displayed</p>
-                    </div>
-                    <select className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:outline-none">
-                      <option>MM/DD/YYYY</option>
-                      <option>DD/MM/YYYY</option>
-                      <option>YYYY-MM-DD</option>
+                      <option>Central European Time (CET)</option>
                     </select>
                   </div>
                 </div>
@@ -217,70 +218,37 @@ export default function SettingsPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
             >
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Company Information</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('org.details')}</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Company Name</label>
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('org.companyName')}</label>
                     <input
                       type="text"
-                      defaultValue="Acme Corporation"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                      defaultValue="Acme Corp"
+                      className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">Industry</label>
-                      <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
+                      <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('org.industry')}</label>
+                      <select className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50">
                         <option>Technology</option>
                         <option>Finance</option>
                         <option>Healthcare</option>
                         <option>Retail</option>
-                        <option>Manufacturing</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-400 mb-2">Company Size</label>
-                      <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
-                        <option>1-10 employees</option>
-                        <option>11-50 employees</option>
-                        <option>51-200 employees</option>
-                        <option>201-1000 employees</option>
-                        <option>1000+ employees</option>
+                      <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('org.companySize')}</label>
+                      <select className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50">
+                        <option>1-10</option>
+                        <option>11-50</option>
+                        <option>51-200</option>
+                        <option>200+</option>
                       </select>
                     </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Tax ID / EIN</label>
-                    <input
-                      type="text"
-                      defaultValue="12-3456789"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
-                    />
-                  </div>
-                </div>
-              </Card>
-
-              <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Fiscal Year Settings</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Fiscal Year Start</label>
-                    <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
-                      <option>January</option>
-                      <option>April</option>
-                      <option>July</option>
-                      <option>October</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Accounting Method</label>
-                    <select className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50">
-                      <option>Accrual</option>
-                      <option>Cash</option>
-                    </select>
                   </div>
                 </div>
               </Card>
@@ -294,39 +262,23 @@ export default function SettingsPage() {
               animate={{ opacity: 1, y: 0 }}
             >
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Notification Preferences</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('notifications.preferences')}</h3>
                 <div className="space-y-4">
                   {[
-                    { title: 'Transaction Alerts', description: 'Get notified for new transactions', email: true, push: true },
-                    { title: 'Weekly Reports', description: 'Receive weekly financial summaries', email: true, push: false },
-                    { title: 'Tax Reminders', description: 'Important tax deadlines and updates', email: true, push: true },
-                    { title: 'Team Activity', description: 'When team members make changes', email: false, push: true },
-                    { title: 'Crypto Price Alerts', description: 'Significant price movements', email: false, push: true },
-                    { title: 'AI Insights', description: 'New AI-generated recommendations', email: true, push: false },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
+                    { labelKey: 'notifications.transactionAlerts', descKey: 'notifications.transactionAlertsDesc' },
+                    { labelKey: 'notifications.weeklyReports', descKey: 'notifications.weeklyReportsDesc' },
+                    { labelKey: 'notifications.taxReminders', descKey: 'notifications.taxRemindersDesc' },
+                    { labelKey: 'notifications.teamUpdates', descKey: 'notifications.teamUpdatesDesc' },
+                  ].map((item) => (
+                    <div key={item.labelKey} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.02] rounded-xl">
                       <div>
-                        <p className="font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-gray-500">{item.description}</p>
+                        <p className="font-medium text-gray-900 dark:text-white">{t(item.labelKey)}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{t(item.descKey)}</p>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            defaultChecked={item.email}
-                            className="w-4 h-4 rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-emerald-500/50"
-                          />
-                          <span className="text-sm text-gray-400">Email</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            defaultChecked={item.push}
-                            className="w-4 h-4 rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-emerald-500/50"
-                          />
-                          <span className="text-sm text-gray-400">Push</span>
-                        </label>
-                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" defaultChecked className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-300 dark:bg-surface-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--accent-primary)]"></div>
+                      </label>
                     </div>
                   ))}
                 </div>
@@ -342,59 +294,44 @@ export default function SettingsPage() {
               className="space-y-6"
             >
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Password & Authentication</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('security.password')}</h3>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
-                    <div className="flex items-center gap-3">
-                      <KeyIcon className="w-5 h-5 text-gray-400" />
-                      <div>
-                        <p className="font-medium text-white">Password</p>
-                        <p className="text-sm text-gray-500">Last changed 30 days ago</p>
-                      </div>
-                    </div>
-                    <button className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm font-medium text-gray-300 transition-colors">
-                      Change Password
-                    </button>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('security.currentPassword')}</label>
+                    <input
+                      type="password"
+                      className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
+                    />
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
-                    <div className="flex items-center gap-3">
-                      <DevicePhoneMobileIcon className="w-5 h-5 text-emerald-400" />
-                      <div>
-                        <p className="font-medium text-white">Two-Factor Authentication</p>
-                        <p className="text-sm text-emerald-400">Enabled via authenticator app</p>
-                      </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('security.newPassword')}</label>
+                      <input
+                        type="password"
+                        className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
+                      />
                     </div>
-                    <button className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm font-medium text-gray-300 transition-colors">
-                      Manage
-                    </button>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{t('security.confirmPassword')}</label>
+                      <input
+                        type="password"
+                        className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50"
+                      />
+                    </div>
                   </div>
                 </div>
               </Card>
 
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Active Sessions</h3>
-                <div className="space-y-3">
-                  {[
-                    { device: 'MacBook Pro', location: 'San Francisco, CA', current: true },
-                    { device: 'iPhone 15 Pro', location: 'San Francisco, CA', current: false },
-                    { device: 'Chrome on Windows', location: 'New York, NY', current: false },
-                  ].map((session, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
-                      <div>
-                        <p className="font-medium text-white">{session.device}</p>
-                        <p className="text-sm text-gray-500">{session.location}</p>
-                      </div>
-                      {session.current ? (
-                        <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-full">
-                          Current Session
-                        </span>
-                      ) : (
-                        <button className="text-sm text-rose-400 hover:text-rose-300 transition-colors">
-                          Revoke
-                        </button>
-                      )}
-                    </div>
-                  ))}
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('security.twoFactor')}</h3>
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.02] rounded-xl">
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">{t('security.authenticatorApp')}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('security.authenticatorAppDesc')}</p>
+                  </div>
+                  <button className="px-4 py-2 bg-[var(--accent-primary)] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                    {t('security.enable')}
+                  </button>
                 </div>
               </Card>
             </motion.div>
@@ -407,58 +344,36 @@ export default function SettingsPage() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <Card className="bg-gradient-to-r from-violet-500/10 to-purple-500/10 border-violet-500/20">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-400">Current Plan</p>
-                    <p className="text-2xl font-bold text-white">Professional</p>
-                    <p className="text-sm text-gray-400 mt-1">$49/month • Billed monthly</p>
+              <Card>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('billing.currentPlan')}</h3>
+                <div className="p-4 bg-gradient-to-r from-[var(--accent-primary)]/10 to-transparent rounded-xl border border-[var(--accent-primary)]/20">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-lg font-semibold text-gray-900 dark:text-white">{t('billing.professionalPlan')}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">$49/month • Renews Dec 1, 2025</p>
+                    </div>
+                    <button className="px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium transition-colors">
+                      {t('billing.upgrade')}
+                    </button>
                   </div>
-                  <button className="px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 rounded-lg text-sm font-medium text-white">
-                    Upgrade Plan
-                  </button>
                 </div>
               </Card>
 
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Payment Method</h3>
-                <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('billing.paymentMethod')}</h3>
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.02] rounded-xl">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-400 rounded flex items-center justify-center text-white text-xs font-bold">
                       VISA
                     </div>
                     <div>
-                      <p className="font-medium text-white">•••• •••• •••• 4242</p>
-                      <p className="text-sm text-gray-500">Expires 12/2026</p>
+                      <p className="font-medium text-gray-900 dark:text-white">•••• •••• •••• 4242</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Expires 12/2026</p>
                     </div>
                   </div>
-                  <button className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors">
-                    Update
+                  <button className="text-sm text-[var(--accent-primary)] hover:opacity-80 transition-opacity">
+                    {t('billing.update')}
                   </button>
-                </div>
-              </Card>
-
-              <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Billing History</h3>
-                <div className="space-y-2">
-                  {[
-                    { date: 'Dec 1, 2024', amount: '$49.00', status: 'Paid' },
-                    { date: 'Nov 1, 2024', amount: '$49.00', status: 'Paid' },
-                    { date: 'Oct 1, 2024', amount: '$49.00', status: 'Paid' },
-                  ].map((invoice, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 hover:bg-white/[0.02] rounded-lg transition-colors">
-                      <div className="flex items-center gap-4">
-                        <span className="text-gray-400">{invoice.date}</span>
-                        <span className="text-white font-mono">{invoice.amount}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-emerald-400 text-sm">{invoice.status}</span>
-                        <button className="text-sm text-gray-400 hover:text-white transition-colors">
-                          Download
-                        </button>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </Card>
             </motion.div>
@@ -471,29 +386,29 @@ export default function SettingsPage() {
               animate={{ opacity: 1, y: 0 }}
             >
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Connected Services</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">{t('integrations.connectedServices')}</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {integrations.map((integration) => (
                     <div
                       key={integration.id}
-                      className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl hover:bg-white/[0.04] transition-colors"
+                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/[0.02] rounded-xl hover:bg-gray-100 dark:hover:bg-white/[0.04] transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-xl">
+                        <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/5 flex items-center justify-center text-xl">
                           {integration.logo}
                         </div>
                         <div>
-                          <p className="font-medium text-white">{integration.name}</p>
-                          <p className="text-xs text-gray-500">{integration.description}</p>
+                          <p className="font-medium text-gray-900 dark:text-white">{integration.name}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">{integration.description}</p>
                         </div>
                       </div>
                       {integration.connected ? (
-                        <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-full">
-                          Connected
+                        <span className="px-3 py-1 bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] text-xs rounded-full">
+                          {t('integrations.connected')}
                         </span>
                       ) : (
-                        <button className="px-3 py-1 bg-white/5 hover:bg-white/10 text-gray-300 text-xs rounded-full transition-colors">
-                          Connect
+                        <button className="px-3 py-1 bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 text-xs rounded-full transition-colors">
+                          {t('integrations.connect')}
                         </button>
                       )}
                     </div>
@@ -508,82 +423,188 @@ export default function SettingsPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
             >
+              {/* Language */}
               <Card>
-                <h3 className="text-lg font-semibold text-white mb-6">Theme Settings</h3>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-3">Color Theme</label>
-                    <div className="grid grid-cols-3 gap-3">
-                      {[
-                        { name: 'Dark', bg: 'bg-[#0f1115]', active: true },
-                        { name: 'Light', bg: 'bg-gray-100', active: false },
-                        { name: 'System', bg: 'bg-gradient-to-r from-[#0f1115] to-gray-100', active: false },
-                      ].map((theme) => (
-                        <button
-                          key={theme.name}
-                          className={`p-4 rounded-xl border-2 transition-colors ${
-                            theme.active ? 'border-emerald-500' : 'border-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          <div className={`w-full h-12 rounded-lg ${theme.bg} mb-2`} />
-                          <p className="text-sm text-white">{theme.name}</p>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('appearance.language')}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{t('appearance.languageDesc')}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {languages.map((lang) => {
+                    const isActive = language === lang.code;
+                    return (
+                      <button
+                        key={lang.code}
+                        onClick={() => setLanguage(lang.code)}
+                        className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
+                          isActive 
+                            ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5' 
+                            : 'border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20'
+                        }`}
+                      >
+                        {isActive && (
+                          <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[var(--accent-primary)] flex items-center justify-center">
+                            <Check className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                        <span className="text-3xl">{lang.flag}</span>
+                        <div className="text-left">
+                          <p className="font-medium text-gray-900 dark:text-white">{lang.nativeName}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">{lang.name}</p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-3">Accent Color</label>
-                    <div className="flex items-center gap-3">
-                      {['emerald', 'blue', 'violet', 'rose', 'amber'].map((color) => (
-                        <button
-                          key={color}
-                          className={`w-10 h-10 rounded-full bg-${color}-500 ${
-                            color === 'emerald' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#0f1115]' : ''
+              {/* Theme Mode */}
+              <Card>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('appearance.theme')}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{t('appearance.themeDesc')}</p>
+                <div className="grid grid-cols-3 gap-4">
+                  {themeModes.map((mode) => {
+                    const Icon = mode.icon;
+                    const isActive = themeMode === mode.id;
+                    return (
+                      <button
+                        key={mode.id}
+                        onClick={() => setThemeMode(mode.id)}
+                        className={`relative p-4 rounded-xl border-2 transition-all ${
+                          isActive 
+                            ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5' 
+                            : 'border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20'
+                        }`}
+                      >
+                        {isActive && (
+                          <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[var(--accent-primary)] flex items-center justify-center">
+                            <Check className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                        <div className={`w-full h-20 rounded-lg mb-3 flex items-center justify-center ${
+                          mode.id === 'light' 
+                            ? 'bg-gray-100 border border-gray-200' 
+                            : mode.id === 'dark' 
+                            ? 'bg-gray-900 border border-gray-700' 
+                            : 'bg-gradient-to-r from-gray-900 to-gray-100 border border-gray-400'
+                        }`}>
+                          <Icon className={`w-8 h-8 ${
+                            mode.id === 'light' ? 'text-amber-500' : mode.id === 'dark' ? 'text-blue-400' : 'text-gray-500'
+                          }`} />
+                        </div>
+                        <p className="font-medium text-gray-900 dark:text-white">{t(mode.nameKey)}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t(mode.descKey)}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+
+              {/* Accent Color */}
+              <Card>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('appearance.accentColor')}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{t('appearance.accentColorDesc')}</p>
+                <div className="flex flex-wrap gap-3">
+                  {accentColors.map((color) => {
+                    const isActive = accentColor === color.value;
+                    return (
+                      <button
+                        key={color.value}
+                        onClick={() => setAccentColor(color.value)}
+                        className={`group relative flex flex-col items-center gap-2 p-3 rounded-xl transition-all ${
+                          isActive 
+                            ? 'bg-gray-100 dark:bg-white/10' 
+                            : 'hover:bg-gray-50 dark:hover:bg-white/5'
+                        }`}
+                      >
+                        <div 
+                          className={`w-10 h-10 rounded-full transition-transform ${
+                            isActive ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 scale-110' : 'group-hover:scale-105'
                           }`}
-                          style={{
-                            backgroundColor: 
-                              color === 'emerald' ? '#10b981' :
-                              color === 'blue' ? '#3b82f6' :
-                              color === 'violet' ? '#8b5cf6' :
-                              color === 'rose' ? '#f43f5e' :
-                              '#f59e0b'
+                          style={{ 
+                            backgroundColor: color.primary,
+                            ['--tw-ring-color' as any]: color.primary,
                           }}
-                        />
-                      ))}
+                        >
+                          {isActive && (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Check className="w-5 h-5 text-white" />
+                            </div>
+                          )}
+                        </div>
+                        <span className={`text-xs font-medium ${
+                          isActive ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400'
+                        }`}>
+                          {color.name}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+
+              {/* Sidebar Mode */}
+              <Card>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('appearance.sidebar')}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{t('appearance.sidebarDesc')}</p>
+                <div className="grid grid-cols-3 gap-4">
+                  {sidebarModes.map((mode) => {
+                    const Icon = mode.icon;
+                    const isActive = sidebarMode === mode.id;
+                    return (
+                      <button
+                        key={mode.id}
+                        onClick={() => setSidebarMode(mode.id)}
+                        className={`relative p-4 rounded-xl border-2 transition-all ${
+                          isActive 
+                            ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5' 
+                            : 'border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20'
+                        }`}
+                      >
+                        {isActive && (
+                          <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[var(--accent-primary)] flex items-center justify-center">
+                            <Check className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                        <div className="w-full h-16 rounded-lg mb-3 bg-gray-100 dark:bg-white/5 flex items-center justify-center">
+                          <Icon className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                        </div>
+                        <p className="font-medium text-gray-900 dark:text-white">{t(mode.nameKey)}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t(mode.descKey)}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+
+              {/* Preview */}
+              <Card>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('appearance.preview')}</h3>
+                <div className="p-4 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold"
+                      style={{ backgroundColor: 'var(--accent-primary)' }}
+                    >
+                      P
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white">{t('appearance.currentSettings')}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Theme: {themeMode} ({resolvedTheme}) • Accent: {accentColor} • Sidebar: {sidebarMode} • Lang: {language}
+                      </p>
                     </div>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-3">Sidebar</label>
-                    <div className="flex items-center gap-4">
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="sidebar"
-                          defaultChecked
-                          className="w-4 h-4 text-emerald-500 focus:ring-emerald-500/50"
-                        />
-                        <span className="text-white">Expanded</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="sidebar"
-                          className="w-4 h-4 text-emerald-500 focus:ring-emerald-500/50"
-                        />
-                        <span className="text-white">Collapsed</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="sidebar"
-                          className="w-4 h-4 text-emerald-500 focus:ring-emerald-500/50"
-                        />
-                        <span className="text-white">Auto-hide</span>
-                      </label>
-                    </div>
+                  <div className="flex gap-2">
+                    <button 
+                      className="px-4 py-2 rounded-lg text-white text-sm font-medium"
+                      style={{ backgroundColor: 'var(--accent-primary)' }}
+                    >
+                      {t('appearance.primaryButton')}
+                    </button>
+                    <button className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-gray-300 text-sm font-medium">
+                      {t('appearance.secondary')}
+                    </button>
                   </div>
                 </div>
               </Card>

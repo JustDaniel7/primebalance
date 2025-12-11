@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useStore } from '@/index'
+import { useThemeStore } from '@/store/theme-store'
 import { Card, Badge } from '@/components/ui'
 import { ChevronRightIcon } from '@/components/ui/Icons'
 import Link from 'next/link'
@@ -9,6 +10,7 @@ import { format } from 'date-fns'
 
 export default function RecentTransactions() {
   const { transactions } = useStore()
+  const { t } = useThemeStore()
   const recentTransactions = transactions.slice(0, 5)
 
   const formatCurrency = (amount: number, currency: string) => {
@@ -41,18 +43,18 @@ export default function RecentTransactions() {
       <Card variant="glass">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-lg font-semibold text-surface-100">
-              Recent Transactions
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
+              {t('dashboard.recentTransactions')}
             </h3>
-            <p className="text-sm text-surface-500">
-              Latest activity in your accounts
+            <p className="text-sm text-gray-500 dark:text-surface-500">
+              {t('dashboard.last30Days')}
             </p>
           </div>
           <Link
             href="/dashboard/transactions"
-            className="flex items-center gap-1 text-sm text-primary-400 hover:text-primary-300 transition-colors"
+            className="flex items-center gap-1 text-sm text-[var(--accent-primary)] hover:opacity-80 transition-opacity"
           >
-            View all
+            {t('dashboard.viewAll')}
             <ChevronRightIcon size={16} />
           </Link>
         </div>
@@ -64,24 +66,24 @@ export default function RecentTransactions() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.1 * index }}
-              className="flex items-center gap-4 p-4 rounded-xl bg-surface-900/40 hover:bg-surface-800/50 transition-colors cursor-pointer group"
+              className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-surface-900/40 hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors cursor-pointer group"
             >
               {/* Icon */}
-              <div className="w-10 h-10 rounded-xl bg-surface-800 flex items-center justify-center text-lg">
+              <div className="w-10 h-10 rounded-xl bg-gray-200 dark:bg-surface-800 flex items-center justify-center text-lg">
                 {getCategoryIcon(transaction.category)}
               </div>
 
               {/* Details */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-surface-200 truncate group-hover:text-surface-100 transition-colors">
+                <p className="text-sm font-medium text-gray-700 dark:text-surface-200 truncate group-hover:text-gray-900 dark:group-hover:text-surface-100 transition-colors">
                   {transaction.description}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs text-surface-500">
+                  <span className="text-xs text-gray-500 dark:text-surface-500">
                     {format(new Date(transaction.date), 'MMM d, yyyy')}
                   </span>
-                  <span className="text-xs text-surface-600">•</span>
-                  <span className="text-xs text-surface-500">
+                  <span className="text-xs text-gray-400 dark:text-surface-600">•</span>
+                  <span className="text-xs text-gray-500 dark:text-surface-500">
                     {transaction.account}
                   </span>
                 </div>
@@ -92,8 +94,8 @@ export default function RecentTransactions() {
                 <p
                   className={`text-sm font-semibold ${
                     transaction.amount > 0
-                      ? 'text-primary-400'
-                      : 'text-surface-200'
+                      ? 'text-[var(--accent-primary)]'
+                      : 'text-gray-700 dark:text-surface-200'
                   }`}
                 >
                   {transaction.amount > 0 ? '+' : ''}
@@ -110,7 +112,9 @@ export default function RecentTransactions() {
                     }
                     size="sm"
                   >
-                    {transaction.status}
+                    {transaction.status === 'completed' ? t('transactions.completed') :
+                     transaction.status === 'pending' ? t('transactions.pending') :
+                     t('transactions.failed')}
                   </Badge>
                 </div>
               </div>
