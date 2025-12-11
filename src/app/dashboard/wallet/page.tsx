@@ -141,7 +141,7 @@ export default function WalletPage() {
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-surface-100">{token.name}</h3>
                       <p className="text-sm text-gray-500 dark:text-surface-500">
-                        {token.amount.toLocaleString()} {token.symbol}
+                        {token.price} {token.symbol}
                       </p>
                     </div>
                   </div>

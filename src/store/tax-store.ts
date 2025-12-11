@@ -38,6 +38,9 @@ interface TaxStore {
   optimizationResult: OptimizationResult | null;
   isAnalyzing: boolean;
   
+  // Loading State
+  isLoading: boolean;
+  
   // Notifications
   notifications: TaxNotification[];
   
@@ -78,6 +81,9 @@ interface TaxStore {
   // UI Actions
   updateDashboardState: (updates: Partial<TaxDashboardState>) => void;
   
+  // Demo Data Action
+  loadDemoData: () => void;
+  
   // Getters
   getActiveStructure: () => CorporateStructure | null;
   getEntityById: (structureId: string, entityId: string) => CorporateEntity | null;
@@ -105,6 +111,7 @@ export const useTaxStore = create<TaxStore>()(
       taxTransactions: [],
       optimizationResult: null,
       isAnalyzing: false,
+      isLoading: false,
       notifications: [],
       dashboardState: {
         selectedStructureId: null,
@@ -435,6 +442,17 @@ export const useTaxStore = create<TaxStore>()(
         set(state => ({
           dashboardState: { ...state.dashboardState, ...updates },
         }));
+      },
+
+      // Demo Data Action
+      loadDemoData: () => {
+        set({ isLoading: true });
+        
+        // Simulate async loading
+        setTimeout(() => {
+          initializeDemoTaxData();
+          set({ isLoading: false });
+        }, 500);
       },
 
       // Getters

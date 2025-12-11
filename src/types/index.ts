@@ -1,3 +1,9 @@
+export interface Merchant {
+  id: string;
+  name?: string;
+  // ...other fields
+}
+
 // Transaction types
 export interface Transaction {
   id: string
@@ -15,6 +21,7 @@ export interface Transaction {
   txHash?: string
   createdAt: string
   updatedAt: string
+    merchant?: Merchant | null; // Add this
 }
 
 export interface Receipt {

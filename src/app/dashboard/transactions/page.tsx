@@ -210,7 +210,7 @@ export default function TransactionsPage() {
                             {transaction.description}
                           </p>
                           <p className="text-sm text-gray-500 dark:text-surface-500">
-                            {transaction.merchant || 'Unknown'}
+                            {transaction.merchant?.name || 'Unknown'}
                           </p>
                         </div>
                       </div>

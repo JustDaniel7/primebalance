@@ -59,178 +59,172 @@ type TabId = 'overview' | 'structure' | 'jurisdictions' | 'optimization';
 // =============================================================================
 
 const OverviewTab: React.FC = () => {
-  const { getActiveStructure, notifications, optimizationResult } = useTaxStore();
   const { t } = useThemeStore();
-  const structure = getActiveStructure();
+  const { getActiveStructure, notifications, optimizationResult } = useTaxStore();
+  const activeStructure = getActiveStructure();
 
-  const jurisdictionCount = useMemo(() => {
-    if (!structure) return 0;
-    return new Set(structure.entities.map(e => e.jurisdictionCode)).size;
-  }, [structure]);
+  const stats = useMemo(() => {
+    if (!activeStructure) {
+      return {
+        totalEntities: 0,
+        jurisdictions: 0,
+        estimatedTax: 0,
+        potentialSavings: 0,
+      };
+    }
 
-  const entityCount = structure?.entities.length || 0;
+    const uniqueJurisdictions = new Set(
+      activeStructure.entities.map((e) => e.jurisdictionCode)
+    );
 
-  const upcomingDeadlines = useMemo(() => {
-    return notifications
-      .filter(n => n.category === 'DEADLINE' && !n.dismissed)
-      .slice(0, 5);
-  }, [notifications]);
+    return {
+      totalEntities: activeStructure.entities.length,
+      jurisdictions: uniqueJurisdictions.size,
+      estimatedTax: 125000, // Mock value
+      potentialSavings: optimizationResult?.potentialSavings || 0,
+    };
+  }, [activeStructure, optimizationResult]);
 
-  const unreadNotifications = notifications.filter(n => !n.read && !n.dismissed);
+  const unreadNotifications = notifications.filter((n) => !n.read && !n.dismissed);
 
   return (
     <div className="space-y-6">
-      {/* Summary Cards */}
+      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gray-100 dark:bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-gray-200 dark:border-white/10"
+          className="bg-white dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10 p-4"
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t('tax.entities')}</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                {entityCount}
-              </p>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-500/20">
+              <Building2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
-            <div className="p-3 bg-blue-500/20 rounded-lg">
-              <Building2 className="w-6 h-6 text-blue-400" />
-            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{t('tax.entities')}</span>
           </div>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalEntities}</p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-gray-100 dark:bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-gray-200 dark:border-white/10"
+          className="bg-white dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10 p-4"
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t('tax.jurisdictions')}</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                {jurisdictionCount}
-              </p>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 rounded-lg bg-green-100 dark:bg-green-500/20">
+              <Globe className="w-5 h-5 text-green-600 dark:text-green-400" />
             </div>
-            <div className="p-3 bg-green-500/20 rounded-lg">
-              <Globe className="w-6 h-6 text-green-400" />
-            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{t('tax.jurisdictions')}</span>
           </div>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.jurisdictions}</p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-gray-100 dark:bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-gray-200 dark:border-white/10"
+          className="bg-white dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10 p-4"
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t('tax.taxSavings')}</p>
-              <p className="text-2xl font-bold text-emerald-400 mt-1">
-                {optimizationResult?.suggestions.length || 0}
-              </p>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 rounded-lg bg-amber-100 dark:bg-amber-500/20">
+              <DollarSign className="w-5 h-5 text-amber-600 dark:text-amber-400" />
             </div>
-            <div className="p-3 bg-emerald-500/20 rounded-lg">
-              <Lightbulb className="w-6 h-6 text-emerald-400" />
-            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{t('tax.estimatedTax')}</span>
           </div>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            ${stats.estimatedTax.toLocaleString()}
+          </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-gray-100 dark:bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-gray-200 dark:border-white/10"
+          className="bg-white dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10 p-4"
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{t('common.warning')}</p>
-              <p className="text-2xl font-bold text-orange-400 mt-1">
-                {unreadNotifications.length}
-              </p>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-500/20">
+              <TrendingDown className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
-            <div className="p-3 bg-orange-500/20 rounded-lg">
-              <Bell className="w-6 h-6 text-orange-400" />
-            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{t('tax.taxSavings')}</span>
           </div>
+          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+            ${stats.potentialSavings.toLocaleString()}
+          </p>
         </motion.div>
       </div>
 
-      {/* Two Column Layout */}
+      {/* Notifications & Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Upcoming Deadlines */}
+        {/* Notifications */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-gray-100 dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-white dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10 p-6"
         >
-          <div className="p-4 border-b border-gray-200 dark:border-white/10">
+          <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-blue-400" />
-              {t('tax.nextDeadline')}
+              <Bell className="w-5 h-5" />
+              {t('settings.tabs.notifications')}
             </h3>
+            {unreadNotifications.length > 0 && (
+              <span className="px-2 py-1 text-xs font-medium bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-full">
+                {unreadNotifications.length} new
+              </span>
+            )}
           </div>
-          <div className="p-4">
-            {upcomingDeadlines.length > 0 ? (
-              <div className="space-y-3">
-                {upcomingDeadlines.map((deadline) => {
-                  const jurisdiction = deadline.relatedJurisdiction 
-                    ? getJurisdiction(deadline.relatedJurisdiction)
-                    : null;
-                  
-                  return (
-                    <div
-                      key={deadline.id}
-                      className="flex items-center justify-between p-3 bg-gray-50 dark:bg-white/5 rounded-lg"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-2 h-2 rounded-full ${
-                          deadline.priority === 'HIGH' ? 'bg-red-400' :
-                          deadline.priority === 'MEDIUM' ? 'bg-yellow-400' : 'bg-green-400'
-                        }`} />
-                        <div>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">{deadline.title}</p>
-                          {jurisdiction && (
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                              {jurisdiction.flag} {jurisdiction.name}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {new Date(deadline.createdAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="text-center text-gray-500 dark:text-gray-400 py-8">
-                {t('common.noData')}
+
+          <div className="space-y-3">
+            {unreadNotifications.length === 0 ? (
+              <p className="text-gray-500 dark:text-gray-400 text-sm py-4 text-center">
+                No new notifications
               </p>
+            ) : (
+              unreadNotifications.slice(0, 3).map((notification) => (
+                <div
+                  key={notification.id}
+                  className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-white/5 rounded-lg"
+                >
+                  <div
+                    className={`p-1.5 rounded-lg ${
+                      notification.priority === 'HIGH'
+                        ? 'bg-red-100 dark:bg-red-500/20'
+                        : notification.priority === 'MEDIUM'
+                        ? 'bg-amber-100 dark:bg-amber-500/20'
+                        : 'bg-blue-100 dark:bg-blue-500/20'
+                    }`}
+                  >
+                    {notification.priority === 'HIGH' ? (
+                      <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                    ) : notification.priority === 'MEDIUM' ? (
+                      <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    ) : (
+                      <Info className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {notification.title}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">
+                      {notification.message}
+                    </p>
+                  </div>
+                </div>
+              ))
             )}
           </div>
         </motion.div>
 
         {/* Quick Actions */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-gray-100 dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-white dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-white/10 p-6"
         >
-          <div className="p-4 border-b border-gray-200 dark:border-white/10">
-            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-purple-400" />
-              {t('common.actions')}
-            </h3>
-          </div>
-          <div className="p-4 space-y-3">
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+          <div className="space-y-2">
             <button className="w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-white/5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
               <div className="flex items-center gap-3">
                 <Building2 className="w-5 h-5 text-blue-400" />
@@ -344,7 +338,7 @@ const JurisdictionsTab: React.FC = () => {
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold text-[var(--accent-primary)]">
-                  {jurisdiction.corporateTax.rate}%
+                  {jurisdiction.corporateTax.standardRate}%
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{t('tax.taxRate')}</p>
               </div>
@@ -359,31 +353,49 @@ const JurisdictionsTab: React.FC = () => {
                   className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10"
                 >
                   <div className="grid grid-cols-2 gap-3 text-sm">
-                    {jurisdiction.personalIncomeTax && (
+                    {/* Withholding Tax - Dividends */}
+                    {jurisdiction.withholdingTax && (
                       <div>
-                        <p className="text-gray-500 dark:text-gray-400">Income Tax</p>
+                        <p className="text-gray-500 dark:text-gray-400">WHT Dividends</p>
                         <p className="text-gray-900 dark:text-white font-medium">
-                          {jurisdiction.personalIncomeTax.maxRate}%
+                          {jurisdiction.withholdingTax.dividends}%
                         </p>
                       </div>
                     )}
-                    {jurisdiction.salesTax && (
+                    {/* Withholding Tax - Interest */}
+                    {jurisdiction.withholdingTax && (
                       <div>
-                        <p className="text-gray-500 dark:text-gray-400">Sales Tax</p>
+                        <p className="text-gray-500 dark:text-gray-400">WHT Interest</p>
                         <p className="text-gray-900 dark:text-white font-medium">
-                          {jurisdiction.salesTax.stateRate}%
+                          {jurisdiction.withholdingTax.interest}%
                         </p>
                       </div>
                     )}
-                    {jurisdiction.capitalGainsTax && (
+                    {/* Withholding Tax - Royalties */}
+                    {jurisdiction.withholdingTax && (
                       <div>
-                        <p className="text-gray-500 dark:text-gray-400">Capital Gains</p>
+                        <p className="text-gray-500 dark:text-gray-400">WHT Royalties</p>
                         <p className="text-gray-900 dark:text-white font-medium">
-                          {jurisdiction.capitalGainsTax.shortTermRate}%
+                          {jurisdiction.withholdingTax.royalties}%
+                        </p>
+                      </div>
+                    )}
+                    {/* DTA Partners Count */}
+                    {jurisdiction.dtaPartners && (
+                      <div>
+                        <p className="text-gray-500 dark:text-gray-400">DTA Partners</p>
+                        <p className="text-gray-900 dark:text-white font-medium">
+                          {jurisdiction.dtaPartners.length}
                         </p>
                       </div>
                     )}
                   </div>
+                  {/* Notes if available */}
+                  {jurisdiction.corporateTax.notes && (
+                    <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 italic">
+                      {jurisdiction.corporateTax.notes}
+                    </p>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -407,7 +419,7 @@ const JurisdictionsTab: React.FC = () => {
 export default function TaxCenterPage() {
   const { t } = useThemeStore();
   const [activeTab, setActiveTab] = useState<TabId>('overview');
-  const { loadDemoData, isLoading } = useTaxStore();
+  const { isLoading, loadDemoData } = useTaxStore();
 
   // Initialize demo data
   useEffect(() => {
@@ -440,7 +452,7 @@ export default function TaxCenterPage() {
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
-            {t('common.loading')}
+            {isLoading ? t('common.loading') : t('common.refresh')}
           </button>
           <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-colors">
             <Plus className="w-4 h-4" />
