@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-
+import { Transaction } from '@prisma/client'
 
 // GET /api/dashboard - Get dashboard metrics
 export async function GET(request: NextRequest) {
@@ -54,27 +54,27 @@ export async function GET(request: NextRequest) {
 
     // Calculate metrics
     const currentMonthIncome = currentMonthTx
-      .filter(t => t.type === 'INCOME')
+      .filter((t: Transaction) => t.type === 'INCOME')
       .reduce((sum, t) => sum + Number(t.amount), 0)
     
     const currentMonthExpenses = currentMonthTx
-      .filter(t => t.type === 'EXPENSE')
+      .filter((t: Transaction) => t.type === 'EXPENSE')
       .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
     const lastMonthIncome = lastMonthTx
-      .filter(t => t.type === 'INCOME')
+      .filter((t: Transaction) => t.type === 'INCOME')
       .reduce((sum, t) => sum + Number(t.amount), 0)
     
     const lastMonthExpenses = lastMonthTx
-      .filter(t => t.type === 'EXPENSE')
+      .filter((t: Transaction) => t.type === 'EXPENSE')
       .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
     const ytdRevenue = ytdTx
-      .filter(t => t.type === 'INCOME')
+      .filter((t: Transaction) => t.type === 'INCOME')
       .reduce((sum, t) => sum + Number(t.amount), 0)
     
     const ytdExpenses = ytdTx
-      .filter(t => t.type === 'EXPENSE')
+      .filter((t: Transaction) => t.type === 'EXPENSE')
       .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
     // Get total balance from accounts
