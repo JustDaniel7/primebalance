@@ -4,14 +4,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 
 // POST /api/reports/generate - Generate report data
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
+
+    if (!session?.user?.id || !session?.user?.organizationId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const userId = session.user.id
+    const organizationId = session.user.organizationId
     const start = startDate ? new Date(startDate) : new Date(new Date().getFullYear(), 0, 1)
     const end = endDate ? new Date(endDate) : new Date()
 
@@ -33,22 +33,22 @@ export async function POST(request: NextRequest) {
 
     switch (type.toLowerCase().replace('-', '_')) {
       case 'profit_loss':
-        reportData = await generateProfitLoss(userId, start, end)
+        reportData = await generateProfitLoss(organizationId, start, end)
         break
       case 'balance_sheet':
-        reportData = await generateBalanceSheet(userId, end)
+        reportData = await generateBalanceSheet(organizationId, end)
         break
       case 'cash_flow':
-        reportData = await generateCashFlow(userId, start, end)
+        reportData = await generateCashFlow(organizationId, start, end)
         break
       case 'tax_summary':
-        reportData = await generateTaxSummary(userId, start, end)
+        reportData = await generateTaxSummary(organizationId, start, end)
         break
       case 'expense_report':
-        reportData = await generateExpenseReport(userId, start, end)
+        reportData = await generateExpenseReport(organizationId, start, end)
         break
       case 'income_report':
-        reportData = await generateIncomeReport(userId, start, end)
+        reportData = await generateIncomeReport(organizationId, start, end)
         break
       default:
         return NextResponse.json(
@@ -76,10 +76,10 @@ export async function POST(request: NextRequest) {
 }
 
 // Profit & Loss Report
-async function generateProfitLoss(userId: string, start: Date, end: Date) {
+async function generateProfitLoss(organizationId: string, start: Date, end: Date) {
   const transactions = await prisma.transaction.findMany({
     where: {
-      userId,
+      organizationId,
       date: { gte: start, lte: end },
       status: 'COMPLETED',
     },
@@ -97,14 +97,16 @@ async function generateProfitLoss(userId: string, start: Date, end: Date) {
   const revenueByCategory = transactions
     .filter(t => t.type === 'INCOME')
     .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + Number(t.amount)
+      const cat = t.category || 'Uncategorized'
+      acc[cat] = (acc[cat] || 0) + Number(t.amount)
       return acc
     }, {} as Record<string, number>)
 
   const expensesByCategory = transactions
     .filter(t => t.type === 'EXPENSE')
     .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + Math.abs(Number(t.amount))
+      const cat = t.category || 'Uncategorized'
+      acc[cat] = (acc[cat] || 0) + Math.abs(Number(t.amount))
       return acc
     }, {} as Record<string, number>)
 
@@ -128,9 +130,9 @@ async function generateProfitLoss(userId: string, start: Date, end: Date) {
 }
 
 // Balance Sheet Report
-async function generateBalanceSheet(userId: string, asOfDate: Date) {
+async function generateBalanceSheet(organizationId: string, asOfDate: Date) {
   const accounts = await prisma.financialAccount.findMany({
-    where: { userId, isActive: true },
+    where: { organizationId, isActive: true },
   })
 
   const assets = accounts
@@ -181,10 +183,10 @@ async function generateBalanceSheet(userId: string, asOfDate: Date) {
 }
 
 // Cash Flow Report
-async function generateCashFlow(userId: string, start: Date, end: Date) {
+async function generateCashFlow(organizationId: string, start: Date, end: Date) {
   const transactions = await prisma.transaction.findMany({
     where: {
-      userId,
+      organizationId,
       date: { gte: start, lte: end },
       status: 'COMPLETED',
     },
@@ -234,10 +236,10 @@ async function generateCashFlow(userId: string, start: Date, end: Date) {
 }
 
 // Tax Summary Report
-async function generateTaxSummary(userId: string, start: Date, end: Date) {
+async function generateTaxSummary(organizationId: string, start: Date, end: Date) {
   const transactions = await prisma.transaction.findMany({
     where: {
-      userId,
+      organizationId,
       date: { gte: start, lte: end },
       status: 'COMPLETED',
     },
@@ -259,7 +261,8 @@ async function generateTaxSummary(userId: string, start: Date, end: Date) {
   const deductionsByCategory = transactions
     .filter(t => t.type === 'EXPENSE')
     .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + Math.abs(Number(t.amount))
+      const cat = t.category || 'Uncategorized'
+      acc[cat] = (acc[cat] || 0) + Math.abs(Number(t.amount))
       return acc
     }, {} as Record<string, number>)
 
@@ -288,10 +291,10 @@ async function generateTaxSummary(userId: string, start: Date, end: Date) {
 }
 
 // Expense Report
-async function generateExpenseReport(userId: string, start: Date, end: Date) {
+async function generateExpenseReport(organizationId: string, start: Date, end: Date) {
   const transactions = await prisma.transaction.findMany({
     where: {
-      userId,
+      organizationId,
       date: { gte: start, lte: end },
       type: 'EXPENSE',
       status: 'COMPLETED',
@@ -302,7 +305,8 @@ async function generateExpenseReport(userId: string, start: Date, end: Date) {
   const total = transactions.reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
   const byCategory = transactions.reduce((acc, t) => {
-    acc[t.category] = (acc[t.category] || 0) + Math.abs(Number(t.amount))
+    const cat = t.category || 'Uncategorized'
+    acc[cat] = (acc[cat] || 0) + Math.abs(Number(t.amount))
     return acc
   }, {} as Record<string, number>)
 
@@ -335,10 +339,10 @@ async function generateExpenseReport(userId: string, start: Date, end: Date) {
 }
 
 // Income Report
-async function generateIncomeReport(userId: string, start: Date, end: Date) {
+async function generateIncomeReport(organizationId: string, start: Date, end: Date) {
   const transactions = await prisma.transaction.findMany({
     where: {
-      userId,
+      organizationId,
       date: { gte: start, lte: end },
       type: 'INCOME',
       status: 'COMPLETED',
@@ -349,7 +353,8 @@ async function generateIncomeReport(userId: string, start: Date, end: Date) {
   const total = transactions.reduce((sum, t) => sum + Number(t.amount), 0)
 
   const byCategory = transactions.reduce((acc, t) => {
-    acc[t.category] = (acc[t.category] || 0) + Number(t.amount)
+    const cat = t.category || 'Uncategorized'
+    acc[cat] = (acc[cat] || 0) + Number(t.amount)
     return acc
   }, {} as Record<string, number>)
 

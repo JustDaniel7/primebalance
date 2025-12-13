@@ -4,18 +4,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 
 // GET /api/dashboard - Get dashboard metrics
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
+
+    if (!session?.user?.id || !session?.user?.organizationId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const userId = session.user.id
+    const organizationId = session.user.organizationId
 
     // Date ranges
     const now = new Date()
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     // Current month transactions
     const currentMonthTx = await prisma.transaction.findMany({
       where: {
-        userId,
+        organizationId,
         date: { gte: startOfMonth },
         status: 'COMPLETED',
       },
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     // Last month transactions
     const lastMonthTx = await prisma.transaction.findMany({
       where: {
-        userId,
+        organizationId,
         date: { gte: startOfLastMonth, lte: endOfLastMonth },
         status: 'COMPLETED',
       },
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     // Year to date transactions
     const ytdTx = await prisma.transaction.findMany({
       where: {
-        userId,
+        organizationId,
         date: { gte: startOfYear },
         status: 'COMPLETED',
       },
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
 
     // Get total balance from accounts
     const accounts = await prisma.financialAccount.findMany({
-      where: { userId, isActive: true },
+      where: { organizationId, isActive: true },
     })
 
     const totalBalance = accounts
@@ -91,12 +91,12 @@ export async function GET(request: NextRequest) {
 
     // Pending transactions count
     const pendingCount = await prisma.transaction.count({
-      where: { userId, status: 'PENDING' },
+      where: { organizationId, status: 'PENDING' },
     })
 
     // Recent transactions
     const recentTransactions = await prisma.transaction.findMany({
-      where: { userId },
+      where: { organizationId },
       orderBy: { date: 'desc' },
       take: 5,
     })
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
     const expensesByCategory = currentMonthTx
       .filter(t => t.type === 'EXPENSE')
       .reduce((acc, t) => {
-        const cat = t.category
+        const cat = t.category || 'Uncategorized'
         acc[cat] = (acc[cat] || 0) + Math.abs(Number(t.amount))
         return acc
       }, {} as Record<string, number>)
@@ -126,7 +126,7 @@ export async function GET(request: NextRequest) {
       
       const monthTx = await prisma.transaction.findMany({
         where: {
-          userId,
+          organizationId,
           date: { gte: monthStart, lte: monthEnd },
           status: 'COMPLETED',
         },

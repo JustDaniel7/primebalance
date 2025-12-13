@@ -20,12 +20,12 @@ import { Loader2, Pencil, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function TransactionsPage() {
-  const { 
-    transactions, 
-    fetchTransactions, 
+  const {
+    transactions,
+    fetchTransactions,
     deleteTransaction,
     isLoading,
-    error 
+    error
   } = useStore()
   const { t } = useThemeStore()
   const [searchQuery, setSearchQuery] = useState('')
