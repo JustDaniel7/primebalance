@@ -84,7 +84,7 @@ export default function RecentTransactions() {
                   </span>
                   <span className="text-xs text-gray-400 dark:text-surface-600">•</span>
                   <span className="text-xs text-gray-500 dark:text-surface-500">
-                    {transaction.account}
+                    {transaction.accountId}
                   </span>
                 </div>
               </div>

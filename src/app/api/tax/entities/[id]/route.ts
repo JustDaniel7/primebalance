@@ -1,14 +1,21 @@
 // src/app/api/tax/entities/[id]/route.ts
 // Single Corporate Entity API - GET, PUT, DELETE
+// CHANGE: Removed Prisma.Decimal - Prisma auto-converts numbers to Decimal
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import Prisma from '@prisma/client'
+import type { CorporateEntity } from '@prisma/client'
 
 interface RouteParams {
   params: { id: string }
+}
+
+// Type for entity with relations
+type EntityWithRelations = CorporateEntity & {
+  children: CorporateEntity[]
+  parent: CorporateEntity | null
 }
 
 // GET /api/tax/entities/[id]
@@ -29,7 +36,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         children: true,
         parent: true,
       },
-    })
+    }) as EntityWithRelations | null
 
     if (!entity) {
       return NextResponse.json({ error: 'Entity not found' }, { status: 404 })
@@ -53,7 +60,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         id: entity.parent.id,
         name: entity.parent.name,
       } : null,
-      children: entity.children.map(c => ({
+      children: entity.children.map((c: CorporateEntity) => ({
         id: c.id,
         name: c.name,
         type: c.type,
@@ -90,7 +97,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     }
 
     const body = await request.json()
-    const updateData: Prisma.CorporateEntityUpdateInput = {}
+    
+    // CHANGE: Build update data without using Prisma.Decimal
+    // Prisma automatically converts numbers to Decimal type
+    const updateData: Record<string, unknown> = {}
 
     if (body.name !== undefined) updateData.name = body.name
     if (body.type !== undefined) updateData.type = body.type
@@ -99,22 +109,25 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     if (body.incorporationDate !== undefined) {
       updateData.incorporationDate = body.incorporationDate ? new Date(body.incorporationDate) : null
     }
+    // CHANGE: Just pass numbers directly - Prisma handles conversion
     if (body.ownershipPercent !== undefined) {
-      updateData.ownershipPercent = body.ownershipPercent ? new Prisma.Decimal(body.ownershipPercent) : null
+      updateData.ownershipPercent = body.ownershipPercent ?? null
     }
     if (body.revenue !== undefined) {
-      updateData.revenue = body.revenue ? new Prisma.Decimal(body.revenue) : null
+      updateData.revenue = body.revenue ?? null
     }
     if (body.expenses !== undefined) {
-      updateData.expenses = body.expenses ? new Prisma.Decimal(body.expenses) : null
+      updateData.expenses = body.expenses ?? null
     }
     if (body.taxLiability !== undefined) {
-      updateData.taxLiability = body.taxLiability ? new Prisma.Decimal(body.taxLiability) : null
+      updateData.taxLiability = body.taxLiability ?? null
     }
     if (body.effectiveTaxRate !== undefined) {
-      updateData.effectiveTaxRate = body.effectiveTaxRate ? new Prisma.Decimal(body.effectiveTaxRate) : null
+      updateData.effectiveTaxRate = body.effectiveTaxRate ?? null
     }
     if (body.isActive !== undefined) updateData.isActive = body.isActive
+    
+    // Handle parent relationship separately
     if (body.parentId !== undefined) {
       // Prevent circular reference
       if (body.parentId === params.id) {

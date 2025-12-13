@@ -1,11 +1,36 @@
 // src/app/api/tax/entities/route.ts
 // Corporate Entities API - GET (list), POST (create)
+// CHANGE: Removed Prisma.Decimal - Prisma auto-converts numbers to Decimal
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import type { CorporateEntity } from '@prisma/client'
+
+// Type for entity with relations
+type EntityWithRelations = CorporateEntity & {
+  children: CorporateEntity[]
+  parent: CorporateEntity | null
+}
+
+// Type for hierarchy node
+interface EntityHierarchyNode {
+  id: string
+  name: string
+  type: string
+  jurisdiction: string
+  taxId: string | null
+  incorporationDate: string | undefined
+  ownershipPercent: number | null
+  revenue: number | null
+  expenses: number | null
+  taxLiability: number | null
+  effectiveTaxRate: number | null
+  isActive: boolean
+  parentId: string | null
+  children: EntityHierarchyNode[]
+}
 
 // GET /api/tax/entities - List all corporate entities
 export async function GET(request: NextRequest) {
@@ -23,12 +48,12 @@ export async function GET(request: NextRequest) {
         parent: true,
       },
       orderBy: { createdAt: 'asc' },
-    })
+    }) as EntityWithRelations[]
 
     // Build hierarchy
-    const rootEntities = entities.filter(e => !e.parentId)
+    const rootEntities = entities.filter((e: EntityWithRelations) => !e.parentId)
     
-    const buildHierarchy = (entity: any): any => ({
+    const buildHierarchy = (entity: EntityWithRelations): EntityHierarchyNode => ({
       id: entity.id,
       name: entity.name,
       type: entity.type,
@@ -43,14 +68,14 @@ export async function GET(request: NextRequest) {
       isActive: entity.isActive,
       parentId: entity.parentId,
       children: entities
-        .filter(e => e.parentId === entity.id)
+        .filter((e: EntityWithRelations) => e.parentId === entity.id)
         .map(buildHierarchy),
     })
 
     const hierarchy = rootEntities.map(buildHierarchy)
 
     // Calculate totals
-    const totals = entities.reduce((acc, e) => ({
+    const totals = entities.reduce((acc: { revenue: number; expenses: number; taxLiability: number }, e: EntityWithRelations) => ({
       revenue: acc.revenue + (Number(e.revenue) || 0),
       expenses: acc.expenses + (Number(e.expenses) || 0),
       taxLiability: acc.taxLiability + (Number(e.taxLiability) || 0),
@@ -58,7 +83,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       entities: hierarchy,
-      flat: entities.map(e => ({
+      flat: entities.map((e: EntityWithRelations) => ({
         id: e.id,
         name: e.name,
         type: e.type,
@@ -119,6 +144,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // CHANGE: Just pass numbers directly - Prisma handles Decimal conversion
     const entity = await prisma.corporateEntity.create({
       data: {
         userId: session.user.id,
@@ -128,9 +154,9 @@ export async function POST(request: NextRequest) {
         taxId,
         incorporationDate: incorporationDate ? new Date(incorporationDate) : null,
         parentId,
-        ownershipPercent: ownershipPercent ? new Prisma.Decimal(ownershipPercent) : null,
-        revenue: revenue ? new Prisma.Decimal(revenue) : null,
-        expenses: expenses ? new Prisma.Decimal(expenses) : null,
+        ownershipPercent: ownershipPercent ?? null,
+        revenue: revenue ?? null,
+        expenses: expenses ?? null,
         isActive: true,
       },
     })

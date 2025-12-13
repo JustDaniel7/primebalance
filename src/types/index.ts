@@ -12,7 +12,7 @@ export interface Transaction {
   amount: number
   currency: string
   type: 'income' | 'expense' | 'transfer'
-  category: string | null
+  category: string | 'uncategorized'
   accountId: string
   account?: Account
   status: 'pending' | 'completed' | 'failed'
