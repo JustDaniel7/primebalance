@@ -1,6 +1,7 @@
 'use client'
 
 import { useStore } from '@/index'
+import { useThemeStore } from '@/store/theme-store'
 import {
   MetricCard,
   RevenueChart,
@@ -17,6 +18,7 @@ import {
 
 export default function DashboardPage() {
   const { metrics, cryptoTokens } = useStore()
+  const { t } = useThemeStore()
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -37,48 +39,48 @@ export default function DashboardPage() {
     <div className="space-y-8">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-bold text-surface-100 font-display">
-          Dashboard
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-surface-100 font-display">
+          {t('dashboard.title')}
         </h1>
-        <p className="text-surface-500 mt-1">
-          Welcome back! Here&apos;s your financial overview.
+        <p className="text-gray-500 dark:text-surface-500 mt-1">
+          {t('dashboard.subtitle')}
         </p>
       </div>
 
       {/* Metrics grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         <MetricCard
-          title="Total Revenue"
+          title={t('dashboard.totalBalance')}
           value={formatCurrency(metrics.totalRevenue)}
           change={12.5}
-          changeLabel="vs last month"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={<TrendUpIcon size={24} className="text-primary-400" />}
           trend="up"
           delay={0}
         />
         <MetricCard
-          title="Total Expenses"
+          title={t('dashboard.monthlyExpenses')}
           value={formatCurrency(metrics.totalExpenses)}
           change={-3.2}
-          changeLabel="vs last month"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={<TransactionsIcon size={24} className="text-red-400" />}
           trend="down"
           delay={0.1}
         />
         <MetricCard
-          title="Net Income"
+          title={t('dashboard.monthlyIncome')}
           value={formatCurrency(metrics.netIncome)}
           change={18.7}
-          changeLabel="vs last month"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={<AccountsIcon size={24} className="text-accent-400" />}
           trend="up"
           delay={0.2}
         />
         <MetricCard
-          title="Crypto Holdings"
+          title={t('wallet.totalValue')}
           value={formatCurrency(totalCryptoValue)}
           change={5.4}
-          changeLabel="24h change"
+          changeLabel="24h"
           icon={<WalletIcon size={24} className="text-blue-400" />}
           trend="up"
           delay={0.3}
@@ -103,35 +105,35 @@ export default function DashboardPage() {
 
       {/* Quick stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-surface-900/40 border border-surface-800/50">
-          <p className="text-xs text-surface-500 uppercase tracking-wider">
-            Gross Margin
+        <div className="p-4 rounded-xl bg-gray-100 dark:bg-surface-900/40 border border-gray-200 dark:border-surface-800/50">
+          <p className="text-xs text-gray-500 dark:text-surface-500 uppercase tracking-wider">
+            {t('common.profit')} %
           </p>
-          <p className="text-xl font-bold text-surface-100 mt-1">
+          <p className="text-xl font-bold text-gray-900 dark:text-surface-100 mt-1">
             {formatPercentage(metrics.grossMargin)}
           </p>
         </div>
-        <div className="p-4 rounded-xl bg-surface-900/40 border border-surface-800/50">
-          <p className="text-xs text-surface-500 uppercase tracking-wider">
-            Operating Margin
+        <div className="p-4 rounded-xl bg-gray-100 dark:bg-surface-900/40 border border-gray-200 dark:border-surface-800/50">
+          <p className="text-xs text-gray-500 dark:text-surface-500 uppercase tracking-wider">
+            {t('common.balance')}
           </p>
-          <p className="text-xl font-bold text-surface-100 mt-1">
+          <p className="text-xl font-bold text-gray-900 dark:text-surface-100 mt-1">
             {formatPercentage(metrics.operatingMargin)}
           </p>
         </div>
-        <div className="p-4 rounded-xl bg-surface-900/40 border border-surface-800/50">
-          <p className="text-xs text-surface-500 uppercase tracking-wider">
-            Current Ratio
+        <div className="p-4 rounded-xl bg-gray-100 dark:bg-surface-900/40 border border-gray-200 dark:border-surface-800/50">
+          <p className="text-xs text-gray-500 dark:text-surface-500 uppercase tracking-wider">
+            {t('common.total')}
           </p>
-          <p className="text-xl font-bold text-surface-100 mt-1">
+          <p className="text-xl font-bold text-gray-900 dark:text-surface-100 mt-1">
             {metrics.currentRatio.toFixed(2)}
           </p>
         </div>
-        <div className="p-4 rounded-xl bg-surface-900/40 border border-surface-800/50">
-          <p className="text-xs text-surface-500 uppercase tracking-wider">
-            Return on Equity
+        <div className="p-4 rounded-xl bg-gray-100 dark:bg-surface-900/40 border border-gray-200 dark:border-surface-800/50">
+          <p className="text-xs text-gray-500 dark:text-surface-500 uppercase tracking-wider">
+            ROE
           </p>
-          <p className="text-xl font-bold text-surface-100 mt-1">
+          <p className="text-xl font-bold text-gray-900 dark:text-surface-100 mt-1">
             {formatPercentage(metrics.returnOnEquity)}
           </p>
         </div>

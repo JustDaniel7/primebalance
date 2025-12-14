@@ -1,3 +1,7 @@
+// src/index.ts
+// LEGACY: Mock data store - kept for reference/fallback
+// CHANGE: Fixed account -> accountId, fixed syntax error on line 64, added organizationId
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { 
@@ -21,12 +25,13 @@ const generateMockTransactions = (): Transaction[] => [
     currency: 'USD',
     type: 'income',
     category: 'Sales Revenue',
-    account: 'Business Checking',
+    accountId: '1110', // CHANGE: was 'account: "Business Checking"'
     status: 'completed',
     tags: ['client', 'invoice'],
     tokenized: false,
     createdAt: '2025-12-06T10:00:00Z',
     updatedAt: '2025-12-06T10:00:00Z',
+    organizationId: 'org-1', // CHANGE: added required field
   },
   {
     id: '2',
@@ -36,13 +41,14 @@ const generateMockTransactions = (): Transaction[] => [
     currency: 'USD',
     type: 'expense',
     category: 'Cloud Infrastructure',
-    account: 'Business Checking',
+    accountId: '1110',
     status: 'completed',
     tags: ['infrastructure', 'recurring'],
     tokenized: true,
     txHash: '0x1234...5678',
     createdAt: '2025-12-05T14:30:00Z',
     updatedAt: '2025-12-05T14:30:00Z',
+    organizationId: 'org-1',
   },
   {
     id: '3',
@@ -52,12 +58,13 @@ const generateMockTransactions = (): Transaction[] => [
     currency: 'USD',
     type: 'expense',
     category: 'Professional Services',
-    account: 'Business Checking',
+    accountId: '1110',
     status: 'pending',
     tags: ['contractor'],
     tokenized: false,
     createdAt: '2025-12-04T09:15:00Z',
     updatedAt: '2025-12-04T09:15:00Z',
+    organizationId: 'org-1',
   },
   {
     id: '4',
@@ -67,12 +74,13 @@ const generateMockTransactions = (): Transaction[] => [
     currency: 'USD',
     type: 'income',
     category: 'Subscription Revenue',
-    account: 'Stripe Account',
+    accountId: '1110', // CHANGE: was syntax error "account: {'Business Checking'}"
     status: 'completed',
     tags: ['saas', 'recurring'],
     tokenized: false,
     createdAt: '2025-12-03T00:00:00Z',
     updatedAt: '2025-12-03T00:00:00Z',
+    organizationId: 'org-1',
   },
   {
     id: '5',
@@ -82,12 +90,13 @@ const generateMockTransactions = (): Transaction[] => [
     currency: 'USD',
     type: 'expense',
     category: 'Office Expenses',
-    account: 'Business Credit Card',
+    accountId: '1110',
     status: 'completed',
     tags: ['supplies'],
     tokenized: false,
     createdAt: '2025-12-02T16:45:00Z',
     updatedAt: '2025-12-02T16:45:00Z',
+    organizationId: 'org-1',
   },
   {
     id: '6',
@@ -97,13 +106,14 @@ const generateMockTransactions = (): Transaction[] => [
     currency: 'USDC',
     type: 'transfer',
     category: 'Crypto Exchange',
-    account: 'Crypto Wallet',
+    accountId: '1150', // Crypto Holdings
     status: 'completed',
     tags: ['crypto', 'conversion'],
     tokenized: true,
     txHash: '0xabcd...efgh',
     createdAt: '2025-12-01T11:20:00Z',
     updatedAt: '2025-12-01T11:20:00Z',
+    organizationId: 'org-1',
   },
 ]
 
@@ -236,7 +246,7 @@ const generateMockCryptoTokens = (): CryptoToken[] => [
   },
 ]
 
-// Store interfaces
+// Store interfaces - LEGACY, prefer using src/store/index.ts
 interface AppState {
   // UI State
   sidebarOpen: boolean

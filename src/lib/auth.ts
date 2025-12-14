@@ -3,6 +3,7 @@ import { AuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
+import { prisma } from "@/lib/prisma"
 
 export const authOptions: AuthOptions = {
   // Use JWT strategy instead of database for now
@@ -42,9 +43,24 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/login",
   },
   callbacks: {
+    async jwt({ token, user, account }) {
+      // On sign in, fetch organizationId from database
+      if (user?.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { id: true, organizationId: true }
+        })
+        if (dbUser) {
+          token.organizationId = dbUser.organizationId || undefined
+          token.sub = dbUser.id
+        }
+      }
+      return token
+    },
     async session({ session, token }) {
       if (session?.user) {
-        (session.user as any).id = token.sub as string
+        session.user.id = token.sub as string
+        session.user.organizationId = token.organizationId as string | undefined
       }
       return session
     },

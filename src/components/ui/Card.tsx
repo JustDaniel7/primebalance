@@ -24,9 +24,9 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     const baseStyles = 'rounded-2xl overflow-hidden'
 
     const variantStyles = {
-      default: 'bg-surface-900/60 border border-surface-800/50',
+      default: 'bg-white dark:bg-surface-900/60 border border-gray-200 dark:border-surface-800/50 shadow-sm dark:shadow-none',
       glass: 'glass-card',
-      elevated: 'bg-surface-900/80 border border-surface-700/50 shadow-xl shadow-black/20',
+      elevated: 'bg-white dark:bg-surface-900/80 border border-gray-200 dark:border-surface-700/50 shadow-lg dark:shadow-xl dark:shadow-black/20',
     }
 
     const paddingStyles = {
@@ -37,7 +37,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     }
 
     const hoverStyles = hover
-      ? 'transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-surface-700'
+      ? 'transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-gray-300 dark:hover:border-surface-700'
       : ''
 
     return (

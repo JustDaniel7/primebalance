@@ -1,13 +1,20 @@
+export interface Merchant {
+  id: string;
+  name?: string;
+  // ...other fields
+}
+
 // Transaction types
 export interface Transaction {
   id: string
   date: string
   description: string
   amount: number
-  currency: Currency
+  currency: string
   type: 'income' | 'expense' | 'transfer'
-  category: string
-  account: string
+  category: string | 'uncategorized'
+  accountId: string
+  account?: Account
   status: 'pending' | 'completed' | 'failed'
   tags: string[]
   receipt?: Receipt
@@ -15,6 +22,8 @@ export interface Transaction {
   txHash?: string
   createdAt: string
   updatedAt: string
+  merchant?: Merchant | null
+  organizationId: string
 }
 
 export interface Receipt {

@@ -1,489 +1,180 @@
-'use client';
+'use client'
 
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui';
-import { useStore } from '@/store';
-import toast from 'react-hot-toast';
-import {
-  ChartPieIcon,
-  DocumentChartBarIcon,
-  ArrowDownTrayIcon,
-  CalendarDaysIcon,
-  PrinterIcon,
-  EnvelopeIcon,
-  ArrowTrendingUpIcon,
-  BanknotesIcon,
-  ScaleIcon,
-} from '@heroicons/react/24/outline';
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { useThemeStore } from '@/store/theme-store'
+import { Card, Button, Badge } from '@/components/ui'
+import { ReportsIcon, TrendUpIcon, TrendDownIcon } from '@/components/ui/Icons'
+import { 
+  FileText, 
+  Download, 
+  Calendar,
+  BarChart3,
+  PieChart,
+  TrendingUp,
+  DollarSign,
+  Receipt,
+  Clock
+} from 'lucide-react'
 
-type ReportType = 'profit-loss' | 'balance-sheet' | 'cash-flow' | 'tax-summary';
-
-const reportConfigs = {
-  'profit-loss': { title: 'Profit & Loss Statement', icon: ArrowTrendingUpIcon, color: 'from-emerald-500/20 to-green-600/10 border-emerald-500/30', iconColor: 'text-emerald-400' },
-  'balance-sheet': { title: 'Balance Sheet', icon: ScaleIcon, color: 'from-violet-500/20 to-purple-600/10 border-violet-500/30', iconColor: 'text-violet-400' },
-  'cash-flow': { title: 'Cash Flow Statement', icon: BanknotesIcon, color: 'from-sky-500/20 to-blue-600/10 border-sky-500/30', iconColor: 'text-sky-400' },
-  'tax-summary': { title: 'Tax Summary Report', icon: DocumentChartBarIcon, color: 'from-amber-500/20 to-orange-600/10 border-amber-500/30', iconColor: 'text-amber-400' },
-};
+const reportTypes = [
+  { id: 'profit-loss', icon: TrendingUp, color: 'emerald' },
+  { id: 'balance-sheet', icon: BarChart3, color: 'blue' },
+  { id: 'cash-flow', icon: DollarSign, color: 'violet' },
+  { id: 'tax-summary', icon: Receipt, color: 'amber' },
+  { id: 'expense-report', icon: PieChart, color: 'rose' },
+  { id: 'income-report', icon: TrendingUp, color: 'cyan' },
+]
 
 export default function ReportsPage() {
-  const { metrics } = useStore();
-  const [activeReport, setActiveReport] = useState<ReportType>('profit-loss');
-  const [dateRange, setDateRange] = useState('ytd');
-  const [comparePeriod, setComparePeriod] = useState(false);
-  const [isExporting, setIsExporting] = useState(false);
-  const reportRef = useRef<HTMLDivElement>(null);
+  const { t } = useThemeStore()
+  const [selectedPeriod, setSelectedPeriod] = useState('month')
 
-  const config = reportConfigs[activeReport];
+  const periods = [
+    { value: 'week', label: t('common.thisWeek') },
+    { value: 'month', label: t('common.thisMonth') },
+    { value: 'year', label: t('common.thisYear') },
+    { value: 'custom', label: t('common.custom') },
+  ]
 
-  const handlePrint = () => {
-    window.print();
-    toast.success('Print dialog opened');
-  };
-
-  const handleExportPDF = async () => {
-    setIsExporting(true);
-    toast.loading('Generating PDF...', { id: 'export' });
-
-    try {
-      // Create a simple text-based export since we can't use complex PDF libraries client-side
-      const reportContent = generateReportText();
-      const blob = new Blob([reportContent], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${activeReport}-report-${new Date().toISOString().split('T')[0]}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      toast.success('Report exported successfully', { id: 'export' });
-    } catch (error) {
-      toast.error('Export failed', { id: 'export' });
-    } finally {
-      setIsExporting(false);
+  const getReportName = (id: string) => {
+    switch (id) {
+      case 'profit-loss': return t('reports.profitLoss')
+      case 'balance-sheet': return t('reports.balanceSheet')
+      case 'cash-flow': return t('reports.cashFlow')
+      case 'tax-summary': return t('reports.taxSummary')
+      case 'expense-report': return t('reports.expenseReport')
+      case 'income-report': return t('reports.incomeReport')
+      default: return id
     }
-  };
-
-  const handleExportCSV = () => {
-    const csvContent = generateCSVContent();
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${activeReport}-report-${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    toast.success('CSV exported successfully');
-  };
-
-  const generateReportText = () => {
-    const date = new Date().toLocaleDateString();
-    let content = `${config.title}\nGenerated: ${date}\nPeriod: ${dateRange.toUpperCase()}\n${'='.repeat(50)}\n\n`;
-
-    if (activeReport === 'profit-loss') {
-      content += `REVENUE\n`;
-      content += `Product Sales: $98,500.00\n`;
-      content += `Service Revenue: $45,000.00\n`;
-      content += `Consulting Fees: $12,500.00\n`;
-      content += `Total Revenue: $156,000.00\n\n`;
-      content += `COST OF GOODS SOLD\n`;
-      content += `Direct Materials: $28,000.00\n`;
-      content += `Direct Labor: $15,680.00\n`;
-      content += `Total COGS: $43,680.00\n\n`;
-      content += `GROSS PROFIT: $112,320.00 (72.0% margin)\n\n`;
-      content += `OPERATING EXPENSES\n`;
-      content += `Salaries & Wages: $24,000.00\n`;
-      content += `Rent & Utilities: $8,400.00\n`;
-      content += `Software & Subscriptions: $4,200.00\n`;
-      content += `Marketing & Advertising: $6,800.00\n`;
-      content += `Professional Services: $1,920.00\n`;
-      content += `Total Operating Expenses: $45,320.00\n\n`;
-      content += `NET INCOME: $67,000.00\n`;
-    } else if (activeReport === 'balance-sheet') {
-      content += `ASSETS\n`;
-      content += `Cash & Equivalents: $85,000\n`;
-      content += `Accounts Receivable: $42,000\n`;
-      content += `Crypto Holdings: $45,000\n`;
-      content += `Inventory: $18,000\n`;
-      content += `Property & Equipment: $45,000\n`;
-      content += `Intangible Assets: $10,000\n`;
-      content += `Total Assets: $245,000\n\n`;
-      content += `LIABILITIES\n`;
-      content += `Accounts Payable: $12,000\n`;
-      content += `Accrued Expenses: $8,000\n`;
-      content += `Short-term Debt: $15,000\n`;
-      content += `Total Liabilities: $35,000\n\n`;
-      content += `EQUITY\n`;
-      content += `Common Stock: $100,000\n`;
-      content += `Retained Earnings: $110,000\n`;
-      content += `Total Equity: $210,000\n`;
-    }
-
-    return content;
-  };
-
-  const generateCSVContent = () => {
-    let csv = 'Category,Item,Amount\n';
-    
-    if (activeReport === 'profit-loss') {
-      csv += 'Revenue,Product Sales,98500\n';
-      csv += 'Revenue,Service Revenue,45000\n';
-      csv += 'Revenue,Consulting Fees,12500\n';
-      csv += 'COGS,Direct Materials,28000\n';
-      csv += 'COGS,Direct Labor,15680\n';
-      csv += 'Expenses,Salaries & Wages,24000\n';
-      csv += 'Expenses,Rent & Utilities,8400\n';
-      csv += 'Expenses,Software,4200\n';
-      csv += 'Expenses,Marketing,6800\n';
-      csv += 'Expenses,Professional Services,1920\n';
-    } else if (activeReport === 'balance-sheet') {
-      csv += 'Assets,Cash & Equivalents,85000\n';
-      csv += 'Assets,Accounts Receivable,42000\n';
-      csv += 'Assets,Crypto Holdings,45000\n';
-      csv += 'Liabilities,Accounts Payable,12000\n';
-      csv += 'Liabilities,Short-term Debt,15000\n';
-      csv += 'Equity,Common Stock,100000\n';
-      csv += 'Equity,Retained Earnings,110000\n';
-    }
-
-    return csv;
-  };
-
-  const handleSendEmail = () => {
-    const subject = encodeURIComponent(`${config.title} - ${new Date().toLocaleDateString()}`);
-    const body = encodeURIComponent(`Please find attached the ${config.title} for your review.`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    toast.success('Email client opened');
-  };
+  }
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-rose-500/20 to-pink-600/10 border border-rose-500/20">
-              <ChartPieIcon className="w-6 h-6 text-rose-400" />
-            </div>
-            Financial Reports
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-surface-100 font-display">
+            {t('reports.title')}
           </h1>
-          <p className="text-gray-400 mt-1">Generate and analyze your financial statements</p>
+          <p className="text-gray-500 dark:text-surface-500 mt-1">
+            {t('reports.subtitle')}
+          </p>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handlePrint}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium text-white transition-colors"
-          >
-            <PrinterIcon className="w-5 h-5" />
-            <span className="hidden sm:inline">Print</span>
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleExportCSV}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium text-white transition-colors"
-          >
-            <ArrowDownTrayIcon className="w-5 h-5" />
-            <span className="hidden sm:inline">CSV</span>
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleExportPDF}
-            disabled={isExporting}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl font-medium text-white shadow-lg shadow-emerald-500/25 disabled:opacity-50"
-          >
-            <ArrowDownTrayIcon className="w-5 h-5" />
-            <span className="hidden sm:inline">{isExporting ? 'Exporting...' : 'Export'}</span>
-          </motion.button>
-        </div>
+        <Button variant="primary" leftIcon={<FileText size={18} />}>
+          {t('reports.generateReport')}
+        </Button>
       </div>
 
-      {/* Report Type Selection */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        {(Object.keys(reportConfigs) as ReportType[]).map((type) => {
-          const cfg = reportConfigs[type];
-          const Icon = cfg.icon;
-          return (
-            <motion.button
-              key={type}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setActiveReport(type)}
-              className={`p-3 sm:p-4 rounded-xl border transition-all text-left ${
-                activeReport === type
-                  ? `bg-gradient-to-br ${cfg.color} ring-2 ring-white/20`
-                  : 'bg-white/[0.02] border-white/5 hover:border-white/10'
-              }`}
-            >
-              <Icon className={`w-5 sm:w-6 h-5 sm:h-6 ${cfg.iconColor} mb-2 sm:mb-3`} />
-              <p className="font-medium text-white text-sm sm:text-base truncate">{cfg.title}</p>
-            </motion.button>
-          );
-        })}
-      </div>
-
-      {/* Date Range & Options */}
-      <Card>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="flex items-center gap-2">
-              <CalendarDaysIcon className="w-5 h-5 text-gray-400" />
-              <span className="text-sm text-gray-400">Period:</span>
-            </div>
-            <div className="flex items-center gap-1 p-1 bg-white/5 rounded-lg overflow-x-auto">
-              {[
-                { value: 'mtd', label: 'MTD' },
-                { value: 'qtd', label: 'QTD' },
-                { value: 'ytd', label: 'YTD' },
-                { value: 'custom', label: 'Custom' },
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => setDateRange(option.value)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
-                    dateRange === option.value
-                      ? 'bg-white/10 text-white'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
+      {/* Period Selection */}
+      <Card variant="glass" padding="md">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Calendar size={20} className="text-gray-500 dark:text-surface-400" />
+            <span className="text-gray-700 dark:text-surface-300 font-medium">{t('reports.dateRange')}:</span>
           </div>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={comparePeriod}
-              onChange={(e) => setComparePeriod(e.target.checked)}
-              className="w-4 h-4 rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-emerald-500/50"
-            />
-            <span className="text-sm text-gray-400">Compare to previous period</span>
-          </label>
+          <div className="flex gap-2">
+            {periods.map((period) => (
+              <button
+                key={period.value}
+                onClick={() => setSelectedPeriod(period.value)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                  selectedPeriod === period.value
+                    ? 'bg-[var(--accent-primary)] text-white'
+                    : 'bg-gray-100 dark:bg-surface-800/50 text-gray-600 dark:text-surface-400 hover:bg-gray-200 dark:hover:bg-surface-700/50'
+                }`}
+              >
+                {period.label}
+              </button>
+            ))}
+          </div>
         </div>
       </Card>
 
-      {/* Report Content */}
-      <motion.div
-        ref={reportRef}
-        key={activeReport}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="print:bg-white print:text-black"
-      >
-        {activeReport === 'profit-loss' && (
-          <Card>
-            <div className="border-b border-white/5 pb-4 mb-6 print:border-black">
-              <h2 className="text-xl font-bold text-white print:text-black">Profit & Loss Statement</h2>
-              <p className="text-sm text-gray-400 print:text-gray-600">January 1 - December 31, 2024</p>
-            </div>
-
-            <div className="space-y-6">
-              {/* Revenue Section */}
-              <div>
-                <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-3 print:text-emerald-600">Revenue</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Product Sales</span>
-                    <span className="font-mono text-white print:text-black">$98,500.00</span>
+      {/* Report Types Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {reportTypes.map((report, index) => {
+          const Icon = report.icon
+          return (
+            <motion.div
+              key={report.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card variant="glass" padding="md" hover className="cursor-pointer">
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`w-12 h-12 rounded-xl bg-${report.color}-500/10 flex items-center justify-center`}>
+                    <Icon size={24} className={`text-${report.color}-500`} />
                   </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Service Revenue</span>
-                    <span className="font-mono text-white print:text-black">$45,000.00</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Consulting Fees</span>
-                    <span className="font-mono text-white print:text-black">$12,500.00</span>
-                  </div>
-                  <div className="flex justify-between py-3 bg-emerald-500/5 rounded-lg px-3 -mx-3 print:bg-emerald-50">
-                    <span className="font-semibold text-emerald-400 print:text-emerald-600">Total Revenue</span>
-                    <span className="font-mono font-bold text-emerald-400 print:text-emerald-600">$156,000.00</span>
+                  <div className="flex gap-2">
+                    <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors">
+                      <Download size={16} className="text-gray-500 dark:text-surface-400" />
+                    </button>
                   </div>
                 </div>
-              </div>
-
-              {/* Cost of Goods */}
-              <div>
-                <h3 className="text-sm font-semibold text-amber-400 uppercase tracking-wider mb-3 print:text-amber-600">Cost of Goods Sold</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Direct Materials</span>
-                    <span className="font-mono text-white print:text-black">$28,000.00</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Direct Labor</span>
-                    <span className="font-mono text-white print:text-black">$15,680.00</span>
-                  </div>
-                  <div className="flex justify-between py-3 bg-amber-500/5 rounded-lg px-3 -mx-3 print:bg-amber-50">
-                    <span className="font-semibold text-amber-400 print:text-amber-600">Total COGS</span>
-                    <span className="font-mono font-bold text-amber-400 print:text-amber-600">$43,680.00</span>
-                  </div>
+                
+                <h3 className="font-semibold text-gray-900 dark:text-surface-100">
+                  {getReportName(report.id)}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-surface-500 mt-1">
+                  {t('common.thisMonth')}
+                </p>
+                
+                <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-200 dark:border-surface-800/50">
+                  <button className="flex-1 py-2 text-sm font-medium text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 rounded-lg transition-colors">
+                    {t('common.view')}
+                  </button>
+                  <button className="flex-1 py-2 text-sm font-medium text-gray-600 dark:text-surface-400 hover:bg-gray-100 dark:hover:bg-surface-800/50 rounded-lg transition-colors">
+                    {t('reports.exportPDF')}
+                  </button>
                 </div>
-              </div>
+              </Card>
+            </motion.div>
+          )
+        })}
+      </div>
 
-              {/* Gross Profit */}
-              <div className="flex justify-between py-4 bg-white/5 rounded-xl px-4 -mx-4 print:bg-gray-100">
-                <span className="text-lg font-bold text-white print:text-black">Gross Profit</span>
-                <div className="text-right">
-                  <span className="font-mono text-xl font-bold text-white print:text-black">$112,320.00</span>
-                  <p className="text-xs text-emerald-400 print:text-emerald-600">72.0% margin</p>
+      {/* Saved Reports */}
+      <Card variant="glass" padding="md">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
+            {t('reports.savedReports')}
+          </h3>
+          <Button variant="secondary" size="sm">
+            {t('common.viewAll')}
+          </Button>
+        </div>
+        
+        <div className="space-y-3">
+          {[
+            { name: 'Q4 2024 Financial Summary', date: 'Dec 1, 2024', type: t('reports.profitLoss') },
+            { name: 'November Expense Report', date: 'Nov 30, 2024', type: t('reports.expenseReport') },
+            { name: 'Tax Preparation 2024', date: 'Nov 15, 2024', type: t('reports.taxSummary') },
+          ].map((report, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between p-4 bg-gray-50 dark:bg-surface-800/30 rounded-xl hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-[var(--accent-primary)]/10 flex items-center justify-center">
+                  <FileText size={20} className="text-[var(--accent-primary)]" />
                 </div>
-              </div>
-
-              {/* Operating Expenses */}
-              <div>
-                <h3 className="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-3 print:text-rose-600">Operating Expenses</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Salaries & Wages</span>
-                    <span className="font-mono text-white print:text-black">$24,000.00</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Rent & Utilities</span>
-                    <span className="font-mono text-white print:text-black">$8,400.00</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Software & Subscriptions</span>
-                    <span className="font-mono text-white print:text-black">$4,200.00</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Marketing & Advertising</span>
-                    <span className="font-mono text-white print:text-black">$6,800.00</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-white/5 print:border-gray-200">
-                    <span className="text-gray-300 print:text-gray-700">Professional Services</span>
-                    <span className="font-mono text-white print:text-black">$1,920.00</span>
-                  </div>
-                  <div className="flex justify-between py-3 bg-rose-500/5 rounded-lg px-3 -mx-3 print:bg-rose-50">
-                    <span className="font-semibold text-rose-400 print:text-rose-600">Total Operating Expenses</span>
-                    <span className="font-mono font-bold text-rose-400 print:text-rose-600">$45,320.00</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Net Income */}
-              <div className="flex justify-between py-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl px-6 -mx-4 border border-emerald-500/20 print:bg-emerald-50 print:border-emerald-200">
                 <div>
-                  <span className="text-xl font-bold text-white print:text-black">Net Income</span>
-                  <p className="text-sm text-gray-400 print:text-gray-600">Before taxes</p>
-                </div>
-                <div className="text-right">
-                  <span className="font-mono text-3xl font-bold text-emerald-400 print:text-emerald-600">$67,000.00</span>
-                  <p className="text-sm text-emerald-400 print:text-emerald-600">+23.4% vs last year</p>
+                  <p className="font-medium text-gray-900 dark:text-surface-100">{report.name}</p>
+                  <p className="text-sm text-gray-500 dark:text-surface-500">{report.type}</p>
                 </div>
               </div>
-            </div>
-          </Card>
-        )}
-
-        {/* Balance Sheet, Cash Flow, Tax Summary remain similar - keeping for brevity */}
-        {activeReport === 'balance-sheet' && (
-          <Card>
-            <div className="border-b border-white/5 pb-4 mb-6">
-              <h2 className="text-xl font-bold text-white">Balance Sheet</h2>
-              <p className="text-sm text-gray-400">As of December 31, 2024</p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Assets</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Cash & Equivalents</span><span className="font-mono text-white">$85,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Accounts Receivable</span><span className="font-mono text-white">$42,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Crypto Holdings</span><span className="font-mono text-white">$45,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Property & Equipment</span><span className="font-mono text-white">$45,000</span></div>
-                  <div className="flex justify-between py-3 bg-emerald-500/10 rounded-lg px-3"><span className="font-semibold text-emerald-400">Total Assets</span><span className="font-mono font-bold text-emerald-400">$245,000</span></div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-rose-400 uppercase tracking-wider">Liabilities & Equity</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Accounts Payable</span><span className="font-mono text-white">$12,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Short-term Debt</span><span className="font-mono text-white">$15,000</span></div>
-                  <div className="flex justify-between py-3 bg-rose-500/10 rounded-lg px-3"><span className="font-semibold text-rose-400">Total Liabilities</span><span className="font-mono font-bold text-rose-400">$35,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Common Stock</span><span className="font-mono text-white">$100,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Retained Earnings</span><span className="font-mono text-white">$110,000</span></div>
-                  <div className="flex justify-between py-3 bg-violet-500/10 rounded-lg px-3"><span className="font-semibold text-violet-400">Total Equity</span><span className="font-mono font-bold text-violet-400">$210,000</span></div>
-                </div>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-500 dark:text-surface-500">{report.date}</span>
+                <Button variant="ghost" size="sm" leftIcon={<Download size={14} />}>
+                  {t('common.download')}
+                </Button>
               </div>
             </div>
-          </Card>
-        )}
-
-        {activeReport === 'cash-flow' && (
-          <Card>
-            <div className="border-b border-white/5 pb-4 mb-6">
-              <h2 className="text-xl font-bold text-white">Cash Flow Statement</h2>
-              <p className="text-sm text-gray-400">For the Year Ended December 31, 2024</p>
-            </div>
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider mb-3">Operating Activities</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Net Income</span><span className="font-mono text-white">$67,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Depreciation</span><span className="font-mono text-white">$5,000</span></div>
-                  <div className="flex justify-between py-3 bg-sky-500/10 rounded-lg px-3 -mx-3"><span className="font-semibold text-sky-400">Net Cash from Operations</span><span className="font-mono font-bold text-sky-400">$63,500</span></div>
-                </div>
-              </div>
-              <div className="flex justify-between py-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl px-6 -mx-4 border border-emerald-500/20">
-                <div><span className="text-xl font-bold text-white">Net Change in Cash</span><p className="text-sm text-gray-400">Beginning Balance: $51,500</p></div>
-                <div className="text-right"><span className="font-mono text-3xl font-bold text-emerald-400">$33,500</span><p className="text-sm text-gray-400">Ending Balance: $85,000</p></div>
-              </div>
-            </div>
-          </Card>
-        )}
-
-        {activeReport === 'tax-summary' && (
-          <Card>
-            <div className="border-b border-white/5 pb-4 mb-6">
-              <h2 className="text-xl font-bold text-white">Tax Summary Report</h2>
-              <p className="text-sm text-gray-400">Tax Year 2024</p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Income Summary</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Gross Revenue</span><span className="font-mono text-white">$156,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Crypto Gains</span><span className="font-mono text-white">$20,500</span></div>
-                  <div className="flex justify-between py-3 bg-emerald-500/10 rounded-lg px-3"><span className="font-semibold text-emerald-400">Total Taxable Income</span><span className="font-mono font-bold text-emerald-400">$176,500</span></div>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider">Deductions</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Business Expenses</span><span className="font-mono text-white">$45,000</span></div>
-                  <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-300">Depreciation</span><span className="font-mono text-white">$5,000</span></div>
-                  <div className="flex justify-between py-3 bg-sky-500/10 rounded-lg px-3"><span className="font-semibold text-sky-400">Total Deductions</span><span className="font-mono font-bold text-sky-400">$53,200</span></div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-white">Estimated Tax Liability</h3>
-                <span className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium">Preliminary</span>
-              </div>
-              <div className="flex justify-between items-center mt-6 pt-4 border-t border-amber-500/20">
-                <span className="text-lg font-semibold text-amber-400">Total Estimated Taxes</span>
-                <span className="text-3xl font-bold font-mono text-amber-400">$42,402</span>
-              </div>
-            </div>
-            <div className="flex gap-4 mt-6">
-              <button onClick={handleExportPDF} className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl font-medium text-white">
-                <ArrowDownTrayIcon className="w-5 h-5" />Export Tax Package
-              </button>
-              <button onClick={handleSendEmail} className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-medium text-gray-300 transition-colors">
-                <EnvelopeIcon className="w-5 h-5" />Send to Accountant
-              </button>
-            </div>
-          </Card>
-        )}
-      </motion.div>
+          ))}
+        </div>
+      </Card>
     </div>
-  );
+  )
 }

@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useStore } from '@/index'
+import { useStore } from '@/store'
+import { useThemeStore } from '@/store/theme-store'
 import { Card, Button, Badge, Input } from '@/components/ui'
 import {
   PlusIcon,
@@ -13,34 +14,77 @@ import {
 import { format } from 'date-fns'
 import type { Transaction } from '@/types'
 
-const categories = [
-  'All Categories',
-  'Sales Revenue',
-  'Subscription Revenue',
-  'Cloud Infrastructure',
-  'Professional Services',
-  'Office Expenses',
-  'Crypto Exchange',
-]
-
-const statuses = ['All Status', 'completed', 'pending', 'failed']
+import { useEffect } from 'react'
+import TransactionModal from '@/components/transactions/TransactionModal'
+import { Loader2, Pencil, Trash2 } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export default function TransactionsPage() {
-  const { transactions, addTransaction } = useStore()
+  const {
+    transactions,
+    fetchTransactions,
+    deleteTransaction,
+    isLoading,
+    error
+  } = useStore()
+  const { t } = useThemeStore()
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('All Categories')
-  const [selectedStatus, setSelectedStatus] = useState('All Status')
-  const [showNewModal, setShowNewModal] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedStatus, setSelectedStatus] = useState('all')
+  const [showModal, setShowModal] = useState(false)
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null)
+
+  // Fetch transactions on mount
+  useEffect(() => {
+    fetchTransactions()
+  }, [fetchTransactions])
+
+  const handleEdit = (tx: Transaction) => {
+    setEditingTransaction(tx)
+    setShowModal(true)
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Delete this transaction?')) return
+    try {
+      await deleteTransaction(id)
+      toast.success('Transaction deleted')
+    } catch (e: any) {
+      toast.error(e.message)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setEditingTransaction(null)
+  }
+
+  const categories = [
+    { value: 'all', label: t('transactions.allCategories') },
+    { value: 'sales', label: 'Sales Revenue' },
+    { value: 'subscription', label: 'Subscription Revenue' },
+    { value: 'cloud', label: 'Cloud Infrastructure' },
+    { value: 'services', label: 'Professional Services' },
+    { value: 'office', label: 'Office Expenses' },
+    { value: 'crypto', label: 'Crypto Exchange' },
+  ]
+
+  const statuses = [
+    { value: 'all', label: t('common.all') },
+    { value: 'completed', label: t('transactions.completed') },
+    { value: 'pending', label: t('transactions.pending') },
+    { value: 'failed', label: t('transactions.failed') },
+  ]
 
   // Filter transactions
-  const filteredTransactions = transactions.filter((t) => {
-    const matchesSearch = t.description
+  const filteredTransactions = transactions.filter((tx) => {
+    const matchesSearch = tx.description
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
     const matchesCategory =
-      selectedCategory === 'All Categories' || t.category === selectedCategory
+      selectedCategory === 'all' || tx.category === selectedCategory
     const matchesStatus =
-      selectedStatus === 'All Status' || t.status === selectedStatus
+      selectedStatus === 'all' || tx.status === selectedStatus
     return matchesSearch && matchesCategory && matchesStatus
   })
 
@@ -54,386 +98,186 @@ export default function TransactionsPage() {
   }
 
   const totalIncome = filteredTransactions
-    .filter((t) => t.amount > 0)
-    .reduce((sum, t) => sum + t.amount, 0)
+    .filter((tx) => tx.amount > 0)
+    .reduce((sum, tx) => sum + tx.amount, 0)
 
   const totalExpenses = filteredTransactions
-    .filter((t) => t.amount < 0)
-    .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+    .filter((tx) => tx.amount < 0)
+    .reduce((sum, tx) => sum + Math.abs(tx.amount), 0)
 
+  
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-surface-100 font-display">
-            Transactions
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-surface-100">
+            {t('transactions.title')}
           </h1>
-          <p className="text-surface-500 mt-1">
-            Manage and track all your financial transactions
+          <p className="text-gray-500 dark:text-surface-400">
+            {t('transactions.subtitle')}
           </p>
         </div>
-        <Button
-          variant="primary"
-          leftIcon={<PlusIcon size={18} />}
-          onClick={() => setShowNewModal(true)}
-        >
-          New Transaction
+        <Button onClick={() => setShowModal(true)}>
+          <PlusIcon className="w-4 h-4 mr-2" />
+          {t('transactions.addTransaction')}
         </Button>
       </div>
+
+      {/* Error state */}
+      {error && (
+        <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500">
+          {error}
+        </div>
+      )}
+
+      {/* Loading state */}
+      {isLoading && transactions.length === 0 && (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+        </div>
+      )}
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card variant="glass" padding="md">
-          <p className="text-sm text-surface-400">Total Income</p>
+          <p className="text-sm text-gray-500 dark:text-surface-400">{t('common.income')}</p>
           <p className="text-2xl font-bold text-primary-400 mt-1">
             +{formatCurrency(totalIncome, 'USD')}
           </p>
         </Card>
         <Card variant="glass" padding="md">
-          <p className="text-sm text-surface-400">Total Expenses</p>
+          <p className="text-sm text-gray-500 dark:text-surface-400">{t('common.expense')}</p>
           <p className="text-2xl font-bold text-red-400 mt-1">
             -{formatCurrency(totalExpenses, 'USD')}
           </p>
         </Card>
         <Card variant="glass" padding="md">
-          <p className="text-sm text-surface-400">Net Flow</p>
-          <p
-            className={`text-2xl font-bold mt-1 ${
-              totalIncome - totalExpenses >= 0
-                ? 'text-primary-400'
-                : 'text-red-400'
-            }`}
-          >
-            {totalIncome - totalExpenses >= 0 ? '+' : ''}
-            {formatCurrency(totalIncome - totalExpenses, 'USD')}
+          <p className="text-sm text-gray-500 dark:text-surface-400">{t('common.balance')}</p>
+          <p className={`text-2xl font-bold mt-1 ${
+            totalIncome - totalExpenses >= 0 ? 'text-primary-400' : 'text-red-400'
+          }`}>
+            {totalIncome - totalExpenses >= 0 ? '+' : '-'}
+            {formatCurrency(Math.abs(totalIncome - totalExpenses), 'USD')}
           </p>
         </Card>
       </div>
 
       {/* Filters */}
       <Card variant="glass" padding="md">
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
-            <Input
-              placeholder="Search transactions..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              leftIcon={<SearchIcon size={18} />}
-            />
+            <div className="relative">
+              <SearchIcon
+                size={18}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-surface-500"
+              />
+              <input
+                type="text"
+                placeholder={t('transactions.searchTransactions')}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 placeholder:text-gray-400 dark:placeholder:text-surface-500 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
+              />
+            </div>
           </div>
           <div className="flex gap-3">
-            <div className="relative">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="appearance-none px-4 py-3 pr-10 rounded-xl bg-surface-900/60 border border-surface-700/50 text-surface-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50"
-              >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-              <ChevronDownIcon
-                size={16}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-500 pointer-events-none"
-              />
-            </div>
-            <div className="relative">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="appearance-none px-4 py-3 pr-10 rounded-xl bg-surface-900/60 border border-surface-700/50 text-surface-100 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50"
-              >
-                {statuses.map((status) => (
-                  <option key={status} value={status}>
-                    {status === 'All Status'
-                      ? status
-                      : status.charAt(0).toUpperCase() + status.slice(1)}
-                  </option>
-                ))}
-              </select>
-              <ChevronDownIcon
-                size={16}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-500 pointer-events-none"
-              />
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      {/* Transactions table */}
-      <Card variant="glass" padding="none">
-        <div className="overflow-x-auto">
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Account</th>
-                <th>Status</th>
-                <th className="text-right">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTransactions.map((transaction, index) => (
-                <motion.tr
-                  key={transaction.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="cursor-pointer"
-                >
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                          transaction.amount > 0
-                            ? 'bg-primary-500/10'
-                            : 'bg-surface-700/50'
-                        }`}
-                      >
-                        <TransactionsIcon
-                          size={16}
-                          className={
-                            transaction.amount > 0
-                              ? 'text-primary-400'
-                              : 'text-surface-400'
-                          }
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-surface-200">
-                          {transaction.description}
-                        </p>
-                        {transaction.tokenized && (
-                          <p className="text-xs text-surface-500 mt-0.5 font-mono">
-                            {transaction.txHash}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="text-surface-400">
-                    {format(new Date(transaction.date), 'MMM d, yyyy')}
-                  </td>
-                  <td>
-                    <Badge variant="neutral" size="sm">
-                      {transaction.category}
-                    </Badge>
-                  </td>
-                  <td className="text-surface-400">{transaction.account}</td>
-                  <td>
-                    <Badge
-                      variant={
-                        transaction.status === 'completed'
-                          ? 'success'
-                          : transaction.status === 'pending'
-                          ? 'warning'
-                          : 'danger'
-                      }
-                      dot
-                      size="sm"
-                    >
-                      {transaction.status}
-                    </Badge>
-                  </td>
-                  <td className="text-right">
-                    <span
-                      className={`font-semibold ${
-                        transaction.amount > 0
-                          ? 'text-primary-400'
-                          : 'text-surface-200'
-                      }`}
-                    >
-                      {transaction.amount > 0 ? '+' : ''}
-                      {formatCurrency(transaction.amount, transaction.currency)}
-                    </span>
-                    {transaction.currency !== 'USD' && (
-                      <span className="ml-1 text-xs text-surface-500">
-                        {transaction.currency}
-                      </span>
-                    )}
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {filteredTransactions.length === 0 && (
-          <div className="py-12 text-center">
-            <TransactionsIcon size={48} className="mx-auto text-surface-600" />
-            <p className="mt-4 text-surface-400">No transactions found</p>
-            <p className="text-sm text-surface-500">
-              Try adjusting your filters or add a new transaction
-            </p>
-          </div>
-        )}
-      </Card>
-
-      {/* New Transaction Modal */}
-      <AnimatePresence>
-        {showNewModal && (
-          <NewTransactionModal onClose={() => setShowNewModal(false)} />
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-function NewTransactionModal({ onClose }: { onClose: () => void }) {
-  const { addTransaction } = useStore()
-  const [formData, setFormData] = useState({
-    description: '',
-    amount: '',
-    type: 'expense' as 'income' | 'expense',
-    category: 'Office Expenses',
-    account: 'Business Checking',
-    date: new Date().toISOString().split('T')[0],
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const amount =
-      formData.type === 'expense'
-        ? -Math.abs(parseFloat(formData.amount))
-        : Math.abs(parseFloat(formData.amount))
-
-    addTransaction({
-      id: Date.now().toString(),
-      description: formData.description,
-      amount,
-      currency: 'USD',
-      type: formData.type,
-      category: formData.category,
-      account: formData.account,
-      date: formData.date,
-      status: 'completed',
-      tags: [],
-      tokenized: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    })
-    onClose()
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="w-full max-w-md glass-card rounded-2xl p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="text-xl font-semibold text-surface-100 mb-6">
-          New Transaction
-        </h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            label="Description"
-            placeholder="Enter description..."
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            required
-          />
-
-          <div className="grid grid-cols-2 gap-4">
-            <Input
-              label="Amount"
-              type="number"
-              placeholder="0.00"
-              value={formData.amount}
-              onChange={(e) =>
-                setFormData({ ...formData, amount: e.target.value })
-              }
-              required
-            />
-
-            <div>
-              <label className="block text-sm font-medium text-surface-300 mb-2">
-                Type
-              </label>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, type: 'income' })}
-                  className={`flex-1 py-3 rounded-xl text-sm font-medium transition-colors ${
-                    formData.type === 'income'
-                      ? 'bg-primary-500/20 text-primary-400 border border-primary-500/30'
-                      : 'bg-surface-800/50 text-surface-400 border border-surface-700/50'
-                  }`}
-                >
-                  Income
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, type: 'expense' })}
-                  className={`flex-1 py-3 rounded-xl text-sm font-medium transition-colors ${
-                    formData.type === 'expense'
-                      ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                      : 'bg-surface-800/50 text-surface-400 border border-surface-700/50'
-                  }`}
-                >
-                  Expense
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-surface-300 mb-2">
-              Category
-            </label>
             <select
-              value={formData.category}
-              onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
-              }
-              className="w-full px-4 py-3 rounded-xl bg-surface-900/60 border border-surface-700/50 text-surface-100 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
             >
-              {categories.slice(1).map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              {categories.map((cat) => (
+                <option key={cat.value} value={cat.value}>
+                  {cat.label}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
+            >
+              {statuses.map((status) => (
+                <option key={status.value} value={status.value}>
+                  {status.label}
                 </option>
               ))}
             </select>
           </div>
+        </div>
+      </Card>
 
-          <Input
-            label="Date"
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-          />
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+              <thead className="bg-surface-50 dark:bg-surface-800">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Description</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Amount</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+            <tbody className="divide-y divide-surface-200 dark:divide-surface-700">
+            {filteredTransactions.map((transaction) => (
+              <motion.tr
+                key={transaction.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="hover:bg-surface-50 dark:hover:bg-surface-800/50"
+              >
+                <td className="px-6 py-4">
+                  <div className="font-medium text-gray-900 dark:text-surface-100">
+                    {transaction.description}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-surface-400">
+                    {transaction.category}
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-gray-600 dark:text-surface-300">
+                  {format(new Date(transaction.date), 'MMM dd, yyyy')}
+                </td>
+                <td className={`px-6 py-4 font-medium ${
+                  transaction.amount >= 0 ? 'text-primary-500' : 'text-red-500'
+                }`}>
+                  {transaction.amount >= 0 ? '+' : ''}{formatCurrency(transaction.amount, transaction.currency)}
+                </td>
+                <td className="px-6 py-4">
+                  <Badge variant={transaction.status === 'completed' ? 'success' : transaction.status === 'pending' ? 'warning' : 'danger'}>
+                    {transaction.status}
+                  </Badge>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleEdit(transaction)}
+                      className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 text-gray-500 hover:text-gray-700 dark:hover:text-surface-300 transition-colors"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(transaction.id)}
+                      className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+          </table>
+        </div>
+      </Card>
 
-          <div className="flex gap-3 pt-4">
-            <Button
-              type="button"
-              variant="ghost"
-              className="flex-1"
-              onClick={onClose}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary" className="flex-1">
-              Add Transaction
-            </Button>
-          </div>
-        </form>
-      </motion.div>
-    </motion.div>
+      {/* Modal */}
+      <TransactionModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        transaction={editingTransaction}
+      />
+    </div>
   )
 }

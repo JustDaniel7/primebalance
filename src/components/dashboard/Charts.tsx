@@ -1,259 +1,117 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useThemeStore } from '@/store/theme-store'
 import { Card } from '@/components/ui'
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
-  Legend,
-  Filler,
-  ChartOptions,
-} from 'chart.js'
-import { Line, Bar } from 'react-chartjs-2'
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts'
 
-// Register ChartJS components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-)
+const revenueData = [
+  { month: 'Jan', revenue: 42000, expenses: 28000 },
+  { month: 'Feb', revenue: 45000, expenses: 30000 },
+  { month: 'Mar', revenue: 51000, expenses: 32000 },
+  { month: 'Apr', revenue: 48000, expenses: 35000 },
+  { month: 'May', revenue: 55000, expenses: 33000 },
+  { month: 'Jun', revenue: 62000, expenses: 38000 },
+]
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-const revenueData = {
-  labels: months,
-  datasets: [
-    {
-      label: 'Revenue',
-      data: [45000, 52000, 48000, 61000, 55000, 67000, 72000, 68000, 78000, 85000, 92000, 98000],
-      borderColor: '#14d47a',
-      backgroundColor: 'rgba(20, 212, 122, 0.1)',
-      fill: true,
-      tension: 0.4,
-      pointRadius: 0,
-      pointHoverRadius: 6,
-      pointHoverBackgroundColor: '#14d47a',
-      pointHoverBorderColor: '#fff',
-      pointHoverBorderWidth: 2,
-    },
-    {
-      label: 'Expenses',
-      data: [32000, 35000, 31000, 42000, 38000, 45000, 48000, 44000, 52000, 55000, 58000, 62000],
-      borderColor: '#ef4444',
-      backgroundColor: 'rgba(239, 68, 68, 0.1)',
-      fill: true,
-      tension: 0.4,
-      pointRadius: 0,
-      pointHoverRadius: 6,
-      pointHoverBackgroundColor: '#ef4444',
-      pointHoverBorderColor: '#fff',
-      pointHoverBorderWidth: 2,
-    },
-  ],
-}
-
-const expenseBreakdownData = {
-  labels: ['Operations', 'Marketing', 'Payroll', 'Infrastructure', 'Other'],
-  datasets: [
-    {
-      label: 'Expenses',
-      data: [15000, 8500, 25000, 6500, 7000],
-      backgroundColor: [
-        'rgba(20, 212, 122, 0.8)',
-        'rgba(238, 177, 5, 0.8)',
-        'rgba(59, 130, 246, 0.8)',
-        'rgba(168, 85, 247, 0.8)',
-        'rgba(107, 114, 128, 0.8)',
-      ],
-      borderRadius: 8,
-      borderSkipped: false,
-    },
-  ],
-}
-
-const lineChartOptions: ChartOptions<'line'> = {
-  responsive: true,
-  maintainAspectRatio: false,
-  interaction: {
-    mode: 'index',
-    intersect: false,
-  },
-  plugins: {
-    legend: {
-      display: true,
-      position: 'top',
-      align: 'end',
-      labels: {
-        color: '#8594a9',
-        usePointStyle: true,
-        pointStyle: 'circle',
-        padding: 20,
-        font: {
-          size: 12,
-          family: 'DM Sans',
-        },
-      },
-    },
-    tooltip: {
-      backgroundColor: 'rgba(52, 58, 70, 0.95)',
-      titleColor: '#f6f7f9',
-      bodyColor: '#d5dae2',
-      borderColor: 'rgba(255, 255, 255, 0.08)',
-      borderWidth: 1,
-      cornerRadius: 12,
-      padding: 12,
-      displayColors: true,
-      callbacks: {
-        label: function (context) {
-          // @ts-ignore
-          return `${context.dataset.label}: $${context.parsed.y.toLocaleString()}`
-        },
-      },
-    },
-  },
-  scales: {
-    x: {
-      grid: {
-        display: false,
-      },
-      ticks: {
-        color: '#66778f',
-        font: {
-          size: 11,
-          family: 'DM Sans',
-        },
-      },
-      border: {
-        display: false,
-      },
-    },
-    y: {
-      grid: {
-        color: 'rgba(255, 255, 255, 0.03)',
-      },
-      ticks: {
-        color: '#66778f',
-        font: {
-          size: 11,
-          family: 'DM Sans',
-        },
-        callback: function (value) {
-          return '$' + (Number(value) / 1000).toFixed(0) + 'k'
-        },
-      },
-      border: {
-        display: false,
-      },
-    },
-  },
-}
-
-const barChartOptions: ChartOptions<'bar'> = {
-  responsive: true,
-  maintainAspectRatio: false,
-  indexAxis: 'y',
-  plugins: {
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      backgroundColor: 'rgba(52, 58, 70, 0.95)',
-      titleColor: '#f6f7f9',
-      bodyColor: '#d5dae2',
-      borderColor: 'rgba(255, 255, 255, 0.08)',
-      borderWidth: 1,
-      cornerRadius: 12,
-      padding: 12,
-      callbacks: {
-        label: function (context) {
-          // @ts-ignore
-          return '$' + context.parsed.x.toLocaleString()
-        },
-      },
-    },
-  },
-  scales: {
-    x: {
-      grid: {
-        color: 'rgba(255, 255, 255, 0.03)',
-      },
-      ticks: {
-        color: '#66778f',
-        font: {
-          size: 11,
-          family: 'DM Sans',
-        },
-        callback: function (value) {
-          return '$' + (Number(value) / 1000).toFixed(0) + 'k'
-        },
-      },
-      border: {
-        display: false,
-      },
-    },
-    y: {
-      grid: {
-        display: false,
-      },
-      ticks: {
-        color: '#b0bac8',
-        font: {
-          size: 12,
-          family: 'DM Sans',
-        },
-      },
-      border: {
-        display: false,
-      },
-    },
-  },
-}
+const expenseData = [
+  { name: 'Cloud Services', value: 35, color: '#10b981' },
+  { name: 'Marketing', value: 25, color: '#3b82f6' },
+  { name: 'Operations', value: 20, color: '#8b5cf6' },
+  { name: 'Staff', value: 15, color: '#f59e0b' },
+  { name: 'Other', value: 5, color: '#6b7280' },
+]
 
 export function RevenueChart() {
+  const { t, resolvedTheme, accentColor } = useThemeStore()
+  
+  // Get accent color for chart
+  const getAccentColor = () => {
+    const colors: Record<string, string> = {
+      emerald: '#10b981',
+      blue: '#3b82f6',
+      violet: '#8b5cf6',
+      rose: '#f43f5e',
+      amber: '#f59e0b',
+      cyan: '#06b6d4',
+      orange: '#f97316',
+    }
+    return colors[accentColor] || '#10b981'
+  }
+
+  const primaryColor = getAccentColor()
+  const textColor = resolvedTheme === 'dark' ? '#9ca3af' : '#6b7280'
+  const gridColor = resolvedTheme === 'dark' ? '#374151' : '#e5e7eb'
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      <Card variant="glass" className="h-full">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-lg font-semibold text-surface-100">
-              Revenue & Expenses
-            </h3>
-            <p className="text-sm text-surface-500">Monthly overview</p>
-          </div>
-          <div className="flex gap-2">
-            {['1M', '3M', '6M', '1Y'].map((period, index) => (
-              <button
-                key={period}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
-                  index === 3
-                    ? 'bg-surface-800 text-surface-100'
-                    : 'text-surface-400 hover:text-surface-200'
-                }`}
-              >
-                {period}
-              </button>
-            ))}
-          </div>
+      <Card variant="glass">
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
+            {t('dashboard.cashFlow')}
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-surface-500">
+            {t('common.income')} vs {t('common.expense')}
+          </p>
         </div>
-        <div className="h-[300px]">
-          <Line data={revenueData} options={lineChartOptions} />
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={revenueData}>
+              <defs>
+                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={primaryColor} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={primaryColor} stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey="month" stroke={textColor} fontSize={12} />
+              <YAxis stroke={textColor} fontSize={12} tickFormatter={(v) => `$${v / 1000}k`} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: resolvedTheme === 'dark' ? '#1f2937' : '#ffffff',
+                  border: `1px solid ${resolvedTheme === 'dark' ? '#374151' : '#e5e7eb'}`,
+                  borderRadius: '8px',
+                  color: resolvedTheme === 'dark' ? '#f3f4f6' : '#1f2937',
+                }}
+                formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+              />
+              <Area
+                type="monotone"
+                dataKey="revenue"
+                stroke={primaryColor}
+                fillOpacity={1}
+                fill="url(#colorRevenue)"
+                name={t('common.income')}
+              />
+              <Area
+                type="monotone"
+                dataKey="expenses"
+                stroke="#f43f5e"
+                fillOpacity={1}
+                fill="url(#colorExpenses)"
+                name={t('common.expense')}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       </Card>
     </motion.div>
@@ -261,21 +119,64 @@ export function RevenueChart() {
 }
 
 export function ExpenseBreakdownChart() {
+  const { t, resolvedTheme } = useThemeStore()
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
-      <Card variant="glass" className="h-full">
+      <Card variant="glass">
         <div className="mb-6">
-          <h3 className="text-lg font-semibold text-surface-100">
-            Expense Breakdown
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
+            {t('dashboard.expenseBreakdown')}
           </h3>
-          <p className="text-sm text-surface-500">This month&apos;s spending</p>
+          <p className="text-sm text-gray-500 dark:text-surface-500">
+            {t('dashboard.last30Days')}
+          </p>
         </div>
-        <div className="h-[240px]">
-          <Bar data={expenseBreakdownData} options={barChartOptions} />
+        <div className="h-48">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={expenseData}
+                cx="50%"
+                cy="50%"
+                innerRadius={40}
+                outerRadius={70}
+                paddingAngle={2}
+                dataKey="value"
+              >
+                {expenseData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: resolvedTheme === 'dark' ? '#1f2937' : '#ffffff',
+                  border: `1px solid ${resolvedTheme === 'dark' ? '#374151' : '#e5e7eb'}`,
+                  borderRadius: '8px',
+                  color: resolvedTheme === 'dark' ? '#f3f4f6' : '#1f2937',
+                }}
+                formatter={(value: number) => [`${value}%`, '']}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="grid grid-cols-2 gap-2 mt-4">
+          {expenseData.map((item) => (
+            <div key={item.name} className="flex items-center gap-2">
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="text-xs text-gray-600 dark:text-surface-400">{item.name}</span>
+              <span className="text-xs text-gray-900 dark:text-surface-200 ml-auto font-medium">
+                {item.value}%
+              </span>
+            </div>
+          ))}
         </div>
       </Card>
     </motion.div>
