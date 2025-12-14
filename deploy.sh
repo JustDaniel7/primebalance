@@ -46,7 +46,7 @@ esac
 
 PROJECT_ID=$(gcloud config get-value project)
 SQL_CONNECTION="${PROJECT_ID}:${REGION}:${DB_INSTANCE}"
-DATABASE_URL="postgresql://575940724914-compute@developer.gserviceaccount.com@/${DB_NAME}?host=/cloudsql/${SQL_CONNECTION}"
+DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost/${DB_NAME}?host=/cloudsql/${SQL_CONNECTION}"
 
 # Initialize database if requested
 if [ "$INIT_DB" = true ]; then
