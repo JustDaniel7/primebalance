@@ -1,8 +1,8 @@
-FROM node:18-alpine AS base
+FROM node:18-slim AS base
 
 # Install dependencies only when needed
 FROM base AS deps
-RUN apk add --no-cache libc6-compat openssl
+RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 # Install dependencies
@@ -11,7 +11,6 @@ RUN npm ci --legacy-peer-deps
 
 # Rebuild the source code only when needed
 FROM base AS builder
-RUN apk add --no-cache openssl
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -20,6 +19,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npx prisma generate
+
 # Build the application
 RUN npm run build
 
@@ -27,7 +27,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-RUN apk add --no-cache openssl
+# Install OpenSSL for Prisma runtime
+RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -39,9 +40,13 @@ RUN adduser --system --uid 1001 nextjs
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Automatically leverage output traces to reduce image size
+# Copy standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# CRITICAL: Copy Prisma client
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
 
 USER nextjs
 
