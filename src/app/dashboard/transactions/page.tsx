@@ -211,32 +211,63 @@ export default function TransactionsPage() {
       <Card>
         <div className="overflow-x-auto">
           <table className="w-full">
-            {/* ... thead stays same ... */}
+              <thead className="bg-surface-50 dark:bg-surface-800">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Description</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Amount</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
             <tbody className="divide-y divide-surface-200 dark:divide-surface-700">
-              {filteredTransactions.map((transaction) => (
-                <motion.tr key={transaction.id} /* ... existing props ... */>
-                  {/* ... existing cells ... */}
-                  
-                  {/* Add actions cell */}
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleEdit(transaction)}
-                        className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 text-gray-500 hover:text-gray-700 dark:hover:text-surface-300 transition-colors"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(transaction.id)}
-                        className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
+            {filteredTransactions.map((transaction) => (
+              <motion.tr
+                key={transaction.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="hover:bg-surface-50 dark:hover:bg-surface-800/50"
+              >
+                <td className="px-6 py-4">
+                  <div className="font-medium text-gray-900 dark:text-surface-100">
+                    {transaction.description}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-surface-400">
+                    {transaction.category}
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-gray-600 dark:text-surface-300">
+                  {format(new Date(transaction.date), 'MMM dd, yyyy')}
+                </td>
+                <td className={`px-6 py-4 font-medium ${
+                  transaction.amount >= 0 ? 'text-primary-500' : 'text-red-500'
+                }`}>
+                  {transaction.amount >= 0 ? '+' : ''}{formatCurrency(transaction.amount, transaction.currency)}
+                </td>
+                <td className="px-6 py-4">
+                  <Badge variant={transaction.status === 'completed' ? 'success' : transaction.status === 'pending' ? 'warning' : 'danger'}>
+                    {transaction.status}
+                  </Badge>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleEdit(transaction)}
+                      className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 text-gray-500 hover:text-gray-700 dark:hover:text-surface-300 transition-colors"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(transaction.id)}
+                      className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
           </table>
         </div>
       </Card>
