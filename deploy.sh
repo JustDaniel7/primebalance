@@ -46,7 +46,7 @@ esac
 
 PROJECT_ID=$(gcloud config get-value project)
 SQL_CONNECTION="${PROJECT_ID}:${REGION}:${DB_INSTANCE}"
-DATABASE_URL="postgresql://575940724914-compute@developer.gserviceaccount.com@localhost/${DB_NAME}?host=/cloudsql/${SQL_CONNECTION}&sslmode=disable"
+DATABASE_URL="postgresql://575940724914-compute@developer.gserviceaccount.com@/${DB_NAME}?host=/cloudsql/${SQL_CONNECTION}"
 
 # Initialize database if requested
 if [ "$INIT_DB" = true ]; then
@@ -92,11 +92,12 @@ gcloud run deploy primebalance \
     --allow-unauthenticated \
     --add-cloudsql-instances="$SQL_CONNECTION" \
     --set-env-vars="NEXTAUTH_SECRET=${NEXTAUTH_SECRET}" \
-    --set-env-vars="NEXTAUTH_URL=https://primebalance-HASH-ew.a.run.app" \
+    --set-env-vars="NEXTAUTH_URL=https://primebalance-575940724914.europe-west6.run.app" \
     --set-env-vars="GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}" \
     --set-env-vars="GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}" \
     --set-env-vars="GITHUB_ID=${GITHUB_ID}" \
     --set-env-vars="GITHUB_SECRET=${GITHUB_SECRET}" \
-    --set-env-vars="DATABASE_URL=${DATABASE_URL}"
+    --set-env-vars="DATABASE_URL=${DATABASE_URL}" \
+    --set-env-vars="CLOUDSQL_IAM_AUTHENTICATION=true"
 
 echo "✅ Deployment complete!"

@@ -171,7 +171,7 @@ function InvoiceList({
 
       {/* Invoice List */}
       {filteredInvoices.length === 0 ? (
-        <Card variant="glass" padding="xl" className="text-center">
+        <Card variant="glass" padding="lg" className="text-center">
           <FileText size={48} className="mx-auto text-gray-300 dark:text-surface-600 mb-4" />
           <h3 className="text-lg font-medium text-gray-900 dark:text-surface-100">{t('invoice.noInvoices')}</h3>
           <p className="text-gray-500 dark:text-surface-400 mt-1">{t('invoice.createFirst')}</p>
