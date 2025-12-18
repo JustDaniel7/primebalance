@@ -43,51 +43,6 @@ function calculateDaysOutstanding(issueDate: string, status: ReceivableStatus): 
     return Math.floor((Date.now() - new Date(issueDate).getTime()) / msPerDay);
 }
 
-function generateDemoDebtors(): Debtor[] {
-    return [
-        {
-            id: 'deb-001',
-            name: 'TechCorp Solutions GmbH',
-            type: 'customer',
-            email: 'billing@techcorp.de',
-            country: 'DE',
-            vatId: 'DE123456789',
-            creditLimit: 100000,
-            paymentTermsDays: 30,
-            averagePaymentDelayDays: 5,
-            totalReceivables: 45000,
-            overdueReceivables: 0,
-            paymentHistory: 'excellent',
-        },
-        {
-            id: 'deb-002',
-            name: 'Digital Dynamics AG',
-            type: 'customer',
-            email: 'accounts@digitaldynamics.ch',
-            country: 'CH',
-            vatId: 'CHE-123.456.789',
-            creditLimit: 75000,
-            paymentTermsDays: 45,
-            averagePaymentDelayDays: 15,
-            totalReceivables: 28000,
-            overdueReceivables: 12500,
-            paymentHistory: 'fair',
-        },
-        {
-            id: 'deb-003',
-            name: 'StartupXYZ Inc',
-            type: 'customer',
-            email: 'finance@startupxyz.io',
-            country: 'US',
-            paymentTermsDays: 30,
-            averagePaymentDelayDays: 25,
-            totalReceivables: 15000,
-            overdueReceivables: 8000,
-            paymentHistory: 'poor',
-        },
-    ];
-}
-
 function mapApiToReceivable(api: any): Receivable {
     const status = api.status || 'open';
     const days = api.daysOutstanding ?? calculateDaysOutstanding(api.issueDate, status);
@@ -210,7 +165,7 @@ export const useReceivablesStore = create<ReceivablesState>()(
             events: [],
             payments: [],
             collectionActions: [],
-            debtors: generateDemoDebtors(),
+            debtors: [],
             filter: initialFilter,
             isLoading: false,
             error: null,

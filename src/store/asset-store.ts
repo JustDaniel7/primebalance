@@ -171,6 +171,7 @@ interface AssetStore {
     // Depreciation
     generateSchedule: (assetId: string, bookType: BookType) => DepreciationSchedule;
     postDepreciation: (assetId: string, bookType: BookType, periodDate: string, actor: string) => void;
+    postAllDueDepreciation: (periodDate: string, actor: string) => number;
     runDepreciation: (assetId: string, bookType: BookType, periodDate: string, actor: string) => void;
     getSchedule: (assetId: string, bookType: BookType) => DepreciationSchedule | undefined;
 
@@ -671,6 +672,49 @@ export const useAssetStore = create<AssetStore>()(
 
             postDepreciation: (assetId, bookType, periodDate, actor) => {
                 get().runDepreciation(assetId, bookType, periodDate, actor);
+            },
+
+            postAllDueDepreciation: (periodDate, actor) => {
+                const { assets, assetBooks, schedules } = get();
+                let count = 0;
+
+                assets.filter(a => a.isActive && !a.isCIP).forEach(asset => {
+                    const book = assetBooks.find(
+                        b => b.assetId === asset.id && b.bookType === BookType.STATUTORY && b.isActive
+                    );
+                    if (!book) return;
+
+                    const schedule = schedules.find(
+                        s => s.assetId === asset.id && s.bookType === BookType.STATUTORY
+                    );
+                    if (!schedule) return;
+
+                    const pendingEntries = schedule.entries.filter(
+                        e => !e.isPosted && new Date(e.periodEndDate) <= new Date(periodDate)
+                    );
+
+                    pendingEntries.forEach(entry => {
+                        get().runDepreciation(asset.id, BookType.STATUTORY, entry.periodEndDate, actor);
+                        
+                        // Mark entry as posted
+                        set(state => ({
+                            schedules: state.schedules.map(s => {
+                                if (s.assetId !== asset.id || s.bookType !== BookType.STATUTORY) return s;
+                                return {
+                                    ...s,
+                                    entries: s.entries.map(e =>
+                                        e.id === entry.id
+                                            ? { ...e, isPosted: true, postedAt: new Date().toISOString() }
+                                            : e
+                                    ),
+                                };
+                            }),
+                        }));
+                        count++;
+                    });
+                });
+
+                return count;
             },
 
             runDepreciation: (assetId, bookType, periodDate, actor) => {

@@ -95,12 +95,6 @@ const initialWizardState: InventoryWizardState = {
     description: '',
 };
 
-const generateDemoLocations = (): InventoryLocation[] => [
-    { id: 'loc-001', name: 'Hauptlager München', type: 'warehouse', address: 'Industriestr. 15, 80339 München', isDefault: true, isActive: true },
-    { id: 'loc-002', name: 'Filiale Berlin', type: 'store', address: 'Friedrichstr. 100, 10117 Berlin', isDefault: false, isActive: true },
-    { id: 'loc-003', name: '3PL Logistik', type: '3pl', address: 'Logistikweg 5, 85748 Garching', isDefault: false, isActive: true },
-];
-
 function mapApiToInventoryItem(api: any): InventoryItem {
     return {
         id: api.id,
@@ -140,7 +134,7 @@ export const useInventoryStore = create<InventoryState>()(
     persist(
         (set, get) => ({
             items: [],
-            locations: generateDemoLocations(),
+            locations: [],
             movements: [],
             reservations: [],
             batches: [],
