@@ -7,15 +7,13 @@ import {
     Save,
     Package,
     DollarSign,
-    Calendar,
-    MapPin,
     Building2,
-    FileText,
     ChevronRight,
     ChevronLeft,
 } from 'lucide-react';
-import { Card, Button } from '@/components/ui';
+import { Card } from '@/components/ui';
 import { useAssetStore } from '@/store/asset-store';
+import { useThemeStore } from '@/store/theme-store';
 import { ASSET_CLASS_CONFIGS } from '@/data/asset-classes';
 import {
     AssetType,
@@ -56,6 +54,7 @@ interface FormData {
 
 export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
     const { createAsset, acquireAsset, capitalizeAsset, putInUse } = useAssetStore();
+    const { t } = useThemeStore();
     const [step, setStep] = useState(1);
     const [autoCapitalize, setAutoCapitalize] = useState(true);
 
@@ -76,6 +75,20 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
         acquisitionDate: new Date().toISOString().split('T')[0],
         isCIP: false,
     });
+
+    const categoryLabels: Record<AssetCategory, string> = {
+        [AssetCategory.BUILDINGS]: t('assets.category.buildings'),
+        [AssetCategory.MACHINERY]: t('assets.category.machinery'),
+        [AssetCategory.VEHICLES]: t('assets.category.vehicles'),
+        [AssetCategory.IT_EQUIPMENT]: t('assets.category.itEquipment'),
+        [AssetCategory.FURNITURE]: t('assets.category.furniture'),
+        [AssetCategory.INTANGIBLE_ASSETS]: t('assets.category.intangibleAssets'),
+        [AssetCategory.CAPITALIZED_SOFTWARE]: t('assets.category.capitalizedSoftware'),
+        [AssetCategory.LEASEHOLD_IMPROVEMENTS]: t('assets.category.leaseholdImprovements'),
+        [AssetCategory.LAND]: t('assets.category.land'),
+        [AssetCategory.CONSTRUCTION_IN_PROGRESS]: t('assets.category.constructionInProgress'),
+        [AssetCategory.RIGHT_OF_USE]: t('assets.category.rightOfUse'),
+    };
 
     const updateForm = (updates: Partial<FormData>) => {
         setFormData(prev => ({ ...prev, ...updates }));
@@ -122,9 +135,9 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
     };
 
     const steps = [
-        { number: 1, title: 'Basic Info', icon: Package },
-        { number: 2, title: 'Financials', icon: DollarSign },
-        { number: 3, title: 'Assignment', icon: Building2 },
+        { number: 1, title: t('assets.form.basicInfo'), icon: Package },
+        { number: 2, title: t('assets.form.financials'), icon: DollarSign },
+        { number: 3, title: t('assets.form.assignment'), icon: Building2 },
     ];
 
     return (
@@ -143,7 +156,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
             >
                 {/* Header */}
                 <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Add New Asset</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('assets.form.addNewAsset')}</h2>
                     <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg">
                         <X className="w-5 h-5 text-gray-500" />
                     </button>
@@ -160,10 +173,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                             return (
                                 <React.Fragment key={s.number}>
                                     <div
-                                        className={`flex items-center gap-2 cursor-pointer ${
-                                            isActive ? 'text-blue-600' : isComplete ? 'text-green-600' : 'text-gray-400'
-                                        }`}
-                                        onClick={() => setStep(s.number)}
+                                        className={`flex items-center gap-2 ${isActive ? 'text-blue-600' : isComplete ? 'text-green-600' : 'text-gray-400'}`}
                                     >
                                         <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                                             isActive ? 'bg-blue-100 dark:bg-blue-900/30' : isComplete ? 'bg-green-100 dark:bg-green-900/30' : 'bg-gray-100 dark:bg-gray-800'
@@ -173,7 +183,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                                         <span className="text-sm font-medium hidden sm:inline">{s.title}</span>
                                     </div>
                                     {idx < steps.length - 1 && (
-                                        <div className={`flex-1 h-0.5 mx-4 ${isComplete ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`} />
+                                        <div className={`flex-1 h-0.5 mx-4 ${step > s.number ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`} />
                                     )}
                                 </React.Fragment>
                             );
@@ -182,30 +192,30 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                 </div>
 
                 {/* Form Content */}
-                <div className="px-6 py-6 overflow-y-auto max-h-[50vh]">
+                <div className="p-6 overflow-y-auto max-h-[50vh]">
                     {step === 1 && (
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Asset Name *
+                                    {t('assets.form.assetName')} *
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.name}
                                     onChange={(e) => updateForm({ name: e.target.value })}
-                                    placeholder="e.g., MacBook Pro 16-inch"
+                                    placeholder={t('assets.form.assetNamePlaceholder')}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Description
+                                    {t('assets.form.description')}
                                 </label>
                                 <textarea
                                     value={formData.description}
                                     onChange={(e) => updateForm({ description: e.target.value })}
-                                    placeholder="Additional details about the asset..."
+                                    placeholder={t('assets.form.descriptionPlaceholder')}
                                     rows={3}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-none"
                                 />
@@ -214,21 +224,21 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Asset Type
+                                        {t('assets.form.assetType')}
                                     </label>
                                     <select
                                         value={formData.assetType}
                                         onChange={(e) => updateForm({ assetType: e.target.value as AssetType })}
                                         className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white"
                                     >
-                                        <option value={AssetType.TANGIBLE}>Tangible</option>
-                                        <option value={AssetType.INTANGIBLE}>Intangible</option>
+                                        <option value={AssetType.TANGIBLE}>{t('assets.form.tangible')}</option>
+                                        <option value={AssetType.INTANGIBLE}>{t('assets.form.intangible')}</option>
                                     </select>
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Category
+                                        {t('assets.form.category')}
                                     </label>
                                     <select
                                         value={formData.category}
@@ -236,13 +246,13 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                                         className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white"
                                     >
                                         {Object.values(AssetCategory).map(cat => (
-                                            <option key={cat} value={cat}>{ASSET_CLASS_CONFIGS[cat].label}</option>
+                                            <option key={cat} value={cat}>{categoryLabels[cat]}</option>
                                         ))}
                                     </select>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 pt-2">
                                 <input
                                     type="checkbox"
                                     id="isCIP"
@@ -251,9 +261,12 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                                     className="w-4 h-4 text-blue-500 rounded"
                                 />
                                 <label htmlFor="isCIP" className="text-sm text-gray-700 dark:text-gray-300">
-                                    Construction in Progress (not ready for use)
+                                    {t('assets.form.constructionInProgress')}
                                 </label>
                             </div>
+                            {formData.isCIP && (
+                                <p className="text-xs text-gray-500 ml-6">{t('assets.form.cipDescription')}</p>
+                            )}
                         </div>
                     )}
 
@@ -262,21 +275,14 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Acquisition Cost *
+                                        {t('assets.form.acquisitionCost')} *
                                     </label>
                                     <div className="relative">
                                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">€</span>
                                         <input
                                             type="number"
                                             value={formData.acquisitionCost || ''}
-                                            onChange={(e) => {
-                                                const cost = parseFloat(e.target.value) || 0;
-                                                const config = ASSET_CLASS_CONFIGS[formData.category];
-                                                updateForm({
-                                                    acquisitionCost: cost,
-                                                    salvageValue: cost * (config.defaultSalvageValuePercent / 100),
-                                                });
-                                            }}
+                                            onChange={(e) => updateForm({ acquisitionCost: parseFloat(e.target.value) || 0 })}
                                             placeholder="0.00"
                                             className="w-full pl-8 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                         />
@@ -285,7 +291,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Salvage Value
+                                        {t('assets.form.salvageValue')}
                                     </label>
                                     <div className="relative">
                                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">€</span>
@@ -303,40 +309,41 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Useful Life (months)
+                                        {t('assets.form.usefulLife')}
                                     </label>
                                     <input
                                         type="number"
                                         value={formData.usefulLifeMonths}
                                         onChange={(e) => updateForm({ usefulLifeMonths: parseInt(e.target.value) || 12 })}
+                                        min={1}
                                         className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                     />
                                     <p className="text-xs text-gray-500 mt-1">
-                                        {(formData.usefulLifeMonths / 12).toFixed(1)} years
+                                        {(formData.usefulLifeMonths / 12).toFixed(1)} {t('assets.form.years')}
                                     </p>
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Depreciation Method
+                                        {t('assets.form.depreciationMethod')}
                                     </label>
                                     <select
                                         value={formData.depreciationMethod}
                                         onChange={(e) => updateForm({ depreciationMethod: e.target.value as DepreciationMethod })}
                                         className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white"
                                     >
-                                        <option value={DepreciationMethod.STRAIGHT_LINE}>Straight Line</option>
-                                        <option value={DepreciationMethod.DECLINING_BALANCE}>Declining Balance</option>
-                                        <option value={DepreciationMethod.DOUBLE_DECLINING_BALANCE}>Double Declining Balance</option>
-                                        <option value={DepreciationMethod.SUM_OF_YEARS_DIGITS}>Sum of Years' Digits</option>
-                                        <option value={DepreciationMethod.UNITS_OF_PRODUCTION}>Units of Production</option>
+                                        <option value={DepreciationMethod.STRAIGHT_LINE}>{t('assets.form.straightLine')}</option>
+                                        <option value={DepreciationMethod.DECLINING_BALANCE}>{t('assets.form.decliningBalance')}</option>
+                                        <option value={DepreciationMethod.DOUBLE_DECLINING_BALANCE}>{t('assets.form.doubleDecliningBalance')}</option>
+                                        <option value={DepreciationMethod.SUM_OF_YEARS_DIGITS}>{t('assets.form.sumOfYearsDigits')}</option>
+                                        <option value={DepreciationMethod.UNITS_OF_PRODUCTION}>{t('assets.form.unitsOfProduction')}</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Acquisition Date
+                                    {t('assets.form.acquisitionDate')}
                                 </label>
                                 <input
                                     type="date"
@@ -348,19 +355,19 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
 
                             {/* Calculated Values */}
                             <div className="p-4 bg-gray-50 dark:bg-slate-900 rounded-lg">
-                                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Depreciation Preview</h4>
+                                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('assets.form.depreciationPreview')}</h4>
                                 <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
-                                        <span className="text-gray-500">Depreciable Base:</span>
+                                        <span className="text-gray-500">{t('assets.form.depreciableBase')}:</span>
                                         <span className="ml-2 font-medium text-gray-900 dark:text-white">
-                      €{(formData.acquisitionCost - formData.salvageValue).toLocaleString('de-DE')}
-                    </span>
+                                            €{(formData.acquisitionCost - formData.salvageValue).toLocaleString('de-DE')}
+                                        </span>
                                     </div>
                                     <div>
-                                        <span className="text-gray-500">Monthly Depreciation:</span>
+                                        <span className="text-gray-500">{t('assets.form.monthlyDepreciation')}:</span>
                                         <span className="ml-2 font-medium text-gray-900 dark:text-white">
-                      €{((formData.acquisitionCost - formData.salvageValue) / formData.usefulLifeMonths).toLocaleString('de-DE', { minimumFractionDigits: 2 })}
-                    </span>
+                                            €{((formData.acquisitionCost - formData.salvageValue) / formData.usefulLifeMonths).toLocaleString('de-DE', { minimumFractionDigits: 2 })}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -371,52 +378,52 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Legal Entity
+                                    {t('assets.form.legalEntity')}
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.legalEntityId}
                                     onChange={(e) => updateForm({ legalEntityId: e.target.value })}
-                                    placeholder="Select or enter entity..."
+                                    placeholder={t('assets.form.legalEntityPlaceholder')}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Cost Center
+                                    {t('assets.form.costCenter')}
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.costCenterId}
                                     onChange={(e) => updateForm({ costCenterId: e.target.value })}
-                                    placeholder="e.g., CC-100 Marketing"
+                                    placeholder={t('assets.form.costCenterPlaceholder')}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Location
+                                    {t('assets.form.location')}
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.location}
                                     onChange={(e) => updateForm({ location: e.target.value })}
-                                    placeholder="e.g., HQ Floor 3, Room 301"
+                                    placeholder={t('assets.form.locationPlaceholder')}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Responsible Party
+                                    {t('assets.form.responsibleParty')}
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.responsibleParty}
                                     onChange={(e) => updateForm({ responsibleParty: e.target.value })}
-                                    placeholder="e.g., IT Manager"
+                                    placeholder={t('assets.form.responsiblePartyPlaceholder')}
                                     className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
                             </div>
@@ -430,7 +437,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                                     className="w-4 h-4 text-blue-500 rounded"
                                 />
                                 <label htmlFor="autoCapitalize" className="text-sm text-gray-700 dark:text-gray-300">
-                                    Automatically capitalize and put in use
+                                    {t('assets.form.autoCapitalize')}
                                 </label>
                             </div>
                         </div>
@@ -444,7 +451,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                         className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-2"
                     >
                         <ChevronLeft className="w-4 h-4" />
-                        {step > 1 ? 'Back' : 'Cancel'}
+                        {step > 1 ? t('assets.form.back') : t('assets.form.cancel')}
                     </button>
 
                     {step < 3 ? (
@@ -453,7 +460,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                             disabled={step === 1 && !formData.name}
                             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
-                            Next
+                            {t('assets.form.next')}
                             <ChevronRight className="w-4 h-4" />
                         </button>
                     ) : (
@@ -463,7 +470,7 @@ export const AssetForm: React.FC<AssetFormProps> = ({ onClose, onSuccess }) => {
                             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
                             <Save className="w-4 h-4" />
-                            Create Asset
+                            {t('assets.form.createAsset')}
                         </button>
                     )}
                 </div>

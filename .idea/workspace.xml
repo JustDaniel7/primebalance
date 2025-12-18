@@ -4,21 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="Added Treasury, Inventory and Liabilities">
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/assets/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetDetail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetLifecycleTimeline.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetMetricsCards.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetRegister.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/DepreciationScheduleView.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/DisposalForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/assets/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/asset-classes.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/depreciation-engine.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/asset-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/asset.ts" afterDir="false" />
+    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/assets/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/assets/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetLifecycleTimeline.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetLifecycleTimeline.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetMetricsCards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetMetricsCards.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetRegister.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetRegister.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/DepreciationScheduleView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/DepreciationScheduleView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/assets/DisposalForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/DisposalForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/theme-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/theme-store.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,18 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "KonradECrypto"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KonradECrypto&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JustDaniel7/primebalance.git",
-    "accountId": "4184901b-18fd-4c81-b81d-8608f1129a8e"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JustDaniel7/primebalance.git&quot;,
+    &quot;accountId&quot;: &quot;4184901b-18fd-4c81-b81d-8608f1129a8e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -108,7 +105,7 @@
       <updated>1765736094059</updated>
       <workItem from="1765736095428" duration="319000" />
       <workItem from="1765739723974" duration="557000" />
-      <workItem from="1765793420666" duration="28291000" />
+      <workItem from="1765793420666" duration="35180000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -126,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766047994668</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo">
+      <option name="closed" value="true" />
+      <created>1766058263118</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1766058263118</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,7 +140,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Liabilities, Orders and Archive" />
     <MESSAGE value="Added Treasury, Inventory and Liabilities" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Treasury, Inventory and Liabilities" />
+    <MESSAGE value="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

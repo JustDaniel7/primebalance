@@ -6,57 +6,65 @@ import {
     Plus,
     ShoppingCart,
     CheckCircle,
-    Play,
     TrendingDown,
     AlertTriangle,
+    RefreshCw,
     ArrowRight,
     Tag,
     Trash2,
     DollarSign,
-    RefreshCw,
+    XCircle,
+    Wrench,
+    Minus,
+    Clock,
+    Settings,
 } from 'lucide-react';
-import { AssetEvent, AssetEventType, Asset } from '@/types/asset';
+import { useAssetStore } from '@/store/asset-store';
+import { useThemeStore } from '@/store/theme-store';
+import { AssetEventType } from '@/types/asset';
 
 interface AssetLifecycleTimelineProps {
-    events: AssetEvent[];
-    asset: Asset;
+    assetId: string;
 }
 
-const eventConfig: Record<AssetEventType, { icon: React.ElementType; color: string; label: string }> = {
-    [AssetEventType.ASSET_CREATED]: { icon: Plus, color: 'bg-blue-500', label: 'Created' },
-    [AssetEventType.ASSET_ACQUIRED]: { icon: ShoppingCart, color: 'bg-cyan-500', label: 'Acquired' },
-    [AssetEventType.ASSET_CAPITALIZED]: { icon: CheckCircle, color: 'bg-green-500', label: 'Capitalized' },
-    [AssetEventType.DEPRECIATION_POSTED]: { icon: TrendingDown, color: 'bg-purple-500', label: 'Depreciation Posted' },
-    [AssetEventType.IMPAIRMENT_RECORDED]: { icon: AlertTriangle, color: 'bg-amber-500', label: 'Impairment Recorded' },
-    [AssetEventType.REVALUATION_RECORDED]: { icon: RefreshCw, color: 'bg-indigo-500', label: 'Revaluation Recorded' },
-    [AssetEventType.ASSET_TRANSFERRED]: { icon: ArrowRight, color: 'bg-slate-500', label: 'Transferred' },
-    [AssetEventType.ASSET_HELD_FOR_SALE]: { icon: Tag, color: 'bg-orange-500', label: 'Held for Sale' },
-    [AssetEventType.ASSET_DISPOSED]: { icon: Trash2, color: 'bg-red-500', label: 'Disposed' },
-    [AssetEventType.ASSET_SOLD]: { icon: DollarSign, color: 'bg-emerald-500', label: 'Sold' },
-    [AssetEventType.ASSET_WRITTEN_OFF]: { icon: Trash2, color: 'bg-red-600', label: 'Written Off' },
-    [AssetEventType.COMPONENT_ADDED]: { icon: Plus, color: 'bg-teal-500', label: 'Component Added' },
-    [AssetEventType.COMPONENT_REMOVED]: { icon: Trash2, color: 'bg-rose-500', label: 'Component Removed' },
-    [AssetEventType.USEFUL_LIFE_CHANGED]: { icon: RefreshCw, color: 'bg-violet-500', label: 'Useful Life Changed' },
-    [AssetEventType.METHOD_CHANGED]: { icon: RefreshCw, color: 'bg-fuchsia-500', label: 'Method Changed' },
-};
+export const AssetLifecycleTimeline: React.FC<AssetLifecycleTimelineProps> = ({ assetId }) => {
+    const { getAssetEvents } = useAssetStore();
+    const { t } = useThemeStore();
+    const events = getAssetEvents(assetId);
 
-export const AssetLifecycleTimeline: React.FC<AssetLifecycleTimelineProps> = ({ events, asset }) => {
+    const eventConfig: Record<AssetEventType, { icon: React.ElementType; color: string; label: string }> = {
+        [AssetEventType.ASSET_CREATED]: { icon: Plus, color: 'bg-blue-500', label: t('assets.event.created') },
+        [AssetEventType.ASSET_ACQUIRED]: { icon: ShoppingCart, color: 'bg-green-500', label: t('assets.event.acquired') },
+        [AssetEventType.ASSET_CAPITALIZED]: { icon: CheckCircle, color: 'bg-emerald-500', label: t('assets.event.capitalized') },
+        [AssetEventType.DEPRECIATION_POSTED]: { icon: TrendingDown, color: 'bg-purple-500', label: t('assets.event.depreciationPosted') },
+        [AssetEventType.IMPAIRMENT_RECORDED]: { icon: AlertTriangle, color: 'bg-amber-500', label: t('assets.event.impairmentRecorded') },
+        [AssetEventType.REVALUATION_RECORDED]: { icon: RefreshCw, color: 'bg-cyan-500', label: t('assets.event.revaluationRecorded') },
+        [AssetEventType.ASSET_TRANSFERRED]: { icon: ArrowRight, color: 'bg-indigo-500', label: t('assets.event.transferred') },
+        [AssetEventType.ASSET_HELD_FOR_SALE]: { icon: Tag, color: 'bg-orange-500', label: t('assets.event.heldForSale') },
+        [AssetEventType.ASSET_DISPOSED]: { icon: Trash2, color: 'bg-red-500', label: t('assets.event.disposed') },
+        [AssetEventType.ASSET_SOLD]: { icon: DollarSign, color: 'bg-green-500', label: t('assets.event.sold') },
+        [AssetEventType.ASSET_WRITTEN_OFF]: { icon: XCircle, color: 'bg-red-600', label: t('assets.event.writtenOff') },
+        [AssetEventType.COMPONENT_ADDED]: { icon: Wrench, color: 'bg-blue-400', label: t('assets.event.componentAdded') },
+        [AssetEventType.COMPONENT_REMOVED]: { icon: Minus, color: 'bg-gray-500', label: t('assets.event.componentRemoved') },
+        [AssetEventType.USEFUL_LIFE_CHANGED]: { icon: Clock, color: 'bg-yellow-500', label: t('assets.event.usefulLifeChanged') },
+        [AssetEventType.METHOD_CHANGED]: { icon: Settings, color: 'bg-fuchsia-500', label: t('assets.event.methodChanged') },
+    };
+
     if (events.length === 0) {
         return (
-            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
-                No events recorded for this asset yet.
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                {t('assets.timeline.noEvents')}
             </div>
         );
     }
 
     return (
         <div className="relative">
-            {/* Timeline line */}
+            {/* Vertical line */}
             <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700" />
 
-            {/* Events */}
-            <div className="space-y-6">
-                {events.map((event, idx) => {
+            <div className="space-y-4">
+                {events.map((event, index) => {
                     const config = eventConfig[event.eventType];
                     const Icon = config.icon;
 
@@ -65,11 +73,11 @@ export const AssetLifecycleTimeline: React.FC<AssetLifecycleTimelineProps> = ({ 
                             key={event.id}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="relative pl-12"
+                            transition={{ delay: index * 0.05 }}
+                            className="relative pl-10"
                         >
                             {/* Icon */}
-                            <div className={`absolute left-0 w-8 h-8 rounded-full ${config.color} flex items-center justify-center shadow-lg`}>
+                            <div className={`absolute left-0 w-8 h-8 rounded-full ${config.color} flex items-center justify-center`}>
                                 <Icon className="w-4 h-4 text-white" />
                             </div>
 
@@ -78,58 +86,39 @@ export const AssetLifecycleTimeline: React.FC<AssetLifecycleTimelineProps> = ({ 
                                 <div className="flex items-start justify-between">
                                     <div>
                                         <h4 className="font-medium text-gray-900 dark:text-white">{config.label}</h4>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                            {new Date(event.timestamp).toLocaleString('de-DE', {
-                                                dateStyle: 'medium',
-                                                timeStyle: 'short',
-                                            })}
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                            {new Date(event.timestamp).toLocaleString('de-DE')} {t('assets.event.by')} {event.actor}
                                         </p>
                                     </div>
-                                    <span className="text-xs text-gray-400">by {event.actor}</span>
                                 </div>
 
-                                {/* Event details */}
-                                {event.reason && (
-                                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                                        {event.reason}
-                                    </p>
-                                )}
-
-                                {event.amount !== undefined && (
-                                    <p className="mt-2 text-sm">
-                                        <span className="text-gray-500">Amount:</span>{' '}
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                      €{event.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
-                    </span>
-                                    </p>
-                                )}
-
-                                {event.previousValue !== undefined && event.newValue !== undefined && (
-                                    <p className="mt-2 text-sm">
-                                        <span className="text-gray-500">Value:</span>{' '}
-                                        <span className="text-gray-400">€{event.previousValue.toLocaleString('de-DE')}</span>
-                                        {' → '}
-                                        <span className="font-medium text-gray-900 dark:text-white">€{event.newValue.toLocaleString('de-DE')}</span>
-                                    </p>
-                                )}
-
-                                {event.previousStatus && event.newStatus && (
-                                    <p className="mt-2 text-sm">
-                                        <span className="text-gray-500">Status:</span>{' '}
-                                        <span className="text-gray-400">{event.previousStatus.replace(/_/g, ' ')}</span>
-                                        {' → '}
-                                        <span className="font-medium text-gray-900 dark:text-white">{event.newStatus.replace(/_/g, ' ')}</span>
-                                    </p>
-                                )}
-
-                                {event.toLocation && (
-                                    <p className="mt-2 text-sm">
-                                        <span className="text-gray-500">Location:</span>{' '}
-                                        <span className="text-gray-400">{event.fromLocation || '—'}</span>
-                                        {' → '}
-                                        <span className="font-medium text-gray-900 dark:text-white">{event.toLocation}</span>
-                                    </p>
-                                )}
+                                {/* Event Details */}
+                                <div className="mt-2 text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                    {event.reason && (
+                                        <p><span className="text-gray-500">{t('assets.event.reason')}:</span> {event.reason}</p>
+                                    )}
+                                    {event.amount !== undefined && (
+                                        <p><span className="text-gray-500">{t('assets.event.amount')}:</span> €{event.amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</p>
+                                    )}
+                                    {event.previousValue !== undefined && event.newValue !== undefined && (
+                                        <p>
+                                            <span className="text-gray-500">{t('assets.event.value')}:</span>{' '}
+                                            €{event.previousValue.toLocaleString('de-DE')} → €{event.newValue.toLocaleString('de-DE')}
+                                        </p>
+                                    )}
+                                    {event.previousStatus && event.newStatus && (
+                                        <p>
+                                            <span className="text-gray-500">{t('assets.table.status')}:</span>{' '}
+                                            {event.previousStatus} → {event.newStatus}
+                                        </p>
+                                    )}
+                                    {(event.fromLocation || event.toLocation) && (
+                                        <p>
+                                            <span className="text-gray-500">{t('assets.detail.location')}:</span>{' '}
+                                            {event.fromLocation || '-'} → {event.toLocation || '-'}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </motion.div>
                     );

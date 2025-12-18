@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     Package,
     TrendingDown,
-    FileText,
     DollarSign,
     BarChart3,
     Bell,
@@ -14,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Card } from '@/components/ui';
 import { useAssetStore, initializeDemoAssetData } from '@/store/asset-store';
+import { useThemeStore } from '@/store/theme-store';
 import {
     AssetMetricsCards,
     AssetRegister,
@@ -28,19 +28,13 @@ import { Asset, BookType } from '@/types/asset';
 
 type TabId = 'register' | 'depreciation' | 'capex' | 'reports';
 
-const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
-    { id: 'register', label: 'Asset Register', icon: Package },
-    { id: 'depreciation', label: 'Depreciation', icon: TrendingDown },
-    { id: 'capex', label: 'CapEx', icon: DollarSign },
-    { id: 'reports', label: 'Reports', icon: BarChart3 },
-];
-
 // =============================================================================
 // DEPRECIATION TAB
 // =============================================================================
 
 const DepreciationTab: React.FC = () => {
     const { assets, assetBooks, schedules, postAllDueDepreciation } = useAssetStore();
+    const { t } = useThemeStore();
     const [isRunning, setIsRunning] = useState(false);
     const [lastRunResult, setLastRunResult] = useState<number | null>(null);
 
@@ -63,11 +57,11 @@ const DepreciationTab: React.FC = () => {
             <Card variant="glass" padding="lg">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Run Depreciation</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.depreciation.runDepreciation')}</h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                             {pendingDepreciations > 0
-                                ? `${pendingDepreciations} depreciation entries pending`
-                                : 'All depreciation entries are up to date'}
+                                ? `${pendingDepreciations} ${t('assets.depreciation.entriesPending')}`
+                                : t('assets.depreciation.upToDate')}
                         </p>
                     </div>
                     <button
@@ -76,7 +70,7 @@ const DepreciationTab: React.FC = () => {
                         className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                     >
                         <RefreshCw className={`w-5 h-5 ${isRunning ? 'animate-spin' : ''}`} />
-                        {isRunning ? 'Running...' : 'Run Now'}
+                        {isRunning ? t('assets.depreciation.running') : t('assets.depreciation.runNow')}
                     </button>
                 </div>
 
@@ -87,7 +81,7 @@ const DepreciationTab: React.FC = () => {
                         className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg"
                     >
                         <p className="text-sm text-green-700 dark:text-green-400">
-                            ✓ Posted {lastRunResult} depreciation entries successfully
+                            ✓ {t('assets.depreciation.posted')} {lastRunResult} {t('assets.depreciation.entriesSuccessfully')}
                         </p>
                     </motion.div>
                 )}
@@ -96,7 +90,7 @@ const DepreciationTab: React.FC = () => {
             {/* Depreciation Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card variant="glass" padding="md">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">MTD Depreciation</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('assets.depreciation.mtdDepreciation')}</p>
                     <p className="text-2xl font-bold text-purple-600 mt-1">
                         €{assetBooks
                         .filter(b => b.bookType === BookType.STATUTORY)
@@ -109,7 +103,7 @@ const DepreciationTab: React.FC = () => {
                 </Card>
 
                 <Card variant="glass" padding="md">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">YTD Depreciation</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('assets.depreciation.ytdDepreciation')}</p>
                     <p className="text-2xl font-bold text-purple-600 mt-1">
                         €{assetBooks
                         .filter(b => b.bookType === BookType.STATUTORY)
@@ -119,7 +113,7 @@ const DepreciationTab: React.FC = () => {
                 </Card>
 
                 <Card variant="glass" padding="md">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Assets Depreciating</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t('assets.depreciation.assetsDepreciating')}</p>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
                         {assets.filter(a => a.isActive && !a.isCIP).length}
                     </p>
@@ -128,15 +122,15 @@ const DepreciationTab: React.FC = () => {
 
             {/* Upcoming Depreciation */}
             <Card variant="glass" padding="md">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Upcoming Depreciation</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('assets.depreciation.upcomingDepreciation')}</h3>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
                         <tr className="border-b border-gray-200 dark:border-gray-700">
-                            <th className="text-left py-2 text-gray-500">Asset</th>
-                            <th className="text-left py-2 text-gray-500">Period</th>
-                            <th className="text-right py-2 text-gray-500">Amount</th>
-                            <th className="text-right py-2 text-gray-500">New NBV</th>
+                            <th className="text-left py-2 text-gray-500">{t('assets.table.asset')}</th>
+                            <th className="text-left py-2 text-gray-500">{t('assets.depreciation.period')}</th>
+                            <th className="text-right py-2 text-gray-500">{t('assets.depreciation.amount')}</th>
+                            <th className="text-right py-2 text-gray-500">{t('assets.depreciation.newNBV')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -176,15 +170,16 @@ const DepreciationTab: React.FC = () => {
 
 const CapExTab: React.FC = () => {
     const { capExBudgets, createCapExBudget } = useAssetStore();
+    const { t } = useThemeStore();
 
     return (
         <div className="space-y-6">
             {capExBudgets.length === 0 ? (
                 <Card variant="glass" padding="lg" className="text-center">
                     <DollarSign className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">No CapEx Budgets</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.capex.nobudgets')}</h3>
                     <p className="text-gray-500 dark:text-gray-400 mt-2 mb-4">
-                        Create a capital expenditure budget to track planned and actual spending.
+                        {t('assets.capex.noBudgetsDesc')}
                     </p>
                     <button
                         onClick={() => createCapExBudget({
@@ -195,7 +190,7 @@ const CapExTab: React.FC = () => {
                         })}
                         className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                     >
-                        Create Budget
+                        {t('assets.capex.createBudget')}
                     </button>
                 </Card>
             ) : (
@@ -215,7 +210,7 @@ const CapExTab: React.FC = () => {
                             {/* Progress */}
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-500">Spent</span>
+                                    <span className="text-gray-500">{t('assets.capex.spent')}</span>
                                     <span className="text-gray-900 dark:text-white">
                     €{budget.spentAmount.toLocaleString('de-DE')} ({((budget.spentAmount / budget.budgetAmount) * 100).toFixed(1)}%)
                   </span>
@@ -227,8 +222,8 @@ const CapExTab: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="flex justify-between text-xs text-gray-500">
-                                    <span>Committed: €{budget.committedAmount.toLocaleString('de-DE')}</span>
-                                    <span>Remaining: €{budget.remainingAmount.toLocaleString('de-DE')}</span>
+                                    <span>{t('assets.capex.committed')}: €{budget.committedAmount.toLocaleString('de-DE')}</span>
+                                    <span>{t('assets.capex.remaining')}: €{budget.remainingAmount.toLocaleString('de-DE')}</span>
                                 </div>
                             </div>
                         </Card>
@@ -244,20 +239,24 @@ const CapExTab: React.FC = () => {
 // =============================================================================
 
 const ReportsTab: React.FC = () => {
+    const { t } = useThemeStore();
+
+    const reports = [
+        { name: t('assets.reports.assetRegister'), desc: t('assets.reports.assetRegisterDesc') },
+        { name: t('assets.reports.depSchedule'), desc: t('assets.reports.depScheduleDesc') },
+        { name: t('assets.reports.movementReport'), desc: t('assets.reports.movementReportDesc') },
+        { name: t('assets.reports.nbvSummary'), desc: t('assets.reports.nbvSummaryDesc') },
+    ];
+
     return (
         <Card variant="glass" padding="lg" className="text-center">
             <BarChart3 className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Asset Reports</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.reports.title')}</h3>
             <p className="text-gray-500 dark:text-gray-400 mt-2">
-                Generate asset register, depreciation schedules, movement reports, and more.
+                {t('assets.reports.description')}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                {[
-                    { name: 'Asset Register', desc: 'Full list of all assets' },
-                    { name: 'Depreciation Schedule', desc: 'Monthly depreciation forecast' },
-                    { name: 'Movement Report', desc: 'Additions, disposals, transfers' },
-                    { name: 'NBV Summary', desc: 'Net book value by category' },
-                ].map(report => (
+                {reports.map(report => (
                     <button
                         key={report.name}
                         className="p-4 bg-gray-50 dark:bg-slate-900 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
@@ -276,10 +275,18 @@ const ReportsTab: React.FC = () => {
 // =============================================================================
 
 export default function AssetsPage() {
-    const { notifications, dashboardState, setDashboardState } = useAssetStore();
+    const { notifications } = useAssetStore();
+    const { t } = useThemeStore();
     const [activeTab, setActiveTab] = useState<TabId>('register');
     const [showAssetForm, setShowAssetForm] = useState(false);
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
+
+    const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
+        { id: 'register', label: t('assets.tabs.register'), icon: Package },
+        { id: 'depreciation', label: t('assets.tabs.depreciation'), icon: TrendingDown },
+        { id: 'capex', label: t('assets.tabs.capex'), icon: DollarSign },
+        { id: 'reports', label: t('assets.tabs.reports'), icon: BarChart3 },
+    ];
 
     // Initialize demo data on first load
     useEffect(() => {
@@ -293,9 +300,9 @@ export default function AssetsPage() {
             {/* Page Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Fixed Assets</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('assets.title')}</h1>
                     <p className="text-gray-500 dark:text-gray-400">
-                        Manage assets, depreciation, and capital expenditure
+                        {t('assets.subtitle')}
                     </p>
                 </div>
 

@@ -7,7 +7,6 @@ import {
     Filter,
     Download,
     Plus,
-    ChevronRight,
     Building2,
     Car,
     Monitor,
@@ -20,12 +19,10 @@ import {
     MoreVertical,
     Eye,
     Edit2,
-    Trash2,
-    TrendingDown,
-    AlertTriangle,
 } from 'lucide-react';
-import { Card, Button, Badge, Input } from '@/components/ui';
+import { Card } from '@/components/ui';
 import { useAssetStore } from '@/store/asset-store';
+import { useThemeStore } from '@/store/theme-store';
 import { AssetStatus, AssetCategory, BookType, Asset } from '@/types/asset';
 import { calculateBookValue } from '@/lib/depreciation-engine';
 
@@ -47,19 +44,6 @@ const categoryIcons: Record<AssetCategory, React.ElementType> = {
     [AssetCategory.RIGHT_OF_USE]: FileSignature,
 };
 
-const statusConfig: Record<AssetStatus, { label: string; color: string }> = {
-    [AssetStatus.PLANNED]: { label: 'Planned', color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
-    [AssetStatus.ACQUIRED]: { label: 'Acquired', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
-    [AssetStatus.CAPITALIZED]: { label: 'Capitalized', color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' },
-    [AssetStatus.IN_USE]: { label: 'In Use', color: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' },
-    [AssetStatus.FULLY_DEPRECIATED]: { label: 'Fully Depreciated', color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' },
-    [AssetStatus.IMPAIRED]: { label: 'Impaired', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
-    [AssetStatus.HELD_FOR_SALE]: { label: 'Held for Sale', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' },
-    [AssetStatus.DISPOSED]: { label: 'Disposed', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
-    [AssetStatus.SOLD]: { label: 'Sold', color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' },
-    [AssetStatus.WRITTEN_OFF]: { label: 'Written Off', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
-};
-
 // =============================================================================
 // COMPONENT
 // =============================================================================
@@ -71,8 +55,36 @@ interface AssetRegisterProps {
 
 export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onCreateNew }) => {
     const { assets, assetBooks, dashboardState, setFilters } = useAssetStore();
+    const { t } = useThemeStore();
     const [showFilters, setShowFilters] = useState(false);
     const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
+
+    const statusConfig: Record<AssetStatus, { label: string; color: string }> = {
+        [AssetStatus.PLANNED]: { label: t('assets.status.planned'), color: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300' },
+        [AssetStatus.ACQUIRED]: { label: t('assets.status.acquired'), color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
+        [AssetStatus.CAPITALIZED]: { label: t('assets.status.capitalized'), color: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' },
+        [AssetStatus.IN_USE]: { label: t('assets.status.inUse'), color: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' },
+        [AssetStatus.FULLY_DEPRECIATED]: { label: t('assets.status.fullyDepreciated'), color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' },
+        [AssetStatus.IMPAIRED]: { label: t('assets.status.impaired'), color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
+        [AssetStatus.HELD_FOR_SALE]: { label: t('assets.status.heldForSale'), color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' },
+        [AssetStatus.DISPOSED]: { label: t('assets.status.disposed'), color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
+        [AssetStatus.SOLD]: { label: t('assets.status.sold'), color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' },
+        [AssetStatus.WRITTEN_OFF]: { label: t('assets.status.writtenOff'), color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
+    };
+
+    const categoryLabels: Record<AssetCategory, string> = {
+        [AssetCategory.BUILDINGS]: t('assets.category.buildings'),
+        [AssetCategory.MACHINERY]: t('assets.category.machinery'),
+        [AssetCategory.VEHICLES]: t('assets.category.vehicles'),
+        [AssetCategory.IT_EQUIPMENT]: t('assets.category.itEquipment'),
+        [AssetCategory.FURNITURE]: t('assets.category.furniture'),
+        [AssetCategory.INTANGIBLE_ASSETS]: t('assets.category.intangibleAssets'),
+        [AssetCategory.CAPITALIZED_SOFTWARE]: t('assets.category.capitalizedSoftware'),
+        [AssetCategory.LEASEHOLD_IMPROVEMENTS]: t('assets.category.leaseholdImprovements'),
+        [AssetCategory.LAND]: t('assets.category.land'),
+        [AssetCategory.CONSTRUCTION_IN_PROGRESS]: t('assets.category.constructionInProgress'),
+        [AssetCategory.RIGHT_OF_USE]: t('assets.category.rightOfUse'),
+    };
 
     const filteredAssets = useMemo(() => {
         const { filters } = dashboardState;
@@ -113,7 +125,7 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="Search assets..."
+                        placeholder={t('assets.searchAssets')}
                         value={dashboardState.filters.searchQuery}
                         onChange={(e) => setFilters({ searchQuery: e.target.value })}
                         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
@@ -130,44 +142,45 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                         }`}
                     >
                         <Filter className="w-4 h-4" />
-                        Filters
+                        {t('assets.filters')}
                     </button>
 
-                    <button className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+                    <button className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-slate-800 flex items-center gap-2">
                         <Download className="w-4 h-4" />
-                        Export
+                        {t('assets.export')}
                     </button>
 
                     <button
                         onClick={onCreateNew}
-                        className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center gap-2"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
                     >
                         <Plus className="w-4 h-4" />
-                        Add Asset
+                        {t('assets.addAsset')}
                     </button>
                 </div>
             </div>
 
-            {/* Filters Panel */}
+            {/* Filters */}
             <AnimatePresence>
                 {showFilters && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden"
                     >
                         <Card variant="glass" padding="md">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Status
+                                        {t('assets.table.status')}
                                     </label>
                                     <select
                                         value={dashboardState.filters.status}
                                         onChange={(e) => setFilters({ status: e.target.value as AssetStatus | 'ALL' })}
                                         className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                                     >
-                                        <option value="ALL">All Statuses</option>
+                                        <option value="ALL">{t('assets.allStatuses')}</option>
                                         {Object.values(AssetStatus).map(status => (
                                             <option key={status} value={status}>{statusConfig[status].label}</option>
                                         ))}
@@ -176,27 +189,44 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Category
+                                        {t('assets.table.category')}
                                     </label>
                                     <select
                                         value={dashboardState.filters.category}
                                         onChange={(e) => setFilters({ category: e.target.value as AssetCategory | 'ALL' })}
                                         className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                                     >
-                                        <option value="ALL">All Categories</option>
+                                        <option value="ALL">{t('assets.allCategories')}</option>
                                         {Object.values(AssetCategory).map(cat => (
-                                            <option key={cat} value={cat}>{cat.replace(/_/g, ' ')}</option>
+                                            <option key={cat} value={cat}>{categoryLabels[cat]}</option>
                                         ))}
                                     </select>
                                 </div>
 
-                                <div className="flex items-end">
-                                    <button
-                                        onClick={() => setFilters({ status: 'ALL', category: 'ALL', searchQuery: '' })}
-                                        className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        {t('assets.detail.entity')}
+                                    </label>
+                                    <select
+                                        value={dashboardState.filters.entityId || ''}
+                                        onChange={(e) => setFilters({ entityId: e.target.value || null })}
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
                                     >
-                                        Clear Filters
-                                    </button>
+                                        <option value="">{t('assets.allEntities')}</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        {t('assets.detail.costCenter')}
+                                    </label>
+                                    <select
+                                        value={dashboardState.filters.costCenterId || ''}
+                                        onChange={(e) => setFilters({ costCenterId: e.target.value || null })}
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white"
+                                    >
+                                        <option value="">{t('common.all')}</option>
+                                    </select>
                                 </div>
                             </div>
                         </Card>
@@ -204,26 +234,26 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                 )}
             </AnimatePresence>
 
-            {/* Asset List */}
+            {/* Table */}
             <Card variant="glass" padding="none">
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
                         <tr className="border-b border-gray-200 dark:border-gray-700">
-                            <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Asset</th>
-                            <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Category</th>
-                            <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Status</th>
-                            <th className="text-right px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Acquisition Cost</th>
-                            <th className="text-right px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Net Book Value</th>
-                            <th className="text-right px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Depreciated</th>
-                            <th className="text-center px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">Actions</th>
+                            <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.asset')}</th>
+                            <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.category')}</th>
+                            <th className="text-left px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.status')}</th>
+                            <th className="text-right px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.acquisitionCost')}</th>
+                            <th className="text-right px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.netBookValue')}</th>
+                            <th className="text-right px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.depreciated')}</th>
+                            <th className="text-center px-4 py-3 text-sm font-medium text-gray-500 dark:text-gray-400">{t('assets.table.actions')}</th>
                         </tr>
                         </thead>
                         <tbody>
                         {filteredAssets.length === 0 ? (
                             <tr>
                                 <td colSpan={7} className="px-4 py-12 text-center text-gray-500 dark:text-gray-400">
-                                    No assets found. Create your first asset to get started.
+                                    {t('assets.noAssetsFound')}
                                 </td>
                             </tr>
                         ) : (
@@ -254,24 +284,24 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                                             </div>
                                         </td>
                                         <td className="px-4 py-3">
-                        <span className="text-sm text-gray-600 dark:text-gray-300">
-                          {asset.category.replace(/_/g, ' ')}
-                        </span>
+                                            <span className="text-sm text-gray-600 dark:text-gray-300">
+                                                {categoryLabels[asset.category]}
+                                            </span>
                                         </td>
                                         <td className="px-4 py-3">
-                        <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${status.color}`}>
-                          {status.label}
-                        </span>
+                                            <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${status.color}`}>
+                                                {status.label}
+                                            </span>
                                         </td>
                                         <td className="px-4 py-3 text-right">
-                        <span className="text-sm text-gray-900 dark:text-white">
-                          €{asset.acquisitionCost.toLocaleString('de-DE')}
-                        </span>
+                                            <span className="text-sm text-gray-900 dark:text-white">
+                                                €{asset.acquisitionCost.toLocaleString('de-DE')}
+                                            </span>
                                         </td>
                                         <td className="px-4 py-3 text-right">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          €{nbv.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
-                        </span>
+                                            <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                                €{nbv.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
+                                            </span>
                                         </td>
                                         <td className="px-4 py-3 text-right">
                                             <div className="flex items-center justify-end gap-2">
@@ -282,8 +312,8 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                                                     />
                                                 </div>
                                                 <span className="text-xs text-gray-500 dark:text-gray-400 w-12 text-right">
-                            {depPercent.toFixed(1)}%
-                          </span>
+                                                    {depPercent.toFixed(1)}%
+                                                </span>
                                             </div>
                                         </td>
                                         <td className="px-4 py-3">
@@ -314,7 +344,7 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                                                                 }}
                                                                 className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-slate-700 flex items-center gap-2"
                                                             >
-                                                                <Eye className="w-4 h-4" /> View
+                                                                <Eye className="w-4 h-4" /> {t('common.view')}
                                                             </button>
                                                             <button
                                                                 onClick={(e) => {
@@ -323,7 +353,7 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                                                                 }}
                                                                 className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-slate-700 flex items-center gap-2"
                                                             >
-                                                                <Edit2 className="w-4 h-4" /> Edit
+                                                                <Edit2 className="w-4 h-4" /> {t('common.edit')}
                                                             </button>
                                                         </motion.div>
                                                     )}

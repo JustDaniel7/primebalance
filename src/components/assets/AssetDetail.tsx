@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     X,
-    Package,
     Calendar,
     MapPin,
     Building2,
@@ -12,26 +11,19 @@ import {
     DollarSign,
     Clock,
     FileText,
-    History,
     AlertTriangle,
-    Edit2,
-    Trash2,
     ArrowRight,
     ShoppingCart,
     Ban,
 } from 'lucide-react';
-import { Card } from '@/components/ui';
 import { useAssetStore } from '@/store/asset-store';
-import { Asset, AssetStatus, BookType } from '@/types/asset';
-import { calculateBookValue, getDepreciationMethodLabel, canDepreciate } from '@/lib/depreciation-engine';
+import { useThemeStore } from '@/store/theme-store';
+import { Asset, AssetStatus, AssetCategory, BookType } from '@/types/asset';
+import { calculateBookValue, canDepreciate } from '@/lib/depreciation-engine';
 import { ASSET_CLASS_CONFIGS } from '@/data/asset-classes';
 import { DepreciationScheduleView } from './DepreciationScheduleView';
 import { AssetLifecycleTimeline } from './AssetLifecycleTimeline';
 import { DisposalForm } from './DisposalForm';
-
-// =============================================================================
-// COMPONENT
-// =============================================================================
 
 interface AssetDetailProps {
     asset: Asset;
@@ -39,14 +31,14 @@ interface AssetDetailProps {
 }
 
 export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
-    const { assetBooks, getAssetEvents, getSchedule, holdForSale, writeOffAsset } = useAssetStore();
+    const { assetBooks, getSchedule, holdForSale, writeOffAsset } = useAssetStore();
+    const { t } = useThemeStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'depreciation' | 'history'>('overview');
     const [showDisposalForm, setShowDisposalForm] = useState(false);
     const [showWriteOffConfirm, setShowWriteOffConfirm] = useState(false);
 
     const statutoryBook = assetBooks.find(b => b.assetId === asset.id && b.bookType === BookType.STATUTORY);
     const taxBook = assetBooks.find(b => b.assetId === asset.id && b.bookType === BookType.TAX);
-    const events = getAssetEvents(asset.id);
     const schedule = getSchedule(asset.id, BookType.STATUTORY);
 
     const netBookValue = statutoryBook ? calculateBookValue(statutoryBook) : asset.capitalizedCost;
@@ -54,14 +46,46 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
 
     const depreciableBase = (statutoryBook?.acquisitionCost || asset.acquisitionCost) - (statutoryBook?.salvageValue || asset.salvageValue);
     const percentDepreciated = depreciableBase > 0 ? ((statutoryBook?.accumulatedDepreciation || 0) / depreciableBase) * 100 : 0;
-    const remainingMonths = Math.max(0, (statutoryBook?.usefulLifeMonths || asset.usefulLifeMonths) - Math.floor(percentDepreciated));
+
+    const categoryLabels: Record<AssetCategory, string> = {
+        [AssetCategory.BUILDINGS]: t('assets.category.buildings'),
+        [AssetCategory.MACHINERY]: t('assets.category.machinery'),
+        [AssetCategory.VEHICLES]: t('assets.category.vehicles'),
+        [AssetCategory.IT_EQUIPMENT]: t('assets.category.itEquipment'),
+        [AssetCategory.FURNITURE]: t('assets.category.furniture'),
+        [AssetCategory.INTANGIBLE_ASSETS]: t('assets.category.intangibleAssets'),
+        [AssetCategory.CAPITALIZED_SOFTWARE]: t('assets.category.capitalizedSoftware'),
+        [AssetCategory.LEASEHOLD_IMPROVEMENTS]: t('assets.category.leaseholdImprovements'),
+        [AssetCategory.LAND]: t('assets.category.land'),
+        [AssetCategory.CONSTRUCTION_IN_PROGRESS]: t('assets.category.constructionInProgress'),
+        [AssetCategory.RIGHT_OF_USE]: t('assets.category.rightOfUse'),
+    };
+
+    const statusLabels: Record<AssetStatus, string> = {
+        [AssetStatus.PLANNED]: t('assets.status.planned'),
+        [AssetStatus.ACQUIRED]: t('assets.status.acquired'),
+        [AssetStatus.CAPITALIZED]: t('assets.status.capitalized'),
+        [AssetStatus.IN_USE]: t('assets.status.inUse'),
+        [AssetStatus.FULLY_DEPRECIATED]: t('assets.status.fullyDepreciated'),
+        [AssetStatus.IMPAIRED]: t('assets.status.impaired'),
+        [AssetStatus.HELD_FOR_SALE]: t('assets.status.heldForSale'),
+        [AssetStatus.DISPOSED]: t('assets.status.disposed'),
+        [AssetStatus.SOLD]: t('assets.status.sold'),
+        [AssetStatus.WRITTEN_OFF]: t('assets.status.writtenOff'),
+    };
+
+    const tabLabels: Record<string, string> = {
+        overview: t('assets.detail.overview'),
+        depreciation: t('assets.detail.depreciation'),
+        history: t('assets.detail.history'),
+    };
 
     const handleHoldForSale = () => {
-        holdForSale(asset.id, 'Marked for sale by user', 'user');
+        holdForSale(asset.id, t('assets.event.heldForSale'), 'user');
     };
 
     const handleWriteOff = () => {
-        writeOffAsset(asset.id, 'Written off by user', 'user');
+        writeOffAsset(asset.id, t('assets.event.writtenOff'), 'user');
         setShowWriteOffConfirm(false);
     };
 
@@ -100,11 +124,11 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
                                 <div className="flex items-center gap-3">
                                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{asset.name}</h2>
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[asset.status]}`}>
-                    {asset.status.replace(/_/g, ' ')}
-                  </span>
+                                        {statusLabels[asset.status]}
+                                    </span>
                                 </div>
                                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                    {asset.assetNumber} • {categoryConfig.label}
+                                    {asset.assetNumber} • {categoryLabels[asset.category]}
                                 </p>
                             </div>
                             <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg">
@@ -124,7 +148,7 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
                                             : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
                                     }`}
                                 >
-                                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                                    {tabLabels[tab]}
                                 </button>
                             ))}
                         </div>
@@ -137,154 +161,113 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
                                 {/* Key Metrics */}
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div className="p-4 bg-gray-50 dark:bg-slate-900 rounded-xl">
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">Acquisition Cost</p>
-                                        <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">{t('assets.table.acquisitionCost')}</p>
+                                        <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
                                             €{asset.acquisitionCost.toLocaleString('de-DE')}
                                         </p>
                                     </div>
                                     <div className="p-4 bg-gray-50 dark:bg-slate-900 rounded-xl">
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">Net Book Value</p>
-                                        <p className="text-xl font-bold text-green-600 dark:text-green-400 mt-1">
-                                            €{netBookValue.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">{t('assets.netBookValue')}</p>
+                                        <p className="text-lg font-bold text-green-600 mt-1">
+                                            €{netBookValue.toLocaleString('de-DE')}
                                         </p>
                                     </div>
                                     <div className="p-4 bg-gray-50 dark:bg-slate-900 rounded-xl">
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">Accumulated Depreciation</p>
-                                        <p className="text-xl font-bold text-purple-600 dark:text-purple-400 mt-1">
-                                            €{(statutoryBook?.accumulatedDepreciation || 0).toLocaleString('de-DE', { minimumFractionDigits: 2 })}
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">{t('assets.detail.accumulatedDep')}</p>
+                                        <p className="text-lg font-bold text-purple-600 mt-1">
+                                            €{(statutoryBook?.accumulatedDepreciation || 0).toLocaleString('de-DE')}
                                         </p>
                                     </div>
                                     <div className="p-4 bg-gray-50 dark:bg-slate-900 rounded-xl">
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">Depreciated</p>
-                                        <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">{t('assets.depreciated')}</p>
+                                        <p className="text-lg font-bold text-blue-600 mt-1">
                                             {percentDepreciated.toFixed(1)}%
                                         </p>
-                                        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-2 overflow-hidden">
-                                            <div className="h-full bg-blue-500 rounded-full" style={{ width: `${Math.min(100, percentDepreciated)}%` }} />
-                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Details Grid */}
+                                {/* Asset Information */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/* Asset Information */}
                                     <div>
                                         <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                            <Package className="w-4 h-4" /> Asset Information
+                                            <FileText className="w-4 h-4" /> {t('assets.detail.assetInformation')}
                                         </h3>
                                         <div className="space-y-3">
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Type</span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.assetNumber')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.assetNumber}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.type')}</span>
                                                 <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.assetType}</span>
                                             </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Category</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{categoryConfig.label}</span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.category')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{categoryLabels[asset.category]}</span>
                                             </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Useful Life</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.usefulLifeMonths} months ({(asset.usefulLifeMonths / 12).toFixed(1)} years)
-                        </span>
-                                            </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Depreciation Method</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {getDepreciationMethodLabel(asset.depreciationMethod)}
-                        </span>
-                                            </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Salvage Value</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          €{asset.salvageValue.toLocaleString('de-DE')}
-                        </span>
-                                            </div>
-                                            <div className="flex justify-between py-2">
-                                                <span className="text-sm text-gray-500">Remaining Life</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          ~{remainingMonths} months
-                        </span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.usefulLife')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.usefulLifeMonths} {t('assets.detail.months')}</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Location & Assignment */}
                                     <div>
                                         <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                            <MapPin className="w-4 h-4" /> Location & Assignment
+                                            <MapPin className="w-4 h-4" /> {t('assets.detail.locationAssignment')}
                                         </h3>
                                         <div className="space-y-3">
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Location</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.location || '—'}
-                        </span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.entity')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.legalEntityId || t('assets.detail.notAssigned')}</span>
                                             </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Legal Entity</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.legalEntityId || '—'}
-                        </span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.costCenter')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.costCenterId || t('assets.detail.notAssigned')}</span>
                                             </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Cost Center</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.costCenterId || '—'}
-                        </span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.location')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.location || t('assets.detail.notAssigned')}</span>
                                             </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Responsible Party</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.responsibleParty || '—'}
-                        </span>
-                                            </div>
-                                            <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                                <span className="text-sm text-gray-500">Acquisition Date</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.acquisitionDate || '—'}
-                        </span>
-                                            </div>
-                                            <div className="flex justify-between py-2">
-                                                <span className="text-sm text-gray-500">Depreciation Start</span>
-                                                <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {asset.depreciationStartDate || '—'}
-                        </span>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-gray-500">{t('assets.detail.responsible')}</span>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-white">{asset.responsibleParty || t('assets.detail.notAssigned')}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Tax Book Comparison */}
-                                {taxBook && (
+                                {taxBook && statutoryBook && (
                                     <div>
                                         <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                            <FileText className="w-4 h-4" /> Book vs Tax Comparison
+                                            <FileText className="w-4 h-4" /> {t('assets.detail.bookComparison')}
                                         </h3>
                                         <div className="overflow-x-auto">
                                             <table className="w-full text-sm">
                                                 <thead>
                                                 <tr className="border-b border-gray-200 dark:border-gray-700">
-                                                    <th className="text-left py-2 text-gray-500">Attribute</th>
-                                                    <th className="text-right py-2 text-gray-500">Statutory Book</th>
-                                                    <th className="text-right py-2 text-gray-500">Tax Book</th>
-                                                    <th className="text-right py-2 text-gray-500">Difference</th>
+                                                    <th className="text-left py-2 text-gray-500"></th>
+                                                    <th className="text-right py-2 text-gray-500">{t('assets.detail.statutory')}</th>
+                                                    <th className="text-right py-2 text-gray-500">{t('assets.detail.tax')}</th>
+                                                    <th className="text-right py-2 text-gray-500">Δ</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr className="border-b border-gray-100 dark:border-gray-800">
-                                                    <td className="py-2">Net Book Value</td>
-                                                    <td className="py-2 text-right">€{calculateBookValue(statutoryBook!).toLocaleString('de-DE')}</td>
+                                                    <td className="py-2">{t('assets.detail.nbv')}</td>
+                                                    <td className="py-2 text-right">€{calculateBookValue(statutoryBook).toLocaleString('de-DE')}</td>
                                                     <td className="py-2 text-right">€{calculateBookValue(taxBook).toLocaleString('de-DE')}</td>
                                                     <td className="py-2 text-right font-medium">
-                                                        €{(calculateBookValue(statutoryBook!) - calculateBookValue(taxBook)).toLocaleString('de-DE')}
+                                                        €{(calculateBookValue(statutoryBook) - calculateBookValue(taxBook)).toLocaleString('de-DE')}
                                                     </td>
                                                 </tr>
                                                 <tr className="border-b border-gray-100 dark:border-gray-800">
-                                                    <td className="py-2">Accumulated Depreciation</td>
-                                                    <td className="py-2 text-right">€{statutoryBook!.accumulatedDepreciation.toLocaleString('de-DE')}</td>
+                                                    <td className="py-2">{t('assets.detail.accumulatedDep')}</td>
+                                                    <td className="py-2 text-right">€{statutoryBook.accumulatedDepreciation.toLocaleString('de-DE')}</td>
                                                     <td className="py-2 text-right">€{taxBook.accumulatedDepreciation.toLocaleString('de-DE')}</td>
                                                     <td className="py-2 text-right font-medium">
-                                                        €{(statutoryBook!.accumulatedDepreciation - taxBook.accumulatedDepreciation).toLocaleString('de-DE')}
+                                                        €{(statutoryBook.accumulatedDepreciation - taxBook.accumulatedDepreciation).toLocaleString('de-DE')}
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -298,38 +281,38 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
                                     <div className="flex flex-wrap gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
                                         {canDepreciate(asset) && (
                                             <button className="px-4 py-2 text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-600 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-900/50 flex items-center gap-2">
-                                                <TrendingDown className="w-4 h-4" /> Run Depreciation
+                                                <TrendingDown className="w-4 h-4" /> {t('assets.detail.runDepreciation')}
                                             </button>
                                         )}
                                         <button
                                             onClick={() => setShowDisposalForm(true)}
                                             className="px-4 py-2 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 flex items-center gap-2"
                                         >
-                                            <ShoppingCart className="w-4 h-4" /> Dispose / Sell
+                                            <ShoppingCart className="w-4 h-4" /> {t('assets.detail.disposeSell')}
                                         </button>
                                         <button
                                             onClick={handleHoldForSale}
                                             className="px-4 py-2 text-sm bg-orange-100 dark:bg-orange-900/30 text-orange-600 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-900/50 flex items-center gap-2"
                                         >
-                                            <ArrowRight className="w-4 h-4" /> Hold for Sale
+                                            <ArrowRight className="w-4 h-4" /> {t('assets.detail.holdForSale')}
                                         </button>
                                         <button
                                             onClick={() => setShowWriteOffConfirm(true)}
                                             className="px-4 py-2 text-sm bg-red-100 dark:bg-red-900/30 text-red-600 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 flex items-center gap-2"
                                         >
-                                            <Ban className="w-4 h-4" /> Write Off
+                                            <Ban className="w-4 h-4" /> {t('assets.detail.writeOff')}
                                         </button>
                                     </div>
                                 )}
                             </div>
                         )}
 
-                        {activeTab === 'depreciation' && schedule && (
-                            <DepreciationScheduleView schedule={schedule} asset={asset} />
+                        {activeTab === 'depreciation' && (
+                            <DepreciationScheduleView assetId={asset.id} bookType={BookType.STATUTORY} />
                         )}
 
                         {activeTab === 'history' && (
-                            <AssetLifecycleTimeline events={events} asset={asset} />
+                            <AssetLifecycleTimeline assetId={asset.id} />
                         )}
                     </div>
                 </motion.div>
@@ -359,23 +342,23 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
                         >
                             <div className="flex items-center gap-3 text-red-600 mb-4">
                                 <AlertTriangle className="w-6 h-6" />
-                                <h3 className="text-lg font-semibold">Confirm Write-Off</h3>
+                                <h3 className="text-lg font-semibold">{t('assets.detail.confirmWriteOff')}</h3>
                             </div>
                             <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                Are you sure you want to write off <strong>{asset.name}</strong>? This will remove the remaining book value of €{netBookValue.toLocaleString('de-DE')} and close the asset permanently.
+                                {t('assets.detail.writeOffWarning')} €{netBookValue.toLocaleString('de-DE')}. {t('assets.detail.writeOffReason')}
                             </p>
                             <div className="flex justify-end gap-3">
                                 <button
                                     onClick={() => setShowWriteOffConfirm(false)}
                                     className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900"
                                 >
-                                    Cancel
+                                    {t('common.cancel')}
                                 </button>
                                 <button
                                     onClick={handleWriteOff}
                                     className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
                                 >
-                                    Write Off Asset
+                                    {t('assets.detail.confirmWriteOffButton')}
                                 </button>
                             </div>
                         </motion.div>

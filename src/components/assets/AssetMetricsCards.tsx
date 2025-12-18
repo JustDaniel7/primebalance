@@ -7,15 +7,16 @@ import {
     TrendingDown,
     DollarSign,
     AlertTriangle,
-    Clock,
     CheckCircle2,
 } from 'lucide-react';
 import { Card } from '@/components/ui';
 import { useAssetStore } from '@/store/asset-store';
+import { useThemeStore } from '@/store/theme-store';
 import { AssetStatus, BookType } from '@/types/asset';
 
 export const AssetMetricsCards: React.FC = () => {
     const { assets, assetBooks, calculateTotalNetBookValue } = useAssetStore();
+    const { t } = useThemeStore();
 
     const metrics = useMemo(() => {
         const activeAssets = assets.filter(a => a.isActive);
@@ -53,30 +54,30 @@ export const AssetMetricsCards: React.FC = () => {
 
     const cards = [
         {
-            title: 'Total Assets',
+            title: t('assets.totalAssets'),
             value: metrics.totalAssets.toString(),
-            subtitle: `${metrics.inUse} in use`,
+            subtitle: `${metrics.inUse} ${t('assets.inUse')}`,
             icon: Package,
             color: 'blue',
         },
         {
-            title: 'Net Book Value',
+            title: t('assets.netBookValue'),
             value: `€${metrics.totalNBV.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
-            subtitle: `${metrics.depreciationPercent.toFixed(1)}% depreciated`,
+            subtitle: `${metrics.depreciationPercent.toFixed(1)}% ${t('assets.depreciated')}`,
             icon: DollarSign,
             color: 'green',
         },
         {
-            title: 'Monthly Depreciation',
+            title: t('assets.monthlyDepreciation'),
             value: `€${metrics.monthlyDepreciation.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
-            subtitle: 'Current run rate',
+            subtitle: t('assets.currentRunRate'),
             icon: TrendingDown,
             color: 'purple',
         },
         {
-            title: 'Attention Needed',
+            title: t('assets.attentionNeeded'),
             value: (metrics.fullyDepreciated + metrics.impaired).toString(),
-            subtitle: `${metrics.fullyDepreciated} fully depreciated, ${metrics.impaired} impaired`,
+            subtitle: `${metrics.fullyDepreciated} ${t('assets.fullyDepreciated')}, ${metrics.impaired} ${t('assets.impaired')}`,
             icon: metrics.impaired > 0 ? AlertTriangle : CheckCircle2,
             color: metrics.impaired > 0 ? 'amber' : 'slate',
         },

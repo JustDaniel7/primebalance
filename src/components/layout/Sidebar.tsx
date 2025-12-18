@@ -5,7 +5,7 @@ import { useThemeStore } from '@/store/theme-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft, FileText, Package, Archive, Landmark, TablePropertiesIcon, Wallet, Vault } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft, FileText, Package, Archive, Landmark, TablePropertiesIcon, Wallet, Vault, Boxes } from 'lucide-react';
 import {
   DashboardIcon,
   TransactionsIcon,
@@ -43,6 +43,7 @@ export default function Sidebar() {
     { name: t('nav.inventory'), href: '/dashboard/inventory', icon: TablePropertiesIcon },
     { name: t('nav.receivables'), href: '/dashboard/receivables', icon: Wallet },
     { name: t('nav.treasury'), href: '/dashboard/treasury', icon: Vault },
+    { name: t('nav.assets'), href: '/dashboard/assets', icon: Boxes },
   ];
 
   const secondaryNavigation = [
