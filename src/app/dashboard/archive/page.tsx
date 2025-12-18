@@ -66,7 +66,7 @@ export default function ArchivePage() {
 
     // Get available years
     const availableYears = useMemo(() => {
-        const years = [...new Set(items.map((i) => i.fiscalYear))].sort((a, b) => b - a);
+        const years = Array.from(new Set(items.map((i) => i.fiscalYear))).sort((a, b) => b - a);
         return years;
     }, [items]);
 
