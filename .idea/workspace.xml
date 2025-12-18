@@ -4,21 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="Added Liabilities, Orders and Archive">
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/inventory/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/receivables/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/treasury/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/inventory-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/receivables-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/treasury-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/inventory.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/receivables.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/treasury.ts" afterDir="false" />
+    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="Added Treasury, Inventory and Liabilities">
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/assets/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetDetail.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetLifecycleTimeline.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetMetricsCards.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/AssetRegister.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/DepreciationScheduleView.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/DisposalForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/assets/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/asset-classes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/depreciation-engine.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/asset-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/asset.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/theme-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/theme-store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +108,7 @@
       <updated>1765736094059</updated>
       <workItem from="1765736095428" duration="319000" />
       <workItem from="1765739723974" duration="557000" />
-      <workItem from="1765793420666" duration="23729000" />
+      <workItem from="1765793420666" duration="28291000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -118,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765813594338</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added Treasury, Inventory and Liabilities">
+      <option name="closed" value="true" />
+      <created>1766047994668</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1766047994668</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,7 +134,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Liabilities, Orders and Archive" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Liabilities, Orders and Archive" />
+    <MESSAGE value="Added Treasury, Inventory and Liabilities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Treasury, Inventory and Liabilities" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -135,6 +144,12 @@
           <url>file://$PROJECT_DIR$/src/app/dashboard/chat/page.tsx</url>
           <line>27</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/store/asset-store.ts</url>
+          <line>1055</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
