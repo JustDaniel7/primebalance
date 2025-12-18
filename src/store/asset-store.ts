@@ -194,6 +194,7 @@ interface AssetStore {
 
     // UI State
     setDashboardState: (state: Partial<AssetDashboardState>) => void;
+    setFilters: (filters: Partial<AssetDashboardState['filters']>) => void;
     addNotification: (notification: Omit<AssetNotification, 'id' | 'createdAt'>) => void;
     markNotificationRead: (id: string) => void;
 
@@ -1001,6 +1002,15 @@ export const useAssetStore = create<AssetStore>()(
             setDashboardState: (state) => {
                 set((current) => ({
                     dashboardState: { ...current.dashboardState, ...state },
+                }));
+            },
+
+            setFilters: (filters) => {
+                set((current) => ({
+                    dashboardState: {
+                        ...current.dashboardState,
+                        filters: { ...current.dashboardState.filters, ...filters },
+                    },
                 }));
             },
 
