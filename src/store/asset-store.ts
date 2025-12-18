@@ -1,7 +1,3 @@
-// =============================================================================
-// PRIMEBALANCE - FIXED ASSETS STORE (EVENT-SOURCED)
-// =============================================================================
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
@@ -14,6 +10,7 @@ import {
     AssetCategory,
     DepreciationMethod,
     DepreciationSchedule,
+    DepreciationScheduleEntry,
     BookType,
     ImpairmentRecord,
     RevaluationRecord,
@@ -25,57 +22,139 @@ import {
     AssetNotification,
     AssetRegisterEntry,
 } from '@/types/asset';
-import {
-    generateDepreciationSchedule,
-    calculateBookValue,
-    calculateDisposalGainLoss,
-    calculateImpairmentLoss,
-    calculateCatchUpDepreciation,
-    canDepreciate,
-    calculateRemainingLife,
-} from '@/lib/depreciation-engine';
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+
+function calculateBookValue(book: AssetBook): number {
+    return (
+        book.acquisitionCost -
+        book.accumulatedDepreciation -
+        book.impairmentLosses +
+        book.revaluationSurplus
+    );
+}
+
+function calculateMonthlyDepreciation(
+    method: DepreciationMethod,
+    acquisitionCost: number,
+    salvageValue: number,
+    usefulLifeMonths: number,
+    currentMonth: number,
+    openingBookValue: number
+): number {
+    const depreciableBase = acquisitionCost - salvageValue;
+
+    if (openingBookValue <= salvageValue) {
+        return 0;
+    }
+
+    switch (method) {
+        case DepreciationMethod.STRAIGHT_LINE:
+            return depreciableBase / usefulLifeMonths;
+
+        case DepreciationMethod.DECLINING_BALANCE:
+            const dbRate = 1 / (usefulLifeMonths / 12);
+            return openingBookValue * (dbRate / 12);
+
+        case DepreciationMethod.DOUBLE_DECLINING_BALANCE:
+            const ddbRate = (2 / (usefulLifeMonths / 12)) / 12;
+            return openingBookValue * ddbRate;
+
+        default:
+            return depreciableBase / usefulLifeMonths;
+    }
+}
+
+function mapApiToAsset(api: any): Asset {
+    return {
+        id: api.id,
+        assetNumber: api.assetNumber || `AST-${api.id.slice(-5)}`,
+        name: api.name,
+        description: api.description,
+        assetType: api.assetType || AssetType.TANGIBLE,
+        category: api.category || AssetCategory.IT_EQUIPMENT,
+        internalReference: api.internalReference,
+        legalEntityId: api.legalEntityId || api.organizationId,
+        costCenterId: api.costCenterId,
+        projectId: api.projectId,
+        location: api.location,
+        responsibleParty: api.responsibleParty,
+        currency: api.currency || 'EUR',
+        acquisitionCost: Number(api.acquisitionCost) || Number(api.capitalizedCost) || 0,
+        capitalizedCost: Number(api.capitalizedCost) || Number(api.acquisitionCost) || 0,
+        salvageValue: Number(api.salvageValue) || Number(api.residualValue) || 0,
+        usefulLifeMonths: Number(api.usefulLifeMonths) || 36,
+        depreciationMethod: api.depreciationMethod || DepreciationMethod.STRAIGHT_LINE,
+        depreciationStartDate: api.depreciationStartDate?.split('T')[0],
+        totalUnits: api.totalUnits,
+        unitsProduced: api.unitsProduced,
+        customFormula: api.customFormula,
+        status: api.status || AssetStatus.PLANNED,
+        isActive: api.isActive ?? true,
+        parentAssetId: api.parentAssetId,
+        isComponent: api.isComponent || false,
+        supplierId: api.supplierId,
+        supplierInvoiceId: api.supplierInvoiceId,
+        purchaseOrderId: api.purchaseOrderId,
+        acquisitionDate: api.acquisitionDate?.split('T')[0],
+        disposalDate: api.disposalDate?.split('T')[0],
+        disposalReason: api.disposalReason,
+        salePrice: api.salePrice,
+        buyerReference: api.buyerReference,
+        isLeaseAsset: api.isLeaseAsset || api.acquisitionType === 'lease',
+        leaseId: api.leaseId,
+        isCIP: api.isCIP || api.status === AssetStatus.PLANNED,
+        cipStartDate: api.cipStartDate?.split('T')[0],
+        cipCompletionDate: api.cipCompletionDate?.split('T')[0],
+        tags: api.tags || [],
+        notes: api.notes,
+        attachments: api.attachments || [],
+        createdAt: api.createdAt,
+        updatedAt: api.updatedAt,
+    };
+}
 
 // =============================================================================
 // STORE INTERFACE
 // =============================================================================
 
 interface AssetStore {
-    // Core Data
     assets: Asset[];
     assetBooks: AssetBook[];
     events: AssetEvent[];
     schedules: DepreciationSchedule[];
-
-    // Records
     impairments: ImpairmentRecord[];
     revaluations: RevaluationRecord[];
     transfers: AssetTransfer[];
     disposals: AssetDisposal[];
-
-    // CapEx
     capExBudgets: CapExBudget[];
     capExItems: CapExItem[];
-
-    // Notifications
     notifications: AssetNotification[];
-
-    // UI State
     dashboardState: AssetDashboardState;
-
-    // Counters
     lastAssetNumber: number;
+    isLoading: boolean;
+    error: string | null;
+    isInitialized: boolean;
+
+    // API
+    fetchAssets: () => Promise<void>;
 
     // Asset CRUD
-    //createAsset: (asset: Omit<Asset, 'id' | 'assetNumber' | 'createdAt' | 'updatedAt' | 'status'>) => string;
-    createAsset: (asset: Omit<Asset, 'id' | 'assetNumber' | 'createdAt' | 'updatedAt' | 'status' | 'isActive' | 'isComponent' | 'isLeaseAsset' | 'isCIP'> & { isLeaseAsset?: boolean; isCIP?: boolean; isComponent?: boolean; isActive?: boolean }) => string;
+    createAsset: (asset: Omit<Asset, 'id' | 'assetNumber' | 'createdAt' | 'updatedAt' | 'status' | 'isActive' | 'isComponent' | 'isLeaseAsset' | 'isCIP'> & {
+        isLeaseAsset?: boolean;
+        isCIP?: boolean;
+        isComponent?: boolean;
+        isActive?: boolean;
+    }) => string;
     updateAsset: (id: string, updates: Partial<Asset>, reason?: string) => void;
+    deleteAsset: (id: string) => void;
     getAsset: (id: string) => Asset | undefined;
     getAssetsByStatus: (status: AssetStatus) => Asset[];
     getAssetsByCategory: (category: AssetCategory) => Asset[];
-    getAssetsByEntity: (entityId: string) => Asset[];
-    getComponentAssets: (parentId: string) => Asset[];
 
-    // Asset Lifecycle
+    // Lifecycle
     acquireAsset: (id: string, acquisitionDate: string, acquisitionCost: number, actor: string) => void;
     capitalizeAsset: (id: string, capitalizationDate: string, actor: string) => void;
     putInUse: (id: string, startDate: string, actor: string) => void;
@@ -92,7 +171,7 @@ interface AssetStore {
     // Depreciation
     generateSchedule: (assetId: string, bookType: BookType) => DepreciationSchedule;
     postDepreciation: (assetId: string, bookType: BookType, periodDate: string, actor: string) => void;
-    postAllDueDepreciation: (periodDate: string, actor: string) => number;
+    runDepreciation: (assetId: string, bookType: BookType, periodDate: string, actor: string) => void;
     getSchedule: (assetId: string, bookType: BookType) => DepreciationSchedule | undefined;
 
     // Impairment & Revaluation
@@ -109,25 +188,25 @@ interface AssetStore {
     updateCapExItem: (id: string, updates: Partial<CapExItem>) => void;
 
     // Events
+    recordEvent: (event: Omit<AssetEvent, 'id' | 'timestamp'>) => AssetEvent;
     getAssetEvents: (assetId: string) => AssetEvent[];
-    getEventsByType: (eventType: AssetEventType) => AssetEvent[];
-
-    // Reporting
-    getAssetRegister: (filters?: Partial<AssetDashboardState['filters']>) => AssetRegisterEntry[];
-    calculateTotalNetBookValue: (bookType?: BookType) => number;
-
-    // Notifications
-    addNotification: (notification: Omit<AssetNotification, 'id' | 'createdAt'>) => void;
-    markNotificationRead: (id: string) => void;
-    clearNotifications: () => void;
 
     // UI State
-    setDashboardState: (updates: Partial<AssetDashboardState>) => void;
-    setFilters: (filters: Partial<AssetDashboardState['filters']>) => void;
-    selectAsset: (id: string | null) => void;
+    setDashboardState: (state: Partial<AssetDashboardState>) => void;
+    addNotification: (notification: Omit<AssetNotification, 'id' | 'createdAt'>) => void;
+    markNotificationRead: (id: string) => void;
 
-    // Utilities
-    generateAssetNumber: () => string;
+    // Analytics
+    getSummary: () => {
+        totalAssets: number;
+        totalValue: number;
+        totalDepreciation: number;
+        netBookValue: number;
+        byStatus: Record<AssetStatus, number>;
+        byCategory: Record<AssetCategory, number>;
+    };
+    getAssetRegister: () => AssetRegisterEntry[];
+    calculateTotalNetBookValue: (bookType?: BookType) => number;
 }
 
 // =============================================================================
@@ -158,7 +237,6 @@ const initialDashboardState: AssetDashboardState = {
 export const useAssetStore = create<AssetStore>()(
     persist(
         (set, get) => ({
-            // Initial State
             assets: [],
             assetBooks: [],
             events: [],
@@ -172,317 +250,279 @@ export const useAssetStore = create<AssetStore>()(
             notifications: [],
             dashboardState: initialDashboardState,
             lastAssetNumber: 0,
+            isLoading: false,
+            error: null,
+            isInitialized: false,
 
-            // =========================================================================
+            // =================================================================
+            // API
+            // =================================================================
+
+            fetchAssets: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/assets');
+                    if (!response.ok) throw new Error('Failed to fetch assets');
+                    const data = await response.json();
+                    const assets = (data.assets || data || []).map(mapApiToAsset);
+                    set({ assets, isLoading: false, isInitialized: true });
+                } catch (error) {
+                    console.error('Failed to fetch assets:', error);
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+                }
+            },
+
+            // =================================================================
             // ASSET CRUD
-            // =========================================================================
+            // =================================================================
 
             createAsset: (assetData) => {
-                const id = `asset-${Date.now()}`;
-                const assetNumber = get().generateAssetNumber();
                 const now = new Date().toISOString();
+                const newNumber = get().lastAssetNumber + 1;
+                const id = `ast-${Date.now()}`;
 
-                const asset: Asset = {
+                const newAsset: Asset = {
                     ...assetData,
                     id,
-                    assetNumber,
-                    status: AssetStatus.PLANNED,
-                    isActive: true,
-                    isComponent: assetData.parentAssetId ? true : false,
+                    assetNumber: `AST-${String(newNumber).padStart(5, '0')}`,
+                    status: assetData.isCIP ? AssetStatus.PLANNED : AssetStatus.PLANNED,
+                    isActive: assetData.isActive ?? true,
+                    isComponent: assetData.isComponent ?? false,
                     isLeaseAsset: assetData.isLeaseAsset ?? false,
                     isCIP: assetData.isCIP ?? false,
                     createdAt: now,
                     updatedAt: now,
                 };
 
-                // Create event
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
-                    assetId: id,
-                    eventType: AssetEventType.ASSET_CREATED,
-                    timestamp: now,
-                    actor: 'system',
-                    newStatus: AssetStatus.PLANNED,
-                    metadata: { assetNumber },
-                };
-
                 set((state) => ({
-                    assets: [...state.assets, asset],
-                    events: [...state.events, event],
-                    lastAssetNumber: state.lastAssetNumber + 1,
+                    assets: [...state.assets, newAsset],
+                    lastAssetNumber: newNumber,
                 }));
 
-                // Auto-create statutory book
+                // Create statutory book automatically
                 get().createAssetBook(id, BookType.STATUTORY);
+
+                // Record event
+                get().recordEvent({
+                    assetId: id,
+                    eventType: AssetEventType.ASSET_CREATED,
+                    actor: 'user',
+                    newStatus: AssetStatus.PLANNED,
+                    newValue: assetData.acquisitionCost,
+                });
+
+                // Background API sync
+                fetch('/api/assets', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(assetData),
+                }).catch(console.error);
 
                 return id;
             },
 
             updateAsset: (id, updates, reason) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
+                const asset = get().assets.find((a) => a.id === id);
                 if (!asset) return;
 
                 set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? { ...a, ...updates, updatedAt: now } : a
+                    assets: state.assets.map((a) =>
+                        a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a
                     ),
                 }));
 
-                // Record event for status changes
-                if (updates.status && updates.status !== asset.status) {
-                    const event: AssetEvent = {
-                        id: `event-${Date.now()}`,
-                        assetId: id,
-                        eventType: AssetEventType.ASSET_TRANSFERRED, // Generic update
-                        timestamp: now,
-                        actor: 'user',
-                        reason,
-                        previousStatus: asset.status,
-                        newStatus: updates.status,
-                    };
+                get().recordEvent({
+                    assetId: id,
+                    eventType: AssetEventType.ASSET_CREATED, // Using ASSET_CREATED as generic modification
+                    actor: 'user',
+                    reason,
+                    previousStatus: asset.status,
+                    newStatus: updates.status || asset.status,
+                });
 
-                    set((state) => ({
-                        events: [...state.events, event],
-                    }));
+                fetch(`/api/assets/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
+            },
+
+            deleteAsset: (id) => {
+                set((state) => ({
+                    assets: state.assets.filter((a) => a.id !== id),
+                    assetBooks: state.assetBooks.filter((b) => b.assetId !== id),
+                    events: state.events.filter((e) => e.assetId !== id),
+                }));
+
+                fetch(`/api/assets/${id}`, { method: 'DELETE' }).catch(console.error);
+            },
+
+            getAsset: (id) => get().assets.find((a) => a.id === id),
+
+            getAssetsByStatus: (status) => get().assets.filter((a) => a.status === status),
+
+            getAssetsByCategory: (category) => get().assets.filter((a) => a.category === category),
+
+            // =================================================================
+            // LIFECYCLE
+            // =================================================================
+
+            acquireAsset: (id, acquisitionDate, acquisitionCost, actor) => {
+                const asset = get().assets.find((a) => a.id === id);
+                if (!asset) return;
+
+                get().updateAsset(id, {
+                    status: AssetStatus.ACQUIRED,
+                    acquisitionDate,
+                    acquisitionCost,
+                    capitalizedCost: acquisitionCost,
+                });
+
+                get().recordEvent({
+                    assetId: id,
+                    eventType: AssetEventType.ASSET_ACQUIRED,
+                    actor,
+                    previousStatus: asset.status,
+                    newStatus: AssetStatus.ACQUIRED,
+                    newValue: acquisitionCost,
+                });
+
+                // Update statutory book
+                const book = get().getAssetBook(id, BookType.STATUTORY);
+                if (book) {
+                    get().updateAssetBook(book.id, {
+                        acquisitionCost,
+                        netBookValue: acquisitionCost,
+                    });
                 }
             },
 
-            getAsset: (id) => get().assets.find(a => a.id === id),
+            capitalizeAsset: (id, capitalizationDate, actor) => {
+                const asset = get().assets.find((a) => a.id === id);
+                if (!asset) return;
 
-            getAssetsByStatus: (status) => get().assets.filter(a => a.status === status),
-
-            getAssetsByCategory: (category) => get().assets.filter(a => a.category === category),
-
-            getAssetsByEntity: (entityId) => get().assets.filter(a => a.legalEntityId === entityId),
-
-            getComponentAssets: (parentId) => get().assets.filter(a => a.parentAssetId === parentId),
-
-            // =========================================================================
-            // ASSET LIFECYCLE
-            // =========================================================================
-
-            acquireAsset: (id, acquisitionDate, acquisitionCost, actor) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
-                if (!asset || asset.status !== AssetStatus.PLANNED) return;
-
-                set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? {
-                            ...a,
-                            status: AssetStatus.ACQUIRED,
-                            acquisitionDate,
-                            acquisitionCost,
-                            capitalizedCost: acquisitionCost,
-                            updatedAt: now,
-                        } : a
-                    ),
-                }));
-
-                // Update books
-                get().assetBooks.filter(b => b.assetId === id).forEach(book => {
-                    get().updateAssetBook(book.id, { acquisitionCost });
+                get().updateAsset(id, {
+                    status: AssetStatus.CAPITALIZED,
+                    depreciationStartDate: capitalizationDate,
+                    isCIP: false,
+                    cipCompletionDate: capitalizationDate,
                 });
 
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
-                    assetId: id,
-                    eventType: AssetEventType.ASSET_ACQUIRED,
-                    timestamp: now,
-                    actor,
-                    previousStatus: AssetStatus.PLANNED,
-                    newStatus: AssetStatus.ACQUIRED,
-                    newValue: acquisitionCost,
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
-            },
-
-            capitalizeAsset: (id, capitalizationDate, actor) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
-                if (!asset || asset.status !== AssetStatus.ACQUIRED) return;
-
-                set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? {
-                            ...a,
-                            status: AssetStatus.CAPITALIZED,
-                            depreciationStartDate: capitalizationDate,
-                            updatedAt: now,
-                        } : a
-                    ),
-                }));
-
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
+                get().recordEvent({
                     assetId: id,
                     eventType: AssetEventType.ASSET_CAPITALIZED,
-                    timestamp: now,
                     actor,
-                    previousStatus: AssetStatus.ACQUIRED,
+                    previousStatus: asset.status,
                     newStatus: AssetStatus.CAPITALIZED,
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
-
-                // Generate depreciation schedules
-                get().assetBooks.filter(b => b.assetId === id).forEach(book => {
-                    get().generateSchedule(id, book.bookType);
                 });
             },
 
             putInUse: (id, startDate, actor) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
-                if (!asset || asset.status !== AssetStatus.CAPITALIZED) return;
+                const asset = get().assets.find((a) => a.id === id);
+                if (!asset) return;
 
-                set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? {
-                            ...a,
-                            status: AssetStatus.IN_USE,
-                            depreciationStartDate: a.depreciationStartDate || startDate,
-                            updatedAt: now,
-                        } : a
-                    ),
-                }));
+                get().updateAsset(id, {
+                    status: AssetStatus.IN_USE,
+                    depreciationStartDate: asset.depreciationStartDate || startDate,
+                });
 
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
+                get().recordEvent({
                     assetId: id,
                     eventType: AssetEventType.ASSET_CAPITALIZED,
-                    timestamp: now,
                     actor,
-                    previousStatus: AssetStatus.CAPITALIZED,
+                    previousStatus: asset.status,
                     newStatus: AssetStatus.IN_USE,
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
+                });
             },
 
             holdForSale: (id, reason, actor) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
+                const asset = get().assets.find((a) => a.id === id);
                 if (!asset) return;
 
-                set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? {
-                            ...a,
-                            status: AssetStatus.HELD_FOR_SALE,
-                            updatedAt: now,
-                        } : a
-                    ),
-                }));
+                get().updateAsset(id, {
+                    status: AssetStatus.HELD_FOR_SALE,
+                });
 
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
+                get().recordEvent({
                     assetId: id,
                     eventType: AssetEventType.ASSET_HELD_FOR_SALE,
-                    timestamp: now,
                     actor,
                     reason,
                     previousStatus: asset.status,
                     newStatus: AssetStatus.HELD_FOR_SALE,
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
+                });
             },
 
-            disposeAsset: (id, disposalData, actor) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
+            disposeAsset: (id, disposal, actor) => {
+                const asset = get().assets.find((a) => a.id === id);
                 if (!asset) return;
 
                 const book = get().getAssetBook(id, BookType.STATUTORY);
-                const carryingAmount = book ? calculateBookValue(book) : 0;
+                const carryingAmount = book ? calculateBookValue(book) : asset.capitalizedCost;
+                const gainOrLoss = (disposal.salePrice || 0) - carryingAmount;
 
-                const gainLoss = calculateDisposalGainLoss(
-                    carryingAmount,
-                    disposalData.salePrice || 0
-                );
-
-                const eventId = `event-${Date.now()}`;
-                const disposal: AssetDisposal = {
-                    id: `disposal-${Date.now()}`,
-                    ...disposalData,
+                const eventId = `evt-${Date.now()}`;
+                const disposalRecord: AssetDisposal = {
+                    ...disposal,
+                    id: `disp-${Date.now()}`,
                     assetId: id,
                     carryingAmount,
                     accumulatedDepreciation: book?.accumulatedDepreciation || 0,
-                    gainOrLoss: gainLoss.amount,
-                    isGain: gainLoss.isGain,
+                    gainOrLoss,
+                    isGain: gainOrLoss >= 0,
                     eventId,
                 };
 
-                const newStatus = disposalData.disposalType === 'SALE' ? AssetStatus.SOLD : AssetStatus.DISPOSED;
-
                 set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? {
-                            ...a,
-                            status: newStatus,
-                            isActive: false,
-                            disposalDate: disposalData.disposalDate,
-                            disposalReason: disposalData.reason,
-                            salePrice: disposalData.salePrice,
-                            buyerReference: disposalData.buyerReference,
-                            updatedAt: now,
-                        } : a
-                    ),
-                    disposals: [...state.disposals, disposal],
+                    disposals: [...state.disposals, disposalRecord],
                 }));
 
-                const event: AssetEvent = {
-                    id: eventId,
+                get().updateAsset(id, {
+                    status: disposal.disposalType === 'SALE' ? AssetStatus.SOLD : AssetStatus.DISPOSED,
+                    isActive: false,
+                    disposalDate: disposal.disposalDate,
+                    disposalReason: disposal.reason,
+                    salePrice: disposal.salePrice,
+                    buyerReference: disposal.buyerReference,
+                });
+
+                get().recordEvent({
                     assetId: id,
-                    eventType: disposalData.disposalType === 'SALE' ? AssetEventType.ASSET_SOLD : AssetEventType.ASSET_DISPOSED,
-                    timestamp: now,
+                    eventType: disposal.disposalType === 'SALE' ? AssetEventType.ASSET_SOLD : AssetEventType.ASSET_DISPOSED,
                     actor,
-                    reason: disposalData.reason,
+                    reason: disposal.reason,
                     previousStatus: asset.status,
-                    newStatus,
+                    newStatus: disposal.disposalType === 'SALE' ? AssetStatus.SOLD : AssetStatus.DISPOSED,
                     previousValue: carryingAmount,
                     newValue: 0,
-                    amount: gainLoss.amount,
-                    metadata: { isGain: gainLoss.isGain },
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
-
-                // Deactivate books
-                get().assetBooks.filter(b => b.assetId === id).forEach(book => {
-                    get().updateAssetBook(book.id, { isActive: false });
+                    amount: gainOrLoss,
                 });
             },
 
             writeOffAsset: (id, reason, actor) => {
-                const now = new Date().toISOString();
-                const asset = get().assets.find(a => a.id === id);
+                const asset = get().assets.find((a) => a.id === id);
                 if (!asset) return;
 
                 const book = get().getAssetBook(id, BookType.STATUTORY);
-                const carryingAmount = book ? calculateBookValue(book) : 0;
+                const carryingAmount = book ? calculateBookValue(book) : asset.capitalizedCost;
 
-                set((state) => ({
-                    assets: state.assets.map(a =>
-                        a.id === id ? {
-                            ...a,
-                            status: AssetStatus.WRITTEN_OFF,
-                            isActive: false,
-                            disposalDate: now.split('T')[0],
-                            disposalReason: reason,
-                            updatedAt: now,
-                        } : a
-                    ),
-                }));
+                get().updateAsset(id, {
+                    status: AssetStatus.WRITTEN_OFF,
+                    isActive: false,
+                    disposalDate: new Date().toISOString().split('T')[0],
+                    disposalReason: reason,
+                });
 
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
+                if (book) {
+                    get().updateAssetBook(book.id, {
+                        isActive: false,
+                        netBookValue: 0,
+                    });
+                }
+
+                get().recordEvent({
                     assetId: id,
                     eventType: AssetEventType.ASSET_WRITTEN_OFF,
-                    timestamp: now,
                     actor,
                     reason,
                     previousStatus: asset.status,
@@ -490,26 +530,21 @@ export const useAssetStore = create<AssetStore>()(
                     previousValue: carryingAmount,
                     newValue: 0,
                     amount: carryingAmount,
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
-
-                // Deactivate books
-                get().assetBooks.filter(b => b.assetId === id).forEach(book => {
-                    get().updateAssetBook(book.id, { isActive: false, netBookValue: 0 });
                 });
             },
 
-            // =========================================================================
+            // =================================================================
             // MULTI-BOOK
-            // =========================================================================
+            // =================================================================
 
             createAssetBook: (assetId, bookType, overrides) => {
-                const asset = get().assets.find(a => a.id === assetId);
+                const asset = get().assets.find((a) => a.id === assetId);
                 if (!asset) return '';
 
-                // Check if book already exists
-                const existing = get().assetBooks.find(b => b.assetId === assetId && b.bookType === bookType);
+                // Check if book exists
+                const existing = get().assetBooks.find(
+                    (b) => b.assetId === assetId && b.bookType === bookType
+                );
                 if (existing) return existing.id;
 
                 const id = `book-${Date.now()}-${bookType}`;
@@ -538,35 +573,95 @@ export const useAssetStore = create<AssetStore>()(
 
             updateAssetBook: (id, updates) => {
                 set((state) => ({
-                    assetBooks: state.assetBooks.map(b =>
-                        b.id === id ? { ...b, ...updates, netBookValue: calculateBookValue({ ...b, ...updates }) } : b
-                    ),
+                    assetBooks: state.assetBooks.map((b) => {
+                        if (b.id !== id) return b;
+                        const updated = { ...b, ...updates };
+                        updated.netBookValue = calculateBookValue(updated);
+                        return updated;
+                    }),
                 }));
             },
 
-            getAssetBooks: (assetId) => get().assetBooks.filter(b => b.assetId === assetId),
+            getAssetBooks: (assetId) => get().assetBooks.filter((b) => b.assetId === assetId),
 
             getAssetBook: (assetId, bookType) =>
-                get().assetBooks.find(b => b.assetId === assetId && b.bookType === bookType),
+                get().assetBooks.find((b) => b.assetId === assetId && b.bookType === bookType),
 
-            // =========================================================================
+            // =================================================================
             // DEPRECIATION
-            // =========================================================================
+            // =================================================================
 
             generateSchedule: (assetId, bookType) => {
-                const asset = get().assets.find(a => a.id === assetId);
+                const asset = get().assets.find((a) => a.id === assetId);
                 const book = get().getAssetBook(assetId, bookType);
 
                 if (!asset || !book) {
-                    return { assetId, bookType, entries: [], totalDepreciation: 0, totalPeriods: 0, generatedAt: new Date().toISOString() };
+                    return {
+                        assetId,
+                        bookType,
+                        entries: [],
+                        totalDepreciation: 0,
+                        totalPeriods: 0,
+                        generatedAt: new Date().toISOString(),
+                    };
                 }
 
-                const schedule = generateDepreciationSchedule(asset, book);
+                const entries: DepreciationScheduleEntry[] = [];
+                let openingValue = book.acquisitionCost;
+                let accumulatedDep = 0;
 
-                // Remove existing schedule and add new one
+                for (let i = 1; i <= book.usefulLifeMonths; i++) {
+                    const depAmount = calculateMonthlyDepreciation(
+                        book.depreciationMethod,
+                        book.acquisitionCost,
+                        book.salvageValue,
+                        book.usefulLifeMonths,
+                        i,
+                        openingValue
+                    );
+
+                    accumulatedDep += depAmount;
+                    const closingValue = Math.max(book.salvageValue, openingValue - depAmount);
+
+                    const startDate = new Date(asset.depreciationStartDate || asset.createdAt);
+                    startDate.setMonth(startDate.getMonth() + i - 1);
+                    const endDate = new Date(startDate);
+                    endDate.setMonth(endDate.getMonth() + 1);
+                    endDate.setDate(endDate.getDate() - 1);
+
+                    entries.push({
+                        id: `sched-${assetId}-${bookType}-${i}`,
+                        assetId,
+                        bookType,
+                        periodNumber: i,
+                        periodStartDate: startDate.toISOString().split('T')[0],
+                        periodEndDate: endDate.toISOString().split('T')[0],
+                        openingBookValue: openingValue,
+                        depreciationAmount: depAmount,
+                        accumulatedDepreciation: accumulatedDep,
+                        closingBookValue: closingValue,
+                        isPosted: false,
+                    });
+
+                    openingValue = closingValue;
+                    if (openingValue <= book.salvageValue) break;
+                }
+
+                const schedule: DepreciationSchedule = {
+                    assetId,
+                    bookType,
+                    entries,
+                    totalDepreciation: accumulatedDep,
+                    totalPeriods: entries.length,
+                    generatedAt: new Date().toISOString(),
+                };
+
+                // Store schedule
                 set((state) => ({
                     schedules: [
-                        ...state.schedules.filter(s => !(s.assetId === assetId && s.bookType === bookType)),
+                        ...state.schedules.filter(
+                            (s) => !(s.assetId === assetId && s.bookType === bookType)
+                        ),
                         schedule,
                     ],
                 }));
@@ -575,106 +670,74 @@ export const useAssetStore = create<AssetStore>()(
             },
 
             postDepreciation: (assetId, bookType, periodDate, actor) => {
-                const schedule = get().getSchedule(assetId, bookType);
+                get().runDepreciation(assetId, bookType, periodDate, actor);
+            },
+
+            runDepreciation: (assetId, bookType, periodDate, actor) => {
                 const book = get().getAssetBook(assetId, bookType);
-                const asset = get().assets.find(a => a.id === assetId);
+                if (!book) return;
 
-                if (!schedule || !book || !asset || !canDepreciate(asset)) return;
-
-                const now = new Date().toISOString();
-                const entry = schedule.entries.find(e =>
-                    !e.isPosted && new Date(e.periodEndDate) <= new Date(periodDate)
+                const depAmount = calculateMonthlyDepreciation(
+                    book.depreciationMethod,
+                    book.acquisitionCost,
+                    book.salvageValue,
+                    book.usefulLifeMonths,
+                    1, // Current period
+                    book.netBookValue
                 );
 
-                if (!entry) return;
+                const newAccumulated = book.accumulatedDepreciation + depAmount;
+                const newNetBookValue = calculateBookValue({
+                    ...book,
+                    accumulatedDepreciation: newAccumulated,
+                });
 
-                // Update schedule entry
-                const updatedSchedule: DepreciationSchedule = {
-                    ...schedule,
-                    entries: schedule.entries.map(e =>
-                        e.id === entry.id ? { ...e, isPosted: true, postedAt: now } : e
-                    ),
-                };
-
-                set((state) => ({
-                    schedules: state.schedules.map(s =>
-                        s.assetId === assetId && s.bookType === bookType ? updatedSchedule : s
-                    ),
-                }));
-
-                // Update book
-                const newAccumulated = book.accumulatedDepreciation + entry.depreciationAmount;
                 get().updateAssetBook(book.id, {
                     accumulatedDepreciation: newAccumulated,
+                    netBookValue: newNetBookValue,
                     lastDepreciationDate: periodDate,
                 });
 
-                // Check if fully depreciated
-                if (entry.closingBookValue <= book.salvageValue) {
-                    get().updateAsset(assetId, { status: AssetStatus.FULLY_DEPRECIATED });
-                }
-
-                // Record event
-                const event: AssetEvent = {
-                    id: `event-${Date.now()}`,
+                get().recordEvent({
                     assetId,
                     eventType: AssetEventType.DEPRECIATION_POSTED,
-                    timestamp: now,
                     actor,
-                    amount: entry.depreciationAmount,
-                    metadata: { periodNumber: entry.periodNumber, bookType },
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
-            },
-
-            postAllDueDepreciation: (periodDate, actor) => {
-                let count = 0;
-                const assets = get().assets.filter(a => canDepreciate(a));
-
-                assets.forEach(asset => {
-                    get().assetBooks.filter(b => b.assetId === asset.id && b.isActive).forEach(book => {
-                        const schedule = get().getSchedule(asset.id, book.bookType);
-                        if (!schedule) return;
-
-                        const dueEntries = schedule.entries.filter(e =>
-                            !e.isPosted && new Date(e.periodEndDate) <= new Date(periodDate)
-                        );
-
-                        dueEntries.forEach(() => {
-                            get().postDepreciation(asset.id, book.bookType, periodDate, actor);
-                            count++;
-                        });
-                    });
+                    amount: depAmount,
+                    previousValue: book.netBookValue,
+                    newValue: newNetBookValue,
                 });
 
-                return count;
+                // Check if fully depreciated
+                if (newNetBookValue <= book.salvageValue) {
+                    const asset = get().assets.find((a) => a.id === assetId);
+                    if (asset && asset.status === AssetStatus.IN_USE) {
+                        get().updateAsset(assetId, { status: AssetStatus.FULLY_DEPRECIATED });
+                    }
+                }
             },
 
             getSchedule: (assetId, bookType) =>
-                get().schedules.find(s => s.assetId === assetId && s.bookType === bookType),
+                get().schedules.find((s) => s.assetId === assetId && s.bookType === bookType),
 
-            // =========================================================================
+            // =================================================================
             // IMPAIRMENT & REVALUATION
-            // =========================================================================
+            // =================================================================
 
             recordImpairment: (assetId, bookType, recoverableAmount, reason, actor) => {
                 const book = get().getAssetBook(assetId, bookType);
-                const asset = get().assets.find(a => a.id === assetId);
-                if (!book || !asset) return;
+                if (!book) return;
 
-                const now = new Date().toISOString();
                 const carryingAmount = calculateBookValue(book);
-                const impairmentLoss = calculateImpairmentLoss(carryingAmount, recoverableAmount);
+                if (recoverableAmount >= carryingAmount) return; // No impairment needed
 
-                if (impairmentLoss === 0) return;
+                const impairmentLoss = carryingAmount - recoverableAmount;
+                const eventId = `evt-${Date.now()}`;
 
-                const eventId = `event-${Date.now()}`;
                 const record: ImpairmentRecord = {
-                    id: `impairment-${Date.now()}`,
+                    id: `imp-${Date.now()}`,
                     assetId,
                     bookType,
-                    impairmentDate: now.split('T')[0],
+                    impairmentDate: new Date().toISOString().split('T')[0],
                     previousCarryingAmount: carryingAmount,
                     recoverableAmount,
                     impairmentLoss,
@@ -686,53 +749,40 @@ export const useAssetStore = create<AssetStore>()(
                     impairments: [...state.impairments, record],
                 }));
 
-                // Update book
                 get().updateAssetBook(book.id, {
                     impairmentLosses: book.impairmentLosses + impairmentLoss,
                 });
 
-                // Update asset status
-                get().updateAsset(assetId, { status: AssetStatus.IMPAIRED });
-
-                // Record event
-                const event: AssetEvent = {
-                    id: eventId,
+                get().recordEvent({
                     assetId,
                     eventType: AssetEventType.IMPAIRMENT_RECORDED,
-                    timestamp: now,
                     actor,
                     reason,
                     previousValue: carryingAmount,
                     newValue: recoverableAmount,
                     amount: impairmentLoss,
-                };
+                });
 
-                set((state) => ({ events: [...state.events, event] }));
-
-                // Regenerate schedule with new values
-                get().generateSchedule(assetId, bookType);
+                get().updateAsset(assetId, { status: AssetStatus.IMPAIRED });
             },
 
             recordRevaluation: (assetId, bookType, fairValue, reason, actor) => {
                 const book = get().getAssetBook(assetId, bookType);
-                const asset = get().assets.find(a => a.id === assetId);
-                if (!book || !asset) return;
+                if (!book) return;
 
-                const now = new Date().toISOString();
                 const carryingAmount = calculateBookValue(book);
                 const revaluationAmount = fairValue - carryingAmount;
-                const isIncrease = revaluationAmount > 0;
+                const eventId = `evt-${Date.now()}`;
 
-                const eventId = `event-${Date.now()}`;
                 const record: RevaluationRecord = {
-                    id: `revaluation-${Date.now()}`,
+                    id: `reval-${Date.now()}`,
                     assetId,
                     bookType,
-                    revaluationDate: now.split('T')[0],
+                    revaluationDate: new Date().toISOString().split('T')[0],
                     previousCarryingAmount: carryingAmount,
                     fairValue,
                     revaluationAmount: Math.abs(revaluationAmount),
-                    isIncrease,
+                    isIncrease: revaluationAmount > 0,
                     reason,
                     eventId,
                 };
@@ -741,92 +791,83 @@ export const useAssetStore = create<AssetStore>()(
                     revaluations: [...state.revaluations, record],
                 }));
 
-                // Update book
-                if (isIncrease) {
+                if (revaluationAmount > 0) {
                     get().updateAssetBook(book.id, {
                         revaluationSurplus: book.revaluationSurplus + revaluationAmount,
                     });
                 } else {
-                    // Decrease goes against existing surplus first, then P&L
-                    const surplusReduction = Math.min(book.revaluationSurplus, Math.abs(revaluationAmount));
-                    get().updateAssetBook(book.id, {
-                        revaluationSurplus: book.revaluationSurplus - surplusReduction,
-                        impairmentLosses: book.impairmentLosses + (Math.abs(revaluationAmount) - surplusReduction),
-                    });
+                    // Decrease - reduce surplus first, then impairment
+                    const decrease = Math.abs(revaluationAmount);
+                    if (book.revaluationSurplus >= decrease) {
+                        get().updateAssetBook(book.id, {
+                            revaluationSurplus: book.revaluationSurplus - decrease,
+                        });
+                    } else {
+                        const remainingDecrease = decrease - book.revaluationSurplus;
+                        get().updateAssetBook(book.id, {
+                            revaluationSurplus: 0,
+                            impairmentLosses: book.impairmentLosses + remainingDecrease,
+                        });
+                    }
                 }
 
-                // Record event
-                const event: AssetEvent = {
-                    id: eventId,
+                get().recordEvent({
                     assetId,
                     eventType: AssetEventType.REVALUATION_RECORDED,
-                    timestamp: now,
                     actor,
                     reason,
                     previousValue: carryingAmount,
                     newValue: fairValue,
-                    amount: Math.abs(revaluationAmount),
-                    metadata: { isIncrease },
-                };
-
-                set((state) => ({ events: [...state.events, event] }));
+                    amount: revaluationAmount,
+                });
             },
 
-            // =========================================================================
+            // =================================================================
             // TRANSFERS
-            // =========================================================================
+            // =================================================================
 
-            transferAsset: (transferData, actor) => {
-                const asset = get().assets.find(a => a.id === transferData.assetId);
-                if (!asset) return;
+            transferAsset: (transfer, actor) => {
+                const eventId = `evt-${Date.now()}`;
 
-                const now = new Date().toISOString();
-                const eventId = `event-${Date.now()}`;
-
-                const transfer: AssetTransfer = {
-                    id: `transfer-${Date.now()}`,
-                    ...transferData,
+                const transferRecord: AssetTransfer = {
+                    ...transfer,
+                    id: `xfer-${Date.now()}`,
                     eventId,
                 };
 
-                // Update asset with new assignments
-                const updates: Partial<Asset> = { updatedAt: now };
-                if (transferData.toEntityId) updates.legalEntityId = transferData.toEntityId;
-                if (transferData.toCostCenterId) updates.costCenterId = transferData.toCostCenterId;
-                if (transferData.toLocation) updates.location = transferData.toLocation;
-                if (transferData.toResponsibleParty) updates.responsibleParty = transferData.toResponsibleParty;
-
                 set((state) => ({
-                    assets: state.assets.map(a => a.id === transferData.assetId ? { ...a, ...updates } : a),
-                    transfers: [...state.transfers, transfer],
+                    transfers: [...state.transfers, transferRecord],
                 }));
 
-                // Record event
-                const event: AssetEvent = {
-                    id: eventId,
-                    assetId: transferData.assetId,
-                    eventType: AssetEventType.ASSET_TRANSFERRED,
-                    timestamp: now,
-                    actor,
-                    reason: transferData.reason,
-                    fromEntityId: transferData.fromEntityId,
-                    toEntityId: transferData.toEntityId,
-                    fromCostCenterId: transferData.fromCostCenterId,
-                    toCostCenterId: transferData.toCostCenterId,
-                    fromLocation: transferData.fromLocation,
-                    toLocation: transferData.toLocation,
-                };
+                const updates: Partial<Asset> = {};
+                if (transfer.toEntityId) updates.legalEntityId = transfer.toEntityId;
+                if (transfer.toCostCenterId) updates.costCenterId = transfer.toCostCenterId;
+                if (transfer.toLocation) updates.location = transfer.toLocation;
+                if (transfer.toResponsibleParty) updates.responsibleParty = transfer.toResponsibleParty;
 
-                set((state) => ({ events: [...state.events, event] }));
+                get().updateAsset(transfer.assetId, updates);
+
+                get().recordEvent({
+                    assetId: transfer.assetId,
+                    eventType: AssetEventType.ASSET_TRANSFERRED,
+                    actor,
+                    reason: transfer.reason,
+                    fromEntityId: transfer.fromEntityId,
+                    toEntityId: transfer.toEntityId,
+                    fromCostCenterId: transfer.fromCostCenterId,
+                    toCostCenterId: transfer.toCostCenterId,
+                    fromLocation: transfer.fromLocation,
+                    toLocation: transfer.toLocation,
+                });
             },
 
-            // =========================================================================
+            // =================================================================
             // CAPEX
-            // =========================================================================
+            // =================================================================
 
             createCapExBudget: (budgetData) => {
-                const id = `capex-budget-${Date.now()}`;
                 const now = new Date().toISOString();
+                const id = `capex-${Date.now()}`;
 
                 const budget: CapExBudget = {
                     ...budgetData,
@@ -847,7 +888,7 @@ export const useAssetStore = create<AssetStore>()(
 
             updateCapExBudget: (id, updates) => {
                 set((state) => ({
-                    capExBudgets: state.capExBudgets.map(b => {
+                    capExBudgets: state.capExBudgets.map((b) => {
                         if (b.id !== id) return b;
                         const updated = { ...b, ...updates, updatedAt: new Date().toISOString() };
                         updated.remainingAmount = updated.budgetAmount - updated.committedAmount - updated.spentAmount;
@@ -858,20 +899,22 @@ export const useAssetStore = create<AssetStore>()(
 
             addCapExItem: (itemData) => {
                 const id = `capex-item-${Date.now()}`;
-                const item: CapExItem = { ...itemData, id };
+
+                const item: CapExItem = {
+                    ...itemData,
+                    id,
+                };
 
                 set((state) => ({
                     capExItems: [...state.capExItems, item],
                 }));
 
-                // Update budget if committed or spent
-                if (itemData.status === 'COMMITTED' || itemData.status === 'SPENT') {
-                    const budget = get().capExBudgets.find(b => b.id === itemData.budgetId);
+                // Update budget committed amount
+                if (itemData.status === 'COMMITTED' || itemData.status === 'APPROVED') {
+                    const budget = get().capExBudgets.find((b) => b.id === itemData.budgetId);
                     if (budget) {
-                        const amount = itemData.actualAmount || itemData.estimatedAmount;
                         get().updateCapExBudget(budget.id, {
-                            committedAmount: itemData.status === 'COMMITTED' ? budget.committedAmount + amount : budget.committedAmount,
-                            spentAmount: itemData.status === 'SPENT' ? budget.spentAmount + amount : budget.spentAmount,
+                            committedAmount: budget.committedAmount + itemData.estimatedAmount,
                         });
                     }
                 }
@@ -881,86 +924,48 @@ export const useAssetStore = create<AssetStore>()(
 
             updateCapExItem: (id, updates) => {
                 set((state) => ({
-                    capExItems: state.capExItems.map(i => i.id === id ? { ...i, ...updates } : i),
+                    capExItems: state.capExItems.map((i) => (i.id === id ? { ...i, ...updates } : i)),
                 }));
             },
 
-            // =========================================================================
+            // =================================================================
             // EVENTS
-            // =========================================================================
+            // =================================================================
 
-            getAssetEvents: (assetId) =>
-                get().events.filter(e => e.assetId === assetId).sort((a, b) =>
-                    new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-                ),
-
-            getEventsByType: (eventType) => get().events.filter(e => e.eventType === eventType),
-
-            // =========================================================================
-            // REPORTING
-            // =========================================================================
-
-            getAssetRegister: (filters) => {
-                const { assets, assetBooks, dashboardState } = get();
-                const activeFilters = filters || dashboardState.filters;
-                const bookType = dashboardState.bookType;
-
-                return assets
-                    .filter(asset => {
-                        if (activeFilters.status !== 'ALL' && asset.status !== activeFilters.status) return false;
-                        if (activeFilters.category !== 'ALL' && asset.category !== activeFilters.category) return false;
-                        if (activeFilters.entityId && asset.legalEntityId !== activeFilters.entityId) return false;
-                        if (activeFilters.costCenterId && asset.costCenterId !== activeFilters.costCenterId) return false;
-                        if (activeFilters.searchQuery) {
-                            const query = activeFilters.searchQuery.toLowerCase();
-                            return (
-                                asset.name.toLowerCase().includes(query) ||
-                                asset.assetNumber.toLowerCase().includes(query) ||
-                                asset.description?.toLowerCase().includes(query)
-                            );
-                        }
-                        return true;
-                    })
-                    .map(asset => {
-                        const book = assetBooks.find(b => b.assetId === asset.id && b.bookType === bookType);
-                        const netBookValue = book ? calculateBookValue(book) : asset.capitalizedCost;
-                        const depreciableBase = (book?.acquisitionCost || asset.acquisitionCost) - (book?.salvageValue || asset.salvageValue);
-                        const percentDepreciated = depreciableBase > 0 ? ((book?.accumulatedDepreciation || 0) / depreciableBase) * 100 : 0;
-
-                        return {
-                            asset,
-                            acquisitionCost: book?.acquisitionCost || asset.acquisitionCost,
-                            accumulatedDepreciation: book?.accumulatedDepreciation || 0,
-                            impairmentLosses: book?.impairmentLosses || 0,
-                            netBookValue,
-                            monthlyDepreciation: depreciableBase / (book?.usefulLifeMonths || asset.usefulLifeMonths),
-                            remainingLifeMonths: calculateRemainingLife(
-                                book?.usefulLifeMonths || asset.usefulLifeMonths,
-                                book?.accumulatedDepreciation || 0,
-                                depreciableBase
-                            ),
-                            percentDepreciated,
-                        };
-                    });
+            recordEvent: (eventData) => {
+                const newEvent: AssetEvent = {
+                    ...eventData,
+                    id: `evt-${Date.now()}`,
+                    timestamp: new Date().toISOString(),
+                };
+                set((state) => ({
+                    events: [...state.events, newEvent],
+                }));
+                return newEvent;
             },
 
-            calculateTotalNetBookValue: (bookType = BookType.STATUTORY) => {
-                return get().assetBooks
-                    .filter(b => b.bookType === bookType && b.isActive)
-                    .reduce((sum, book) => sum + calculateBookValue(book), 0);
+            getAssetEvents: (assetId) => {
+                return get()
+                    .events.filter((e) => e.assetId === assetId)
+                    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
             },
 
-            // =========================================================================
-            // NOTIFICATIONS
-            // =========================================================================
+            // =================================================================
+            // UI STATE
+            // =================================================================
+
+            setDashboardState: (state) => {
+                set((current) => ({
+                    dashboardState: { ...current.dashboardState, ...state },
+                }));
+            },
 
             addNotification: (notificationData) => {
                 const notification: AssetNotification = {
                     ...notificationData,
-                    id: `notification-${Date.now()}`,
+                    id: `notif-${Date.now()}`,
                     createdAt: new Date().toISOString(),
                 };
-
                 set((state) => ({
                     notifications: [...state.notifications, notification],
                 }));
@@ -968,158 +973,103 @@ export const useAssetStore = create<AssetStore>()(
 
             markNotificationRead: (id) => {
                 set((state) => ({
-                    notifications: state.notifications.map(n =>
+                    notifications: state.notifications.map((n) =>
                         n.id === id ? { ...n, readAt: new Date().toISOString() } : n
                     ),
                 }));
             },
 
-            clearNotifications: () => {
-                set({ notifications: [] });
+            // =================================================================
+            // ANALYTICS
+            // =================================================================
+
+            getSummary: () => {
+                const { assets, assetBooks } = get();
+                const activeAssets = assets.filter((a) => a.isActive);
+
+                const totalValue = activeAssets.reduce((sum, a) => sum + a.acquisitionCost, 0);
+                const totalDepreciation = assetBooks
+                    .filter((b) => b.bookType === BookType.STATUTORY && b.isActive)
+                    .reduce((sum, b) => sum + b.accumulatedDepreciation, 0);
+
+                const byStatus = {} as Record<AssetStatus, number>;
+                const byCategory = {} as Record<AssetCategory, number>;
+
+                activeAssets.forEach((a) => {
+                    byStatus[a.status] = (byStatus[a.status] || 0) + 1;
+                    byCategory[a.category] = (byCategory[a.category] || 0) + 1;
+                });
+
+                return {
+                    totalAssets: activeAssets.length,
+                    totalValue,
+                    totalDepreciation,
+                    netBookValue: totalValue - totalDepreciation,
+                    byStatus,
+                    byCategory,
+                };
             },
 
-            // =========================================================================
-            // UI STATE
-            // =========================================================================
+            getAssetRegister: () => {
+                const { assets, assetBooks } = get();
 
-            setDashboardState: (updates) => {
-                set((state) => ({
-                    dashboardState: { ...state.dashboardState, ...updates },
-                }));
+                return assets
+                    .filter((a) => a.isActive)
+                    .map((asset) => {
+                        const book = assetBooks.find(
+                            (b) => b.assetId === asset.id && b.bookType === BookType.STATUTORY
+                        );
+
+                        const acquisitionCost = book?.acquisitionCost || asset.acquisitionCost;
+                        const accumulatedDepreciation = book?.accumulatedDepreciation || 0;
+                        const impairmentLosses = book?.impairmentLosses || 0;
+                        const netBookValue = book ? calculateBookValue(book) : asset.capitalizedCost;
+
+                        const depreciableBase = acquisitionCost - (book?.salvageValue || asset.salvageValue);
+                        const monthlyDep = depreciableBase / (book?.usefulLifeMonths || asset.usefulLifeMonths);
+
+                        const remainingLife = Math.max(
+                            0,
+                            (book?.usefulLifeMonths || asset.usefulLifeMonths) -
+                                Math.ceil(accumulatedDepreciation / monthlyDep)
+                        );
+
+                        return {
+                            asset,
+                            acquisitionCost,
+                            accumulatedDepreciation,
+                            impairmentLosses,
+                            netBookValue,
+                            monthlyDepreciation: monthlyDep,
+                            remainingLifeMonths: remainingLife,
+                            percentDepreciated:
+                                depreciableBase > 0 ? (accumulatedDepreciation / depreciableBase) * 100 : 0,
+                        };
+                    });
             },
 
-            setFilters: (filters) => {
-                set((state) => ({
-                    dashboardState: {
-                        ...state.dashboardState,
-                        filters: { ...state.dashboardState.filters, ...filters },
-                    },
-                }));
-            },
-
-            selectAsset: (id) => {
-                set((state) => ({
-                    dashboardState: { ...state.dashboardState, selectedAssetId: id },
-                }));
-            },
-
-            // =========================================================================
-            // UTILITIES
-            // =========================================================================
-
-            generateAssetNumber: () => {
-                const year = new Date().getFullYear();
-                const nextNum = get().lastAssetNumber + 1;
-                return `FA-${year}-${String(nextNum).padStart(5, '0')}`;
+            calculateTotalNetBookValue: (bookType = BookType.STATUTORY) => {
+                const { assetBooks } = get();
+                return assetBooks
+                    .filter((b) => b.bookType === bookType && b.isActive)
+                    .reduce((sum, b) => sum + calculateBookValue(b), 0);
             },
         }),
         {
             name: 'primebalance-assets',
+            partialize: (state) => ({
+                assets: state.assets,
+                assetBooks: state.assetBooks,
+                events: state.events,
+                schedules: state.schedules,
+                impairments: state.impairments,
+                revaluations: state.revaluations,
+                transfers: state.transfers,
+                disposals: state.disposals,
+                capExBudgets: state.capExBudgets,
+                capExItems: state.capExItems,
+                lastAssetNumber: state.lastAssetNumber,
+            }),
         }
     )
 );
-
-// =============================================================================
-// DEMO DATA INITIALIZER
-// =============================================================================
-
-export function initializeDemoAssetData() {
-    const store = useAssetStore.getState();
-
-    // Only initialize if empty
-    if (store.assets.length > 0) return;
-
-    // Create demo assets
-    const officeEquipmentId = store.createAsset({
-        name: 'Office Furniture Set',
-        description: 'Executive desk, chairs, and filing cabinets for main office',
-        assetType: AssetType.TANGIBLE,
-        category: AssetCategory.FURNITURE,
-        currency: 'EUR',
-        acquisitionCost: 15000,
-        capitalizedCost: 15000,
-        salvageValue: 1500,
-        usefulLifeMonths: 60,
-        depreciationMethod: DepreciationMethod.STRAIGHT_LINE,
-        legalEntityId: 'entity-1',
-        location: 'HQ Floor 3',
-        responsibleParty: 'Office Manager',
-    });
-
-    store.acquireAsset(officeEquipmentId, '2024-01-15', 15000, 'admin');
-    store.capitalizeAsset(officeEquipmentId, '2024-02-01', 'admin');
-    store.putInUse(officeEquipmentId, '2024-02-01', 'admin');
-
-    const vehicleId = store.createAsset({
-        name: 'Company Vehicle - BMW 320d',
-        description: 'Company car for sales team',
-        assetType: AssetType.TANGIBLE,
-        category: AssetCategory.VEHICLES,
-        currency: 'EUR',
-        acquisitionCost: 45000,
-        capitalizedCost: 45000,
-        salvageValue: 12000,
-        usefulLifeMonths: 48,
-        depreciationMethod: DepreciationMethod.DECLINING_BALANCE,
-        legalEntityId: 'entity-1',
-        location: 'HQ Parking',
-        responsibleParty: 'Fleet Manager',
-    });
-
-    store.acquireAsset(vehicleId, '2024-03-01', 45000, 'admin');
-    store.capitalizeAsset(vehicleId, '2024-03-15', 'admin');
-    store.putInUse(vehicleId, '2024-03-15', 'admin');
-
-    const softwareId = store.createAsset({
-        name: 'ERP System License',
-        description: 'Enterprise resource planning software - 5 year license',
-        assetType: AssetType.INTANGIBLE,
-        category: AssetCategory.CAPITALIZED_SOFTWARE,
-        currency: 'EUR',
-        acquisitionCost: 120000,
-        capitalizedCost: 120000,
-        salvageValue: 0,
-        usefulLifeMonths: 60,
-        depreciationMethod: DepreciationMethod.STRAIGHT_LINE,
-        legalEntityId: 'entity-1',
-    });
-
-    store.acquireAsset(softwareId, '2024-01-01', 120000, 'admin');
-    store.capitalizeAsset(softwareId, '2024-01-01', 'admin');
-    store.putInUse(softwareId, '2024-01-01', 'admin');
-
-    // Create a CIP asset
-    store.createAsset({
-        name: 'New Production Line',
-        description: 'Automated manufacturing equipment - under construction',
-        assetType: AssetType.TANGIBLE,
-        category: AssetCategory.CONSTRUCTION_IN_PROGRESS,
-        currency: 'EUR',
-        acquisitionCost: 0,
-        capitalizedCost: 0,
-        salvageValue: 50000,
-        usefulLifeMonths: 120,
-        depreciationMethod: DepreciationMethod.STRAIGHT_LINE,
-        isCIP: true,
-        cipStartDate: '2024-06-01',
-        legalEntityId: 'entity-1',
-    });
-
-    // Create CapEx budget
-    store.createCapExBudget({
-        name: 'FY2025 Capital Expenditure',
-        fiscalYear: '2025',
-        budgetAmount: 500000,
-        currency: 'EUR',
-    });
-
-    // Add notification
-    store.addNotification({
-        type: 'WARNING',
-        category: 'DEPRECIATION',
-        title: 'Depreciation Due',
-        message: '3 assets have depreciation entries pending for December 2024',
-        actionRequired: true,
-        dueDate: '2024-12-31',
-    });
-}

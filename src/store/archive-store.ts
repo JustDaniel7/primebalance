@@ -1,14 +1,27 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ArchiveItem, ArchiveCategory, ArchiveFilter, ArchiveStats } from '@/types/archive';
+import type {
+    ArchiveItem,
+    ArchiveCategory,
+    ArchiveFilter,
+    ArchiveStats,
+    ArchiveAttachment,
+    ArchiveItemStatus,
+} from '@/types/archive';
 
 // =============================================================================
-// ARCHIVE STORE
+// ARCHIVE STORE - API CONNECTED
 // =============================================================================
 
 interface ArchiveState {
     items: ArchiveItem[];
     filter: ArchiveFilter;
+    isLoading: boolean;
+    error: string | null;
+    isInitialized: boolean;
+
+    // API Actions
+    fetchItems: () => Promise<void>;
 
     // CRUD
     addToArchive: (item: Omit<ArchiveItem, 'id' | 'archivedAt' | 'status'>) => ArchiveItem;
@@ -40,193 +53,70 @@ const initialFilter: ArchiveFilter = {
     tags: [],
 };
 
-// Demo archive items
-const generateDemoArchive = (): ArchiveItem[] => [
-    // Bookings
-    {
-        id: 'arch-001',
-        category: 'bookings',
-        status: 'archived',
-        originalId: 'txn-2024-001',
-        originalType: 'transaction',
-        title: 'Jahresabschluss Buchung Q4',
-        description: 'Abschlussbuchungen Geschäftsjahr 2024',
-        amount: 125000,
-        currency: 'EUR',
-        itemDate: '2024-12-31',
-        archivedAt: '2025-01-15T10:00:00Z',
-        fiscalYear: 2024,
-        tags: ['jahresabschluss', 'q4'],
-    },
-    {
-        id: 'arch-002',
-        category: 'bookings',
-        status: 'archived',
-        originalId: 'txn-2024-002',
-        originalType: 'transaction',
-        title: 'Abschreibungen 2024',
-        description: 'Planmäßige Abschreibungen Anlagevermögen',
-        amount: 45000,
-        currency: 'EUR',
-        itemDate: '2024-12-31',
-        archivedAt: '2025-01-15T10:00:00Z',
-        fiscalYear: 2024,
-        tags: ['abschreibung', 'anlagen'],
-    },
-    // Invoices
-    {
-        id: 'arch-003',
-        category: 'invoices',
-        status: 'archived',
-        originalId: 'inv-2024-089',
-        originalType: 'invoice',
-        title: 'Rechnung Schmidt & Partner',
-        description: 'Beratungsleistungen November 2024',
-        amount: 8500,
-        currency: 'EUR',
-        counterparty: 'Schmidt & Partner GmbH',
-        itemDate: '2024-11-30',
-        archivedAt: '2025-01-10T09:00:00Z',
-        fiscalYear: 2024,
-        tags: ['beratung', 'bezahlt'],
-    },
-    {
-        id: 'arch-004',
-        category: 'invoices',
-        status: 'archived',
-        originalId: 'inv-2024-090',
-        originalType: 'invoice',
-        title: 'Rechnung Tech Solutions AG',
-        description: 'IT Support Dezember 2024',
-        amount: 3200,
-        currency: 'CHF',
-        counterparty: 'Tech Solutions AG',
-        itemDate: '2024-12-15',
-        archivedAt: '2025-01-10T09:00:00Z',
-        fiscalYear: 2024,
-        tags: ['it', 'support', 'bezahlt'],
-    },
-    // Bank
-    {
-        id: 'arch-005',
-        category: 'bank',
-        status: 'archived',
-        originalId: 'bank-2024-12',
-        originalType: 'bank_statement',
-        title: 'Kontoauszug Dezember 2024',
-        description: 'Deutsche Bank Geschäftskonto',
-        amount: 87500,
-        currency: 'EUR',
-        counterparty: 'Deutsche Bank',
-        itemDate: '2024-12-31',
-        archivedAt: '2025-01-05T08:00:00Z',
-        fiscalYear: 2024,
-        attachments: [
-            { id: 'att-001', fileName: 'Kontoauszug_2024_12.pdf', fileType: 'application/pdf', fileSize: 245000, fileUrl: '/files/bank/2024-12.pdf', uploadedAt: '2025-01-05T08:00:00Z' },
-        ],
-    },
-    // Services
-    {
-        id: 'arch-006',
-        category: 'services',
-        status: 'archived',
-        originalId: 'svc-2024-015',
-        originalType: 'service',
-        title: 'Webentwicklung Projekt Alpha',
-        description: 'Komplette Neuentwicklung Kundenportal',
-        amount: 45000,
-        currency: 'EUR',
-        counterparty: 'Kunde ABC GmbH',
-        itemDate: '2024-10-31',
-        periodStart: '2024-06-01',
-        periodEnd: '2024-10-31',
-        archivedAt: '2024-11-15T14:00:00Z',
-        fiscalYear: 2024,
-        tags: ['projekt', 'webentwicklung', 'abgeschlossen'],
-    },
-    // Documents
-    {
-        id: 'arch-007',
-        category: 'documents',
-        status: 'archived',
-        originalId: 'doc-2024-001',
-        originalType: 'document',
-        title: 'Steuererklärung 2023',
-        description: 'Körperschaftsteuererklärung inkl. Anlagen',
-        itemDate: '2024-07-31',
-        archivedAt: '2024-08-15T10:00:00Z',
-        fiscalYear: 2024,
-        attachments: [
-            { id: 'att-002', fileName: 'KSt_2023.pdf', fileType: 'application/pdf', fileSize: 1250000, fileUrl: '/files/tax/kst-2023.pdf', uploadedAt: '2024-08-15T10:00:00Z' },
-        ],
-        tags: ['steuer', 'finanzamt'],
-    },
-    {
-        id: 'arch-008',
-        category: 'documents',
-        status: 'archived',
-        originalId: 'doc-2024-002',
-        originalType: 'document',
-        title: 'Jahresabschluss 2023',
-        description: 'Bilanz und GuV 2023',
-        itemDate: '2024-06-30',
-        archivedAt: '2024-07-01T09:00:00Z',
-        fiscalYear: 2024,
-        tags: ['bilanz', 'guv', 'jahresabschluss'],
-    },
-    // Contracts
-    {
-        id: 'arch-009',
-        category: 'contracts',
-        status: 'archived',
-        originalId: 'ctr-2023-005',
-        originalType: 'contract',
-        title: 'Mietvertrag Büro München',
-        description: 'Gewerbemietvertrag - gekündigt zum 31.12.2024',
-        amount: 36000,
-        currency: 'EUR',
-        counterparty: 'Immobilien Müller GmbH',
-        itemDate: '2021-01-01',
-        periodStart: '2021-01-01',
-        periodEnd: '2024-12-31',
-        archivedAt: '2025-01-02T10:00:00Z',
-        fiscalYear: 2024,
-        tags: ['miete', 'gekündigt'],
-    },
-    {
-        id: 'arch-010',
-        category: 'contracts',
-        status: 'archived',
-        originalId: 'ctr-2022-012',
-        originalType: 'contract',
-        title: 'Wartungsvertrag Server',
-        description: 'IT-Wartungsvertrag - abgelaufen',
-        amount: 4800,
-        currency: 'EUR',
-        counterparty: 'IT Service Pro',
-        itemDate: '2022-03-01',
-        periodStart: '2022-03-01',
-        periodEnd: '2024-02-28',
-        archivedAt: '2024-03-01T08:00:00Z',
-        fiscalYear: 2024,
-        tags: ['it', 'wartung', 'abgelaufen'],
-    },
-];
+function mapApiToArchiveItem(api: any): ArchiveItem {
+    return {
+        id: api.id,
+        category: api.category,
+        status: api.status || 'archived',
+        originalId: api.originalId,
+        originalType: api.originalType,
+        title: api.title,
+        description: api.description,
+        amount: api.amount ? Number(api.amount) : undefined,
+        currency: api.currency,
+        counterparty: api.counterparty,
+        itemDate: api.itemDate?.split('T')[0] || api.itemDate,
+        archivedAt: api.archivedAt,
+        restoredAt: api.restoredAt,
+        periodStart: api.periodStart?.split('T')[0],
+        periodEnd: api.periodEnd?.split('T')[0],
+        attachments: api.attachments || [],
+        tags: api.tags || [],
+        notes: api.notes,
+        archivedBy: api.archivedBy,
+        fiscalYear: api.fiscalYear,
+    };
+}
 
 export const useArchiveStore = create<ArchiveState>()(
     persist(
         (set, get) => ({
-            items: generateDemoArchive(),
+            items: [],
             filter: initialFilter,
+            isLoading: false,
+            error: null,
+            isInitialized: false,
+
+            fetchItems: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/archive');
+                    if (!response.ok) throw new Error('Failed to fetch archive');
+                    const data = await response.json();
+                    const items = (data.items || data || []).map(mapApiToArchiveItem);
+                    set({ items, isLoading: false, isInitialized: true });
+                } catch (error) {
+                    console.error('Failed to fetch archive:', error);
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+                }
+            },
 
             addToArchive: (itemData) => {
                 const newItem: ArchiveItem = {
                     ...itemData,
-                    id: `arch-${Date.now()}`,
-                    status: 'archived',
+                    id: `arc-${Date.now()}`,
                     archivedAt: new Date().toISOString(),
+                    status: 'archived',
                 };
+
                 set((state) => ({ items: [...state.items, newItem] }));
+
+                fetch('/api/archive', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(itemData),
+                }).catch(console.error);
+
                 return newItem;
             },
 
@@ -234,25 +124,41 @@ export const useArchiveStore = create<ArchiveState>()(
                 set((state) => ({
                     items: state.items.map((item) =>
                         item.id === id
-                            ? { ...item, status: 'restored' as const, restoredAt: new Date().toISOString() }
+                            ? { ...item, status: 'restored' as ArchiveItemStatus, restoredAt: new Date().toISOString() }
                             : item
                     ),
                 }));
+
+                fetch(`/api/archive/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'restored', restoredAt: new Date().toISOString() }),
+                }).catch(console.error);
             },
 
             permanentlyDelete: (id) => {
-                set((state) => ({ items: state.items.filter((item) => item.id !== id) }));
+                set((state) => ({
+                    items: state.items.filter((i) => i.id !== id),
+                }));
+
+                fetch(`/api/archive/${id}`, { method: 'DELETE' }).catch(console.error);
             },
 
             updateArchiveItem: (id, updates) => {
                 set((state) => ({
-                    items: state.items.map((item) => (item.id === id ? { ...item, ...updates } : item)),
+                    items: state.items.map((item) =>
+                        item.id === id ? { ...item, ...updates } : item
+                    ),
                 }));
+
+                fetch(`/api/archive/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
             },
 
-            setFilter: (filter) => {
-                set((state) => ({ filter: { ...state.filter, ...filter } }));
-            },
+            setFilter: (filter) => set((state) => ({ filter: { ...state.filter, ...filter } })),
 
             resetFilter: () => set({ filter: initialFilter }),
 
@@ -264,63 +170,59 @@ export const useArchiveStore = create<ArchiveState>()(
                     if (filter.fiscalYear && item.fiscalYear !== filter.fiscalYear) return false;
                     if (filter.searchQuery) {
                         const query = filter.searchQuery.toLowerCase();
-                        const matches =
-                            item.title.toLowerCase().includes(query) ||
-                            item.description?.toLowerCase().includes(query) ||
-                            item.counterparty?.toLowerCase().includes(query) ||
-                            item.tags?.some((tag) => tag.toLowerCase().includes(query));
-                        if (!matches) return false;
+                        if (
+                            !item.title.toLowerCase().includes(query) &&
+                            !item.description?.toLowerCase().includes(query) &&
+                            !item.counterparty?.toLowerCase().includes(query)
+                        ) return false;
                     }
-                    if (filter.dateFrom && item.itemDate < filter.dateFrom) return false;
-                    if (filter.dateTo && item.itemDate > filter.dateTo) return false;
+                    if (filter.tags && filter.tags.length > 0) {
+                        if (!filter.tags.some((t) => item.tags?.includes(t))) return false;
+                    }
                     return true;
                 });
             },
 
             getStats: () => {
-                const items = get().items.filter((i) => i.status === 'archived');
-                const byCategory: Record<ArchiveCategory, number> = {
-                    bookings: 0,
-                    invoices: 0,
-                    bank: 0,
-                    services: 0,
-                    documents: 0,
-                    contracts: 0,
+                const { items } = get();
+                const archivedItems = items.filter((i) => i.status === 'archived');
+
+                const byCategory = archivedItems.reduce((acc, item) => {
+                    acc[item.category] = (acc[item.category] || 0) + 1;
+                    return acc;
+                }, {} as Record<ArchiveCategory, number>);
+
+                const byYear = archivedItems.reduce((acc, item) => {
+                    if (item.fiscalYear) acc[item.fiscalYear] = (acc[item.fiscalYear] || 0) + 1;
+                    return acc;
+                }, {} as Record<number, number>);
+
+                const totalValue = archivedItems.reduce((sum, item) => sum + (item.amount || 0), 0);
+
+                return {
+                    totalItems: archivedItems.length,
+                    byCategory,
+                    byYear,
+                    totalValue,
                 };
-                const byYear: Record<number, number> = {};
-                let totalValue = 0;
-
-                items.forEach((item) => {
-                    byCategory[item.category]++;
-                    byYear[item.fiscalYear] = (byYear[item.fiscalYear] || 0) + 1;
-                    if (item.amount) totalValue += item.amount;
-                });
-
-                return { totalItems: items.length, byCategory, byYear, totalValue };
             },
 
-            getItemsByCategory: (category) => {
-                return get().items.filter((i) => i.status === 'archived' && i.category === category);
-            },
+            getItemsByCategory: (category) => get().items.filter((i) => i.category === category && i.status === 'archived'),
 
-            getItemsByYear: (year) => {
-                return get().items.filter((i) => i.status === 'archived' && i.fiscalYear === year);
-            },
+            getItemsByYear: (year) => get().items.filter((i) => i.fiscalYear === year && i.status === 'archived'),
 
             archiveMultiple: (itemsData) => {
-                const newItems = itemsData.map((data) => ({
-                    ...data,
-                    id: `arch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                    status: 'archived' as const,
-                    archivedAt: new Date().toISOString(),
-                }));
-                set((state) => ({ items: [...state.items, ...newItems] }));
+                itemsData.forEach((item) => get().addToArchive(item));
             },
 
             deleteByYear: (year) => {
-                set((state) => ({ items: state.items.filter((i) => i.fiscalYear !== year) }));
+                const itemsToDelete = get().items.filter((i) => i.fiscalYear === year);
+                itemsToDelete.forEach((item) => get().permanentlyDelete(item.id));
             },
         }),
-        { name: 'primebalance-archive' }
+        {
+            name: 'primebalance-archive',
+            partialize: (state) => ({ items: state.items }),
+        }
     )
 );

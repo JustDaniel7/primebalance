@@ -1,32 +1,3 @@
-/* import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type {
-    TreasuryDecision,
-    TreasuryDecisionStatus,
-    TreasuryDecisionType,
-    TreasuryEvent,
-    TreasuryEventType,
-    TreasurySummary,
-    BankAccount,
-    CashPosition,
-    CapitalBucket,
-    CapitalBucketType,
-    CreditFacility,
-    RiskExposure,
-    RiskBreach,
-    TreasuryScenario,
-    ScenarioResult,
-    NettingOpportunity,
-    TreasuryPlan,
-    TreasuryPlanStep,
-    RiskLevel,
-    Priority,
-    TimeHorizon,
-    Jurisdiction,
-    VALID_DECISION_TRANSITIONS,
-    TERMINAL_STATES,
-} from '@/types/treasury';*/
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
@@ -50,21 +21,372 @@ import type {
     TreasuryScenario,
     ScenarioResult,
     NettingOpportunity,
-    TreasuryPlan,
-    TreasuryPlanStep,
     TimeHorizon,
     Jurisdiction,
+    CashClassification,
+    Priority,
+    ExecutionMode,
 } from '@/types/treasury';
 
-// RiskLevel aus treasury umbenennen wegen Konflikt
+// =============================================================================
+// LOCAL TYPE ALIAS
+// =============================================================================
+
 type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
 
 // =============================================================================
-// TREASURY STORE
+// DEMO DATA GENERATORS
+// =============================================================================
+
+function generateDemoAccounts(): BankAccount[] {
+    return [
+        {
+            id: 'acc-001',
+            name: 'Operating Account EUR',
+            bankName: 'Deutsche Bank',
+            accountNumber: 'DE89370400440532013000',
+            iban: 'DE89370400440532013000',
+            bic: 'DEUTDEDB',
+            currency: 'EUR',
+            country: 'DE',
+            entityId: 'entity-001',
+            type: 'checking',
+            currentBalance: 850000,
+            availableBalance: 820000,
+            pendingCredits: 45000,
+            pendingDebits: 15000,
+            cashClassification: 'unrestricted',
+            overdraftLimit: 100000,
+            dailyTransferLimit: 500000,
+            isActive: true,
+            lastSyncAt: new Date().toISOString(),
+            jurisdiction: 'EU',
+            complianceFrameworks: ['PSD2', 'GDPR'],
+        },
+        {
+            id: 'acc-002',
+            name: 'Operating Account USD',
+            bankName: 'JPMorgan Chase',
+            accountNumber: '123456789012',
+            currency: 'USD',
+            country: 'US',
+            entityId: 'entity-001',
+            type: 'checking',
+            currentBalance: 450000,
+            availableBalance: 430000,
+            pendingCredits: 25000,
+            pendingDebits: 5000,
+            cashClassification: 'unrestricted',
+            dailyTransferLimit: 250000,
+            isActive: true,
+            lastSyncAt: new Date().toISOString(),
+            jurisdiction: 'US',
+            complianceFrameworks: ['SOX'],
+        },
+        {
+            id: 'acc-003',
+            name: 'Tax Reserve Account',
+            bankName: 'Deutsche Bank',
+            accountNumber: 'DE89370400440532013001',
+            iban: 'DE89370400440532013001',
+            currency: 'EUR',
+            country: 'DE',
+            entityId: 'entity-001',
+            type: 'savings',
+            currentBalance: 250000,
+            availableBalance: 250000,
+            pendingCredits: 0,
+            pendingDebits: 0,
+            cashClassification: 'restricted',
+            restrictionReason: 'Reserved for quarterly tax payments',
+            isActive: true,
+            lastSyncAt: new Date().toISOString(),
+            jurisdiction: 'EU',
+            complianceFrameworks: ['PSD2', 'GDPR'],
+        },
+    ];
+}
+
+function generateDemoBuckets(): CapitalBucket[] {
+    return [
+        {
+            id: 'bucket-001',
+            type: 'operating',
+            name: 'Operating Cash',
+            description: 'Day-to-day operational expenses',
+            targetAmount: 500000,
+            minimumAmount: 200000,
+            currentAmount: 450000,
+            fundingRatio: 0.9,
+            status: 'funded',
+            priority: 1,
+            currency: 'EUR',
+            timeHorizon: 'today',
+            allowedSources: ['acc-001', 'acc-002'],
+            autoFundEnabled: true,
+            updatedAt: new Date().toISOString(),
+        },
+        {
+            id: 'bucket-002',
+            type: 'payroll_reserve',
+            name: 'Payroll Reserve',
+            description: 'Monthly payroll obligations',
+            targetAmount: 300000,
+            minimumAmount: 280000,
+            currentAmount: 300000,
+            fundingRatio: 1.0,
+            status: 'funded',
+            priority: 1,
+            currency: 'EUR',
+            timeHorizon: '30d',
+            allowedSources: ['acc-001'],
+            autoFundEnabled: true,
+            updatedAt: new Date().toISOString(),
+        },
+        {
+            id: 'bucket-003',
+            type: 'tax_reserve',
+            name: 'Tax Reserve',
+            description: 'Quarterly tax payments',
+            targetAmount: 250000,
+            minimumAmount: 200000,
+            currentAmount: 250000,
+            fundingRatio: 1.0,
+            status: 'funded',
+            priority: 2,
+            currency: 'EUR',
+            timeHorizon: '90d',
+            allowedSources: ['acc-003'],
+            autoFundEnabled: false,
+            regulatoryRequirement: 'Quarterly VAT and corporate tax',
+            jurisdiction: 'EU',
+            updatedAt: new Date().toISOString(),
+        },
+        {
+            id: 'bucket-004',
+            type: 'debt_service',
+            name: 'Debt Service Reserve',
+            description: 'Loan repayments and interest',
+            targetAmount: 150000,
+            minimumAmount: 100000,
+            currentAmount: 80000,
+            fundingRatio: 0.53,
+            status: 'underfunded',
+            priority: 2,
+            currency: 'EUR',
+            timeHorizon: '30d',
+            allowedSources: ['acc-001'],
+            autoFundEnabled: true,
+            updatedAt: new Date().toISOString(),
+        },
+    ];
+}
+
+function generateDemoFacilities(): CreditFacility[] {
+    return [
+        {
+            id: 'fac-001',
+            name: 'Revolving Credit Facility',
+            type: 'revolving',
+            bankId: 'bank-001',
+            bankName: 'Deutsche Bank',
+            totalLimit: 500000,
+            drawnAmount: 100000,
+            availableAmount: 400000,
+            currency: 'EUR',
+            interestRate: 4.5,
+            interestType: 'variable',
+            baseRate: 'EURIBOR',
+            spread: 2.0,
+            startDate: '2024-01-01',
+            maturityDate: '2026-12-31',
+            nextReviewDate: '2025-06-30',
+            covenants: [
+                {
+                    id: 'cov-001',
+                    name: 'Current Ratio',
+                    type: 'financial',
+                    metric: 'current_ratio',
+                    threshold: 1.5,
+                    operator: 'gte',
+                    currentValue: 2.1,
+                    status: 'compliant',
+                    testFrequency: 'quarterly',
+                    nextTestDate: '2025-03-31',
+                },
+                {
+                    id: 'cov-002',
+                    name: 'Debt-to-EBITDA',
+                    type: 'financial',
+                    metric: 'debt_to_ebitda',
+                    threshold: 3.0,
+                    operator: 'lte',
+                    currentValue: 1.8,
+                    status: 'compliant',
+                    testFrequency: 'quarterly',
+                    nextTestDate: '2025-03-31',
+                },
+            ],
+            covenantStatus: 'compliant',
+            minDrawAmount: 10000,
+            jurisdiction: 'EU',
+            isActive: true,
+            updatedAt: new Date().toISOString(),
+        },
+        {
+            id: 'fac-002',
+            name: 'Overdraft Facility',
+            type: 'overdraft',
+            bankId: 'bank-001',
+            bankName: 'Deutsche Bank',
+            totalLimit: 100000,
+            drawnAmount: 0,
+            availableAmount: 100000,
+            currency: 'EUR',
+            interestRate: 8.0,
+            interestType: 'variable',
+            startDate: '2024-01-01',
+            maturityDate: '2025-12-31',
+            covenants: [],
+            covenantStatus: 'compliant',
+            jurisdiction: 'EU',
+            isActive: true,
+            updatedAt: new Date().toISOString(),
+        },
+    ];
+}
+
+function generateDemoDecisions(): TreasuryDecision[] {
+    return [
+        {
+            id: 'dec-001',
+            type: 'allocation',
+            status: 'awaiting_approval',
+            entityId: 'entity-001',
+            currency: 'EUR',
+            accountIds: ['acc-001'],
+            bucketIds: ['bucket-004'],
+            timeWindow: 'today',
+            createdBy: 'automation',
+            priority: 'high',
+            riskClass: 'low',
+            executionMode: 'assisted',
+            requiresApproval: true,
+            approvalReason: 'Amount exceeds auto-approval threshold',
+            rationale: 'Debt service bucket is underfunded. Allocate 70,000 EUR to meet minimum reserve.',
+            impactSummary: 'Brings debt service reserve to 100% of minimum requirement.',
+            risksIdentified: ['Reduces operating cash flexibility'],
+            alternativesConsidered: [
+                {
+                    description: 'Draw from credit facility',
+                    expectedOutcome: 'Maintain operating cash',
+                    reasonNotChosen: 'Higher cost due to interest',
+                    estimatedCost: 3150,
+                },
+            ],
+            complianceChecks: [],
+            version: 1,
+            events: [],
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+        },
+    ];
+}
+
+function generateDemoScenarios(): TreasuryScenario[] {
+    return [
+        {
+            id: 'scenario-001',
+            name: 'Base Case',
+            type: 'expected',
+            description: 'Normal operating conditions',
+            parameters: {
+                receivablesDelayDays: 5,
+                receivablesDefaultRate: 0.02,
+                revenueChange: 0,
+                creditWithdrawal: 0,
+                fxShock: {},
+                inventoryLockup: 0,
+            },
+            isActive: true,
+            createdAt: new Date().toISOString(),
+        },
+        {
+            id: 'scenario-002',
+            name: 'Stress Test - Recession',
+            type: 'worst_case',
+            description: 'Economic downturn scenario',
+            parameters: {
+                receivablesDelayDays: 30,
+                receivablesDefaultRate: 0.15,
+                revenueChange: -0.25,
+                creditWithdrawal: 0.5,
+                fxShock: { USD: -0.1 },
+                inventoryLockup: 60,
+            },
+            isActive: true,
+            createdAt: new Date().toISOString(),
+        },
+    ];
+}
+
+function generateDemoNetting(): NettingOpportunity[] {
+    return [
+        {
+            id: 'net-001',
+            type: 'receivable_payable',
+            counterpartyId: 'cp-001',
+            counterpartyName: 'TechCorp Solutions GmbH',
+            receivableIds: ['rec-001'],
+            payableIds: ['pay-001'],
+            grossReceivable: 25000,
+            grossPayable: 8500,
+            netAmount: 16500,
+            currency: 'EUR',
+            cashSaved: 8500,
+            fxSaved: 0,
+            status: 'identified',
+            createdAt: new Date().toISOString(),
+        },
+    ];
+}
+
+// =============================================================================
+// API MAPPING
+// =============================================================================
+
+function mapApiToAccount(api: any): BankAccount {
+    return {
+        id: api.id,
+        name: api.name,
+        bankName: api.bankName,
+        accountNumber: api.accountNumber,
+        iban: api.iban,
+        bic: api.bic,
+        currency: api.currency || 'EUR',
+        country: api.country || 'DE',
+        entityId: api.entityId || api.organizationId,
+        type: api.type || 'checking',
+        currentBalance: Number(api.currentBalance) || 0,
+        availableBalance: Number(api.availableBalance) || 0,
+        pendingCredits: Number(api.pendingCredits) || 0,
+        pendingDebits: Number(api.pendingDebits) || 0,
+        cashClassification: api.cashClassification || 'unrestricted',
+        restrictionReason: api.restrictionReason,
+        overdraftLimit: api.overdraftLimit,
+        dailyTransferLimit: api.dailyTransferLimit,
+        isActive: api.isActive ?? true,
+        lastSyncAt: api.lastSyncAt || api.updatedAt || new Date().toISOString(),
+        jurisdiction: api.jurisdiction || 'EU',
+        complianceFrameworks: api.complianceFrameworks || [],
+    };
+}
+
+// =============================================================================
+// STORE INTERFACE
 // =============================================================================
 
 interface TreasuryState {
-    // Data
     accounts: BankAccount[];
     cashPosition: CashPosition | null;
     buckets: CapitalBucket[];
@@ -74,6 +396,13 @@ interface TreasuryState {
     riskExposure: RiskExposure | null;
     scenarios: TreasuryScenario[];
     nettingOpportunities: NettingOpportunity[];
+    isLoading: boolean;
+    error: string | null;
+    isInitialized: boolean;
+
+    // API
+    fetchTreasury: () => Promise<void>;
+    fetchAccounts: () => Promise<void>;
 
     // Account Management
     addAccount: (account: Omit<BankAccount, 'id' | 'lastSyncAt'>) => BankAccount;
@@ -126,391 +455,9 @@ interface TreasuryState {
     getPendingApprovals: () => TreasuryDecision[];
 }
 
-// Demo Data
-const generateDemoAccounts = (): BankAccount[] => [
-    {
-        id: 'acc-001',
-        name: 'Operating Account EUR',
-        bankName: 'Deutsche Bank',
-        accountNumber: 'DE89370400440532013000',
-        iban: 'DE89370400440532013000',
-        bic: 'DEUTDEDB',
-        currency: 'EUR',
-        country: 'DE',
-        entityId: 'entity-001',
-        type: 'checking',
-        currentBalance: 850000,
-        availableBalance: 820000,
-        pendingCredits: 45000,
-        pendingDebits: 15000,
-        cashClassification: 'unrestricted',
-        overdraftLimit: 100000,
-        dailyTransferLimit: 500000,
-        isActive: true,
-        lastSyncAt: new Date().toISOString(),
-        jurisdiction: 'EU',
-        complianceFrameworks: ['PSD2', 'GDPR'],
-    },
-    {
-        id: 'acc-002',
-        name: 'Operating Account USD',
-        bankName: 'JPMorgan Chase',
-        accountNumber: '123456789012',
-        currency: 'USD',
-        country: 'US',
-        entityId: 'entity-001',
-        type: 'checking',
-        currentBalance: 425000,
-        availableBalance: 425000,
-        pendingCredits: 0,
-        pendingDebits: 0,
-        cashClassification: 'unrestricted',
-        dailyTransferLimit: 1000000,
-        isActive: true,
-        lastSyncAt: new Date().toISOString(),
-        jurisdiction: 'US',
-        complianceFrameworks: ['SOX'],
-    },
-    {
-        id: 'acc-003',
-        name: 'Tax Reserve Account',
-        bankName: 'Commerzbank',
-        accountNumber: 'DE12500105170648489890',
-        iban: 'DE12500105170648489890',
-        bic: 'COBADEFF',
-        currency: 'EUR',
-        country: 'DE',
-        entityId: 'entity-001',
-        type: 'savings',
-        currentBalance: 180000,
-        availableBalance: 0,
-        pendingCredits: 0,
-        pendingDebits: 0,
-        cashClassification: 'restricted',
-        restrictionReason: 'Tax reserve - Q4 VAT and Corporate Tax',
-        isActive: true,
-        lastSyncAt: new Date().toISOString(),
-        jurisdiction: 'EU',
-        complianceFrameworks: ['GDPR'],
-    },
-    {
-        id: 'acc-004',
-        name: 'CHF Account',
-        bankName: 'UBS',
-        accountNumber: 'CH9300762011623852957',
-        iban: 'CH9300762011623852957',
-        bic: 'UBSWCHZH',
-        currency: 'CHF',
-        country: 'CH',
-        entityId: 'entity-001',
-        type: 'checking',
-        currentBalance: 125000,
-        availableBalance: 125000,
-        pendingCredits: 0,
-        pendingDebits: 0,
-        cashClassification: 'unrestricted',
-        isActive: true,
-        lastSyncAt: new Date().toISOString(),
-        jurisdiction: 'CH',
-        complianceFrameworks: ['FINMA'],
-    },
-];
-
-const generateDemoBuckets = (): CapitalBucket[] => [
-    {
-        id: 'bucket-001',
-        type: 'operating',
-        name: 'Operating Capital',
-        description: 'Day-to-day operational expenses',
-        targetAmount: 500000,
-        minimumAmount: 250000,
-        currentAmount: 450000,
-        fundingRatio: 0.9,
-        status: 'funded',
-        priority: 1,
-        currency: 'EUR',
-        timeHorizon: '30d',
-        allowedSources: ['acc-001', 'acc-002'],
-        autoFundEnabled: true,
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'bucket-002',
-        type: 'payroll_reserve',
-        name: 'Payroll Reserve',
-        description: '3 months payroll coverage',
-        targetAmount: 350000,
-        minimumAmount: 200000,
-        currentAmount: 320000,
-        fundingRatio: 0.91,
-        status: 'funded',
-        priority: 2,
-        currency: 'EUR',
-        timeHorizon: '90d',
-        allowedSources: ['acc-001'],
-        autoFundEnabled: true,
-        regulatoryRequirement: 'Labor law compliance',
-        jurisdiction: 'EU',
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'bucket-003',
-        type: 'tax_reserve',
-        name: 'Tax Reserve',
-        description: 'VAT, Corporate Tax, Payroll Tax',
-        targetAmount: 200000,
-        minimumAmount: 150000,
-        currentAmount: 180000,
-        fundingRatio: 0.9,
-        status: 'funded',
-        priority: 3,
-        currency: 'EUR',
-        timeHorizon: '90d',
-        allowedSources: ['acc-003'],
-        autoFundEnabled: true,
-        regulatoryRequirement: 'Tax compliance',
-        jurisdiction: 'EU',
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'bucket-004',
-        type: 'debt_service',
-        name: 'Debt Service Reserve',
-        description: 'Loan repayments and interest',
-        targetAmount: 150000,
-        minimumAmount: 100000,
-        currentAmount: 85000,
-        fundingRatio: 0.57,
-        status: 'underfunded',
-        priority: 4,
-        currency: 'EUR',
-        timeHorizon: '30d',
-        allowedSources: ['acc-001'],
-        autoFundEnabled: false,
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'bucket-005',
-        type: 'excess',
-        name: 'Excess Capital',
-        description: 'Available for investment or strategic use',
-        targetAmount: 0,
-        minimumAmount: 0,
-        currentAmount: 245000,
-        fundingRatio: 1,
-        status: 'overfunded',
-        priority: 6,
-        currency: 'EUR',
-        timeHorizon: '1y',
-        allowedSources: ['acc-001', 'acc-002', 'acc-004'],
-        autoFundEnabled: false,
-        updatedAt: new Date().toISOString(),
-    },
-];
-
-const generateDemoFacilities = (): CreditFacility[] => [
-    {
-        id: 'fac-001',
-        name: 'Revolving Credit Facility',
-        type: 'revolving',
-        bankId: 'bank-001',
-        bankName: 'Deutsche Bank',
-        totalLimit: 500000,
-        drawnAmount: 0,
-        availableAmount: 500000,
-        currency: 'EUR',
-        interestRate: 4.5,
-        interestType: 'variable',
-        baseRate: 'EURIBOR',
-        spread: 2.0,
-        startDate: '2024-01-01',
-        maturityDate: '2026-12-31',
-        nextReviewDate: '2025-06-01',
-        covenants: [
-            {
-                id: 'cov-001',
-                name: 'Debt Service Coverage Ratio',
-                type: 'financial',
-                metric: 'DSCR',
-                threshold: 1.25,
-                operator: 'gte',
-                currentValue: 1.8,
-                status: 'compliant',
-                testFrequency: 'quarterly',
-                nextTestDate: '2025-03-31',
-            },
-            {
-                id: 'cov-002',
-                name: 'Current Ratio',
-                type: 'financial',
-                metric: 'Current Ratio',
-                threshold: 1.5,
-                operator: 'gte',
-                currentValue: 2.1,
-                status: 'compliant',
-                testFrequency: 'quarterly',
-                nextTestDate: '2025-03-31',
-            },
-        ],
-        covenantStatus: 'compliant',
-        minDrawAmount: 50000,
-        jurisdiction: 'EU',
-        isActive: true,
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'fac-002',
-        name: 'USD Credit Line',
-        type: 'credit_line',
-        bankId: 'bank-002',
-        bankName: 'JPMorgan Chase',
-        totalLimit: 300000,
-        drawnAmount: 50000,
-        availableAmount: 250000,
-        currency: 'USD',
-        interestRate: 6.5,
-        interestType: 'variable',
-        baseRate: 'SOFR',
-        spread: 1.75,
-        startDate: '2024-03-01',
-        maturityDate: '2025-03-01',
-        covenants: [],
-        covenantStatus: 'compliant',
-        jurisdiction: 'US',
-        isActive: true,
-        updatedAt: new Date().toISOString(),
-    },
-];
-
-const generateDemoDecisions = (): TreasuryDecision[] => [
-    {
-        id: 'dec-001',
-        type: 'allocation',
-        status: 'awaiting_approval',
-        entityId: 'entity-001',
-        currency: 'EUR',
-        accountIds: ['acc-001'],
-        bucketIds: ['bucket-004'],
-        timeWindow: '7d',
-        createdBy: 'automation',
-        priority: 'high',
-        riskClass: 'medium',
-        executionMode: 'assisted',
-        plan: {
-            id: 'plan-001',
-            decisionId: 'dec-001',
-            steps: [
-                {
-                    id: 'step-001',
-                    sequence: 1,
-                    action: 'transfer',
-                    description: 'Transfer from Operating to Debt Service Reserve',
-                    amount: 65000,
-                    currency: 'EUR',
-                    sourceAccountId: 'acc-001',
-                    targetAccountId: 'acc-001',
-                    status: 'pending',
-                    isReversible: true,
-                },
-            ],
-            expectedLedgerEvents: ['bucket_allocation'],
-            expectedCashImpact: { today: 0, '7d': 0, '30d': 0, '90d': 0, '1y': 0 },
-            expectedRiskDelta: { concentrationChange: 0, fxExposureChange: {}, covenantImpact: 0, liquidityRiskChange: -5 },
-            estimatedCost: 0,
-            status: 'validated',
-        },
-        requiresApproval: true,
-        approvalReason: 'Amount exceeds €50,000 threshold',
-        rationale: 'Debt Service Reserve is underfunded at 57%. Upcoming loan payment of €75,000 due in 15 days requires immediate action.',
-        impactSummary: 'Will increase Debt Service Reserve funding to 100% of target.',
-        risksIdentified: ['Reduces operating buffer temporarily'],
-        alternativesConsidered: [
-            {
-                description: 'Draw from credit facility',
-                expectedOutcome: 'Same funding achieved',
-                reasonNotChosen: 'Higher cost (interest) and unnecessary given available cash',
-                estimatedCost: 1500,
-            },
-        ],
-        complianceChecks: [
-            { framework: 'SOX', requirement: 'Dual control for transfers > €50k', status: 'passed', details: 'Approval required' },
-        ],
-        version: 1,
-        events: [],
-        createdAt: '2024-12-15T10:00:00Z',
-        updatedAt: '2024-12-15T10:00:00Z',
-    },
-];
-
-const generateDemoScenarios = (): TreasuryScenario[] => [
-    {
-        id: 'scen-001',
-        name: 'Base Case',
-        type: 'expected',
-        description: 'Expected scenario based on current forecasts',
-        parameters: {
-            receivablesDelayDays: 5,
-            receivablesDefaultRate: 0.02,
-            revenueChange: 0,
-            creditWithdrawal: 0,
-            fxShock: {},
-            inventoryLockup: 0,
-        },
-        isActive: true,
-        createdAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'scen-002',
-        name: 'Stress Test - Receivables Delay',
-        type: 'worst_case',
-        description: 'Major customers delay payments by 30 days',
-        parameters: {
-            receivablesDelayDays: 30,
-            receivablesDefaultRate: 0.05,
-            revenueChange: -0.1,
-            creditWithdrawal: 0,
-            fxShock: {},
-            inventoryLockup: 0,
-        },
-        isActive: true,
-        createdAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'scen-003',
-        name: 'Credit Crisis',
-        type: 'worst_case',
-        description: 'Bank withdraws 50% of credit facilities',
-        parameters: {
-            receivablesDelayDays: 15,
-            receivablesDefaultRate: 0.03,
-            revenueChange: -0.05,
-            creditWithdrawal: 0.5,
-            fxShock: { USD: -0.1 },
-            inventoryLockup: 0.2,
-        },
-        isActive: true,
-        createdAt: '2024-12-01T10:00:00Z',
-    },
-];
-
-const generateDemoNetting = (): NettingOpportunity[] => [
-    {
-        id: 'net-001',
-        type: 'receivable_payable',
-        counterpartyId: 'cp-001',
-        counterpartyName: 'TechCorp Solutions GmbH',
-        receivableIds: ['rec-001'],
-        payableIds: ['pay-001'],
-        grossReceivable: 25000,
-        grossPayable: 8500,
-        netAmount: 16500,
-        currency: 'EUR',
-        cashSaved: 8500,
-        fxSaved: 0,
-        status: 'identified',
-        createdAt: new Date().toISOString(),
-    },
-];
+// =============================================================================
+// STORE IMPLEMENTATION
+// =============================================================================
 
 export const useTreasuryStore = create<TreasuryState>()(
     persist(
@@ -524,6 +471,52 @@ export const useTreasuryStore = create<TreasuryState>()(
             riskExposure: null,
             scenarios: generateDemoScenarios(),
             nettingOpportunities: generateDemoNetting(),
+            isLoading: false,
+            error: null,
+            isInitialized: false,
+
+            // =================================================================
+            // API
+            // =================================================================
+
+            fetchTreasury: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/treasury');
+                    if (!response.ok) throw new Error('Failed to fetch treasury data');
+                    const data = await response.json();
+
+                    set({
+                        accounts: (data.accounts || []).map(mapApiToAccount),
+                        buckets: data.buckets || get().buckets,
+                        facilities: data.facilities || get().facilities,
+                        decisions: data.decisions || get().decisions,
+                        isLoading: false,
+                        isInitialized: true,
+                    });
+
+                    get().recalculateCashPosition();
+                } catch (error) {
+                    console.error('Failed to fetch treasury:', error);
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+                }
+            },
+
+            fetchAccounts: async () => {
+                try {
+                    const response = await fetch('/api/treasury/accounts');
+                    if (!response.ok) return;
+                    const data = await response.json();
+                    set({ accounts: (data.accounts || data || []).map(mapApiToAccount) });
+                    get().recalculateCashPosition();
+                } catch (error) {
+                    console.error('Failed to fetch accounts:', error);
+                }
+            },
+
+            // =================================================================
+            // ACCOUNT MANAGEMENT
+            // =================================================================
 
             addAccount: (accountData) => {
                 const newAccount: BankAccount = {
@@ -531,95 +524,103 @@ export const useTreasuryStore = create<TreasuryState>()(
                     id: `acc-${Date.now()}`,
                     lastSyncAt: new Date().toISOString(),
                 };
-                set((state) => ({ accounts: [...state.accounts, newAccount] }));
+                set((state) => ({
+                    accounts: [...state.accounts, newAccount],
+                }));
                 get().recalculateCashPosition();
+
+                fetch('/api/treasury/accounts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(accountData),
+                }).catch(console.error);
+
                 return newAccount;
             },
 
             updateAccount: (id, updates) => {
                 set((state) => ({
-                    accounts: state.accounts.map((a) => (a.id === id ? { ...a, ...updates } : a)),
+                    accounts: state.accounts.map((a) =>
+                        a.id === id ? { ...a, ...updates } : a
+                    ),
                 }));
                 get().recalculateCashPosition();
+
+                fetch(`/api/treasury/accounts/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
             },
 
             syncAccountBalance: (id, balance, availableBalance) => {
                 set((state) => ({
                     accounts: state.accounts.map((a) =>
-                        a.id === id ? { ...a, currentBalance: balance, availableBalance, lastSyncAt: new Date().toISOString() } : a
+                        a.id === id
+                            ? {
+                                  ...a,
+                                  currentBalance: balance,
+                                  availableBalance,
+                                  lastSyncAt: new Date().toISOString(),
+                              }
+                            : a
                     ),
                 }));
                 get().recalculateCashPosition();
             },
 
+            // =================================================================
+            // CASH POSITION
+            // =================================================================
+
             recalculateCashPosition: () => {
                 const { accounts } = get();
                 const activeAccounts = accounts.filter((a) => a.isActive);
 
-                let totalCash = 0;
-                let unrestricted = 0;
-                let restricted = 0;
-                let pledged = 0;
-                let escrowed = 0;
-                let blocked = 0;
-                let availableCash = 0;
+                const totalCash = activeAccounts.reduce((sum, a) => sum + a.currentBalance, 0);
+                const unrestricted = activeAccounts
+                    .filter((a) => a.cashClassification === 'unrestricted')
+                    .reduce((sum, a) => sum + a.currentBalance, 0);
+                const restricted = activeAccounts
+                    .filter((a) => a.cashClassification === 'restricted')
+                    .reduce((sum, a) => sum + a.currentBalance, 0);
+                const pledged = activeAccounts
+                    .filter((a) => a.cashClassification === 'pledged')
+                    .reduce((sum, a) => sum + a.currentBalance, 0);
 
                 const byCurrency: Record<string, number> = {};
                 const byEntity: Record<string, number> = {};
                 const byBank: Record<string, number> = {};
-                const byJurisdiction: Record<string, number> = {};
 
-                activeAccounts.forEach((acc) => {
-                    totalCash += acc.currentBalance;
-
-                    switch (acc.cashClassification) {
-                        case 'unrestricted':
-                            unrestricted += acc.currentBalance;
-                            availableCash += acc.availableBalance;
-                            break;
-                        case 'restricted':
-                            restricted += acc.currentBalance;
-                            break;
-                        case 'pledged':
-                            pledged += acc.currentBalance;
-                            break;
-                        case 'escrowed':
-                            escrowed += acc.currentBalance;
-                            break;
-                        case 'blocked':
-                            blocked += acc.currentBalance;
-                            break;
-                    }
-
-                    byCurrency[acc.currency] = (byCurrency[acc.currency] || 0) + acc.currentBalance;
-                    byEntity[acc.entityId] = (byEntity[acc.entityId] || 0) + acc.currentBalance;
-                    byBank[acc.bankName] = (byBank[acc.bankName] || 0) + acc.currentBalance;
-                    byJurisdiction[acc.jurisdiction] = (byJurisdiction[acc.jurisdiction] || 0) + acc.currentBalance;
+                activeAccounts.forEach((a) => {
+                    byCurrency[a.currency] = (byCurrency[a.currency] || 0) + a.currentBalance;
+                    byEntity[a.entityId] = (byEntity[a.entityId] || 0) + a.currentBalance;
+                    byBank[a.bankName] = (byBank[a.bankName] || 0) + a.currentBalance;
                 });
 
                 const cashPosition: CashPosition = {
-                    id: `pos-${Date.now()}`,
+                    id: 'cp-current',
                     date: new Date().toISOString().split('T')[0],
                     totalCash,
                     unrestricted,
                     restricted,
                     pledged,
-                    escrowed,
-                    blocked,
+                    escrowed: 0,
+                    blocked: 0,
                     grossCash: totalCash,
-                    reservedCash: restricted + pledged + escrowed + blocked,
-                    committedCash: 0, // Would be calculated from upcoming obligations
-                    availableCash,
-                    excessCash: Math.max(0, availableCash - 500000), // Above operating minimum
+                    reservedCash: restricted + pledged,
+                    committedCash: 0,
+                    availableCash: unrestricted,
+                    excessCash: Math.max(0, unrestricted - 500000),
                     byCurrency,
                     byEntity,
                     byBank,
-                    byJurisdiction: byJurisdiction as Record<Jurisdiction, number>,
+                    byJurisdiction: {} as Record<Jurisdiction, number>,
                     projections: {
-                        today: availableCash,
-                        day7: availableCash + 50000,
-                        day30: availableCash + 120000,
-                        day90: availableCash + 280000,
+                        today: totalCash,
+                        day7: totalCash,
+                        day30: totalCash,
+                        day90: totalCash,
                     },
                     updatedAt: new Date().toISOString(),
                 };
@@ -627,65 +628,46 @@ export const useTreasuryStore = create<TreasuryState>()(
                 set({ cashPosition });
             },
 
-            /* getCashByClassification: () => {
-                const { cashPosition } = get();
-                if (!cashPosition) return {};
-                return {
-                    unrestricted: cashPosition.unrestricted,
-                    restricted: cashPosition.restricted,
-                    pledged: cashPosition.pledged,
-                    escrowed: cashPosition.escrowed,
-                    blocked: cashPosition.blocked,
-                };
-            },*/
+            getCashByClassification: () => {
+                const { accounts } = get();
+                const result: Record<string, number> = {};
 
-            getCashByClassification: (): Record<string, number> => {
-                const { cashPosition } = get();
-                if (!cashPosition) {
-                    return {
-                        unrestricted: 0,
-                        restricted: 0,
-                        pledged: 0,
-                        escrowed: 0,
-                        blocked: 0,
-                    };
-                }
-                return {
-                    unrestricted: cashPosition.unrestricted,
-                    restricted: cashPosition.restricted,
-                    pledged: cashPosition.pledged,
-                    escrowed: cashPosition.escrowed,
-                    blocked: cashPosition.blocked,
-                };
+                accounts.filter((a) => a.isActive).forEach((a) => {
+                    result[a.cashClassification] =
+                        (result[a.cashClassification] || 0) + a.currentBalance;
+                });
+
+                return result;
             },
 
-            //now it works
+            // =================================================================
+            // CAPITAL BUCKETS
+            // =================================================================
 
             updateBucket: (id, updates) => {
                 set((state) => ({
                     buckets: state.buckets.map((b) => {
                         if (b.id !== id) return b;
                         const updated = { ...b, ...updates, updatedAt: new Date().toISOString() };
-                        updated.fundingRatio = updated.targetAmount > 0 ? updated.currentAmount / updated.targetAmount : 1;
-                        if (updated.fundingRatio >= 1) updated.status = 'overfunded';
-                        else if (updated.fundingRatio >= 0.8) updated.status = 'funded';
-                        else if (updated.fundingRatio >= 0.5) updated.status = 'underfunded';
-                        else updated.status = 'critical';
+                        updated.fundingRatio = updated.currentAmount / updated.targetAmount;
+                        if (updated.fundingRatio >= 1) updated.status = 'funded';
+                        else if (updated.fundingRatio < updated.minimumAmount / updated.targetAmount)
+                            updated.status = 'critical';
+                        else updated.status = 'underfunded';
                         return updated;
                     }),
                 }));
             },
 
             allocateToBucket: (bucketId, amount, sourceAccountId) => {
-                const { accounts, buckets } = get();
-                const account = accounts.find((a) => a.id === sourceAccountId);
-                const bucket = buckets.find((b) => b.id === bucketId);
+                const bucket = get().buckets.find((b) => b.id === bucketId);
+                const account = get().accounts.find((a) => a.id === sourceAccountId);
 
-                if (!account || !bucket) return false;
+                if (!bucket || !account) return false;
                 if (account.availableBalance < amount) return false;
-                if (!bucket.allowedSources.includes(sourceAccountId)) return false;
 
                 get().updateAccount(sourceAccountId, {
+                    currentBalance: account.currentBalance - amount,
                     availableBalance: account.availableBalance - amount,
                 });
 
@@ -697,44 +679,37 @@ export const useTreasuryStore = create<TreasuryState>()(
             },
 
             rebalanceBuckets: () => {
-                // Create allocation decision based on bucket priorities
-                const { buckets, accounts } = get();
-                const underfunded = buckets
-                    .filter((b) => b.status === 'underfunded' || b.status === 'critical')
-                    .sort((a, b) => a.priority - b.priority);
-
+                const underfunded = get().buckets.filter(
+                    (b) => b.status === 'underfunded' || b.status === 'critical'
+                );
                 if (underfunded.length === 0) return null;
 
-                const topPriority = underfunded[0];
-                const deficit = topPriority.targetAmount - topPriority.currentAmount;
-
-                // Find source with available funds
-                const source = accounts.find(
-                    (a) => topPriority.allowedSources.includes(a.id) && a.availableBalance >= deficit
-                );
-
-                if (!source) return null;
+                const highestPriority = underfunded.sort((a, b) => a.priority - b.priority)[0];
+                const deficit = highestPriority.targetAmount - highestPriority.currentAmount;
 
                 return get().createDecision({
                     type: 'allocation',
                     entityId: 'entity-001',
-                    currency: topPriority.currency,
-                    accountIds: [source.id],
-                    bucketIds: [topPriority.id],
-                    timeWindow: '7d',
+                    currency: 'EUR',
+                    accountIds: highestPriority.allowedSources,
+                    bucketIds: [highestPriority.id],
+                    timeWindow: 'today',
                     createdBy: 'automation',
-                    priority: topPriority.status === 'critical' ? 'critical' : 'high',
+                    priority: highestPriority.status === 'critical' ? 'critical' : 'high',
                     riskClass: 'low',
                     executionMode: 'assisted',
                     requiresApproval: deficit > 50000,
-                    approvalReason: deficit > 50000 ? `Amount exceeds €50,000 threshold` : undefined,
-                    rationale: `${topPriority.name} is ${topPriority.status} at ${Math.round(topPriority.fundingRatio * 100)}%. Allocating ${deficit} ${topPriority.currency} from ${source.name}.`,
-                    impactSummary: `Will bring ${topPriority.name} to 100% funding.`,
-                    risksIdentified: ['Reduces available operating cash'],
+                    rationale: `${highestPriority.name} is ${highestPriority.status}. Need to allocate ${deficit} EUR.`,
+                    impactSummary: `Will bring ${highestPriority.name} to full funding.`,
+                    risksIdentified: ['Reduces operating cash'],
                     alternativesConsidered: [],
                     complianceChecks: [],
                 });
             },
+
+            // =================================================================
+            // CREDIT FACILITIES
+            // =================================================================
 
             addFacility: (facilityData) => {
                 const newFacility: CreditFacility = {
@@ -743,7 +718,9 @@ export const useTreasuryStore = create<TreasuryState>()(
                     availableAmount: facilityData.totalLimit - facilityData.drawnAmount,
                     updatedAt: new Date().toISOString(),
                 };
-                set((state) => ({ facilities: [...state.facilities, newFacility] }));
+                set((state) => ({
+                    facilities: [...state.facilities, newFacility],
+                }));
                 return newFacility;
             },
 
@@ -760,7 +737,7 @@ export const useTreasuryStore = create<TreasuryState>()(
 
             drawFromFacility: (facilityId, amount) => {
                 const facility = get().facilities.find((f) => f.id === facilityId);
-                if (!facility || facility.availableAmount < amount) return null;
+                if (!facility || amount > facility.availableAmount) return null;
 
                 return get().createDecision({
                     type: 'credit_draw',
@@ -772,21 +749,18 @@ export const useTreasuryStore = create<TreasuryState>()(
                     priority: 'medium',
                     riskClass: 'medium',
                     executionMode: 'manual',
-                    requiresApproval: true,
-                    approvalReason: 'Credit draw requires approval',
-                    rationale: `Draw ${amount} ${facility.currency} from ${facility.name} to increase liquidity.`,
+                    requiresApproval: amount > 100000,
+                    rationale: `Draw ${amount} ${facility.currency} from ${facility.name}.`,
                     impactSummary: `Credit utilization will increase to ${Math.round(((facility.drawnAmount + amount) / facility.totalLimit) * 100)}%.`,
-                    risksIdentified: ['Increases interest expense', 'Reduces available credit buffer'],
+                    risksIdentified: ['Increases interest expense', 'Reduces credit headroom'],
                     alternativesConsidered: [],
-                    complianceChecks: [
-                        { framework: 'SOX', requirement: 'Credit draw approval', status: 'passed' },
-                    ],
+                    complianceChecks: [],
                 });
             },
 
             repayFacility: (facilityId, amount) => {
                 const facility = get().facilities.find((f) => f.id === facilityId);
-                if (!facility || facility.drawnAmount < amount) return null;
+                if (!facility || amount > facility.drawnAmount) return null;
 
                 return get().createDecision({
                     type: 'credit_repay',
@@ -799,13 +773,17 @@ export const useTreasuryStore = create<TreasuryState>()(
                     riskClass: 'low',
                     executionMode: 'manual',
                     requiresApproval: amount > 100000,
-                    rationale: `Repay ${amount} ${facility.currency} to ${facility.name} to reduce interest expense.`,
+                    rationale: `Repay ${amount} ${facility.currency} to ${facility.name}.`,
                     impactSummary: `Credit utilization will decrease to ${Math.round(((facility.drawnAmount - amount) / facility.totalLimit) * 100)}%.`,
                     risksIdentified: ['Reduces available cash'],
                     alternativesConsidered: [],
                     complianceChecks: [],
                 });
             },
+
+            // =================================================================
+            // TREASURY DECISIONS
+            // =================================================================
 
             createDecision: (data) => {
                 const now = new Date().toISOString();
@@ -819,7 +797,9 @@ export const useTreasuryStore = create<TreasuryState>()(
                     updatedAt: now,
                 };
 
-                set((state) => ({ decisions: [...state.decisions, newDecision] }));
+                set((state) => ({
+                    decisions: [...state.decisions, newDecision],
+                }));
 
                 get().recordEvent({
                     decisionId: newDecision.id,
@@ -828,7 +808,7 @@ export const useTreasuryStore = create<TreasuryState>()(
                     newStatus: 'draft',
                 });
 
-                // Auto-validate
+                // Auto-advance through validation
                 get().transitionDecision(newDecision.id, 'validating', 'system');
                 get().transitionDecision(newDecision.id, 'evaluating', 'system');
                 get().transitionDecision(newDecision.id, 'proposed', 'system');
@@ -854,13 +834,20 @@ export const useTreasuryStore = create<TreasuryState>()(
 
                 set((state) => ({
                     decisions: state.decisions.map((d) =>
-                        d.id === id ? { ...d, status: newStatus, version: d.version + 1, updatedAt: new Date().toISOString() } : d
+                        d.id === id
+                            ? {
+                                  ...d,
+                                  status: newStatus,
+                                  version: d.version + 1,
+                                  updatedAt: new Date().toISOString(),
+                              }
+                            : d
                     ),
                 }));
 
                 get().recordEvent({
                     decisionId: id,
-                    type: `${newStatus === 'approved' ? 'approved' : newStatus === 'rejected' ? 'rejected' : 'decision_updated'}` as TreasuryEventType,
+                    type: 'decision_updated',
                     actor,
                     previousStatus,
                     newStatus,
@@ -876,11 +863,18 @@ export const useTreasuryStore = create<TreasuryState>()(
 
                 set((state) => ({
                     decisions: state.decisions.map((d) =>
-                        d.id === id ? { ...d, approvedBy: approverId, approvedAt: new Date().toISOString() } : d
+                        d.id === id
+                            ? {
+                                  ...d,
+                                  approvedBy: approverId,
+                                  approvedAt: new Date().toISOString(),
+                              }
+                            : d
                     ),
                 }));
 
-                return get().transitionDecision(id, 'approved', 'user', `Approved by ${approverId}`);
+                get().transitionDecision(id, 'approved', 'user', `Approved by ${approverId}`);
+                return true;
             },
 
             rejectDecision: (id, reason) => {
@@ -893,250 +887,143 @@ export const useTreasuryStore = create<TreasuryState>()(
                     ),
                 }));
 
-                return get().transitionDecision(id, 'rejected', 'user', reason);
+                get().transitionDecision(id, 'rejected', 'user', reason);
+                return true;
             },
 
             executeDecision: (id) => {
                 const decision = get().decisions.find((d) => d.id === id);
-                if (!decision || (decision.status !== 'approved' && decision.status !== 'scheduled')) return false;
+                if (!decision || decision.status !== 'approved') return false;
 
                 get().transitionDecision(id, 'executing', 'system');
+                get().transitionDecision(id, 'executed', 'system');
 
-                // Simulate execution
-                setTimeout(() => {
-                    get().transitionDecision(id, 'executed', 'system');
-                    set((state) => ({
-                        decisions: state.decisions.map((d) =>
-                            d.id === id ? { ...d, executedAt: new Date().toISOString() } : d
-                        ),
-                    }));
-
-                    get().transitionDecision(id, 'reconciling', 'system');
-                    get().transitionDecision(id, 'settled', 'system');
-                    set((state) => ({
-                        decisions: state.decisions.map((d) =>
-                            d.id === id ? { ...d, settledAt: new Date().toISOString() } : d
-                        ),
-                    }));
-                }, 1000);
+                set((state) => ({
+                    decisions: state.decisions.map((d) =>
+                        d.id === id ? { ...d, executedAt: new Date().toISOString() } : d
+                    ),
+                }));
 
                 return true;
             },
 
             cancelDecision: (id) => {
-                const decision = get().decisions.find((d) => d.id === id);
-                if (!decision) return false;
-                if (TERMINAL_STATES.includes(decision.status)) return false;
-                if (decision.status === 'executing') return false;
-
                 return get().transitionDecision(id, 'cancelled', 'user', 'Cancelled by user');
             },
+
+            // =================================================================
+            // EVENTS
+            // =================================================================
 
             recordEvent: (eventData) => {
                 const newEvent: TreasuryEvent = {
                     ...eventData,
-                    id: `evt-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                    id: `evt-${Date.now()}`,
                     timestamp: new Date().toISOString(),
                 };
-                set((state) => ({ events: [...state.events, newEvent] }));
+                set((state) => ({
+                    events: [...state.events, newEvent],
+                }));
                 return newEvent;
             },
 
             getEventsByDecision: (decisionId) => {
-                return get().events
-                    .filter((e) => e.decisionId === decisionId)
+                return get()
+                    .events.filter((e) => e.decisionId === decisionId)
                     .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
             },
 
+            // =================================================================
+            // RISK
+            // =================================================================
+
             recalculateRiskExposure: () => {
-                const { accounts, facilities } = get();
-
-                const byBank: Record<string, { amount: number; limit: number; utilization: number }> = {};
-                const byCurrency: Record<string, { exposure: number; limit: number; hedgedAmount: number }> = {};
-
-                accounts.forEach((acc) => {
-                    if (!byBank[acc.bankName]) {
-                        byBank[acc.bankName] = { amount: 0, limit: 1000000, utilization: 0 };
-                    }
-                    byBank[acc.bankName].amount += acc.currentBalance;
-                });
-
-                Object.keys(byBank).forEach((bank) => {
-                    byBank[bank].utilization = (byBank[bank].amount / byBank[bank].limit) * 100;
-                });
-
-                accounts.forEach((acc) => {
-                    if (!byCurrency[acc.currency]) {
-                        byCurrency[acc.currency] = { exposure: 0, limit: 500000, hedgedAmount: 0 };
-                    }
-                    byCurrency[acc.currency].exposure += acc.currentBalance;
-                });
-
-                const riskExposure: RiskExposure = {
-                    id: `risk-${Date.now()}`,
-                    date: new Date().toISOString().split('T')[0],
-                    byCounterparty: {},
-                    byBank,
-                    byCurrency,
-                    byMaturity: { today: 100000, '7d': 250000, '30d': 400000, '90d': 600000, '1y': 800000 },
-                    concentrationRisk: {
-                        largestExposure: { name: 'Deutsche Bank', amount: 850000, percentage: 45 },
-                        top5Percentage: 92,
-                        herfindahlIndex: 0.28,
-                    },
-                    liquidityStress: {
-                        currentRatio: 2.1,
-                        quickRatio: 1.8,
-                        cashCoverageRatio: 1.5,
-                        stressTestResult: 'pass',
-                    },
-                    breaches: [],
-                    updatedAt: new Date().toISOString(),
-                };
-
-                set({ riskExposure });
+                // Placeholder for risk calculation
             },
 
             checkRiskBreaches: () => {
                 const breaches: RiskBreach[] = [];
-                const { riskExposure, facilities } = get();
+                const { facilities } = get();
 
-                if (!riskExposure) return breaches;
-
-                // Check bank concentration
-                Object.entries(riskExposure.byBank).forEach(([bank, data]) => {
-                    if (data.utilization > 50) {
+                facilities.forEach((f) => {
+                    const utilization = f.drawnAmount / f.totalLimit;
+                    if (utilization > 0.9) {
                         breaches.push({
-                            id: `breach-${Date.now()}`,
-                            type: 'bank',
-                            entityName: bank,
-                            currentValue: data.utilization,
-                            threshold: 50,
-                            severity: data.utilization > 70 ? 'high' : 'medium',
-                            recommendedAction: `Reduce exposure to ${bank} by diversifying across other banks`,
+                            id: `breach-${f.id}`,
+                            type: 'concentration',
+                            entityName: f.name,
+                            currentValue: utilization * 100,
+                            threshold: 90,
+                            severity: utilization > 0.95 ? 'critical' : 'high',
+                            recommendedAction: 'Reduce credit utilization',
                             createdAt: new Date().toISOString(),
                         });
                     }
                 });
 
-                // Check covenant warnings
-                facilities.forEach((fac) => {
-                    fac.covenants.forEach((cov) => {
-                        if (cov.status === 'warning' || cov.status === 'breach') {
-                            breaches.push({
-                                id: `breach-${Date.now()}`,
-                                type: 'concentration',
-                                entityName: `${fac.name} - ${cov.name}`,
-                                currentValue: cov.currentValue,
-                                threshold: cov.threshold,
-                                severity: cov.status === 'breach' ? 'critical' : 'high',
-                                recommendedAction: `Review and improve ${cov.metric} ratio`,
-                                createdAt: new Date().toISOString(),
-                            });
-                        }
-                    });
-                });
-
                 return breaches;
             },
 
-            getRiskLevel: () => {
+            getRiskLevel: (): RiskLevel => {
                 const breaches = get().checkRiskBreaches();
                 if (breaches.some((b) => b.severity === 'critical')) return 'critical';
                 if (breaches.some((b) => b.severity === 'high')) return 'high';
-                if (breaches.some((b) => b.severity === 'medium')) return 'medium';
+                if (breaches.length > 0) return 'medium';
                 return 'low';
             },
+
+            // =================================================================
+            // SCENARIOS
+            // =================================================================
 
             createScenario: (scenarioData) => {
                 const newScenario: TreasuryScenario = {
                     ...scenarioData,
-                    id: `scen-${Date.now()}`,
+                    id: `scenario-${Date.now()}`,
                     createdAt: new Date().toISOString(),
                 };
-                set((state) => ({ scenarios: [...state.scenarios, newScenario] }));
+                set((state) => ({
+                    scenarios: [...state.scenarios, newScenario],
+                }));
                 return newScenario;
             },
 
             runScenario: (scenarioId) => {
                 const scenario = get().scenarios.find((s) => s.id === scenarioId);
-                const { cashPosition, buckets, facilities } = get();
+                const { cashPosition } = get();
 
-                if (!scenario || !cashPosition) {
-                    return {
-                        scenarioId,
-                        calculatedAt: new Date().toISOString(),
-                        cashProjection: { today: 0, '7d': 0, '30d': 0, '90d': 0, '1y': 0 },
-                        liquidityGap: 0,
-                        impactOnBuckets: {} as Record<CapitalBucketType, number>,
-                        impactOnCovenants: [],
-                        mitigationActions: [],
-                        overallRisk: 'medium' as RiskLevel,
-                    };
-                }
-
-                const { parameters } = scenario;
-                const baseAvailable = cashPosition.availableCash;
-
-                // Calculate stressed cash position
-                const receivablesImpact = baseAvailable * (1 - parameters.receivablesDefaultRate);
-                const revenueImpact = baseAvailable * (1 + parameters.revenueChange);
-                const creditImpact = facilities.reduce((sum, f) => sum + f.availableAmount, 0) * (1 - parameters.creditWithdrawal);
-
-                const stressedCash = Math.min(receivablesImpact, revenueImpact);
-                const liquidityGap = Math.max(0, 500000 - stressedCash); // Against minimum operating
+                const baseAmount = cashPosition?.totalCash || 1000000;
 
                 const result: ScenarioResult = {
                     scenarioId,
                     calculatedAt: new Date().toISOString(),
                     cashProjection: {
-                        today: stressedCash,
-                        '7d': stressedCash * 0.95,
-                        '30d': stressedCash * 0.85,
-                        '90d': stressedCash * 0.75,
-                        '1y': stressedCash * 0.7,
+                        today: baseAmount,
+                        '7d': baseAmount * (1 + (scenario?.parameters.revenueChange || 0) * 0.02),
+                        '30d': baseAmount * (1 + (scenario?.parameters.revenueChange || 0) * 0.1),
+                        '90d': baseAmount * (1 + (scenario?.parameters.revenueChange || 0) * 0.25),
+                        '1y': baseAmount * (1 + (scenario?.parameters.revenueChange || 0)),
                     },
-                    liquidityGap,
-                    gapTiming: liquidityGap > 0 ? '30d' : undefined,
-                    impactOnBuckets: {
-                        operating: -baseAvailable * 0.1,
-                        payroll_reserve: 0,
-                        tax_reserve: 0,
-                        debt_service: -baseAvailable * 0.05,
-                        investment: -baseAvailable * 0.15,
-                        excess: -baseAvailable * 0.2,
-                    },
-                    impactOnCovenants: facilities.flatMap((f) =>
-                        f.covenants.map((c) => ({
-                            name: c.name,
-                            projectedValue: c.currentValue * (1 - Math.abs(parameters.revenueChange) * 0.5),
-                            status: c.currentValue * 0.9 >= c.threshold ? 'compliant' : 'warning',
-                        }))
-                    ),
-                    mitigationActions: [
-                        'Draw on available credit facilities',
-                        'Accelerate receivables collection',
-                        'Delay non-essential payables',
-                        'Reduce discretionary spending',
-                    ],
-                    overallRisk: liquidityGap > 200000 ? 'critical' : liquidityGap > 100000 ? 'high' : liquidityGap > 0 ? 'medium' : 'low',
+                    liquidityGap: 0,
+                    impactOnBuckets: {} as Record<CapitalBucketType, number>,
+                    impactOnCovenants: [],
+                    mitigationActions: [],
+                    overallRisk: 'low',
                 };
-
-                // Store result
-                set((state) => ({
-                    scenarios: state.scenarios.map((s) => (s.id === scenarioId ? { ...s, results: result } : s)),
-                }));
 
                 return result;
             },
 
+            // =================================================================
+            // NETTING
+            // =================================================================
+
             identifyNettingOpportunities: () => {
-                // In real implementation, would cross-reference receivables and payables
                 return get().nettingOpportunities;
             },
 
             executeNetting: (opportunityId) => {
-                const opportunity = get().nettingOpportunities.find((n) => n.id === opportunityId);
+                const opportunity = get().nettingOpportunities.find((o) => o.id === opportunityId);
                 if (!opportunity) return null;
 
                 return get().createDecision({
@@ -1149,8 +1036,8 @@ export const useTreasuryStore = create<TreasuryState>()(
                     priority: 'medium',
                     riskClass: 'low',
                     executionMode: 'manual',
-                    requiresApproval: opportunity.netAmount > 10000,
-                    rationale: `Net ${opportunity.grossReceivable} receivable against ${opportunity.grossPayable} payable with ${opportunity.counterpartyName}. Saves ${opportunity.cashSaved} in cash movement.`,
+                    requiresApproval: opportunity.netAmount > 50000,
+                    rationale: `Net ${opportunity.counterpartyName}. Saves ${opportunity.cashSaved} in cash.`,
                     impactSummary: `Net settlement of ${opportunity.netAmount} ${opportunity.currency}.`,
                     risksIdentified: [],
                     alternativesConsidered: [],
@@ -1158,11 +1045,16 @@ export const useTreasuryStore = create<TreasuryState>()(
                 });
             },
 
-            getSummary: () => {
+            // =================================================================
+            // ANALYTICS
+            // =================================================================
+
+            getSummary: (): TreasurySummary => {
                 const { cashPosition, buckets, facilities, decisions, nettingOpportunities } = get();
 
-                const activeBuckets = buckets;
-                const underfundedBuckets = activeBuckets.filter((b) => b.status === 'underfunded' || b.status === 'critical');
+                const underfundedBuckets = buckets.filter(
+                    (b) => b.status === 'underfunded' || b.status === 'critical'
+                );
 
                 const totalCreditAvailable = facilities.reduce((sum, f) => sum + f.availableAmount, 0);
                 const totalCreditUsed = facilities.reduce((sum, f) => sum + f.drawnAmount, 0);
@@ -1177,9 +1069,12 @@ export const useTreasuryStore = create<TreasuryState>()(
                     totalCash: cashPosition?.totalCash || 0,
                     availableCash: cashPosition?.availableCash || 0,
                     restrictedCash: cashPosition?.restricted || 0,
-                    bucketsFunded: activeBuckets.filter((b) => b.status === 'funded' || b.status === 'overfunded').length,
+                    bucketsFunded: buckets.filter((b) => b.status === 'funded' || b.status === 'overfunded').length,
                     bucketsUnderfunded: underfundedBuckets.length,
-                    totalBucketDeficit: underfundedBuckets.reduce((sum, b) => sum + (b.targetAmount - b.currentAmount), 0),
+                    totalBucketDeficit: underfundedBuckets.reduce(
+                        (sum, b) => sum + (b.targetAmount - b.currentAmount),
+                        0
+                    ),
                     totalCreditAvailable,
                     totalCreditUsed,
                     creditUtilization: totalCreditLimit > 0 ? (totalCreditUsed / totalCreditLimit) * 100 : 0,
@@ -1188,11 +1083,13 @@ export const useTreasuryStore = create<TreasuryState>()(
                     covenantStatus: covenantIssues ? 'warning' : 'compliant',
                     pendingDecisions: pendingDecisions.length,
                     pendingApprovals: pendingApprovals.length,
-                    nettingOpportunities: nettingOpportunities.filter((n) => n.status === 'identified').length,
-                    potentialSavings: nettingOpportunities.reduce((sum, n) => sum + n.cashSaved, 0),
-                    expectedCashIn7d: 85000,
-                    expectedCashOut7d: 62000,
-                    netCashFlow7d: 23000,
+                    nettingOpportunities: nettingOpportunities.filter((o) => o.status === 'identified').length,
+                    potentialSavings: nettingOpportunities
+                        .filter((o) => o.status === 'identified')
+                        .reduce((sum, o) => sum + o.cashSaved, 0),
+                    expectedCashIn7d: 0,
+                    expectedCashOut7d: 0,
+                    netCashFlow7d: 0,
                     complianceStatus: 'compliant',
                     lastUpdated: new Date().toISOString(),
                 };
@@ -1201,19 +1098,16 @@ export const useTreasuryStore = create<TreasuryState>()(
             getCashForecast: (days) => {
                 const { cashPosition } = get();
                 const forecast: { date: string; inflow: number; outflow: number; balance: number }[] = [];
-                let balance = cashPosition?.availableCash || 0;
+                const baseBalance = cashPosition?.totalCash || 0;
+                const msPerDay = 1000 * 60 * 60 * 24;
 
-                for (let i = 0; i <= days; i += 7) {
-                    const date = new Date(Date.now() + i * 24 * 60 * 60 * 1000);
-                    const inflow = 15000 + Math.random() * 10000;
-                    const outflow = 12000 + Math.random() * 8000;
-                    balance = balance + inflow - outflow;
-
+                for (let i = 0; i <= days; i++) {
+                    const date = new Date(Date.now() + i * msPerDay);
                     forecast.push({
                         date: date.toISOString().split('T')[0],
-                        inflow: Math.round(inflow),
-                        outflow: Math.round(outflow),
-                        balance: Math.round(balance),
+                        inflow: 0,
+                        outflow: 0,
+                        balance: baseBalance,
                     });
                 }
 
@@ -1224,6 +1118,17 @@ export const useTreasuryStore = create<TreasuryState>()(
                 return get().decisions.filter((d) => d.status === 'awaiting_approval');
             },
         }),
-        { name: 'primebalance-treasury' }
+        {
+            name: 'primebalance-treasury',
+            partialize: (state) => ({
+                accounts: state.accounts,
+                buckets: state.buckets,
+                facilities: state.facilities,
+                decisions: state.decisions,
+                events: state.events,
+                scenarios: state.scenarios,
+                nettingOpportunities: state.nettingOpportunities,
+            }),
+        }
     )
 );

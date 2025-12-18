@@ -12,7 +12,7 @@ import {
     RefreshCw,
 } from 'lucide-react';
 import { Card } from '@/components/ui';
-import { useAssetStore, initializeDemoAssetData } from '@/store/asset-store';
+import { useAssetStore } from '@/store/asset-store';
 import { useThemeStore } from '@/store/theme-store';
 import {
     AssetMetricsCards,
@@ -289,9 +289,13 @@ export default function AssetsPage() {
     ];
 
     // Initialize demo data on first load
+    const { fetchAssets, isInitialized } = useAssetStore();
+
     useEffect(() => {
-        initializeDemoAssetData();
-    }, []);
+        if (!isInitialized) {
+            fetchAssets();
+        }
+    }, [isInitialized, fetchAssets]);
 
     const unreadNotifications = notifications.filter(n => !n.readAt).length;
 

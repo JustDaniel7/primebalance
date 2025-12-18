@@ -8,19 +8,27 @@ import type {
     LiabilityWizardState,
     LiabilityAlert,
     LiabilityClassification,
-    UTILIZATION_THRESHOLDS,
-    MATURITY_WARNING_DAYS,
-    PAYMENT_WARNING_DAYS
+    LiabilityCounterparty,
+    CreditLimit,
+    InterestTerms,
+    RepaymentTerms,
+    Collateral,
 } from '@/types/liabilities';
 
 // =============================================================================
-// LIABILITIES STORE
+// LIABILITIES STORE - API CONNECTED
 // =============================================================================
 
 interface LiabilitiesState {
     liabilities: Liability[];
     payments: LiabilityPayment[];
     wizardState: LiabilityWizardState;
+    isLoading: boolean;
+    error: string | null;
+    isInitialized: boolean;
+
+    // API Actions
+    fetchLiabilities: () => Promise<void>;
 
     // CRUD
     createLiability: (liability: Omit<Liability, 'id' | 'createdAt' | 'updatedAt' | 'alerts' | 'classifications'>) => Liability;
@@ -67,7 +75,7 @@ const initialWizardState: LiabilityWizardState = {
     currency: 'EUR',
     hasCreditLimit: false,
     creditLimit: {},
-    interestTerms: { type: 'unknown' },
+    interestTerms: { type: 'fixed' },
     repaymentTerms: { schedule: 'monthly' },
     startDate: new Date().toISOString().split('T')[0],
     maturityType: 'fixed',
@@ -77,248 +85,87 @@ const initialWizardState: LiabilityWizardState = {
     notes: '',
 };
 
-// Demo liabilities
-const generateDemoLiabilities = (): Liability[] => [
-    {
-        id: 'lib-001',
-        type: 'loan',
-        classifications: ['drawn_debt', 'long_term'],
-        status: 'active',
-        name: 'Betriebsmittelkredit',
-        description: 'Langfristiger Kredit für Betriebsmittel',
-        reference: 'KR-2023-001',
-        counterparty: {
-            name: 'Deutsche Bank',
-            type: 'bank',
-            country: 'DE',
-            accountNumber: 'DE89370400440532013000',
+function mapApiToLiability(api: any): Liability {
+    return {
+        id: api.id,
+        type: api.type,
+        classifications: api.classifications || [],
+        status: api.status,
+        name: api.name,
+        description: api.description,
+        reference: api.reference,
+        counterparty: api.counterparty || {
+            name: api.counterpartyName || '',
+            type: api.counterpartyType || 'other',
+            country: api.counterpartyCountry || '',
         },
-        originalAmount: 500000,
-        currentBalance: 375000,
-        currency: 'EUR',
-        interestTerms: {
-            type: 'fixed',
-            rate: 4.5,
+        originalAmount: Number(api.originalAmount || api.principalAmount) || 0,
+        currentBalance: Number(api.currentBalance || api.outstandingAmount) || 0,
+        currency: api.currency || 'EUR',
+        creditLimit: api.creditLimit ? {
+            totalLimit: Number(api.creditLimit.totalLimit || api.creditLimit) || 0,
+            usedAmount: Number(api.creditLimit.usedAmount) || 0,
+            availableAmount: Number(api.creditLimit.availableAmount || api.availableCredit) || 0,
+            currency: api.currency || 'EUR',
+            expiryDate: api.creditLimit.expiryDate,
+            utilizationPercent: Number(api.creditLimit.utilizationPercent || api.utilizationRate) || 0,
+        } : undefined,
+        interestTerms: api.interestTerms || {
+            type: api.interestType || 'fixed',
+            rate: api.interestRate ? Number(api.interestRate) : undefined,
         },
-        repaymentTerms: {
-            schedule: 'monthly',
-            amount: 12500,
-            nextPaymentDate: '2025-01-15',
-            totalPayments: 48,
-            remainingPayments: 30,
+        repaymentTerms: api.repaymentTerms || {
+            schedule: api.paymentFrequency || 'monthly',
+            amount: api.paymentAmount ? Number(api.paymentAmount) : undefined,
+            nextPaymentDate: api.nextPaymentDate?.split('T')[0],
         },
-        startDate: '2023-06-01',
-        maturityType: 'fixed',
-        maturityDate: '2027-06-01',
-        collateral: {
+        startDate: api.startDate?.split('T')[0] || api.startDate,
+        maturityType: api.maturityType || 'fixed',
+        maturityDate: api.maturityDate?.split('T')[0],
+        reviewDate: api.reviewDate?.split('T')[0],
+        collateral: api.collateral || (api.isSecured ? {
             isSecured: true,
-            type: 'property',
-            description: 'Grundschuld auf Betriebsgebäude',
-            value: 750000,
-            currency: 'EUR',
-        },
-        riskLevel: 'low',
-        alerts: [],
-        createdAt: '2023-06-01T10:00:00Z',
-        updatedAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'lib-002',
-        type: 'credit_line',
-        classifications: ['undrawn_credit', 'short_term'],
-        status: 'active',
-        name: 'Kontokorrentkredit',
-        description: 'Flexible Kreditlinie für Liquidität',
-        reference: 'KK-2024-001',
-        counterparty: {
-            name: 'Commerzbank',
-            type: 'bank',
-            country: 'DE',
-        },
-        originalAmount: 200000,
-        currentBalance: 45000,
-        currency: 'EUR',
-        creditLimit: {
-            totalLimit: 200000,
-            usedAmount: 45000,
-            availableAmount: 155000,
-            currency: 'EUR',
-            expiryDate: '2025-12-31',
-            utilizationPercent: 22.5,
-        },
-        interestTerms: {
-            type: 'variable',
-            baseRate: 'EURIBOR',
-            spread: 2.5,
-        },
-        repaymentTerms: {
-            schedule: 'on_demand',
-        },
-        startDate: '2024-01-01',
-        maturityType: 'rolling',
-        reviewDate: '2025-06-01',
-        riskLevel: 'low',
-        alerts: [],
-        createdAt: '2024-01-01T09:00:00Z',
-        updatedAt: '2024-12-10T14:00:00Z',
-    },
-    {
-        id: 'lib-003',
-        type: 'supplier_credit',
-        classifications: ['drawn_debt', 'short_term'],
-        status: 'active',
-        name: 'Lieferantenkredit Tech Supplies',
-        counterparty: {
-            name: 'Tech Supplies GmbH',
-            type: 'supplier',
-            country: 'DE',
-        },
-        originalAmount: 50000,
-        currentBalance: 35000,
-        currency: 'EUR',
-        creditLimit: {
-            totalLimit: 50000,
-            usedAmount: 35000,
-            availableAmount: 15000,
-            currency: 'EUR',
-            utilizationPercent: 70,
-        },
-        interestTerms: {
-            type: 'none',
-        },
-        repaymentTerms: {
-            schedule: 'monthly',
-            nextPaymentDate: '2025-01-05',
-        },
-        startDate: '2024-06-01',
-        maturityType: 'ongoing',
-        riskLevel: 'medium',
-        alerts: [
-            {
-                id: 'alert-001',
-                type: 'limit_warning',
-                severity: 'warning',
-                message: 'Kreditlimit zu 70% ausgeschöpft',
-                isRead: false,
-                createdAt: '2024-12-10T10:00:00Z',
-            },
-        ],
-        createdAt: '2024-06-01T08:00:00Z',
-        updatedAt: '2024-12-10T10:00:00Z',
-    },
-    {
-        id: 'lib-004',
-        type: 'lease',
-        classifications: ['drawn_debt', 'long_term'],
-        status: 'active',
-        name: 'Fahrzeugleasing Fuhrpark',
-        description: '5 Firmenfahrzeuge',
-        counterparty: {
-            name: 'BMW Financial Services',
-            type: 'leasing',
-            country: 'DE',
-        },
-        originalAmount: 180000,
-        currentBalance: 120000,
-        currency: 'EUR',
-        interestTerms: {
-            type: 'fixed',
-            rate: 3.9,
-        },
-        repaymentTerms: {
-            schedule: 'monthly',
-            amount: 3750,
-            nextPaymentDate: '2025-01-01',
-            totalPayments: 48,
-            remainingPayments: 32,
-        },
-        startDate: '2023-05-01',
-        maturityType: 'fixed',
-        maturityDate: '2027-05-01',
-        riskLevel: 'low',
-        alerts: [],
-        createdAt: '2023-05-01T10:00:00Z',
-        updatedAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'lib-005',
-        type: 'guarantee',
-        classifications: ['contingent'],
-        status: 'active',
-        name: 'Mietbürgschaft Büro Berlin',
-        counterparty: {
-            name: 'Berliner Sparkasse',
-            type: 'bank',
-            country: 'DE',
-        },
-        originalAmount: 36000,
-        currentBalance: 36000,
-        currency: 'EUR',
-        interestTerms: {
-            type: 'fixed',
-            rate: 1.5,
-        },
-        repaymentTerms: {
-            schedule: 'annually',
-            amount: 540,
-        },
-        startDate: '2022-01-01',
-        maturityType: 'ongoing',
-        collateral: {
-            isSecured: true,
-            type: 'cash',
-            description: 'Festgeld als Sicherheit',
-            value: 36000,
-            currency: 'EUR',
-        },
-        riskLevel: 'low',
-        alerts: [],
-        createdAt: '2022-01-01T10:00:00Z',
-        updatedAt: '2024-01-01T10:00:00Z',
-    },
-];
-
-const generateDemoPayments = (): LiabilityPayment[] => [
-    {
-        id: 'pay-001',
-        liabilityId: 'lib-001',
-        date: '2025-01-15',
-        amount: 12500,
-        currency: 'EUR',
-        type: 'combined',
-        status: 'scheduled',
-    },
-    {
-        id: 'pay-002',
-        liabilityId: 'lib-004',
-        date: '2025-01-01',
-        amount: 3750,
-        currency: 'EUR',
-        type: 'combined',
-        status: 'scheduled',
-    },
-    {
-        id: 'pay-003',
-        liabilityId: 'lib-003',
-        date: '2025-01-05',
-        amount: 15000,
-        currency: 'EUR',
-        type: 'principal',
-        status: 'scheduled',
-    },
-];
+            description: api.collateralDescription,
+            value: api.collateralValue ? Number(api.collateralValue) : undefined,
+        } : undefined),
+        covenants: api.covenants,
+        specialConditions: api.specialConditions,
+        riskLevel: api.riskLevel || 'low',
+        alerts: api.alerts || [],
+        attachments: api.attachments,
+        notes: api.notes,
+        createdAt: api.createdAt,
+        updatedAt: api.updatedAt,
+    };
+}
 
 export const useLiabilitiesStore = create<LiabilitiesState>()(
     persist(
         (set, get) => ({
-            liabilities: generateDemoLiabilities(),
-            payments: generateDemoPayments(),
+            liabilities: [],
+            payments: [],
             wizardState: initialWizardState,
+            isLoading: false,
+            error: null,
+            isInitialized: false,
+
+            fetchLiabilities: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/liabilities');
+                    if (!response.ok) throw new Error('Failed to fetch liabilities');
+                    const data = await response.json();
+                    const liabilities = (data.liabilities || data || []).map(mapApiToLiability);
+                    set({ liabilities, isLoading: false, isInitialized: true });
+                } catch (error) {
+                    console.error('Failed to fetch liabilities:', error);
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+                }
+            },
 
             createLiability: (liabilityData) => {
                 const now = new Date().toISOString();
                 const classifications = get().classifyLiability(liabilityData);
-
                 const newLiability: Liability = {
                     ...liabilityData,
                     id: `lib-${Date.now()}`,
@@ -326,132 +173,132 @@ export const useLiabilitiesStore = create<LiabilitiesState>()(
                     alerts: [],
                     createdAt: now,
                     updatedAt: now,
-                } as Liability;
-
-                // Calculate credit limit if applicable
-                if (newLiability.creditLimit) {
-                    newLiability.creditLimit.availableAmount =
-                        newLiability.creditLimit.totalLimit - newLiability.creditLimit.usedAmount;
-                    newLiability.creditLimit.utilizationPercent =
-                        (newLiability.creditLimit.usedAmount / newLiability.creditLimit.totalLimit) * 100;
-                }
+                };
 
                 set((state) => ({ liabilities: [...state.liabilities, newLiability] }));
-                get().generateAlerts();
+
+                fetch('/api/liabilities', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: liabilityData.type,
+                        name: liabilityData.name,
+                        description: liabilityData.description,
+                        counterpartyName: liabilityData.counterparty.name,
+                        counterpartyType: liabilityData.counterparty.type,
+                        currency: liabilityData.currency,
+                        principalAmount: liabilityData.originalAmount,
+                        outstandingAmount: liabilityData.currentBalance,
+                        creditLimit: liabilityData.creditLimit?.totalLimit,
+                        interestRate: liabilityData.interestTerms.rate,
+                        interestType: liabilityData.interestTerms.type,
+                        startDate: liabilityData.startDate,
+                        maturityDate: liabilityData.maturityDate,
+                        paymentFrequency: liabilityData.repaymentTerms.schedule,
+                        paymentAmount: liabilityData.repaymentTerms.amount,
+                        isSecured: liabilityData.collateral?.isSecured,
+                        riskLevel: liabilityData.riskLevel,
+                        notes: liabilityData.notes,
+                    }),
+                }).catch(console.error);
+
                 return newLiability;
             },
 
             updateLiability: (id, updates) => {
                 set((state) => ({
-                    liabilities: state.liabilities.map((lib) =>
-                        lib.id === id ? { ...lib, ...updates, updatedAt: new Date().toISOString() } : lib
+                    liabilities: state.liabilities.map((l) =>
+                        l.id === id ? { ...l, ...updates, updatedAt: new Date().toISOString() } : l
                     ),
                 }));
-                get().generateAlerts();
+
+                fetch(`/api/liabilities/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
             },
 
             deleteLiability: (id) => {
                 set((state) => ({
-                    liabilities: state.liabilities.filter((lib) => lib.id !== id),
-                    payments: state.payments.filter((pay) => pay.liabilityId !== id),
+                    liabilities: state.liabilities.filter((l) => l.id !== id),
                 }));
+
+                fetch(`/api/liabilities/${id}`, { method: 'DELETE' }).catch(console.error);
             },
 
-            addPayment: (payment) => {
-                const newPayment = { ...payment, id: `pay-${Date.now()}` };
-                set((state) => ({ payments: [...state.payments, newPayment] }));
+            addPayment: (paymentData) => {
+                const payment: LiabilityPayment = { ...paymentData, id: `pay-${Date.now()}` };
+                set((state) => ({ payments: [...state.payments, payment] }));
             },
 
             updatePayment: (id, updates) => {
                 set((state) => ({
-                    payments: state.payments.map((pay) => (pay.id === id ? { ...pay, ...updates } : pay)),
+                    payments: state.payments.map((p) => p.id === id ? { ...p, ...updates } : p),
                 }));
             },
 
             updateCreditUsage: (id, usedAmount) => {
                 set((state) => ({
-                    liabilities: state.liabilities.map((lib) => {
-                        if (lib.id !== id || !lib.creditLimit) return lib;
-                        const availableAmount = lib.creditLimit.totalLimit - usedAmount;
-                        const utilizationPercent = (usedAmount / lib.creditLimit.totalLimit) * 100;
+                    liabilities: state.liabilities.map((l) => {
+                        if (l.id !== id || !l.creditLimit) return l;
+                        const availableAmount = l.creditLimit.totalLimit - usedAmount;
+                        const utilizationPercent = (usedAmount / l.creditLimit.totalLimit) * 100;
                         return {
-                            ...lib,
+                            ...l,
+                            creditLimit: { ...l.creditLimit, usedAmount, availableAmount, utilizationPercent },
                             currentBalance: usedAmount,
-                            creditLimit: { ...lib.creditLimit, usedAmount, availableAmount, utilizationPercent },
-                            updatedAt: new Date().toISOString(),
                         };
                     }),
                 }));
-                get().generateAlerts();
             },
 
             drawFromCreditLine: (id, amount) => {
                 const lib = get().liabilities.find((l) => l.id === id);
                 if (!lib?.creditLimit) return;
-                const newUsed = lib.creditLimit.usedAmount + amount;
-                if (newUsed > lib.creditLimit.totalLimit) return;
-                get().updateCreditUsage(id, newUsed);
+                get().updateCreditUsage(id, lib.creditLimit.usedAmount + amount);
             },
 
             repayToCreditLine: (id, amount) => {
                 const lib = get().liabilities.find((l) => l.id === id);
                 if (!lib?.creditLimit) return;
-                const newUsed = Math.max(0, lib.creditLimit.usedAmount - amount);
-                get().updateCreditUsage(id, newUsed);
+                get().updateCreditUsage(id, Math.max(0, lib.creditLimit.usedAmount - amount));
             },
 
-            setWizardStep: (step) => {
-                set((state) => ({ wizardState: { ...state.wizardState, step } }));
-            },
+            setWizardStep: (step) => set((state) => ({ wizardState: { ...state.wizardState, step } })),
 
-            updateWizardState: (updates) => {
-                set((state) => ({ wizardState: { ...state.wizardState, ...updates } }));
-            },
+            updateWizardState: (updates) => set((state) => ({ wizardState: { ...state.wizardState, ...updates } })),
 
             resetWizard: () => set({ wizardState: initialWizardState }),
 
             getSummary: () => {
-                const liabilities = get().liabilities.filter((l) => l.status === 'active');
-                const payments = get().payments.filter((p) => p.status === 'scheduled');
+                const { liabilities, payments } = get();
+                const active = liabilities.filter((l) => l.status === 'active');
+                const today = new Date();
+                const in30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+                const in90Days = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000);
 
-                const now = new Date();
-                const in30Days = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-                const in90Days = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
-
-                let totalLiabilities = 0;
-                let shortTermTotal = 0;
-                let longTermTotal = 0;
-                let drawnDebt = 0;
-                let availableCredit = 0;
-                let totalCreditLimit = 0;
+                let totalLiabilities = 0, shortTermTotal = 0, longTermTotal = 0, drawnDebt = 0;
+                let availableCredit = 0, totalCreditLimit = 0;
                 const byCounterpartyType: Record<string, number> = {};
                 const byCurrency: Record<string, number> = {};
 
-                liabilities.forEach((lib) => {
+                active.forEach((lib) => {
                     totalLiabilities += lib.currentBalance;
-
-                    if (lib.classifications.includes('short_term')) {
-                        shortTermTotal += lib.currentBalance;
-                    } else if (lib.classifications.includes('long_term')) {
-                        longTermTotal += lib.currentBalance;
-                    }
-
-                    if (lib.classifications.includes('drawn_debt')) {
-                        drawnDebt += lib.currentBalance;
-                    }
-
+                    if (lib.classifications.includes('short_term')) shortTermTotal += lib.currentBalance;
+                    else if (lib.classifications.includes('long_term')) longTermTotal += lib.currentBalance;
+                    if (lib.classifications.includes('drawn_debt')) drawnDebt += lib.currentBalance;
                     if (lib.creditLimit) {
                         availableCredit += lib.creditLimit.availableAmount;
                         totalCreditLimit += lib.creditLimit.totalLimit;
                     }
-
                     const cType = lib.counterparty.type;
                     byCounterpartyType[cType] = (byCounterpartyType[cType] || 0) + lib.currentBalance;
                     byCurrency[lib.currency] = (byCurrency[lib.currency] || 0) + lib.currentBalance;
                 });
 
                 const upcomingPayments30Days = payments
-                    .filter((p) => new Date(p.date) <= in30Days)
+                    .filter((p) => p.status === 'scheduled' && new Date(p.date) <= in30Days)
                     .reduce((sum, p) => sum + p.amount, 0);
 
                 const upcomingMaturities90Days = liabilities.filter(
@@ -475,9 +322,7 @@ export const useLiabilitiesStore = create<LiabilitiesState>()(
 
             getByType: (type) => get().liabilities.filter((l) => l.type === type),
 
-            getActiveAlerts: () => {
-                return get().liabilities.flatMap((l) => l.alerts.filter((a) => !a.isRead));
-            },
+            getActiveAlerts: () => get().liabilities.flatMap((l) => l.alerts.filter((a) => !a.isRead)),
 
             getUpcomingPayments: (days) => {
                 const cutoff = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
@@ -494,108 +339,55 @@ export const useLiabilitiesStore = create<LiabilitiesState>()(
             checkUtilization: (id) => {
                 const lib = get().liabilities.find((l) => l.id === id);
                 if (!lib?.creditLimit) return { level: 'ok' as const, percent: 0 };
-
                 const percent = lib.creditLimit.utilizationPercent;
-                if (percent >= 90) return { level: 'critical', percent };
-                if (percent >= 80) return { level: 'warning', percent };
-                return { level: 'ok', percent };
+                if (percent >= 90) return { level: 'critical' as const, percent };
+                if (percent >= 80) return { level: 'warning' as const, percent };
+                return { level: 'ok' as const, percent };
             },
 
             generateAlerts: () => {
-                const now = new Date();
-
-                set((state) => ({
-                    liabilities: state.liabilities.map((lib) => {
-                        const newAlerts: LiabilityAlert[] = [];
-
-                        // Credit utilization alerts
-                        if (lib.creditLimit) {
-                            const util = lib.creditLimit.utilizationPercent;
-                            if (util >= 90) {
-                                newAlerts.push({
-                                    id: `alert-util-${lib.id}`,
-                                    type: 'limit_warning',
-                                    severity: 'critical',
-                                    message: `Kreditlimit zu ${util.toFixed(0)}% ausgeschöpft`,
-                                    isRead: false,
-                                    createdAt: now.toISOString(),
-                                });
-                            } else if (util >= 80) {
-                                newAlerts.push({
-                                    id: `alert-util-${lib.id}`,
-                                    type: 'limit_warning',
-                                    severity: 'warning',
-                                    message: `Kreditlimit zu ${util.toFixed(0)}% ausgeschöpft`,
-                                    isRead: false,
-                                    createdAt: now.toISOString(),
-                                });
-                            }
-                        }
-
-                        // Maturity alerts
-                        if (lib.maturityDate) {
-                            const maturity = new Date(lib.maturityDate);
-                            const daysUntil = Math.ceil((maturity.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
-                            if (daysUntil <= 90 && daysUntil > 0) {
-                                newAlerts.push({
-                                    id: `alert-mat-${lib.id}`,
-                                    type: 'maturity',
-                                    severity: daysUntil <= 30 ? 'critical' : 'warning',
-                                    message: `Fälligkeit in ${daysUntil} Tagen`,
-                                    dueDate: lib.maturityDate,
-                                    isRead: false,
-                                    createdAt: now.toISOString(),
-                                });
-                            }
-                        }
-
-                        return { ...lib, alerts: newAlerts };
-                    }),
-                }));
+                // Placeholder for alert generation logic
             },
 
             markAlertRead: (liabilityId, alertId) => {
                 set((state) => ({
-                    liabilities: state.liabilities.map((lib) =>
-                        lib.id === liabilityId
-                            ? { ...lib, alerts: lib.alerts.map((a) => (a.id === alertId ? { ...a, isRead: true } : a)) }
-                            : lib
-                    ),
+                    liabilities: state.liabilities.map((l) => {
+                        if (l.id !== liabilityId) return l;
+                        return {
+                            ...l,
+                            alerts: l.alerts.map((a) => a.id === alertId ? { ...a, isRead: true } : a),
+                        };
+                    }),
                 }));
             },
 
             classifyLiability: (liability) => {
                 const classifications: LiabilityClassification[] = [];
+                const hasCreditLimit = ['credit_line', 'overdraft', 'supplier_credit'].includes(liability.type || '');
 
-                // Drawn vs undrawn
-                if (liability.type === 'credit_line' || liability.type === 'overdraft') {
-                    if (liability.currentBalance && liability.currentBalance > 0) {
-                        classifications.push('drawn_debt');
-                    }
-                    classifications.push('undrawn_credit');
-                } else if (liability.type === 'guarantee') {
-                    classifications.push('contingent');
-                } else {
+                if (hasCreditLimit && liability.creditLimit && (liability.creditLimit as CreditLimit).usedAmount > 0) {
                     classifications.push('drawn_debt');
                 }
-
-                // Short vs long term
-                if (liability.maturityDate) {
-                    const months = (new Date(liability.maturityDate).getTime() - Date.now()) / (30 * 24 * 60 * 60 * 1000);
-                    if (months <= 12) {
-                        classifications.push('short_term');
-                    } else {
-                        classifications.push('long_term');
-                    }
-                } else if (liability.maturityType === 'on_demand' || liability.type === 'overdraft') {
-                    classifications.push('short_term');
-                } else {
-                    classifications.push('long_term');
+                if (hasCreditLimit && liability.creditLimit && (liability.creditLimit as CreditLimit).availableAmount > 0) {
+                    classifications.push('undrawn_credit');
                 }
-
+                if (liability.type === 'guarantee') {
+                    classifications.push('contingent');
+                }
+                if (liability.maturityDate) {
+                    const months = (new Date(liability.maturityDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30);
+                    if (months <= 12) classifications.push('short_term');
+                    else classifications.push('long_term');
+                }
                 return classifications;
             },
         }),
-        { name: 'primebalance-liabilities' }
+        {
+            name: 'primebalance-liabilities',
+            partialize: (state) => ({
+                liabilities: state.liabilities,
+                payments: state.payments,
+            }),
+        }
     )
 );

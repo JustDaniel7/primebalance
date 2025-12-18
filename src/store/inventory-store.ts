@@ -14,7 +14,7 @@ import type {
 } from '@/types/inventory';
 
 // =============================================================================
-// INVENTORY STORE
+// INVENTORY STORE - API CONNECTED
 // =============================================================================
 
 interface InventoryState {
@@ -24,6 +24,12 @@ interface InventoryState {
     reservations: StockReservation[];
     batches: BatchInfo[];
     wizardState: InventoryWizardState;
+    isLoading: boolean;
+    error: string | null;
+    isInitialized: boolean;
+
+    // API Actions
+    fetchItems: () => Promise<void>;
 
     // Items CRUD
     createItem: (item: Omit<InventoryItem, 'id' | 'createdAt' | 'updatedAt' | 'availableStock' | 'stockByLocation'>) => InventoryItem;
@@ -89,239 +95,73 @@ const initialWizardState: InventoryWizardState = {
     description: '',
 };
 
-// Demo data
 const generateDemoLocations = (): InventoryLocation[] => [
     { id: 'loc-001', name: 'Hauptlager München', type: 'warehouse', address: 'Industriestr. 15, 80339 München', isDefault: true, isActive: true },
     { id: 'loc-002', name: 'Filiale Berlin', type: 'store', address: 'Friedrichstr. 100, 10117 Berlin', isDefault: false, isActive: true },
-    { id: 'loc-003', name: 'Amazon FBA', type: '3pl', isDefault: false, isActive: true },
-    { id: 'loc-004', name: 'Digital Assets', type: 'virtual', isDefault: false, isActive: true },
+    { id: 'loc-003', name: '3PL Logistik', type: '3pl', address: 'Logistikweg 5, 85748 Garching', isDefault: false, isActive: true },
 ];
 
-const generateDemoItems = (): InventoryItem[] => [
-    {
-        id: 'inv-001',
-        name: 'Premium Wireless Headphones',
-        sku: 'AUDIO-WH-001',
-        category: 'electronics',
-        type: 'physical',
-        unit: 'piece',
-        ownership: 'owned',
-        defaultLocationId: 'loc-001',
-        totalStock: 250,
-        reservedStock: 45,
-        availableStock: 205,
-        incomingStock: 100,
-        committedStock: 30,
-        stockByLocation: { 'loc-001': 180, 'loc-002': 50, 'loc-003': 20 },
-        minStockLevel: 50,
-        reorderPoint: 100,
-        maxStockLevel: 500,
-        trackSerialNumbers: true,
-        trackBatches: false,
-        trackExpiry: false,
-        valuationMethod: 'weighted_average',
-        unitCost: 45.00,
-        totalValue: 11250,
-        currency: 'EUR',
-        status: 'active',
-        tags: ['bestseller', 'electronics'],
-        createdAt: '2024-01-15T10:00:00Z',
-        updatedAt: '2024-12-10T14:00:00Z',
-    },
-    {
-        id: 'inv-002',
-        name: 'Organic Green Tea (1kg)',
-        sku: 'FOOD-GT-1KG',
-        category: 'food',
-        type: 'physical',
-        unit: 'kg',
-        ownership: 'owned',
-        defaultLocationId: 'loc-001',
-        totalStock: 85,
-        reservedStock: 10,
-        availableStock: 75,
-        incomingStock: 50,
-        committedStock: 0,
-        stockByLocation: { 'loc-001': 85 },
-        minStockLevel: 20,
-        reorderPoint: 40,
-        trackSerialNumbers: false,
-        trackBatches: true,
-        trackExpiry: true,
-        valuationMethod: 'fifo',
-        unitCost: 28.50,
-        totalValue: 2422.50,
-        currency: 'EUR',
-        status: 'active',
-        tags: ['organic', 'food'],
-        createdAt: '2024-03-01T09:00:00Z',
-        updatedAt: '2024-12-08T11:00:00Z',
-    },
-    {
-        id: 'inv-003',
-        name: 'Software License Pro',
-        sku: 'SOFT-LIC-PRO',
-        category: 'software',
-        type: 'digital',
-        unit: 'license',
-        ownership: 'owned',
-        defaultLocationId: 'loc-004',
-        totalStock: 500,
-        reservedStock: 150,
-        availableStock: 350,
-        incomingStock: 0,
-        committedStock: 0,
-        stockByLocation: { 'loc-004': 500 },
-        trackSerialNumbers: true,
-        trackBatches: false,
-        trackExpiry: true,
-        valuationMethod: 'standard_cost',
-        unitCost: 99.00,
-        totalValue: 49500,
-        currency: 'EUR',
-        status: 'active',
-        createdAt: '2024-02-01T10:00:00Z',
-        updatedAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'inv-004',
-        name: 'Consulting Hours',
-        sku: 'SVC-CONSULT',
-        category: 'services',
-        type: 'service',
-        unit: 'hour',
-        ownership: 'owned',
-        totalStock: 160,
-        reservedStock: 80,
-        availableStock: 80,
-        incomingStock: 0,
-        committedStock: 40,
-        stockByLocation: {},
-        trackSerialNumbers: false,
-        trackBatches: false,
-        trackExpiry: false,
-        valuationMethod: 'standard_cost',
-        unitCost: 150.00,
-        totalValue: 24000,
-        currency: 'EUR',
-        status: 'active',
-        description: 'Available consulting capacity per month',
-        createdAt: '2024-01-01T10:00:00Z',
-        updatedAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'inv-005',
-        name: 'USB-C Cables (2m)',
-        sku: 'ACC-USBC-2M',
-        category: 'electronics',
-        type: 'physical',
-        unit: 'piece',
-        ownership: 'owned',
-        defaultLocationId: 'loc-001',
-        totalStock: 15,
-        reservedStock: 0,
-        availableStock: 15,
-        incomingStock: 200,
-        committedStock: 0,
-        stockByLocation: { 'loc-001': 10, 'loc-002': 5 },
-        minStockLevel: 50,
-        reorderPoint: 100,
-        trackSerialNumbers: false,
-        trackBatches: false,
-        trackExpiry: false,
-        valuationMethod: 'weighted_average',
-        unitCost: 8.50,
-        totalValue: 127.50,
-        currency: 'EUR',
-        status: 'active',
-        createdAt: '2024-06-01T10:00:00Z',
-        updatedAt: '2024-12-10T10:00:00Z',
-    },
-];
-
-const generateDemoMovements = (): StockMovement[] => [
-    {
-        id: 'mov-001',
-        itemId: 'inv-001',
-        type: 'purchase',
-        date: '2024-12-01',
-        quantity: 100,
-        toLocationId: 'loc-001',
-        unitCost: 45.00,
-        totalCost: 4500,
-        reference: 'PO-2024-089',
-        referenceType: 'order',
-        createdAt: '2024-12-01T10:00:00Z',
-    },
-    {
-        id: 'mov-002',
-        itemId: 'inv-001',
-        type: 'sale',
-        date: '2024-12-05',
-        quantity: -25,
-        fromLocationId: 'loc-001',
-        reference: 'SO-2024-156',
-        referenceType: 'order',
-        createdAt: '2024-12-05T14:00:00Z',
-    },
-    {
-        id: 'mov-003',
-        itemId: 'inv-001',
-        type: 'transfer',
-        date: '2024-12-08',
-        quantity: 20,
-        fromLocationId: 'loc-001',
-        toLocationId: 'loc-002',
-        notes: 'Stock replenishment Berlin',
-        createdAt: '2024-12-08T09:00:00Z',
-    },
-    {
-        id: 'mov-004',
-        itemId: 'inv-002',
-        type: 'purchase',
-        date: '2024-12-10',
-        quantity: 50,
-        toLocationId: 'loc-001',
-        batchNumber: 'GT-2024-12-A',
-        expiryDate: '2025-12-10',
-        unitCost: 28.50,
-        totalCost: 1425,
-        reference: 'PO-2024-092',
-        referenceType: 'order',
-        createdAt: '2024-12-10T08:00:00Z',
-    },
-];
-
-const generateDemoReservations = (): StockReservation[] => [
-    {
-        id: 'res-001',
-        itemId: 'inv-001',
-        quantity: 45,
-        reason: 'customer_order',
-        reference: 'SO-2024-160',
-        reservedAt: '2024-12-10T10:00:00Z',
-        status: 'active',
-    },
-    {
-        id: 'res-002',
-        itemId: 'inv-003',
-        quantity: 150,
-        reason: 'customer_order',
-        reference: 'Contract-Enterprise-2024',
-        reservedAt: '2024-12-01T10:00:00Z',
-        status: 'active',
-    },
-];
+function mapApiToInventoryItem(api: any): InventoryItem {
+    return {
+        id: api.id,
+        name: api.name,
+        sku: api.sku,
+        category: api.category,
+        type: api.itemType || api.type || 'physical',
+        unit: api.unitOfMeasure || api.unit || 'piece',
+        ownership: api.ownershipType || api.ownership || 'owned',
+        defaultLocationId: api.warehouseId || api.defaultLocationId,
+        totalStock: Number(api.quantityOnHand ?? api.totalStock) || 0,
+        reservedStock: Number(api.quantityReserved ?? api.reservedStock) || 0,
+        availableStock: Number(api.quantityAvailable ?? api.availableStock) || 0,
+        incomingStock: Number(api.incomingStock) || 0,
+        committedStock: Number(api.committedStock) || 0,
+        stockByLocation: api.stockByLocation || {},
+        minStockLevel: api.minimumStock ?? api.minStockLevel,
+        reorderPoint: api.reorderPoint,
+        maxStockLevel: api.maxStockLevel,
+        trackSerialNumbers: api.isSerialTracked ?? api.trackSerialNumbers ?? false,
+        trackBatches: api.isBatchTracked ?? api.trackBatches ?? false,
+        trackExpiry: api.isExpiryTracked ?? api.trackExpiry ?? false,
+        valuationMethod: api.costingMethod || api.valuationMethod || 'none',
+        unitCost: api.unitCost ? Number(api.unitCost) : undefined,
+        totalValue: api.totalValue ? Number(api.totalValue) : undefined,
+        currency: api.currency || 'EUR',
+        status: api.status || 'active',
+        description: api.description,
+        imageUrl: api.imageUrl,
+        tags: api.tags || [],
+        createdAt: api.createdAt,
+        updatedAt: api.updatedAt,
+    };
+}
 
 export const useInventoryStore = create<InventoryState>()(
     persist(
         (set, get) => ({
-            items: generateDemoItems(),
+            items: [],
             locations: generateDemoLocations(),
-            movements: generateDemoMovements(),
-            reservations: generateDemoReservations(),
+            movements: [],
+            reservations: [],
             batches: [],
             wizardState: initialWizardState,
+            isLoading: false,
+            error: null,
+            isInitialized: false,
+
+            fetchItems: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/inventory');
+                    if (!response.ok) throw new Error('Failed to fetch inventory');
+                    const data = await response.json();
+                    const items = (data.items || data || []).map(mapApiToInventoryItem);
+                    set({ items, isLoading: false, isInitialized: true });
+                } catch (error) {
+                    console.error('Failed to fetch inventory:', error);
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+                }
+            },
 
             createItem: (itemData) => {
                 const now = new Date().toISOString();
@@ -335,6 +175,33 @@ export const useInventoryStore = create<InventoryState>()(
                     createdAt: now,
                     updatedAt: now,
                 };
+
+                // Async API call (fire and forget for now)
+                fetch('/api/inventory', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: itemData.name,
+                        sku: itemData.sku,
+                        category: itemData.category,
+                        itemType: itemData.type,
+                        unitOfMeasure: itemData.unit,
+                        ownershipType: itemData.ownership,
+                        warehouseId: itemData.defaultLocationId,
+                        quantityOnHand: itemData.totalStock,
+                        quantityReserved: itemData.reservedStock,
+                        minimumStock: itemData.minStockLevel,
+                        reorderPoint: itemData.reorderPoint,
+                        isSerialTracked: itemData.trackSerialNumbers,
+                        isBatchTracked: itemData.trackBatches,
+                        isExpiryTracked: itemData.trackExpiry,
+                        costingMethod: itemData.valuationMethod,
+                        unitCost: itemData.unitCost,
+                        currency: itemData.currency,
+                        description: itemData.description,
+                    }),
+                }).catch(console.error);
+
                 set((state) => ({ items: [...state.items, newItem] }));
                 return newItem;
             },
@@ -352,6 +219,13 @@ export const useInventoryStore = create<InventoryState>()(
                             : item
                     ),
                 }));
+
+                // Async API call
+                fetch(`/api/inventory/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
             },
 
             deleteItem: (id) => {
@@ -360,6 +234,8 @@ export const useInventoryStore = create<InventoryState>()(
                     movements: state.movements.filter((m) => m.itemId !== id),
                     reservations: state.reservations.filter((r) => r.itemId !== id),
                 }));
+
+                fetch(`/api/inventory/${id}`, { method: 'DELETE' }).catch(console.error);
             },
 
             createLocation: (locationData) => {
@@ -386,9 +262,14 @@ export const useInventoryStore = create<InventoryState>()(
                 };
 
                 set((state) => ({ movements: [...state.movements, newMovement] }));
-
-                // Update item stock
                 get().recalculateStock(movementData.itemId);
+
+                // API call for movement
+                fetch(`/api/inventory/${movementData.itemId}/movements`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(movementData),
+                }).catch(console.error);
 
                 return newMovement;
             },
@@ -415,7 +296,6 @@ export const useInventoryStore = create<InventoryState>()(
 
                 set((state) => ({ reservations: [...state.reservations, newReservation] }));
 
-                // Update reserved stock
                 const item = get().items.find((i) => i.id === reservationData.itemId);
                 if (item) {
                     get().updateItem(item.id, {
@@ -436,7 +316,6 @@ export const useInventoryStore = create<InventoryState>()(
                     ),
                 }));
 
-                // Reduce both reserved and total stock
                 const item = get().items.find((i) => i.id === reservation.itemId);
                 if (item) {
                     get().updateItem(item.id, {
@@ -456,7 +335,6 @@ export const useInventoryStore = create<InventoryState>()(
                     ),
                 }));
 
-                // Release reserved stock
                 const item = get().items.find((i) => i.id === reservation.itemId);
                 if (item) {
                     get().updateItem(item.id, {
@@ -467,52 +345,33 @@ export const useInventoryStore = create<InventoryState>()(
 
             recalculateStock: (itemId) => {
                 const movements = get().movements.filter((m) => m.itemId === itemId);
-                const reservations = get().reservations.filter((r) => r.itemId === itemId && r.status === 'active');
+                const item = get().items.find((i) => i.id === itemId);
+                if (!item) return;
 
-                let totalStock = 0;
                 const stockByLocation: Record<string, number> = {};
+                let totalStock = 0;
 
-                movements.forEach((mov) => {
-                    if (mov.type === 'sale' || mov.type === 'return_supplier') {
-                        totalStock += mov.quantity; // quantity is negative for outgoing
-                        if (mov.fromLocationId) {
-                            stockByLocation[mov.fromLocationId] = (stockByLocation[mov.fromLocationId] || 0) + mov.quantity;
-                        }
-                    } else if (mov.type === 'transfer') {
-                        if (mov.fromLocationId) {
-                            stockByLocation[mov.fromLocationId] = (stockByLocation[mov.fromLocationId] || 0) - mov.quantity;
-                        }
-                        if (mov.toLocationId) {
-                            stockByLocation[mov.toLocationId] = (stockByLocation[mov.toLocationId] || 0) + mov.quantity;
-                        }
-                    } else {
-                        totalStock += mov.quantity;
-                        if (mov.toLocationId) {
-                            stockByLocation[mov.toLocationId] = (stockByLocation[mov.toLocationId] || 0) + mov.quantity;
-                        }
+                movements.forEach((m) => {
+                    const qty = m.quantity;
+                    if (m.toLocationId) {
+                        stockByLocation[m.toLocationId] = (stockByLocation[m.toLocationId] || 0) + qty;
+                        totalStock += qty;
+                    }
+                    if (m.fromLocationId) {
+                        stockByLocation[m.fromLocationId] = (stockByLocation[m.fromLocationId] || 0) - qty;
+                        totalStock -= qty;
                     }
                 });
 
-                const reservedStock = reservations.reduce((sum, r) => sum + r.quantity, 0);
-
-                get().updateItem(itemId, {
-                    totalStock,
-                    reservedStock,
-                    stockByLocation,
-                });
+                get().updateItem(itemId, { stockByLocation, totalStock });
             },
 
             getAvailableStock: (itemId, locationId) => {
                 const item = get().items.find((i) => i.id === itemId);
                 if (!item) return 0;
-
                 if (locationId) {
-                    const locationStock = item.stockByLocation[locationId] || 0;
-                    // Proportional reservation for location (simplified)
-                    const locationRatio = item.totalStock > 0 ? locationStock / item.totalStock : 0;
-                    return locationStock - Math.ceil(item.reservedStock * locationRatio);
+                    return (item.stockByLocation[locationId] || 0) - item.reservedStock;
                 }
-
                 return item.availableStock;
             },
 
@@ -524,110 +383,73 @@ export const useInventoryStore = create<InventoryState>()(
                 };
             },
 
-            setWizardStep: (step) => {
-                set((state) => ({ wizardState: { ...state.wizardState, step } }));
-            },
+            setWizardStep: (step) => set((state) => ({ wizardState: { ...state.wizardState, step } })),
 
-            updateWizardState: (updates) => {
-                set((state) => ({ wizardState: { ...state.wizardState, ...updates } }));
-            },
+            updateWizardState: (updates) => set((state) => ({ wizardState: { ...state.wizardState, ...updates } })),
 
             resetWizard: () => set({ wizardState: initialWizardState }),
 
             getSummary: () => {
-                const { items, movements, locations } = get();
+                const { items, movements } = get();
                 const activeItems = items.filter((i) => i.status === 'active');
-
-                const lowStockItems = activeItems.filter((i) =>
-                    i.minStockLevel && i.availableStock < i.minStockLevel
-                ).length;
-
-                const overstockItems = activeItems.filter((i) =>
-                    i.maxStockLevel && i.totalStock > i.maxStockLevel
-                ).length;
-
-                const totalValue = activeItems.reduce((sum, i) => sum + (i.totalValue || 0), 0);
-
-                const byType: Record<InventoryType, number> = {
-                    physical: 0,
-                    digital: 0,
-                    service: 0,
-                    wip: 0,
-                    consignment: 0,
-                };
-                activeItems.forEach((i) => { byType[i.type]++; });
-
-                const byLocation: Record<string, number> = {};
-                activeItems.forEach((i) => {
-                    Object.entries(i.stockByLocation).forEach(([locId, qty]) => {
-                        byLocation[locId] = (byLocation[locId] || 0) + qty;
-                    });
+                const lowStockItems = activeItems.filter((i) => i.minStockLevel && i.availableStock < i.minStockLevel);
+                const recentMovements = movements.filter((m) => {
+                    const moveDate = new Date(m.date);
+                    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                    return moveDate > weekAgo;
                 });
 
-                const now = Date.now();
-                const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
-                const recentMovements = movements.filter((m) =>
-                    new Date(m.createdAt).getTime() > thirtyDaysAgo
-                ).length;
+                const byType = activeItems.reduce((acc, item) => {
+                    acc[item.type] = (acc[item.type] || 0) + 1;
+                    return acc;
+                }, {} as Record<InventoryType, number>);
+
+                const byLocation = activeItems.reduce((acc, item) => {
+                    Object.entries(item.stockByLocation).forEach(([locId, qty]) => {
+                        acc[locId] = (acc[locId] || 0) + qty;
+                    });
+                    return acc;
+                }, {} as Record<string, number>);
 
                 return {
                     totalItems: activeItems.length,
-                    totalValue,
-                    lowStockItems,
-                    expiringItems: 0, // Would check batches
-                    overstockItems,
+                    totalValue: activeItems.reduce((sum, i) => sum + (i.totalValue || 0), 0),
+                    lowStockItems: lowStockItems.length,
+                    expiringItems: 0,
+                    overstockItems: activeItems.filter((i) => i.maxStockLevel && i.totalStock > i.maxStockLevel).length,
                     byType,
                     byLocation,
-                    recentMovements,
+                    recentMovements: recentMovements.length,
                 };
             },
 
             getAlerts: () => {
-                const { items } = get();
+                const { items, batches } = get();
                 const alerts: InventoryAlert[] = [];
-                const now = new Date().toISOString();
 
-                items.filter((i) => i.status === 'active').forEach((item) => {
-                    // Low stock
+                items.forEach((item) => {
                     if (item.minStockLevel && item.availableStock < item.minStockLevel) {
                         alerts.push({
                             id: `alert-low-${item.id}`,
                             itemId: item.id,
                             type: 'low_stock',
                             severity: item.availableStock === 0 ? 'critical' : 'warning',
-                            message: `${item.name}: Only ${item.availableStock} ${item.unit} available`,
+                            message: `${item.name} is below minimum stock level`,
                             threshold: item.minStockLevel,
                             currentValue: item.availableStock,
-                            createdAt: now,
+                            createdAt: new Date().toISOString(),
                             isRead: false,
                         });
                     }
-
-                    // Overstock
-                    if (item.maxStockLevel && item.totalStock > item.maxStockLevel) {
-                        alerts.push({
-                            id: `alert-over-${item.id}`,
-                            itemId: item.id,
-                            type: 'overstock',
-                            severity: 'info',
-                            message: `${item.name}: Stock exceeds maximum (${item.totalStock}/${item.maxStockLevel})`,
-                            threshold: item.maxStockLevel,
-                            currentValue: item.totalStock,
-                            createdAt: now,
-                            isRead: false,
-                        });
-                    }
-
-                    // Negative availability
                     if (item.availableStock < 0) {
                         alerts.push({
                             id: `alert-neg-${item.id}`,
                             itemId: item.id,
                             type: 'negative',
                             severity: 'critical',
-                            message: `${item.name}: Negative availability detected (${item.availableStock})`,
+                            message: `${item.name} has negative stock`,
                             currentValue: item.availableStock,
-                            createdAt: now,
+                            createdAt: new Date().toISOString(),
                             isRead: false,
                         });
                     }
@@ -645,7 +467,7 @@ export const useInventoryStore = create<InventoryState>()(
             getExpiringBatches: (days) => {
                 const cutoff = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
                 return get().batches.filter((b) =>
-                    b.expiryDate && new Date(b.expiryDate) <= cutoff && b.status === 'available'
+                    b.status === 'available' && b.expiryDate && new Date(b.expiryDate) <= cutoff
                 );
             },
 
@@ -664,6 +486,7 @@ export const useInventoryStore = create<InventoryState>()(
                     fromLocationId,
                     toLocationId,
                     reference,
+                    referenceType: 'other',
                 });
 
                 return true;
@@ -673,20 +496,30 @@ export const useInventoryStore = create<InventoryState>()(
                 const item = get().items.find((i) => i.id === itemId);
                 if (!item) return;
 
-                const currentQty = item.stockByLocation[locationId] || 0;
-                const difference = newQuantity - currentQty;
+                const currentStock = item.stockByLocation[locationId] || 0;
+                const adjustment = newQuantity - currentStock;
 
                 get().recordMovement({
                     itemId,
                     type: 'adjustment',
                     date: new Date().toISOString().split('T')[0],
-                    quantity: difference,
-                    toLocationId: difference > 0 ? locationId : undefined,
-                    fromLocationId: difference < 0 ? locationId : undefined,
+                    quantity: Math.abs(adjustment),
+                    fromLocationId: adjustment < 0 ? locationId : undefined,
+                    toLocationId: adjustment > 0 ? locationId : undefined,
                     notes: reason,
+                    referenceType: 'adjustment',
                 });
             },
         }),
-        { name: 'primebalance-inventory' }
+        {
+            name: 'primebalance-inventory',
+            partialize: (state) => ({
+                items: state.items,
+                locations: state.locations,
+                movements: state.movements,
+                reservations: state.reservations,
+                batches: state.batches,
+            }),
+        }
     )
 );
