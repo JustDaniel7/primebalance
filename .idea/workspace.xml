@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/archive/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/liabilities/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/orders/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/archive-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/liabilities-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/order-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/archive.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/liabilities.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/order.ts" afterDir="false" />
+    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="Added Liabilities, Orders and Archive">
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/inventory/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/receivables/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/treasury/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/inventory-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/receivables-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/treasury-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/inventory.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/receivables.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/treasury.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
@@ -28,6 +28,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "KonradECrypto"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/JustDaniel7/primebalance.git",
+    "accountId": "4184901b-18fd-4c81-b81d-8608f1129a8e"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -96,12 +108,25 @@
       <updated>1765736094059</updated>
       <workItem from="1765736095428" duration="319000" />
       <workItem from="1765739723974" duration="557000" />
-      <workItem from="1765793420666" duration="8518000" />
+      <workItem from="1765793420666" duration="23729000" />
     </task>
+    <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
+      <option name="closed" value="true" />
+      <created>1765813594338</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1765813594338</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added Liabilities, Orders and Archive" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Liabilities, Orders and Archive" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

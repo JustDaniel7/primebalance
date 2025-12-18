@@ -425,3 +425,6 @@ export const useActiveChannelMessages = () => {
 export { useOrderStore } from './order-store'
 export { useArchiveStore } from './archive-store'
 export { useLiabilitiesStore } from './liabilities-store'
+export { useInventoryStore } from './inventory-store'
+export { useReceivablesStore } from './receivables-store'
+export { useTreasuryStore } from './treasury-store'
