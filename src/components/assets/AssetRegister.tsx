@@ -259,7 +259,7 @@ export const AssetRegister: React.FC<AssetRegisterProps> = ({ onSelectAsset, onC
                         ) : (
                             filteredAssets.map((asset, index) => {
                                 const Icon = categoryIcons[asset.category];
-                                const status = statusConfig[asset.status];
+                                const status = statusConfig[asset.status] || statusConfig[AssetStatus.PLANNED];
                                 const nbv = getAssetBookValue(asset.id);
                                 const depPercent = getDepreciationPercent(asset.id);
 

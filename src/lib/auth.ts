@@ -6,7 +6,6 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
 
 export const authOptions: AuthOptions = {
-  // Use JWT strategy instead of database for now
   session: {
     strategy: "jwt",
   },
@@ -19,7 +18,6 @@ export const authOptions: AuthOptions = {
       clientId: process.env.GITHUB_ID || "demo",
       clientSecret: process.env.GITHUB_SECRET || "demo",
     }),
-    // Simple credentials for development
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -27,7 +25,6 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        // This is just for development
         if (credentials?.email) {
           return {
             id: "1",
@@ -44,12 +41,45 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, account }) {
-      // On sign in, fetch organizationId from database
       if (user?.email) {
-        const dbUser = await prisma.user.findUnique({
+        // Try to find existing user
+        let dbUser = await prisma.user.findUnique({
           where: { email: user.email },
           select: { id: true, organizationId: true }
         })
+        
+        // If user doesn't exist, auto-create and link to first organization
+        if (!dbUser) {
+          // Find the first organization (from seed data)
+          const org = await prisma.organization.findFirst()
+          
+          if (org) {
+            // Create user linked to the organization
+            dbUser = await prisma.user.create({
+              data: {
+                email: user.email,
+                name: user.name || 'User',
+                organizationId: org.id,
+              },
+              select: { id: true, organizationId: true }
+            })
+            console.log(`Auto-created user ${user.email} linked to org ${org.name}`)
+          }
+        }
+        
+        // If user exists but has no org, link to first available org
+        if (dbUser && !dbUser.organizationId) {
+          const org = await prisma.organization.findFirst()
+          if (org) {
+            await prisma.user.update({
+              where: { id: dbUser.id },
+              data: { organizationId: org.id }
+            })
+            dbUser.organizationId = org.id
+            console.log(`Linked existing user ${user.email} to org ${org.name}`)
+          }
+        }
+        
         if (dbUser) {
           token.organizationId = dbUser.organizationId || undefined
           token.sub = dbUser.id

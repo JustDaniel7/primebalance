@@ -67,14 +67,51 @@ function calculateMonthlyDepreciation(
     }
 }
 
+function normalizeAssetStatus(status: string | undefined): AssetStatus {
+    if (!status) return AssetStatus.PLANNED;
+    const upper = status.toUpperCase();
+    if (Object.values(AssetStatus).includes(upper as AssetStatus)) {
+        return upper as AssetStatus;
+    }
+    return AssetStatus.PLANNED;
+}
+
+function normalizeAssetCategory(category: string | undefined): AssetCategory {
+    if (!category) return AssetCategory.IT_EQUIPMENT;
+    const upper = category.toUpperCase();
+    if (Object.values(AssetCategory).includes(upper as AssetCategory)) {
+        return upper as AssetCategory;
+    }
+    return AssetCategory.IT_EQUIPMENT;
+}
+
+function normalizeAssetType(type: string | undefined): AssetType {
+    if (!type) return AssetType.TANGIBLE;
+    const upper = type.toUpperCase();
+    if (Object.values(AssetType).includes(upper as AssetType)) {
+        return upper as AssetType;
+    }
+    return AssetType.TANGIBLE;
+}
+
+function normalizeDepreciationMethod(method: string | undefined): DepreciationMethod {
+    if (!method) return DepreciationMethod.STRAIGHT_LINE;
+    const upper = method.toUpperCase();
+    if (Object.values(DepreciationMethod).includes(upper as DepreciationMethod)) {
+        return upper as DepreciationMethod;
+    }
+    return DepreciationMethod.STRAIGHT_LINE;
+}
+
 function mapApiToAsset(api: any): Asset {
+    const status = normalizeAssetStatus(api.status);
     return {
         id: api.id,
-        assetNumber: api.assetNumber || `AST-${api.id.slice(-5)}`,
-        name: api.name,
+        assetNumber: api.assetNumber || `AST-${api.id?.slice(-5) || Date.now()}`,
+        name: api.name || 'Unnamed Asset',
         description: api.description,
-        assetType: api.assetType || AssetType.TANGIBLE,
-        category: api.category || AssetCategory.IT_EQUIPMENT,
+        assetType: normalizeAssetType(api.assetType),
+        category: normalizeAssetCategory(api.category),
         internalReference: api.internalReference,
         legalEntityId: api.legalEntityId || api.organizationId,
         costCenterId: api.costCenterId,
@@ -86,12 +123,12 @@ function mapApiToAsset(api: any): Asset {
         capitalizedCost: Number(api.capitalizedCost) || Number(api.acquisitionCost) || 0,
         salvageValue: Number(api.salvageValue) || Number(api.residualValue) || 0,
         usefulLifeMonths: Number(api.usefulLifeMonths) || 36,
-        depreciationMethod: api.depreciationMethod || DepreciationMethod.STRAIGHT_LINE,
+        depreciationMethod: normalizeDepreciationMethod(api.depreciationMethod),
         depreciationStartDate: api.depreciationStartDate?.split('T')[0],
         totalUnits: api.totalUnits,
         unitsProduced: api.unitsProduced,
         customFormula: api.customFormula,
-        status: api.status || AssetStatus.PLANNED,
+        status,
         isActive: api.isActive ?? true,
         parentAssetId: api.parentAssetId,
         isComponent: api.isComponent || false,
@@ -105,7 +142,7 @@ function mapApiToAsset(api: any): Asset {
         buyerReference: api.buyerReference,
         isLeaseAsset: api.isLeaseAsset || api.acquisitionType === 'lease',
         leaseId: api.leaseId,
-        isCIP: api.isCIP || api.status === AssetStatus.PLANNED,
+        isCIP: api.isCIP || status === AssetStatus.PLANNED,
         cipStartDate: api.cipStartDate?.split('T')[0],
         cipCompletionDate: api.cipCompletionDate?.split('T')[0],
         tags: api.tags || [],

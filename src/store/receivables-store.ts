@@ -43,8 +43,27 @@ function calculateDaysOutstanding(issueDate: string, status: ReceivableStatus): 
     return Math.floor((Date.now() - new Date(issueDate).getTime()) / msPerDay);
 }
 
+const VALID_RECEIVABLE_STATUSES: ReceivableStatus[] = [
+    'open', 'due', 'overdue', 'partially_paid', 'paid', 
+    'disputed', 'in_collection', 'written_off', 'settled_via_offset'
+];
+
+const VALID_RISK_LEVELS: RiskLevel[] = ['low', 'medium', 'high', 'critical'];
+
+function normalizeReceivableStatus(status: string | undefined): ReceivableStatus {
+    if (!status) return 'open';
+    const lower = status.toLowerCase() as ReceivableStatus;
+    return VALID_RECEIVABLE_STATUSES.includes(lower) ? lower : 'open';
+}
+
+function normalizeRiskLevel(level: string | undefined): RiskLevel {
+    if (!level) return 'low';
+    const lower = level.toLowerCase() as RiskLevel;
+    return VALID_RISK_LEVELS.includes(lower) ? lower : 'low';
+}
+
 function mapApiToReceivable(api: any): Receivable {
-    const status = api.status || 'open';
+    const status = normalizeReceivableStatus(api.status);
     const days = api.daysOutstanding ?? calculateDaysOutstanding(api.issueDate, status);
     return {
         id: api.id,
@@ -63,8 +82,8 @@ function mapApiToReceivable(api: any): Receivable {
         dueDate: api.dueDate?.split('T')[0] || api.dueDate,
         expectedPaymentDate: api.expectedPaymentDate?.split('T')[0],
         lastActivityDate: api.lastActivityDate || new Date().toISOString(),
-        status: status,
-        riskLevel: api.riskLevel || 'low',
+        status,
+        riskLevel: normalizeRiskLevel(api.riskLevel),
         daysOutstanding: days,
         agingBucket: api.agingBucket || calculateAgingBucket(days),
         isDisputed: api.isDisputed || false,
