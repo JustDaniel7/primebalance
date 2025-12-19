@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState,} from 'react'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Button, Badge } from '@/components/ui'
 import { ReportsIcon, TrendUpIcon, TrendDownIcon } from '@/components/ui/Icons'
@@ -14,8 +14,10 @@ import {
   TrendingUp,
   DollarSign,
   Receipt,
-  Clock
+  Clock,
+  Plus
 } from 'lucide-react'
+import { ReportsWizard } from '@/components/reports/ReportsWizard'
 
 const reportTypes = [
   { id: 'profit-loss', icon: TrendingUp, color: 'emerald' },
@@ -29,6 +31,7 @@ const reportTypes = [
 export default function ReportsPage() {
   const { t } = useThemeStore()
   const [selectedPeriod, setSelectedPeriod] = useState('month')
+  const [showWizard, setShowWizard] = useState(false)
 
   const periods = [
     { value: 'week', label: t('common.thisWeek') },
@@ -61,10 +64,16 @@ export default function ReportsPage() {
             {t('reports.subtitle')}
           </p>
         </div>
-        <Button variant="primary" leftIcon={<FileText size={18} />}>
-          {t('reports.generateReport')}
+        <Button variant="primary" leftIcon={<Plus size={18} />} onClick={() => setShowWizard(true)}>
+          {t('reports.newReport') || 'New Report'}
         </Button>
+        {/* Reports Wizard Modal */}
+        <AnimatePresence>
+          {showWizard && <ReportsWizard onClose={() => setShowWizard(false)} />}
+        </AnimatePresence>
       </div>
+      )
+      &rbrace;
 
       {/* Period Selection */}
       <Card variant="glass" padding="md">

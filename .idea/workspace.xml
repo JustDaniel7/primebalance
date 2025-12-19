@@ -4,18 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo">
+    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="assets rdy">
+      <change afterPath="$PROJECT_DIR$/src/components/orders/OrderCreationWizard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/reports/ReportsWizard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/report-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/report.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/assets/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/assets/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetLifecycleTimeline.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetLifecycleTimeline.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetMetricsCards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetMetricsCards.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/AssetRegister.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/AssetRegister.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/DepreciationScheduleView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/DepreciationScheduleView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/assets/DisposalForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/assets/DisposalForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/orders/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/orders/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/reports/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/reports/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/order-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/order-store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/theme-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/theme-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/order.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +38,9 @@
     &quot;accountId&quot;: &quot;4184901b-18fd-4c81-b81d-8608f1129a8e&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -63,6 +67,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Konrad\\Desktop\\primebalance\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -74,7 +79,7 @@
       <recent name="C:\Users\Konrad\Desktop\primebalance\src\app\dashboard" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.Next.js: server-side">
+  <component name="RunManager" selected="JavaScript Debug.Next.js: debug client-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -106,6 +111,9 @@
       <workItem from="1765736095428" duration="319000" />
       <workItem from="1765739723974" duration="557000" />
       <workItem from="1765793420666" duration="35180000" />
+      <workItem from="1766072270089" duration="13052000" />
+      <workItem from="1766141661234" duration="3598000" />
+      <workItem from="1766150620972" duration="6482000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -131,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766058263118</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="assets rdy">
+      <option name="closed" value="true" />
+      <created>1766072376150</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1766072376151</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,7 +157,8 @@
     <MESSAGE value="Added Liabilities, Orders and Archive" />
     <MESSAGE value="Added Treasury, Inventory and Liabilities" />
     <MESSAGE value="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started assets, not rdy yet - this one is just for mf claude cause he aint opening the repo" />
+    <MESSAGE value="assets rdy" />
+    <option name="LAST_COMMIT_MESSAGE" value="assets rdy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -154,10 +171,17 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/store/asset-store.ts</url>
           <line>1055</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
