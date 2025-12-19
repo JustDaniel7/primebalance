@@ -302,6 +302,18 @@ export const translations: Record<Language, Record<string, string>> = {
     'receipts.extractedData': 'Extracted Data',
     'receipts.matchTransaction': 'Match to Transaction',
 
+    // Orders
+    'order.title': 'Orders',
+    'order.subtitle': 'Manage orders and create invoices',
+    'order.new': 'New Order',
+    'order.select': 'Select Order',
+    'order.status.draft': 'Draft',
+    'order.status.confirmed': 'Confirmed',
+    'order.status.in_progress': 'In Progress',
+    'order.status.partially_completed': 'Partially Completed',
+    'order.status.completed': 'Completed',
+    'order.status.cancelled': 'Cancelled',
+
     // Reports
     'reports.title': 'Reports',
     'reports.subtitle': 'Generate and analyze financial reports',
@@ -403,17 +415,6 @@ export const translations: Record<Language, Record<string, string>> = {
     'invoice.all': 'All Invoices',
     'invoice.search': 'Search invoices...',
 
-    // Orders
-    'order.title': 'Orders',
-    'order.subtitle': 'Manage orders and create invoices',
-    'order.new': 'New Order',
-    'order.select': 'Select Order',
-    'order.status.draft': 'Draft',
-    'order.status.confirmed': 'Confirmed',
-    'order.status.in_progress': 'In Progress',
-    'order.status.partially_completed': 'Partially Completed',
-    'order.status.completed': 'Completed',
-    'order.status.cancelled': 'Cancelled',
 
     //Invoices
     'fakturierung.title': 'Create Invoice from Order',
@@ -1486,7 +1487,6 @@ export const translations: Record<Language, Record<string, string>> = {
     'auth.firstName': 'Vorname',
     'auth.lastName': 'Nachname',
 
-    // Orders
     'order.title': 'Aufträge',
     'order.subtitle': 'Aufträge verwalten und Rechnungen erstellen',
     'order.new': 'Neuer Auftrag',
@@ -7137,6 +7137,600 @@ export const translations: Record<Language, Record<string, string>> = {
     'assets.reports.nbvSummaryDesc': 'ارزش دفتری خالص به تفکیک دسته',
   },
 };
+
+// =============================================================================
+// ORDERS MODULE TRANSLATION KEYS
+// =============================================================================
+// Add these to each language block in theme-store.ts
+// =============================================================================
+
+// ENGLISH (en)
+const ordersEN = {
+  // Module Header
+  'orders.title': 'Orders',
+  'orders.subtitle': 'Manage orders, fulfillment, and invoicing',
+
+  // Tabs
+  'orders.tabs.all': 'All Orders',
+  'orders.tabs.active': 'Active',
+  'orders.tabs.pending': 'Pending',
+  'orders.tabs.fulfilled': 'Fulfilled',
+  'orders.tabs.invoiced': 'Invoiced',
+
+  // Metrics
+  'orders.metrics.totalOrders': 'Total Orders',
+  'orders.metrics.activeOrders': 'Active Orders',
+  'orders.metrics.totalValue': 'Total Value',
+  'orders.metrics.awaitingFulfillment': 'Awaiting Fulfillment',
+  'orders.metrics.awaitingInvoice': 'Awaiting Invoice',
+  'orders.metrics.avgOrderValue': 'Avg. Order Value',
+  'orders.metrics.fulfillmentRate': 'Fulfillment Rate',
+  'orders.metrics.invoicingRate': 'Invoicing Rate',
+
+  // Actions
+  'orders.actions.create': 'Create Order',
+  'orders.actions.edit': 'Edit Order',
+  'orders.actions.duplicate': 'Duplicate Order',
+  'orders.actions.delete': 'Delete Order',
+  'orders.actions.confirm': 'Confirm Order',
+  'orders.actions.cancel': 'Cancel Order',
+  'orders.actions.hold': 'Put on Hold',
+  'orders.actions.resume': 'Resume Order',
+  'orders.actions.fulfill': 'Record Fulfillment',
+  'orders.actions.invoice': 'Create Invoice',
+  'orders.actions.viewInvoices': 'View Invoices',
+  'orders.actions.export': 'Export',
+  'orders.actions.print': 'Print',
+  'orders.actions.amend': 'Create Amendment',
+
+  // Status
+  'orders.status.draft': 'Draft',
+  'orders.status.pending_approval': 'Pending Approval',
+  'orders.status.approved': 'Approved',
+  'orders.status.confirmed': 'Confirmed',
+  'orders.status.in_progress': 'In Progress',
+  'orders.status.partially_fulfilled': 'Partially Fulfilled',
+  'orders.status.fulfilled': 'Fulfilled',
+  'orders.status.partially_invoiced': 'Partially Invoiced',
+  'orders.status.fully_invoiced': 'Fully Invoiced',
+  'orders.status.completed': 'Completed',
+  'orders.status.on_hold': 'On Hold',
+  'orders.status.cancelled': 'Cancelled',
+  'orders.status.disputed': 'Disputed',
+
+  // Fulfillment Status
+  'orders.fulfillment.pending': 'Pending',
+  'orders.fulfillment.partial': 'Partial',
+  'orders.fulfillment.complete': 'Complete',
+
+  // Invoicing Status
+  'orders.invoicing.pending': 'Not Invoiced',
+  'orders.invoicing.partial': 'Partially Invoiced',
+  'orders.invoicing.complete': 'Fully Invoiced',
+
+  // Table Headers
+  'orders.table.orderNumber': 'Order #',
+  'orders.table.customer': 'Customer',
+  'orders.table.date': 'Date',
+  'orders.table.total': 'Total',
+  'orders.table.status': 'Status',
+  'orders.table.fulfillment': 'Fulfillment',
+  'orders.table.invoicing': 'Invoicing',
+  'orders.table.actions': 'Actions',
+
+  // Form - Basic Info
+  'orders.form.title': 'Order Details',
+  'orders.form.basicInfo': 'Basic Information',
+  'orders.form.orderNumber': 'Order Number',
+  'orders.form.orderDate': 'Order Date',
+  'orders.form.currency': 'Currency',
+  'orders.form.reference': 'Reference',
+  'orders.form.customerPO': 'Customer PO #',
+  'orders.form.projectRef': 'Project Reference',
+
+  // Form - Customer
+  'orders.form.customer': 'Customer',
+  'orders.form.selectCustomer': 'Select Customer',
+  'orders.form.customerType': 'Customer Type',
+  'orders.form.b2b': 'Business (B2B)',
+  'orders.form.b2c': 'Consumer (B2C)',
+  'orders.form.government': 'Government',
+  'orders.form.nonprofit': 'Non-Profit',
+  'orders.form.crossBorder': 'Cross-Border',
+  'orders.form.intraEU': 'Intra-EU',
+
+  // Form - Items
+  'orders.form.items': 'Line Items',
+  'orders.form.addItem': 'Add Item',
+  'orders.form.removeItem': 'Remove Item',
+  'orders.form.description': 'Description',
+  'orders.form.quantity': 'Quantity',
+  'orders.form.unit': 'Unit',
+  'orders.form.unitPrice': 'Unit Price',
+  'orders.form.discount': 'Discount',
+  'orders.form.taxRate': 'Tax Rate',
+  'orders.form.lineTotal': 'Total',
+  'orders.form.noItems': 'No items added yet',
+
+  // Form - Pricing Model
+  'orders.form.pricingModel': 'Pricing Model',
+  'orders.form.pricing.fixed': 'Fixed Price',
+  'orders.form.pricing.unit_based': 'Unit Based',
+  'orders.form.pricing.time_based': 'Time Based',
+  'orders.form.pricing.milestone': 'Milestone',
+  'orders.form.pricing.subscription': 'Subscription',
+  'orders.form.pricing.usage_based': 'Usage Based',
+
+  // Form - Discounts
+  'orders.form.discounts': 'Discounts',
+  'orders.form.addDiscount': 'Add Discount',
+  'orders.form.discountType': 'Discount Type',
+  'orders.form.discountValue': 'Value',
+  'orders.form.discountReason': 'Reason',
+
+  // Form - Totals
+  'orders.form.subtotal': 'Subtotal',
+  'orders.form.totalDiscounts': 'Total Discounts',
+  'orders.form.taxableAmount': 'Taxable Amount',
+  'orders.form.tax': 'Tax',
+  'orders.form.total': 'Total',
+  'orders.form.margin': 'Margin',
+
+  // Form - Terms
+  'orders.form.terms': 'Terms',
+  'orders.form.paymentTerms': 'Payment Terms',
+  'orders.form.paymentDays': 'Payment Days',
+  'orders.form.deliveryTerms': 'Delivery Terms',
+  'orders.form.incoterm': 'Incoterm',
+
+  // Form - Dates
+  'orders.form.dates': 'Dates',
+  'orders.form.expectedDelivery': 'Expected Delivery',
+  'orders.form.servicePeriod': 'Service Period',
+  'orders.form.servicePeriodStart': 'Service Start',
+  'orders.form.servicePeriodEnd': 'Service End',
+
+  // Form - Recurring
+  'orders.form.recurring': 'Recurring Order',
+  'orders.form.isRecurring': 'This is a recurring order',
+  'orders.form.recurringInterval': 'Interval',
+  'orders.form.weekly': 'Weekly',
+  'orders.form.biweekly': 'Bi-weekly',
+  'orders.form.monthly': 'Monthly',
+  'orders.form.quarterly': 'Quarterly',
+  'orders.form.annually': 'Annually',
+
+  // Form - Notes
+  'orders.form.notes': 'Notes',
+  'orders.form.internalNotes': 'Internal Notes',
+  'orders.form.customerNotes': 'Customer Notes',
+  'orders.form.termsConditions': 'Terms & Conditions',
+
+  // Detail View
+  'orders.detail.overview': 'Overview',
+  'orders.detail.items': 'Items',
+  'orders.detail.fulfillment': 'Fulfillment',
+  'orders.detail.invoices': 'Invoices',
+  'orders.detail.history': 'History',
+  'orders.detail.documents': 'Documents',
+
+  // Detail - Order Info
+  'orders.detail.orderInfo': 'Order Information',
+  'orders.detail.createdAt': 'Created',
+  'orders.detail.updatedAt': 'Last Updated',
+  'orders.detail.createdBy': 'Created By',
+  'orders.detail.origin': 'Origin',
+  'orders.detail.fromOffer': 'From Offer',
+  'orders.detail.manual': 'Manual Entry',
+
+  // Detail - Customer Info
+  'orders.detail.customerInfo': 'Customer Information',
+  'orders.detail.billingAddress': 'Billing Address',
+  'orders.detail.shippingAddress': 'Shipping Address',
+  'orders.detail.vatId': 'VAT ID',
+  'orders.detail.contact': 'Contact',
+
+  // Detail - Financial Summary
+  'orders.detail.financialSummary': 'Financial Summary',
+  'orders.detail.orderTotal': 'Order Total',
+  'orders.detail.invoiced': 'Invoiced',
+  'orders.detail.remaining': 'Remaining',
+  'orders.detail.paid': 'Paid',
+  'orders.detail.outstanding': 'Outstanding',
+
+  // Fulfillment
+  'orders.fulfillment.title': 'Fulfillment',
+  'orders.fulfillment.recordDelivery': 'Record Delivery',
+  'orders.fulfillment.item': 'Item',
+  'orders.fulfillment.ordered': 'Ordered',
+  'orders.fulfillment.fulfilled': 'Fulfilled',
+  'orders.fulfillment.remaining': 'Remaining',
+  'orders.fulfillment.deliveryDate': 'Delivery Date',
+  'orders.fulfillment.trackingNumber': 'Tracking Number',
+  'orders.fulfillment.carrier': 'Carrier',
+  'orders.fulfillment.notes': 'Notes',
+  'orders.fulfillment.confirm': 'Confirm Fulfillment',
+
+  // Invoicing
+  'orders.invoicing.title': 'Create Invoice from Order',
+  'orders.invoicing.selectType': 'Select Invoice Type',
+  'orders.invoicing.final': 'Final Invoice',
+  'orders.invoicing.finalDesc': 'Invoice for the full remaining amount',
+  'orders.invoicing.partialDesc': 'Invoice for a portion of the order',
+  'orders.invoicing.advance': 'Advance Invoice',
+  'orders.invoicing.advanceDesc': 'Upfront payment before delivery',
+  'orders.invoicing.periodic': 'Periodic Invoice',
+  'orders.invoicing.periodicDesc': 'Invoice for a specific period',
+  'orders.invoicing.selectItems': 'Select Items to Invoice',
+  'orders.invoicing.selectPeriod': 'Select Period',
+  'orders.invoicing.percentage': 'Percentage',
+  'orders.invoicing.amount': 'Amount',
+  'orders.invoicing.previouslyInvoiced': 'Previously Invoiced',
+  'orders.invoicing.currentInvoice': 'This Invoice',
+  'orders.invoicing.remainingAfter': 'Remaining After',
+  'orders.invoicing.createInvoice': 'Create Invoice',
+  'orders.invoicing.warning.double': 'Warning: This may result in over-invoicing',
+  'orders.invoicing.warning.exceeds': 'Invoice amount exceeds order total',
+
+  // History / Timeline
+  'orders.history.title': 'Order Timeline',
+  'orders.history.noEvents': 'No events recorded',
+  'orders.event.order_created': 'Order created',
+  'orders.event.order_created_from_offer': 'Order created from offer',
+  'orders.event.order_confirmed': 'Order confirmed',
+  'orders.event.order_modified': 'Order modified',
+  'orders.event.fulfillment_started': 'Fulfillment started',
+  'orders.event.item_fulfilled': 'Item fulfilled',
+  'orders.event.invoice_generated': 'Invoice generated',
+  'orders.event.payment_received': 'Payment received',
+  'orders.event.order_completed': 'Order completed',
+  'orders.event.order_cancelled': 'Order cancelled',
+  'orders.event.order_put_on_hold': 'Order put on hold',
+  'orders.event.order_resumed': 'Order resumed',
+  'orders.event.amendment_created': 'Amendment created',
+
+  // Approval
+  'orders.approval.title': 'Approval Required',
+  'orders.approval.reason': 'Reason',
+  'orders.approval.pending': 'Pending Approval',
+  'orders.approval.approved': 'Approved',
+  'orders.approval.rejected': 'Rejected',
+  'orders.approval.approve': 'Approve',
+  'orders.approval.reject': 'Reject',
+  'orders.approval.requestApproval': 'Request Approval',
+
+  // Empty States
+  'orders.empty.title': 'No Orders Yet',
+  'orders.empty.description': 'Create your first order to get started.',
+  'orders.empty.filtered': 'No orders match your filters',
+
+  // Confirmations
+  'orders.confirm.delete': 'Are you sure you want to delete this order?',
+  'orders.confirm.cancel': 'Are you sure you want to cancel this order?',
+  'orders.confirm.hold': 'Put this order on hold?',
+
+  // Validation
+  'orders.validation.customerRequired': 'Customer is required',
+  'orders.validation.itemsRequired': 'At least one item is required',
+  'orders.validation.quantityPositive': 'Quantity must be positive',
+  'orders.validation.pricePositive': 'Price must be positive',
+  'orders.validation.dateRequired': 'Order date is required',
+
+  // Units
+  'orders.unit.piece': 'Piece',
+  'orders.unit.hour': 'Hour',
+  'orders.unit.day': 'Day',
+  'orders.unit.week': 'Week',
+  'orders.unit.month': 'Month',
+  'orders.unit.year': 'Year',
+  'orders.unit.kg': 'Kilogram',
+  'orders.unit.liter': 'Liter',
+  'orders.unit.meter': 'Meter',
+  'orders.unit.flat': 'Flat Rate',
+  'orders.unit.license': 'License',
+  'orders.unit.user': 'User',
+};
+
+// =============================================================================
+// GERMAN (de)
+// =============================================================================
+
+const ordersDE = {
+  // Module Header
+  'orders.title': 'Aufträge',
+  'orders.subtitle': 'Aufträge, Erfüllung und Fakturierung verwalten',
+
+  // Tabs
+  'orders.tabs.all': 'Alle Aufträge',
+  'orders.tabs.active': 'Aktiv',
+  'orders.tabs.pending': 'Ausstehend',
+  'orders.tabs.fulfilled': 'Erfüllt',
+  'orders.tabs.invoiced': 'Fakturiert',
+
+  // Metrics
+  'orders.metrics.totalOrders': 'Gesamte Aufträge',
+  'orders.metrics.activeOrders': 'Aktive Aufträge',
+  'orders.metrics.totalValue': 'Gesamtwert',
+  'orders.metrics.awaitingFulfillment': 'Wartet auf Erfüllung',
+  'orders.metrics.awaitingInvoice': 'Wartet auf Rechnung',
+  'orders.metrics.avgOrderValue': 'Ø Auftragswert',
+  'orders.metrics.fulfillmentRate': 'Erfüllungsrate',
+  'orders.metrics.invoicingRate': 'Fakturierungsrate',
+
+  // Actions
+  'orders.actions.create': 'Auftrag erstellen',
+  'orders.actions.edit': 'Auftrag bearbeiten',
+  'orders.actions.duplicate': 'Auftrag duplizieren',
+  'orders.actions.delete': 'Auftrag löschen',
+  'orders.actions.confirm': 'Auftrag bestätigen',
+  'orders.actions.cancel': 'Auftrag stornieren',
+  'orders.actions.hold': 'Zurückstellen',
+  'orders.actions.resume': 'Fortsetzen',
+  'orders.actions.fulfill': 'Erfüllung erfassen',
+  'orders.actions.invoice': 'Rechnung erstellen',
+  'orders.actions.viewInvoices': 'Rechnungen anzeigen',
+  'orders.actions.export': 'Exportieren',
+  'orders.actions.print': 'Drucken',
+  'orders.actions.amend': 'Änderung erstellen',
+
+  // Status
+  'orders.status.draft': 'Entwurf',
+  'orders.status.pending_approval': 'Genehmigung ausstehend',
+  'orders.status.approved': 'Genehmigt',
+  'orders.status.confirmed': 'Bestätigt',
+  'orders.status.in_progress': 'In Bearbeitung',
+  'orders.status.partially_fulfilled': 'Teilweise erfüllt',
+  'orders.status.fulfilled': 'Erfüllt',
+  'orders.status.partially_invoiced': 'Teilweise fakturiert',
+  'orders.status.fully_invoiced': 'Vollständig fakturiert',
+  'orders.status.completed': 'Abgeschlossen',
+  'orders.status.on_hold': 'Zurückgestellt',
+  'orders.status.cancelled': 'Storniert',
+  'orders.status.disputed': 'Strittig',
+
+  // Fulfillment Status
+  'orders.fulfillment.pending': 'Ausstehend',
+  'orders.fulfillment.partial': 'Teilweise',
+  'orders.fulfillment.complete': 'Vollständig',
+
+  // Invoicing Status
+  'orders.invoicing.pending': 'Nicht fakturiert',
+  'orders.invoicing.partial': 'Teilweise fakturiert',
+  'orders.invoicing.complete': 'Vollständig fakturiert',
+
+  // Table Headers
+  'orders.table.orderNumber': 'Auftragsnr.',
+  'orders.table.customer': 'Kunde',
+  'orders.table.date': 'Datum',
+  'orders.table.total': 'Gesamt',
+  'orders.table.status': 'Status',
+  'orders.table.fulfillment': 'Erfüllung',
+  'orders.table.invoicing': 'Fakturierung',
+  'orders.table.actions': 'Aktionen',
+
+  // Form - Basic Info
+  'orders.form.title': 'Auftragsdetails',
+  'orders.form.basicInfo': 'Grundinformationen',
+  'orders.form.orderNumber': 'Auftragsnummer',
+  'orders.form.orderDate': 'Auftragsdatum',
+  'orders.form.currency': 'Währung',
+  'orders.form.reference': 'Referenz',
+  'orders.form.customerPO': 'Kunden-Bestellnr.',
+  'orders.form.projectRef': 'Projektreferenz',
+
+  // Form - Customer
+  'orders.form.customer': 'Kunde',
+  'orders.form.selectCustomer': 'Kunde auswählen',
+  'orders.form.customerType': 'Kundentyp',
+  'orders.form.b2b': 'Geschäftskunde (B2B)',
+  'orders.form.b2c': 'Privatkunde (B2C)',
+  'orders.form.government': 'Behörde',
+  'orders.form.nonprofit': 'Gemeinnützig',
+  'orders.form.crossBorder': 'Grenzüberschreitend',
+  'orders.form.intraEU': 'Innergemeinschaftlich',
+
+  // Form - Items
+  'orders.form.items': 'Positionen',
+  'orders.form.addItem': 'Position hinzufügen',
+  'orders.form.removeItem': 'Position entfernen',
+  'orders.form.description': 'Beschreibung',
+  'orders.form.quantity': 'Menge',
+  'orders.form.unit': 'Einheit',
+  'orders.form.unitPrice': 'Einzelpreis',
+  'orders.form.discount': 'Rabatt',
+  'orders.form.taxRate': 'Steuersatz',
+  'orders.form.lineTotal': 'Gesamt',
+  'orders.form.noItems': 'Noch keine Positionen hinzugefügt',
+
+  // Form - Pricing Model
+  'orders.form.pricingModel': 'Preismodell',
+  'orders.form.pricing.fixed': 'Festpreis',
+  'orders.form.pricing.unit_based': 'Stückbasiert',
+  'orders.form.pricing.time_based': 'Zeitbasiert',
+  'orders.form.pricing.milestone': 'Meilensteinbasiert',
+  'orders.form.pricing.subscription': 'Abonnement',
+  'orders.form.pricing.usage_based': 'Nutzungsbasiert',
+
+  // Form - Discounts
+  'orders.form.discounts': 'Rabatte',
+  'orders.form.addDiscount': 'Rabatt hinzufügen',
+  'orders.form.discountType': 'Rabattart',
+  'orders.form.discountValue': 'Wert',
+  'orders.form.discountReason': 'Begründung',
+
+  // Form - Totals
+  'orders.form.subtotal': 'Zwischensumme',
+  'orders.form.totalDiscounts': 'Rabatte gesamt',
+  'orders.form.taxableAmount': 'Steuerbarer Betrag',
+  'orders.form.tax': 'Steuer',
+  'orders.form.total': 'Gesamt',
+  'orders.form.margin': 'Marge',
+
+  // Form - Terms
+  'orders.form.terms': 'Konditionen',
+  'orders.form.paymentTerms': 'Zahlungsbedingungen',
+  'orders.form.paymentDays': 'Zahlungsziel (Tage)',
+  'orders.form.deliveryTerms': 'Lieferbedingungen',
+  'orders.form.incoterm': 'Incoterm',
+
+  // Form - Dates
+  'orders.form.dates': 'Termine',
+  'orders.form.expectedDelivery': 'Voraussichtliche Lieferung',
+  'orders.form.servicePeriod': 'Leistungszeitraum',
+  'orders.form.servicePeriodStart': 'Leistungsbeginn',
+  'orders.form.servicePeriodEnd': 'Leistungsende',
+
+  // Form - Recurring
+  'orders.form.recurring': 'Wiederkehrender Auftrag',
+  'orders.form.isRecurring': 'Dies ist ein wiederkehrender Auftrag',
+  'orders.form.recurringInterval': 'Intervall',
+  'orders.form.weekly': 'Wöchentlich',
+  'orders.form.biweekly': 'Zweiwöchentlich',
+  'orders.form.monthly': 'Monatlich',
+  'orders.form.quarterly': 'Vierteljährlich',
+  'orders.form.annually': 'Jährlich',
+
+  // Form - Notes
+  'orders.form.notes': 'Notizen',
+  'orders.form.internalNotes': 'Interne Notizen',
+  'orders.form.customerNotes': 'Kundenhinweise',
+  'orders.form.termsConditions': 'AGB',
+
+  // Detail View
+  'orders.detail.overview': 'Übersicht',
+  'orders.detail.items': 'Positionen',
+  'orders.detail.fulfillment': 'Erfüllung',
+  'orders.detail.invoices': 'Rechnungen',
+  'orders.detail.history': 'Verlauf',
+  'orders.detail.documents': 'Dokumente',
+
+  // Detail - Order Info
+  'orders.detail.orderInfo': 'Auftragsinformationen',
+  'orders.detail.createdAt': 'Erstellt',
+  'orders.detail.updatedAt': 'Zuletzt aktualisiert',
+  'orders.detail.createdBy': 'Erstellt von',
+  'orders.detail.origin': 'Herkunft',
+  'orders.detail.fromOffer': 'Aus Angebot',
+  'orders.detail.manual': 'Manuelle Eingabe',
+
+  // Detail - Customer Info
+  'orders.detail.customerInfo': 'Kundeninformationen',
+  'orders.detail.billingAddress': 'Rechnungsadresse',
+  'orders.detail.shippingAddress': 'Lieferadresse',
+  'orders.detail.vatId': 'USt-IdNr.',
+  'orders.detail.contact': 'Kontakt',
+
+  // Detail - Financial Summary
+  'orders.detail.financialSummary': 'Finanzzusammenfassung',
+  'orders.detail.orderTotal': 'Auftragssumme',
+  'orders.detail.invoiced': 'Fakturiert',
+  'orders.detail.remaining': 'Verbleibend',
+  'orders.detail.paid': 'Bezahlt',
+  'orders.detail.outstanding': 'Ausstehend',
+
+  // Fulfillment
+  'orders.fulfillment.title': 'Erfüllung',
+  'orders.fulfillment.recordDelivery': 'Lieferung erfassen',
+  'orders.fulfillment.item': 'Position',
+  'orders.fulfillment.ordered': 'Bestellt',
+  'orders.fulfillment.fulfilled': 'Erfüllt',
+  'orders.fulfillment.remaining': 'Verbleibend',
+  'orders.fulfillment.deliveryDate': 'Lieferdatum',
+  'orders.fulfillment.trackingNumber': 'Sendungsnummer',
+  'orders.fulfillment.carrier': 'Versanddienstleister',
+  'orders.fulfillment.notes': 'Notizen',
+  'orders.fulfillment.confirm': 'Erfüllung bestätigen',
+
+  // Invoicing
+  'orders.invoicing.title': 'Rechnung aus Auftrag erstellen',
+  'orders.invoicing.selectType': 'Rechnungsart auswählen',
+  'orders.invoicing.final': 'Schlussrechnung',
+  'orders.invoicing.finalDesc': 'Rechnung über den gesamten Restbetrag',
+  'orders.invoicing.partialDesc': 'Rechnung über einen Teil des Auftrags',
+  'orders.invoicing.advance': 'Vorausrechnung',
+  'orders.invoicing.advanceDesc': 'Vorauszahlung vor Lieferung',
+  'orders.invoicing.periodic': 'Periodenrechnung',
+  'orders.invoicing.periodicDesc': 'Rechnung für einen bestimmten Zeitraum',
+  'orders.invoicing.selectItems': 'Zu fakturierende Positionen auswählen',
+  'orders.invoicing.selectPeriod': 'Zeitraum auswählen',
+  'orders.invoicing.percentage': 'Prozentsatz',
+  'orders.invoicing.amount': 'Betrag',
+  'orders.invoicing.previouslyInvoiced': 'Bereits fakturiert',
+  'orders.invoicing.currentInvoice': 'Diese Rechnung',
+  'orders.invoicing.remainingAfter': 'Verbleibend danach',
+  'orders.invoicing.createInvoice': 'Rechnung erstellen',
+  'orders.invoicing.warning.double': 'Warnung: Dies könnte zu Überfakturierung führen',
+  'orders.invoicing.warning.exceeds': 'Rechnungsbetrag übersteigt Auftragssumme',
+
+  // History / Timeline
+  'orders.history.title': 'Auftragsverlauf',
+  'orders.history.noEvents': 'Keine Ereignisse erfasst',
+  'orders.event.order_created': 'Auftrag erstellt',
+  'orders.event.order_created_from_offer': 'Auftrag aus Angebot erstellt',
+  'orders.event.order_confirmed': 'Auftrag bestätigt',
+  'orders.event.order_modified': 'Auftrag geändert',
+  'orders.event.fulfillment_started': 'Erfüllung gestartet',
+  'orders.event.item_fulfilled': 'Position erfüllt',
+  'orders.event.invoice_generated': 'Rechnung erstellt',
+  'orders.event.payment_received': 'Zahlung erhalten',
+  'orders.event.order_completed': 'Auftrag abgeschlossen',
+  'orders.event.order_cancelled': 'Auftrag storniert',
+  'orders.event.order_put_on_hold': 'Auftrag zurückgestellt',
+  'orders.event.order_resumed': 'Auftrag fortgesetzt',
+  'orders.event.amendment_created': 'Änderung erstellt',
+
+  // Approval
+  'orders.approval.title': 'Genehmigung erforderlich',
+  'orders.approval.reason': 'Begründung',
+  'orders.approval.pending': 'Genehmigung ausstehend',
+  'orders.approval.approved': 'Genehmigt',
+  'orders.approval.rejected': 'Abgelehnt',
+  'orders.approval.approve': 'Genehmigen',
+  'orders.approval.reject': 'Ablehnen',
+  'orders.approval.requestApproval': 'Genehmigung anfordern',
+
+  // Empty States
+  'orders.empty.title': 'Noch keine Aufträge',
+  'orders.empty.description': 'Erstellen Sie Ihren ersten Auftrag.',
+  'orders.empty.filtered': 'Keine Aufträge entsprechen Ihren Filtern',
+
+  // Confirmations
+  'orders.confirm.delete': 'Möchten Sie diesen Auftrag wirklich löschen?',
+  'orders.confirm.cancel': 'Möchten Sie diesen Auftrag wirklich stornieren?',
+  'orders.confirm.hold': 'Diesen Auftrag zurückstellen?',
+
+  // Validation
+  'orders.validation.customerRequired': 'Kunde ist erforderlich',
+  'orders.validation.itemsRequired': 'Mindestens eine Position erforderlich',
+  'orders.validation.quantityPositive': 'Menge muss positiv sein',
+  'orders.validation.pricePositive': 'Preis muss positiv sein',
+  'orders.validation.dateRequired': 'Auftragsdatum ist erforderlich',
+
+  // Units
+  'orders.unit.piece': 'Stück',
+  'orders.unit.hour': 'Stunde',
+  'orders.unit.day': 'Tag',
+  'orders.unit.week': 'Woche',
+  'orders.unit.month': 'Monat',
+  'orders.unit.year': 'Jahr',
+  'orders.unit.kg': 'Kilogramm',
+  'orders.unit.liter': 'Liter',
+  'orders.unit.meter': 'Meter',
+  'orders.unit.flat': 'Pauschal',
+  'orders.unit.license': 'Lizenz',
+  'orders.unit.user': 'Benutzer',
+};
+// I removed two lines, 'orders.invoicing.partial': partial invoice and german translation to bugfix, I assume it doesnt really matter but to make sure heres this comment
+
+// =============================================================================
+// Export for reference - Add to theme-store.ts for each language
+// =============================================================================
+
+export { ordersEN, ordersDE };
+
+// NOTE: Spanish (es), French (fr), Russian (ru), Hindi (hi), Romanian (ro),
+// Persian (fa) translations follow the same structure.
+// Copy ordersEN and translate each value.
 // =============================================================================
 // ACCENT COLORS
 // =============================================================================
@@ -7170,7 +7764,7 @@ export const translations: Record<Language, Record<string, string>> = {
     name: 'Rose',
     value: 'rose',
     primary: '#f43f5e',
-    primaryHover: '#e11d48',
+    primaryHover: '#e32f80',
     primaryLight: '#ffe4e6',
     gradient: 'from-rose-500 to-pink-500',
   },

@@ -276,11 +276,45 @@ export interface Integration {
   config: Record<string, unknown>
 }
 
+// export order members at top level
 export * from './order'
+
+// export receivables under a namespace to avoid duplicate top-level symbols like EventActor
+export * as Receivables from './receivables'
+
 export * from './archive'
 export * from './liabilities'
 export * from './inventory'
-export * from './receivables'
+
+// Note: removed `type ReportType` here to avoid conflict with the local ReportType declared above
+export {
+  type ReportCategory,
+  type ReportStatus,
+  type ReportVisibility,
+  type TimeGrain,
+  type CurrencyView,
+  type ExportFormat,
+  type ScheduleFrequency,
+  type ReportFilter,
+  type ReportDimension,
+  type ReportMeasure,
+  type ComputedMeasure,
+  type QuerySpec,
+  type FormattingRules,
+  type ReconciliationPolicy,
+  type JurisdictionSettings,
+  type ReportDefinition,
+  type ReportSnapshot,
+  type ReportSchedule,
+  type ReportWizardState,
+  type WizardStep,
+  type ValidationResult,
+  type DrilldownRequest,
+  type DrilldownResponse,
+  DEFAULT_AGING_BUCKETS,
+  REPORT_TEMPLATES,
+  REPORT_CATEGORIES,
+} from './report'
 
 export {
   type TreasuryDecisionStatus,
@@ -316,3 +350,4 @@ export {
   VALID_DECISION_TRANSITIONS,
   TERMINAL_STATES,
 } from './treasury'
+
