@@ -12,14 +12,15 @@ export async function GET(
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
+  const {id} = await params;
   // Verify liability belongs to org
   const liability = await prisma.liability.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!liability) return notFound('Liability not found')
   
   const payments = await prisma.liabilityPayment.findMany({
-    where: { liabilityId: params.id },
+    where: { liabilityId: id },
     orderBy: { paymentDate: 'desc' }
   })
   
@@ -34,9 +35,11 @@ export async function POST(
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
+    const {id} = await params;
+
   // Verify liability belongs to org
   const liability = await prisma.liability.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!liability) return notFound('Liability not found')
   
@@ -73,7 +76,7 @@ export async function POST(
       reference,
       transactionId,
       notes,
-      liabilityId: params.id,
+      liabilityId: id,
     }
   })
   
@@ -82,7 +85,7 @@ export async function POST(
   const newPaid = Number(liability.paidAmount) + Number(principalAmount)
   
   await prisma.liability.update({
-    where: { id: params.id },
+    where: { id: id },
     data: {
       outstandingAmount: Math.max(0, newOutstanding),
       paidAmount: newPaid,

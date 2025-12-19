@@ -11,9 +11,9 @@ export async function GET(
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const invoice = await prisma.invoice.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (!invoice) return notFound('Invoice not found')
@@ -30,7 +30,7 @@ export async function PATCH(
   if (!user?.organizationId) return unauthorized()
   
   const body = await req.json()
-  
+  const {id} = await params;
   // Convert date strings to Date objects
   if (body.invoiceDate) body.invoiceDate = new Date(body.invoiceDate)
   if (body.dueDate) body.dueDate = new Date(body.dueDate)
@@ -39,13 +39,13 @@ export async function PATCH(
   if (body.paidAt) body.paidAt = new Date(body.paidAt)
   
   const invoice = await prisma.invoice.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (invoice.count === 0) return notFound('Invoice not found')
   
-  const updated = await prisma.invoice.findUnique({ where: { id: params.id } })
+  const updated = await prisma.invoice.findUnique({ where: { id: id } })
   return NextResponse.json(updated)
 }
 
@@ -56,9 +56,10 @@ export async function DELETE(
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
+
   const result = await prisma.invoice.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Invoice not found')

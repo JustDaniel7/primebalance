@@ -11,9 +11,10 @@ export async function GET(
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+
+  const {id} = await params;
   const liability = await prisma.liability.findFirst({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     include: { 
       payments: { orderBy: { paymentDate: 'desc' } } 
     }
@@ -33,7 +34,7 @@ export async function PATCH(
   if (!user?.organizationId) return unauthorized()
   
   const body = await req.json()
-  
+  const {id} = await params;
   // Convert date strings
   if (body.startDate) body.startDate = new Date(body.startDate)
   if (body.maturityDate) body.maturityDate = new Date(body.maturityDate)
@@ -43,7 +44,7 @@ export async function PATCH(
   // Recalculate utilization if relevant fields changed
   if (body.creditLimit !== undefined || body.outstandingAmount !== undefined) {
     const current = await prisma.liability.findFirst({
-      where: { id: params.id, organizationId: user.organizationId }
+      where: { id: id, organizationId: user.organizationId }
     })
     if (current) {
       const creditLimit = body.creditLimit ?? current.creditLimit
@@ -56,14 +57,14 @@ export async function PATCH(
   }
   
   const result = await prisma.liability.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (result.count === 0) return notFound('Liability not found')
   
   const updated = await prisma.liability.findUnique({ 
-    where: { id: params.id },
+    where: { id: id },
     include: { payments: { orderBy: { paymentDate: 'desc' } } }
   })
   return NextResponse.json(updated)
@@ -76,9 +77,10 @@ export async function DELETE(
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+
+  const {id} = await params;
   const result = await prisma.liability.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Liability not found')

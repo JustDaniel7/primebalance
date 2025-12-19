@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import type { CorporateEntity } from '@prisma/client'
+import type { CorporateEntity } from '@/generated/prisma/client'
 
 // Type for entity with relations
 type EntityWithRelations = CorporateEntity & {

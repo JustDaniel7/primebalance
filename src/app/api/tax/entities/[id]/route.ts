@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import type { CorporateEntity } from '@prisma/client'
+import type { CorporateEntity } from '@/generated/prisma/client'
 
-interface RouteParams {
-  params: { id: string }
+type RouteParams = {
+  params: Promise<{ id: string }>
 }
 
 // Type for entity with relations
@@ -26,10 +26,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-
+    const { id } = await params;
     const entity = await prisma.corporateEntity.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id,
       },
       include: {
@@ -84,10 +84,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-
+    const { id } = await params;
     const existing = await prisma.corporateEntity.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id,
       },
     })
@@ -130,7 +130,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     // Handle parent relationship separately
     if (body.parentId !== undefined) {
       // Prevent circular reference
-      if (body.parentId === params.id) {
+      if (body.parentId === id) {
         return NextResponse.json(
           { error: 'Entity cannot be its own parent' },
           { status: 400 }
@@ -144,7 +144,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     }
 
     const entity = await prisma.corporateEntity.update({
-      where: { id: params.id },
+      where: { id: id },
       data: updateData,
     })
 
@@ -173,10 +173,10 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-
+    const { id } = await params;
     const existing = await prisma.corporateEntity.findFirst({
       where: {
-        id: params.id,
+        id: id,
         userId: session.user.id,
       },
       include: {
@@ -197,7 +197,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     }
 
     await prisma.corporateEntity.delete({
-      where: { id: params.id },
+      where: { id: id },
     })
 
     return NextResponse.json({ success: true })

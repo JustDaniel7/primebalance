@@ -11,9 +11,9 @@ export async function GET(
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const order = await prisma.order.findFirst({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     include: { invoices: true }
   })
   
@@ -36,16 +36,17 @@ export async function PATCH(
   if (body.orderDate) body.orderDate = new Date(body.orderDate)
   if (body.expectedDeliveryDate) body.expectedDeliveryDate = new Date(body.expectedDeliveryDate)
   if (body.completedDate) body.completedDate = new Date(body.completedDate)
-  
+ 
+    const {id} = await params;
   const order = await prisma.order.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (order.count === 0) return notFound('Order not found')
   
   const updated = await prisma.order.findUnique({ 
-    where: { id: params.id },
+    where: { id: id },
     include: { invoices: true }
   })
   return NextResponse.json(updated)
@@ -59,8 +60,9 @@ export async function DELETE(
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
+  const {id} = await params;
   const result = await prisma.order.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Order not found')
