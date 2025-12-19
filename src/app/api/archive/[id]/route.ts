@@ -7,13 +7,14 @@ import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils'
 // GET /api/archive/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const {id} = await params;
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
   const item = await prisma.archiveItem.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (!item) return notFound('Archive item not found')
@@ -24,7 +25,7 @@ export async function GET(
 // PATCH /api/archive/[id] - mainly for restore
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
@@ -33,8 +34,9 @@ export async function PATCH(
   
   // Handle restore action
   if (body.action === 'restore') {
+    const {id} = await params;
     const item = await prisma.archiveItem.updateMany({
-      where: { id: params.id, organizationId: user.organizationId },
+      where: { id: id, organizationId: user.organizationId },
       data: {
         status: 'restored',
         restoredAt: new Date(),
@@ -44,32 +46,32 @@ export async function PATCH(
     
     if (item.count === 0) return notFound('Archive item not found')
     
-    const updated = await prisma.archiveItem.findUnique({ where: { id: params.id } })
+    const updated = await prisma.archiveItem.findUnique({ where: { id: id } })
     return NextResponse.json(updated)
   }
-  
+  const {id} = await params;
   // Regular update
   const item = await prisma.archiveItem.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (item.count === 0) return notFound('Archive item not found')
   
-  const updated = await prisma.archiveItem.findUnique({ where: { id: params.id } })
+  const updated = await prisma.archiveItem.findUnique({ where: { id: id } })
   return NextResponse.json(updated)
 }
 
 // DELETE /api/archive/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const result = await prisma.archiveItem.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Archive item not found')

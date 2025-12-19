@@ -7,18 +7,18 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 // GET /api/assets/capex/[id]/items
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const budget = await prisma.capExBudget.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!budget) return notFound('CapEx budget not found')
   
   const items = await prisma.capExItem.findMany({
-    where: { budgetId: params.id },
+    where: { budgetId: id },
     orderBy: { createdAt: 'desc' }
   })
   
@@ -28,13 +28,13 @@ export async function GET(
 // POST /api/assets/capex/[id]/items
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const budget = await prisma.capExBudget.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!budget) return notFound('CapEx budget not found')
   
@@ -69,13 +69,13 @@ export async function POST(
       assetId,
       plannedDate: plannedDate ? new Date(plannedDate) : null,
       notes,
-      budgetId: params.id,
+      budgetId: id,
     }
   })
   
   // Update budget amounts
   const allItems = await prisma.capExItem.findMany({
-    where: { budgetId: params.id }
+    where: { budgetId: id }
   })
   
   const committed = allItems
@@ -92,7 +92,7 @@ export async function POST(
     : 0
   
   await prisma.capExBudget.update({
-    where: { id: params.id },
+    where: { id: id },
     data: {
       committedAmount: committed,
       spentAmount: spent,

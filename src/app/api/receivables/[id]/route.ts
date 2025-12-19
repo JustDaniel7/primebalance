@@ -7,13 +7,13 @@ import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils'
 // GET /api/receivables/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const receivable = await prisma.receivable.findFirst({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     include: {
       paymentApplications: { orderBy: { appliedAt: 'desc' } },
       events: { orderBy: { createdAt: 'desc' } }
@@ -28,16 +28,16 @@ export async function GET(
 // PATCH /api/receivables/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
   const body = await req.json()
-  
+  const {id} = await params;
   // Get current receivable
   const current = await prisma.receivable.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!current) return notFound('Receivable not found')
   
@@ -68,7 +68,7 @@ export async function PATCH(
   body.lastActivityDate = new Date()
   
   const result = await prisma.receivable.update({
-    where: { id: params.id },
+    where: { id: id },
     data: body
   })
   
@@ -81,13 +81,13 @@ export async function PATCH(
         previousValue: previousStatus,
         newValue: body.status,
         performedBy: user.id,
-        receivableId: params.id,
+        receivableId: id,
       }
     })
   }
   
   const updated = await prisma.receivable.findUnique({
-    where: { id: params.id },
+    where: { id: id },
     include: {
       paymentApplications: { orderBy: { appliedAt: 'desc' } },
       events: { orderBy: { createdAt: 'desc' } }
@@ -100,13 +100,13 @@ export async function PATCH(
 // DELETE /api/receivables/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const result = await prisma.receivable.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Receivable not found')

@@ -7,14 +7,14 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 // GET /api/inventory/[id]/movements
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   // Verify item belongs to org
   const item = await prisma.inventoryItem.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!item) return notFound('Inventory item not found')
   
@@ -23,7 +23,7 @@ export async function GET(
   const limit = parseInt(searchParams.get('limit') || '50')
   const offset = parseInt(searchParams.get('offset') || '0')
   
-  const where: any = { inventoryItemId: params.id }
+  const where: any = { inventoryItemId: id }
   if (type) where.type = type
   
   const [movements, total] = await Promise.all([
@@ -43,14 +43,14 @@ export async function GET(
 // POST /api/inventory/[id]/movements
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   // Get current item
   const item = await prisma.inventoryItem.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!item) return notFound('Inventory item not found')
   
@@ -124,7 +124,7 @@ export async function POST(
       reason,
       notes,
       performedBy: user.id,
-      inventoryItemId: params.id,
+      inventoryItemId: id,
     }
   })
   
@@ -142,7 +142,7 @@ export async function POST(
   }
   
   await prisma.inventoryItem.update({
-    where: { id: params.id },
+    where: { id: id },
     data: {
       quantityOnHand: newQuantity,
       quantityAvailable: newAvailable,

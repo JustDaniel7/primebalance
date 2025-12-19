@@ -7,13 +7,13 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 // GET /api/treasury/decisions/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const decision = await prisma.treasuryDecision.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (!decision) return notFound('Decision not found')
@@ -24,16 +24,16 @@ export async function GET(
 // PATCH /api/treasury/decisions/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
   const body = await req.json()
-  
+  const {id} = await params;
   // Get current decision
   const current = await prisma.treasuryDecision.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!current) return notFound('Decision not found')
   
@@ -83,28 +83,28 @@ export async function PATCH(
   // Convert dates
   if (body.scheduledDate) body.scheduledDate = new Date(body.scheduledDate)
   if (body.expiresAt) body.expiresAt = new Date(body.expiresAt)
-  
+
   const result = await prisma.treasuryDecision.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (result.count === 0) return notFound('Decision not found')
   
-  const updated = await prisma.treasuryDecision.findUnique({ where: { id: params.id } })
+  const updated = await prisma.treasuryDecision.findUnique({ where: { id: id } })
   return NextResponse.json(updated)
 }
 
 // DELETE /api/treasury/decisions/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const result = await prisma.treasuryDecision.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Decision not found')

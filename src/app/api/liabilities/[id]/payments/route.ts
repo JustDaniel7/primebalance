@@ -7,7 +7,7 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 // GET /api/liabilities/[id]/payments
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
@@ -29,7 +29,7 @@ export async function GET(
 // POST /api/liabilities/[id]/payments
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()

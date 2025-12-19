@@ -7,13 +7,13 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 // POST /api/assets/[id]/dispose
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const asset = await prisma.asset.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!asset) return notFound('Asset not found')
   
@@ -68,14 +68,14 @@ export async function POST(
       reason,
       notes,
       attachments,
-      assetId: params.id,
+      assetId: id,
       organizationId: user.organizationId,
     }
   })
   
   // Update asset status
   await prisma.asset.update({
-    where: { id: params.id },
+    where: { id: id },
     data: {
       status: disposalType === 'write_off' ? 'written_off' : 'disposed',
       currentBookValue: 0,
@@ -94,7 +94,7 @@ export async function POST(
       referenceType: 'disposal',
       referenceId: disposal.id,
       performedBy: user.id,
-      assetId: params.id,
+      assetId: id,
     }
   })
   

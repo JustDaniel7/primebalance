@@ -7,7 +7,7 @@ import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils'
 // GET /api/liabilities/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
@@ -27,7 +27,7 @@ export async function GET(
 // PATCH /api/liabilities/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
@@ -72,7 +72,7 @@ export async function PATCH(
 // DELETE /api/liabilities/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()

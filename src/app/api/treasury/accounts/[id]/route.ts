@@ -7,13 +7,14 @@ import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils'
 // GET /api/treasury/accounts/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
+  const {id} = await params;
   const account = await prisma.treasuryAccount.findFirst({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     include: {
       cashMovements: { orderBy: { movementDate: 'desc' }, take: 50 }
     }
@@ -27,34 +28,36 @@ export async function GET(
 // PATCH /api/treasury/accounts/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
   const body = await req.json()
-  
+
+  const {id} = await params;
   const result = await prisma.treasuryAccount.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (result.count === 0) return notFound('Treasury account not found')
   
-  const updated = await prisma.treasuryAccount.findUnique({ where: { id: params.id } })
+  const updated = await prisma.treasuryAccount.findUnique({ where: { id: id } })
   return NextResponse.json(updated)
 }
 
 // DELETE /api/treasury/accounts/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
   
+  const {id} = await params;
   const result = await prisma.treasuryAccount.deleteMany({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   
   if (result.count === 0) return notFound('Treasury account not found')

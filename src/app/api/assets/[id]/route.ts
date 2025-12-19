@@ -7,13 +7,13 @@ import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils'
 // GET /api/assets/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const asset = await prisma.asset.findFirst({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     include: {
       components: true,
       parentAsset: { select: { id: true, name: true, assetNumber: true } },
@@ -31,11 +31,11 @@ export async function GET(
 // PATCH /api/assets/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const body = await req.json()
   
   // Convert dates
@@ -50,14 +50,14 @@ export async function PATCH(
   })
   
   const result = await prisma.asset.updateMany({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     data: body
   })
   
   if (result.count === 0) return notFound('Asset not found')
   
   const updated = await prisma.asset.findUnique({
-    where: { id: params.id },
+    where: { id: id },
     include: {
       components: true,
       depreciationEntries: { orderBy: { periodStart: 'desc' }, take: 12 },
@@ -70,14 +70,14 @@ export async function PATCH(
 // DELETE /api/assets/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   // Check if asset has components
   const asset = await prisma.asset.findFirst({
-    where: { id: params.id, organizationId: user.organizationId },
+    where: { id: id, organizationId: user.organizationId },
     include: { components: { select: { id: true } } }
   })
   
@@ -90,7 +90,7 @@ export async function DELETE(
     )
   }
   
-  await prisma.asset.delete({ where: { id: params.id } })
+  await prisma.asset.delete({ where: { id: id } })
   
   return NextResponse.json({ success: true })
 }

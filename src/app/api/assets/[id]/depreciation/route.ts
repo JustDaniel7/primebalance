@@ -7,13 +7,13 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 // GET /api/assets/[id]/depreciation
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const asset = await prisma.asset.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!asset) return notFound('Asset not found')
   
@@ -21,7 +21,7 @@ export async function GET(
   const bookType = searchParams.get('bookType') || 'statutory'
   const fiscalYear = searchParams.get('fiscalYear')
   
-  const where: any = { assetId: params.id, bookType }
+  const where: any = { assetId: id, bookType }
   if (fiscalYear) where.fiscalYear = parseInt(fiscalYear)
   
   const entries = await prisma.assetDepreciation.findMany({
@@ -35,13 +35,13 @@ export async function GET(
 // POST /api/assets/[id]/depreciation - Calculate/record depreciation
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
-  
+  const {id} = await params;
   const asset = await prisma.asset.findFirst({
-    where: { id: params.id, organizationId: user.organizationId }
+    where: { id: id, organizationId: user.organizationId }
   })
   if (!asset) return notFound('Asset not found')
   
@@ -100,7 +100,6 @@ export async function POST(
   const openingBookValue = Number(asset.currentBookValue)
   const newAccumulatedDep = Number(asset.accumulatedDepreciation) + depreciationAmount
   const closingBookValue = openingBookValue - depreciationAmount
-  
   // Create depreciation entry
   const entry = await prisma.assetDepreciation.create({
     data: {
@@ -115,7 +114,7 @@ export async function POST(
       method: asset.depreciationMethod,
       rate: asset.depreciationRate,
       bookType: bookType || 'statutory',
-      assetId: params.id,
+      assetId: id,
     }
   })
   
@@ -123,7 +122,7 @@ export async function POST(
   const isFullyDepreciated = closingBookValue <= Number(asset.residualValue)
   
   await prisma.asset.update({
-    where: { id: params.id },
+    where: { id: id },
     data: {
       currentBookValue: closingBookValue,
       accumulatedDepreciation: newAccumulatedDep,
@@ -142,7 +141,7 @@ export async function POST(
       newValue: closingBookValue,
       eventDate: new Date(periodEnd),
       performedBy: user.id,
-      assetId: params.id,
+      assetId: id,
     }
   })
   
