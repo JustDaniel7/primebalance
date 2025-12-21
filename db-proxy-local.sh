@@ -11,7 +11,7 @@ cloud-sql-proxy \
 sleep 2
 
 # 2. Set DATABASE_URL with fresh IAM token
-export DATABASE_URL="postgresql://ddxd2302@gmail.com:$(gcloud auth print-access-token)@127.0.0.1:5433/primebalance"
+export DATABASE_URL="postgresql://primebalance_app:demoPassword089@127.0.0.1:5433/primebalance"
 
 # 3. Generate Prisma client (if needed)
 npx prisma generate

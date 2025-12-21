@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useThemeStore } from '@/store/theme-store'
 import { Button, Input, Card } from '@/components/ui'
@@ -18,29 +19,33 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
+  const searchParams = useSearchParams()
+const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
 
-    try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      })
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setIsLoading(true)
+  setError('')
 
-      if (result?.error) {
-        setError('Invalid credentials')
-      } else {
-        router.push('/dashboard')
-      }
-    } catch (err) {
-      setError('An error occurred')
-    } finally {
-      setIsLoading(false)
+  try {
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    })
+
+    if (result?.error) {
+      setError('Invalid credentials')
+    } else {
+      router.push(callbackUrl)
+      router.refresh() // Ensures session is updated
     }
+  } catch (err) {
+    setError('An error occurred')
+  } finally {
+    setIsLoading(false)
   }
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-surface-950 dark:to-surface-900 p-4">
