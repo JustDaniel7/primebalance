@@ -24,13 +24,7 @@ export const AssetMetricsCards: React.FC = () => {
         setMounted(true);
     }, []);
 
-    if (!mounted) {
-    return (
-        <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
-        </div>
-    );
-}
+
 
     const metrics = useMemo(() => {
         const activeAssets = assets.filter(a => a.isActive);

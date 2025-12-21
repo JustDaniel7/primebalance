@@ -125,56 +125,47 @@ export default function TreasuryPage() {
   }
 }, [fetchTreasury, isInitialized]);
 
-// EARLY RETURN before any data rendering
-  if (!mounted) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
-      </div>
-    );
-  }
-    const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
-    const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
-    const [selectedScenario, setSelectedScenario] = useState<TreasuryScenario | null>(null);
+const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
+const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
 
-    useEffect(() => {
-        recalculateCashPosition();
-        recalculateRiskExposure();
-    }, []);
+useEffect(() => {
+    recalculateCashPosition();
+    recalculateRiskExposure();
+}, []);
 
-    const summary = getSummary();
-    const pendingApprovals = getPendingApprovals();
+const summary = getSummary();
+const pendingApprovals = getPendingApprovals();
 
-    const formatCurrency = (amount: number, currency: string = 'EUR') => {
-        return new Intl.NumberFormat(language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : language === 'es' ? 'es-ES' : 'en-US', {
-            style: 'currency',
-            currency,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount);
-    };
+const formatCurrency = (amount: number, currency: string = 'EUR') => {
+    return new Intl.NumberFormat(language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : language === 'es' ? 'es-ES' : 'en-US', {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(amount);
+};
 
-    const formatPercent = (value: number) => `${value.toFixed(1)}%`;
+const formatPercent = (value: number) => `${value.toFixed(1)}%`;
 
-    const getRiskBadge = (risk: RiskLevel) => (
-        <Badge variant={risk === 'low' ? 'success' : risk === 'medium' ? 'warning' : 'danger'} size="sm">
+const getRiskBadge = (risk: RiskLevel) => (
+    <Badge variant={risk === 'low' ? 'success' : risk === 'medium' ? 'warning' : 'danger'} size="sm">
             {t(`treasury.risk.${risk}`)}
         </Badge>
     );
-
+    
     const getStatusBadge = (status: TreasuryDecisionStatus) => (
         <Badge
-            variant={
-                status === 'settled' || status === 'approved' || status === 'executed' ? 'success' :
-                    status === 'rejected' || status === 'failed' ? 'danger' :
-                        status === 'awaiting_approval' ? 'warning' : 'neutral'
-            }
-            size="sm"
+        variant={
+            status === 'settled' || status === 'approved' || status === 'executed' ? 'success' :
+            status === 'rejected' || status === 'failed' ? 'danger' :
+            status === 'awaiting_approval' ? 'warning' : 'neutral'
+        }
+        size="sm"
         >
             {t(`treasury.status.${status}`)}
         </Badge>
     );
-
+    
     const tabs = [
         { id: 'overview', label: t('treasury.tabs.overview'), icon: BarChart3 },
         { id: 'buckets', label: t('treasury.tabs.buckets'), icon: Layers },
@@ -182,6 +173,18 @@ export default function TreasuryPage() {
         { id: 'decisions', label: t('treasury.tabs.decisions'), icon: Zap, badge: pendingApprovals.length },
         { id: 'scenarios', label: t('treasury.tabs.scenarios'), icon: Target },
     ];
+    
+    // EARLY RETURN before any data rendering
+      if (!mounted) {
+        return (
+          <div className="flex items-center justify-center h-screen">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+          </div>
+        );
+      }
+    function setSelectedScenario(scenario: TreasuryScenario): void {
+        throw new Error('Function not implemented.');
+    }
 
     return (
         <div className="space-y-6">
