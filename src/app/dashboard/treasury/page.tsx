@@ -91,6 +91,7 @@ const bucketIcons: Record<string, React.ElementType> = {
 // =============================================================================
 
 export default function TreasuryPage() {
+    const [mounted, setMounted] = useState(false);
     const { t, language } = useThemeStore();
     const {
         accounts,
@@ -113,11 +114,25 @@ export default function TreasuryPage() {
         isInitialized,
         isLoading,
     } = useTreasuryStore();
+    
     useEffect(() => {
-  if (!isInitialized) {
+    setMounted(true);
+  }, []);
+
+    useEffect(() => {
+        if (!isInitialized) {
     fetchTreasury();
   }
 }, [fetchTreasury, isInitialized]);
+
+// EARLY RETURN before any data rendering
+  if (!mounted) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
     const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
     const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
     const [selectedScenario, setSelectedScenario] = useState<TreasuryScenario | null>(null);
@@ -524,7 +539,7 @@ export default function TreasuryPage() {
                                     </div>
 
                                     {/* Covenants */}
-                                    {facility.covenants.length > 0 && (
+                                    {(facility.covenants || []).length > 0 && (
                                         <div className="border-t border-gray-200 dark:border-surface-700 pt-4">
                                             <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">{t('treasury.covenants')}</p>
                                             <div className="grid grid-cols-2 gap-2">
