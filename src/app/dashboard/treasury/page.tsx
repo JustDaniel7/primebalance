@@ -109,8 +109,15 @@ export default function TreasuryPage() {
         executeDecision,
         runScenario,
         rebalanceBuckets,
+        fetchTreasury,
+        isInitialized,
+        isLoading,
     } = useTreasuryStore();
-
+    useEffect(() => {
+  if (!isInitialized) {
+    fetchTreasury();
+  }
+}, [fetchTreasury, isInitialized]);
     const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
     const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
     const [selectedScenario, setSelectedScenario] = useState<TreasuryScenario | null>(null);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
@@ -47,7 +47,13 @@ function InvoiceList({
   onSelectInvoice: (invoice: Invoice) => void;
 }) {
   const { t, language } = useThemeStore();
-  const { invoices, markAsPaid, deleteInvoice, duplicateInvoice } = useInvoiceStore();
+const { invoices, fetchInvoices, isInitialized, isLoading, markAsPaid, deleteInvoice, duplicateInvoice } = useInvoiceStore();
+// Fetch on mount
+useEffect(() => {
+  if (!isInitialized) {
+    fetchInvoices();
+  }
+}, [fetchInvoices, isInitialized]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<Invoice['status'] | 'all'>('all');
   const [selectedInvoice, setSelectedInvoice] = useState<string | null>(null);

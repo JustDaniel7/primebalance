@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Plus,
@@ -66,7 +66,12 @@ function InventoryList({
     onSelectItem: (item: InventoryItem) => void;
 }) {
     const { t, language } = useThemeStore();
-    const { items, locations, getSummary, getAlerts, getLowStockItems } = useInventoryStore();
+const { items, fetchItems, isInitialized, isLoading, locations, getSummary, getAlerts, getLowStockItems } = useInventoryStore();
+useEffect(() => {
+  if (!isInitialized) {
+    fetchItems();
+  }
+}, [fetchItems, isInitialized]);
     const [searchQuery, setSearchQuery] = useState('');
     const [typeFilter, setTypeFilter] = useState<InventoryType | 'all'>('all');
     const [locationFilter, setLocationFilter] = useState<string | 'all'>('all');
@@ -259,7 +264,7 @@ function InventoryList({
             ) : (
                 <div className="space-y-3">
                     {filteredItems.map((item, index) => {
-                        const Icon = typeIcons[item.type];
+                        const Icon = typeIcons[item.type] || Package;  // Package as fallback
                         const stockStatus = getStockStatus(item);
                         const hasAlerts = alerts.some((a) => a.itemId === item.id && !a.isRead);
 

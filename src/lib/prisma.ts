@@ -4,9 +4,12 @@ import { PrismaClient } from '@/generated/prisma/client'
 import { Pool } from 'pg'
 
 function createPool(): Pool {
-  // Production (Cloud Run) - use Unix socket
+  // Cloud Run sets K_SERVICE env var
+  const isCloudRun = !!process.env.K_SERVICE
   const cloudSqlConnection = process.env.CLOUD_SQL_CONNECTION_NAME
-  if (cloudSqlConnection && process.env.NODE_ENV === 'production') {
+  
+  if (isCloudRun && cloudSqlConnection) {
+    console.log('🔌 Using Cloud SQL socket:', cloudSqlConnection)
     return new Pool({
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
@@ -15,7 +18,8 @@ function createPool(): Pool {
     })
   }
   
-  // Local development
+  // Local development (including npm start locally)
+  console.log('🔌 Using local database connection')
   return new Pool({
     host: '127.0.0.1',
     port: 5433,

@@ -1,22 +1,98 @@
 // prisma/seed.ts
-// Comprehensive seed for all PrimeBalance modules
+// Comprehensive seed for PrimeBalance - December 2025
+// Prisma 7, Node 24 LTS, Next.js 16
 
-// prisma/seed.ts
 import 'dotenv/config'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../src/generated/prisma/client'
+import { Pool } from 'pg'
 
-const connectionString = process.env.DATABASE_URL!
-const adapter = new PrismaPg({ connectionString })
+// Use Pool directly for better connection handling
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+})
+const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
+// Helper for dates
+const daysAgo = (days: number) => {
+  const d = new Date()
+  d.setDate(d.getDate() - days)
+  return d
+}
+
+const daysFromNow = (days: number) => {
+  const d = new Date()
+  d.setDate(d.getDate() + days)
+  return d
+}
+
 async function main() {
-  console.log('🌱 Seeding database...\n')
+  console.log('🌱 Seeding PrimeBalance Database...\n')
+  console.log('=' .repeat(60))
+
+  // =============================================================================
+  // CLEANUP - Delete all existing data in correct order (respecting FK constraints)
+  // =============================================================================
+  console.log('\n🧹 Cleaning existing data...')
+  
+  // Child tables first
+  await prisma.assetDisposal.deleteMany({})
+  await prisma.assetTransfer.deleteMany({})
+  await prisma.assetEvent.deleteMany({})
+  await prisma.assetDepreciation.deleteMany({})
+  await prisma.capExItem.deleteMany({})
+  await prisma.capExBudget.deleteMany({})
+  await prisma.asset.deleteMany({})
+  
+  await prisma.nettingOpportunity.deleteMany({})
+  await prisma.treasuryScenario.deleteMany({})
+  await prisma.treasuryDecision.deleteMany({})
+  await prisma.treasuryCashMovement.deleteMany({})
+  await prisma.facilityDrawdown.deleteMany({})
+  await prisma.creditFacility.deleteMany({})
+  await prisma.capitalBucket.deleteMany({})
+  await prisma.treasuryAccount.deleteMany({})
+  
+  await prisma.receivableEvent.deleteMany({})
+  await prisma.receivablePayment.deleteMany({})
+  await prisma.receivable.deleteMany({})
+  
+  await prisma.inventoryMovement.deleteMany({})
+  await prisma.inventoryBatch.deleteMany({})
+  await prisma.inventoryItem.deleteMany({})
+  
+  await prisma.liabilityPayment.deleteMany({})
+  await prisma.liability.deleteMany({})
+  
+  await prisma.archiveItem.deleteMany({})
+  await prisma.order.deleteMany({})
+  await prisma.invoice.deleteMany({})
+  
+  await prisma.savedReport.deleteMany({})
+  await prisma.aISuggestion.deleteMany({})
+  await prisma.wallet.deleteMany({})
+  await prisma.corporateEntity.deleteMany({})
+  
+  await prisma.chatMessage.deleteMany({})
+  await prisma.chatChannel.deleteMany({})
+  
+  await prisma.receipt.deleteMany({})
+  await prisma.transaction.deleteMany({})
+  await prisma.financialAccount.deleteMany({})
+  
+  await prisma.userSettings.deleteMany({})
+  await prisma.session.deleteMany({})
+  await prisma.account.deleteMany({})
+  await prisma.user.deleteMany({})
+  await prisma.organization.deleteMany({})
+  
+  console.log('  ✓ All existing data cleared')
 
   // =============================================================================
   // 1. ORGANIZATION
   // =============================================================================
-  console.log('📁 Creating Organization...')
+  console.log('\n📁 Creating Organization...')
   const org = await prisma.organization.upsert({
     where: { slug: 'demo-company' },
     update: {},
@@ -109,7 +185,6 @@ async function main() {
 
   const accountMap: Record<string, string> = {}
   
-  // First pass: create accounts without parent references
   for (const acc of accountsData) {
     const created = await prisma.financialAccount.upsert({
       where: { organizationId_accountNumber: { organizationId: org.id, accountNumber: acc.accountNumber } },
@@ -126,7 +201,6 @@ async function main() {
     accountMap[acc.accountNumber] = created.id
   }
 
-  // Second pass: set parent relationships
   for (const acc of accountsData) {
     if (acc.parent && accountMap[acc.parent]) {
       await prisma.financialAccount.update({
@@ -151,7 +225,7 @@ async function main() {
     { date: '2025-01-09', description: 'Client Payment - TechStart GmbH', amount: 18500, type: 'income', category: 'Service Revenue', account: '1110', status: 'completed', tags: ['client', 'consulting'] },
     { date: '2025-01-08', description: 'Google Workspace - Annual', amount: -2880, type: 'expense', category: 'Software', account: '1110', status: 'completed', tags: ['software', 'annual'] },
     { date: '2025-01-07', description: 'Transfer to Savings', amount: -20000, type: 'transfer', category: 'Internal Transfer', account: '1110', status: 'completed', tags: ['internal'] },
-    { date: '2025-01-06', description: 'ETH Sale to EUR', amount: 5500, type: 'income', category: 'Crypto Exchange', account: '1150', status: 'completed', tags: ['crypto'], tokenized: true, txHash: '0x7a8b...9c0d' },
+    { date: '2025-01-06', description: 'ETH Sale to EUR', amount: 5500, type: 'income', category: 'Crypto Exchange', account: '1150', status: 'completed', tags: ['crypto'], tokenized: true, txHash: '0x7a8b9c0d...' },
     { date: '2025-01-05', description: 'Marketing Campaign - LinkedIn', amount: -3500, type: 'expense', category: 'Marketing', account: '2200', status: 'completed', tags: ['marketing', 'ads'] },
     { date: '2025-01-04', description: 'Client Payment - GlobalTech', amount: 42000, type: 'income', category: 'Product Sales', account: '1110', status: 'completed', tags: ['client', 'enterprise'] },
     { date: '2025-01-03', description: 'Insurance Premium - Q1', amount: -4200, type: 'expense', category: 'Insurance', account: '1110', status: 'completed', tags: ['insurance', 'quarterly'] },
@@ -211,24 +285,52 @@ async function main() {
   console.log('  ✓ Created', receipts.length, 'receipts')
 
   // =============================================================================
-  // 6. CHAT CHANNELS
+  // 6. CHAT CHANNELS & MESSAGES
   // =============================================================================
-  console.log('\n💬 Creating Chat Channels...')
-  const channels = [
+  console.log('\n💬 Creating Chat Channels & Messages...')
+  const channelsData = [
     { name: 'general', description: 'General team discussion' },
     { name: 'finance', description: 'Finance and accounting topics' },
     { name: 'sales', description: 'Sales team updates' },
     { name: 'engineering', description: 'Technical discussions' },
   ]
 
-  for (const ch of channels) {
-    await prisma.chatChannel.upsert({
+  const channelMap: Record<string, string> = {}
+  for (const ch of channelsData) {
+    const created = await prisma.chatChannel.upsert({
       where: { organizationId_name: { organizationId: org.id, name: ch.name } },
       update: {},
       create: { name: ch.name, description: ch.description, organizationId: org.id },
     })
+    channelMap[ch.name] = created.id
   }
-  console.log('  ✓ Created', channels.length, 'channels')
+  console.log('  ✓ Created', channelsData.length, 'channels')
+
+  // Chat Messages
+  const messages = [
+    { channel: 'general', content: 'Welcome to Demo Company! 🎉', createdAt: daysAgo(30) },
+    { channel: 'general', content: 'Q1 kickoff meeting scheduled for Monday at 10am', createdAt: daysAgo(7) },
+    { channel: 'general', content: 'Reminder: Submit expense reports by end of month', createdAt: daysAgo(3) },
+    { channel: 'finance', content: 'January invoices have been processed', createdAt: daysAgo(5) },
+    { channel: 'finance', content: 'VAT filing due next week - all documents ready', createdAt: daysAgo(2) },
+    { channel: 'finance', content: 'Bank reconciliation complete for December', createdAt: daysAgo(10) },
+    { channel: 'sales', content: 'Closed deal with GlobalTech - €42k! 🚀', createdAt: daysAgo(4) },
+    { channel: 'sales', content: 'New lead from trade show - TechStart GmbH', createdAt: daysAgo(8) },
+    { channel: 'engineering', content: 'Deployed v2.1 to production', createdAt: daysAgo(6) },
+    { channel: 'engineering', content: 'Sprint planning tomorrow at 2pm', createdAt: daysAgo(1) },
+  ]
+
+  for (const msg of messages) {
+    await prisma.chatMessage.create({
+      data: {
+        content: msg.content,
+        channelId: channelMap[msg.channel],
+        userId: user.id,
+        createdAt: msg.createdAt,
+      },
+    })
+  }
+  console.log('  ✓ Created', messages.length, 'chat messages')
 
   // =============================================================================
   // 7. CORPORATE ENTITIES
@@ -628,10 +730,11 @@ async function main() {
     },
   ]
 
+  const liabilityMap: Record<string, string> = {}
   for (const lib of liabilities) {
     const utilizationRate = lib.creditLimit ? (lib.outstandingAmount / lib.creditLimit) * 100 : null
     
-    await prisma.liability.create({
+    const created = await prisma.liability.create({
       data: {
         type: lib.type,
         name: lib.name,
@@ -655,123 +758,67 @@ async function main() {
         organizationId: org.id,
       },
     })
+    liabilityMap[lib.name] = created.id
   }
   console.log('  ✓ Created', liabilities.length, 'liabilities')
+
+  // =============================================================================
+  // 14b. LIABILITY PAYMENTS
+  // =============================================================================
+  console.log('\n💸 Creating Liability Payments...')
+  const liabilityPayments = [
+    // Business Expansion Loan payments
+    { liabilityName: 'Business Expansion Loan', amount: 2850, principalAmount: 2500, interestAmount: 350, paymentDate: daysAgo(60), status: 'completed' },
+    { liabilityName: 'Business Expansion Loan', amount: 2850, principalAmount: 2510, interestAmount: 340, paymentDate: daysAgo(30), status: 'completed' },
+    { liabilityName: 'Business Expansion Loan', amount: 2850, principalAmount: 2520, interestAmount: 330, paymentDate: daysAgo(0), status: 'completed' },
+    // Hardware Supplier Credit payments
+    { liabilityName: 'Hardware Supplier Credit', amount: 7500, principalAmount: 7500, interestAmount: 0, paymentDate: daysAgo(45), status: 'completed' },
+    { liabilityName: 'Hardware Supplier Credit', amount: 2500, principalAmount: 2500, interestAmount: 0, paymentDate: daysAgo(15), status: 'completed' },
+    // Office Lease payments
+    { liabilityName: 'Office Lease Obligation', amount: 4500, principalAmount: 4500, interestAmount: 0, paymentDate: daysAgo(60), status: 'completed' },
+    { liabilityName: 'Office Lease Obligation', amount: 4500, principalAmount: 4500, interestAmount: 0, paymentDate: daysAgo(30), status: 'completed' },
+    { liabilityName: 'Office Lease Obligation', amount: 4500, principalAmount: 4500, interestAmount: 0, paymentDate: daysAgo(0), status: 'completed' },
+  ]
+
+  for (const pmt of liabilityPayments) {
+    await prisma.liabilityPayment.create({
+      data: {
+        amount: pmt.amount,
+        principalAmount: pmt.principalAmount,
+        interestAmount: pmt.interestAmount,
+        paymentDate: pmt.paymentDate,
+        status: pmt.status,
+        liabilityId: liabilityMap[pmt.liabilityName],
+      },
+    })
+  }
+  console.log('  ✓ Created', liabilityPayments.length, 'liability payments')
 
   // =============================================================================
   // 15. INVENTORY
   // =============================================================================
   console.log('\n📦 Creating Inventory...')
   const inventory = [
-    {
-      sku: 'SW-LIC-ENT',
-      name: 'Enterprise Software License',
-      type: 'finished_goods',
-      category: 'Software',
-      quantityOnHand: 999,
-      quantityAvailable: 999,
-      unitCost: 2500,
-      sellingPrice: 15000,
-      minimumStock: 1,
-      reorderPoint: 1,
-    },
-    {
-      sku: 'SW-LIC-PRO',
-      name: 'Professional Software License',
-      type: 'finished_goods',
-      category: 'Software',
-      quantityOnHand: 999,
-      quantityAvailable: 999,
-      unitCost: 800,
-      sellingPrice: 5000,
-      minimumStock: 1,
-      reorderPoint: 1,
-    },
-    {
-      sku: 'HW-LAPTOP-01',
-      name: 'MacBook Pro 16"',
-      type: 'merchandise',
-      category: 'Hardware',
-      quantityOnHand: 15,
-      quantityAvailable: 12,
-      quantityReserved: 3,
-      unitCost: 2200,
-      sellingPrice: 2800,
-      minimumStock: 5,
-      reorderPoint: 8,
-      warehouseName: 'Main Warehouse',
-      location: 'A-1-01',
-    },
-    {
-      sku: 'HW-MONITOR-01',
-      name: 'Dell UltraSharp 32"',
-      type: 'merchandise',
-      category: 'Hardware',
-      quantityOnHand: 25,
-      quantityAvailable: 25,
-      unitCost: 650,
-      sellingPrice: 850,
-      minimumStock: 10,
-      reorderPoint: 15,
-      warehouseName: 'Main Warehouse',
-      location: 'A-1-02',
-    },
-    {
-      sku: 'HW-KB-01',
-      name: 'Mechanical Keyboard',
-      type: 'merchandise',
-      category: 'Accessories',
-      quantityOnHand: 50,
-      quantityAvailable: 48,
-      quantityReserved: 2,
-      unitCost: 85,
-      sellingPrice: 149,
-      minimumStock: 20,
-      reorderPoint: 25,
-      warehouseName: 'Main Warehouse',
-      location: 'B-2-01',
-    },
-    {
-      sku: 'CONS-PAPER-01',
-      name: 'Printer Paper A4',
-      type: 'consumables',
-      category: 'Office Supplies',
-      quantityOnHand: 100,
-      quantityAvailable: 100,
-      unitCost: 4.50,
-      minimumStock: 50,
-      reorderPoint: 60,
-      unitOfMeasure: 'pack',
-      warehouseName: 'Main Warehouse',
-      location: 'C-1-01',
-    },
-    {
-      sku: 'HW-LAPTOP-02',
-      name: 'ThinkPad X1 Carbon',
-      type: 'merchandise',
-      category: 'Hardware',
-      quantityOnHand: 3,
-      quantityAvailable: 3,
-      unitCost: 1800,
-      sellingPrice: 2400,
-      minimumStock: 5,
-      reorderPoint: 8,
-      warehouseName: 'Main Warehouse',
-      location: 'A-1-03',
-      status: 'active',
-    },
+    { sku: 'SW-LIC-ENT', name: 'Enterprise Software License', type: 'finished_goods', category: 'Software', quantityOnHand: 999, quantityAvailable: 999, unitCost: 2500, sellingPrice: 15000, minimumStock: 1, reorderPoint: 1 },
+    { sku: 'SW-LIC-PRO', name: 'Professional Software License', type: 'finished_goods', category: 'Software', quantityOnHand: 999, quantityAvailable: 999, unitCost: 800, sellingPrice: 5000, minimumStock: 1, reorderPoint: 1 },
+    { sku: 'HW-LAPTOP-01', name: 'MacBook Pro 16"', type: 'merchandise', category: 'Hardware', quantityOnHand: 15, quantityAvailable: 12, quantityReserved: 3, unitCost: 2200, sellingPrice: 2800, minimumStock: 5, reorderPoint: 8, warehouseName: 'Main Warehouse', location: 'A-1-01' },
+    { sku: 'HW-MONITOR-01', name: 'Dell UltraSharp 32"', type: 'merchandise', category: 'Hardware', quantityOnHand: 25, quantityAvailable: 25, unitCost: 650, sellingPrice: 850, minimumStock: 10, reorderPoint: 15, warehouseName: 'Main Warehouse', location: 'A-1-02' },
+    { sku: 'HW-KB-01', name: 'Mechanical Keyboard', type: 'merchandise', category: 'Accessories', quantityOnHand: 50, quantityAvailable: 48, quantityReserved: 2, unitCost: 85, sellingPrice: 149, minimumStock: 20, reorderPoint: 25, warehouseName: 'Main Warehouse', location: 'B-2-01' },
+    { sku: 'CONS-PAPER-01', name: 'Printer Paper A4', type: 'consumables', category: 'Office Supplies', quantityOnHand: 100, quantityAvailable: 100, unitCost: 4.50, minimumStock: 50, reorderPoint: 60, unitOfMeasure: 'pack', warehouseName: 'Main Warehouse', location: 'C-1-01' },
+    { sku: 'HW-LAPTOP-02', name: 'ThinkPad X1 Carbon', type: 'merchandise', category: 'Hardware', quantityOnHand: 3, quantityAvailable: 3, unitCost: 1800, sellingPrice: 2400, minimumStock: 5, reorderPoint: 8, warehouseName: 'Main Warehouse', location: 'A-1-03' },
   ]
 
+  const inventoryMap: Record<string, string> = {}
   for (const item of inventory) {
     const totalValue = item.quantityOnHand * item.unitCost
     
-    await prisma.inventoryItem.create({
+    const created = await prisma.inventoryItem.create({
       data: {
         sku: item.sku,
         name: item.name,
         type: item.type,
         category: item.category,
-        status: item.status || 'active',
+        status: 'active',
         quantityOnHand: item.quantityOnHand,
         quantityAvailable: item.quantityAvailable,
         quantityReserved: item.quantityReserved || 0,
@@ -788,89 +835,89 @@ async function main() {
         organizationId: org.id,
       },
     })
+    inventoryMap[item.sku] = created.id
   }
   console.log('  ✓ Created', inventory.length, 'inventory items')
+
+  // =============================================================================
+  // 15b. INVENTORY BATCHES
+  // =============================================================================
+  console.log('\n📋 Creating Inventory Batches...')
+  const batches = [
+    { sku: 'HW-LAPTOP-01', batchNumber: 'BATCH-2025-001', initialQuantity: 10, currentQuantity: 8, unitCost: 2200, status: 'available' },
+    { sku: 'HW-LAPTOP-01', batchNumber: 'BATCH-2025-002', initialQuantity: 5, currentQuantity: 4, unitCost: 2150, status: 'available' },
+    { sku: 'HW-MONITOR-01', batchNumber: 'BATCH-2024-050', initialQuantity: 30, currentQuantity: 25, unitCost: 650, status: 'available' },
+    { sku: 'HW-KB-01', batchNumber: 'BATCH-2024-100', initialQuantity: 100, currentQuantity: 50, unitCost: 85, status: 'available' },
+    { sku: 'CONS-PAPER-01', batchNumber: 'BATCH-2025-010', initialQuantity: 200, currentQuantity: 100, unitCost: 4.50, status: 'available', expiryDate: daysFromNow(365) },
+  ]
+
+  const batchMap: Record<string, string> = {}
+  for (const batch of batches) {
+    const created = await prisma.inventoryBatch.create({
+      data: {
+        batchNumber: batch.batchNumber,
+        initialQuantity: batch.initialQuantity,
+        currentQuantity: batch.currentQuantity,
+        unitCost: batch.unitCost,
+        status: batch.status,
+        receivedDate: daysAgo(30),
+        expiryDate: batch.expiryDate,
+        inventoryItemId: inventoryMap[batch.sku],
+      },
+    })
+    batchMap[batch.batchNumber] = created.id
+  }
+  console.log('  ✓ Created', batches.length, 'inventory batches')
+
+  // =============================================================================
+  // 15c. INVENTORY MOVEMENTS
+  // =============================================================================
+  console.log('\n🔄 Creating Inventory Movements...')
+  const movements = [
+    { sku: 'HW-LAPTOP-01', type: 'receipt', quantity: 10, previousQuantity: 5, newQuantity: 15, unitCost: 2200, referenceType: 'purchase_order', batchNumber: 'BATCH-2025-001', movementDate: daysAgo(30) },
+    { sku: 'HW-LAPTOP-01', type: 'issue', quantity: -3, previousQuantity: 15, newQuantity: 12, unitCost: 2200, referenceType: 'sales_order', movementDate: daysAgo(15) },
+    { sku: 'HW-MONITOR-01', type: 'receipt', quantity: 30, previousQuantity: 0, newQuantity: 30, unitCost: 650, referenceType: 'purchase_order', batchNumber: 'BATCH-2024-050', movementDate: daysAgo(60) },
+    { sku: 'HW-MONITOR-01', type: 'issue', quantity: -5, previousQuantity: 30, newQuantity: 25, unitCost: 650, referenceType: 'sales_order', movementDate: daysAgo(20) },
+    { sku: 'HW-KB-01', type: 'receipt', quantity: 100, previousQuantity: 0, newQuantity: 100, unitCost: 85, referenceType: 'purchase_order', movementDate: daysAgo(90) },
+    { sku: 'HW-KB-01', type: 'issue', quantity: -50, previousQuantity: 100, newQuantity: 50, unitCost: 85, referenceType: 'sales_order', movementDate: daysAgo(45) },
+    { sku: 'CONS-PAPER-01', type: 'receipt', quantity: 200, previousQuantity: 0, newQuantity: 200, unitCost: 4.50, referenceType: 'purchase_order', batchNumber: 'BATCH-2025-010', movementDate: daysAgo(30) },
+    { sku: 'CONS-PAPER-01', type: 'issue', quantity: -100, previousQuantity: 200, newQuantity: 100, unitCost: 4.50, referenceType: 'internal_use', movementDate: daysAgo(10) },
+    { sku: 'HW-LAPTOP-02', type: 'adjustment', quantity: -2, previousQuantity: 5, newQuantity: 3, unitCost: 1800, reason: 'Inventory count adjustment', movementDate: daysAgo(5) },
+  ]
+
+  for (const mov of movements) {
+    await prisma.inventoryMovement.create({
+      data: {
+        type: mov.type,
+        quantity: Math.abs(mov.quantity),
+        previousQuantity: mov.previousQuantity,
+        newQuantity: mov.newQuantity,
+        unitCost: mov.unitCost,
+        totalCost: Math.abs(mov.quantity) * mov.unitCost,
+        referenceType: mov.referenceType,
+        reason: mov.reason,
+        movementDate: mov.movementDate,
+        batchId: mov.batchNumber ? batchMap[mov.batchNumber] : null,
+        inventoryItemId: inventoryMap[mov.sku],
+      },
+    })
+  }
+  console.log('  ✓ Created', movements.length, 'inventory movements')
 
   // =============================================================================
   // 16. RECEIVABLES
   // =============================================================================
   console.log('\n💵 Creating Receivables...')
   const receivables = [
-    {
-      originType: 'invoice',
-      originReferenceId: 'INV-2025-002',
-      debtorName: 'TechStart GmbH',
-      debtorEmail: 'finance@techstart.de',
-      originalAmount: 17232,
-      outstandingAmount: 17232,
-      paidAmount: 0,
-      issueDate: '2025-01-12',
-      dueDate: '2025-01-27',
-      status: 'open',
-      riskLevel: 'low',
-      reference: 'Consulting Services January',
-    },
-    {
-      originType: 'invoice',
-      originReferenceId: 'INV-2024-089',
-      debtorName: 'SlowPay Ltd',
-      debtorEmail: 'accounts@slowpay.co.uk',
-      originalAmount: 22617,
-      outstandingAmount: 22617,
-      paidAmount: 0,
-      issueDate: '2024-12-01',
-      dueDate: '2024-12-31',
-      status: 'overdue',
-      riskLevel: 'high',
-      daysOutstanding: 16,
-      agingBucket: '1-30',
-      reference: 'Development Services Q4',
-      collectionStage: 'reminder_1',
-    },
-    {
-      originType: 'invoice',
-      originReferenceId: 'INV-2024-075',
-      debtorName: 'LateClient AG',
-      debtorEmail: 'ap@lateclient.ch',
-      originalAmount: 35000,
-      outstandingAmount: 15000,
-      paidAmount: 20000,
-      issueDate: '2024-10-15',
-      dueDate: '2024-11-15',
-      status: 'partially_paid',
-      riskLevel: 'medium',
-      daysOutstanding: 62,
-      agingBucket: '61-90',
-      reference: 'Annual License',
-    },
-    {
-      originType: 'contract',
-      originReferenceId: 'CONTRACT-2024-022',
-      debtorName: 'BigCorp International',
-      debtorEmail: 'payables@bigcorp.com',
-      originalAmount: 85000,
-      outstandingAmount: 0,
-      paidAmount: 85000,
-      issueDate: '2024-11-01',
-      dueDate: '2024-12-01',
-      status: 'paid',
-      riskLevel: 'low',
-      reference: 'Q4 Project Milestone',
-    },
+    { originType: 'invoice', originReferenceId: 'INV-2025-002', debtorName: 'TechStart GmbH', debtorEmail: 'finance@techstart.de', originalAmount: 17232, outstandingAmount: 17232, paidAmount: 0, issueDate: daysAgo(5), dueDate: daysFromNow(10), status: 'open', riskLevel: 'low', reference: 'Consulting Services January' },
+    { originType: 'invoice', originReferenceId: 'INV-2024-089', debtorName: 'SlowPay Ltd', debtorEmail: 'accounts@slowpay.co.uk', originalAmount: 22617, outstandingAmount: 22617, paidAmount: 0, issueDate: daysAgo(50), dueDate: daysAgo(20), status: 'overdue', riskLevel: 'high', daysOutstanding: 20, agingBucket: '1-30', reference: 'Development Services Q4', collectionStage: 'reminder_1' },
+    { originType: 'invoice', originReferenceId: 'INV-2024-075', debtorName: 'LateClient AG', debtorEmail: 'ap@lateclient.ch', originalAmount: 35000, outstandingAmount: 15000, paidAmount: 20000, issueDate: daysAgo(90), dueDate: daysAgo(60), status: 'partially_paid', riskLevel: 'medium', daysOutstanding: 60, agingBucket: '61-90', reference: 'Annual License' },
+    { originType: 'contract', originReferenceId: 'CONTRACT-2024-022', debtorName: 'BigCorp International', debtorEmail: 'payables@bigcorp.com', originalAmount: 85000, outstandingAmount: 0, paidAmount: 85000, issueDate: daysAgo(60), dueDate: daysAgo(30), status: 'paid', riskLevel: 'low', reference: 'Q4 Project Milestone' },
   ]
 
+  const receivableMap: Record<string, string> = {}
   for (const rec of receivables) {
-    const today = new Date()
-    const dueDate = new Date(rec.dueDate)
-    const daysOut = rec.daysOutstanding || Math.max(0, Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)))
-    
-    let agingBucket = 'current'
-    if (daysOut > 90) agingBucket = '90+'
-    else if (daysOut > 60) agingBucket = '61-90'
-    else if (daysOut > 30) agingBucket = '31-60'
-    else if (daysOut > 0) agingBucket = '1-30'
-    
-    await prisma.receivable.create({
+    const created = await prisma.receivable.create({
       data: {
         originType: rec.originType,
         originReferenceId: rec.originReferenceId,
@@ -880,21 +927,80 @@ async function main() {
         originalAmount: rec.originalAmount,
         outstandingAmount: rec.outstandingAmount,
         paidAmount: rec.paidAmount,
-        issueDate: new Date(rec.issueDate),
-        dueDate: new Date(rec.dueDate),
+        issueDate: rec.issueDate,
+        dueDate: rec.dueDate,
         lastActivityDate: new Date(),
         status: rec.status,
         riskLevel: rec.riskLevel,
-        daysOutstanding: daysOut,
-        agingBucket: rec.agingBucket || agingBucket,
+        daysOutstanding: rec.daysOutstanding || 0,
+        agingBucket: rec.agingBucket || 'current',
         reference: rec.reference,
         collectionStage: rec.collectionStage,
         autoRemindersEnabled: true,
         organizationId: org.id,
       },
     })
+    receivableMap[rec.originReferenceId] = created.id
   }
   console.log('  ✓ Created', receivables.length, 'receivables')
+
+  // =============================================================================
+  // 16b. RECEIVABLE PAYMENTS
+  // =============================================================================
+  console.log('\n💳 Creating Receivable Payments...')
+  const receivablePayments = [
+    { receivableRef: 'INV-2024-075', amount: 10000, type: 'payment', appliedAt: daysAgo(45), reference: 'Wire transfer - partial payment' },
+    { receivableRef: 'INV-2024-075', amount: 10000, type: 'payment', appliedAt: daysAgo(30), reference: 'Wire transfer - 2nd installment' },
+    { receivableRef: 'CONTRACT-2024-022', amount: 42500, type: 'payment', appliedAt: daysAgo(45), reference: 'Milestone 1 payment' },
+    { receivableRef: 'CONTRACT-2024-022', amount: 42500, type: 'payment', appliedAt: daysAgo(30), reference: 'Milestone 2 payment - final' },
+  ]
+
+  for (const pmt of receivablePayments) {
+    await prisma.receivablePayment.create({
+      data: {
+        amount: pmt.amount,
+        type: pmt.type,
+        reference: pmt.reference,
+        appliedAt: pmt.appliedAt,
+        appliedBy: user.id,
+        receivableId: receivableMap[pmt.receivableRef],
+      },
+    })
+  }
+  console.log('  ✓ Created', receivablePayments.length, 'receivable payments')
+
+  // =============================================================================
+  // 16c. RECEIVABLE EVENTS
+  // =============================================================================
+  console.log('\n📋 Creating Receivable Events...')
+  const receivableEvents = [
+    { receivableRef: 'INV-2025-002', type: 'receivable_created', description: 'Invoice sent to TechStart GmbH', performedBy: user.id, createdAt: daysAgo(5) },
+    { receivableRef: 'INV-2024-089', type: 'receivable_created', description: 'Invoice sent to SlowPay Ltd', performedBy: user.id, createdAt: daysAgo(50) },
+    { receivableRef: 'INV-2024-089', type: 'reminder_sent', description: 'First payment reminder sent', performedBy: user.id, createdAt: daysAgo(15) },
+    { receivableRef: 'INV-2024-089', type: 'status_changed', description: 'Status changed to overdue', previousValue: 'due', newValue: 'overdue', createdAt: daysAgo(10) },
+    { receivableRef: 'INV-2024-075', type: 'receivable_created', description: 'Invoice sent to LateClient AG', performedBy: user.id, createdAt: daysAgo(90) },
+    { receivableRef: 'INV-2024-075', type: 'partial_payment_applied', description: 'Payment of €10,000 applied', amount: 10000, createdAt: daysAgo(45) },
+    { receivableRef: 'INV-2024-075', type: 'partial_payment_applied', description: 'Payment of €10,000 applied', amount: 10000, createdAt: daysAgo(30) },
+    { receivableRef: 'CONTRACT-2024-022', type: 'receivable_created', description: 'Contract receivable created', performedBy: user.id, createdAt: daysAgo(60) },
+    { receivableRef: 'CONTRACT-2024-022', type: 'payment_applied', description: 'Full payment received', amount: 85000, createdAt: daysAgo(30) },
+    { receivableRef: 'CONTRACT-2024-022', type: 'status_changed', description: 'Status changed to paid', previousValue: 'open', newValue: 'paid', createdAt: daysAgo(30) },
+  ]
+
+  for (const evt of receivableEvents) {
+    await prisma.receivableEvent.create({
+      data: {
+        type: evt.type,
+        description: evt.description,
+        previousValue: evt.previousValue,
+        newValue: evt.newValue,
+        amount: evt.amount,
+        performedBy: evt.performedBy,
+        receivableId: receivableMap[evt.receivableRef],
+        createdAt: evt.createdAt,
+      },
+    })
+  }
+  console.log('  ✓ Created', receivableEvents.length, 'receivable events')
 
   // =============================================================================
   // 17. TREASURY ACCOUNTS
@@ -929,6 +1035,39 @@ async function main() {
     treasuryAccountMap[acc.name] = created.id
   }
   console.log('  ✓ Created', treasuryAccounts.length, 'treasury accounts')
+
+  // =============================================================================
+  // 17b. TREASURY CASH MOVEMENTS
+  // =============================================================================
+  console.log('\n💸 Creating Treasury Cash Movements...')
+  const cashMovements = [
+    { accountName: 'Operating Account EUR', type: 'inflow', category: 'operating', amount: 25000, description: 'Client payment - Acme Corp', counterparty: 'Acme Corp', movementDate: daysAgo(2), balanceBefore: 100000, balanceAfter: 125000 },
+    { accountName: 'Operating Account EUR', type: 'outflow', category: 'operating', amount: 4500, description: 'Office rent payment', counterparty: 'Swiss Property AG', movementDate: daysAgo(5), balanceBefore: 104500, balanceAfter: 100000 },
+    { accountName: 'Operating Account EUR', type: 'outflow', category: 'operating', amount: 3240.50, description: 'AWS infrastructure', counterparty: 'Amazon Web Services', movementDate: daysAgo(7), balanceBefore: 107740.50, balanceAfter: 104500 },
+    { accountName: 'Operating Account EUR', type: 'transfer_out', category: 'financing', amount: 20000, description: 'Transfer to savings', counterparty: 'Internal', movementDate: daysAgo(10), balanceBefore: 127740.50, balanceAfter: 107740.50 },
+    { accountName: 'Savings Reserve', type: 'transfer_in', category: 'financing', amount: 20000, description: 'Transfer from operating', counterparty: 'Internal', movementDate: daysAgo(10), balanceBefore: 55000, balanceAfter: 75000 },
+    { accountName: 'Tax Reserve Account', type: 'transfer_in', category: 'financing', amount: 5000, description: 'Monthly tax provision', counterparty: 'Internal', movementDate: daysAgo(15), balanceBefore: 30000, balanceAfter: 35000 },
+    { accountName: 'Investment Account', type: 'interest', category: 'investing', amount: 250, description: 'Monthly interest earned', counterparty: 'Julius Baer', movementDate: daysAgo(1), balanceBefore: 49750, balanceAfter: 50000 },
+  ]
+
+  for (const mov of cashMovements) {
+    await prisma.treasuryCashMovement.create({
+      data: {
+        type: mov.type,
+        category: mov.category,
+        amount: mov.amount,
+        currency: 'EUR',
+        description: mov.description,
+        counterparty: mov.counterparty,
+        movementDate: mov.movementDate,
+        balanceBefore: mov.balanceBefore,
+        balanceAfter: mov.balanceAfter,
+        status: 'completed',
+        accountId: treasuryAccountMap[mov.accountName],
+      },
+    })
+  }
+  console.log('  ✓ Created', cashMovements.length, 'treasury cash movements')
 
   // =============================================================================
   // 18. CAPITAL BUCKETS
@@ -973,47 +1112,17 @@ async function main() {
   // =============================================================================
   console.log('\n🏛️ Creating Credit Facilities...')
   const facilities = [
-    {
-      name: 'Revolving Credit Facility',
-      type: 'revolving',
-      lenderName: 'UBS AG',
-      facilityLimit: 200000,
-      drawnAmount: 25000,
-      interestRate: 4.5,
-      interestType: 'variable',
-      startDate: '2024-01-01',
-      maturityDate: '2026-12-31',
-      commitmentFeeBps: 25,
-    },
-    {
-      name: 'Term Loan Facility',
-      type: 'term',
-      lenderName: 'Credit Suisse',
-      facilityLimit: 150000,
-      drawnAmount: 120000,
-      interestRate: 3.5,
-      interestType: 'fixed',
-      startDate: '2023-06-01',
-      maturityDate: '2028-06-01',
-    },
-    {
-      name: 'Overdraft Facility',
-      type: 'overdraft',
-      lenderName: 'UBS AG',
-      facilityLimit: 50000,
-      drawnAmount: 0,
-      interestRate: 8.5,
-      interestType: 'variable',
-      startDate: '2024-01-01',
-      maturityDate: '2025-12-31',
-    },
+    { name: 'Revolving Credit Facility', type: 'revolving', lenderName: 'UBS AG', facilityLimit: 200000, drawnAmount: 25000, interestRate: 4.5, interestType: 'variable', startDate: '2024-01-01', maturityDate: '2026-12-31', commitmentFeeBps: 25 },
+    { name: 'Term Loan Facility', type: 'term', lenderName: 'Credit Suisse', facilityLimit: 150000, drawnAmount: 120000, interestRate: 3.5, interestType: 'fixed', startDate: '2023-06-01', maturityDate: '2028-06-01' },
+    { name: 'Overdraft Facility', type: 'overdraft', lenderName: 'UBS AG', facilityLimit: 50000, drawnAmount: 0, interestRate: 8.5, interestType: 'variable', startDate: '2024-01-01', maturityDate: '2025-12-31' },
   ]
 
+  const facilityMap: Record<string, string> = {}
   for (const fac of facilities) {
     const available = fac.facilityLimit - fac.drawnAmount
     const utilization = (fac.drawnAmount / fac.facilityLimit) * 100
     
-    await prisma.creditFacility.create({
+    const created = await prisma.creditFacility.create({
       data: {
         name: fac.name,
         type: fac.type,
@@ -1032,8 +1141,33 @@ async function main() {
         organizationId: org.id,
       },
     })
+    facilityMap[fac.name] = created.id
   }
   console.log('  ✓ Created', facilities.length, 'credit facilities')
+
+  // =============================================================================
+  // 19b. FACILITY DRAWDOWNS
+  // =============================================================================
+  console.log('\n📤 Creating Facility Drawdowns...')
+  const drawdowns = [
+    { facilityName: 'Revolving Credit Facility', amount: 25000, drawdownDate: daysAgo(30), outstandingAmount: 25000, status: 'active', purpose: 'Working capital' },
+    { facilityName: 'Term Loan Facility', amount: 150000, drawdownDate: new Date('2023-06-01'), repaidAmount: 30000, outstandingAmount: 120000, status: 'active', purpose: 'Business expansion' },
+  ]
+
+  for (const dd of drawdowns) {
+    await prisma.facilityDrawdown.create({
+      data: {
+        amount: dd.amount,
+        drawdownDate: dd.drawdownDate,
+        repaidAmount: dd.repaidAmount || 0,
+        outstandingAmount: dd.outstandingAmount,
+        status: dd.status,
+        purpose: dd.purpose,
+        facilityId: facilityMap[dd.facilityName],
+      },
+    })
+  }
+  console.log('  ✓ Created', drawdowns.length, 'facility drawdowns')
 
   // =============================================================================
   // 20. TREASURY DECISIONS
@@ -1068,42 +1202,10 @@ async function main() {
   // =============================================================================
   console.log('\n📊 Creating Treasury Scenarios...')
   const scenarios = [
-    {
-      name: 'Baseline Forecast',
-      type: 'baseline',
-      isBaseline: true,
-      horizonDays: 90,
-      assumptions: { revenueGrowth: 0.05, expenseGrowth: 0.03, collectionDays: 30 },
-      minimumCashAmount: 85000,
-      endingCashAmount: 145000,
-    },
-    {
-      name: 'Optimistic Scenario',
-      type: 'best_case',
-      horizonDays: 90,
-      assumptions: { revenueGrowth: 0.15, expenseGrowth: 0.02, collectionDays: 25 },
-      minimumCashAmount: 95000,
-      endingCashAmount: 185000,
-      probabilityWeight: 20,
-    },
-    {
-      name: 'Pessimistic Scenario',
-      type: 'worst_case',
-      horizonDays: 90,
-      assumptions: { revenueGrowth: -0.10, expenseGrowth: 0.05, collectionDays: 45 },
-      minimumCashAmount: 45000,
-      endingCashAmount: 75000,
-      probabilityWeight: 15,
-    },
-    {
-      name: 'Major Client Loss',
-      type: 'stress_test',
-      horizonDays: 90,
-      assumptions: { revenueGrowth: -0.25, expenseGrowth: 0, collectionDays: 60, clientChurn: 0.20 },
-      minimumCashAmount: 25000,
-      endingCashAmount: 40000,
-      riskScore: 85,
-    },
+    { name: 'Baseline Forecast', type: 'baseline', isBaseline: true, horizonDays: 90, assumptions: { revenueGrowth: 0.05, expenseGrowth: 0.03, collectionDays: 30 }, minimumCashAmount: 85000, endingCashAmount: 145000 },
+    { name: 'Optimistic Scenario', type: 'best_case', horizonDays: 90, assumptions: { revenueGrowth: 0.15, expenseGrowth: 0.02, collectionDays: 25 }, minimumCashAmount: 95000, endingCashAmount: 185000, probabilityWeight: 20 },
+    { name: 'Pessimistic Scenario', type: 'worst_case', horizonDays: 90, assumptions: { revenueGrowth: -0.10, expenseGrowth: 0.05, collectionDays: 45 }, minimumCashAmount: 45000, endingCashAmount: 75000, probabilityWeight: 15 },
+    { name: 'Major Client Loss', type: 'stress_test', horizonDays: 90, assumptions: { revenueGrowth: -0.25, expenseGrowth: 0, collectionDays: 60, clientChurn: 0.20 }, minimumCashAmount: 25000, endingCashAmount: 40000, riskScore: 85 },
   ]
 
   const today = new Date()
@@ -1137,31 +1239,14 @@ async function main() {
   // =============================================================================
   console.log('\n🔄 Creating Netting Opportunities...')
   const netting = [
-    {
-      entityAName: 'Demo Company GmbH',
-      entityBName: 'Demo Tech AG',
-      amountAToB: 15000,
-      amountBToA: 8500,
-      netAmount: 6500,
-      netDirection: 'a_to_b',
-    },
-    {
-      entityAName: 'Demo Company GmbH',
-      entityBName: 'Demo Services LLC',
-      amountAToB: 22000,
-      amountBToA: 18000,
-      netAmount: 4000,
-      netDirection: 'a_to_b',
-    },
+    { entityAName: 'Demo Company GmbH', entityBName: 'Demo Tech AG', amountAToB: 15000, amountBToA: 8500, netAmount: 6500, netDirection: 'a_to_b' },
+    { entityAName: 'Demo Company GmbH', entityBName: 'Demo Services LLC', amountAToB: 22000, amountBToA: 18000, netAmount: 4000, netDirection: 'a_to_b' },
   ]
 
   for (const n of netting) {
     const grossAmount = n.amountAToB + n.amountBToA
     const savingsAmount = grossAmount - n.netAmount
     const savingsPercent = (savingsAmount / grossAmount) * 100
-    
-    const validUntil = new Date()
-    validUntil.setDate(validUntil.getDate() + 30)
     
     await prisma.nettingOpportunity.create({
       data: {
@@ -1178,7 +1263,7 @@ async function main() {
         savingsAmount,
         savingsPercent,
         status: 'identified',
-        validUntil,
+        validUntil: daysFromNow(30),
         organizationId: org.id,
       },
     })
@@ -1190,107 +1275,25 @@ async function main() {
   // =============================================================================
   console.log('\n🏗️ Creating Assets...')
   const assets = [
-    {
-      assetNumber: 'AST-001',
-      name: 'Office Building - Zurich',
-      category: 'property_plant_equipment',
-      assetClass: 'buildings',
-      acquisitionDate: '2020-01-15',
-      acquisitionCost: 850000,
-      residualValue: 100000,
-      usefulLifeMonths: 480,
-      depreciationMethod: 'straight_line',
-      locationName: 'Zurich HQ',
-      accumulatedDepreciation: 93750,
-    },
-    {
-      assetNumber: 'AST-002',
-      name: 'Company Vehicle - Tesla Model 3',
-      category: 'property_plant_equipment',
-      assetClass: 'vehicles',
-      acquisitionDate: '2023-06-01',
-      acquisitionCost: 52000,
-      residualValue: 15000,
-      usefulLifeMonths: 60,
-      depreciationMethod: 'straight_line',
-      locationName: 'Zurich HQ',
-      serialNumber: '5YJ3E1EA1PF123456',
-      accumulatedDepreciation: 11100,
-    },
-    {
-      assetNumber: 'AST-003',
-      name: 'Server Infrastructure',
-      category: 'property_plant_equipment',
-      assetClass: 'equipment',
-      acquisitionDate: '2024-01-15',
-      acquisitionCost: 45000,
-      residualValue: 5000,
-      usefulLifeMonths: 48,
-      depreciationMethod: 'straight_line',
-      locationName: 'Data Center',
-      accumulatedDepreciation: 10000,
-    },
-    {
-      assetNumber: 'AST-004',
-      name: 'Office Furniture Set',
-      category: 'property_plant_equipment',
-      assetClass: 'furniture',
-      acquisitionDate: '2022-03-01',
-      acquisitionCost: 35000,
-      residualValue: 2000,
-      usefulLifeMonths: 84,
-      depreciationMethod: 'straight_line',
-      locationName: 'Zurich HQ',
-      accumulatedDepreciation: 13571,
-    },
-    {
-      assetNumber: 'AST-005',
-      name: 'Software Platform - PrimeBalance',
-      category: 'intangible',
-      assetClass: 'software',
-      acquisitionDate: '2021-06-01',
-      acquisitionCost: 250000,
-      residualValue: 0,
-      usefulLifeMonths: 60,
-      depreciationMethod: 'straight_line',
-      accumulatedDepreciation: 175000,
-    },
-    {
-      assetNumber: 'AST-006',
-      name: 'Patent - Data Processing Method',
-      category: 'intangible',
-      assetClass: 'patents',
-      acquisitionDate: '2022-01-01',
-      acquisitionCost: 75000,
-      residualValue: 0,
-      usefulLifeMonths: 180,
-      depreciationMethod: 'straight_line',
-      accumulatedDepreciation: 15000,
-    },
-    {
-      assetNumber: 'AST-007',
-      name: 'MacBook Pro Fleet (10 units)',
-      category: 'property_plant_equipment',
-      assetClass: 'equipment',
-      acquisitionDate: '2024-06-01',
-      acquisitionCost: 28000,
-      residualValue: 4000,
-      usefulLifeMonths: 36,
-      depreciationMethod: 'straight_line',
-      locationName: 'Zurich HQ',
-      quantity: 10,
-      accumulatedDepreciation: 4667,
-    },
+    { assetNumber: 'AST-001', name: 'Office Building - Zurich', category: 'property_plant_equipment', assetClass: 'buildings', acquisitionDate: '2020-01-15', acquisitionCost: 850000, residualValue: 100000, usefulLifeMonths: 480, depreciationMethod: 'straight_line', locationName: 'Zurich HQ', accumulatedDepreciation: 93750 },
+    { assetNumber: 'AST-002', name: 'Company Vehicle - Tesla Model 3', category: 'property_plant_equipment', assetClass: 'vehicles', acquisitionDate: '2023-06-01', acquisitionCost: 52000, residualValue: 15000, usefulLifeMonths: 60, depreciationMethod: 'straight_line', locationName: 'Zurich HQ', serialNumber: '5YJ3E1EA1PF123456', accumulatedDepreciation: 11100 },
+    { assetNumber: 'AST-003', name: 'Server Infrastructure', category: 'property_plant_equipment', assetClass: 'equipment', acquisitionDate: '2024-01-15', acquisitionCost: 45000, residualValue: 5000, usefulLifeMonths: 48, depreciationMethod: 'straight_line', locationName: 'Data Center', accumulatedDepreciation: 10000 },
+    { assetNumber: 'AST-004', name: 'Office Furniture Set', category: 'property_plant_equipment', assetClass: 'furniture', acquisitionDate: '2022-03-01', acquisitionCost: 35000, residualValue: 2000, usefulLifeMonths: 84, depreciationMethod: 'straight_line', locationName: 'Zurich HQ', accumulatedDepreciation: 13571 },
+    { assetNumber: 'AST-005', name: 'Software Platform - PrimeBalance', category: 'intangible', assetClass: 'software', acquisitionDate: '2021-06-01', acquisitionCost: 250000, residualValue: 0, usefulLifeMonths: 60, depreciationMethod: 'straight_line', accumulatedDepreciation: 175000 },
+    { assetNumber: 'AST-006', name: 'Patent - Data Processing Method', category: 'intangible', assetClass: 'patents', acquisitionDate: '2022-01-01', acquisitionCost: 75000, residualValue: 0, usefulLifeMonths: 180, depreciationMethod: 'straight_line', accumulatedDepreciation: 15000 },
+    { assetNumber: 'AST-007', name: 'MacBook Pro Fleet (10 units)', category: 'property_plant_equipment', assetClass: 'equipment', acquisitionDate: '2024-06-01', acquisitionCost: 28000, residualValue: 4000, usefulLifeMonths: 36, depreciationMethod: 'straight_line', locationName: 'Zurich HQ', quantity: 10, accumulatedDepreciation: 4667 },
+    { assetNumber: 'AST-008', name: 'Old Printer (Disposed)', category: 'property_plant_equipment', assetClass: 'equipment', acquisitionDate: '2019-01-01', acquisitionCost: 5000, residualValue: 0, usefulLifeMonths: 60, depreciationMethod: 'straight_line', locationName: 'Zurich HQ', accumulatedDepreciation: 5000, status: 'disposed' },
   ]
 
+  const assetMap: Record<string, string> = {}
   for (const asset of assets) {
     const currentBookValue = asset.acquisitionCost - asset.accumulatedDepreciation
     const depreciableAmount = asset.acquisitionCost - asset.residualValue
     const monthlyDep = depreciableAmount / asset.usefulLifeMonths
     
-    const status = currentBookValue <= asset.residualValue ? 'fully_depreciated' : 'active'
+    const status = asset.status || (currentBookValue <= asset.residualValue ? 'fully_depreciated' : 'active')
     
-    await prisma.asset.create({
+    const created = await prisma.asset.create({
       data: {
         assetNumber: asset.assetNumber,
         name: asset.name,
@@ -1316,8 +1319,163 @@ async function main() {
         organizationId: org.id,
       },
     })
+    assetMap[asset.assetNumber] = created.id
   }
   console.log('  ✓ Created', assets.length, 'assets')
+
+  // =============================================================================
+  // 23b. ASSET DEPRECIATION ENTRIES
+  // =============================================================================
+  console.log('\n📉 Creating Asset Depreciation Entries...')
+  const depreciationEntries = [
+    // Tesla Model 3 - monthly depreciation entries for 2024
+    { assetNumber: 'AST-002', periodStart: '2024-07-01', periodEnd: '2024-07-31', fiscalYear: 2024, fiscalPeriod: 'M07', depreciationAmount: 617, openingBookValue: 45283, closingBookValue: 44667 },
+    { assetNumber: 'AST-002', periodStart: '2024-08-01', periodEnd: '2024-08-31', fiscalYear: 2024, fiscalPeriod: 'M08', depreciationAmount: 617, openingBookValue: 44667, closingBookValue: 44050 },
+    { assetNumber: 'AST-002', periodStart: '2024-09-01', periodEnd: '2024-09-30', fiscalYear: 2024, fiscalPeriod: 'M09', depreciationAmount: 617, openingBookValue: 44050, closingBookValue: 43433 },
+    { assetNumber: 'AST-002', periodStart: '2024-10-01', periodEnd: '2024-10-31', fiscalYear: 2024, fiscalPeriod: 'M10', depreciationAmount: 617, openingBookValue: 43433, closingBookValue: 42817 },
+    { assetNumber: 'AST-002', periodStart: '2024-11-01', periodEnd: '2024-11-30', fiscalYear: 2024, fiscalPeriod: 'M11', depreciationAmount: 617, openingBookValue: 42817, closingBookValue: 42200 },
+    { assetNumber: 'AST-002', periodStart: '2024-12-01', periodEnd: '2024-12-31', fiscalYear: 2024, fiscalPeriod: 'M12', depreciationAmount: 617, openingBookValue: 42200, closingBookValue: 41583 },
+    // Server Infrastructure
+    { assetNumber: 'AST-003', periodStart: '2024-10-01', periodEnd: '2024-10-31', fiscalYear: 2024, fiscalPeriod: 'M10', depreciationAmount: 833, openingBookValue: 37500, closingBookValue: 36667 },
+    { assetNumber: 'AST-003', periodStart: '2024-11-01', periodEnd: '2024-11-30', fiscalYear: 2024, fiscalPeriod: 'M11', depreciationAmount: 833, openingBookValue: 36667, closingBookValue: 35833 },
+    { assetNumber: 'AST-003', periodStart: '2024-12-01', periodEnd: '2024-12-31', fiscalYear: 2024, fiscalPeriod: 'M12', depreciationAmount: 833, openingBookValue: 35833, closingBookValue: 35000 },
+    // MacBook Fleet
+    { assetNumber: 'AST-007', periodStart: '2024-07-01', periodEnd: '2024-07-31', fiscalYear: 2024, fiscalPeriod: 'M07', depreciationAmount: 667, openingBookValue: 28000, closingBookValue: 27333 },
+    { assetNumber: 'AST-007', periodStart: '2024-08-01', periodEnd: '2024-08-31', fiscalYear: 2024, fiscalPeriod: 'M08', depreciationAmount: 667, openingBookValue: 27333, closingBookValue: 26667 },
+    { assetNumber: 'AST-007', periodStart: '2024-09-01', periodEnd: '2024-09-30', fiscalYear: 2024, fiscalPeriod: 'M09', depreciationAmount: 667, openingBookValue: 26667, closingBookValue: 26000 },
+  ]
+
+  for (const dep of depreciationEntries) {
+    const accumulatedDep = assets.find(a => a.assetNumber === dep.assetNumber)!.acquisitionCost - dep.closingBookValue
+    await prisma.assetDepreciation.create({
+      data: {
+        periodStart: new Date(dep.periodStart),
+        periodEnd: new Date(dep.periodEnd),
+        fiscalYear: dep.fiscalYear,
+        fiscalPeriod: dep.fiscalPeriod,
+        depreciationAmount: dep.depreciationAmount,
+        accumulatedDepreciation: accumulatedDep,
+        openingBookValue: dep.openingBookValue,
+        closingBookValue: dep.closingBookValue,
+        method: 'straight_line',
+        status: 'posted',
+        bookType: 'statutory',
+        assetId: assetMap[dep.assetNumber],
+      },
+    })
+  }
+  console.log('  ✓ Created', depreciationEntries.length, 'depreciation entries')
+
+  // =============================================================================
+  // 23c. ASSET EVENTS
+  // =============================================================================
+  console.log('\n📋 Creating Asset Events...')
+  const assetEvents = [
+    { assetNumber: 'AST-001', type: 'acquisition', description: 'Asset acquired via purchase', amount: 850000, eventDate: '2020-01-15' },
+    { assetNumber: 'AST-002', type: 'acquisition', description: 'Company vehicle purchased', amount: 52000, eventDate: '2023-06-01' },
+    { assetNumber: 'AST-002', type: 'insurance_update', description: 'Insurance policy renewed', eventDate: '2024-06-01' },
+    { assetNumber: 'AST-003', type: 'acquisition', description: 'Server infrastructure purchased', amount: 45000, eventDate: '2024-01-15' },
+    { assetNumber: 'AST-003', type: 'maintenance', description: 'Scheduled maintenance performed', eventDate: '2024-07-15' },
+    { assetNumber: 'AST-005', type: 'acquisition', description: 'Software platform development completed', amount: 250000, eventDate: '2021-06-01' },
+    { assetNumber: 'AST-007', type: 'acquisition', description: 'MacBook fleet purchased', amount: 28000, eventDate: '2024-06-01' },
+    { assetNumber: 'AST-008', type: 'acquisition', description: 'Printer purchased', amount: 5000, eventDate: '2019-01-01' },
+    { assetNumber: 'AST-008', type: 'disposal', description: 'Printer disposed - obsolete', previousValue: 0, newValue: 0, eventDate: '2024-01-15' },
+  ]
+
+  for (const evt of assetEvents) {
+    await prisma.assetEvent.create({
+      data: {
+        type: evt.type,
+        description: evt.description,
+        amount: evt.amount,
+        previousValue: evt.previousValue,
+        newValue: evt.newValue,
+        eventDate: new Date(evt.eventDate),
+        performedBy: user.id,
+        assetId: assetMap[evt.assetNumber],
+      },
+    })
+  }
+  console.log('  ✓ Created', assetEvents.length, 'asset events')
+
+  // =============================================================================
+  // 23d. ASSET TRANSFERS
+  // =============================================================================
+  console.log('\n🔄 Creating Asset Transfers...')
+  const assetTransfers = [
+    {
+      assetNumber: 'AST-003',
+      transferDate: daysAgo(60),
+      effectiveDate: daysAgo(60),
+      transferType: 'location',
+      fromLocationName: 'Zurich HQ',
+      toLocationName: 'Data Center',
+      bookValueAtTransfer: 40000,
+      accumulatedDepAtTransfer: 5000,
+      status: 'completed',
+      reason: 'Server relocation to dedicated data center',
+    },
+    {
+      assetNumber: 'AST-004',
+      transferDate: daysAgo(30),
+      effectiveDate: daysAgo(30),
+      transferType: 'cost_center',
+      fromCostCenterName: 'Administration',
+      toCostCenterName: 'Engineering',
+      bookValueAtTransfer: 21429,
+      accumulatedDepAtTransfer: 13571,
+      status: 'completed',
+      reason: 'Department reorganization',
+    },
+  ]
+
+  for (const transfer of assetTransfers) {
+    await prisma.assetTransfer.create({
+      data: {
+        transferDate: transfer.transferDate,
+        effectiveDate: transfer.effectiveDate,
+        transferType: transfer.transferType,
+        fromLocationName: transfer.fromLocationName,
+        toLocationName: transfer.toLocationName,
+        fromCostCenterName: transfer.fromCostCenterName,
+        toCostCenterName: transfer.toCostCenterName,
+        bookValueAtTransfer: transfer.bookValueAtTransfer,
+        accumulatedDepAtTransfer: transfer.accumulatedDepAtTransfer,
+        status: transfer.status,
+        reason: transfer.reason,
+        requestedBy: user.id,
+        requestedAt: transfer.transferDate,
+        approvedBy: user.id,
+        approvedAt: transfer.transferDate,
+        assetId: assetMap[transfer.assetNumber],
+      },
+    })
+  }
+  console.log('  ✓ Created', assetTransfers.length, 'asset transfers')
+
+  // =============================================================================
+  // 23e. ASSET DISPOSAL
+  // =============================================================================
+  console.log('\n🗑️ Creating Asset Disposal...')
+  await prisma.assetDisposal.create({
+    data: {
+      disposalDate: new Date('2024-01-15'),
+      disposalType: 'scrap',
+      carryingAmount: 0,
+      accumulatedDepreciation: 5000,
+      salePrice: 0,
+      gainOrLoss: 0,
+      isGain: false,
+      disposalCosts: 100,
+      status: 'completed',
+      reason: 'Equipment obsolete and no longer functional',
+      approvedBy: user.id,
+      approvedAt: new Date('2024-01-15'),
+      assetId: assetMap['AST-008'],
+      organizationId: org.id,
+    },
+  })
+  console.log('  ✓ Created 1 asset disposal')
 
   // =============================================================================
   // 24. CAPEX BUDGETS
@@ -1364,18 +1522,19 @@ async function main() {
   console.log('  ✓ Created 1 CapEx budget with', capexItems.length, 'items')
 
   // =============================================================================
-  // DONE
+  // SUMMARY
   // =============================================================================
-  console.log('\n' + '='.repeat(60))
+  console.log('\n' + '=' .repeat(60))
   console.log('✅ Database seeding completed successfully!')
-  console.log('='.repeat(60))
+  console.log('=' .repeat(60))
   console.log('\nSummary:')
   console.log('  • 1 Organization')
   console.log('  • 1 User with settings')
   console.log('  • ' + Object.keys(accountMap).length + ' Financial accounts')
   console.log('  • ' + transactions.length + ' Transactions')
   console.log('  • ' + receipts.length + ' Receipts')
-  console.log('  • ' + channels.length + ' Chat channels')
+  console.log('  • ' + channelsData.length + ' Chat channels')
+  console.log('  • ' + messages.length + ' Chat messages')
   console.log('  • ' + entities.length + ' Corporate entities')
   console.log('  • ' + wallets.length + ' Wallets')
   console.log('  • ' + suggestions.length + ' AI suggestions')
@@ -1384,24 +1543,37 @@ async function main() {
   console.log('  • ' + orders.length + ' Orders')
   console.log('  • ' + archiveItems.length + ' Archive items')
   console.log('  • ' + liabilities.length + ' Liabilities')
+  console.log('  • ' + liabilityPayments.length + ' Liability payments')
   console.log('  • ' + inventory.length + ' Inventory items')
+  console.log('  • ' + batches.length + ' Inventory batches')
+  console.log('  • ' + movements.length + ' Inventory movements')
   console.log('  • ' + receivables.length + ' Receivables')
+  console.log('  • ' + receivablePayments.length + ' Receivable payments')
+  console.log('  • ' + receivableEvents.length + ' Receivable events')
   console.log('  • ' + treasuryAccounts.length + ' Treasury accounts')
+  console.log('  • ' + cashMovements.length + ' Treasury cash movements')
   console.log('  • ' + buckets.length + ' Capital buckets')
   console.log('  • ' + facilities.length + ' Credit facilities')
+  console.log('  • ' + drawdowns.length + ' Facility drawdowns')
   console.log('  • ' + decisions.length + ' Treasury decisions')
   console.log('  • ' + scenarios.length + ' Treasury scenarios')
   console.log('  • ' + netting.length + ' Netting opportunities')
   console.log('  • ' + assets.length + ' Assets')
+  console.log('  • ' + depreciationEntries.length + ' Depreciation entries')
+  console.log('  • ' + assetEvents.length + ' Asset events')
+  console.log('  • ' + assetTransfers.length + ' Asset transfers')
+  console.log('  • 1 Asset disposal')
   console.log('  • 1 CapEx budget with ' + capexItems.length + ' items')
   console.log('\n🎉 Ready to use!')
+  console.log('   Login: demo@primebalance.app')
 }
 
 main()
   .catch((e) => {
-    console.error(e)
+    console.error('❌ Seeding failed:', e)
     process.exit(1)
   })
   .finally(async () => {
+    await pool.end()
     await prisma.$disconnect()
   })

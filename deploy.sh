@@ -155,7 +155,7 @@ if [ "$RUN_MIGRATE" = true ]; then
     export DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@127.0.0.1:5433/${DB_NAME}"
     
     echo "Running migrations..."
-    npx prisma migrate deploy
+    npx prisma db push
     
     echo "Seeding database..."
     npm run db:seed
