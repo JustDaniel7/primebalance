@@ -12,7 +12,8 @@ export async function GET(
         const user = await getSessionWithOrg();
         if (!user?.organizationId) return unauthorized();
 
-        const project = await prisma.Project.findFirst({
+        // @ts-ignore
+        const project = await prisma.project.findFirst({
             where: {
                 id: params.id,
                 organizationId: user.organizationId,
@@ -74,7 +75,7 @@ export async function PATCH(
         const body = await req.json();
 
         // Verify project exists and belongs to organization
-        const existing = await prisma.Project.findFirst({
+        const existing = await prisma.project.findFirst({
             where: {
                 id: params.id,
                 organizationId: user.organizationId,
@@ -146,7 +147,7 @@ export async function PATCH(
         // Meta
         if (body.tags !== undefined) updateData.tags = body.tags;
 
-        const project = await prisma.Project.update({
+        const project = await prisma.project.update({
             where: { id: params.id },
             data: updateData,
             include: {
@@ -173,7 +174,7 @@ export async function DELETE(
         if (!user?.organizationId) return unauthorized();
 
         // Verify project exists and belongs to organization
-        const existing = await prisma.Project.findFirst({
+        const existing = await prisma.project.findFirst({
             where: {
                 id: params.id,
                 organizationId: user.organizationId,
@@ -183,7 +184,7 @@ export async function DELETE(
         if (!existing) return notFound('Project');
 
         // Delete project (cascades to related records)
-        await prisma.Project.delete({
+        await prisma.project.delete({
             where: { id: params.id },
         });
 

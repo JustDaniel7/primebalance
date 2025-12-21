@@ -51,6 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Project: 'Project',
+  TimeEntry: 'TimeEntry',
+  CostCenter: 'CostCenter',
   User: 'User',
   Account: 'Account',
   Session: 'Session',
@@ -108,6 +111,85 @@ export const TransactionIsolationLevel = {
 } as const
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  projectNumber: 'projectNumber',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  status: 'status',
+  priority: 'priority',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  actualStartDate: 'actualStartDate',
+  actualEndDate: 'actualEndDate',
+  currency: 'currency',
+  budgetAmount: 'budgetAmount',
+  budgetSpent: 'budgetSpent',
+  actualCost: 'actualCost',
+  committedCost: 'committedCost',
+  totalCosts: 'totalCosts',
+  contractValue: 'contractValue',
+  totalRevenue: 'totalRevenue',
+  billedAmount: 'billedAmount',
+  allocatedHours: 'allocatedHours',
+  actualHours: 'actualHours',
+  progressPercent: 'progressPercent',
+  managerId: 'managerId',
+  managerName: 'managerName',
+  departmentId: 'departmentId',
+  departmentName: 'departmentName',
+  clientId: 'clientId',
+  clientName: 'clientName',
+  costCenterId: 'costCenterId',
+  notes: 'notes',
+  tags: 'tags',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const TimeEntryScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  hours: 'hours',
+  description: 'description',
+  billable: 'billable',
+  billed: 'billed',
+  hourlyRate: 'hourlyRate',
+  userId: 'userId',
+  userName: 'userName',
+  projectId: 'projectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TimeEntryScalarFieldEnum = (typeof TimeEntryScalarFieldEnum)[keyof typeof TimeEntryScalarFieldEnum]
+
+
+export const CostCenterScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  parentId: 'parentId',
+  currency: 'currency',
+  budgetAmount: 'budgetAmount',
+  actualAmount: 'actualAmount',
+  isActive: 'isActive',
+  managerId: 'managerId',
+  managerName: 'managerName',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CostCenterScalarFieldEnum = (typeof CostCenterScalarFieldEnum)[keyof typeof CostCenterScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
