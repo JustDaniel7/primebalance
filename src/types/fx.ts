@@ -439,3 +439,6 @@ export interface FXDashboard {
     dataQuality: 'complete' | 'partial' | 'limited';
     disclaimers: string[];
 }
+
+
+//wird geaddet weil baum
