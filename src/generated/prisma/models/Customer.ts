@@ -27,11 +27,14 @@ export type AggregateCustomer = {
 }
 
 export type CustomerAvgAggregateOutputType = {
+  employeeCount: number | null
+  annualRevenue: runtime.Decimal | null
   creditLimit: runtime.Decimal | null
   creditUsed: runtime.Decimal | null
   creditAvailable: runtime.Decimal | null
   averageDaysToPayment: number | null
   onTimePaymentRate: runtime.Decimal | null
+  latePaymentCount: number | null
   riskScore: number | null
   totalRevenue: runtime.Decimal | null
   totalOrders: number | null
@@ -41,11 +44,14 @@ export type CustomerAvgAggregateOutputType = {
 }
 
 export type CustomerSumAggregateOutputType = {
+  employeeCount: number | null
+  annualRevenue: runtime.Decimal | null
   creditLimit: runtime.Decimal | null
   creditUsed: runtime.Decimal | null
   creditAvailable: runtime.Decimal | null
   averageDaysToPayment: number | null
   onTimePaymentRate: runtime.Decimal | null
+  latePaymentCount: number | null
   riskScore: number | null
   totalRevenue: runtime.Decimal | null
   totalOrders: number | null
@@ -58,6 +64,7 @@ export type CustomerMinAggregateOutputType = {
   id: string | null
   customerNumber: string | null
   name: string | null
+  legalName: string | null
   type: string | null
   status: string | null
   industry: string | null
@@ -66,8 +73,13 @@ export type CustomerMinAggregateOutputType = {
   website: string | null
   taxId: string | null
   vatNumber: string | null
-  legalName: string | null
+  registrationNumber: string | null
   classification: string | null
+  employeeCount: number | null
+  annualRevenue: runtime.Decimal | null
+  accountManagerId: string | null
+  accountManagerName: string | null
+  segment: string | null
   creditLimit: runtime.Decimal | null
   creditUsed: runtime.Decimal | null
   creditAvailable: runtime.Decimal | null
@@ -76,6 +88,7 @@ export type CustomerMinAggregateOutputType = {
   paymentBehavior: string | null
   averageDaysToPayment: number | null
   onTimePaymentRate: runtime.Decimal | null
+  latePaymentCount: number | null
   riskLevel: string | null
   riskScore: number | null
   totalRevenue: runtime.Decimal | null
@@ -85,11 +98,11 @@ export type CustomerMinAggregateOutputType = {
   overdueAmount: runtime.Decimal | null
   currency: string | null
   customerSince: Date | null
+  lastActivityDate: Date | null
+  lastPurchaseDate: Date | null
   lastOrderDate: Date | null
   lastPaymentDate: Date | null
   lastContactDate: Date | null
-  accountManagerId: string | null
-  accountManagerName: string | null
   preferredPaymentMethod: string | null
   preferredLanguage: string | null
   invoiceDelivery: string | null
@@ -103,6 +116,7 @@ export type CustomerMaxAggregateOutputType = {
   id: string | null
   customerNumber: string | null
   name: string | null
+  legalName: string | null
   type: string | null
   status: string | null
   industry: string | null
@@ -111,8 +125,13 @@ export type CustomerMaxAggregateOutputType = {
   website: string | null
   taxId: string | null
   vatNumber: string | null
-  legalName: string | null
+  registrationNumber: string | null
   classification: string | null
+  employeeCount: number | null
+  annualRevenue: runtime.Decimal | null
+  accountManagerId: string | null
+  accountManagerName: string | null
+  segment: string | null
   creditLimit: runtime.Decimal | null
   creditUsed: runtime.Decimal | null
   creditAvailable: runtime.Decimal | null
@@ -121,6 +140,7 @@ export type CustomerMaxAggregateOutputType = {
   paymentBehavior: string | null
   averageDaysToPayment: number | null
   onTimePaymentRate: runtime.Decimal | null
+  latePaymentCount: number | null
   riskLevel: string | null
   riskScore: number | null
   totalRevenue: runtime.Decimal | null
@@ -130,11 +150,11 @@ export type CustomerMaxAggregateOutputType = {
   overdueAmount: runtime.Decimal | null
   currency: string | null
   customerSince: Date | null
+  lastActivityDate: Date | null
+  lastPurchaseDate: Date | null
   lastOrderDate: Date | null
   lastPaymentDate: Date | null
   lastContactDate: Date | null
-  accountManagerId: string | null
-  accountManagerName: string | null
   preferredPaymentMethod: string | null
   preferredLanguage: string | null
   invoiceDelivery: string | null
@@ -148,6 +168,7 @@ export type CustomerCountAggregateOutputType = {
   id: number
   customerNumber: number
   name: number
+  legalName: number
   type: number
   status: number
   industry: number
@@ -157,8 +178,14 @@ export type CustomerCountAggregateOutputType = {
   address: number
   taxId: number
   vatNumber: number
-  legalName: number
+  registrationNumber: number
   classification: number
+  employeeCount: number
+  annualRevenue: number
+  accountManagerId: number
+  accountManagerName: number
+  segment: number
+  tags: number
   creditLimit: number
   creditUsed: number
   creditAvailable: number
@@ -167,6 +194,7 @@ export type CustomerCountAggregateOutputType = {
   paymentBehavior: number
   averageDaysToPayment: number
   onTimePaymentRate: number
+  latePaymentCount: number
   riskLevel: number
   riskScore: number
   totalRevenue: number
@@ -176,15 +204,14 @@ export type CustomerCountAggregateOutputType = {
   overdueAmount: number
   currency: number
   customerSince: number
+  lastActivityDate: number
+  lastPurchaseDate: number
   lastOrderDate: number
   lastPaymentDate: number
   lastContactDate: number
-  accountManagerId: number
-  accountManagerName: number
   preferredPaymentMethod: number
   preferredLanguage: number
   invoiceDelivery: number
-  tags: number
   notes: number
   organizationId: number
   createdAt: number
@@ -194,11 +221,14 @@ export type CustomerCountAggregateOutputType = {
 
 
 export type CustomerAvgAggregateInputType = {
+  employeeCount?: true
+  annualRevenue?: true
   creditLimit?: true
   creditUsed?: true
   creditAvailable?: true
   averageDaysToPayment?: true
   onTimePaymentRate?: true
+  latePaymentCount?: true
   riskScore?: true
   totalRevenue?: true
   totalOrders?: true
@@ -208,11 +238,14 @@ export type CustomerAvgAggregateInputType = {
 }
 
 export type CustomerSumAggregateInputType = {
+  employeeCount?: true
+  annualRevenue?: true
   creditLimit?: true
   creditUsed?: true
   creditAvailable?: true
   averageDaysToPayment?: true
   onTimePaymentRate?: true
+  latePaymentCount?: true
   riskScore?: true
   totalRevenue?: true
   totalOrders?: true
@@ -225,6 +258,7 @@ export type CustomerMinAggregateInputType = {
   id?: true
   customerNumber?: true
   name?: true
+  legalName?: true
   type?: true
   status?: true
   industry?: true
@@ -233,8 +267,13 @@ export type CustomerMinAggregateInputType = {
   website?: true
   taxId?: true
   vatNumber?: true
-  legalName?: true
+  registrationNumber?: true
   classification?: true
+  employeeCount?: true
+  annualRevenue?: true
+  accountManagerId?: true
+  accountManagerName?: true
+  segment?: true
   creditLimit?: true
   creditUsed?: true
   creditAvailable?: true
@@ -243,6 +282,7 @@ export type CustomerMinAggregateInputType = {
   paymentBehavior?: true
   averageDaysToPayment?: true
   onTimePaymentRate?: true
+  latePaymentCount?: true
   riskLevel?: true
   riskScore?: true
   totalRevenue?: true
@@ -252,11 +292,11 @@ export type CustomerMinAggregateInputType = {
   overdueAmount?: true
   currency?: true
   customerSince?: true
+  lastActivityDate?: true
+  lastPurchaseDate?: true
   lastOrderDate?: true
   lastPaymentDate?: true
   lastContactDate?: true
-  accountManagerId?: true
-  accountManagerName?: true
   preferredPaymentMethod?: true
   preferredLanguage?: true
   invoiceDelivery?: true
@@ -270,6 +310,7 @@ export type CustomerMaxAggregateInputType = {
   id?: true
   customerNumber?: true
   name?: true
+  legalName?: true
   type?: true
   status?: true
   industry?: true
@@ -278,8 +319,13 @@ export type CustomerMaxAggregateInputType = {
   website?: true
   taxId?: true
   vatNumber?: true
-  legalName?: true
+  registrationNumber?: true
   classification?: true
+  employeeCount?: true
+  annualRevenue?: true
+  accountManagerId?: true
+  accountManagerName?: true
+  segment?: true
   creditLimit?: true
   creditUsed?: true
   creditAvailable?: true
@@ -288,6 +334,7 @@ export type CustomerMaxAggregateInputType = {
   paymentBehavior?: true
   averageDaysToPayment?: true
   onTimePaymentRate?: true
+  latePaymentCount?: true
   riskLevel?: true
   riskScore?: true
   totalRevenue?: true
@@ -297,11 +344,11 @@ export type CustomerMaxAggregateInputType = {
   overdueAmount?: true
   currency?: true
   customerSince?: true
+  lastActivityDate?: true
+  lastPurchaseDate?: true
   lastOrderDate?: true
   lastPaymentDate?: true
   lastContactDate?: true
-  accountManagerId?: true
-  accountManagerName?: true
   preferredPaymentMethod?: true
   preferredLanguage?: true
   invoiceDelivery?: true
@@ -315,6 +362,7 @@ export type CustomerCountAggregateInputType = {
   id?: true
   customerNumber?: true
   name?: true
+  legalName?: true
   type?: true
   status?: true
   industry?: true
@@ -324,8 +372,14 @@ export type CustomerCountAggregateInputType = {
   address?: true
   taxId?: true
   vatNumber?: true
-  legalName?: true
+  registrationNumber?: true
   classification?: true
+  employeeCount?: true
+  annualRevenue?: true
+  accountManagerId?: true
+  accountManagerName?: true
+  segment?: true
+  tags?: true
   creditLimit?: true
   creditUsed?: true
   creditAvailable?: true
@@ -334,6 +388,7 @@ export type CustomerCountAggregateInputType = {
   paymentBehavior?: true
   averageDaysToPayment?: true
   onTimePaymentRate?: true
+  latePaymentCount?: true
   riskLevel?: true
   riskScore?: true
   totalRevenue?: true
@@ -343,15 +398,14 @@ export type CustomerCountAggregateInputType = {
   overdueAmount?: true
   currency?: true
   customerSince?: true
+  lastActivityDate?: true
+  lastPurchaseDate?: true
   lastOrderDate?: true
   lastPaymentDate?: true
   lastContactDate?: true
-  accountManagerId?: true
-  accountManagerName?: true
   preferredPaymentMethod?: true
   preferredLanguage?: true
   invoiceDelivery?: true
-  tags?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -449,6 +503,7 @@ export type CustomerGroupByOutputType = {
   id: string
   customerNumber: string
   name: string
+  legalName: string | null
   type: string
   status: string
   industry: string | null
@@ -458,8 +513,14 @@ export type CustomerGroupByOutputType = {
   address: runtime.JsonValue | null
   taxId: string | null
   vatNumber: string | null
-  legalName: string | null
+  registrationNumber: string | null
   classification: string | null
+  employeeCount: number | null
+  annualRevenue: runtime.Decimal | null
+  accountManagerId: string | null
+  accountManagerName: string | null
+  segment: string | null
+  tags: string[]
   creditLimit: runtime.Decimal
   creditUsed: runtime.Decimal
   creditAvailable: runtime.Decimal
@@ -468,6 +529,7 @@ export type CustomerGroupByOutputType = {
   paymentBehavior: string
   averageDaysToPayment: number | null
   onTimePaymentRate: runtime.Decimal | null
+  latePaymentCount: number
   riskLevel: string
   riskScore: number
   totalRevenue: runtime.Decimal
@@ -477,15 +539,14 @@ export type CustomerGroupByOutputType = {
   overdueAmount: runtime.Decimal
   currency: string
   customerSince: Date
+  lastActivityDate: Date | null
+  lastPurchaseDate: Date | null
   lastOrderDate: Date | null
   lastPaymentDate: Date | null
   lastContactDate: Date | null
-  accountManagerId: string | null
-  accountManagerName: string | null
   preferredPaymentMethod: string | null
   preferredLanguage: string
   invoiceDelivery: string
-  tags: string[]
   notes: string | null
   organizationId: string
   createdAt: Date
@@ -519,6 +580,7 @@ export type CustomerWhereInput = {
   id?: Prisma.StringFilter<"Customer"> | string
   customerNumber?: Prisma.StringFilter<"Customer"> | string
   name?: Prisma.StringFilter<"Customer"> | string
+  legalName?: Prisma.StringNullableFilter<"Customer"> | string | null
   type?: Prisma.StringFilter<"Customer"> | string
   status?: Prisma.StringFilter<"Customer"> | string
   industry?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -528,8 +590,14 @@ export type CustomerWhereInput = {
   address?: Prisma.JsonNullableFilter<"Customer">
   taxId?: Prisma.StringNullableFilter<"Customer"> | string | null
   vatNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
-  legalName?: Prisma.StringNullableFilter<"Customer"> | string | null
+  registrationNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   classification?: Prisma.StringNullableFilter<"Customer"> | string | null
+  employeeCount?: Prisma.IntNullableFilter<"Customer"> | number | null
+  annualRevenue?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.StringNullableFilter<"Customer"> | string | null
+  accountManagerName?: Prisma.StringNullableFilter<"Customer"> | string | null
+  segment?: Prisma.StringNullableFilter<"Customer"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Customer">
   creditLimit?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -538,6 +606,7 @@ export type CustomerWhereInput = {
   paymentBehavior?: Prisma.StringFilter<"Customer"> | string
   averageDaysToPayment?: Prisma.IntNullableFilter<"Customer"> | number | null
   onTimePaymentRate?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFilter<"Customer"> | number
   riskLevel?: Prisma.StringFilter<"Customer"> | string
   riskScore?: Prisma.IntFilter<"Customer"> | number
   totalRevenue?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -547,15 +616,14 @@ export type CustomerWhereInput = {
   overdueAmount?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Customer"> | string
   customerSince?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  lastActivityDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  lastPurchaseDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastOrderDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastContactDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableFilter<"Customer"> | string | null
-  accountManagerName?: Prisma.StringNullableFilter<"Customer"> | string | null
   preferredPaymentMethod?: Prisma.StringNullableFilter<"Customer"> | string | null
   preferredLanguage?: Prisma.StringFilter<"Customer"> | string
   invoiceDelivery?: Prisma.StringFilter<"Customer"> | string
-  tags?: Prisma.StringNullableListFilter<"Customer">
   notes?: Prisma.StringNullableFilter<"Customer"> | string | null
   organizationId?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -572,6 +640,7 @@ export type CustomerOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   customerNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -581,8 +650,14 @@ export type CustomerOrderByWithRelationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
   vatNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   classification?: Prisma.SortOrderInput | Prisma.SortOrder
+  employeeCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  segment?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
@@ -591,6 +666,7 @@ export type CustomerOrderByWithRelationInput = {
   paymentBehavior?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrderInput | Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
@@ -600,15 +676,14 @@ export type CustomerOrderByWithRelationInput = {
   overdueAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   customerSince?: Prisma.SortOrder
+  lastActivityDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastContactDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountManagerName?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredPaymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   invoiceDelivery?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -629,6 +704,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
   customerNumber?: Prisma.StringFilter<"Customer"> | string
   name?: Prisma.StringFilter<"Customer"> | string
+  legalName?: Prisma.StringNullableFilter<"Customer"> | string | null
   type?: Prisma.StringFilter<"Customer"> | string
   status?: Prisma.StringFilter<"Customer"> | string
   industry?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -638,8 +714,14 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.JsonNullableFilter<"Customer">
   taxId?: Prisma.StringNullableFilter<"Customer"> | string | null
   vatNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
-  legalName?: Prisma.StringNullableFilter<"Customer"> | string | null
+  registrationNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   classification?: Prisma.StringNullableFilter<"Customer"> | string | null
+  employeeCount?: Prisma.IntNullableFilter<"Customer"> | number | null
+  annualRevenue?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.StringNullableFilter<"Customer"> | string | null
+  accountManagerName?: Prisma.StringNullableFilter<"Customer"> | string | null
+  segment?: Prisma.StringNullableFilter<"Customer"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Customer">
   creditLimit?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -648,6 +730,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   paymentBehavior?: Prisma.StringFilter<"Customer"> | string
   averageDaysToPayment?: Prisma.IntNullableFilter<"Customer"> | number | null
   onTimePaymentRate?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFilter<"Customer"> | number
   riskLevel?: Prisma.StringFilter<"Customer"> | string
   riskScore?: Prisma.IntFilter<"Customer"> | number
   totalRevenue?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -657,15 +740,14 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   overdueAmount?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Customer"> | string
   customerSince?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  lastActivityDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  lastPurchaseDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastOrderDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastContactDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableFilter<"Customer"> | string | null
-  accountManagerName?: Prisma.StringNullableFilter<"Customer"> | string | null
   preferredPaymentMethod?: Prisma.StringNullableFilter<"Customer"> | string | null
   preferredLanguage?: Prisma.StringFilter<"Customer"> | string
   invoiceDelivery?: Prisma.StringFilter<"Customer"> | string
-  tags?: Prisma.StringNullableListFilter<"Customer">
   notes?: Prisma.StringNullableFilter<"Customer"> | string | null
   organizationId?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -682,6 +764,7 @@ export type CustomerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   customerNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -691,8 +774,14 @@ export type CustomerOrderByWithAggregationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
   vatNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   classification?: Prisma.SortOrderInput | Prisma.SortOrder
+  employeeCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  segment?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
@@ -701,6 +790,7 @@ export type CustomerOrderByWithAggregationInput = {
   paymentBehavior?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrderInput | Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
@@ -710,15 +800,14 @@ export type CustomerOrderByWithAggregationInput = {
   overdueAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   customerSince?: Prisma.SortOrder
+  lastActivityDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastPurchaseDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastContactDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountManagerName?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredPaymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   invoiceDelivery?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -737,6 +826,7 @@ export type CustomerScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   customerNumber?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   name?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  legalName?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   type?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   status?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   industry?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
@@ -746,8 +836,14 @@ export type CustomerScalarWhereWithAggregatesInput = {
   address?: Prisma.JsonNullableWithAggregatesFilter<"Customer">
   taxId?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   vatNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  legalName?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  registrationNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   classification?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  employeeCount?: Prisma.IntNullableWithAggregatesFilter<"Customer"> | number | null
+  annualRevenue?: Prisma.DecimalNullableWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  accountManagerName?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  segment?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Customer">
   creditLimit?: Prisma.DecimalWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -756,6 +852,7 @@ export type CustomerScalarWhereWithAggregatesInput = {
   paymentBehavior?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   averageDaysToPayment?: Prisma.IntNullableWithAggregatesFilter<"Customer"> | number | null
   onTimePaymentRate?: Prisma.DecimalNullableWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntWithAggregatesFilter<"Customer"> | number
   riskLevel?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   riskScore?: Prisma.IntWithAggregatesFilter<"Customer"> | number
   totalRevenue?: Prisma.DecimalWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -765,15 +862,14 @@ export type CustomerScalarWhereWithAggregatesInput = {
   overdueAmount?: Prisma.DecimalWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   customerSince?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
+  lastActivityDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  lastPurchaseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   lastOrderDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   lastContactDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  accountManagerName?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   preferredPaymentMethod?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   preferredLanguage?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   invoiceDelivery?: Prisma.StringWithAggregatesFilter<"Customer"> | string
-  tags?: Prisma.StringNullableListFilter<"Customer">
   notes?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
@@ -784,6 +880,7 @@ export type CustomerCreateInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -793,8 +890,14 @@ export type CustomerCreateInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -803,6 +906,7 @@ export type CustomerCreateInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -812,15 +916,14 @@ export type CustomerCreateInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -836,6 +939,7 @@ export type CustomerUncheckedCreateInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -845,8 +949,14 @@ export type CustomerUncheckedCreateInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -855,6 +965,7 @@ export type CustomerUncheckedCreateInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -864,15 +975,14 @@ export type CustomerUncheckedCreateInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -888,6 +998,7 @@ export type CustomerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -897,8 +1008,14 @@ export type CustomerUpdateInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -907,6 +1024,7 @@ export type CustomerUpdateInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -916,15 +1034,14 @@ export type CustomerUpdateInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -940,6 +1057,7 @@ export type CustomerUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -949,8 +1067,14 @@ export type CustomerUncheckedUpdateInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -959,6 +1083,7 @@ export type CustomerUncheckedUpdateInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -968,15 +1093,14 @@ export type CustomerUncheckedUpdateInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -992,6 +1116,7 @@ export type CustomerCreateManyInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1001,8 +1126,14 @@ export type CustomerCreateManyInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1011,6 +1142,7 @@ export type CustomerCreateManyInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1020,15 +1152,14 @@ export type CustomerCreateManyInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -1039,6 +1170,7 @@ export type CustomerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1048,8 +1180,14 @@ export type CustomerUpdateManyMutationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1058,6 +1196,7 @@ export type CustomerUpdateManyMutationInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1067,15 +1206,14 @@ export type CustomerUpdateManyMutationInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1085,6 +1223,7 @@ export type CustomerUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1094,8 +1233,14 @@ export type CustomerUncheckedUpdateManyInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1104,6 +1249,7 @@ export type CustomerUncheckedUpdateManyInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1113,15 +1259,14 @@ export type CustomerUncheckedUpdateManyInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1147,6 +1292,7 @@ export type CustomerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   customerNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  legalName?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   industry?: Prisma.SortOrder
@@ -1156,8 +1302,14 @@ export type CustomerCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
   vatNumber?: Prisma.SortOrder
-  legalName?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
   classification?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrder
+  segment?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
@@ -1166,6 +1318,7 @@ export type CustomerCountOrderByAggregateInput = {
   paymentBehavior?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
@@ -1175,15 +1328,14 @@ export type CustomerCountOrderByAggregateInput = {
   overdueAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   customerSince?: Prisma.SortOrder
+  lastActivityDate?: Prisma.SortOrder
+  lastPurchaseDate?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
   lastContactDate?: Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrder
-  accountManagerName?: Prisma.SortOrder
   preferredPaymentMethod?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   invoiceDelivery?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1191,11 +1343,14 @@ export type CustomerCountOrderByAggregateInput = {
 }
 
 export type CustomerAvgOrderByAggregateInput = {
+  employeeCount?: Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
   totalOrders?: Prisma.SortOrder
@@ -1208,6 +1363,7 @@ export type CustomerMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   customerNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  legalName?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   industry?: Prisma.SortOrder
@@ -1216,8 +1372,13 @@ export type CustomerMaxOrderByAggregateInput = {
   website?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
   vatNumber?: Prisma.SortOrder
-  legalName?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
   classification?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrder
+  segment?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
@@ -1226,6 +1387,7 @@ export type CustomerMaxOrderByAggregateInput = {
   paymentBehavior?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
@@ -1235,11 +1397,11 @@ export type CustomerMaxOrderByAggregateInput = {
   overdueAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   customerSince?: Prisma.SortOrder
+  lastActivityDate?: Prisma.SortOrder
+  lastPurchaseDate?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
   lastContactDate?: Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrder
-  accountManagerName?: Prisma.SortOrder
   preferredPaymentMethod?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   invoiceDelivery?: Prisma.SortOrder
@@ -1253,6 +1415,7 @@ export type CustomerMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   customerNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  legalName?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   industry?: Prisma.SortOrder
@@ -1261,8 +1424,13 @@ export type CustomerMinOrderByAggregateInput = {
   website?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
   vatNumber?: Prisma.SortOrder
-  legalName?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
   classification?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrder
+  segment?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
@@ -1271,6 +1439,7 @@ export type CustomerMinOrderByAggregateInput = {
   paymentBehavior?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
@@ -1280,11 +1449,11 @@ export type CustomerMinOrderByAggregateInput = {
   overdueAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   customerSince?: Prisma.SortOrder
+  lastActivityDate?: Prisma.SortOrder
+  lastPurchaseDate?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
   lastContactDate?: Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrder
-  accountManagerName?: Prisma.SortOrder
   preferredPaymentMethod?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   invoiceDelivery?: Prisma.SortOrder
@@ -1295,11 +1464,14 @@ export type CustomerMinOrderByAggregateInput = {
 }
 
 export type CustomerSumOrderByAggregateInput = {
+  employeeCount?: Prisma.SortOrder
+  annualRevenue?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   creditUsed?: Prisma.SortOrder
   creditAvailable?: Prisma.SortOrder
   averageDaysToPayment?: Prisma.SortOrder
   onTimePaymentRate?: Prisma.SortOrder
+  latePaymentCount?: Prisma.SortOrder
   riskScore?: Prisma.SortOrder
   totalRevenue?: Prisma.SortOrder
   totalOrders?: Prisma.SortOrder
@@ -1438,6 +1610,7 @@ export type CustomerCreateWithoutOrganizationInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1447,8 +1620,14 @@ export type CustomerCreateWithoutOrganizationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1457,6 +1636,7 @@ export type CustomerCreateWithoutOrganizationInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1466,15 +1646,14 @@ export type CustomerCreateWithoutOrganizationInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1489,6 +1668,7 @@ export type CustomerUncheckedCreateWithoutOrganizationInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1498,8 +1678,14 @@ export type CustomerUncheckedCreateWithoutOrganizationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1508,6 +1694,7 @@ export type CustomerUncheckedCreateWithoutOrganizationInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1517,15 +1704,14 @@ export type CustomerUncheckedCreateWithoutOrganizationInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1569,6 +1755,7 @@ export type CustomerScalarWhereInput = {
   id?: Prisma.StringFilter<"Customer"> | string
   customerNumber?: Prisma.StringFilter<"Customer"> | string
   name?: Prisma.StringFilter<"Customer"> | string
+  legalName?: Prisma.StringNullableFilter<"Customer"> | string | null
   type?: Prisma.StringFilter<"Customer"> | string
   status?: Prisma.StringFilter<"Customer"> | string
   industry?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -1578,8 +1765,14 @@ export type CustomerScalarWhereInput = {
   address?: Prisma.JsonNullableFilter<"Customer">
   taxId?: Prisma.StringNullableFilter<"Customer"> | string | null
   vatNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
-  legalName?: Prisma.StringNullableFilter<"Customer"> | string | null
+  registrationNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
   classification?: Prisma.StringNullableFilter<"Customer"> | string | null
+  employeeCount?: Prisma.IntNullableFilter<"Customer"> | number | null
+  annualRevenue?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.StringNullableFilter<"Customer"> | string | null
+  accountManagerName?: Prisma.StringNullableFilter<"Customer"> | string | null
+  segment?: Prisma.StringNullableFilter<"Customer"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Customer">
   creditLimit?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1588,6 +1781,7 @@ export type CustomerScalarWhereInput = {
   paymentBehavior?: Prisma.StringFilter<"Customer"> | string
   averageDaysToPayment?: Prisma.IntNullableFilter<"Customer"> | number | null
   onTimePaymentRate?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFilter<"Customer"> | number
   riskLevel?: Prisma.StringFilter<"Customer"> | string
   riskScore?: Prisma.IntFilter<"Customer"> | number
   totalRevenue?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1597,15 +1791,14 @@ export type CustomerScalarWhereInput = {
   overdueAmount?: Prisma.DecimalFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Customer"> | string
   customerSince?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  lastActivityDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  lastPurchaseDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastOrderDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   lastContactDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableFilter<"Customer"> | string | null
-  accountManagerName?: Prisma.StringNullableFilter<"Customer"> | string | null
   preferredPaymentMethod?: Prisma.StringNullableFilter<"Customer"> | string | null
   preferredLanguage?: Prisma.StringFilter<"Customer"> | string
   invoiceDelivery?: Prisma.StringFilter<"Customer"> | string
-  tags?: Prisma.StringNullableListFilter<"Customer">
   notes?: Prisma.StringNullableFilter<"Customer"> | string | null
   organizationId?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -1616,6 +1809,7 @@ export type CustomerCreateWithoutContactsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1625,8 +1819,14 @@ export type CustomerCreateWithoutContactsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1635,6 +1835,7 @@ export type CustomerCreateWithoutContactsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1644,15 +1845,14 @@ export type CustomerCreateWithoutContactsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1667,6 +1867,7 @@ export type CustomerUncheckedCreateWithoutContactsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1676,8 +1877,14 @@ export type CustomerUncheckedCreateWithoutContactsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1686,6 +1893,7 @@ export type CustomerUncheckedCreateWithoutContactsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1695,15 +1903,14 @@ export type CustomerUncheckedCreateWithoutContactsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -1734,6 +1941,7 @@ export type CustomerUpdateWithoutContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1743,8 +1951,14 @@ export type CustomerUpdateWithoutContactsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1753,6 +1967,7 @@ export type CustomerUpdateWithoutContactsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1762,15 +1977,14 @@ export type CustomerUpdateWithoutContactsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1785,6 +1999,7 @@ export type CustomerUncheckedUpdateWithoutContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1794,8 +2009,14 @@ export type CustomerUncheckedUpdateWithoutContactsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1804,6 +2025,7 @@ export type CustomerUncheckedUpdateWithoutContactsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1813,15 +2035,14 @@ export type CustomerUncheckedUpdateWithoutContactsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1836,6 +2057,7 @@ export type CustomerCreateWithoutPaymentsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1845,8 +2067,14 @@ export type CustomerCreateWithoutPaymentsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1855,6 +2083,7 @@ export type CustomerCreateWithoutPaymentsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1864,15 +2093,14 @@ export type CustomerCreateWithoutPaymentsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1887,6 +2115,7 @@ export type CustomerUncheckedCreateWithoutPaymentsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -1896,8 +2125,14 @@ export type CustomerUncheckedCreateWithoutPaymentsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1906,6 +2141,7 @@ export type CustomerUncheckedCreateWithoutPaymentsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1915,15 +2151,14 @@ export type CustomerUncheckedCreateWithoutPaymentsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -1954,6 +2189,7 @@ export type CustomerUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1963,8 +2199,14 @@ export type CustomerUpdateWithoutPaymentsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1973,6 +2215,7 @@ export type CustomerUpdateWithoutPaymentsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1982,15 +2225,14 @@ export type CustomerUpdateWithoutPaymentsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2005,6 +2247,7 @@ export type CustomerUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2014,8 +2257,14 @@ export type CustomerUncheckedUpdateWithoutPaymentsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2024,6 +2273,7 @@ export type CustomerUncheckedUpdateWithoutPaymentsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2033,15 +2283,14 @@ export type CustomerUncheckedUpdateWithoutPaymentsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2056,6 +2305,7 @@ export type CustomerCreateWithoutCreditEventsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2065,8 +2315,14 @@ export type CustomerCreateWithoutCreditEventsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2075,6 +2331,7 @@ export type CustomerCreateWithoutCreditEventsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2084,15 +2341,14 @@ export type CustomerCreateWithoutCreditEventsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2107,6 +2363,7 @@ export type CustomerUncheckedCreateWithoutCreditEventsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2116,8 +2373,14 @@ export type CustomerUncheckedCreateWithoutCreditEventsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2126,6 +2389,7 @@ export type CustomerUncheckedCreateWithoutCreditEventsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2135,15 +2399,14 @@ export type CustomerUncheckedCreateWithoutCreditEventsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -2174,6 +2437,7 @@ export type CustomerUpdateWithoutCreditEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2183,8 +2447,14 @@ export type CustomerUpdateWithoutCreditEventsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2193,6 +2463,7 @@ export type CustomerUpdateWithoutCreditEventsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2202,15 +2473,14 @@ export type CustomerUpdateWithoutCreditEventsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2225,6 +2495,7 @@ export type CustomerUncheckedUpdateWithoutCreditEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2234,8 +2505,14 @@ export type CustomerUncheckedUpdateWithoutCreditEventsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2244,6 +2521,7 @@ export type CustomerUncheckedUpdateWithoutCreditEventsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2253,15 +2531,14 @@ export type CustomerUncheckedUpdateWithoutCreditEventsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2276,6 +2553,7 @@ export type CustomerCreateWithoutRevenueRecordsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2285,8 +2563,14 @@ export type CustomerCreateWithoutRevenueRecordsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2295,6 +2579,7 @@ export type CustomerCreateWithoutRevenueRecordsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2304,15 +2589,14 @@ export type CustomerCreateWithoutRevenueRecordsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2327,6 +2611,7 @@ export type CustomerUncheckedCreateWithoutRevenueRecordsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2336,8 +2621,14 @@ export type CustomerUncheckedCreateWithoutRevenueRecordsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2346,6 +2637,7 @@ export type CustomerUncheckedCreateWithoutRevenueRecordsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2355,15 +2647,14 @@ export type CustomerUncheckedCreateWithoutRevenueRecordsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -2394,6 +2685,7 @@ export type CustomerUpdateWithoutRevenueRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2403,8 +2695,14 @@ export type CustomerUpdateWithoutRevenueRecordsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2413,6 +2711,7 @@ export type CustomerUpdateWithoutRevenueRecordsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2422,15 +2721,14 @@ export type CustomerUpdateWithoutRevenueRecordsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2445,6 +2743,7 @@ export type CustomerUncheckedUpdateWithoutRevenueRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2454,8 +2753,14 @@ export type CustomerUncheckedUpdateWithoutRevenueRecordsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2464,6 +2769,7 @@ export type CustomerUncheckedUpdateWithoutRevenueRecordsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2473,15 +2779,14 @@ export type CustomerUncheckedUpdateWithoutRevenueRecordsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2496,6 +2801,7 @@ export type CustomerCreateWithoutRiskIndicatorsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2505,8 +2811,14 @@ export type CustomerCreateWithoutRiskIndicatorsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2515,6 +2827,7 @@ export type CustomerCreateWithoutRiskIndicatorsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2524,15 +2837,14 @@ export type CustomerCreateWithoutRiskIndicatorsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2547,6 +2859,7 @@ export type CustomerUncheckedCreateWithoutRiskIndicatorsInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2556,8 +2869,14 @@ export type CustomerUncheckedCreateWithoutRiskIndicatorsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2566,6 +2885,7 @@ export type CustomerUncheckedCreateWithoutRiskIndicatorsInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2575,15 +2895,14 @@ export type CustomerUncheckedCreateWithoutRiskIndicatorsInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -2614,6 +2933,7 @@ export type CustomerUpdateWithoutRiskIndicatorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2623,8 +2943,14 @@ export type CustomerUpdateWithoutRiskIndicatorsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2633,6 +2959,7 @@ export type CustomerUpdateWithoutRiskIndicatorsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2642,15 +2969,14 @@ export type CustomerUpdateWithoutRiskIndicatorsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2665,6 +2991,7 @@ export type CustomerUncheckedUpdateWithoutRiskIndicatorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2674,8 +3001,14 @@ export type CustomerUncheckedUpdateWithoutRiskIndicatorsInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2684,6 +3017,7 @@ export type CustomerUncheckedUpdateWithoutRiskIndicatorsInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2693,15 +3027,14 @@ export type CustomerUncheckedUpdateWithoutRiskIndicatorsInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2716,6 +3049,7 @@ export type CustomerCreateManyOrganizationInput = {
   id?: string
   customerNumber: string
   name: string
+  legalName?: string | null
   type?: string
   status?: string
   industry?: string | null
@@ -2725,8 +3059,14 @@ export type CustomerCreateManyOrganizationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
   vatNumber?: string | null
-  legalName?: string | null
+  registrationNumber?: string | null
   classification?: string | null
+  employeeCount?: number | null
+  annualRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  segment?: string | null
+  tags?: Prisma.CustomerCreatetagsInput | string[]
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2735,6 +3075,7 @@ export type CustomerCreateManyOrganizationInput = {
   paymentBehavior?: string
   averageDaysToPayment?: number | null
   onTimePaymentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: number
   riskLevel?: string
   riskScore?: number
   totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2744,15 +3085,14 @@ export type CustomerCreateManyOrganizationInput = {
   overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   customerSince?: Date | string
+  lastActivityDate?: Date | string | null
+  lastPurchaseDate?: Date | string | null
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
   lastContactDate?: Date | string | null
-  accountManagerId?: string | null
-  accountManagerName?: string | null
   preferredPaymentMethod?: string | null
   preferredLanguage?: string
   invoiceDelivery?: string
-  tags?: Prisma.CustomerCreatetagsInput | string[]
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2762,6 +3102,7 @@ export type CustomerUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2771,8 +3112,14 @@ export type CustomerUpdateWithoutOrganizationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2781,6 +3128,7 @@ export type CustomerUpdateWithoutOrganizationInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2790,15 +3138,14 @@ export type CustomerUpdateWithoutOrganizationInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2813,6 +3160,7 @@ export type CustomerUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2822,8 +3170,14 @@ export type CustomerUncheckedUpdateWithoutOrganizationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2832,6 +3186,7 @@ export type CustomerUncheckedUpdateWithoutOrganizationInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2841,15 +3196,14 @@ export type CustomerUncheckedUpdateWithoutOrganizationInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2864,6 +3218,7 @@ export type CustomerUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customerNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2873,8 +3228,14 @@ export type CustomerUncheckedUpdateManyWithoutOrganizationInput = {
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   classification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  annualRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  segment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.CustomerUpdatetagsInput | string[]
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditUsed?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditAvailable?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2883,6 +3244,7 @@ export type CustomerUncheckedUpdateManyWithoutOrganizationInput = {
   paymentBehavior?: Prisma.StringFieldUpdateOperationsInput | string
   averageDaysToPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   onTimePaymentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latePaymentCount?: Prisma.IntFieldUpdateOperationsInput | number
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2892,15 +3254,14 @@ export type CustomerUncheckedUpdateManyWithoutOrganizationInput = {
   overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   customerSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastActivityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPurchaseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastContactDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceDelivery?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.CustomerUpdatetagsInput | string[]
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2977,6 +3338,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   customerNumber?: boolean
   name?: boolean
+  legalName?: boolean
   type?: boolean
   status?: boolean
   industry?: boolean
@@ -2986,8 +3348,14 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   address?: boolean
   taxId?: boolean
   vatNumber?: boolean
-  legalName?: boolean
+  registrationNumber?: boolean
   classification?: boolean
+  employeeCount?: boolean
+  annualRevenue?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  segment?: boolean
+  tags?: boolean
   creditLimit?: boolean
   creditUsed?: boolean
   creditAvailable?: boolean
@@ -2996,6 +3364,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   paymentBehavior?: boolean
   averageDaysToPayment?: boolean
   onTimePaymentRate?: boolean
+  latePaymentCount?: boolean
   riskLevel?: boolean
   riskScore?: boolean
   totalRevenue?: boolean
@@ -3005,15 +3374,14 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   overdueAmount?: boolean
   currency?: boolean
   customerSince?: boolean
+  lastActivityDate?: boolean
+  lastPurchaseDate?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
   lastContactDate?: boolean
-  accountManagerId?: boolean
-  accountManagerName?: boolean
   preferredPaymentMethod?: boolean
   preferredLanguage?: boolean
   invoiceDelivery?: boolean
-  tags?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -3031,6 +3399,7 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   customerNumber?: boolean
   name?: boolean
+  legalName?: boolean
   type?: boolean
   status?: boolean
   industry?: boolean
@@ -3040,8 +3409,14 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   address?: boolean
   taxId?: boolean
   vatNumber?: boolean
-  legalName?: boolean
+  registrationNumber?: boolean
   classification?: boolean
+  employeeCount?: boolean
+  annualRevenue?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  segment?: boolean
+  tags?: boolean
   creditLimit?: boolean
   creditUsed?: boolean
   creditAvailable?: boolean
@@ -3050,6 +3425,7 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   paymentBehavior?: boolean
   averageDaysToPayment?: boolean
   onTimePaymentRate?: boolean
+  latePaymentCount?: boolean
   riskLevel?: boolean
   riskScore?: boolean
   totalRevenue?: boolean
@@ -3059,15 +3435,14 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   overdueAmount?: boolean
   currency?: boolean
   customerSince?: boolean
+  lastActivityDate?: boolean
+  lastPurchaseDate?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
   lastContactDate?: boolean
-  accountManagerId?: boolean
-  accountManagerName?: boolean
   preferredPaymentMethod?: boolean
   preferredLanguage?: boolean
   invoiceDelivery?: boolean
-  tags?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -3079,6 +3454,7 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   customerNumber?: boolean
   name?: boolean
+  legalName?: boolean
   type?: boolean
   status?: boolean
   industry?: boolean
@@ -3088,8 +3464,14 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   address?: boolean
   taxId?: boolean
   vatNumber?: boolean
-  legalName?: boolean
+  registrationNumber?: boolean
   classification?: boolean
+  employeeCount?: boolean
+  annualRevenue?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  segment?: boolean
+  tags?: boolean
   creditLimit?: boolean
   creditUsed?: boolean
   creditAvailable?: boolean
@@ -3098,6 +3480,7 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   paymentBehavior?: boolean
   averageDaysToPayment?: boolean
   onTimePaymentRate?: boolean
+  latePaymentCount?: boolean
   riskLevel?: boolean
   riskScore?: boolean
   totalRevenue?: boolean
@@ -3107,15 +3490,14 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   overdueAmount?: boolean
   currency?: boolean
   customerSince?: boolean
+  lastActivityDate?: boolean
+  lastPurchaseDate?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
   lastContactDate?: boolean
-  accountManagerId?: boolean
-  accountManagerName?: boolean
   preferredPaymentMethod?: boolean
   preferredLanguage?: boolean
   invoiceDelivery?: boolean
-  tags?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -3127,6 +3509,7 @@ export type CustomerSelectScalar = {
   id?: boolean
   customerNumber?: boolean
   name?: boolean
+  legalName?: boolean
   type?: boolean
   status?: boolean
   industry?: boolean
@@ -3136,8 +3519,14 @@ export type CustomerSelectScalar = {
   address?: boolean
   taxId?: boolean
   vatNumber?: boolean
-  legalName?: boolean
+  registrationNumber?: boolean
   classification?: boolean
+  employeeCount?: boolean
+  annualRevenue?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  segment?: boolean
+  tags?: boolean
   creditLimit?: boolean
   creditUsed?: boolean
   creditAvailable?: boolean
@@ -3146,6 +3535,7 @@ export type CustomerSelectScalar = {
   paymentBehavior?: boolean
   averageDaysToPayment?: boolean
   onTimePaymentRate?: boolean
+  latePaymentCount?: boolean
   riskLevel?: boolean
   riskScore?: boolean
   totalRevenue?: boolean
@@ -3155,22 +3545,21 @@ export type CustomerSelectScalar = {
   overdueAmount?: boolean
   currency?: boolean
   customerSince?: boolean
+  lastActivityDate?: boolean
+  lastPurchaseDate?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
   lastContactDate?: boolean
-  accountManagerId?: boolean
-  accountManagerName?: boolean
   preferredPaymentMethod?: boolean
   preferredLanguage?: boolean
   invoiceDelivery?: boolean
-  tags?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerNumber" | "name" | "type" | "status" | "industry" | "email" | "phone" | "website" | "address" | "taxId" | "vatNumber" | "legalName" | "classification" | "creditLimit" | "creditUsed" | "creditAvailable" | "creditStatus" | "paymentTerms" | "paymentBehavior" | "averageDaysToPayment" | "onTimePaymentRate" | "riskLevel" | "riskScore" | "totalRevenue" | "totalOrders" | "averageOrderValue" | "outstandingBalance" | "overdueAmount" | "currency" | "customerSince" | "lastOrderDate" | "lastPaymentDate" | "lastContactDate" | "accountManagerId" | "accountManagerName" | "preferredPaymentMethod" | "preferredLanguage" | "invoiceDelivery" | "tags" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerNumber" | "name" | "legalName" | "type" | "status" | "industry" | "email" | "phone" | "website" | "address" | "taxId" | "vatNumber" | "registrationNumber" | "classification" | "employeeCount" | "annualRevenue" | "accountManagerId" | "accountManagerName" | "segment" | "tags" | "creditLimit" | "creditUsed" | "creditAvailable" | "creditStatus" | "paymentTerms" | "paymentBehavior" | "averageDaysToPayment" | "onTimePaymentRate" | "latePaymentCount" | "riskLevel" | "riskScore" | "totalRevenue" | "totalOrders" | "averageOrderValue" | "outstandingBalance" | "overdueAmount" | "currency" | "customerSince" | "lastActivityDate" | "lastPurchaseDate" | "lastOrderDate" | "lastPaymentDate" | "lastContactDate" | "preferredPaymentMethod" | "preferredLanguage" | "invoiceDelivery" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   contacts?: boolean | Prisma.Customer$contactsArgs<ExtArgs>
@@ -3201,6 +3590,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     customerNumber: string
     name: string
+    legalName: string | null
     type: string
     status: string
     industry: string | null
@@ -3210,8 +3600,14 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     address: runtime.JsonValue | null
     taxId: string | null
     vatNumber: string | null
-    legalName: string | null
+    registrationNumber: string | null
     classification: string | null
+    employeeCount: number | null
+    annualRevenue: runtime.Decimal | null
+    accountManagerId: string | null
+    accountManagerName: string | null
+    segment: string | null
+    tags: string[]
     creditLimit: runtime.Decimal
     creditUsed: runtime.Decimal
     creditAvailable: runtime.Decimal
@@ -3220,6 +3616,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     paymentBehavior: string
     averageDaysToPayment: number | null
     onTimePaymentRate: runtime.Decimal | null
+    latePaymentCount: number
     riskLevel: string
     riskScore: number
     totalRevenue: runtime.Decimal
@@ -3229,15 +3626,14 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     overdueAmount: runtime.Decimal
     currency: string
     customerSince: Date
+    lastActivityDate: Date | null
+    lastPurchaseDate: Date | null
     lastOrderDate: Date | null
     lastPaymentDate: Date | null
     lastContactDate: Date | null
-    accountManagerId: string | null
-    accountManagerName: string | null
     preferredPaymentMethod: string | null
     preferredLanguage: string
     invoiceDelivery: string
-    tags: string[]
     notes: string | null
     organizationId: string
     createdAt: Date
@@ -3674,6 +4070,7 @@ export interface CustomerFieldRefs {
   readonly id: Prisma.FieldRef<"Customer", 'String'>
   readonly customerNumber: Prisma.FieldRef<"Customer", 'String'>
   readonly name: Prisma.FieldRef<"Customer", 'String'>
+  readonly legalName: Prisma.FieldRef<"Customer", 'String'>
   readonly type: Prisma.FieldRef<"Customer", 'String'>
   readonly status: Prisma.FieldRef<"Customer", 'String'>
   readonly industry: Prisma.FieldRef<"Customer", 'String'>
@@ -3683,8 +4080,14 @@ export interface CustomerFieldRefs {
   readonly address: Prisma.FieldRef<"Customer", 'Json'>
   readonly taxId: Prisma.FieldRef<"Customer", 'String'>
   readonly vatNumber: Prisma.FieldRef<"Customer", 'String'>
-  readonly legalName: Prisma.FieldRef<"Customer", 'String'>
+  readonly registrationNumber: Prisma.FieldRef<"Customer", 'String'>
   readonly classification: Prisma.FieldRef<"Customer", 'String'>
+  readonly employeeCount: Prisma.FieldRef<"Customer", 'Int'>
+  readonly annualRevenue: Prisma.FieldRef<"Customer", 'Decimal'>
+  readonly accountManagerId: Prisma.FieldRef<"Customer", 'String'>
+  readonly accountManagerName: Prisma.FieldRef<"Customer", 'String'>
+  readonly segment: Prisma.FieldRef<"Customer", 'String'>
+  readonly tags: Prisma.FieldRef<"Customer", 'String[]'>
   readonly creditLimit: Prisma.FieldRef<"Customer", 'Decimal'>
   readonly creditUsed: Prisma.FieldRef<"Customer", 'Decimal'>
   readonly creditAvailable: Prisma.FieldRef<"Customer", 'Decimal'>
@@ -3693,6 +4096,7 @@ export interface CustomerFieldRefs {
   readonly paymentBehavior: Prisma.FieldRef<"Customer", 'String'>
   readonly averageDaysToPayment: Prisma.FieldRef<"Customer", 'Int'>
   readonly onTimePaymentRate: Prisma.FieldRef<"Customer", 'Decimal'>
+  readonly latePaymentCount: Prisma.FieldRef<"Customer", 'Int'>
   readonly riskLevel: Prisma.FieldRef<"Customer", 'String'>
   readonly riskScore: Prisma.FieldRef<"Customer", 'Int'>
   readonly totalRevenue: Prisma.FieldRef<"Customer", 'Decimal'>
@@ -3702,15 +4106,14 @@ export interface CustomerFieldRefs {
   readonly overdueAmount: Prisma.FieldRef<"Customer", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Customer", 'String'>
   readonly customerSince: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly lastActivityDate: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly lastPurchaseDate: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly lastOrderDate: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly lastPaymentDate: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly lastContactDate: Prisma.FieldRef<"Customer", 'DateTime'>
-  readonly accountManagerId: Prisma.FieldRef<"Customer", 'String'>
-  readonly accountManagerName: Prisma.FieldRef<"Customer", 'String'>
   readonly preferredPaymentMethod: Prisma.FieldRef<"Customer", 'String'>
   readonly preferredLanguage: Prisma.FieldRef<"Customer", 'String'>
   readonly invoiceDelivery: Prisma.FieldRef<"Customer", 'String'>
-  readonly tags: Prisma.FieldRef<"Customer", 'String[]'>
   readonly notes: Prisma.FieldRef<"Customer", 'String'>
   readonly organizationId: Prisma.FieldRef<"Customer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Customer", 'DateTime'>

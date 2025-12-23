@@ -39,29 +39,47 @@ async function main() {
   // Child tables first
   await prisma.liquidityPosition.deleteMany({})
   
-  await prisma.investorUpdate.deleteMany({})
-  await prisma.investorInvestment.deleteMany({})
-  await prisma.investor.deleteMany({})
-  
+  // FX module
   await prisma.fXRate.deleteMany({})
-  await prisma.fXHedge.deleteMany({})
   await prisma.fXExposure.deleteMany({})
   
+  // KPI module
   await prisma.kPIHistory.deleteMany({})
   await prisma.kPI.deleteMany({})
   
+  // Scenario module
   await prisma.scenario.deleteMany({})
   
-  await prisma.forecastPeriod.deleteMany({})
-  await prisma.forecast.deleteMany({})
+  // Cash Forecast module
+  await prisma.cashForecastPeriod.deleteMany({})
+  await prisma.cashForecast.deleteMany({})
   
+  // Task module (with all relations)
+  await prisma.taskActivity.deleteMany({})
+  await prisma.taskComment.deleteMany({})
+  await prisma.taskAttachment.deleteMany({})
+  await prisma.taskNotification.deleteMany({})
+  await prisma.taskRiskLink.deleteMany({})
+  await prisma.taskDependency.deleteMany({})
+  await prisma.taskWatcher.deleteMany({})
+  await prisma.taskAssignee.deleteMany({})
+  await prisma.taskTagLink.deleteMany({})
+  await prisma.savedTaskFilter.deleteMany({})
+  await prisma.riskActivity.deleteMany({})
+  await prisma.riskComment.deleteMany({})
+  await prisma.riskMitigationStep.deleteMany({})
+  await prisma.risk.deleteMany({})
+  await prisma.taskTag.deleteMany({})
   await prisma.task.deleteMany({})
   
+  // Offer module
   await prisma.offer.deleteMany({})
   
+  // Supplier module
   await prisma.supplierContact.deleteMany({})
   await prisma.supplier.deleteMany({})
   
+  // Customer module
   await prisma.customerRiskIndicator.deleteMany({})
   await prisma.customerRevenue.deleteMany({})
   await prisma.customerCreditEvent.deleteMany({})
@@ -69,12 +87,14 @@ async function main() {
   await prisma.customerContact.deleteMany({})
   await prisma.customer.deleteMany({})
   
+  // Period Close module
   await prisma.periodAuditEntry.deleteMany({})
   await prisma.periodAdjustment.deleteMany({})
   await prisma.periodMissingItem.deleteMany({})
   await prisma.closeChecklistItem.deleteMany({})
   await prisma.accountingPeriod.deleteMany({})
 
+  // Assets module
   await prisma.assetDisposal.deleteMany({})
   await prisma.assetTransfer.deleteMany({})
   await prisma.assetEvent.deleteMany({})
@@ -83,6 +103,7 @@ async function main() {
   await prisma.capExBudget.deleteMany({})
   await prisma.asset.deleteMany({})
   
+  // Treasury module
   await prisma.nettingOpportunity.deleteMany({})
   await prisma.treasuryScenario.deleteMany({})
   await prisma.treasuryDecision.deleteMany({})
@@ -92,41 +113,55 @@ async function main() {
   await prisma.capitalBucket.deleteMany({})
   await prisma.treasuryAccount.deleteMany({})
   
+  // Receivables module
   await prisma.receivableEvent.deleteMany({})
   await prisma.receivablePayment.deleteMany({})
   await prisma.receivable.deleteMany({})
   
+  // Inventory module
   await prisma.inventoryMovement.deleteMany({})
   await prisma.inventoryBatch.deleteMany({})
   await prisma.inventoryItem.deleteMany({})
   
+  // Liabilities module
   await prisma.liabilityPayment.deleteMany({})
   await prisma.liability.deleteMany({})
   
+  // Core business
   await prisma.archiveItem.deleteMany({})
   await prisma.order.deleteMany({})
   await prisma.invoice.deleteMany({})
   
+  // Project module
+  await prisma.internalChargeback.deleteMany({})
+  await prisma.timeEntry.deleteMany({})
+  await prisma.projectMilestone.deleteMany({})
+  await prisma.project.deleteMany({})
+  await prisma.costCenter.deleteMany({})
+  
+  // User data
   await prisma.savedReport.deleteMany({})
   await prisma.aISuggestion.deleteMany({})
   await prisma.wallet.deleteMany({})
   await prisma.corporateEntity.deleteMany({})
   
+  // Chat
   await prisma.chatMessage.deleteMany({})
   await prisma.chatChannel.deleteMany({})
   
+  // Transactions
   await prisma.receipt.deleteMany({})
   await prisma.transaction.deleteMany({})
   await prisma.financialAccount.deleteMany({})
 
-  
+  // Auth & User
   await prisma.userSettings.deleteMany({})
   await prisma.session.deleteMany({})
   await prisma.account.deleteMany({})
   await prisma.user.deleteMany({})
   await prisma.organization.deleteMany({})
   
-  console.log('  ✓ All existing data cleared')
+  console.log('  ✓ Cleaned all tables')
 
   // =============================================================================
   // 1. ORGANIZATION
@@ -1986,14 +2021,8 @@ async function main() {
   console.log('  ✓ Created', chargebacks.length, 'internal chargebacks')
 
   // =============================================================================
-  // PERIOD CLOSE MODULE - ADD TO: prisma/seed.ts (before SUMMARY section)
+  // PERIOD CLOSE MODULE
   // =============================================================================
-  // Also add to CLEANUP section at top:
-  //   await prisma.periodAuditEntry.deleteMany({})
-  //   await prisma.periodAdjustment.deleteMany({})
-  //   await prisma.periodMissingItem.deleteMany({})
-  //   await prisma.closeChecklistItem.deleteMany({})
-  //   await prisma.accountingPeriod.deleteMany({})
 
   // =============================================================================
   // ACCOUNTING PERIODS
@@ -2328,17 +2357,6 @@ async function main() {
   console.log('  ✓ Created', auditEntries.length, 'audit entries')
 
   // =============================================================================
-  // CUSTOMERS MODULE - ADD TO: prisma/seed.ts (before SUMMARY section)
-  // =============================================================================
-  // Also add to CLEANUP section at top:
-  //   await prisma.customerRiskIndicator.deleteMany({})
-  //   await prisma.customerRevenue.deleteMany({})
-  //   await prisma.customerCreditEvent.deleteMany({})
-  //   await prisma.customerPayment.deleteMany({})
-  //   await prisma.customerContact.deleteMany({})
-  //   await prisma.customer.deleteMany({})
-
-  // =============================================================================
   // CUSTOMERS
   // =============================================================================
   console.log('\n👥 Creating Customers...')
@@ -2671,11 +2689,11 @@ async function main() {
   // =============================================================================
   console.log('\n🚚 Creating Suppliers...')
   const suppliers = [
-    { supplierNumber: 'SUP-001', name: 'TechParts GmbH', type: 'manufacturer', status: 'preferred', industry: 'Electronics', email: 'orders@techparts.de', paymentTerms: 'Net 30', totalPurchases: 125000, qualityRating: 4.5, deliveryRating: 4.2, onTimeDeliveryRate: 92 },
-    { supplierNumber: 'SUP-002', name: 'CloudServices Inc', type: 'service_provider', status: 'active', industry: 'Technology', email: 'billing@cloudservices.com', paymentTerms: 'Net 15', totalPurchases: 85000, qualityRating: 4.8, deliveryRating: 4.9, onTimeDeliveryRate: 99 },
-    { supplierNumber: 'SUP-003', name: 'Office World AG', type: 'distributor', status: 'active', industry: 'Office Supplies', email: 'sales@officeworld.ch', paymentTerms: 'Net 45', totalPurchases: 22000, qualityRating: 4.0, deliveryRating: 3.8, onTimeDeliveryRate: 85 },
-    { supplierNumber: 'SUP-004', name: 'SecurIT Solutions', type: 'contractor', status: 'active', industry: 'Cybersecurity', email: 'accounts@securit.io', paymentTerms: 'Net 30', totalPurchases: 45000, qualityRating: 4.7, deliveryRating: 4.5, onTimeDeliveryRate: 95 },
-    { supplierNumber: 'SUP-005', name: 'Global Logistics Ltd', type: 'service_provider', status: 'active', industry: 'Logistics', email: 'finance@globallog.com', paymentTerms: 'Net 30', totalPurchases: 38000, qualityRating: 3.9, deliveryRating: 4.1, onTimeDeliveryRate: 88 },
+    { supplierNumber: 'SUP-001', name: 'TechParts GmbH', category: 'manufacturer', status: 'preferred', industry: 'Electronics', email: 'orders@techparts.de', paymentTerms: 'Net 30', totalPurchases: 125000, qualityRating: 4.5, deliveryRating: 4.2, onTimeDeliveryRate: 92 },
+    { supplierNumber: 'SUP-002', name: 'CloudServices Inc', category: 'service_provider', status: 'active', industry: 'Technology', email: 'billing@cloudservices.com', paymentTerms: 'Net 15', totalPurchases: 85000, qualityRating: 4.8, deliveryRating: 4.9, onTimeDeliveryRate: 99 },
+    { supplierNumber: 'SUP-003', name: 'Office World AG', category: 'distributor', status: 'active', industry: 'Office Supplies', email: 'sales@officeworld.ch', paymentTerms: 'Net 45', totalPurchases: 22000, qualityRating: 4.0, deliveryRating: 3.8, onTimeDeliveryRate: 85 },
+    { supplierNumber: 'SUP-004', name: 'SecurIT Solutions', category: 'contractor', status: 'active', industry: 'Cybersecurity', email: 'accounts@securit.io', paymentTerms: 'Net 30', totalPurchases: 45000, qualityRating: 4.7, deliveryRating: 4.5, onTimeDeliveryRate: 95 },
+    { supplierNumber: 'SUP-005', name: 'Global Logistics Ltd', category: 'service_provider', status: 'active', industry: 'Logistics', email: 'finance@globallog.com', paymentTerms: 'Net 30', totalPurchases: 38000, qualityRating: 3.9, deliveryRating: 4.1, onTimeDeliveryRate: 88 },
   ]
 
   const supplierMap: Record<string, string> = {}
@@ -2684,7 +2702,7 @@ async function main() {
       data: {
         supplierNumber: sup.supplierNumber,
         name: sup.name,
-        type: sup.type,
+        category: sup.category,
         status: sup.status,
         industry: sup.industry,
         email: sup.email,
@@ -2718,7 +2736,6 @@ async function main() {
       data: {
         offerNumber: offer.offerNumber,
         status: offer.status,
-        type: offer.type,
         customerName: offer.customerName,
         offerDate: offer.offerDate,
         validUntil: offer.validUntil,
@@ -2741,13 +2758,13 @@ async function main() {
   // =============================================================================
   console.log('\n✅ Creating Tasks...')
   const tasks = [
-    { title: 'Review Q4 Financial Statements', status: 'in_progress', priority: 'high', type: 'review', category: 'finance', dueDate: daysFromNow(3), progress: 60 },
-    { title: 'Approve Vendor Payment Batch', status: 'pending', priority: 'urgent', type: 'approval', category: 'finance', dueDate: daysFromNow(1), progress: 0 },
-    { title: 'Monthly Bank Reconciliation', status: 'completed', priority: 'normal', type: 'reconciliation', category: 'finance', dueDate: daysAgo(2), completedAt: daysAgo(1), progress: 100 },
-    { title: 'Update Tax Registration', status: 'pending', priority: 'high', type: 'compliance', category: 'tax', dueDate: daysFromNow(14), progress: 0 },
-    { title: 'Prepare Board Meeting Materials', status: 'in_progress', priority: 'normal', type: 'deadline', category: 'operations', dueDate: daysFromNow(7), progress: 35 },
-    { title: 'Invoice Follow-up - Overdue Accounts', status: 'pending', priority: 'high', type: 'general', category: 'finance', dueDate: daysFromNow(2), progress: 0 },
-    { title: 'Annual Audit Preparation', status: 'pending', priority: 'normal', type: 'compliance', category: 'compliance', dueDate: daysFromNow(30), progress: 0 },
+    { title: 'Review Q4 Financial Statements', status: 'in_progress', priority: 'high', taskType: 'review', category: 'finance', dueDate: daysFromNow(3), progress: 60 },
+    { title: 'Approve Vendor Payment Batch', status: 'pending', priority: 'urgent', taskType: 'approval', category: 'finance', dueDate: daysFromNow(1), progress: 0 },
+    { title: 'Monthly Bank Reconciliation', status: 'completed', priority: 'normal', taskType: 'reconciliation', category: 'finance', dueDate: daysAgo(2), completedAt: daysAgo(1), progress: 100 },
+    { title: 'Update Tax Registration', status: 'pending', priority: 'high', taskType: 'compliance', category: 'tax', dueDate: daysFromNow(14), progress: 0 },
+    { title: 'Prepare Board Meeting Materials', status: 'in_progress', priority: 'normal', taskType: 'deadline', category: 'operations', dueDate: daysFromNow(7), progress: 35 },
+    { title: 'Invoice Follow-up - Overdue Accounts', status: 'pending', priority: 'high', taskType: 'general', category: 'finance', dueDate: daysFromNow(2), progress: 0 },
+    { title: 'Annual Audit Preparation', status: 'pending', priority: 'normal', taskType: 'compliance', category: 'compliance', dueDate: daysFromNow(30), progress: 0 },
   ]
 
   for (const task of tasks) {
@@ -2756,30 +2773,32 @@ async function main() {
         title: task.title,
         status: task.status,
         priority: task.priority,
-        type: task.type,
+        taskType: task.taskType,
         category: task.category,
         dueDate: task.dueDate,
         completedAt: task.completedAt,
         progress: task.progress,
-        assigneeId: user.id,
-        assigneeName: user.name,
         createdById: user.id,
-        createdByName: user.name,
         organizationId: org.id,
+        assignees: {
+          create: {
+            userId: user.id,
+            assignedAt: new Date(),
+          },
+        },
       },
     })
   }
   console.log('  ✓ Created', tasks.length, 'tasks')
 
   // =============================================================================
-  // FORECASTS
+  // CASH FORECASTS
   // =============================================================================
-  console.log('\n📈 Creating Forecasts...')
-  const forecast = await prisma.forecast.create({
+  console.log('\n📈 Creating Cash Forecasts...')
+  const forecast = await prisma.cashForecast.create({
     data: {
       name: '2025 Annual Cash Flow Forecast',
       description: 'Primary cash flow projection for fiscal year 2025',
-      type: 'cash_flow',
       status: 'active',
       periodType: 'monthly',
       startDate: new Date('2025-01-01'),
@@ -2808,7 +2827,7 @@ async function main() {
   for (const fp of forecastPeriods) {
     const netCash = fp.cashInflow - fp.cashOutflow
     closingCash += netCash
-    await prisma.forecastPeriod.create({
+    await prisma.cashForecastPeriod.create({
       data: {
         periodLabel: fp.label,
         periodStart: new Date(`${fp.label}-01`),
@@ -2824,7 +2843,7 @@ async function main() {
       },
     })
   }
-  console.log('  ✓ Created 1 forecast with', forecastPeriods.length, 'periods')
+  console.log('  ✓ Created 1 cash forecast with', forecastPeriods.length, 'periods')
 
   // =============================================================================
   // SCENARIOS

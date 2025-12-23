@@ -31,6 +31,9 @@ export type CustomerRevenueAvgAggregateOutputType = {
   cost: runtime.Decimal | null
   profit: runtime.Decimal | null
   margin: runtime.Decimal | null
+  productRevenue: runtime.Decimal | null
+  serviceRevenue: runtime.Decimal | null
+  otherRevenue: runtime.Decimal | null
   orderCount: number | null
   averageOrderValue: runtime.Decimal | null
 }
@@ -40,6 +43,9 @@ export type CustomerRevenueSumAggregateOutputType = {
   cost: runtime.Decimal | null
   profit: runtime.Decimal | null
   margin: runtime.Decimal | null
+  productRevenue: runtime.Decimal | null
+  serviceRevenue: runtime.Decimal | null
+  otherRevenue: runtime.Decimal | null
   orderCount: number | null
   averageOrderValue: runtime.Decimal | null
 }
@@ -53,6 +59,9 @@ export type CustomerRevenueMinAggregateOutputType = {
   cost: runtime.Decimal | null
   profit: runtime.Decimal | null
   margin: runtime.Decimal | null
+  productRevenue: runtime.Decimal | null
+  serviceRevenue: runtime.Decimal | null
+  otherRevenue: runtime.Decimal | null
   orderCount: number | null
   averageOrderValue: runtime.Decimal | null
   createdAt: Date | null
@@ -67,6 +76,9 @@ export type CustomerRevenueMaxAggregateOutputType = {
   cost: runtime.Decimal | null
   profit: runtime.Decimal | null
   margin: runtime.Decimal | null
+  productRevenue: runtime.Decimal | null
+  serviceRevenue: runtime.Decimal | null
+  otherRevenue: runtime.Decimal | null
   orderCount: number | null
   averageOrderValue: runtime.Decimal | null
   createdAt: Date | null
@@ -81,6 +93,9 @@ export type CustomerRevenueCountAggregateOutputType = {
   cost: number
   profit: number
   margin: number
+  productRevenue: number
+  serviceRevenue: number
+  otherRevenue: number
   orderCount: number
   averageOrderValue: number
   createdAt: number
@@ -93,6 +108,9 @@ export type CustomerRevenueAvgAggregateInputType = {
   cost?: true
   profit?: true
   margin?: true
+  productRevenue?: true
+  serviceRevenue?: true
+  otherRevenue?: true
   orderCount?: true
   averageOrderValue?: true
 }
@@ -102,6 +120,9 @@ export type CustomerRevenueSumAggregateInputType = {
   cost?: true
   profit?: true
   margin?: true
+  productRevenue?: true
+  serviceRevenue?: true
+  otherRevenue?: true
   orderCount?: true
   averageOrderValue?: true
 }
@@ -115,6 +136,9 @@ export type CustomerRevenueMinAggregateInputType = {
   cost?: true
   profit?: true
   margin?: true
+  productRevenue?: true
+  serviceRevenue?: true
+  otherRevenue?: true
   orderCount?: true
   averageOrderValue?: true
   createdAt?: true
@@ -129,6 +153,9 @@ export type CustomerRevenueMaxAggregateInputType = {
   cost?: true
   profit?: true
   margin?: true
+  productRevenue?: true
+  serviceRevenue?: true
+  otherRevenue?: true
   orderCount?: true
   averageOrderValue?: true
   createdAt?: true
@@ -143,6 +170,9 @@ export type CustomerRevenueCountAggregateInputType = {
   cost?: true
   profit?: true
   margin?: true
+  productRevenue?: true
+  serviceRevenue?: true
+  otherRevenue?: true
   orderCount?: true
   averageOrderValue?: true
   createdAt?: true
@@ -244,6 +274,9 @@ export type CustomerRevenueGroupByOutputType = {
   cost: runtime.Decimal | null
   profit: runtime.Decimal | null
   margin: runtime.Decimal | null
+  productRevenue: runtime.Decimal | null
+  serviceRevenue: runtime.Decimal | null
+  otherRevenue: runtime.Decimal | null
   orderCount: number
   averageOrderValue: runtime.Decimal
   createdAt: Date
@@ -281,6 +314,9 @@ export type CustomerRevenueWhereInput = {
   cost?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFilter<"CustomerRevenue"> | number
   averageOrderValue?: Prisma.DecimalFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"CustomerRevenue"> | Date | string
@@ -296,6 +332,9 @@ export type CustomerRevenueOrderByWithRelationInput = {
   cost?: Prisma.SortOrderInput | Prisma.SortOrder
   profit?: Prisma.SortOrderInput | Prisma.SortOrder
   margin?: Prisma.SortOrderInput | Prisma.SortOrder
+  productRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -315,6 +354,9 @@ export type CustomerRevenueWhereUniqueInput = Prisma.AtLeast<{
   cost?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFilter<"CustomerRevenue"> | number
   averageOrderValue?: Prisma.DecimalFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"CustomerRevenue"> | Date | string
@@ -330,6 +372,9 @@ export type CustomerRevenueOrderByWithAggregationInput = {
   cost?: Prisma.SortOrderInput | Prisma.SortOrder
   profit?: Prisma.SortOrderInput | Prisma.SortOrder
   margin?: Prisma.SortOrderInput | Prisma.SortOrder
+  productRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrderInput | Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -352,6 +397,9 @@ export type CustomerRevenueScalarWhereWithAggregatesInput = {
   cost?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntWithAggregatesFilter<"CustomerRevenue"> | number
   averageOrderValue?: Prisma.DecimalWithAggregatesFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CustomerRevenue"> | Date | string
@@ -365,6 +413,9 @@ export type CustomerRevenueCreateInput = {
   cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount: number
   averageOrderValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -380,6 +431,9 @@ export type CustomerRevenueUncheckedCreateInput = {
   cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount: number
   averageOrderValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -393,6 +447,9 @@ export type CustomerRevenueUpdateInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -408,6 +465,9 @@ export type CustomerRevenueUncheckedUpdateInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -422,6 +482,9 @@ export type CustomerRevenueCreateManyInput = {
   cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount: number
   averageOrderValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -435,6 +498,9 @@ export type CustomerRevenueUpdateManyMutationInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -449,6 +515,9 @@ export type CustomerRevenueUncheckedUpdateManyInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -479,6 +548,9 @@ export type CustomerRevenueCountOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   profit?: Prisma.SortOrder
   margin?: Prisma.SortOrder
+  productRevenue?: Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -489,6 +561,9 @@ export type CustomerRevenueAvgOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   profit?: Prisma.SortOrder
   margin?: Prisma.SortOrder
+  productRevenue?: Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
 }
@@ -502,6 +577,9 @@ export type CustomerRevenueMaxOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   profit?: Prisma.SortOrder
   margin?: Prisma.SortOrder
+  productRevenue?: Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -516,6 +594,9 @@ export type CustomerRevenueMinOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   profit?: Prisma.SortOrder
   margin?: Prisma.SortOrder
+  productRevenue?: Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -526,6 +607,9 @@ export type CustomerRevenueSumOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   profit?: Prisma.SortOrder
   margin?: Prisma.SortOrder
+  productRevenue?: Prisma.SortOrder
+  serviceRevenue?: Prisma.SortOrder
+  otherRevenue?: Prisma.SortOrder
   orderCount?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
 }
@@ -580,6 +664,9 @@ export type CustomerRevenueCreateWithoutCustomerInput = {
   cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount: number
   averageOrderValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -593,6 +680,9 @@ export type CustomerRevenueUncheckedCreateWithoutCustomerInput = {
   cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount: number
   averageOrderValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -636,6 +726,9 @@ export type CustomerRevenueScalarWhereInput = {
   cost?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.DecimalNullableFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFilter<"CustomerRevenue"> | number
   averageOrderValue?: Prisma.DecimalFilter<"CustomerRevenue"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"CustomerRevenue"> | Date | string
@@ -649,6 +742,9 @@ export type CustomerRevenueCreateManyCustomerInput = {
   cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount: number
   averageOrderValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
@@ -662,6 +758,9 @@ export type CustomerRevenueUpdateWithoutCustomerInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -675,6 +774,9 @@ export type CustomerRevenueUncheckedUpdateWithoutCustomerInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -688,6 +790,9 @@ export type CustomerRevenueUncheckedUpdateManyWithoutCustomerInput = {
   cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   profit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   margin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  productRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  serviceRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  otherRevenue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   orderCount?: Prisma.IntFieldUpdateOperationsInput | number
   averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -704,6 +809,9 @@ export type CustomerRevenueSelect<ExtArgs extends runtime.Types.Extensions.Inter
   cost?: boolean
   profit?: boolean
   margin?: boolean
+  productRevenue?: boolean
+  serviceRevenue?: boolean
+  otherRevenue?: boolean
   orderCount?: boolean
   averageOrderValue?: boolean
   createdAt?: boolean
@@ -719,6 +827,9 @@ export type CustomerRevenueSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   cost?: boolean
   profit?: boolean
   margin?: boolean
+  productRevenue?: boolean
+  serviceRevenue?: boolean
+  otherRevenue?: boolean
   orderCount?: boolean
   averageOrderValue?: boolean
   createdAt?: boolean
@@ -734,6 +845,9 @@ export type CustomerRevenueSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   cost?: boolean
   profit?: boolean
   margin?: boolean
+  productRevenue?: boolean
+  serviceRevenue?: boolean
+  otherRevenue?: boolean
   orderCount?: boolean
   averageOrderValue?: boolean
   createdAt?: boolean
@@ -749,12 +863,15 @@ export type CustomerRevenueSelectScalar = {
   cost?: boolean
   profit?: boolean
   margin?: boolean
+  productRevenue?: boolean
+  serviceRevenue?: boolean
+  otherRevenue?: boolean
   orderCount?: boolean
   averageOrderValue?: boolean
   createdAt?: boolean
 }
 
-export type CustomerRevenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "period" | "periodType" | "revenue" | "cost" | "profit" | "margin" | "orderCount" | "averageOrderValue" | "createdAt", ExtArgs["result"]["customerRevenue"]>
+export type CustomerRevenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "period" | "periodType" | "revenue" | "cost" | "profit" | "margin" | "productRevenue" | "serviceRevenue" | "otherRevenue" | "orderCount" | "averageOrderValue" | "createdAt", ExtArgs["result"]["customerRevenue"]>
 export type CustomerRevenueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
 }
@@ -779,6 +896,9 @@ export type $CustomerRevenuePayload<ExtArgs extends runtime.Types.Extensions.Int
     cost: runtime.Decimal | null
     profit: runtime.Decimal | null
     margin: runtime.Decimal | null
+    productRevenue: runtime.Decimal | null
+    serviceRevenue: runtime.Decimal | null
+    otherRevenue: runtime.Decimal | null
     orderCount: number
     averageOrderValue: runtime.Decimal
     createdAt: Date
@@ -1214,6 +1334,9 @@ export interface CustomerRevenueFieldRefs {
   readonly cost: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
   readonly profit: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
   readonly margin: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
+  readonly productRevenue: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
+  readonly serviceRevenue: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
+  readonly otherRevenue: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
   readonly orderCount: Prisma.FieldRef<"CustomerRevenue", 'Int'>
   readonly averageOrderValue: Prisma.FieldRef<"CustomerRevenue", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"CustomerRevenue", 'DateTime'>

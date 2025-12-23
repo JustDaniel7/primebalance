@@ -1,82 +1,57 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils'
+// src/app/api/customers/[id]/risks/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils';
 
-// GET /api/customers/[id]/risk
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+type Params = { params: Promise<{ id: string }> };
 
-  const { id } = await params
-  const { searchParams } = new URL(req.url)
-  const status = searchParams.get('status')
+export async function POST(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const customer = await prisma.customer.findFirst({
-    where: { id, organizationId: user.organizationId },
-    select: { id: true, riskLevel: true, riskScore: true },
-  })
-  if (!customer) return notFound('Customer not found')
+  const { id: customerId } = await params;
+  const body = await req.json();
 
-  const where: Record<string, unknown> = { customerId: id }
-  if (status && status !== 'all') where.status = status
-
-  const indicators = await prisma.customerRiskIndicator.findMany({
-    where,
-    orderBy: [{ status: 'asc' }, { severity: 'desc' }],
-  })
-
-  return NextResponse.json({ risk: customer, indicators })
-}
-
-// POST /api/customers/[id]/risk
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
-
-  const { id } = await params
-  const body = await req.json()
-
-  const customer = await prisma.customer.findFirst({
-    where: { id, organizationId: user.organizationId },
-  })
-  if (!customer) return notFound('Customer not found')
-
-  const { category, indicator, description, severity = 'medium', score = 0, recommendedAction } = body
-
-  if (!category || !indicator || !description) {
-    return badRequest('Category, indicator, and description are required')
+  if (!body.category || !body.indicator || !body.description) {
+    return badRequest('category, indicator, and description are required');
   }
 
-  const riskIndicator = await prisma.customerRiskIndicator.create({
-    data: {
-      customerId: id,
-      category,
-      indicator,
-      description,
-      severity,
-      score,
-      status: 'active',
-      recommendedAction,
-    },
-  })
+  // Verify customer belongs to organization
+  const customer = await prisma.customer.findFirst({
+    where: { id: customerId, organizationId: user.organizationId },
+  });
+  if (!customer) return notFound('Customer');
 
-  // Recalculate customer risk score
-  const activeIndicators = await prisma.customerRiskIndicator.findMany({
-    where: { customerId: id, status: 'active' },
-  })
-  const newScore = Math.min(100, activeIndicators.reduce((sum, r) => sum + r.score, 0))
-  const newLevel = newScore >= 70 ? 'critical' : newScore >= 50 ? 'high' : newScore >= 25 ? 'medium' : 'low'
+  const risk = await prisma.customerRiskIndicator.create({
+    data: {
+      customerId,
+      category: body.category,
+      indicator: body.indicator,
+      description: body.description,
+      severity: body.severity || 'medium',
+      score: body.score || 0,
+      status: body.status || 'active',
+      recommendedAction: body.recommendedAction,
+    },
+  });
+
+  // Update customer risk level if needed
+  const activeRisks = await prisma.customerRiskIndicator.findMany({
+    where: { customerId, status: 'active' },
+  });
+  
+  const criticalCount = activeRisks.filter((r) => r.severity === 'critical').length;
+  const highCount = activeRisks.filter((r) => r.severity === 'high').length;
+  
+  let newRiskLevel = 'low';
+  if (criticalCount > 0) newRiskLevel = 'critical';
+  else if (highCount > 0) newRiskLevel = 'high';
+  else if (activeRisks.length > 2) newRiskLevel = 'medium';
 
   await prisma.customer.update({
-    where: { id },
-    data: { riskScore: newScore, riskLevel: newLevel },
-  })
+    where: { id: customerId },
+    data: { riskLevel: newRiskLevel, riskScore: activeRisks.reduce((sum, r) => sum + r.score, 0) },
+  });
 
-  return NextResponse.json(riskIndicator, { status: 201 })
+  return NextResponse.json(risk, { status: 201 });
 }

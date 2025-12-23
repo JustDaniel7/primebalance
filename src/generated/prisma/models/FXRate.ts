@@ -28,10 +28,14 @@ export type AggregateFXRate = {
 
 export type FXRateAvgAggregateOutputType = {
   rate: runtime.Decimal | null
+  inverseRate: runtime.Decimal | null
+  spread: runtime.Decimal | null
 }
 
 export type FXRateSumAggregateOutputType = {
   rate: runtime.Decimal | null
+  inverseRate: runtime.Decimal | null
+  spread: runtime.Decimal | null
 }
 
 export type FXRateMinAggregateOutputType = {
@@ -39,8 +43,11 @@ export type FXRateMinAggregateOutputType = {
   baseCurrency: string | null
   quoteCurrency: string | null
   rate: runtime.Decimal | null
-  rateDate: Date | null
+  inverseRate: runtime.Decimal | null
   source: string | null
+  timestamp: Date | null
+  validUntil: Date | null
+  spread: runtime.Decimal | null
   organizationId: string | null
   createdAt: Date | null
 }
@@ -50,8 +57,11 @@ export type FXRateMaxAggregateOutputType = {
   baseCurrency: string | null
   quoteCurrency: string | null
   rate: runtime.Decimal | null
-  rateDate: Date | null
+  inverseRate: runtime.Decimal | null
   source: string | null
+  timestamp: Date | null
+  validUntil: Date | null
+  spread: runtime.Decimal | null
   organizationId: string | null
   createdAt: Date | null
 }
@@ -61,8 +71,11 @@ export type FXRateCountAggregateOutputType = {
   baseCurrency: number
   quoteCurrency: number
   rate: number
-  rateDate: number
+  inverseRate: number
   source: number
+  timestamp: number
+  validUntil: number
+  spread: number
   organizationId: number
   createdAt: number
   _all: number
@@ -71,10 +84,14 @@ export type FXRateCountAggregateOutputType = {
 
 export type FXRateAvgAggregateInputType = {
   rate?: true
+  inverseRate?: true
+  spread?: true
 }
 
 export type FXRateSumAggregateInputType = {
   rate?: true
+  inverseRate?: true
+  spread?: true
 }
 
 export type FXRateMinAggregateInputType = {
@@ -82,8 +99,11 @@ export type FXRateMinAggregateInputType = {
   baseCurrency?: true
   quoteCurrency?: true
   rate?: true
-  rateDate?: true
+  inverseRate?: true
   source?: true
+  timestamp?: true
+  validUntil?: true
+  spread?: true
   organizationId?: true
   createdAt?: true
 }
@@ -93,8 +113,11 @@ export type FXRateMaxAggregateInputType = {
   baseCurrency?: true
   quoteCurrency?: true
   rate?: true
-  rateDate?: true
+  inverseRate?: true
   source?: true
+  timestamp?: true
+  validUntil?: true
+  spread?: true
   organizationId?: true
   createdAt?: true
 }
@@ -104,8 +127,11 @@ export type FXRateCountAggregateInputType = {
   baseCurrency?: true
   quoteCurrency?: true
   rate?: true
-  rateDate?: true
+  inverseRate?: true
   source?: true
+  timestamp?: true
+  validUntil?: true
+  spread?: true
   organizationId?: true
   createdAt?: true
   _all?: true
@@ -202,8 +228,11 @@ export type FXRateGroupByOutputType = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal
-  rateDate: Date
+  inverseRate: runtime.Decimal
   source: string
+  timestamp: Date
+  validUntil: Date | null
+  spread: runtime.Decimal | null
   organizationId: string
   createdAt: Date
   _count: FXRateCountAggregateOutputType | null
@@ -236,8 +265,11 @@ export type FXRateWhereInput = {
   baseCurrency?: Prisma.StringFilter<"FXRate"> | string
   quoteCurrency?: Prisma.StringFilter<"FXRate"> | string
   rate?: Prisma.DecimalFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFilter<"FXRate"> | Date | string
+  inverseRate?: Prisma.DecimalFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFilter<"FXRate"> | string
+  timestamp?: Prisma.DateTimeFilter<"FXRate"> | Date | string
+  validUntil?: Prisma.DateTimeNullableFilter<"FXRate"> | Date | string | null
+  spread?: Prisma.DecimalNullableFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId?: Prisma.StringFilter<"FXRate"> | string
   createdAt?: Prisma.DateTimeFilter<"FXRate"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
@@ -248,8 +280,11 @@ export type FXRateOrderByWithRelationInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   rate?: Prisma.SortOrder
-  rateDate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
+  spread?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
@@ -257,27 +292,33 @@ export type FXRateOrderByWithRelationInput = {
 
 export type FXRateWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_baseCurrency_quoteCurrency_rateDate?: Prisma.FXRateOrganizationIdBaseCurrencyQuoteCurrencyRateDateCompoundUniqueInput
+  organizationId_baseCurrency_quoteCurrency_timestamp?: Prisma.FXRateOrganizationIdBaseCurrencyQuoteCurrencyTimestampCompoundUniqueInput
   AND?: Prisma.FXRateWhereInput | Prisma.FXRateWhereInput[]
   OR?: Prisma.FXRateWhereInput[]
   NOT?: Prisma.FXRateWhereInput | Prisma.FXRateWhereInput[]
   baseCurrency?: Prisma.StringFilter<"FXRate"> | string
   quoteCurrency?: Prisma.StringFilter<"FXRate"> | string
   rate?: Prisma.DecimalFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFilter<"FXRate"> | Date | string
+  inverseRate?: Prisma.DecimalFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFilter<"FXRate"> | string
+  timestamp?: Prisma.DateTimeFilter<"FXRate"> | Date | string
+  validUntil?: Prisma.DateTimeNullableFilter<"FXRate"> | Date | string | null
+  spread?: Prisma.DecimalNullableFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId?: Prisma.StringFilter<"FXRate"> | string
   createdAt?: Prisma.DateTimeFilter<"FXRate"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
-}, "id" | "organizationId_baseCurrency_quoteCurrency_rateDate">
+}, "id" | "organizationId_baseCurrency_quoteCurrency_timestamp">
 
 export type FXRateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   rate?: Prisma.SortOrder
-  rateDate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
+  spread?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.FXRateCountOrderByAggregateInput
@@ -295,8 +336,11 @@ export type FXRateScalarWhereWithAggregatesInput = {
   baseCurrency?: Prisma.StringWithAggregatesFilter<"FXRate"> | string
   quoteCurrency?: Prisma.StringWithAggregatesFilter<"FXRate"> | string
   rate?: Prisma.DecimalWithAggregatesFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeWithAggregatesFilter<"FXRate"> | Date | string
+  inverseRate?: Prisma.DecimalWithAggregatesFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringWithAggregatesFilter<"FXRate"> | string
+  timestamp?: Prisma.DateTimeWithAggregatesFilter<"FXRate"> | Date | string
+  validUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"FXRate"> | Date | string | null
+  spread?: Prisma.DecimalNullableWithAggregatesFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"FXRate"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FXRate"> | Date | string
 }
@@ -306,8 +350,11 @@ export type FXRateCreateInput = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate: Date | string
+  inverseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: string
+  timestamp?: Date | string
+  validUntil?: Date | string | null
+  spread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutFxratesInput
 }
@@ -317,8 +364,11 @@ export type FXRateUncheckedCreateInput = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate: Date | string
+  inverseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: string
+  timestamp?: Date | string
+  validUntil?: Date | string | null
+  spread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId: string
   createdAt?: Date | string
 }
@@ -328,8 +378,11 @@ export type FXRateUpdateInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutFxratesNestedInput
 }
@@ -339,8 +392,11 @@ export type FXRateUncheckedUpdateInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -350,8 +406,11 @@ export type FXRateCreateManyInput = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate: Date | string
+  inverseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: string
+  timestamp?: Date | string
+  validUntil?: Date | string | null
+  spread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId: string
   createdAt?: Date | string
 }
@@ -361,8 +420,11 @@ export type FXRateUpdateManyMutationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -371,8 +433,11 @@ export type FXRateUncheckedUpdateManyInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -387,11 +452,11 @@ export type FXRateOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type FXRateOrganizationIdBaseCurrencyQuoteCurrencyRateDateCompoundUniqueInput = {
+export type FXRateOrganizationIdBaseCurrencyQuoteCurrencyTimestampCompoundUniqueInput = {
   organizationId: string
   baseCurrency: string
   quoteCurrency: string
-  rateDate: Date | string
+  timestamp: Date | string
 }
 
 export type FXRateCountOrderByAggregateInput = {
@@ -399,14 +464,19 @@ export type FXRateCountOrderByAggregateInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   rate?: Prisma.SortOrder
-  rateDate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
+  spread?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type FXRateAvgOrderByAggregateInput = {
   rate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
+  spread?: Prisma.SortOrder
 }
 
 export type FXRateMaxOrderByAggregateInput = {
@@ -414,8 +484,11 @@ export type FXRateMaxOrderByAggregateInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   rate?: Prisma.SortOrder
-  rateDate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
+  spread?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -425,14 +498,19 @@ export type FXRateMinOrderByAggregateInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   rate?: Prisma.SortOrder
-  rateDate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  timestamp?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
+  spread?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type FXRateSumOrderByAggregateInput = {
   rate?: Prisma.SortOrder
+  inverseRate?: Prisma.SortOrder
+  spread?: Prisma.SortOrder
 }
 
 export type FXRateCreateNestedManyWithoutOrganizationInput = {
@@ -482,8 +560,11 @@ export type FXRateCreateWithoutOrganizationInput = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate: Date | string
+  inverseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: string
+  timestamp?: Date | string
+  validUntil?: Date | string | null
+  spread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
 }
 
@@ -492,8 +573,11 @@ export type FXRateUncheckedCreateWithoutOrganizationInput = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate: Date | string
+  inverseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: string
+  timestamp?: Date | string
+  validUntil?: Date | string | null
+  spread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
 }
 
@@ -531,8 +615,11 @@ export type FXRateScalarWhereInput = {
   baseCurrency?: Prisma.StringFilter<"FXRate"> | string
   quoteCurrency?: Prisma.StringFilter<"FXRate"> | string
   rate?: Prisma.DecimalFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFilter<"FXRate"> | Date | string
+  inverseRate?: Prisma.DecimalFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFilter<"FXRate"> | string
+  timestamp?: Prisma.DateTimeFilter<"FXRate"> | Date | string
+  validUntil?: Prisma.DateTimeNullableFilter<"FXRate"> | Date | string | null
+  spread?: Prisma.DecimalNullableFilter<"FXRate"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   organizationId?: Prisma.StringFilter<"FXRate"> | string
   createdAt?: Prisma.DateTimeFilter<"FXRate"> | Date | string
 }
@@ -542,8 +629,11 @@ export type FXRateCreateManyOrganizationInput = {
   baseCurrency: string
   quoteCurrency: string
   rate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate: Date | string
+  inverseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: string
+  timestamp?: Date | string
+  validUntil?: Date | string | null
+  spread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
 }
 
@@ -552,8 +642,11 @@ export type FXRateUpdateWithoutOrganizationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -562,8 +655,11 @@ export type FXRateUncheckedUpdateWithoutOrganizationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -572,8 +668,11 @@ export type FXRateUncheckedUpdateManyWithoutOrganizationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   rate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inverseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  spread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -584,8 +683,11 @@ export type FXRateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   baseCurrency?: boolean
   quoteCurrency?: boolean
   rate?: boolean
-  rateDate?: boolean
+  inverseRate?: boolean
   source?: boolean
+  timestamp?: boolean
+  validUntil?: boolean
+  spread?: boolean
   organizationId?: boolean
   createdAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -596,8 +698,11 @@ export type FXRateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   baseCurrency?: boolean
   quoteCurrency?: boolean
   rate?: boolean
-  rateDate?: boolean
+  inverseRate?: boolean
   source?: boolean
+  timestamp?: boolean
+  validUntil?: boolean
+  spread?: boolean
   organizationId?: boolean
   createdAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -608,8 +713,11 @@ export type FXRateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   baseCurrency?: boolean
   quoteCurrency?: boolean
   rate?: boolean
-  rateDate?: boolean
+  inverseRate?: boolean
   source?: boolean
+  timestamp?: boolean
+  validUntil?: boolean
+  spread?: boolean
   organizationId?: boolean
   createdAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -620,13 +728,16 @@ export type FXRateSelectScalar = {
   baseCurrency?: boolean
   quoteCurrency?: boolean
   rate?: boolean
-  rateDate?: boolean
+  inverseRate?: boolean
   source?: boolean
+  timestamp?: boolean
+  validUntil?: boolean
+  spread?: boolean
   organizationId?: boolean
   createdAt?: boolean
 }
 
-export type FXRateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "baseCurrency" | "quoteCurrency" | "rate" | "rateDate" | "source" | "organizationId" | "createdAt", ExtArgs["result"]["fXRate"]>
+export type FXRateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "baseCurrency" | "quoteCurrency" | "rate" | "inverseRate" | "source" | "timestamp" | "validUntil" | "spread" | "organizationId" | "createdAt", ExtArgs["result"]["fXRate"]>
 export type FXRateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
@@ -647,8 +758,11 @@ export type $FXRatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     baseCurrency: string
     quoteCurrency: string
     rate: runtime.Decimal
-    rateDate: Date
+    inverseRate: runtime.Decimal
     source: string
+    timestamp: Date
+    validUntil: Date | null
+    spread: runtime.Decimal | null
     organizationId: string
     createdAt: Date
   }, ExtArgs["result"]["fXRate"]>
@@ -1079,8 +1193,11 @@ export interface FXRateFieldRefs {
   readonly baseCurrency: Prisma.FieldRef<"FXRate", 'String'>
   readonly quoteCurrency: Prisma.FieldRef<"FXRate", 'String'>
   readonly rate: Prisma.FieldRef<"FXRate", 'Decimal'>
-  readonly rateDate: Prisma.FieldRef<"FXRate", 'DateTime'>
+  readonly inverseRate: Prisma.FieldRef<"FXRate", 'Decimal'>
   readonly source: Prisma.FieldRef<"FXRate", 'String'>
+  readonly timestamp: Prisma.FieldRef<"FXRate", 'DateTime'>
+  readonly validUntil: Prisma.FieldRef<"FXRate", 'DateTime'>
+  readonly spread: Prisma.FieldRef<"FXRate", 'Decimal'>
   readonly organizationId: Prisma.FieldRef<"FXRate", 'String'>
   readonly createdAt: Prisma.FieldRef<"FXRate", 'DateTime'>
 }

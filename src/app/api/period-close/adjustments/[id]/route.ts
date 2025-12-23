@@ -1,165 +1,126 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils'
+// src/app/api/period-close/adjustments/[id]/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
 
-// =============================================================================
-// SECTION 8: src/app/api/period-close/adjustments/[id]/route.ts
-// =============================================================================
+type Params = { params: Promise<{ id: string }> };
 
 // GET /api/period-close/adjustments/[id]
-export async function GET_ADJUSTMENT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+export async function GET(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const { id } = await params
+  const { id } = await params;
 
   const adjustment = await prisma.periodAdjustment.findFirst({
     where: { id, organizationId: user.organizationId },
     include: { period: { select: { name: true, code: true, status: true } } },
-  })
+  });
 
-  if (!adjustment) return notFound('Adjustment not found')
+  if (!adjustment) return notFound('Adjustment');
 
-  return NextResponse.json(adjustment)
+  return NextResponse.json(adjustment);
 }
 
 // PATCH /api/period-close/adjustments/[id]
-export async function PATCH_ADJUSTMENT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+export async function PATCH(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const { id } = await params
-  const body = await req.json()
+  const { id } = await params;
+  const body = await req.json();
 
-  const current = await prisma.periodAdjustment.findFirst({
+  const existing = await prisma.periodAdjustment.findFirst({
     where: { id, organizationId: user.organizationId },
-  })
-  if (!current) return notFound('Adjustment not found')
+  });
+  if (!existing) return notFound('Adjustment');
 
-  const previousStatus = current.status
-  const newStatus = body.status
+  // Prevent updates to posted adjustments
+  if (existing.status === 'posted' && body.status !== 'reversal') {
+    return badRequest('Cannot modify a posted adjustment');
+  }
 
-  const updateData: Record<string, unknown> = { ...body }
+  const updateData: Record<string, unknown> = {};
 
-  if (newStatus && newStatus !== previousStatus) {
-    switch (newStatus) {
-      case 'pending_approval':
-        if (previousStatus !== 'draft') {
-          return badRequest('Can only submit for approval from draft status')
-        }
-        break
+  // Basic fields
+  if (body.description !== undefined) updateData.description = body.description;
+  if (body.reason !== undefined) updateData.reason = body.reason;
+  if (body.amount !== undefined) updateData.amount = body.amount;
+  if (body.effectiveDate !== undefined) updateData.effectiveDate = new Date(body.effectiveDate);
+  if (body.notes !== undefined) updateData.notes = body.notes;
+  if (body.supportingDocuments !== undefined) updateData.supportingDocuments = body.supportingDocuments;
 
-      case 'approved':
-        if (previousStatus !== 'pending_approval') {
-          return badRequest('Can only approve from pending_approval status')
-        }
-        updateData.approvedBy = user.id
-        updateData.approvedByName = user.name || undefined
-        updateData.approvedAt = new Date()
-        break
+  // Status changes
+  if (body.status) {
+    updateData.status = body.status;
 
-      case 'rejected':
-        if (previousStatus !== 'pending_approval') {
-          return badRequest('Can only reject from pending_approval status')
-        }
-        if (!body.rejectionReason) {
-          return badRequest('Rejection reason is required')
-        }
-        updateData.rejectedBy = user.id
-        break
-
-      case 'posted':
-        if (previousStatus !== 'approved') {
-          return badRequest('Can only post from approved status')
-        }
-        updateData.postedAt = new Date()
-        updateData.journalEntryId = `JE-${Date.now()}`
-        break
-
-      case 'draft':
-        if (previousStatus !== 'pending_approval') {
-          return badRequest('Can only revert to draft from pending_approval status')
-        }
-        break
+    if (body.status === 'approved') {
+      updateData.approvedBy = user.id;
+      updateData.approvedByName = user.name;
+      updateData.approvedAt = new Date();
+    } else if (body.status === 'rejected') {
+      updateData.rejectedBy = user.id;
+      updateData.rejectionReason = body.rejectionReason;
+    } else if (body.status === 'posted') {
+      updateData.postedAt = new Date();
+      updateData.journalEntryId = body.journalEntryId || `JE-${Date.now()}`;
     }
   }
 
-  if (body.effectiveDate) updateData.effectiveDate = new Date(body.effectiveDate)
-  if (body.reversalDate) updateData.reversalDate = new Date(body.reversalDate)
-
-  const result = await prisma.periodAdjustment.update({
+  const updated = await prisma.periodAdjustment.update({
     where: { id },
     data: updateData,
-    include: { period: { select: { name: true, code: true } } },
-  })
+  });
 
-  const unapprovedCount = await prisma.periodAdjustment.count({
-    where: {
-      periodId: current.periodId,
-      status: { in: ['draft', 'pending_approval', 'approved'] },
-    },
-  })
-
-  await prisma.accountingPeriod.update({
-    where: { id: current.periodId },
-    data: { hasUnapprovedAdjustments: unapprovedCount > 0 },
-  })
-
-  if (newStatus && newStatus !== previousStatus) {
-    await prisma.periodAuditEntry.create({
-      data: {
-        periodId: current.periodId,
-        action: newStatus === 'posted' ? 'adjustment_posted' : 'checklist_updated',
-        description: `Adjustment ${current.adjustmentNumber} ${newStatus}`,
-        userId: user.id,
-        userName: user.name || undefined,
-        metadata: { adjustmentId: id, previousStatus, newStatus },
+  // Update period flag if all adjustments are now posted/rejected
+  if (body.status === 'posted' || body.status === 'rejected') {
+    const pendingAdjustments = await prisma.periodAdjustment.count({
+      where: {
+        periodId: existing.periodId,
+        status: { in: ['draft', 'pending_approval', 'approved'] },
       },
-    })
+    });
+
+    await prisma.accountingPeriod.update({
+      where: { id: existing.periodId },
+      data: { hasUnapprovedAdjustments: pendingAdjustments > 0 },
+    });
   }
 
-  return NextResponse.json(result)
+  // Audit entry for status changes
+  if (body.status && body.status !== existing.status) {
+    await prisma.periodAuditEntry.create({
+      data: {
+        periodId: existing.periodId,
+        action: body.status === 'posted' ? 'adjustment_posted' : 'checklist_updated',
+        description: `Adjustment ${existing.adjustmentNumber} ${body.status}`,
+        userId: user.id!,
+        userName: user.name,
+        metadata: { adjustmentId: id, adjustmentNumber: existing.adjustmentNumber, newStatus: body.status },
+      },
+    });
+  }
+
+  return NextResponse.json(updated);
 }
 
 // DELETE /api/period-close/adjustments/[id]
-export async function DELETE_ADJUSTMENT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+export async function DELETE(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const { id } = await params
+  const { id } = await params;
 
-  const adjustment = await prisma.periodAdjustment.findFirst({
+  const existing = await prisma.periodAdjustment.findFirst({
     where: { id, organizationId: user.organizationId },
-  })
+  });
+  if (!existing) return notFound('Adjustment');
 
-  if (!adjustment) return notFound('Adjustment not found')
-
-  if (adjustment.status !== 'draft') {
-    return badRequest('Can only delete adjustments in draft status')
+  if (existing.status === 'posted') {
+    return badRequest('Cannot delete a posted adjustment');
   }
 
-  await prisma.periodAdjustment.delete({ where: { id } })
+  await prisma.periodAdjustment.delete({ where: { id } });
 
-  const unapprovedCount = await prisma.periodAdjustment.count({
-    where: {
-      periodId: adjustment.periodId,
-      status: { in: ['draft', 'pending_approval', 'approved'] },
-    },
-  })
-
-  await prisma.accountingPeriod.update({
-    where: { id: adjustment.periodId },
-    data: { hasUnapprovedAdjustments: unapprovedCount > 0 },
-  })
-
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true });
 }

@@ -27,39 +27,42 @@ export type AggregateScenario = {
 }
 
 export type ScenarioAvgAggregateOutputType = {
-  revenueImpact: runtime.Decimal | null
-  expenseImpact: runtime.Decimal | null
-  profitImpact: runtime.Decimal | null
-  cashFlowImpact: runtime.Decimal | null
-  probability: runtime.Decimal | null
-  confidenceLevel: runtime.Decimal | null
+  confidenceScore: number | null
+  uncertaintyBandLow: runtime.Decimal | null
+  uncertaintyBandHigh: runtime.Decimal | null
+  version: number | null
 }
 
 export type ScenarioSumAggregateOutputType = {
-  revenueImpact: runtime.Decimal | null
-  expenseImpact: runtime.Decimal | null
-  profitImpact: runtime.Decimal | null
-  cashFlowImpact: runtime.Decimal | null
-  probability: runtime.Decimal | null
-  confidenceLevel: runtime.Decimal | null
+  confidenceScore: number | null
+  uncertaintyBandLow: runtime.Decimal | null
+  uncertaintyBandHigh: runtime.Decimal | null
+  version: number | null
 }
 
 export type ScenarioMinAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
-  type: string | null
+  caseType: string | null
   status: string | null
-  baseForecastId: string | null
-  baseScenarioId: string | null
-  revenueImpact: runtime.Decimal | null
-  expenseImpact: runtime.Decimal | null
-  profitImpact: runtime.Decimal | null
-  cashFlowImpact: runtime.Decimal | null
-  probability: runtime.Decimal | null
-  riskLevel: string | null
-  confidenceLevel: runtime.Decimal | null
-  notes: string | null
+  visibility: string | null
+  confidenceLevel: string | null
+  confidenceScore: number | null
+  uncertaintyBandLow: runtime.Decimal | null
+  uncertaintyBandHigh: runtime.Decimal | null
+  derivedFromId: string | null
+  derivedFromName: string | null
+  ownerId: string | null
+  ownerName: string | null
+  version: number | null
+  previousVersionId: string | null
+  createdBy: string | null
+  lastModifiedBy: string | null
+  lockedAt: Date | null
+  lockedBy: string | null
+  approvedAt: Date | null
+  approvedBy: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,18 +72,25 @@ export type ScenarioMaxAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
-  type: string | null
+  caseType: string | null
   status: string | null
-  baseForecastId: string | null
-  baseScenarioId: string | null
-  revenueImpact: runtime.Decimal | null
-  expenseImpact: runtime.Decimal | null
-  profitImpact: runtime.Decimal | null
-  cashFlowImpact: runtime.Decimal | null
-  probability: runtime.Decimal | null
-  riskLevel: string | null
-  confidenceLevel: runtime.Decimal | null
-  notes: string | null
+  visibility: string | null
+  confidenceLevel: string | null
+  confidenceScore: number | null
+  uncertaintyBandLow: runtime.Decimal | null
+  uncertaintyBandHigh: runtime.Decimal | null
+  derivedFromId: string | null
+  derivedFromName: string | null
+  ownerId: string | null
+  ownerName: string | null
+  version: number | null
+  previousVersionId: string | null
+  createdBy: string | null
+  lastModifiedBy: string | null
+  lockedAt: Date | null
+  lockedBy: string | null
+  approvedAt: Date | null
+  approvedBy: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -90,21 +100,28 @@ export type ScenarioCountAggregateOutputType = {
   id: number
   name: number
   description: number
-  type: number
+  caseType: number
   status: number
-  baseForecastId: number
-  baseScenarioId: number
-  parameters: number
-  results: number
-  revenueImpact: number
-  expenseImpact: number
-  profitImpact: number
-  cashFlowImpact: number
-  probability: number
-  riskLevel: number
+  visibility: number
+  metrics: number
   confidenceLevel: number
+  confidenceScore: number
+  uncertaintyBandLow: number
+  uncertaintyBandHigh: number
+  derivedFromId: number
+  derivedFromName: number
+  ownerId: number
+  ownerName: number
+  sharedWithTeams: number
+  version: number
+  previousVersionId: number
   tags: number
-  notes: number
+  createdBy: number
+  lastModifiedBy: number
+  lockedAt: number
+  lockedBy: number
+  approvedAt: number
+  approvedBy: number
   organizationId: number
   createdAt: number
   updatedAt: number
@@ -113,39 +130,42 @@ export type ScenarioCountAggregateOutputType = {
 
 
 export type ScenarioAvgAggregateInputType = {
-  revenueImpact?: true
-  expenseImpact?: true
-  profitImpact?: true
-  cashFlowImpact?: true
-  probability?: true
-  confidenceLevel?: true
+  confidenceScore?: true
+  uncertaintyBandLow?: true
+  uncertaintyBandHigh?: true
+  version?: true
 }
 
 export type ScenarioSumAggregateInputType = {
-  revenueImpact?: true
-  expenseImpact?: true
-  profitImpact?: true
-  cashFlowImpact?: true
-  probability?: true
-  confidenceLevel?: true
+  confidenceScore?: true
+  uncertaintyBandLow?: true
+  uncertaintyBandHigh?: true
+  version?: true
 }
 
 export type ScenarioMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
-  type?: true
+  caseType?: true
   status?: true
-  baseForecastId?: true
-  baseScenarioId?: true
-  revenueImpact?: true
-  expenseImpact?: true
-  profitImpact?: true
-  cashFlowImpact?: true
-  probability?: true
-  riskLevel?: true
+  visibility?: true
   confidenceLevel?: true
-  notes?: true
+  confidenceScore?: true
+  uncertaintyBandLow?: true
+  uncertaintyBandHigh?: true
+  derivedFromId?: true
+  derivedFromName?: true
+  ownerId?: true
+  ownerName?: true
+  version?: true
+  previousVersionId?: true
+  createdBy?: true
+  lastModifiedBy?: true
+  lockedAt?: true
+  lockedBy?: true
+  approvedAt?: true
+  approvedBy?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -155,18 +175,25 @@ export type ScenarioMaxAggregateInputType = {
   id?: true
   name?: true
   description?: true
-  type?: true
+  caseType?: true
   status?: true
-  baseForecastId?: true
-  baseScenarioId?: true
-  revenueImpact?: true
-  expenseImpact?: true
-  profitImpact?: true
-  cashFlowImpact?: true
-  probability?: true
-  riskLevel?: true
+  visibility?: true
   confidenceLevel?: true
-  notes?: true
+  confidenceScore?: true
+  uncertaintyBandLow?: true
+  uncertaintyBandHigh?: true
+  derivedFromId?: true
+  derivedFromName?: true
+  ownerId?: true
+  ownerName?: true
+  version?: true
+  previousVersionId?: true
+  createdBy?: true
+  lastModifiedBy?: true
+  lockedAt?: true
+  lockedBy?: true
+  approvedAt?: true
+  approvedBy?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -176,21 +203,28 @@ export type ScenarioCountAggregateInputType = {
   id?: true
   name?: true
   description?: true
-  type?: true
+  caseType?: true
   status?: true
-  baseForecastId?: true
-  baseScenarioId?: true
-  parameters?: true
-  results?: true
-  revenueImpact?: true
-  expenseImpact?: true
-  profitImpact?: true
-  cashFlowImpact?: true
-  probability?: true
-  riskLevel?: true
+  visibility?: true
+  metrics?: true
   confidenceLevel?: true
+  confidenceScore?: true
+  uncertaintyBandLow?: true
+  uncertaintyBandHigh?: true
+  derivedFromId?: true
+  derivedFromName?: true
+  ownerId?: true
+  ownerName?: true
+  sharedWithTeams?: true
+  version?: true
+  previousVersionId?: true
   tags?: true
-  notes?: true
+  createdBy?: true
+  lastModifiedBy?: true
+  lockedAt?: true
+  lockedBy?: true
+  approvedAt?: true
+  approvedBy?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -287,21 +321,28 @@ export type ScenarioGroupByOutputType = {
   id: string
   name: string
   description: string | null
-  type: string
+  caseType: string
   status: string
-  baseForecastId: string | null
-  baseScenarioId: string | null
-  parameters: runtime.JsonValue
-  results: runtime.JsonValue | null
-  revenueImpact: runtime.Decimal | null
-  expenseImpact: runtime.Decimal | null
-  profitImpact: runtime.Decimal | null
-  cashFlowImpact: runtime.Decimal | null
-  probability: runtime.Decimal | null
-  riskLevel: string
-  confidenceLevel: runtime.Decimal | null
+  visibility: string
+  metrics: runtime.JsonValue
+  confidenceLevel: string
+  confidenceScore: number
+  uncertaintyBandLow: runtime.Decimal | null
+  uncertaintyBandHigh: runtime.Decimal | null
+  derivedFromId: string | null
+  derivedFromName: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams: string[]
+  version: number
+  previousVersionId: string | null
   tags: string[]
-  notes: string | null
+  createdBy: string
+  lastModifiedBy: string | null
+  lockedAt: Date | null
+  lockedBy: string | null
+  approvedAt: Date | null
+  approvedBy: string | null
   organizationId: string
   createdAt: Date
   updatedAt: Date
@@ -334,50 +375,72 @@ export type ScenarioWhereInput = {
   id?: Prisma.StringFilter<"Scenario"> | string
   name?: Prisma.StringFilter<"Scenario"> | string
   description?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  type?: Prisma.StringFilter<"Scenario"> | string
+  caseType?: Prisma.StringFilter<"Scenario"> | string
   status?: Prisma.StringFilter<"Scenario"> | string
-  baseForecastId?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  baseScenarioId?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  parameters?: Prisma.JsonFilter<"Scenario">
-  results?: Prisma.JsonNullableFilter<"Scenario">
-  revenueImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFilter<"Scenario"> | string
-  confidenceLevel?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFilter<"Scenario"> | string
+  metrics?: Prisma.JsonFilter<"Scenario">
+  confidenceLevel?: Prisma.StringFilter<"Scenario"> | string
+  confidenceScore?: Prisma.IntFilter<"Scenario"> | number
+  uncertaintyBandLow?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  derivedFromName?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  ownerId?: Prisma.StringFilter<"Scenario"> | string
+  ownerName?: Prisma.StringFilter<"Scenario"> | string
+  sharedWithTeams?: Prisma.StringNullableListFilter<"Scenario">
+  version?: Prisma.IntFilter<"Scenario"> | number
+  previousVersionId?: Prisma.StringNullableFilter<"Scenario"> | string | null
   tags?: Prisma.StringNullableListFilter<"Scenario">
-  notes?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  createdBy?: Prisma.StringFilter<"Scenario"> | string
+  lastModifiedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  lockedAt?: Prisma.DateTimeNullableFilter<"Scenario"> | Date | string | null
+  lockedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"Scenario"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
   organizationId?: Prisma.StringFilter<"Scenario"> | string
   createdAt?: Prisma.DateTimeFilter<"Scenario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Scenario"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  assumptions?: Prisma.ScenarioAssumptionListRelationFilter
+  comments?: Prisma.ScenarioCommentListRelationFilter
+  decisions?: Prisma.ScenarioDecisionListRelationFilter
+  changeEvents?: Prisma.ScenarioChangeEventListRelationFilter
 }
 
 export type ScenarioOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
+  caseType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  baseForecastId?: Prisma.SortOrderInput | Prisma.SortOrder
-  baseScenarioId?: Prisma.SortOrderInput | Prisma.SortOrder
-  parameters?: Prisma.SortOrder
-  results?: Prisma.SortOrderInput | Prisma.SortOrder
-  revenueImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  profitImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  probability?: Prisma.SortOrderInput | Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
-  confidenceLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  metrics?: Prisma.SortOrder
+  confidenceLevel?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrderInput | Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrderInput | Prisma.SortOrder
+  derivedFromId?: Prisma.SortOrderInput | Prisma.SortOrder
+  derivedFromName?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  sharedWithTeams?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  lastModifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  assumptions?: Prisma.ScenarioAssumptionOrderByRelationAggregateInput
+  comments?: Prisma.ScenarioCommentOrderByRelationAggregateInput
+  decisions?: Prisma.ScenarioDecisionOrderByRelationAggregateInput
+  changeEvents?: Prisma.ScenarioChangeEventOrderByRelationAggregateInput
 }
 
 export type ScenarioWhereUniqueInput = Prisma.AtLeast<{
@@ -387,46 +450,64 @@ export type ScenarioWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ScenarioWhereInput | Prisma.ScenarioWhereInput[]
   name?: Prisma.StringFilter<"Scenario"> | string
   description?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  type?: Prisma.StringFilter<"Scenario"> | string
+  caseType?: Prisma.StringFilter<"Scenario"> | string
   status?: Prisma.StringFilter<"Scenario"> | string
-  baseForecastId?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  baseScenarioId?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  parameters?: Prisma.JsonFilter<"Scenario">
-  results?: Prisma.JsonNullableFilter<"Scenario">
-  revenueImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFilter<"Scenario"> | string
-  confidenceLevel?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFilter<"Scenario"> | string
+  metrics?: Prisma.JsonFilter<"Scenario">
+  confidenceLevel?: Prisma.StringFilter<"Scenario"> | string
+  confidenceScore?: Prisma.IntFilter<"Scenario"> | number
+  uncertaintyBandLow?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  derivedFromName?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  ownerId?: Prisma.StringFilter<"Scenario"> | string
+  ownerName?: Prisma.StringFilter<"Scenario"> | string
+  sharedWithTeams?: Prisma.StringNullableListFilter<"Scenario">
+  version?: Prisma.IntFilter<"Scenario"> | number
+  previousVersionId?: Prisma.StringNullableFilter<"Scenario"> | string | null
   tags?: Prisma.StringNullableListFilter<"Scenario">
-  notes?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  createdBy?: Prisma.StringFilter<"Scenario"> | string
+  lastModifiedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  lockedAt?: Prisma.DateTimeNullableFilter<"Scenario"> | Date | string | null
+  lockedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"Scenario"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
   organizationId?: Prisma.StringFilter<"Scenario"> | string
   createdAt?: Prisma.DateTimeFilter<"Scenario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Scenario"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  assumptions?: Prisma.ScenarioAssumptionListRelationFilter
+  comments?: Prisma.ScenarioCommentListRelationFilter
+  decisions?: Prisma.ScenarioDecisionListRelationFilter
+  changeEvents?: Prisma.ScenarioChangeEventListRelationFilter
 }, "id">
 
 export type ScenarioOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
+  caseType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  baseForecastId?: Prisma.SortOrderInput | Prisma.SortOrder
-  baseScenarioId?: Prisma.SortOrderInput | Prisma.SortOrder
-  parameters?: Prisma.SortOrder
-  results?: Prisma.SortOrderInput | Prisma.SortOrder
-  revenueImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  profitImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrderInput | Prisma.SortOrder
-  probability?: Prisma.SortOrderInput | Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
-  confidenceLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  metrics?: Prisma.SortOrder
+  confidenceLevel?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrderInput | Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrderInput | Prisma.SortOrder
+  derivedFromId?: Prisma.SortOrderInput | Prisma.SortOrder
+  derivedFromName?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  sharedWithTeams?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  lastModifiedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -444,21 +525,28 @@ export type ScenarioScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
   name?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
-  type?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
+  caseType?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
   status?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
-  baseForecastId?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
-  baseScenarioId?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
-  parameters?: Prisma.JsonWithAggregatesFilter<"Scenario">
-  results?: Prisma.JsonNullableWithAggregatesFilter<"Scenario">
-  revenueImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
-  confidenceLevel?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
+  metrics?: Prisma.JsonWithAggregatesFilter<"Scenario">
+  confidenceLevel?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
+  confidenceScore?: Prisma.IntWithAggregatesFilter<"Scenario"> | number
+  uncertaintyBandLow?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.DecimalNullableWithAggregatesFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
+  derivedFromName?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
+  ownerId?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
+  ownerName?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
+  sharedWithTeams?: Prisma.StringNullableListFilter<"Scenario">
+  version?: Prisma.IntWithAggregatesFilter<"Scenario"> | number
+  previousVersionId?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
   tags?: Prisma.StringNullableListFilter<"Scenario">
-  notes?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
+  createdBy?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
+  lastModifiedBy?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
+  lockedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Scenario"> | Date | string | null
+  lockedBy?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Scenario"> | Date | string | null
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"Scenario"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Scenario"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Scenario"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Scenario"> | Date | string
@@ -468,117 +556,168 @@ export type ScenarioCreateInput = {
   id?: string
   name: string
   description?: string | null
-  type?: string
+  caseType?: string
   status?: string
-  baseForecastId?: string | null
-  baseScenarioId?: string | null
-  parameters: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
-  confidenceLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
   tags?: Prisma.ScenarioCreatetagsInput | string[]
-  notes?: string | null
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutScenariosInput
+  assumptions?: Prisma.ScenarioAssumptionCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventCreateNestedManyWithoutScenarioInput
 }
 
 export type ScenarioUncheckedCreateInput = {
   id?: string
   name: string
   description?: string | null
-  type?: string
+  caseType?: string
   status?: string
-  baseForecastId?: string | null
-  baseScenarioId?: string | null
-  parameters: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
-  confidenceLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
   tags?: Prisma.ScenarioCreatetagsInput | string[]
-  notes?: string | null
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentUncheckedCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionUncheckedCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedCreateNestedManyWithoutScenarioInput
 }
 
 export type ScenarioUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutScenariosNestedInput
+  assumptions?: Prisma.ScenarioAssumptionUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUpdateManyWithoutScenarioNestedInput
 }
 
 export type ScenarioUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUncheckedUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUncheckedUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedUpdateManyWithoutScenarioNestedInput
 }
 
 export type ScenarioCreateManyInput = {
   id?: string
   name: string
   description?: string | null
-  type?: string
+  caseType?: string
   status?: string
-  baseForecastId?: string | null
-  baseScenarioId?: string | null
-  parameters: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
-  confidenceLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
   tags?: Prisma.ScenarioCreatetagsInput | string[]
-  notes?: string | null
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -588,21 +727,28 @@ export type ScenarioUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -611,21 +757,28 @@ export type ScenarioUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -645,51 +798,63 @@ export type ScenarioCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  caseType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  baseForecastId?: Prisma.SortOrder
-  baseScenarioId?: Prisma.SortOrder
-  parameters?: Prisma.SortOrder
-  results?: Prisma.SortOrder
-  revenueImpact?: Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrder
-  profitImpact?: Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrder
-  probability?: Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  metrics?: Prisma.SortOrder
   confidenceLevel?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrder
+  derivedFromId?: Prisma.SortOrder
+  derivedFromName?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  sharedWithTeams?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
   tags?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  lastModifiedBy?: Prisma.SortOrder
+  lockedAt?: Prisma.SortOrder
+  lockedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ScenarioAvgOrderByAggregateInput = {
-  revenueImpact?: Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrder
-  profitImpact?: Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrder
-  probability?: Prisma.SortOrder
-  confidenceLevel?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrder
+  version?: Prisma.SortOrder
 }
 
 export type ScenarioMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  caseType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  baseForecastId?: Prisma.SortOrder
-  baseScenarioId?: Prisma.SortOrder
-  revenueImpact?: Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrder
-  profitImpact?: Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrder
-  probability?: Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   confidenceLevel?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrder
+  derivedFromId?: Prisma.SortOrder
+  derivedFromName?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  lastModifiedBy?: Prisma.SortOrder
+  lockedAt?: Prisma.SortOrder
+  lockedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -699,30 +864,40 @@ export type ScenarioMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  caseType?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  baseForecastId?: Prisma.SortOrder
-  baseScenarioId?: Prisma.SortOrder
-  revenueImpact?: Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrder
-  profitImpact?: Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrder
-  probability?: Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   confidenceLevel?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrder
+  derivedFromId?: Prisma.SortOrder
+  derivedFromName?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  lastModifiedBy?: Prisma.SortOrder
+  lockedAt?: Prisma.SortOrder
+  lockedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ScenarioSumOrderByAggregateInput = {
-  revenueImpact?: Prisma.SortOrder
-  expenseImpact?: Prisma.SortOrder
-  profitImpact?: Prisma.SortOrder
-  cashFlowImpact?: Prisma.SortOrder
-  probability?: Prisma.SortOrder
-  confidenceLevel?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  uncertaintyBandLow?: Prisma.SortOrder
+  uncertaintyBandHigh?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+}
+
+export type ScenarioScalarRelationFilter = {
+  is?: Prisma.ScenarioWhereInput
+  isNot?: Prisma.ScenarioWhereInput
 }
 
 export type ScenarioCreateNestedManyWithoutOrganizationInput = {
@@ -767,8 +942,17 @@ export type ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.ScenarioScalarWhereInput | Prisma.ScenarioScalarWhereInput[]
 }
 
+export type ScenarioCreatesharedWithTeamsInput = {
+  set: string[]
+}
+
 export type ScenarioCreatetagsInput = {
   set: string[]
+}
+
+export type ScenarioUpdatesharedWithTeamsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type ScenarioUpdatetagsInput = {
@@ -776,50 +960,128 @@ export type ScenarioUpdatetagsInput = {
   push?: string | string[]
 }
 
+export type ScenarioCreateNestedOneWithoutAssumptionsInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutAssumptionsInput, Prisma.ScenarioUncheckedCreateWithoutAssumptionsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutAssumptionsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+}
+
+export type ScenarioUpdateOneRequiredWithoutAssumptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutAssumptionsInput, Prisma.ScenarioUncheckedCreateWithoutAssumptionsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutAssumptionsInput
+  upsert?: Prisma.ScenarioUpsertWithoutAssumptionsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ScenarioUpdateToOneWithWhereWithoutAssumptionsInput, Prisma.ScenarioUpdateWithoutAssumptionsInput>, Prisma.ScenarioUncheckedUpdateWithoutAssumptionsInput>
+}
+
+export type ScenarioCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutCommentsInput, Prisma.ScenarioUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+}
+
+export type ScenarioUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutCommentsInput, Prisma.ScenarioUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.ScenarioUpsertWithoutCommentsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ScenarioUpdateToOneWithWhereWithoutCommentsInput, Prisma.ScenarioUpdateWithoutCommentsInput>, Prisma.ScenarioUncheckedUpdateWithoutCommentsInput>
+}
+
+export type ScenarioCreateNestedOneWithoutDecisionsInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutDecisionsInput, Prisma.ScenarioUncheckedCreateWithoutDecisionsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutDecisionsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+}
+
+export type ScenarioUpdateOneRequiredWithoutDecisionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutDecisionsInput, Prisma.ScenarioUncheckedCreateWithoutDecisionsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutDecisionsInput
+  upsert?: Prisma.ScenarioUpsertWithoutDecisionsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ScenarioUpdateToOneWithWhereWithoutDecisionsInput, Prisma.ScenarioUpdateWithoutDecisionsInput>, Prisma.ScenarioUncheckedUpdateWithoutDecisionsInput>
+}
+
+export type ScenarioCreateNestedOneWithoutChangeEventsInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutChangeEventsInput, Prisma.ScenarioUncheckedCreateWithoutChangeEventsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutChangeEventsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+}
+
+export type ScenarioUpdateOneRequiredWithoutChangeEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.ScenarioCreateWithoutChangeEventsInput, Prisma.ScenarioUncheckedCreateWithoutChangeEventsInput>
+  connectOrCreate?: Prisma.ScenarioCreateOrConnectWithoutChangeEventsInput
+  upsert?: Prisma.ScenarioUpsertWithoutChangeEventsInput
+  connect?: Prisma.ScenarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ScenarioUpdateToOneWithWhereWithoutChangeEventsInput, Prisma.ScenarioUpdateWithoutChangeEventsInput>, Prisma.ScenarioUncheckedUpdateWithoutChangeEventsInput>
+}
+
 export type ScenarioCreateWithoutOrganizationInput = {
   id?: string
   name: string
   description?: string | null
-  type?: string
+  caseType?: string
   status?: string
-  baseForecastId?: string | null
-  baseScenarioId?: string | null
-  parameters: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
-  confidenceLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
   tags?: Prisma.ScenarioCreatetagsInput | string[]
-  notes?: string | null
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assumptions?: Prisma.ScenarioAssumptionCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventCreateNestedManyWithoutScenarioInput
 }
 
 export type ScenarioUncheckedCreateWithoutOrganizationInput = {
   id?: string
   name: string
   description?: string | null
-  type?: string
+  caseType?: string
   status?: string
-  baseForecastId?: string | null
-  baseScenarioId?: string | null
-  parameters: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
-  confidenceLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
   tags?: Prisma.ScenarioCreatetagsInput | string[]
-  notes?: string | null
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentUncheckedCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionUncheckedCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedCreateNestedManyWithoutScenarioInput
 }
 
 export type ScenarioCreateOrConnectWithoutOrganizationInput = {
@@ -855,45 +1117,667 @@ export type ScenarioScalarWhereInput = {
   id?: Prisma.StringFilter<"Scenario"> | string
   name?: Prisma.StringFilter<"Scenario"> | string
   description?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  type?: Prisma.StringFilter<"Scenario"> | string
+  caseType?: Prisma.StringFilter<"Scenario"> | string
   status?: Prisma.StringFilter<"Scenario"> | string
-  baseForecastId?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  baseScenarioId?: Prisma.StringNullableFilter<"Scenario"> | string | null
-  parameters?: Prisma.JsonFilter<"Scenario">
-  results?: Prisma.JsonNullableFilter<"Scenario">
-  revenueImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFilter<"Scenario"> | string
-  confidenceLevel?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFilter<"Scenario"> | string
+  metrics?: Prisma.JsonFilter<"Scenario">
+  confidenceLevel?: Prisma.StringFilter<"Scenario"> | string
+  confidenceScore?: Prisma.IntFilter<"Scenario"> | number
+  uncertaintyBandLow?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.DecimalNullableFilter<"Scenario"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  derivedFromName?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  ownerId?: Prisma.StringFilter<"Scenario"> | string
+  ownerName?: Prisma.StringFilter<"Scenario"> | string
+  sharedWithTeams?: Prisma.StringNullableListFilter<"Scenario">
+  version?: Prisma.IntFilter<"Scenario"> | number
+  previousVersionId?: Prisma.StringNullableFilter<"Scenario"> | string | null
   tags?: Prisma.StringNullableListFilter<"Scenario">
-  notes?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  createdBy?: Prisma.StringFilter<"Scenario"> | string
+  lastModifiedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  lockedAt?: Prisma.DateTimeNullableFilter<"Scenario"> | Date | string | null
+  lockedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"Scenario"> | Date | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Scenario"> | string | null
   organizationId?: Prisma.StringFilter<"Scenario"> | string
   createdAt?: Prisma.DateTimeFilter<"Scenario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Scenario"> | Date | string
+}
+
+export type ScenarioCreateWithoutAssumptionsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutScenariosInput
+  comments?: Prisma.ScenarioCommentCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioUncheckedCreateWithoutAssumptionsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  comments?: Prisma.ScenarioCommentUncheckedCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionUncheckedCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioCreateOrConnectWithoutAssumptionsInput = {
+  where: Prisma.ScenarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutAssumptionsInput, Prisma.ScenarioUncheckedCreateWithoutAssumptionsInput>
+}
+
+export type ScenarioUpsertWithoutAssumptionsInput = {
+  update: Prisma.XOR<Prisma.ScenarioUpdateWithoutAssumptionsInput, Prisma.ScenarioUncheckedUpdateWithoutAssumptionsInput>
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutAssumptionsInput, Prisma.ScenarioUncheckedCreateWithoutAssumptionsInput>
+  where?: Prisma.ScenarioWhereInput
+}
+
+export type ScenarioUpdateToOneWithWhereWithoutAssumptionsInput = {
+  where?: Prisma.ScenarioWhereInput
+  data: Prisma.XOR<Prisma.ScenarioUpdateWithoutAssumptionsInput, Prisma.ScenarioUncheckedUpdateWithoutAssumptionsInput>
+}
+
+export type ScenarioUpdateWithoutAssumptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutScenariosNestedInput
+  comments?: Prisma.ScenarioCommentUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioUncheckedUpdateWithoutAssumptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.ScenarioCommentUncheckedUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUncheckedUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioCreateWithoutCommentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutScenariosInput
+  assumptions?: Prisma.ScenarioAssumptionCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioUncheckedCreateWithoutCommentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionUncheckedCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.ScenarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutCommentsInput, Prisma.ScenarioUncheckedCreateWithoutCommentsInput>
+}
+
+export type ScenarioUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.ScenarioUpdateWithoutCommentsInput, Prisma.ScenarioUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutCommentsInput, Prisma.ScenarioUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.ScenarioWhereInput
+}
+
+export type ScenarioUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.ScenarioWhereInput
+  data: Prisma.XOR<Prisma.ScenarioUpdateWithoutCommentsInput, Prisma.ScenarioUncheckedUpdateWithoutCommentsInput>
+}
+
+export type ScenarioUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutScenariosNestedInput
+  assumptions?: Prisma.ScenarioAssumptionUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUncheckedUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioCreateWithoutDecisionsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutScenariosInput
+  assumptions?: Prisma.ScenarioAssumptionCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioUncheckedCreateWithoutDecisionsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentUncheckedCreateNestedManyWithoutScenarioInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioCreateOrConnectWithoutDecisionsInput = {
+  where: Prisma.ScenarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutDecisionsInput, Prisma.ScenarioUncheckedCreateWithoutDecisionsInput>
+}
+
+export type ScenarioUpsertWithoutDecisionsInput = {
+  update: Prisma.XOR<Prisma.ScenarioUpdateWithoutDecisionsInput, Prisma.ScenarioUncheckedUpdateWithoutDecisionsInput>
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutDecisionsInput, Prisma.ScenarioUncheckedCreateWithoutDecisionsInput>
+  where?: Prisma.ScenarioWhereInput
+}
+
+export type ScenarioUpdateToOneWithWhereWithoutDecisionsInput = {
+  where?: Prisma.ScenarioWhereInput
+  data: Prisma.XOR<Prisma.ScenarioUpdateWithoutDecisionsInput, Prisma.ScenarioUncheckedUpdateWithoutDecisionsInput>
+}
+
+export type ScenarioUpdateWithoutDecisionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutScenariosNestedInput
+  assumptions?: Prisma.ScenarioAssumptionUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioUncheckedUpdateWithoutDecisionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUncheckedUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioCreateWithoutChangeEventsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutScenariosInput
+  assumptions?: Prisma.ScenarioAssumptionCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioUncheckedCreateWithoutChangeEventsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  caseType?: string
+  status?: string
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
+  tags?: Prisma.ScenarioCreatetagsInput | string[]
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedCreateNestedManyWithoutScenarioInput
+  comments?: Prisma.ScenarioCommentUncheckedCreateNestedManyWithoutScenarioInput
+  decisions?: Prisma.ScenarioDecisionUncheckedCreateNestedManyWithoutScenarioInput
+}
+
+export type ScenarioCreateOrConnectWithoutChangeEventsInput = {
+  where: Prisma.ScenarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutChangeEventsInput, Prisma.ScenarioUncheckedCreateWithoutChangeEventsInput>
+}
+
+export type ScenarioUpsertWithoutChangeEventsInput = {
+  update: Prisma.XOR<Prisma.ScenarioUpdateWithoutChangeEventsInput, Prisma.ScenarioUncheckedUpdateWithoutChangeEventsInput>
+  create: Prisma.XOR<Prisma.ScenarioCreateWithoutChangeEventsInput, Prisma.ScenarioUncheckedCreateWithoutChangeEventsInput>
+  where?: Prisma.ScenarioWhereInput
+}
+
+export type ScenarioUpdateToOneWithWhereWithoutChangeEventsInput = {
+  where?: Prisma.ScenarioWhereInput
+  data: Prisma.XOR<Prisma.ScenarioUpdateWithoutChangeEventsInput, Prisma.ScenarioUncheckedUpdateWithoutChangeEventsInput>
+}
+
+export type ScenarioUpdateWithoutChangeEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutScenariosNestedInput
+  assumptions?: Prisma.ScenarioAssumptionUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUpdateManyWithoutScenarioNestedInput
+}
+
+export type ScenarioUncheckedUpdateWithoutChangeEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ScenarioUpdatetagsInput | string[]
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUncheckedUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUncheckedUpdateManyWithoutScenarioNestedInput
 }
 
 export type ScenarioCreateManyOrganizationInput = {
   id?: string
   name: string
   description?: string | null
-  type?: string
+  caseType?: string
   status?: string
-  baseForecastId?: string | null
-  baseScenarioId?: string | null
-  parameters: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
-  confidenceLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: string
+  confidenceScore?: number
+  uncertaintyBandLow?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: string | null
+  derivedFromName?: string | null
+  ownerId: string
+  ownerName: string
+  sharedWithTeams?: Prisma.ScenarioCreatesharedWithTeamsInput | string[]
+  version?: number
+  previousVersionId?: string | null
   tags?: Prisma.ScenarioCreatetagsInput | string[]
-  notes?: string | null
+  createdBy: string
+  lastModifiedBy?: string | null
+  lockedAt?: Date | string | null
+  lockedBy?: string | null
+  approvedAt?: Date | string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -902,117 +1786,221 @@ export type ScenarioUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assumptions?: Prisma.ScenarioAssumptionUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUpdateManyWithoutScenarioNestedInput
 }
 
 export type ScenarioUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assumptions?: Prisma.ScenarioAssumptionUncheckedUpdateManyWithoutScenarioNestedInput
+  comments?: Prisma.ScenarioCommentUncheckedUpdateManyWithoutScenarioNestedInput
+  decisions?: Prisma.ScenarioDecisionUncheckedUpdateManyWithoutScenarioNestedInput
+  changeEvents?: Prisma.ScenarioChangeEventUncheckedUpdateManyWithoutScenarioNestedInput
 }
 
 export type ScenarioUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  caseType?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  baseForecastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  baseScenarioId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parameters?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  results?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  revenueImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  expenseImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  profitImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  cashFlowImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  probability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  confidenceLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  visibility?: Prisma.StringFieldUpdateOperationsInput | string
+  metrics?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  confidenceLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  confidenceScore?: Prisma.IntFieldUpdateOperationsInput | number
+  uncertaintyBandLow?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  uncertaintyBandHigh?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  derivedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  derivedFromName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  sharedWithTeams?: Prisma.ScenarioUpdatesharedWithTeamsInput | string[]
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ScenarioUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  lastModifiedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ScenarioCountOutputType
+ */
+
+export type ScenarioCountOutputType = {
+  assumptions: number
+  comments: number
+  decisions: number
+  changeEvents: number
+}
+
+export type ScenarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  assumptions?: boolean | ScenarioCountOutputTypeCountAssumptionsArgs
+  comments?: boolean | ScenarioCountOutputTypeCountCommentsArgs
+  decisions?: boolean | ScenarioCountOutputTypeCountDecisionsArgs
+  changeEvents?: boolean | ScenarioCountOutputTypeCountChangeEventsArgs
+}
+
+/**
+ * ScenarioCountOutputType without action
+ */
+export type ScenarioCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScenarioCountOutputType
+   */
+  select?: Prisma.ScenarioCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ScenarioCountOutputType without action
+ */
+export type ScenarioCountOutputTypeCountAssumptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScenarioAssumptionWhereInput
+}
+
+/**
+ * ScenarioCountOutputType without action
+ */
+export type ScenarioCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScenarioCommentWhereInput
+}
+
+/**
+ * ScenarioCountOutputType without action
+ */
+export type ScenarioCountOutputTypeCountDecisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScenarioDecisionWhereInput
+}
+
+/**
+ * ScenarioCountOutputType without action
+ */
+export type ScenarioCountOutputTypeCountChangeEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScenarioChangeEventWhereInput
+}
 
 
 export type ScenarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   description?: boolean
-  type?: boolean
+  caseType?: boolean
   status?: boolean
-  baseForecastId?: boolean
-  baseScenarioId?: boolean
-  parameters?: boolean
-  results?: boolean
-  revenueImpact?: boolean
-  expenseImpact?: boolean
-  profitImpact?: boolean
-  cashFlowImpact?: boolean
-  probability?: boolean
-  riskLevel?: boolean
+  visibility?: boolean
+  metrics?: boolean
   confidenceLevel?: boolean
+  confidenceScore?: boolean
+  uncertaintyBandLow?: boolean
+  uncertaintyBandHigh?: boolean
+  derivedFromId?: boolean
+  derivedFromName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  sharedWithTeams?: boolean
+  version?: boolean
+  previousVersionId?: boolean
   tags?: boolean
-  notes?: boolean
+  createdBy?: boolean
+  lastModifiedBy?: boolean
+  lockedAt?: boolean
+  lockedBy?: boolean
+  approvedAt?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  assumptions?: boolean | Prisma.Scenario$assumptionsArgs<ExtArgs>
+  comments?: boolean | Prisma.Scenario$commentsArgs<ExtArgs>
+  decisions?: boolean | Prisma.Scenario$decisionsArgs<ExtArgs>
+  changeEvents?: boolean | Prisma.Scenario$changeEventsArgs<ExtArgs>
+  _count?: boolean | Prisma.ScenarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["scenario"]>
 
 export type ScenarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   description?: boolean
-  type?: boolean
+  caseType?: boolean
   status?: boolean
-  baseForecastId?: boolean
-  baseScenarioId?: boolean
-  parameters?: boolean
-  results?: boolean
-  revenueImpact?: boolean
-  expenseImpact?: boolean
-  profitImpact?: boolean
-  cashFlowImpact?: boolean
-  probability?: boolean
-  riskLevel?: boolean
+  visibility?: boolean
+  metrics?: boolean
   confidenceLevel?: boolean
+  confidenceScore?: boolean
+  uncertaintyBandLow?: boolean
+  uncertaintyBandHigh?: boolean
+  derivedFromId?: boolean
+  derivedFromName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  sharedWithTeams?: boolean
+  version?: boolean
+  previousVersionId?: boolean
   tags?: boolean
-  notes?: boolean
+  createdBy?: boolean
+  lastModifiedBy?: boolean
+  lockedAt?: boolean
+  lockedBy?: boolean
+  approvedAt?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1023,21 +2011,28 @@ export type ScenarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   description?: boolean
-  type?: boolean
+  caseType?: boolean
   status?: boolean
-  baseForecastId?: boolean
-  baseScenarioId?: boolean
-  parameters?: boolean
-  results?: boolean
-  revenueImpact?: boolean
-  expenseImpact?: boolean
-  profitImpact?: boolean
-  cashFlowImpact?: boolean
-  probability?: boolean
-  riskLevel?: boolean
+  visibility?: boolean
+  metrics?: boolean
   confidenceLevel?: boolean
+  confidenceScore?: boolean
+  uncertaintyBandLow?: boolean
+  uncertaintyBandHigh?: boolean
+  derivedFromId?: boolean
+  derivedFromName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  sharedWithTeams?: boolean
+  version?: boolean
+  previousVersionId?: boolean
   tags?: boolean
-  notes?: boolean
+  createdBy?: boolean
+  lastModifiedBy?: boolean
+  lockedAt?: boolean
+  lockedBy?: boolean
+  approvedAt?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1048,29 +2043,41 @@ export type ScenarioSelectScalar = {
   id?: boolean
   name?: boolean
   description?: boolean
-  type?: boolean
+  caseType?: boolean
   status?: boolean
-  baseForecastId?: boolean
-  baseScenarioId?: boolean
-  parameters?: boolean
-  results?: boolean
-  revenueImpact?: boolean
-  expenseImpact?: boolean
-  profitImpact?: boolean
-  cashFlowImpact?: boolean
-  probability?: boolean
-  riskLevel?: boolean
+  visibility?: boolean
+  metrics?: boolean
   confidenceLevel?: boolean
+  confidenceScore?: boolean
+  uncertaintyBandLow?: boolean
+  uncertaintyBandHigh?: boolean
+  derivedFromId?: boolean
+  derivedFromName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  sharedWithTeams?: boolean
+  version?: boolean
+  previousVersionId?: boolean
   tags?: boolean
-  notes?: boolean
+  createdBy?: boolean
+  lastModifiedBy?: boolean
+  lockedAt?: boolean
+  lockedBy?: boolean
+  approvedAt?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ScenarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "type" | "status" | "baseForecastId" | "baseScenarioId" | "parameters" | "results" | "revenueImpact" | "expenseImpact" | "profitImpact" | "cashFlowImpact" | "probability" | "riskLevel" | "confidenceLevel" | "tags" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["scenario"]>
+export type ScenarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "caseType" | "status" | "visibility" | "metrics" | "confidenceLevel" | "confidenceScore" | "uncertaintyBandLow" | "uncertaintyBandHigh" | "derivedFromId" | "derivedFromName" | "ownerId" | "ownerName" | "sharedWithTeams" | "version" | "previousVersionId" | "tags" | "createdBy" | "lastModifiedBy" | "lockedAt" | "lockedBy" | "approvedAt" | "approvedBy" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["scenario"]>
 export type ScenarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  assumptions?: boolean | Prisma.Scenario$assumptionsArgs<ExtArgs>
+  comments?: boolean | Prisma.Scenario$commentsArgs<ExtArgs>
+  decisions?: boolean | Prisma.Scenario$decisionsArgs<ExtArgs>
+  changeEvents?: boolean | Prisma.Scenario$changeEventsArgs<ExtArgs>
+  _count?: boolean | Prisma.ScenarioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ScenarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1083,26 +2090,37 @@ export type $ScenarioPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Scenario"
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
+    assumptions: Prisma.$ScenarioAssumptionPayload<ExtArgs>[]
+    comments: Prisma.$ScenarioCommentPayload<ExtArgs>[]
+    decisions: Prisma.$ScenarioDecisionPayload<ExtArgs>[]
+    changeEvents: Prisma.$ScenarioChangeEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     description: string | null
-    type: string
+    caseType: string
     status: string
-    baseForecastId: string | null
-    baseScenarioId: string | null
-    parameters: runtime.JsonValue
-    results: runtime.JsonValue | null
-    revenueImpact: runtime.Decimal | null
-    expenseImpact: runtime.Decimal | null
-    profitImpact: runtime.Decimal | null
-    cashFlowImpact: runtime.Decimal | null
-    probability: runtime.Decimal | null
-    riskLevel: string
-    confidenceLevel: runtime.Decimal | null
+    visibility: string
+    metrics: runtime.JsonValue
+    confidenceLevel: string
+    confidenceScore: number
+    uncertaintyBandLow: runtime.Decimal | null
+    uncertaintyBandHigh: runtime.Decimal | null
+    derivedFromId: string | null
+    derivedFromName: string | null
+    ownerId: string
+    ownerName: string
+    sharedWithTeams: string[]
+    version: number
+    previousVersionId: string | null
     tags: string[]
-    notes: string | null
+    createdBy: string
+    lastModifiedBy: string | null
+    lockedAt: Date | null
+    lockedBy: string | null
+    approvedAt: Date | null
+    approvedBy: string | null
     organizationId: string
     createdAt: Date
     updatedAt: Date
@@ -1501,6 +2519,10 @@ readonly fields: ScenarioFieldRefs;
 export interface Prisma__ScenarioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  assumptions<T extends Prisma.Scenario$assumptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Scenario$assumptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScenarioAssumptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.Scenario$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Scenario$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScenarioCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  decisions<T extends Prisma.Scenario$decisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Scenario$decisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScenarioDecisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  changeEvents<T extends Prisma.Scenario$changeEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Scenario$changeEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScenarioChangeEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1533,21 +2555,28 @@ export interface ScenarioFieldRefs {
   readonly id: Prisma.FieldRef<"Scenario", 'String'>
   readonly name: Prisma.FieldRef<"Scenario", 'String'>
   readonly description: Prisma.FieldRef<"Scenario", 'String'>
-  readonly type: Prisma.FieldRef<"Scenario", 'String'>
+  readonly caseType: Prisma.FieldRef<"Scenario", 'String'>
   readonly status: Prisma.FieldRef<"Scenario", 'String'>
-  readonly baseForecastId: Prisma.FieldRef<"Scenario", 'String'>
-  readonly baseScenarioId: Prisma.FieldRef<"Scenario", 'String'>
-  readonly parameters: Prisma.FieldRef<"Scenario", 'Json'>
-  readonly results: Prisma.FieldRef<"Scenario", 'Json'>
-  readonly revenueImpact: Prisma.FieldRef<"Scenario", 'Decimal'>
-  readonly expenseImpact: Prisma.FieldRef<"Scenario", 'Decimal'>
-  readonly profitImpact: Prisma.FieldRef<"Scenario", 'Decimal'>
-  readonly cashFlowImpact: Prisma.FieldRef<"Scenario", 'Decimal'>
-  readonly probability: Prisma.FieldRef<"Scenario", 'Decimal'>
-  readonly riskLevel: Prisma.FieldRef<"Scenario", 'String'>
-  readonly confidenceLevel: Prisma.FieldRef<"Scenario", 'Decimal'>
+  readonly visibility: Prisma.FieldRef<"Scenario", 'String'>
+  readonly metrics: Prisma.FieldRef<"Scenario", 'Json'>
+  readonly confidenceLevel: Prisma.FieldRef<"Scenario", 'String'>
+  readonly confidenceScore: Prisma.FieldRef<"Scenario", 'Int'>
+  readonly uncertaintyBandLow: Prisma.FieldRef<"Scenario", 'Decimal'>
+  readonly uncertaintyBandHigh: Prisma.FieldRef<"Scenario", 'Decimal'>
+  readonly derivedFromId: Prisma.FieldRef<"Scenario", 'String'>
+  readonly derivedFromName: Prisma.FieldRef<"Scenario", 'String'>
+  readonly ownerId: Prisma.FieldRef<"Scenario", 'String'>
+  readonly ownerName: Prisma.FieldRef<"Scenario", 'String'>
+  readonly sharedWithTeams: Prisma.FieldRef<"Scenario", 'String[]'>
+  readonly version: Prisma.FieldRef<"Scenario", 'Int'>
+  readonly previousVersionId: Prisma.FieldRef<"Scenario", 'String'>
   readonly tags: Prisma.FieldRef<"Scenario", 'String[]'>
-  readonly notes: Prisma.FieldRef<"Scenario", 'String'>
+  readonly createdBy: Prisma.FieldRef<"Scenario", 'String'>
+  readonly lastModifiedBy: Prisma.FieldRef<"Scenario", 'String'>
+  readonly lockedAt: Prisma.FieldRef<"Scenario", 'DateTime'>
+  readonly lockedBy: Prisma.FieldRef<"Scenario", 'String'>
+  readonly approvedAt: Prisma.FieldRef<"Scenario", 'DateTime'>
+  readonly approvedBy: Prisma.FieldRef<"Scenario", 'String'>
   readonly organizationId: Prisma.FieldRef<"Scenario", 'String'>
   readonly createdAt: Prisma.FieldRef<"Scenario", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Scenario", 'DateTime'>
@@ -1944,6 +2973,102 @@ export type ScenarioDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Scenarios to delete.
    */
   limit?: number
+}
+
+/**
+ * Scenario.assumptions
+ */
+export type Scenario$assumptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScenarioAssumption
+   */
+  select?: Prisma.ScenarioAssumptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScenarioAssumption
+   */
+  omit?: Prisma.ScenarioAssumptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScenarioAssumptionInclude<ExtArgs> | null
+  where?: Prisma.ScenarioAssumptionWhereInput
+  orderBy?: Prisma.ScenarioAssumptionOrderByWithRelationInput | Prisma.ScenarioAssumptionOrderByWithRelationInput[]
+  cursor?: Prisma.ScenarioAssumptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScenarioAssumptionScalarFieldEnum | Prisma.ScenarioAssumptionScalarFieldEnum[]
+}
+
+/**
+ * Scenario.comments
+ */
+export type Scenario$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScenarioComment
+   */
+  select?: Prisma.ScenarioCommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScenarioComment
+   */
+  omit?: Prisma.ScenarioCommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScenarioCommentInclude<ExtArgs> | null
+  where?: Prisma.ScenarioCommentWhereInput
+  orderBy?: Prisma.ScenarioCommentOrderByWithRelationInput | Prisma.ScenarioCommentOrderByWithRelationInput[]
+  cursor?: Prisma.ScenarioCommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScenarioCommentScalarFieldEnum | Prisma.ScenarioCommentScalarFieldEnum[]
+}
+
+/**
+ * Scenario.decisions
+ */
+export type Scenario$decisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScenarioDecision
+   */
+  select?: Prisma.ScenarioDecisionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScenarioDecision
+   */
+  omit?: Prisma.ScenarioDecisionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScenarioDecisionInclude<ExtArgs> | null
+  where?: Prisma.ScenarioDecisionWhereInput
+  orderBy?: Prisma.ScenarioDecisionOrderByWithRelationInput | Prisma.ScenarioDecisionOrderByWithRelationInput[]
+  cursor?: Prisma.ScenarioDecisionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScenarioDecisionScalarFieldEnum | Prisma.ScenarioDecisionScalarFieldEnum[]
+}
+
+/**
+ * Scenario.changeEvents
+ */
+export type Scenario$changeEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScenarioChangeEvent
+   */
+  select?: Prisma.ScenarioChangeEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScenarioChangeEvent
+   */
+  omit?: Prisma.ScenarioChangeEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScenarioChangeEventInclude<ExtArgs> | null
+  where?: Prisma.ScenarioChangeEventWhereInput
+  orderBy?: Prisma.ScenarioChangeEventOrderByWithRelationInput | Prisma.ScenarioChangeEventOrderByWithRelationInput[]
+  cursor?: Prisma.ScenarioChangeEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScenarioChangeEventScalarFieldEnum | Prisma.ScenarioChangeEventScalarFieldEnum[]
 }
 
 /**

@@ -1,71 +1,47 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils'
+// src/app/api/customers/[id]/contacts/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils';
 
-// GET /api/customers/[id]/contacts
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+type Params = { params: Promise<{ id: string }> };
 
-  const { id } = await params
+export async function POST(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const customer = await prisma.customer.findFirst({
-    where: { id, organizationId: user.organizationId },
-  })
-  if (!customer) return notFound('Customer not found')
+  const { id: customerId } = await params;
+  const body = await req.json();
 
-  const contacts = await prisma.customerContact.findMany({
-    where: { customerId: id },
-    orderBy: [{ isPrimary: 'desc' }, { name: 'asc' }],
-  })
-
-  return NextResponse.json({ contacts })
-}
-
-// POST /api/customers/[id]/contacts
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
-
-  const { id } = await params
-  const body = await req.json()
-
-  const customer = await prisma.customer.findFirst({
-    where: { id, organizationId: user.organizationId },
-  })
-  if (!customer) return notFound('Customer not found')
-
-  const { name, title, email, phone, isPrimary = false, role = 'general', notes } = body
-
-  if (!name || !email) {
-    return badRequest('Name and email are required')
+  if (!body.name || !body.email) {
+    return badRequest('Name and email are required');
   }
 
-  if (isPrimary) {
+  // Verify customer belongs to organization
+  const customer = await prisma.customer.findFirst({
+    where: { id: customerId, organizationId: user.organizationId },
+  });
+  if (!customer) return notFound('Customer');
+
+  // If setting as primary, unset other primaries
+  if (body.isPrimary) {
     await prisma.customerContact.updateMany({
-      where: { customerId: id, isPrimary: true },
+      where: { customerId, isPrimary: true },
       data: { isPrimary: false },
-    })
+    });
   }
 
   const contact = await prisma.customerContact.create({
     data: {
-      customerId: id,
-      name,
-      title,
-      email,
-      phone,
-      isPrimary,
-      role,
-      notes,
+      customerId,
+      name: body.name,
+      title: body.title,
+      email: body.email,
+      phone: body.phone,
+      isPrimary: body.isPrimary || false,
+      role: body.role || 'general',
+      notes: body.notes,
     },
-  })
+  });
 
-  return NextResponse.json(contact, { status: 201 })
+  return NextResponse.json(contact, { status: 201 });
 }

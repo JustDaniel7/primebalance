@@ -55,6 +55,8 @@ export type KPIHistoryMinAggregateOutputType = {
   vsPrevious: runtime.Decimal | null
   status: string | null
   trend: string | null
+  isAnomaly: boolean | null
+  annotation: string | null
   kpiId: string | null
   createdAt: Date | null
 }
@@ -72,6 +74,8 @@ export type KPIHistoryMaxAggregateOutputType = {
   vsPrevious: runtime.Decimal | null
   status: string | null
   trend: string | null
+  isAnomaly: boolean | null
+  annotation: string | null
   kpiId: string | null
   createdAt: Date | null
 }
@@ -89,6 +93,8 @@ export type KPIHistoryCountAggregateOutputType = {
   vsPrevious: number
   status: number
   trend: number
+  isAnomaly: number
+  annotation: number
   kpiId: number
   createdAt: number
   _all: number
@@ -124,6 +130,8 @@ export type KPIHistoryMinAggregateInputType = {
   vsPrevious?: true
   status?: true
   trend?: true
+  isAnomaly?: true
+  annotation?: true
   kpiId?: true
   createdAt?: true
 }
@@ -141,6 +149,8 @@ export type KPIHistoryMaxAggregateInputType = {
   vsPrevious?: true
   status?: true
   trend?: true
+  isAnomaly?: true
+  annotation?: true
   kpiId?: true
   createdAt?: true
 }
@@ -158,6 +168,8 @@ export type KPIHistoryCountAggregateInputType = {
   vsPrevious?: true
   status?: true
   trend?: true
+  isAnomaly?: true
+  annotation?: true
   kpiId?: true
   createdAt?: true
   _all?: true
@@ -262,6 +274,8 @@ export type KPIHistoryGroupByOutputType = {
   vsPrevious: runtime.Decimal | null
   status: string | null
   trend: string | null
+  isAnomaly: boolean
+  annotation: string | null
   kpiId: string
   createdAt: Date
   _count: KPIHistoryCountAggregateOutputType | null
@@ -302,6 +316,8 @@ export type KPIHistoryWhereInput = {
   vsPrevious?: Prisma.DecimalNullableFilter<"KPIHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
   trend?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
+  isAnomaly?: Prisma.BoolFilter<"KPIHistory"> | boolean
+  annotation?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
   kpiId?: Prisma.StringFilter<"KPIHistory"> | string
   createdAt?: Prisma.DateTimeFilter<"KPIHistory"> | Date | string
   kpi?: Prisma.XOR<Prisma.KPIScalarRelationFilter, Prisma.KPIWhereInput>
@@ -320,6 +336,8 @@ export type KPIHistoryOrderByWithRelationInput = {
   vsPrevious?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   trend?: Prisma.SortOrderInput | Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
+  annotation?: Prisma.SortOrderInput | Prisma.SortOrder
   kpiId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   kpi?: Prisma.KPIOrderByWithRelationInput
@@ -341,6 +359,8 @@ export type KPIHistoryWhereUniqueInput = Prisma.AtLeast<{
   vsPrevious?: Prisma.DecimalNullableFilter<"KPIHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
   trend?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
+  isAnomaly?: Prisma.BoolFilter<"KPIHistory"> | boolean
+  annotation?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
   kpiId?: Prisma.StringFilter<"KPIHistory"> | string
   createdAt?: Prisma.DateTimeFilter<"KPIHistory"> | Date | string
   kpi?: Prisma.XOR<Prisma.KPIScalarRelationFilter, Prisma.KPIWhereInput>
@@ -359,6 +379,8 @@ export type KPIHistoryOrderByWithAggregationInput = {
   vsPrevious?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   trend?: Prisma.SortOrderInput | Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
+  annotation?: Prisma.SortOrderInput | Prisma.SortOrder
   kpiId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.KPIHistoryCountOrderByAggregateInput
@@ -384,6 +406,8 @@ export type KPIHistoryScalarWhereWithAggregatesInput = {
   vsPrevious?: Prisma.DecimalNullableWithAggregatesFilter<"KPIHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringNullableWithAggregatesFilter<"KPIHistory"> | string | null
   trend?: Prisma.StringNullableWithAggregatesFilter<"KPIHistory"> | string | null
+  isAnomaly?: Prisma.BoolWithAggregatesFilter<"KPIHistory"> | boolean
+  annotation?: Prisma.StringNullableWithAggregatesFilter<"KPIHistory"> | string | null
   kpiId?: Prisma.StringWithAggregatesFilter<"KPIHistory"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"KPIHistory"> | Date | string
 }
@@ -401,6 +425,8 @@ export type KPIHistoryCreateInput = {
   vsPrevious?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string | null
   trend?: string | null
+  isAnomaly?: boolean
+  annotation?: string | null
   createdAt?: Date | string
   kpi: Prisma.KPICreateNestedOneWithoutHistoryInput
 }
@@ -418,6 +444,8 @@ export type KPIHistoryUncheckedCreateInput = {
   vsPrevious?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string | null
   trend?: string | null
+  isAnomaly?: boolean
+  annotation?: string | null
   kpiId: string
   createdAt?: Date | string
 }
@@ -435,6 +463,8 @@ export type KPIHistoryUpdateInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   kpi?: Prisma.KPIUpdateOneRequiredWithoutHistoryNestedInput
 }
@@ -452,6 +482,8 @@ export type KPIHistoryUncheckedUpdateInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kpiId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -469,6 +501,8 @@ export type KPIHistoryCreateManyInput = {
   vsPrevious?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string | null
   trend?: string | null
+  isAnomaly?: boolean
+  annotation?: string | null
   kpiId: string
   createdAt?: Date | string
 }
@@ -486,6 +520,8 @@ export type KPIHistoryUpdateManyMutationInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -502,6 +538,8 @@ export type KPIHistoryUncheckedUpdateManyInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kpiId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -529,6 +567,8 @@ export type KPIHistoryCountOrderByAggregateInput = {
   vsPrevious?: Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
+  annotation?: Prisma.SortOrder
   kpiId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -554,6 +594,8 @@ export type KPIHistoryMaxOrderByAggregateInput = {
   vsPrevious?: Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
+  annotation?: Prisma.SortOrder
   kpiId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -571,6 +613,8 @@ export type KPIHistoryMinOrderByAggregateInput = {
   vsPrevious?: Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
+  annotation?: Prisma.SortOrder
   kpiId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -638,6 +682,8 @@ export type KPIHistoryCreateWithoutKpiInput = {
   vsPrevious?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string | null
   trend?: string | null
+  isAnomaly?: boolean
+  annotation?: string | null
   createdAt?: Date | string
 }
 
@@ -654,6 +700,8 @@ export type KPIHistoryUncheckedCreateWithoutKpiInput = {
   vsPrevious?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string | null
   trend?: string | null
+  isAnomaly?: boolean
+  annotation?: string | null
   createdAt?: Date | string
 }
 
@@ -699,6 +747,8 @@ export type KPIHistoryScalarWhereInput = {
   vsPrevious?: Prisma.DecimalNullableFilter<"KPIHistory"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
   trend?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
+  isAnomaly?: Prisma.BoolFilter<"KPIHistory"> | boolean
+  annotation?: Prisma.StringNullableFilter<"KPIHistory"> | string | null
   kpiId?: Prisma.StringFilter<"KPIHistory"> | string
   createdAt?: Prisma.DateTimeFilter<"KPIHistory"> | Date | string
 }
@@ -716,6 +766,8 @@ export type KPIHistoryCreateManyKpiInput = {
   vsPrevious?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string | null
   trend?: string | null
+  isAnomaly?: boolean
+  annotation?: string | null
   createdAt?: Date | string
 }
 
@@ -732,6 +784,8 @@ export type KPIHistoryUpdateWithoutKpiInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -748,6 +802,8 @@ export type KPIHistoryUncheckedUpdateWithoutKpiInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -764,6 +820,8 @@ export type KPIHistoryUncheckedUpdateManyWithoutKpiInput = {
   vsPrevious?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trend?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  annotation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -782,6 +840,8 @@ export type KPIHistorySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   vsPrevious?: boolean
   status?: boolean
   trend?: boolean
+  isAnomaly?: boolean
+  annotation?: boolean
   kpiId?: boolean
   createdAt?: boolean
   kpi?: boolean | Prisma.KPIDefaultArgs<ExtArgs>
@@ -800,6 +860,8 @@ export type KPIHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   vsPrevious?: boolean
   status?: boolean
   trend?: boolean
+  isAnomaly?: boolean
+  annotation?: boolean
   kpiId?: boolean
   createdAt?: boolean
   kpi?: boolean | Prisma.KPIDefaultArgs<ExtArgs>
@@ -818,6 +880,8 @@ export type KPIHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   vsPrevious?: boolean
   status?: boolean
   trend?: boolean
+  isAnomaly?: boolean
+  annotation?: boolean
   kpiId?: boolean
   createdAt?: boolean
   kpi?: boolean | Prisma.KPIDefaultArgs<ExtArgs>
@@ -836,11 +900,13 @@ export type KPIHistorySelectScalar = {
   vsPrevious?: boolean
   status?: boolean
   trend?: boolean
+  isAnomaly?: boolean
+  annotation?: boolean
   kpiId?: boolean
   createdAt?: boolean
 }
 
-export type KPIHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "periodType" | "periodStart" | "periodEnd" | "periodLabel" | "value" | "targetValue" | "previousValue" | "vsTarget" | "vsPrevious" | "status" | "trend" | "kpiId" | "createdAt", ExtArgs["result"]["kPIHistory"]>
+export type KPIHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "periodType" | "periodStart" | "periodEnd" | "periodLabel" | "value" | "targetValue" | "previousValue" | "vsTarget" | "vsPrevious" | "status" | "trend" | "isAnomaly" | "annotation" | "kpiId" | "createdAt", ExtArgs["result"]["kPIHistory"]>
 export type KPIHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   kpi?: boolean | Prisma.KPIDefaultArgs<ExtArgs>
 }
@@ -869,6 +935,8 @@ export type $KPIHistoryPayload<ExtArgs extends runtime.Types.Extensions.Internal
     vsPrevious: runtime.Decimal | null
     status: string | null
     trend: string | null
+    isAnomaly: boolean
+    annotation: string | null
     kpiId: string
     createdAt: Date
   }, ExtArgs["result"]["kPIHistory"]>
@@ -1307,6 +1375,8 @@ export interface KPIHistoryFieldRefs {
   readonly vsPrevious: Prisma.FieldRef<"KPIHistory", 'Decimal'>
   readonly status: Prisma.FieldRef<"KPIHistory", 'String'>
   readonly trend: Prisma.FieldRef<"KPIHistory", 'String'>
+  readonly isAnomaly: Prisma.FieldRef<"KPIHistory", 'Boolean'>
+  readonly annotation: Prisma.FieldRef<"KPIHistory", 'String'>
   readonly kpiId: Prisma.FieldRef<"KPIHistory", 'String'>
   readonly createdAt: Prisma.FieldRef<"KPIHistory", 'DateTime'>
 }

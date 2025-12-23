@@ -27,25 +27,47 @@ export type AggregateFXExposure = {
 }
 
 export type FXExposureAvgAggregateOutputType = {
-  exposureAmount: runtime.Decimal | null
+  grossExposure: runtime.Decimal | null
+  netExposure: runtime.Decimal | null
   hedgedAmount: runtime.Decimal | null
   unhedgedAmount: runtime.Decimal | null
   hedgePercentage: runtime.Decimal | null
+  receivables: runtime.Decimal | null
+  payables: runtime.Decimal | null
+  cashBalance: runtime.Decimal | null
+  operationalInflows: runtime.Decimal | null
+  operationalOutflows: runtime.Decimal | null
+  structuralPositions: runtime.Decimal | null
+  spotRate: runtime.Decimal | null
   bookingRate: runtime.Decimal | null
   currentRate: runtime.Decimal | null
   targetRate: runtime.Decimal | null
+  baseCurrencyValue: runtime.Decimal | null
+  volatility30d: runtime.Decimal | null
+  var95: runtime.Decimal | null
   unrealizedGainLoss: runtime.Decimal | null
   realizedGainLoss: runtime.Decimal | null
 }
 
 export type FXExposureSumAggregateOutputType = {
-  exposureAmount: runtime.Decimal | null
+  grossExposure: runtime.Decimal | null
+  netExposure: runtime.Decimal | null
   hedgedAmount: runtime.Decimal | null
   unhedgedAmount: runtime.Decimal | null
   hedgePercentage: runtime.Decimal | null
+  receivables: runtime.Decimal | null
+  payables: runtime.Decimal | null
+  cashBalance: runtime.Decimal | null
+  operationalInflows: runtime.Decimal | null
+  operationalOutflows: runtime.Decimal | null
+  structuralPositions: runtime.Decimal | null
+  spotRate: runtime.Decimal | null
   bookingRate: runtime.Decimal | null
   currentRate: runtime.Decimal | null
   targetRate: runtime.Decimal | null
+  baseCurrencyValue: runtime.Decimal | null
+  volatility30d: runtime.Decimal | null
+  var95: runtime.Decimal | null
   unrealizedGainLoss: runtime.Decimal | null
   realizedGainLoss: runtime.Decimal | null
 }
@@ -55,14 +77,31 @@ export type FXExposureMinAggregateOutputType = {
   baseCurrency: string | null
   quoteCurrency: string | null
   type: string | null
+  direction: string | null
+  timeHorizon: string | null
   status: string | null
-  exposureAmount: runtime.Decimal | null
+  grossExposure: runtime.Decimal | null
+  netExposure: runtime.Decimal | null
   hedgedAmount: runtime.Decimal | null
   unhedgedAmount: runtime.Decimal | null
   hedgePercentage: runtime.Decimal | null
+  receivables: runtime.Decimal | null
+  payables: runtime.Decimal | null
+  cashBalance: runtime.Decimal | null
+  operationalInflows: runtime.Decimal | null
+  operationalOutflows: runtime.Decimal | null
+  structuralPositions: runtime.Decimal | null
+  entityId: string | null
+  entityName: string | null
+  spotRate: runtime.Decimal | null
   bookingRate: runtime.Decimal | null
   currentRate: runtime.Decimal | null
   targetRate: runtime.Decimal | null
+  baseCurrencyValue: runtime.Decimal | null
+  valuationDate: Date | null
+  riskLevel: string | null
+  volatility30d: runtime.Decimal | null
+  var95: runtime.Decimal | null
   unrealizedGainLoss: runtime.Decimal | null
   realizedGainLoss: runtime.Decimal | null
   exposureDate: Date | null
@@ -71,6 +110,7 @@ export type FXExposureMinAggregateOutputType = {
   referenceType: string | null
   referenceId: string | null
   counterparty: string | null
+  dataQuality: string | null
   notes: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -82,14 +122,31 @@ export type FXExposureMaxAggregateOutputType = {
   baseCurrency: string | null
   quoteCurrency: string | null
   type: string | null
+  direction: string | null
+  timeHorizon: string | null
   status: string | null
-  exposureAmount: runtime.Decimal | null
+  grossExposure: runtime.Decimal | null
+  netExposure: runtime.Decimal | null
   hedgedAmount: runtime.Decimal | null
   unhedgedAmount: runtime.Decimal | null
   hedgePercentage: runtime.Decimal | null
+  receivables: runtime.Decimal | null
+  payables: runtime.Decimal | null
+  cashBalance: runtime.Decimal | null
+  operationalInflows: runtime.Decimal | null
+  operationalOutflows: runtime.Decimal | null
+  structuralPositions: runtime.Decimal | null
+  entityId: string | null
+  entityName: string | null
+  spotRate: runtime.Decimal | null
   bookingRate: runtime.Decimal | null
   currentRate: runtime.Decimal | null
   targetRate: runtime.Decimal | null
+  baseCurrencyValue: runtime.Decimal | null
+  valuationDate: Date | null
+  riskLevel: string | null
+  volatility30d: runtime.Decimal | null
+  var95: runtime.Decimal | null
   unrealizedGainLoss: runtime.Decimal | null
   realizedGainLoss: runtime.Decimal | null
   exposureDate: Date | null
@@ -98,6 +155,7 @@ export type FXExposureMaxAggregateOutputType = {
   referenceType: string | null
   referenceId: string | null
   counterparty: string | null
+  dataQuality: string | null
   notes: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -109,14 +167,31 @@ export type FXExposureCountAggregateOutputType = {
   baseCurrency: number
   quoteCurrency: number
   type: number
+  direction: number
+  timeHorizon: number
   status: number
-  exposureAmount: number
+  grossExposure: number
+  netExposure: number
   hedgedAmount: number
   unhedgedAmount: number
   hedgePercentage: number
+  receivables: number
+  payables: number
+  cashBalance: number
+  operationalInflows: number
+  operationalOutflows: number
+  structuralPositions: number
+  entityId: number
+  entityName: number
+  spotRate: number
   bookingRate: number
   currentRate: number
   targetRate: number
+  baseCurrencyValue: number
+  valuationDate: number
+  riskLevel: number
+  volatility30d: number
+  var95: number
   unrealizedGainLoss: number
   realizedGainLoss: number
   exposureDate: number
@@ -125,6 +200,7 @@ export type FXExposureCountAggregateOutputType = {
   referenceType: number
   referenceId: number
   counterparty: number
+  dataQuality: number
   notes: number
   organizationId: number
   createdAt: number
@@ -134,25 +210,47 @@ export type FXExposureCountAggregateOutputType = {
 
 
 export type FXExposureAvgAggregateInputType = {
-  exposureAmount?: true
+  grossExposure?: true
+  netExposure?: true
   hedgedAmount?: true
   unhedgedAmount?: true
   hedgePercentage?: true
+  receivables?: true
+  payables?: true
+  cashBalance?: true
+  operationalInflows?: true
+  operationalOutflows?: true
+  structuralPositions?: true
+  spotRate?: true
   bookingRate?: true
   currentRate?: true
   targetRate?: true
+  baseCurrencyValue?: true
+  volatility30d?: true
+  var95?: true
   unrealizedGainLoss?: true
   realizedGainLoss?: true
 }
 
 export type FXExposureSumAggregateInputType = {
-  exposureAmount?: true
+  grossExposure?: true
+  netExposure?: true
   hedgedAmount?: true
   unhedgedAmount?: true
   hedgePercentage?: true
+  receivables?: true
+  payables?: true
+  cashBalance?: true
+  operationalInflows?: true
+  operationalOutflows?: true
+  structuralPositions?: true
+  spotRate?: true
   bookingRate?: true
   currentRate?: true
   targetRate?: true
+  baseCurrencyValue?: true
+  volatility30d?: true
+  var95?: true
   unrealizedGainLoss?: true
   realizedGainLoss?: true
 }
@@ -162,14 +260,31 @@ export type FXExposureMinAggregateInputType = {
   baseCurrency?: true
   quoteCurrency?: true
   type?: true
+  direction?: true
+  timeHorizon?: true
   status?: true
-  exposureAmount?: true
+  grossExposure?: true
+  netExposure?: true
   hedgedAmount?: true
   unhedgedAmount?: true
   hedgePercentage?: true
+  receivables?: true
+  payables?: true
+  cashBalance?: true
+  operationalInflows?: true
+  operationalOutflows?: true
+  structuralPositions?: true
+  entityId?: true
+  entityName?: true
+  spotRate?: true
   bookingRate?: true
   currentRate?: true
   targetRate?: true
+  baseCurrencyValue?: true
+  valuationDate?: true
+  riskLevel?: true
+  volatility30d?: true
+  var95?: true
   unrealizedGainLoss?: true
   realizedGainLoss?: true
   exposureDate?: true
@@ -178,6 +293,7 @@ export type FXExposureMinAggregateInputType = {
   referenceType?: true
   referenceId?: true
   counterparty?: true
+  dataQuality?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -189,14 +305,31 @@ export type FXExposureMaxAggregateInputType = {
   baseCurrency?: true
   quoteCurrency?: true
   type?: true
+  direction?: true
+  timeHorizon?: true
   status?: true
-  exposureAmount?: true
+  grossExposure?: true
+  netExposure?: true
   hedgedAmount?: true
   unhedgedAmount?: true
   hedgePercentage?: true
+  receivables?: true
+  payables?: true
+  cashBalance?: true
+  operationalInflows?: true
+  operationalOutflows?: true
+  structuralPositions?: true
+  entityId?: true
+  entityName?: true
+  spotRate?: true
   bookingRate?: true
   currentRate?: true
   targetRate?: true
+  baseCurrencyValue?: true
+  valuationDate?: true
+  riskLevel?: true
+  volatility30d?: true
+  var95?: true
   unrealizedGainLoss?: true
   realizedGainLoss?: true
   exposureDate?: true
@@ -205,6 +338,7 @@ export type FXExposureMaxAggregateInputType = {
   referenceType?: true
   referenceId?: true
   counterparty?: true
+  dataQuality?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -216,14 +350,31 @@ export type FXExposureCountAggregateInputType = {
   baseCurrency?: true
   quoteCurrency?: true
   type?: true
+  direction?: true
+  timeHorizon?: true
   status?: true
-  exposureAmount?: true
+  grossExposure?: true
+  netExposure?: true
   hedgedAmount?: true
   unhedgedAmount?: true
   hedgePercentage?: true
+  receivables?: true
+  payables?: true
+  cashBalance?: true
+  operationalInflows?: true
+  operationalOutflows?: true
+  structuralPositions?: true
+  entityId?: true
+  entityName?: true
+  spotRate?: true
   bookingRate?: true
   currentRate?: true
   targetRate?: true
+  baseCurrencyValue?: true
+  valuationDate?: true
+  riskLevel?: true
+  volatility30d?: true
+  var95?: true
   unrealizedGainLoss?: true
   realizedGainLoss?: true
   exposureDate?: true
@@ -232,6 +383,7 @@ export type FXExposureCountAggregateInputType = {
   referenceType?: true
   referenceId?: true
   counterparty?: true
+  dataQuality?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -330,14 +482,31 @@ export type FXExposureGroupByOutputType = {
   baseCurrency: string
   quoteCurrency: string
   type: string
+  direction: string
+  timeHorizon: string
   status: string
-  exposureAmount: runtime.Decimal
+  grossExposure: runtime.Decimal
+  netExposure: runtime.Decimal
   hedgedAmount: runtime.Decimal
   unhedgedAmount: runtime.Decimal
   hedgePercentage: runtime.Decimal
-  bookingRate: runtime.Decimal
+  receivables: runtime.Decimal
+  payables: runtime.Decimal
+  cashBalance: runtime.Decimal
+  operationalInflows: runtime.Decimal
+  operationalOutflows: runtime.Decimal
+  structuralPositions: runtime.Decimal
+  entityId: string | null
+  entityName: string | null
+  spotRate: runtime.Decimal
+  bookingRate: runtime.Decimal | null
   currentRate: runtime.Decimal | null
   targetRate: runtime.Decimal | null
+  baseCurrencyValue: runtime.Decimal
+  valuationDate: Date
+  riskLevel: string
+  volatility30d: runtime.Decimal | null
+  var95: runtime.Decimal | null
   unrealizedGainLoss: runtime.Decimal
   realizedGainLoss: runtime.Decimal
   exposureDate: Date
@@ -346,6 +515,7 @@ export type FXExposureGroupByOutputType = {
   referenceType: string | null
   referenceId: string | null
   counterparty: string | null
+  dataQuality: string
   notes: string | null
   organizationId: string
   createdAt: Date
@@ -380,14 +550,31 @@ export type FXExposureWhereInput = {
   baseCurrency?: Prisma.StringFilter<"FXExposure"> | string
   quoteCurrency?: Prisma.StringFilter<"FXExposure"> | string
   type?: Prisma.StringFilter<"FXExposure"> | string
+  direction?: Prisma.StringFilter<"FXExposure"> | string
+  timeHorizon?: Prisma.StringFilter<"FXExposure"> | string
   status?: Prisma.StringFilter<"FXExposure"> | string
-  exposureAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  entityName?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  spotRate?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
+  riskLevel?: Prisma.StringFilter<"FXExposure"> | string
+  volatility30d?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
@@ -396,12 +583,12 @@ export type FXExposureWhereInput = {
   referenceType?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   referenceId?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   counterparty?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  dataQuality?: Prisma.StringFilter<"FXExposure"> | string
   notes?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   organizationId?: Prisma.StringFilter<"FXExposure"> | string
   createdAt?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
-  hedges?: Prisma.FXHedgeListRelationFilter
 }
 
 export type FXExposureOrderByWithRelationInput = {
@@ -409,14 +596,31 @@ export type FXExposureOrderByWithRelationInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
+  timeHorizon?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
-  bookingRate?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  entityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityName?: Prisma.SortOrderInput | Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
+  bookingRate?: Prisma.SortOrderInput | Prisma.SortOrder
   currentRate?: Prisma.SortOrderInput | Prisma.SortOrder
   targetRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  valuationDate?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrderInput | Prisma.SortOrder
+  var95?: Prisma.SortOrderInput | Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
   exposureDate?: Prisma.SortOrder
@@ -425,12 +629,12 @@ export type FXExposureOrderByWithRelationInput = {
   referenceType?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   counterparty?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataQuality?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
-  hedges?: Prisma.FXHedgeOrderByRelationAggregateInput
 }
 
 export type FXExposureWhereUniqueInput = Prisma.AtLeast<{
@@ -441,14 +645,31 @@ export type FXExposureWhereUniqueInput = Prisma.AtLeast<{
   baseCurrency?: Prisma.StringFilter<"FXExposure"> | string
   quoteCurrency?: Prisma.StringFilter<"FXExposure"> | string
   type?: Prisma.StringFilter<"FXExposure"> | string
+  direction?: Prisma.StringFilter<"FXExposure"> | string
+  timeHorizon?: Prisma.StringFilter<"FXExposure"> | string
   status?: Prisma.StringFilter<"FXExposure"> | string
-  exposureAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  entityName?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  spotRate?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
+  riskLevel?: Prisma.StringFilter<"FXExposure"> | string
+  volatility30d?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
@@ -457,12 +678,12 @@ export type FXExposureWhereUniqueInput = Prisma.AtLeast<{
   referenceType?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   referenceId?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   counterparty?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  dataQuality?: Prisma.StringFilter<"FXExposure"> | string
   notes?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   organizationId?: Prisma.StringFilter<"FXExposure"> | string
   createdAt?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
-  hedges?: Prisma.FXHedgeListRelationFilter
 }, "id">
 
 export type FXExposureOrderByWithAggregationInput = {
@@ -470,14 +691,31 @@ export type FXExposureOrderByWithAggregationInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
+  timeHorizon?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
-  bookingRate?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  entityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityName?: Prisma.SortOrderInput | Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
+  bookingRate?: Prisma.SortOrderInput | Prisma.SortOrder
   currentRate?: Prisma.SortOrderInput | Prisma.SortOrder
   targetRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  valuationDate?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrderInput | Prisma.SortOrder
+  var95?: Prisma.SortOrderInput | Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
   exposureDate?: Prisma.SortOrder
@@ -486,6 +724,7 @@ export type FXExposureOrderByWithAggregationInput = {
   referenceType?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   counterparty?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataQuality?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -505,14 +744,31 @@ export type FXExposureScalarWhereWithAggregatesInput = {
   baseCurrency?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
   quoteCurrency?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
   type?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
+  direction?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
+  timeHorizon?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
   status?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
-  exposureAmount?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.StringNullableWithAggregatesFilter<"FXExposure"> | string | null
+  entityName?: Prisma.StringNullableWithAggregatesFilter<"FXExposure"> | string | null
+  spotRate?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.DecimalNullableWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.DecimalNullableWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.DecimalNullableWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeWithAggregatesFilter<"FXExposure"> | Date | string
+  riskLevel?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
+  volatility30d?: Prisma.DecimalNullableWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.DecimalNullableWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalWithAggregatesFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeWithAggregatesFilter<"FXExposure"> | Date | string
@@ -521,6 +777,7 @@ export type FXExposureScalarWhereWithAggregatesInput = {
   referenceType?: Prisma.StringNullableWithAggregatesFilter<"FXExposure"> | string | null
   referenceId?: Prisma.StringNullableWithAggregatesFilter<"FXExposure"> | string | null
   counterparty?: Prisma.StringNullableWithAggregatesFilter<"FXExposure"> | string | null
+  dataQuality?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"FXExposure"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"FXExposure"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FXExposure"> | Date | string
@@ -531,15 +788,32 @@ export type FXExposureCreateInput = {
   id?: string
   baseCurrency: string
   quoteCurrency: string
-  type: string
+  type?: string
+  direction?: string
+  timeHorizon?: string
   status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: string | null
+  entityName?: string | null
+  spotRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Date | string
+  riskLevel?: string
+  volatility30d?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate: Date | string
@@ -548,26 +822,43 @@ export type FXExposureCreateInput = {
   referenceType?: string | null
   referenceId?: string | null
   counterparty?: string | null
+  dataQuality?: string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutFxexposuresInput
-  hedges?: Prisma.FXHedgeCreateNestedManyWithoutExposureInput
 }
 
 export type FXExposureUncheckedCreateInput = {
   id?: string
   baseCurrency: string
   quoteCurrency: string
-  type: string
+  type?: string
+  direction?: string
+  timeHorizon?: string
   status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: string | null
+  entityName?: string | null
+  spotRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Date | string
+  riskLevel?: string
+  volatility30d?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate: Date | string
@@ -576,11 +867,11 @@ export type FXExposureUncheckedCreateInput = {
   referenceType?: string | null
   referenceId?: string | null
   counterparty?: string | null
+  dataQuality?: string
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  hedges?: Prisma.FXHedgeUncheckedCreateNestedManyWithoutExposureInput
 }
 
 export type FXExposureUpdateInput = {
@@ -588,14 +879,31 @@ export type FXExposureUpdateInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -604,11 +912,11 @@ export type FXExposureUpdateInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutFxexposuresNestedInput
-  hedges?: Prisma.FXHedgeUpdateManyWithoutExposureNestedInput
 }
 
 export type FXExposureUncheckedUpdateInput = {
@@ -616,14 +924,31 @@ export type FXExposureUncheckedUpdateInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -632,26 +957,43 @@ export type FXExposureUncheckedUpdateInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hedges?: Prisma.FXHedgeUncheckedUpdateManyWithoutExposureNestedInput
 }
 
 export type FXExposureCreateManyInput = {
   id?: string
   baseCurrency: string
   quoteCurrency: string
-  type: string
+  type?: string
+  direction?: string
+  timeHorizon?: string
   status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: string | null
+  entityName?: string | null
+  spotRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Date | string
+  riskLevel?: string
+  volatility30d?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate: Date | string
@@ -660,6 +1002,7 @@ export type FXExposureCreateManyInput = {
   referenceType?: string | null
   referenceId?: string | null
   counterparty?: string | null
+  dataQuality?: string
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -671,14 +1014,31 @@ export type FXExposureUpdateManyMutationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,6 +1047,7 @@ export type FXExposureUpdateManyMutationInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -697,14 +1058,31 @@ export type FXExposureUncheckedUpdateManyInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -713,6 +1091,7 @@ export type FXExposureUncheckedUpdateManyInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -734,14 +1113,31 @@ export type FXExposureCountOrderByAggregateInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
+  timeHorizon?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  entityId?: Prisma.SortOrder
+  entityName?: Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
   bookingRate?: Prisma.SortOrder
   currentRate?: Prisma.SortOrder
   targetRate?: Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  valuationDate?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrder
+  var95?: Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
   exposureDate?: Prisma.SortOrder
@@ -750,6 +1146,7 @@ export type FXExposureCountOrderByAggregateInput = {
   referenceType?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
   counterparty?: Prisma.SortOrder
+  dataQuality?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -757,13 +1154,24 @@ export type FXExposureCountOrderByAggregateInput = {
 }
 
 export type FXExposureAvgOrderByAggregateInput = {
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
   bookingRate?: Prisma.SortOrder
   currentRate?: Prisma.SortOrder
   targetRate?: Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrder
+  var95?: Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
 }
@@ -773,14 +1181,31 @@ export type FXExposureMaxOrderByAggregateInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
+  timeHorizon?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  entityId?: Prisma.SortOrder
+  entityName?: Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
   bookingRate?: Prisma.SortOrder
   currentRate?: Prisma.SortOrder
   targetRate?: Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  valuationDate?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrder
+  var95?: Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
   exposureDate?: Prisma.SortOrder
@@ -789,6 +1214,7 @@ export type FXExposureMaxOrderByAggregateInput = {
   referenceType?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
   counterparty?: Prisma.SortOrder
+  dataQuality?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -800,14 +1226,31 @@ export type FXExposureMinOrderByAggregateInput = {
   baseCurrency?: Prisma.SortOrder
   quoteCurrency?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  direction?: Prisma.SortOrder
+  timeHorizon?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  entityId?: Prisma.SortOrder
+  entityName?: Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
   bookingRate?: Prisma.SortOrder
   currentRate?: Prisma.SortOrder
   targetRate?: Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  valuationDate?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrder
+  var95?: Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
   exposureDate?: Prisma.SortOrder
@@ -816,6 +1259,7 @@ export type FXExposureMinOrderByAggregateInput = {
   referenceType?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
   counterparty?: Prisma.SortOrder
+  dataQuality?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -823,20 +1267,26 @@ export type FXExposureMinOrderByAggregateInput = {
 }
 
 export type FXExposureSumOrderByAggregateInput = {
-  exposureAmount?: Prisma.SortOrder
+  grossExposure?: Prisma.SortOrder
+  netExposure?: Prisma.SortOrder
   hedgedAmount?: Prisma.SortOrder
   unhedgedAmount?: Prisma.SortOrder
   hedgePercentage?: Prisma.SortOrder
+  receivables?: Prisma.SortOrder
+  payables?: Prisma.SortOrder
+  cashBalance?: Prisma.SortOrder
+  operationalInflows?: Prisma.SortOrder
+  operationalOutflows?: Prisma.SortOrder
+  structuralPositions?: Prisma.SortOrder
+  spotRate?: Prisma.SortOrder
   bookingRate?: Prisma.SortOrder
   currentRate?: Prisma.SortOrder
   targetRate?: Prisma.SortOrder
+  baseCurrencyValue?: Prisma.SortOrder
+  volatility30d?: Prisma.SortOrder
+  var95?: Prisma.SortOrder
   unrealizedGainLoss?: Prisma.SortOrder
   realizedGainLoss?: Prisma.SortOrder
-}
-
-export type FXExposureNullableScalarRelationFilter = {
-  is?: Prisma.FXExposureWhereInput | null
-  isNot?: Prisma.FXExposureWhereInput | null
 }
 
 export type FXExposureCreateNestedManyWithoutOrganizationInput = {
@@ -881,35 +1331,36 @@ export type FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.FXExposureScalarWhereInput | Prisma.FXExposureScalarWhereInput[]
 }
 
-export type FXExposureCreateNestedOneWithoutHedgesInput = {
-  create?: Prisma.XOR<Prisma.FXExposureCreateWithoutHedgesInput, Prisma.FXExposureUncheckedCreateWithoutHedgesInput>
-  connectOrCreate?: Prisma.FXExposureCreateOrConnectWithoutHedgesInput
-  connect?: Prisma.FXExposureWhereUniqueInput
-}
-
-export type FXExposureUpdateOneWithoutHedgesNestedInput = {
-  create?: Prisma.XOR<Prisma.FXExposureCreateWithoutHedgesInput, Prisma.FXExposureUncheckedCreateWithoutHedgesInput>
-  connectOrCreate?: Prisma.FXExposureCreateOrConnectWithoutHedgesInput
-  upsert?: Prisma.FXExposureUpsertWithoutHedgesInput
-  disconnect?: Prisma.FXExposureWhereInput | boolean
-  delete?: Prisma.FXExposureWhereInput | boolean
-  connect?: Prisma.FXExposureWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.FXExposureUpdateToOneWithWhereWithoutHedgesInput, Prisma.FXExposureUpdateWithoutHedgesInput>, Prisma.FXExposureUncheckedUpdateWithoutHedgesInput>
-}
-
 export type FXExposureCreateWithoutOrganizationInput = {
   id?: string
   baseCurrency: string
   quoteCurrency: string
-  type: string
+  type?: string
+  direction?: string
+  timeHorizon?: string
   status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: string | null
+  entityName?: string | null
+  spotRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Date | string
+  riskLevel?: string
+  volatility30d?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate: Date | string
@@ -918,25 +1369,42 @@ export type FXExposureCreateWithoutOrganizationInput = {
   referenceType?: string | null
   referenceId?: string | null
   counterparty?: string | null
+  dataQuality?: string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  hedges?: Prisma.FXHedgeCreateNestedManyWithoutExposureInput
 }
 
 export type FXExposureUncheckedCreateWithoutOrganizationInput = {
   id?: string
   baseCurrency: string
   quoteCurrency: string
-  type: string
+  type?: string
+  direction?: string
+  timeHorizon?: string
   status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: string | null
+  entityName?: string | null
+  spotRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Date | string
+  riskLevel?: string
+  volatility30d?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate: Date | string
@@ -945,10 +1413,10 @@ export type FXExposureUncheckedCreateWithoutOrganizationInput = {
   referenceType?: string | null
   referenceId?: string | null
   counterparty?: string | null
+  dataQuality?: string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  hedges?: Prisma.FXHedgeUncheckedCreateNestedManyWithoutExposureInput
 }
 
 export type FXExposureCreateOrConnectWithoutOrganizationInput = {
@@ -985,14 +1453,31 @@ export type FXExposureScalarWhereInput = {
   baseCurrency?: Prisma.StringFilter<"FXExposure"> | string
   quoteCurrency?: Prisma.StringFilter<"FXExposure"> | string
   type?: Prisma.StringFilter<"FXExposure"> | string
+  direction?: Prisma.StringFilter<"FXExposure"> | string
+  timeHorizon?: Prisma.StringFilter<"FXExposure"> | string
   status?: Prisma.StringFilter<"FXExposure"> | string
-  exposureAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  entityName?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  spotRate?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
+  riskLevel?: Prisma.StringFilter<"FXExposure"> | string
+  volatility30d?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.DecimalNullableFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFilter<"FXExposure"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
@@ -1001,149 +1486,43 @@ export type FXExposureScalarWhereInput = {
   referenceType?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   referenceId?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   counterparty?: Prisma.StringNullableFilter<"FXExposure"> | string | null
+  dataQuality?: Prisma.StringFilter<"FXExposure"> | string
   notes?: Prisma.StringNullableFilter<"FXExposure"> | string | null
   organizationId?: Prisma.StringFilter<"FXExposure"> | string
   createdAt?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FXExposure"> | Date | string
 }
 
-export type FXExposureCreateWithoutHedgesInput = {
-  id?: string
-  baseCurrency: string
-  quoteCurrency: string
-  type: string
-  status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  exposureDate: Date | string
-  settlementDate?: Date | string | null
-  maturityDate?: Date | string | null
-  referenceType?: string | null
-  referenceId?: string | null
-  counterparty?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutFxexposuresInput
-}
-
-export type FXExposureUncheckedCreateWithoutHedgesInput = {
-  id?: string
-  baseCurrency: string
-  quoteCurrency: string
-  type: string
-  status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  exposureDate: Date | string
-  settlementDate?: Date | string | null
-  maturityDate?: Date | string | null
-  referenceType?: string | null
-  referenceId?: string | null
-  counterparty?: string | null
-  notes?: string | null
-  organizationId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type FXExposureCreateOrConnectWithoutHedgesInput = {
-  where: Prisma.FXExposureWhereUniqueInput
-  create: Prisma.XOR<Prisma.FXExposureCreateWithoutHedgesInput, Prisma.FXExposureUncheckedCreateWithoutHedgesInput>
-}
-
-export type FXExposureUpsertWithoutHedgesInput = {
-  update: Prisma.XOR<Prisma.FXExposureUpdateWithoutHedgesInput, Prisma.FXExposureUncheckedUpdateWithoutHedgesInput>
-  create: Prisma.XOR<Prisma.FXExposureCreateWithoutHedgesInput, Prisma.FXExposureUncheckedCreateWithoutHedgesInput>
-  where?: Prisma.FXExposureWhereInput
-}
-
-export type FXExposureUpdateToOneWithWhereWithoutHedgesInput = {
-  where?: Prisma.FXExposureWhereInput
-  data: Prisma.XOR<Prisma.FXExposureUpdateWithoutHedgesInput, Prisma.FXExposureUncheckedUpdateWithoutHedgesInput>
-}
-
-export type FXExposureUpdateWithoutHedgesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutFxexposuresNestedInput
-}
-
-export type FXExposureUncheckedUpdateWithoutHedgesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
-  quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  settlementDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 export type FXExposureCreateManyOrganizationInput = {
   id?: string
   baseCurrency: string
   quoteCurrency: string
-  type: string
+  type?: string
+  direction?: string
+  timeHorizon?: string
   status?: string
-  exposureAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: string | null
+  entityName?: string | null
+  spotRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Date | string
+  riskLevel?: string
+  volatility30d?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate: Date | string
@@ -1152,6 +1531,7 @@ export type FXExposureCreateManyOrganizationInput = {
   referenceType?: string | null
   referenceId?: string | null
   counterparty?: string | null
+  dataQuality?: string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1162,14 +1542,31 @@ export type FXExposureUpdateWithoutOrganizationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1178,10 +1575,10 @@ export type FXExposureUpdateWithoutOrganizationInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hedges?: Prisma.FXHedgeUpdateManyWithoutExposureNestedInput
 }
 
 export type FXExposureUncheckedUpdateWithoutOrganizationInput = {
@@ -1189,14 +1586,31 @@ export type FXExposureUncheckedUpdateWithoutOrganizationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1205,10 +1619,10 @@ export type FXExposureUncheckedUpdateWithoutOrganizationInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hedges?: Prisma.FXHedgeUncheckedUpdateManyWithoutExposureNestedInput
 }
 
 export type FXExposureUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1216,14 +1630,31 @@ export type FXExposureUncheckedUpdateManyWithoutOrganizationInput = {
   baseCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   quoteCurrency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  direction?: Prisma.StringFieldUpdateOperationsInput | string
+  timeHorizon?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  exposureAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netExposure?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unhedgedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   hedgePercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  bookingRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  receivables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  payables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  cashBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  operationalOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  structuralPositions?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bookingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baseCurrencyValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  valuationDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  volatility30d?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  var95?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unrealizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   realizedGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exposureDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1232,40 +1663,12 @@ export type FXExposureUncheckedUpdateManyWithoutOrganizationInput = {
   referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterparty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataQuality?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type FXExposureCountOutputType
- */
-
-export type FXExposureCountOutputType = {
-  hedges: number
-}
-
-export type FXExposureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  hedges?: boolean | FXExposureCountOutputTypeCountHedgesArgs
-}
-
-/**
- * FXExposureCountOutputType without action
- */
-export type FXExposureCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FXExposureCountOutputType
-   */
-  select?: Prisma.FXExposureCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * FXExposureCountOutputType without action
- */
-export type FXExposureCountOutputTypeCountHedgesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FXHedgeWhereInput
-}
 
 
 export type FXExposureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1273,14 +1676,31 @@ export type FXExposureSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   baseCurrency?: boolean
   quoteCurrency?: boolean
   type?: boolean
+  direction?: boolean
+  timeHorizon?: boolean
   status?: boolean
-  exposureAmount?: boolean
+  grossExposure?: boolean
+  netExposure?: boolean
   hedgedAmount?: boolean
   unhedgedAmount?: boolean
   hedgePercentage?: boolean
+  receivables?: boolean
+  payables?: boolean
+  cashBalance?: boolean
+  operationalInflows?: boolean
+  operationalOutflows?: boolean
+  structuralPositions?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  spotRate?: boolean
   bookingRate?: boolean
   currentRate?: boolean
   targetRate?: boolean
+  baseCurrencyValue?: boolean
+  valuationDate?: boolean
+  riskLevel?: boolean
+  volatility30d?: boolean
+  var95?: boolean
   unrealizedGainLoss?: boolean
   realizedGainLoss?: boolean
   exposureDate?: boolean
@@ -1289,13 +1709,12 @@ export type FXExposureSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   referenceType?: boolean
   referenceId?: boolean
   counterparty?: boolean
+  dataQuality?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  hedges?: boolean | Prisma.FXExposure$hedgesArgs<ExtArgs>
-  _count?: boolean | Prisma.FXExposureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fXExposure"]>
 
 export type FXExposureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1303,14 +1722,31 @@ export type FXExposureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   baseCurrency?: boolean
   quoteCurrency?: boolean
   type?: boolean
+  direction?: boolean
+  timeHorizon?: boolean
   status?: boolean
-  exposureAmount?: boolean
+  grossExposure?: boolean
+  netExposure?: boolean
   hedgedAmount?: boolean
   unhedgedAmount?: boolean
   hedgePercentage?: boolean
+  receivables?: boolean
+  payables?: boolean
+  cashBalance?: boolean
+  operationalInflows?: boolean
+  operationalOutflows?: boolean
+  structuralPositions?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  spotRate?: boolean
   bookingRate?: boolean
   currentRate?: boolean
   targetRate?: boolean
+  baseCurrencyValue?: boolean
+  valuationDate?: boolean
+  riskLevel?: boolean
+  volatility30d?: boolean
+  var95?: boolean
   unrealizedGainLoss?: boolean
   realizedGainLoss?: boolean
   exposureDate?: boolean
@@ -1319,6 +1755,7 @@ export type FXExposureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   referenceType?: boolean
   referenceId?: boolean
   counterparty?: boolean
+  dataQuality?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1331,14 +1768,31 @@ export type FXExposureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   baseCurrency?: boolean
   quoteCurrency?: boolean
   type?: boolean
+  direction?: boolean
+  timeHorizon?: boolean
   status?: boolean
-  exposureAmount?: boolean
+  grossExposure?: boolean
+  netExposure?: boolean
   hedgedAmount?: boolean
   unhedgedAmount?: boolean
   hedgePercentage?: boolean
+  receivables?: boolean
+  payables?: boolean
+  cashBalance?: boolean
+  operationalInflows?: boolean
+  operationalOutflows?: boolean
+  structuralPositions?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  spotRate?: boolean
   bookingRate?: boolean
   currentRate?: boolean
   targetRate?: boolean
+  baseCurrencyValue?: boolean
+  valuationDate?: boolean
+  riskLevel?: boolean
+  volatility30d?: boolean
+  var95?: boolean
   unrealizedGainLoss?: boolean
   realizedGainLoss?: boolean
   exposureDate?: boolean
@@ -1347,6 +1801,7 @@ export type FXExposureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   referenceType?: boolean
   referenceId?: boolean
   counterparty?: boolean
+  dataQuality?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1359,14 +1814,31 @@ export type FXExposureSelectScalar = {
   baseCurrency?: boolean
   quoteCurrency?: boolean
   type?: boolean
+  direction?: boolean
+  timeHorizon?: boolean
   status?: boolean
-  exposureAmount?: boolean
+  grossExposure?: boolean
+  netExposure?: boolean
   hedgedAmount?: boolean
   unhedgedAmount?: boolean
   hedgePercentage?: boolean
+  receivables?: boolean
+  payables?: boolean
+  cashBalance?: boolean
+  operationalInflows?: boolean
+  operationalOutflows?: boolean
+  structuralPositions?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  spotRate?: boolean
   bookingRate?: boolean
   currentRate?: boolean
   targetRate?: boolean
+  baseCurrencyValue?: boolean
+  valuationDate?: boolean
+  riskLevel?: boolean
+  volatility30d?: boolean
+  var95?: boolean
   unrealizedGainLoss?: boolean
   realizedGainLoss?: boolean
   exposureDate?: boolean
@@ -1375,17 +1847,16 @@ export type FXExposureSelectScalar = {
   referenceType?: boolean
   referenceId?: boolean
   counterparty?: boolean
+  dataQuality?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FXExposureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "baseCurrency" | "quoteCurrency" | "type" | "status" | "exposureAmount" | "hedgedAmount" | "unhedgedAmount" | "hedgePercentage" | "bookingRate" | "currentRate" | "targetRate" | "unrealizedGainLoss" | "realizedGainLoss" | "exposureDate" | "settlementDate" | "maturityDate" | "referenceType" | "referenceId" | "counterparty" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["fXExposure"]>
+export type FXExposureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "baseCurrency" | "quoteCurrency" | "type" | "direction" | "timeHorizon" | "status" | "grossExposure" | "netExposure" | "hedgedAmount" | "unhedgedAmount" | "hedgePercentage" | "receivables" | "payables" | "cashBalance" | "operationalInflows" | "operationalOutflows" | "structuralPositions" | "entityId" | "entityName" | "spotRate" | "bookingRate" | "currentRate" | "targetRate" | "baseCurrencyValue" | "valuationDate" | "riskLevel" | "volatility30d" | "var95" | "unrealizedGainLoss" | "realizedGainLoss" | "exposureDate" | "settlementDate" | "maturityDate" | "referenceType" | "referenceId" | "counterparty" | "dataQuality" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["fXExposure"]>
 export type FXExposureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  hedges?: boolean | Prisma.FXExposure$hedgesArgs<ExtArgs>
-  _count?: boolean | Prisma.FXExposureCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FXExposureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1398,21 +1869,37 @@ export type $FXExposurePayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "FXExposure"
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
-    hedges: Prisma.$FXHedgePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     baseCurrency: string
     quoteCurrency: string
     type: string
+    direction: string
+    timeHorizon: string
     status: string
-    exposureAmount: runtime.Decimal
+    grossExposure: runtime.Decimal
+    netExposure: runtime.Decimal
     hedgedAmount: runtime.Decimal
     unhedgedAmount: runtime.Decimal
     hedgePercentage: runtime.Decimal
-    bookingRate: runtime.Decimal
+    receivables: runtime.Decimal
+    payables: runtime.Decimal
+    cashBalance: runtime.Decimal
+    operationalInflows: runtime.Decimal
+    operationalOutflows: runtime.Decimal
+    structuralPositions: runtime.Decimal
+    entityId: string | null
+    entityName: string | null
+    spotRate: runtime.Decimal
+    bookingRate: runtime.Decimal | null
     currentRate: runtime.Decimal | null
     targetRate: runtime.Decimal | null
+    baseCurrencyValue: runtime.Decimal
+    valuationDate: Date
+    riskLevel: string
+    volatility30d: runtime.Decimal | null
+    var95: runtime.Decimal | null
     unrealizedGainLoss: runtime.Decimal
     realizedGainLoss: runtime.Decimal
     exposureDate: Date
@@ -1421,6 +1908,7 @@ export type $FXExposurePayload<ExtArgs extends runtime.Types.Extensions.Internal
     referenceType: string | null
     referenceId: string | null
     counterparty: string | null
+    dataQuality: string
     notes: string | null
     organizationId: string
     createdAt: Date
@@ -1820,7 +2308,6 @@ readonly fields: FXExposureFieldRefs;
 export interface Prisma__FXExposureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  hedges<T extends Prisma.FXExposure$hedgesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FXExposure$hedgesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FXHedgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1854,14 +2341,31 @@ export interface FXExposureFieldRefs {
   readonly baseCurrency: Prisma.FieldRef<"FXExposure", 'String'>
   readonly quoteCurrency: Prisma.FieldRef<"FXExposure", 'String'>
   readonly type: Prisma.FieldRef<"FXExposure", 'String'>
+  readonly direction: Prisma.FieldRef<"FXExposure", 'String'>
+  readonly timeHorizon: Prisma.FieldRef<"FXExposure", 'String'>
   readonly status: Prisma.FieldRef<"FXExposure", 'String'>
-  readonly exposureAmount: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly grossExposure: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly netExposure: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly hedgedAmount: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly unhedgedAmount: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly hedgePercentage: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly receivables: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly payables: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly cashBalance: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly operationalInflows: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly operationalOutflows: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly structuralPositions: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly entityId: Prisma.FieldRef<"FXExposure", 'String'>
+  readonly entityName: Prisma.FieldRef<"FXExposure", 'String'>
+  readonly spotRate: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly bookingRate: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly currentRate: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly targetRate: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly baseCurrencyValue: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly valuationDate: Prisma.FieldRef<"FXExposure", 'DateTime'>
+  readonly riskLevel: Prisma.FieldRef<"FXExposure", 'String'>
+  readonly volatility30d: Prisma.FieldRef<"FXExposure", 'Decimal'>
+  readonly var95: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly unrealizedGainLoss: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly realizedGainLoss: Prisma.FieldRef<"FXExposure", 'Decimal'>
   readonly exposureDate: Prisma.FieldRef<"FXExposure", 'DateTime'>
@@ -1870,6 +2374,7 @@ export interface FXExposureFieldRefs {
   readonly referenceType: Prisma.FieldRef<"FXExposure", 'String'>
   readonly referenceId: Prisma.FieldRef<"FXExposure", 'String'>
   readonly counterparty: Prisma.FieldRef<"FXExposure", 'String'>
+  readonly dataQuality: Prisma.FieldRef<"FXExposure", 'String'>
   readonly notes: Prisma.FieldRef<"FXExposure", 'String'>
   readonly organizationId: Prisma.FieldRef<"FXExposure", 'String'>
   readonly createdAt: Prisma.FieldRef<"FXExposure", 'DateTime'>
@@ -2267,30 +2772,6 @@ export type FXExposureDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many FXExposures to delete.
    */
   limit?: number
-}
-
-/**
- * FXExposure.hedges
- */
-export type FXExposure$hedgesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FXHedge
-   */
-  select?: Prisma.FXHedgeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FXHedge
-   */
-  omit?: Prisma.FXHedgeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FXHedgeInclude<ExtArgs> | null
-  where?: Prisma.FXHedgeWhereInput
-  orderBy?: Prisma.FXHedgeOrderByWithRelationInput | Prisma.FXHedgeOrderByWithRelationInput[]
-  cursor?: Prisma.FXHedgeWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FXHedgeScalarFieldEnum | Prisma.FXHedgeScalarFieldEnum[]
 }
 
 /**

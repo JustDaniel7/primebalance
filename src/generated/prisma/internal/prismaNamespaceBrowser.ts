@@ -63,6 +63,8 @@ export const ModelName = {
   ChatMessage: 'ChatMessage',
   UserSettings: 'UserSettings',
   Wallet: 'Wallet',
+  WalletToken: 'WalletToken',
+  WalletTransaction: 'WalletTransaction',
   AISuggestion: 'AISuggestion',
   SavedReport: 'SavedReport',
   CorporateEntity: 'CorporateEntity',
@@ -110,19 +112,78 @@ export const ModelName = {
   CustomerRiskIndicator: 'CustomerRiskIndicator',
   Supplier: 'Supplier',
   SupplierContact: 'SupplierContact',
+  SupplierBalance: 'SupplierBalance',
+  SupplierPayment: 'SupplierPayment',
+  SupplierReliability: 'SupplierReliability',
+  SupplierSpend: 'SupplierSpend',
+  SupplierRisk: 'SupplierRisk',
+  NettingAgreement: 'NettingAgreement',
+  NettingParty: 'NettingParty',
+  NettingSession: 'NettingSession',
+  NettingPosition: 'NettingPosition',
+  NettingTransaction: 'NettingTransaction',
+  SettlementInstruction: 'SettlementInstruction',
+  OffsetEntry: 'OffsetEntry',
   Offer: 'Offer',
+  OfferVersion: 'OfferVersion',
+  OfferAuditLog: 'OfferAuditLog',
+  OfferTemplate: 'OfferTemplate',
   Task: 'Task',
-  Forecast: 'Forecast',
-  ForecastPeriod: 'ForecastPeriod',
+  TaskAssignee: 'TaskAssignee',
+  TaskWatcher: 'TaskWatcher',
+  TaskTag: 'TaskTag',
+  TaskTagLink: 'TaskTagLink',
+  TaskDependency: 'TaskDependency',
+  TaskComment: 'TaskComment',
+  TaskActivity: 'TaskActivity',
+  TaskAttachment: 'TaskAttachment',
+  Risk: 'Risk',
+  RiskMitigationStep: 'RiskMitigationStep',
+  TaskRiskLink: 'TaskRiskLink',
+  RiskComment: 'RiskComment',
+  RiskActivity: 'RiskActivity',
+  TaskNotification: 'TaskNotification',
+  SavedTaskFilter: 'SavedTaskFilter',
+  RevenueForecast: 'RevenueForecast',
+  RevenueLineItem: 'RevenueLineItem',
+  CostForecast: 'CostForecast',
+  CostLineItem: 'CostLineItem',
+  CashForecast: 'CashForecast',
+  CashForecastPeriod: 'CashForecastPeriod',
+  ForecastScenario: 'ForecastScenario',
+  ForecastAssumption: 'ForecastAssumption',
+  ForecastAlert: 'ForecastAlert',
+  ForecastAnnotation: 'ForecastAnnotation',
+  ForecastVariance: 'ForecastVariance',
   Scenario: 'Scenario',
+  ScenarioAssumption: 'ScenarioAssumption',
+  StressTest: 'StressTest',
+  SimulationState: 'SimulationState',
+  ScenarioComment: 'ScenarioComment',
+  ScenarioDecision: 'ScenarioDecision',
+  ScenarioChangeEvent: 'ScenarioChangeEvent',
   KPI: 'KPI',
   KPIHistory: 'KPIHistory',
-  FXExposure: 'FXExposure',
-  FXHedge: 'FXHedge',
+  KPIAlert: 'KPIAlert',
+  KPITarget: 'KPITarget',
+  KPIBenchmark: 'KPIBenchmark',
   FXRate: 'FXRate',
-  Investor: 'Investor',
-  InvestorInvestment: 'InvestorInvestment',
-  InvestorUpdate: 'InvestorUpdate',
+  FXExposure: 'FXExposure',
+  FXConversion: 'FXConversion',
+  FXScenario: 'FXScenario',
+  FXForecast: 'FXForecast',
+  FXCost: 'FXCost',
+  FXRiskIndicator: 'FXRiskIndicator',
+  FXAuditLog: 'FXAuditLog',
+  InvestorSnapshot: 'InvestorSnapshot',
+  BoardReport: 'BoardReport',
+  RunwayProjection: 'RunwayProjection',
+  InvestorAccessLog: 'InvestorAccessLog',
+  CashflowItem: 'CashflowItem',
+  LiquidityScenario: 'LiquidityScenario',
+  LiquidityGap: 'LiquidityGap',
+  LiquidityRiskSignal: 'LiquidityRiskSignal',
+  LiquidityAuditLog: 'LiquidityAuditLog',
   LiquidityPosition: 'LiquidityPosition'
 } as const
 
@@ -321,12 +382,80 @@ export const WalletScalarFieldEnum = {
   network: 'network',
   provider: 'provider',
   isActive: 'isActive',
+  isWatching: 'isWatching',
+  nativeBalance: 'nativeBalance',
+  nativeSymbol: 'nativeSymbol',
+  totalValueUsd: 'totalValueUsd',
+  lastSyncAt: 'lastSyncAt',
+  lastSyncStatus: 'lastSyncStatus',
+  walletType: 'walletType',
+  purpose: 'purpose',
+  ens: 'ens',
+  avatar: 'avatar',
+  notes: 'notes',
+  tags: 'tags',
+  isDefault: 'isDefault',
   userId: 'userId',
+  organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+export const WalletTokenScalarFieldEnum = {
+  id: 'id',
+  contractAddress: 'contractAddress',
+  symbol: 'symbol',
+  name: 'name',
+  decimals: 'decimals',
+  logoUrl: 'logoUrl',
+  balance: 'balance',
+  balanceUsd: 'balanceUsd',
+  priceUsd: 'priceUsd',
+  price24hChange: 'price24hChange',
+  tokenType: 'tokenType',
+  isHidden: 'isHidden',
+  isSpam: 'isSpam',
+  lastPriceAt: 'lastPriceAt',
+  walletId: 'walletId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WalletTokenScalarFieldEnum = (typeof WalletTokenScalarFieldEnum)[keyof typeof WalletTokenScalarFieldEnum]
+
+
+export const WalletTransactionScalarFieldEnum = {
+  id: 'id',
+  hash: 'hash',
+  blockNumber: 'blockNumber',
+  network: 'network',
+  type: 'type',
+  status: 'status',
+  fromAddress: 'fromAddress',
+  toAddress: 'toAddress',
+  isIncoming: 'isIncoming',
+  value: 'value',
+  valueUsd: 'valueUsd',
+  tokenSymbol: 'tokenSymbol',
+  tokenAddress: 'tokenAddress',
+  gasUsed: 'gasUsed',
+  gasPrice: 'gasPrice',
+  gasCostUsd: 'gasCostUsd',
+  timestamp: 'timestamp',
+  confirmedAt: 'confirmedAt',
+  methodName: 'methodName',
+  description: 'description',
+  notes: 'notes',
+  tags: 'tags',
+  linkedTransactionId: 'linkedTransactionId',
+  walletId: 'walletId',
+  createdAt: 'createdAt'
+} as const
+
+export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
 
 
 export const AISuggestionScalarFieldEnum = {
@@ -1538,6 +1667,7 @@ export const CustomerScalarFieldEnum = {
   id: 'id',
   customerNumber: 'customerNumber',
   name: 'name',
+  legalName: 'legalName',
   type: 'type',
   status: 'status',
   industry: 'industry',
@@ -1547,8 +1677,14 @@ export const CustomerScalarFieldEnum = {
   address: 'address',
   taxId: 'taxId',
   vatNumber: 'vatNumber',
-  legalName: 'legalName',
+  registrationNumber: 'registrationNumber',
   classification: 'classification',
+  employeeCount: 'employeeCount',
+  annualRevenue: 'annualRevenue',
+  accountManagerId: 'accountManagerId',
+  accountManagerName: 'accountManagerName',
+  segment: 'segment',
+  tags: 'tags',
   creditLimit: 'creditLimit',
   creditUsed: 'creditUsed',
   creditAvailable: 'creditAvailable',
@@ -1557,6 +1693,7 @@ export const CustomerScalarFieldEnum = {
   paymentBehavior: 'paymentBehavior',
   averageDaysToPayment: 'averageDaysToPayment',
   onTimePaymentRate: 'onTimePaymentRate',
+  latePaymentCount: 'latePaymentCount',
   riskLevel: 'riskLevel',
   riskScore: 'riskScore',
   totalRevenue: 'totalRevenue',
@@ -1566,15 +1703,14 @@ export const CustomerScalarFieldEnum = {
   overdueAmount: 'overdueAmount',
   currency: 'currency',
   customerSince: 'customerSince',
+  lastActivityDate: 'lastActivityDate',
+  lastPurchaseDate: 'lastPurchaseDate',
   lastOrderDate: 'lastOrderDate',
   lastPaymentDate: 'lastPaymentDate',
   lastContactDate: 'lastContactDate',
-  accountManagerId: 'accountManagerId',
-  accountManagerName: 'accountManagerName',
   preferredPaymentMethod: 'preferredPaymentMethod',
   preferredLanguage: 'preferredLanguage',
   invoiceDelivery: 'invoiceDelivery',
-  tags: 'tags',
   notes: 'notes',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
@@ -1648,6 +1784,9 @@ export const CustomerRevenueScalarFieldEnum = {
   cost: 'cost',
   profit: 'profit',
   margin: 'margin',
+  productRevenue: 'productRevenue',
+  serviceRevenue: 'serviceRevenue',
+  otherRevenue: 'otherRevenue',
   orderCount: 'orderCount',
   averageOrderValue: 'averageOrderValue',
   createdAt: 'createdAt'
@@ -1680,37 +1819,44 @@ export const SupplierScalarFieldEnum = {
   id: 'id',
   supplierNumber: 'supplierNumber',
   name: 'name',
-  type: 'type',
+  legalName: 'legalName',
   status: 'status',
-  industry: 'industry',
+  category: 'category',
   email: 'email',
   phone: 'phone',
   website: 'website',
   address: 'address',
   taxId: 'taxId',
-  vatNumber: 'vatNumber',
-  legalName: 'legalName',
-  paymentTerms: 'paymentTerms',
-  preferredPaymentMethod: 'preferredPaymentMethod',
-  bankDetails: 'bankDetails',
-  currency: 'currency',
-  totalPurchases: 'totalPurchases',
-  totalOrders: 'totalOrders',
-  averageOrderValue: 'averageOrderValue',
-  outstandingPayables: 'outstandingPayables',
-  overdueAmount: 'overdueAmount',
-  qualityRating: 'qualityRating',
-  deliveryRating: 'deliveryRating',
-  responseRating: 'responseRating',
-  overallRating: 'overallRating',
-  onTimeDeliveryRate: 'onTimeDeliveryRate',
-  riskLevel: 'riskLevel',
+  registrationNumber: 'registrationNumber',
+  founded: 'founded',
+  employeeCount: 'employeeCount',
+  accountManagerId: 'accountManagerId',
+  accountManagerName: 'accountManagerName',
+  tags: 'tags',
   supplierSince: 'supplierSince',
   lastOrderDate: 'lastOrderDate',
   lastPaymentDate: 'lastPaymentDate',
-  accountManagerId: 'accountManagerId',
-  categories: 'categories',
-  tags: 'tags',
+  contractExpiryDate: 'contractExpiryDate',
+  totalSpend: 'totalSpend',
+  totalOrders: 'totalOrders',
+  averageOrderValue: 'averageOrderValue',
+  outstandingBalance: 'outstandingBalance',
+  currency: 'currency',
+  paymentTerms: 'paymentTerms',
+  preferredPaymentMethod: 'preferredPaymentMethod',
+  earlyPaymentDiscount: 'earlyPaymentDiscount',
+  bankDetails: 'bankDetails',
+  reliabilityRating: 'reliabilityRating',
+  reliabilityScore: 'reliabilityScore',
+  onTimeDeliveryRate: 'onTimeDeliveryRate',
+  qualityScore: 'qualityScore',
+  defectRate: 'defectRate',
+  avgLeadTime: 'avgLeadTime',
+  dependencyLevel: 'dependencyLevel',
+  dependencyScore: 'dependencyScore',
+  spendPercentage: 'spendPercentage',
+  alternativeSuppliers: 'alternativeSuppliers',
+  criticalItems: 'criticalItems',
   notes: 'notes',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
@@ -1729,6 +1875,7 @@ export const SupplierContactScalarFieldEnum = {
   phone: 'phone',
   isPrimary: 'isPrimary',
   role: 'role',
+  notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1736,41 +1883,399 @@ export const SupplierContactScalarFieldEnum = {
 export type SupplierContactScalarFieldEnum = (typeof SupplierContactScalarFieldEnum)[keyof typeof SupplierContactScalarFieldEnum]
 
 
+export const SupplierBalanceScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  totalOutstanding: 'totalOutstanding',
+  currentDue: 'currentDue',
+  overdue30: 'overdue30',
+  overdue60: 'overdue60',
+  overdue90Plus: 'overdue90Plus',
+  availableCredits: 'availableCredits',
+  pendingCredits: 'pendingCredits',
+  lastPaymentAmount: 'lastPaymentAmount',
+  lastPaymentDate: 'lastPaymentDate',
+  nextPaymentDue: 'nextPaymentDue',
+  nextPaymentAmount: 'nextPaymentAmount',
+  ytdPayments: 'ytdPayments',
+  ytdPurchases: 'ytdPurchases',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplierBalanceScalarFieldEnum = (typeof SupplierBalanceScalarFieldEnum)[keyof typeof SupplierBalanceScalarFieldEnum]
+
+
+export const SupplierPaymentScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  paymentNumber: 'paymentNumber',
+  invoiceIds: 'invoiceIds',
+  amount: 'amount',
+  currency: 'currency',
+  paymentDate: 'paymentDate',
+  dueDate: 'dueDate',
+  paymentMethod: 'paymentMethod',
+  referenceNumber: 'referenceNumber',
+  bankAccount: 'bankAccount',
+  status: 'status',
+  discountTaken: 'discountTaken',
+  discountType: 'discountType',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type SupplierPaymentScalarFieldEnum = (typeof SupplierPaymentScalarFieldEnum)[keyof typeof SupplierPaymentScalarFieldEnum]
+
+
+export const SupplierReliabilityScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  orderId: 'orderId',
+  orderNumber: 'orderNumber',
+  orderDate: 'orderDate',
+  expectedDeliveryDate: 'expectedDeliveryDate',
+  actualDeliveryDate: 'actualDeliveryDate',
+  daysVariance: 'daysVariance',
+  itemsOrdered: 'itemsOrdered',
+  itemsReceived: 'itemsReceived',
+  itemsDefective: 'itemsDefective',
+  qualityScore: 'qualityScore',
+  hasIssues: 'hasIssues',
+  issueType: 'issueType',
+  issueDescription: 'issueDescription',
+  issueResolved: 'issueResolved',
+  createdAt: 'createdAt'
+} as const
+
+export type SupplierReliabilityScalarFieldEnum = (typeof SupplierReliabilityScalarFieldEnum)[keyof typeof SupplierReliabilityScalarFieldEnum]
+
+
+export const SupplierSpendScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  period: 'period',
+  periodType: 'periodType',
+  totalSpend: 'totalSpend',
+  directSpend: 'directSpend',
+  indirectSpend: 'indirectSpend',
+  goodsSpend: 'goodsSpend',
+  servicesSpend: 'servicesSpend',
+  orderCount: 'orderCount',
+  averageOrderValue: 'averageOrderValue',
+  previousPeriodSpend: 'previousPeriodSpend',
+  changePercentage: 'changePercentage',
+  budgetAmount: 'budgetAmount',
+  budgetVariance: 'budgetVariance',
+  createdAt: 'createdAt'
+} as const
+
+export type SupplierSpendScalarFieldEnum = (typeof SupplierSpendScalarFieldEnum)[keyof typeof SupplierSpendScalarFieldEnum]
+
+
+export const SupplierRiskScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  riskType: 'riskType',
+  title: 'title',
+  description: 'description',
+  severity: 'severity',
+  impactScore: 'impactScore',
+  probabilityScore: 'probabilityScore',
+  overallRiskScore: 'overallRiskScore',
+  mitigationPlan: 'mitigationPlan',
+  mitigationStatus: 'mitigationStatus',
+  status: 'status',
+  identifiedAt: 'identifiedAt',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplierRiskScalarFieldEnum = (typeof SupplierRiskScalarFieldEnum)[keyof typeof SupplierRiskScalarFieldEnum]
+
+
+export const NettingAgreementScalarFieldEnum = {
+  id: 'id',
+  agreementNumber: 'agreementNumber',
+  name: 'name',
+  type: 'type',
+  status: 'status',
+  nettingFrequency: 'nettingFrequency',
+  settlementDays: 'settlementDays',
+  baseCurrency: 'baseCurrency',
+  minimumNettingAmount: 'minimumNettingAmount',
+  maximumNettingAmount: 'maximumNettingAmount',
+  effectiveDate: 'effectiveDate',
+  expiryDate: 'expiryDate',
+  lastNettingDate: 'lastNettingDate',
+  nextNettingDate: 'nextNettingDate',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NettingAgreementScalarFieldEnum = (typeof NettingAgreementScalarFieldEnum)[keyof typeof NettingAgreementScalarFieldEnum]
+
+
+export const NettingPartyScalarFieldEnum = {
+  id: 'id',
+  partyId: 'partyId',
+  partyName: 'partyName',
+  partyType: 'partyType',
+  accountNumber: 'accountNumber',
+  bankName: 'bankName',
+  bankDetails: 'bankDetails',
+  isNettingCenter: 'isNettingCenter',
+  agreementId: 'agreementId',
+  createdAt: 'createdAt'
+} as const
+
+export type NettingPartyScalarFieldEnum = (typeof NettingPartyScalarFieldEnum)[keyof typeof NettingPartyScalarFieldEnum]
+
+
+export const NettingSessionScalarFieldEnum = {
+  id: 'id',
+  sessionNumber: 'sessionNumber',
+  type: 'type',
+  status: 'status',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  nettingDate: 'nettingDate',
+  settlementDate: 'settlementDate',
+  baseCurrency: 'baseCurrency',
+  totalReceivables: 'totalReceivables',
+  totalPayables: 'totalPayables',
+  grossAmount: 'grossAmount',
+  netAmount: 'netAmount',
+  savingsAmount: 'savingsAmount',
+  savingsPercentage: 'savingsPercentage',
+  createdById: 'createdById',
+  createdByName: 'createdByName',
+  approvedBy: 'approvedBy',
+  approvedByName: 'approvedByName',
+  approvedAt: 'approvedAt',
+  rejectedBy: 'rejectedBy',
+  rejectedByName: 'rejectedByName',
+  rejectedAt: 'rejectedAt',
+  rejectedReason: 'rejectedReason',
+  notes: 'notes',
+  agreementId: 'agreementId',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NettingSessionScalarFieldEnum = (typeof NettingSessionScalarFieldEnum)[keyof typeof NettingSessionScalarFieldEnum]
+
+
+export const NettingPositionScalarFieldEnum = {
+  id: 'id',
+  partyId: 'partyId',
+  partyName: 'partyName',
+  partyType: 'partyType',
+  receivables: 'receivables',
+  payables: 'payables',
+  grossPosition: 'grossPosition',
+  netPosition: 'netPosition',
+  receivableCount: 'receivableCount',
+  payableCount: 'payableCount',
+  settlementDirection: 'settlementDirection',
+  settlementAmount: 'settlementAmount',
+  sessionId: 'sessionId',
+  nettingPartyId: 'nettingPartyId',
+  createdAt: 'createdAt'
+} as const
+
+export type NettingPositionScalarFieldEnum = (typeof NettingPositionScalarFieldEnum)[keyof typeof NettingPositionScalarFieldEnum]
+
+
+export const NettingTransactionScalarFieldEnum = {
+  id: 'id',
+  documentType: 'documentType',
+  documentNumber: 'documentNumber',
+  documentDate: 'documentDate',
+  dueDate: 'dueDate',
+  counterpartyId: 'counterpartyId',
+  counterpartyName: 'counterpartyName',
+  originalCurrency: 'originalCurrency',
+  originalAmount: 'originalAmount',
+  baseCurrencyAmount: 'baseCurrencyAmount',
+  exchangeRate: 'exchangeRate',
+  direction: 'direction',
+  included: 'included',
+  excludedReason: 'excludedReason',
+  positionId: 'positionId',
+  createdAt: 'createdAt'
+} as const
+
+export type NettingTransactionScalarFieldEnum = (typeof NettingTransactionScalarFieldEnum)[keyof typeof NettingTransactionScalarFieldEnum]
+
+
+export const SettlementInstructionScalarFieldEnum = {
+  id: 'id',
+  instructionNumber: 'instructionNumber',
+  payerId: 'payerId',
+  payerName: 'payerName',
+  receiverId: 'receiverId',
+  receiverName: 'receiverName',
+  amount: 'amount',
+  currency: 'currency',
+  settlementMethod: 'settlementMethod',
+  payerBankAccount: 'payerBankAccount',
+  receiverBankAccount: 'receiverBankAccount',
+  status: 'status',
+  valueDate: 'valueDate',
+  processedAt: 'processedAt',
+  paymentReference: 'paymentReference',
+  sessionId: 'sessionId',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type SettlementInstructionScalarFieldEnum = (typeof SettlementInstructionScalarFieldEnum)[keyof typeof SettlementInstructionScalarFieldEnum]
+
+
+export const OffsetEntryScalarFieldEnum = {
+  id: 'id',
+  offsetNumber: 'offsetNumber',
+  type: 'type',
+  status: 'status',
+  partyId: 'partyId',
+  partyName: 'partyName',
+  partyType: 'partyType',
+  sourceDocumentType: 'sourceDocumentType',
+  sourceDocumentNumber: 'sourceDocumentNumber',
+  sourceAmount: 'sourceAmount',
+  targetDocumentType: 'targetDocumentType',
+  targetDocumentNumber: 'targetDocumentNumber',
+  targetAmount: 'targetAmount',
+  offsetAmount: 'offsetAmount',
+  currency: 'currency',
+  offsetDate: 'offsetDate',
+  effectiveDate: 'effectiveDate',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  approverName: 'approverName',
+  reversedAt: 'reversedAt',
+  reversedBy: 'reversedBy',
+  reversalReason: 'reversalReason',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OffsetEntryScalarFieldEnum = (typeof OffsetEntryScalarFieldEnum)[keyof typeof OffsetEntryScalarFieldEnum]
+
+
 export const OfferScalarFieldEnum = {
   id: 'id',
   offerNumber: 'offerNumber',
+  version: 'version',
   status: 'status',
-  type: 'type',
+  counterparty: 'counterparty',
   customerId: 'customerId',
   customerName: 'customerName',
-  customerEmail: 'customerEmail',
-  customerAddress: 'customerAddress',
   offerDate: 'offerDate',
-  validUntil: 'validUntil',
+  validityDays: 'validityDays',
+  expiryDate: 'expiryDate',
+  sentAt: 'sentAt',
   acceptedAt: 'acceptedAt',
   rejectedAt: 'rejectedAt',
   convertedAt: 'convertedAt',
-  items: 'items',
   currency: 'currency',
+  paymentTerms: 'paymentTerms',
+  deliveryTerms: 'deliveryTerms',
+  lineItems: 'lineItems',
   subtotal: 'subtotal',
-  taxAmount: 'taxAmount',
-  discountAmount: 'discountAmount',
-  total: 'total',
+  totalDiscount: 'totalDiscount',
+  taxTotal: 'taxTotal',
+  grandTotal: 'grandTotal',
   taxRate: 'taxRate',
-  convertedToOrderId: 'convertedToOrderId',
-  convertedToInvoiceId: 'convertedToInvoiceId',
-  title: 'title',
-  description: 'description',
-  terms: 'terms',
-  notes: 'notes',
+  totalCost: 'totalCost',
+  grossMargin: 'grossMargin',
+  grossMarginPercent: 'grossMarginPercent',
   internalNotes: 'internalNotes',
-  tags: 'tags',
+  customerNotes: 'customerNotes',
+  termsAndConditions: 'termsAndConditions',
+  disclaimer: 'disclaimer',
+  acceptanceMethod: 'acceptanceMethod',
+  rejectionReason: 'rejectionReason',
+  convertedOrderId: 'convertedOrderId',
+  convertedOrderNumber: 'convertedOrderNumber',
+  templateId: 'templateId',
+  templateName: 'templateName',
+  previousVersionId: 'previousVersionId',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  sentBy: 'sentBy',
+  approvedBy: 'approvedBy',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
+
+
+export const OfferVersionScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  version: 'version',
+  changes: 'changes',
+  revisionNotes: 'revisionNotes',
+  snapshotData: 'snapshotData',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt'
+} as const
+
+export type OfferVersionScalarFieldEnum = (typeof OfferVersionScalarFieldEnum)[keyof typeof OfferVersionScalarFieldEnum]
+
+
+export const OfferAuditLogScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  offerNumber: 'offerNumber',
+  action: 'action',
+  details: 'details',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  userId: 'userId',
+  userName: 'userName',
+  userRole: 'userRole',
+  ipAddress: 'ipAddress',
+  metadata: 'metadata',
+  timestamp: 'timestamp'
+} as const
+
+export type OfferAuditLogScalarFieldEnum = (typeof OfferAuditLogScalarFieldEnum)[keyof typeof OfferAuditLogScalarFieldEnum]
+
+
+export const OfferTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  defaultCurrency: 'defaultCurrency',
+  defaultValidityDays: 'defaultValidityDays',
+  defaultPaymentTerms: 'defaultPaymentTerms',
+  defaultDeliveryTerms: 'defaultDeliveryTerms',
+  defaultTermsAndConditions: 'defaultTermsAndConditions',
+  defaultDisclaimer: 'defaultDisclaimer',
+  defaultLineItems: 'defaultLineItems',
+  headerText: 'headerText',
+  footerText: 'footerText',
+  usageCount: 'usageCount',
+  lastUsedAt: 'lastUsedAt',
+  isActive: 'isActive',
+  createdBy: 'createdBy',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferTemplateScalarFieldEnum = (typeof OfferTemplateScalarFieldEnum)[keyof typeof OfferTemplateScalarFieldEnum]
 
 
 export const TaskScalarFieldEnum = {
@@ -1782,23 +2287,31 @@ export const TaskScalarFieldEnum = {
   type: 'type',
   category: 'category',
   dueDate: 'dueDate',
+  dueTime: 'dueTime',
   startDate: 'startDate',
   completedAt: 'completedAt',
+  snoozedUntil: 'snoozedUntil',
   reminderDate: 'reminderDate',
-  assigneeId: 'assigneeId',
-  assigneeName: 'assigneeName',
+  ownerId: 'ownerId',
+  ownerName: 'ownerName',
   createdById: 'createdById',
   createdByName: 'createdByName',
-  referenceType: 'referenceType',
-  referenceId: 'referenceId',
+  assignmentReason: 'assignmentReason',
+  sourceSystem: 'sourceSystem',
+  sourceEntityId: 'sourceEntityId',
+  sourceEntityType: 'sourceEntityType',
+  slaDeadline: 'slaDeadline',
+  slaBreach: 'slaBreach',
+  slaWarning: 'slaWarning',
+  isBlocked: 'isBlocked',
   progress: 'progress',
   estimatedHours: 'estimatedHours',
   actualHours: 'actualHours',
-  tags: 'tags',
-  attachments: 'attachments',
-  notes: 'notes',
+  hasUnreadUpdates: 'hasUnreadUpdates',
+  hasMentions: 'hasMentions',
   isRecurring: 'isRecurring',
   recurringInterval: 'recurringInterval',
+  metadata: 'metadata',
   organizationId: 'organizationId',
   parentId: 'parentId',
   createdAt: 'createdAt',
@@ -1808,84 +2321,541 @@ export const TaskScalarFieldEnum = {
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
-export const ForecastScalarFieldEnum = {
+export const TaskAssigneeScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  userId: 'userId',
+  userName: 'userName',
+  email: 'email',
+  avatar: 'avatar',
+  assignedAt: 'assignedAt',
+  assignedBy: 'assignedBy'
+} as const
+
+export type TaskAssigneeScalarFieldEnum = (typeof TaskAssigneeScalarFieldEnum)[keyof typeof TaskAssigneeScalarFieldEnum]
+
+
+export const TaskWatcherScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  userId: 'userId',
+  userName: 'userName',
+  watchingSince: 'watchingSince'
+} as const
+
+export type TaskWatcherScalarFieldEnum = (typeof TaskWatcherScalarFieldEnum)[keyof typeof TaskWatcherScalarFieldEnum]
+
+
+export const TaskTagScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
-  type: 'type',
-  status: 'status',
-  periodType: 'periodType',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  fiscalYear: 'fiscalYear',
-  version: 'version',
-  isBaseline: 'isBaseline',
-  baselineId: 'baselineId',
+  color: 'color',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type TaskTagScalarFieldEnum = (typeof TaskTagScalarFieldEnum)[keyof typeof TaskTagScalarFieldEnum]
+
+
+export const TaskTagLinkScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  tagId: 'tagId'
+} as const
+
+export type TaskTagLinkScalarFieldEnum = (typeof TaskTagLinkScalarFieldEnum)[keyof typeof TaskTagLinkScalarFieldEnum]
+
+
+export const TaskDependencyScalarFieldEnum = {
+  id: 'id',
+  dependentTaskId: 'dependentTaskId',
+  blockingTaskId: 'blockingTaskId',
+  createdAt: 'createdAt'
+} as const
+
+export type TaskDependencyScalarFieldEnum = (typeof TaskDependencyScalarFieldEnum)[keyof typeof TaskDependencyScalarFieldEnum]
+
+
+export const TaskCommentScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
   parentId: 'parentId',
-  currency: 'currency',
-  totalRevenue: 'totalRevenue',
-  totalExpense: 'totalExpense',
-  totalProfit: 'totalProfit',
-  totalCashFlow: 'totalCashFlow',
-  assumptions: 'assumptions',
-  tags: 'tags',
-  notes: 'notes',
-  approvedBy: 'approvedBy',
-  approvedAt: 'approvedAt',
+  mentions: 'mentions',
+  reactions: 'reactions',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TaskCommentScalarFieldEnum = (typeof TaskCommentScalarFieldEnum)[keyof typeof TaskCommentScalarFieldEnum]
+
+
+export const TaskActivityScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  type: 'type',
+  actorId: 'actorId',
+  actorName: 'actorName',
+  details: 'details',
+  previousValue: 'previousValue',
+  newValue: 'newValue',
+  timestamp: 'timestamp'
+} as const
+
+export type TaskActivityScalarFieldEnum = (typeof TaskActivityScalarFieldEnum)[keyof typeof TaskActivityScalarFieldEnum]
+
+
+export const TaskAttachmentScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  name: 'name',
+  url: 'url',
+  fileType: 'fileType',
+  size: 'size',
+  uploadedBy: 'uploadedBy',
+  uploadedByName: 'uploadedByName',
+  uploadedAt: 'uploadedAt'
+} as const
+
+export type TaskAttachmentScalarFieldEnum = (typeof TaskAttachmentScalarFieldEnum)[keyof typeof TaskAttachmentScalarFieldEnum]
+
+
+export const RiskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  severity: 'severity',
+  likelihood: 'likelihood',
+  impactScore: 'impactScore',
+  status: 'status',
+  identifiedAt: 'identifiedAt',
+  targetMitigationDate: 'targetMitigationDate',
+  resolvedAt: 'resolvedAt',
+  lastUpdatedAt: 'lastUpdatedAt',
+  ownerId: 'ownerId',
+  ownerName: 'ownerName',
+  escalatedTo: 'escalatedTo',
+  escalatedToName: 'escalatedToName',
+  impactAreas: 'impactAreas',
+  affectedSystemId: 'affectedSystemId',
+  affectedSystemName: 'affectedSystemName',
+  affectedProjectId: 'affectedProjectId',
+  affectedProjectName: 'affectedProjectName',
+  blastRadius: 'blastRadius',
+  mitigationPlan: 'mitigationPlan',
+  mitigationProgress: 'mitigationProgress',
+  sourceSystem: 'sourceSystem',
+  sourceEntityId: 'sourceEntityId',
+  isNewlyEscalated: 'isNewlyEscalated',
+  isStale: 'isStale',
+  isMitigationOverdue: 'isMitigationOverdue',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ForecastScalarFieldEnum = (typeof ForecastScalarFieldEnum)[keyof typeof ForecastScalarFieldEnum]
+export type RiskScalarFieldEnum = (typeof RiskScalarFieldEnum)[keyof typeof RiskScalarFieldEnum]
 
 
-export const ForecastPeriodScalarFieldEnum = {
+export const RiskMitigationStepScalarFieldEnum = {
   id: 'id',
-  periodLabel: 'periodLabel',
-  periodStart: 'periodStart',
-  periodEnd: 'periodEnd',
-  revenue: 'revenue',
-  expense: 'expense',
-  profit: 'profit',
-  cashInflow: 'cashInflow',
-  cashOutflow: 'cashOutflow',
-  netCashFlow: 'netCashFlow',
-  closingCash: 'closingCash',
-  actualRevenue: 'actualRevenue',
-  actualExpense: 'actualExpense',
-  actualCashFlow: 'actualCashFlow',
-  revenueVariance: 'revenueVariance',
-  expenseVariance: 'expenseVariance',
-  cashFlowVariance: 'cashFlowVariance',
-  lineItems: 'lineItems',
-  forecastId: 'forecastId',
+  riskId: 'riskId',
+  description: 'description',
+  orderIndex: 'orderIndex',
+  ownerId: 'ownerId',
+  ownerName: 'ownerName',
+  deadline: 'deadline',
+  status: 'status',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type RiskMitigationStepScalarFieldEnum = (typeof RiskMitigationStepScalarFieldEnum)[keyof typeof RiskMitigationStepScalarFieldEnum]
+
+
+export const TaskRiskLinkScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  riskId: 'riskId',
+  createdAt: 'createdAt'
+} as const
+
+export type TaskRiskLinkScalarFieldEnum = (typeof TaskRiskLinkScalarFieldEnum)[keyof typeof TaskRiskLinkScalarFieldEnum]
+
+
+export const RiskCommentScalarFieldEnum = {
+  id: 'id',
+  riskId: 'riskId',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ForecastPeriodScalarFieldEnum = (typeof ForecastPeriodScalarFieldEnum)[keyof typeof ForecastPeriodScalarFieldEnum]
+export type RiskCommentScalarFieldEnum = (typeof RiskCommentScalarFieldEnum)[keyof typeof RiskCommentScalarFieldEnum]
+
+
+export const RiskActivityScalarFieldEnum = {
+  id: 'id',
+  riskId: 'riskId',
+  type: 'type',
+  actorId: 'actorId',
+  actorName: 'actorName',
+  details: 'details',
+  previousValue: 'previousValue',
+  newValue: 'newValue',
+  timestamp: 'timestamp'
+} as const
+
+export type RiskActivityScalarFieldEnum = (typeof RiskActivityScalarFieldEnum)[keyof typeof RiskActivityScalarFieldEnum]
+
+
+export const TaskNotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  taskId: 'taskId',
+  riskId: 'riskId',
+  actorId: 'actorId',
+  actorName: 'actorName',
+  recipientId: 'recipientId',
+  isRead: 'isRead',
+  readAt: 'readAt',
+  timestamp: 'timestamp',
+  organizationId: 'organizationId'
+} as const
+
+export type TaskNotificationScalarFieldEnum = (typeof TaskNotificationScalarFieldEnum)[keyof typeof TaskNotificationScalarFieldEnum]
+
+
+export const SavedTaskFilterScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  icon: 'icon',
+  filters: 'filters',
+  isDefault: 'isDefault',
+  isShared: 'isShared',
+  createdBy: 'createdBy',
+  orderIndex: 'orderIndex',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SavedTaskFilterScalarFieldEnum = (typeof SavedTaskFilterScalarFieldEnum)[keyof typeof SavedTaskFilterScalarFieldEnum]
+
+
+export const RevenueForecastScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  scenarioId: 'scenarioId',
+  timeHorizon: 'timeHorizon',
+  granularity: 'granularity',
+  currency: 'currency',
+  totalExpected: 'totalExpected',
+  totalBestCase: 'totalBestCase',
+  totalWorstCase: 'totalWorstCase',
+  committedRevenue: 'committedRevenue',
+  projectedRevenue: 'projectedRevenue',
+  atRiskRevenue: 'atRiskRevenue',
+  byProduct: 'byProduct',
+  bySegment: 'bySegment',
+  byRegion: 'byRegion',
+  byType: 'byType',
+  dataSource: 'dataSource',
+  confidence: 'confidence',
+  lastUpdatedBy: 'lastUpdatedBy',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RevenueForecastScalarFieldEnum = (typeof RevenueForecastScalarFieldEnum)[keyof typeof RevenueForecastScalarFieldEnum]
+
+
+export const RevenueLineItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  revenueType: 'revenueType',
+  segment: 'segment',
+  region: 'region',
+  customerId: 'customerId',
+  customerName: 'customerName',
+  periods: 'periods',
+  isCommitted: 'isCommitted',
+  isAtRisk: 'isAtRisk',
+  isRenewal: 'isRenewal',
+  hasUpsell: 'hasUpsell',
+  hasDownsell: 'hasDownsell',
+  highUncertainty: 'highUncertainty',
+  drivers: 'drivers',
+  confidence: 'confidence',
+  confidenceScore: 'confidenceScore',
+  revenueForecastId: 'revenueForecastId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RevenueLineItemScalarFieldEnum = (typeof RevenueLineItemScalarFieldEnum)[keyof typeof RevenueLineItemScalarFieldEnum]
+
+
+export const CostForecastScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  scenarioId: 'scenarioId',
+  timeHorizon: 'timeHorizon',
+  granularity: 'granularity',
+  currency: 'currency',
+  totalExpected: 'totalExpected',
+  totalBestCase: 'totalBestCase',
+  totalWorstCase: 'totalWorstCase',
+  committedCosts: 'committedCosts',
+  estimatedCosts: 'estimatedCosts',
+  byCategory: 'byCategory',
+  byDepartment: 'byDepartment',
+  byVendor: 'byVendor',
+  byProject: 'byProject',
+  overrunCount: 'overrunCount',
+  unplannedSpendTotal: 'unplannedSpendTotal',
+  dataSource: 'dataSource',
+  confidence: 'confidence',
+  lastUpdatedBy: 'lastUpdatedBy',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CostForecastScalarFieldEnum = (typeof CostForecastScalarFieldEnum)[keyof typeof CostForecastScalarFieldEnum]
+
+
+export const CostLineItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  department: 'department',
+  costCenter: 'costCenter',
+  vendorId: 'vendorId',
+  vendorName: 'vendorName',
+  projectId: 'projectId',
+  projectName: 'projectName',
+  periods: 'periods',
+  isCommitted: 'isCommitted',
+  isContractual: 'isContractual',
+  hasStepChange: 'hasStepChange',
+  stepChangeDescription: 'stepChangeDescription',
+  isOverrun: 'isOverrun',
+  isUnplanned: 'isUnplanned',
+  drivers: 'drivers',
+  scenarioImpact: 'scenarioImpact',
+  confidence: 'confidence',
+  confidenceScore: 'confidenceScore',
+  costForecastId: 'costForecastId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CostLineItemScalarFieldEnum = (typeof CostLineItemScalarFieldEnum)[keyof typeof CostLineItemScalarFieldEnum]
+
+
+export const CashForecastScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  scenarioId: 'scenarioId',
+  timeHorizon: 'timeHorizon',
+  granularity: 'granularity',
+  currency: 'currency',
+  currentCashBalance: 'currentCashBalance',
+  minimumCashRunway: 'minimumCashRunway',
+  covenantThreshold: 'covenantThreshold',
+  projectedMinimumBalance: 'projectedMinimumBalance',
+  projectedMinimumDate: 'projectedMinimumDate',
+  avgCollectionDays: 'avgCollectionDays',
+  avgPaymentTerms: 'avgPaymentTerms',
+  delayedReceivables: 'delayedReceivables',
+  hasNegativePeriods: 'hasNegativePeriods',
+  hasCriticalPeriods: 'hasCriticalPeriods',
+  covenantAtRisk: 'covenantAtRisk',
+  stressScenarios: 'stressScenarios',
+  dataSource: 'dataSource',
+  confidence: 'confidence',
+  lastUpdatedBy: 'lastUpdatedBy',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CashForecastScalarFieldEnum = (typeof CashForecastScalarFieldEnum)[keyof typeof CashForecastScalarFieldEnum]
+
+
+export const CashForecastPeriodScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  periodLabel: 'periodLabel',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  openingBalance: 'openingBalance',
+  closingBalance: 'closingBalance',
+  netCashFlow: 'netCashFlow',
+  cashIn: 'cashIn',
+  cashInBreakdown: 'cashInBreakdown',
+  cashOut: 'cashOut',
+  cashOutBreakdown: 'cashOutBreakdown',
+  isNegative: 'isNegative',
+  isCritical: 'isCritical',
+  breachesMinimum: 'breachesMinimum',
+  breachesCovenant: 'breachesCovenant',
+  confidence: 'confidence',
+  cashForecastId: 'cashForecastId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CashForecastPeriodScalarFieldEnum = (typeof CashForecastPeriodScalarFieldEnum)[keyof typeof CashForecastPeriodScalarFieldEnum]
+
+
+export const ForecastScenarioScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  description: 'description',
+  revenueForecastId: 'revenueForecastId',
+  costForecastId: 'costForecastId',
+  cashForecastId: 'cashForecastId',
+  revenueVsBase: 'revenueVsBase',
+  costVsBase: 'costVsBase',
+  cashVsBase: 'cashVsBase',
+  netVsBase: 'netVsBase',
+  isLocked: 'isLocked',
+  isActive: 'isActive',
+  createdBy: 'createdBy',
+  lastUpdatedBy: 'lastUpdatedBy',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ForecastScenarioScalarFieldEnum = (typeof ForecastScenarioScalarFieldEnum)[keyof typeof ForecastScenarioScalarFieldEnum]
+
+
+export const ForecastAssumptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  value: 'value',
+  unit: 'unit',
+  description: 'description',
+  impactedForecasts: 'impactedForecasts',
+  isEditable: 'isEditable',
+  lastUpdatedBy: 'lastUpdatedBy',
+  scenarioId: 'scenarioId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ForecastAssumptionScalarFieldEnum = (typeof ForecastAssumptionScalarFieldEnum)[keyof typeof ForecastAssumptionScalarFieldEnum]
+
+
+export const ForecastAlertScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  severity: 'severity',
+  title: 'title',
+  message: 'message',
+  forecastType: 'forecastType',
+  periodId: 'periodId',
+  lineItemId: 'lineItemId',
+  threshold: 'threshold',
+  currentValue: 'currentValue',
+  isRead: 'isRead',
+  isDismissed: 'isDismissed',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type ForecastAlertScalarFieldEnum = (typeof ForecastAlertScalarFieldEnum)[keyof typeof ForecastAlertScalarFieldEnum]
+
+
+export const ForecastAnnotationScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
+  lineItemId: 'lineItemId',
+  periodId: 'periodId',
+  revenueForecastId: 'revenueForecastId',
+  costForecastId: 'costForecastId',
+  cashForecastId: 'cashForecastId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ForecastAnnotationScalarFieldEnum = (typeof ForecastAnnotationScalarFieldEnum)[keyof typeof ForecastAnnotationScalarFieldEnum]
+
+
+export const ForecastVarianceScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  periodLabel: 'periodLabel',
+  revenueForecast: 'revenueForecast',
+  revenueActual: 'revenueActual',
+  revenueVariance: 'revenueVariance',
+  revenueVariancePct: 'revenueVariancePct',
+  costForecast: 'costForecast',
+  costActual: 'costActual',
+  costVariance: 'costVariance',
+  costVariancePct: 'costVariancePct',
+  cashForecast: 'cashForecast',
+  cashActual: 'cashActual',
+  cashVariance: 'cashVariance',
+  cashVariancePct: 'cashVariancePct',
+  netForecast: 'netForecast',
+  netActual: 'netActual',
+  netVariance: 'netVariance',
+  netVariancePct: 'netVariancePct',
+  revenueAttribution: 'revenueAttribution',
+  costAttribution: 'costAttribution',
+  cashAttribution: 'cashAttribution',
+  hasMaterialVariance: 'hasMaterialVariance',
+  varianceThresholdBreached: 'varianceThresholdBreached',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ForecastVarianceScalarFieldEnum = (typeof ForecastVarianceScalarFieldEnum)[keyof typeof ForecastVarianceScalarFieldEnum]
 
 
 export const ScenarioScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  type: 'type',
+  caseType: 'caseType',
   status: 'status',
-  baseForecastId: 'baseForecastId',
-  baseScenarioId: 'baseScenarioId',
-  parameters: 'parameters',
-  results: 'results',
-  revenueImpact: 'revenueImpact',
-  expenseImpact: 'expenseImpact',
-  profitImpact: 'profitImpact',
-  cashFlowImpact: 'cashFlowImpact',
-  probability: 'probability',
-  riskLevel: 'riskLevel',
+  visibility: 'visibility',
+  metrics: 'metrics',
   confidenceLevel: 'confidenceLevel',
+  confidenceScore: 'confidenceScore',
+  uncertaintyBandLow: 'uncertaintyBandLow',
+  uncertaintyBandHigh: 'uncertaintyBandHigh',
+  derivedFromId: 'derivedFromId',
+  derivedFromName: 'derivedFromName',
+  ownerId: 'ownerId',
+  ownerName: 'ownerName',
+  sharedWithTeams: 'sharedWithTeams',
+  version: 'version',
+  previousVersionId: 'previousVersionId',
   tags: 'tags',
-  notes: 'notes',
+  createdBy: 'createdBy',
+  lastModifiedBy: 'lastModifiedBy',
+  lockedAt: 'lockedAt',
+  lockedBy: 'lockedBy',
+  approvedAt: 'approvedAt',
+  approvedBy: 'approvedBy',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1894,24 +2864,154 @@ export const ScenarioScalarFieldEnum = {
 export type ScenarioScalarFieldEnum = (typeof ScenarioScalarFieldEnum)[keyof typeof ScenarioScalarFieldEnum]
 
 
+export const ScenarioAssumptionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  baseValue: 'baseValue',
+  currentValue: 'currentValue',
+  unit: 'unit',
+  description: 'description',
+  isProtected: 'isProtected',
+  isOverridden: 'isOverridden',
+  minValue: 'minValue',
+  maxValue: 'maxValue',
+  step: 'step',
+  impactedMetrics: 'impactedMetrics',
+  lastModifiedAt: 'lastModifiedAt',
+  lastModifiedBy: 'lastModifiedBy',
+  scenarioId: 'scenarioId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScenarioAssumptionScalarFieldEnum = (typeof ScenarioAssumptionScalarFieldEnum)[keyof typeof ScenarioAssumptionScalarFieldEnum]
+
+
+export const StressTestScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  isTemplate: 'isTemplate',
+  parameters: 'parameters',
+  intensity: 'intensity',
+  result: 'result',
+  resultMetrics: 'resultMetrics',
+  thresholds: 'thresholds',
+  cashShortfallPoint: 'cashShortfallPoint',
+  covenantBreachPoint: 'covenantBreachPoint',
+  marginCollapsePoint: 'marginCollapsePoint',
+  defaultIntensities: 'defaultIntensities',
+  lastRunAt: 'lastRunAt',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StressTestScalarFieldEnum = (typeof StressTestScalarFieldEnum)[keyof typeof StressTestScalarFieldEnum]
+
+
+export const SimulationStateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  drivers: 'drivers',
+  resultMetrics: 'resultMetrics',
+  comparisonBaselineId: 'comparisonBaselineId',
+  isPinned: 'isPinned',
+  pinnedAsScenarioId: 'pinnedAsScenarioId',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SimulationStateScalarFieldEnum = (typeof SimulationStateScalarFieldEnum)[keyof typeof SimulationStateScalarFieldEnum]
+
+
+export const ScenarioCommentScalarFieldEnum = {
+  id: 'id',
+  scenarioId: 'scenarioId',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
+  parentId: 'parentId',
+  isResolved: 'isResolved',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScenarioCommentScalarFieldEnum = (typeof ScenarioCommentScalarFieldEnum)[keyof typeof ScenarioCommentScalarFieldEnum]
+
+
+export const ScenarioDecisionScalarFieldEnum = {
+  id: 'id',
+  scenarioId: 'scenarioId',
+  type: 'type',
+  decision: 'decision',
+  rationale: 'rationale',
+  decidedBy: 'decidedBy',
+  decidedByName: 'decidedByName',
+  decidedAt: 'decidedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ScenarioDecisionScalarFieldEnum = (typeof ScenarioDecisionScalarFieldEnum)[keyof typeof ScenarioDecisionScalarFieldEnum]
+
+
+export const ScenarioChangeEventScalarFieldEnum = {
+  id: 'id',
+  scenarioId: 'scenarioId',
+  changeType: 'changeType',
+  assumptionId: 'assumptionId',
+  assumptionName: 'assumptionName',
+  previousValue: 'previousValue',
+  newValue: 'newValue',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  description: 'description',
+  userId: 'userId',
+  userName: 'userName',
+  timestamp: 'timestamp'
+} as const
+
+export type ScenarioChangeEventScalarFieldEnum = (typeof ScenarioChangeEventScalarFieldEnum)[keyof typeof ScenarioChangeEventScalarFieldEnum]
+
+
 export const KPIScalarFieldEnum = {
   id: 'id',
   code: 'code',
   name: 'name',
+  shortName: 'shortName',
   description: 'description',
   category: 'category',
   calculationType: 'calculationType',
   formula: 'formula',
   dataSource: 'dataSource',
+  dataSources: 'dataSources',
   unit: 'unit',
+  format: 'format',
+  higherIsBetter: 'higherIsBetter',
   currentValue: 'currentValue',
   previousValue: 'previousValue',
   targetValue: 'targetValue',
   baselineValue: 'baselineValue',
+  rollingAvg3M: 'rollingAvg3M',
+  rollingAvg6M: 'rollingAvg6M',
+  rollingAvg12M: 'rollingAvg12M',
+  deltaVsPrior: 'deltaVsPrior',
+  deltaVsPriorPercent: 'deltaVsPriorPercent',
+  deltaVsTarget: 'deltaVsTarget',
+  deltaVsTargetPercent: 'deltaVsTargetPercent',
   status: 'status',
   trend: 'trend',
   trendMomentum: 'trendMomentum',
+  dataFreshness: 'dataFreshness',
+  lastCalculatedAt: 'lastCalculatedAt',
   thresholds: 'thresholds',
+  seasonalityFactor: 'seasonalityFactor',
+  volatility: 'volatility',
+  isAnomaly: 'isAnomaly',
   displayOrder: 'displayOrder',
   isVisible: 'isVisible',
   isPinned: 'isPinned',
@@ -1938,6 +3038,8 @@ export const KPIHistoryScalarFieldEnum = {
   vsPrevious: 'vsPrevious',
   status: 'status',
   trend: 'trend',
+  isAnomaly: 'isAnomaly',
+  annotation: 'annotation',
   kpiId: 'kpiId',
   createdAt: 'createdAt'
 } as const
@@ -1945,19 +3047,117 @@ export const KPIHistoryScalarFieldEnum = {
 export type KPIHistoryScalarFieldEnum = (typeof KPIHistoryScalarFieldEnum)[keyof typeof KPIHistoryScalarFieldEnum]
 
 
+export const KPIAlertScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  severity: 'severity',
+  title: 'title',
+  message: 'message',
+  currentValue: 'currentValue',
+  threshold: 'threshold',
+  deviation: 'deviation',
+  suggestedAction: 'suggestedAction',
+  isRead: 'isRead',
+  isDismissed: 'isDismissed',
+  readAt: 'readAt',
+  dismissedAt: 'dismissedAt',
+  dismissedBy: 'dismissedBy',
+  triggeredAt: 'triggeredAt',
+  kpiId: 'kpiId',
+  organizationId: 'organizationId'
+} as const
+
+export type KPIAlertScalarFieldEnum = (typeof KPIAlertScalarFieldEnum)[keyof typeof KPIAlertScalarFieldEnum]
+
+
+export const KPITargetScalarFieldEnum = {
+  id: 'id',
+  periodType: 'periodType',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  periodLabel: 'periodLabel',
+  targetValue: 'targetValue',
+  stretchValue: 'stretchValue',
+  minimumValue: 'minimumValue',
+  status: 'status',
+  actualValue: 'actualValue',
+  achievementPercent: 'achievementPercent',
+  notes: 'notes',
+  kpiId: 'kpiId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPITargetScalarFieldEnum = (typeof KPITargetScalarFieldEnum)[keyof typeof KPITargetScalarFieldEnum]
+
+
+export const KPIBenchmarkScalarFieldEnum = {
+  id: 'id',
+  source: 'source',
+  sourceName: 'sourceName',
+  value: 'value',
+  percentile: 'percentile',
+  rangeMin: 'rangeMin',
+  rangeMax: 'rangeMax',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  isActive: 'isActive',
+  notes: 'notes',
+  kpiId: 'kpiId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIBenchmarkScalarFieldEnum = (typeof KPIBenchmarkScalarFieldEnum)[keyof typeof KPIBenchmarkScalarFieldEnum]
+
+
+export const FXRateScalarFieldEnum = {
+  id: 'id',
+  baseCurrency: 'baseCurrency',
+  quoteCurrency: 'quoteCurrency',
+  rate: 'rate',
+  inverseRate: 'inverseRate',
+  source: 'source',
+  timestamp: 'timestamp',
+  validUntil: 'validUntil',
+  spread: 'spread',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type FXRateScalarFieldEnum = (typeof FXRateScalarFieldEnum)[keyof typeof FXRateScalarFieldEnum]
+
+
 export const FXExposureScalarFieldEnum = {
   id: 'id',
   baseCurrency: 'baseCurrency',
   quoteCurrency: 'quoteCurrency',
   type: 'type',
+  direction: 'direction',
+  timeHorizon: 'timeHorizon',
   status: 'status',
-  exposureAmount: 'exposureAmount',
+  grossExposure: 'grossExposure',
+  netExposure: 'netExposure',
   hedgedAmount: 'hedgedAmount',
   unhedgedAmount: 'unhedgedAmount',
   hedgePercentage: 'hedgePercentage',
+  receivables: 'receivables',
+  payables: 'payables',
+  cashBalance: 'cashBalance',
+  operationalInflows: 'operationalInflows',
+  operationalOutflows: 'operationalOutflows',
+  structuralPositions: 'structuralPositions',
+  entityId: 'entityId',
+  entityName: 'entityName',
+  spotRate: 'spotRate',
   bookingRate: 'bookingRate',
   currentRate: 'currentRate',
   targetRate: 'targetRate',
+  baseCurrencyValue: 'baseCurrencyValue',
+  valuationDate: 'valuationDate',
+  riskLevel: 'riskLevel',
+  volatility30d: 'volatility30d',
+  var95: 'var95',
   unrealizedGainLoss: 'unrealizedGainLoss',
   realizedGainLoss: 'realizedGainLoss',
   exposureDate: 'exposureDate',
@@ -1966,6 +3166,7 @@ export const FXExposureScalarFieldEnum = {
   referenceType: 'referenceType',
   referenceId: 'referenceId',
   counterparty: 'counterparty',
+  dataQuality: 'dataQuality',
   notes: 'notes',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
@@ -1975,116 +3176,404 @@ export const FXExposureScalarFieldEnum = {
 export type FXExposureScalarFieldEnum = (typeof FXExposureScalarFieldEnum)[keyof typeof FXExposureScalarFieldEnum]
 
 
-export const FXHedgeScalarFieldEnum = {
+export const FXConversionScalarFieldEnum = {
   id: 'id',
-  type: 'type',
-  status: 'status',
-  baseCurrency: 'baseCurrency',
-  quoteCurrency: 'quoteCurrency',
-  notionalAmount: 'notionalAmount',
-  strikeRate: 'strikeRate',
-  currentRate: 'currentRate',
-  tradeDate: 'tradeDate',
-  valueDate: 'valueDate',
-  maturityDate: 'maturityDate',
+  conversionNumber: 'conversionNumber',
+  sourceCurrency: 'sourceCurrency',
+  targetCurrency: 'targetCurrency',
+  sourceAmount: 'sourceAmount',
+  targetAmount: 'targetAmount',
+  appliedRate: 'appliedRate',
+  referenceRate: 'referenceRate',
+  rateDeviation: 'rateDeviation',
+  rateSource: 'rateSource',
+  spreadCost: 'spreadCost',
+  feeCost: 'feeCost',
+  totalCost: 'totalCost',
+  effectiveRate: 'effectiveRate',
+  executionChannel: 'executionChannel',
   counterparty: 'counterparty',
-  dealReference: 'dealReference',
-  marketValue: 'marketValue',
-  unrealizedGainLoss: 'unrealizedGainLoss',
-  isDesignatedHedge: 'isDesignatedHedge',
-  effectiveness: 'effectiveness',
-  notes: 'notes',
-  exposureId: 'exposureId',
+  conversionDate: 'conversionDate',
+  valueDate: 'valueDate',
+  settlementDate: 'settlementDate',
+  status: 'status',
+  purpose: 'purpose',
+  relatedDocuments: 'relatedDocuments',
+  initiatedBy: 'initiatedBy',
+  approvedBy: 'approvedBy',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type FXHedgeScalarFieldEnum = (typeof FXHedgeScalarFieldEnum)[keyof typeof FXHedgeScalarFieldEnum]
+export type FXConversionScalarFieldEnum = (typeof FXConversionScalarFieldEnum)[keyof typeof FXConversionScalarFieldEnum]
 
 
-export const FXRateScalarFieldEnum = {
+export const FXScenarioScalarFieldEnum = {
   id: 'id',
+  name: 'name',
+  description: 'description',
   baseCurrency: 'baseCurrency',
-  quoteCurrency: 'quoteCurrency',
-  rate: 'rate',
-  rateDate: 'rateDate',
-  source: 'source',
+  rateAssumptions: 'rateAssumptions',
+  totalExposureImpact: 'totalExposureImpact',
+  revenueImpact: 'revenueImpact',
+  costImpact: 'costImpact',
+  cashImpact: 'cashImpact',
+  scenarioType: 'scenarioType',
+  severity: 'severity',
+  probability: 'probability',
+  isActive: 'isActive',
+  isHypothetical: 'isHypothetical',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FXScenarioScalarFieldEnum = (typeof FXScenarioScalarFieldEnum)[keyof typeof FXScenarioScalarFieldEnum]
+
+
+export const FXForecastScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  baseCurrency: 'baseCurrency',
+  horizonMonths: 'horizonMonths',
+  projectedExposures: 'projectedExposures',
+  assumptions: 'assumptions',
+  status: 'status',
+  isHypothetical: 'isHypothetical',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FXForecastScalarFieldEnum = (typeof FXForecastScalarFieldEnum)[keyof typeof FXForecastScalarFieldEnum]
+
+
+export const FXCostScalarFieldEnum = {
+  id: 'id',
+  period: 'period',
+  baseCurrency: 'baseCurrency',
+  spreadCosts: 'spreadCosts',
+  transactionFees: 'transactionFees',
+  bankCharges: 'bankCharges',
+  totalExplicitCosts: 'totalExplicitCosts',
+  rateDeviationImpact: 'rateDeviationImpact',
+  timingImpact: 'timingImpact',
+  totalImplicitCosts: 'totalImplicitCosts',
+  totalFXCosts: 'totalFXCosts',
+  costAsPercentOfVolume: 'costAsPercentOfVolume',
+  revenueImpact: 'revenueImpact',
+  costImpact: 'costImpact',
+  cashImpact: 'cashImpact',
+  netPnLImpact: 'netPnLImpact',
+  priorPeriodCosts: 'priorPeriodCosts',
+  changeVsPrior: 'changeVsPrior',
+  changePercentVsPrior: 'changePercentVsPrior',
+  calculationMethod: 'calculationMethod',
+  referenceRateUsed: 'referenceRateUsed',
+  lastCalculated: 'lastCalculated',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FXCostScalarFieldEnum = (typeof FXCostScalarFieldEnum)[keyof typeof FXCostScalarFieldEnum]
+
+
+export const FXRiskIndicatorScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  riskLevel: 'riskLevel',
+  metric: 'metric',
+  threshold: 'threshold',
+  breached: 'breached',
+  currency: 'currency',
+  recommendation: 'recommendation',
+  isActive: 'isActive',
+  lastAssessed: 'lastAssessed',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FXRiskIndicatorScalarFieldEnum = (typeof FXRiskIndicatorScalarFieldEnum)[keyof typeof FXRiskIndicatorScalarFieldEnum]
+
+
+export const FXAuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  category: 'category',
+  details: 'details',
+  oldValue: 'oldValue',
+  newValue: 'newValue',
+  userId: 'userId',
+  userName: 'userName',
+  ipAddress: 'ipAddress',
+  organizationId: 'organizationId',
+  timestamp: 'timestamp'
+} as const
+
+export type FXAuditLogScalarFieldEnum = (typeof FXAuditLogScalarFieldEnum)[keyof typeof FXAuditLogScalarFieldEnum]
+
+
+export const InvestorSnapshotScalarFieldEnum = {
+  id: 'id',
+  snapshotDate: 'snapshotDate',
+  periodType: 'periodType',
+  periodLabel: 'periodLabel',
+  revenueMTD: 'revenueMTD',
+  revenueQTD: 'revenueQTD',
+  revenueYTD: 'revenueYTD',
+  revenueTTM: 'revenueTTM',
+  totalCosts: 'totalCosts',
+  fixedCosts: 'fixedCosts',
+  variableCosts: 'variableCosts',
+  grossMargin: 'grossMargin',
+  grossMarginPercent: 'grossMarginPercent',
+  operatingMargin: 'operatingMargin',
+  operatingMarginPercent: 'operatingMarginPercent',
+  ebitda: 'ebitda',
+  ebitdaMarginPercent: 'ebitdaMarginPercent',
+  netMargin: 'netMargin',
+  netMarginPercent: 'netMarginPercent',
+  cashAndEquivalents: 'cashAndEquivalents',
+  restrictedCash: 'restrictedCash',
+  totalCash: 'totalCash',
+  shortTermLiabilities: 'shortTermLiabilities',
+  longTermLiabilities: 'longTermLiabilities',
+  totalLiabilities: 'totalLiabilities',
+  currentAssets: 'currentAssets',
+  currentLiabilities: 'currentLiabilities',
+  netWorkingCapital: 'netWorkingCapital',
+  employeeCount: 'employeeCount',
+  revenuePerEmployee: 'revenuePerEmployee',
+  costPerEmployee: 'costPerEmployee',
+  unitEconomics: 'unitEconomics',
+  currentRatio: 'currentRatio',
+  quickRatio: 'quickRatio',
+  monthlyBurn: 'monthlyBurn',
+  burnAvg3Month: 'burnAvg3Month',
+  burnAvg6Month: 'burnAvg6Month',
+  burnTrend: 'burnTrend',
+  burnTrendPercent: 'burnTrendPercent',
+  runwayMonths: 'runwayMonths',
+  runwayEndDate: 'runwayEndDate',
+  overallRiskLevel: 'overallRiskLevel',
+  liquidityRisk: 'liquidityRisk',
+  dataQuality: 'dataQuality',
+  dataCompleteness: 'dataCompleteness',
+  currency: 'currency',
+  computedAt: 'computedAt',
+  computedBy: 'computedBy',
   organizationId: 'organizationId',
   createdAt: 'createdAt'
 } as const
 
-export type FXRateScalarFieldEnum = (typeof FXRateScalarFieldEnum)[keyof typeof FXRateScalarFieldEnum]
+export type InvestorSnapshotScalarFieldEnum = (typeof InvestorSnapshotScalarFieldEnum)[keyof typeof InvestorSnapshotScalarFieldEnum]
 
 
-export const InvestorScalarFieldEnum = {
+export const BoardReportScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  periodCovered: 'periodCovered',
+  asOfDate: 'asOfDate',
+  financialHealthStatus: 'financialHealthStatus',
+  liquidityStatus: 'liquidityStatus',
+  sustainabilityOutlook: 'sustainabilityOutlook',
+  keyHighlights: 'keyHighlights',
+  materialChanges: 'materialChanges',
+  riskFactors: 'riskFactors',
+  dataLimitations: 'dataLimitations',
+  concentrationRisks: 'concentrationRisks',
+  snapshotId: 'snapshotId',
+  status: 'status',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  publishedAt: 'publishedAt',
+  distributedTo: 'distributedTo',
+  distributedAt: 'distributedAt',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BoardReportScalarFieldEnum = (typeof BoardReportScalarFieldEnum)[keyof typeof BoardReportScalarFieldEnum]
+
+
+export const RunwayProjectionScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  type: 'type',
-  status: 'status',
-  email: 'email',
-  phone: 'phone',
-  primaryContact: 'primaryContact',
-  address: 'address',
+  scenarioType: 'scenarioType',
+  projectionDate: 'projectionDate',
+  currentCash: 'currentCash',
   currency: 'currency',
-  totalInvested: 'totalInvested',
-  currentValue: 'currentValue',
-  ownershipPercent: 'ownershipPercent',
-  unrealizedGain: 'unrealizedGain',
-  distributionsReceived: 'distributionsReceived',
-  investmentDate: 'investmentDate',
-  boardSeat: 'boardSeat',
-  votingRights: 'votingRights',
-  liquidationPref: 'liquidationPref',
-  lastContactDate: 'lastContactDate',
-  reportingFrequency: 'reportingFrequency',
-  tags: 'tags',
+  assumptions: 'assumptions',
+  monthlyBurnRate: 'monthlyBurnRate',
+  runwayMonths: 'runwayMonths',
+  runwayEndDate: 'runwayEndDate',
+  confidenceLevel: 'confidenceLevel',
+  projectionBasis: 'projectionBasis',
+  timeHorizon: 'timeHorizon',
+  warnings: 'warnings',
+  dataInputs: 'dataInputs',
+  isActive: 'isActive',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RunwayProjectionScalarFieldEnum = (typeof RunwayProjectionScalarFieldEnum)[keyof typeof RunwayProjectionScalarFieldEnum]
+
+
+export const InvestorAccessLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  userName: 'userName',
+  userRole: 'userRole',
+  action: 'action',
+  section: 'section',
+  details: 'details',
+  ipAddress: 'ipAddress',
+  sessionId: 'sessionId',
+  userAgent: 'userAgent',
+  organizationId: 'organizationId',
+  timestamp: 'timestamp'
+} as const
+
+export type InvestorAccessLogScalarFieldEnum = (typeof InvestorAccessLogScalarFieldEnum)[keyof typeof InvestorAccessLogScalarFieldEnum]
+
+
+export const CashflowItemScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  category: 'category',
+  description: 'description',
+  amount: 'amount',
+  currency: 'currency',
+  expectedDate: 'expectedDate',
+  confidence: 'confidence',
+  sourceType: 'sourceType',
+  sourceReference: 'sourceReference',
+  sourceDocument: 'sourceDocument',
+  counterparty: 'counterparty',
+  entityId: 'entityId',
+  entityName: 'entityName',
+  isRecurring: 'isRecurring',
+  recurrencePattern: 'recurrencePattern',
+  status: 'status',
   notes: 'notes',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
 } as const
 
-export type InvestorScalarFieldEnum = (typeof InvestorScalarFieldEnum)[keyof typeof InvestorScalarFieldEnum]
+export type CashflowItemScalarFieldEnum = (typeof CashflowItemScalarFieldEnum)[keyof typeof CashflowItemScalarFieldEnum]
 
 
-export const InvestorInvestmentScalarFieldEnum = {
-  id: 'id',
-  round: 'round',
-  investmentDate: 'investmentDate',
-  amount: 'amount',
-  currency: 'currency',
-  instrumentType: 'instrumentType',
-  sharesIssued: 'sharesIssued',
-  pricePerShare: 'pricePerShare',
-  valuation: 'valuation',
-  conversionTerms: 'conversionTerms',
-  liquidationPref: 'liquidationPref',
-  participatingPref: 'participatingPref',
-  status: 'status',
-  investorId: 'investorId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type InvestorInvestmentScalarFieldEnum = (typeof InvestorInvestmentScalarFieldEnum)[keyof typeof InvestorInvestmentScalarFieldEnum]
-
-
-export const InvestorUpdateScalarFieldEnum = {
+export const LiquidityScenarioScalarFieldEnum = {
   id: 'id',
   type: 'type',
-  title: 'title',
-  content: 'content',
-  sentAt: 'sentAt',
-  recipients: 'recipients',
-  attachments: 'attachments',
-  investorId: 'investorId',
+  name: 'name',
+  description: 'description',
+  assumptions: 'assumptions',
+  horizonDays: 'horizonDays',
+  timeBucket: 'timeBucket',
+  startDate: 'startDate',
+  startingCashBalance: 'startingCashBalance',
+  minimumBuffer: 'minimumBuffer',
+  currency: 'currency',
+  timeline: 'timeline',
+  totalInflows: 'totalInflows',
+  totalOutflows: 'totalOutflows',
+  netChange: 'netChange',
+  endingBalance: 'endingBalance',
+  lowestBalance: 'lowestBalance',
+  lowestBalanceDate: 'lowestBalanceDate',
+  daysWithGap: 'daysWithGap',
+  totalGapAmount: 'totalGapAmount',
+  confirmedCashflows: 'confirmedCashflows',
+  expectedCashflows: 'expectedCashflows',
+  estimatedCashflows: 'estimatedCashflows',
+  dataCompleteness: 'dataCompleteness',
+  varianceEndingBalance: 'varianceEndingBalance',
+  varianceLowestBalance: 'varianceLowestBalance',
+  additionalGapDays: 'additionalGapDays',
+  isActive: 'isActive',
+  isHypothetical: 'isHypothetical',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy'
+} as const
+
+export type LiquidityScenarioScalarFieldEnum = (typeof LiquidityScenarioScalarFieldEnum)[keyof typeof LiquidityScenarioScalarFieldEnum]
+
+
+export const LiquidityGapScalarFieldEnum = {
+  id: 'id',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  durationDays: 'durationDays',
+  peakDeficit: 'peakDeficit',
+  averageDeficit: 'averageDeficit',
+  totalDeficitDays: 'totalDeficitDays',
+  currency: 'currency',
+  causes: 'causes',
+  affectedPeriods: 'affectedPeriods',
+  severity: 'severity',
+  status: 'status',
+  mitigationPlan: 'mitigationPlan',
+  mitigatedAt: 'mitigatedAt',
+  mitigatedBy: 'mitigatedBy',
+  scenarioId: 'scenarioId',
   organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type InvestorUpdateScalarFieldEnum = (typeof InvestorUpdateScalarFieldEnum)[keyof typeof InvestorUpdateScalarFieldEnum]
+export type LiquidityGapScalarFieldEnum = (typeof LiquidityGapScalarFieldEnum)[keyof typeof LiquidityGapScalarFieldEnum]
+
+
+export const LiquidityRiskSignalScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  riskLevel: 'riskLevel',
+  metric: 'metric',
+  threshold: 'threshold',
+  breached: 'breached',
+  affectedPeriod: 'affectedPeriod',
+  relatedItems: 'relatedItems',
+  status: 'status',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  dismissedAt: 'dismissedAt',
+  dismissedBy: 'dismissedBy',
+  organizationId: 'organizationId',
+  detectedAt: 'detectedAt'
+} as const
+
+export type LiquidityRiskSignalScalarFieldEnum = (typeof LiquidityRiskSignalScalarFieldEnum)[keyof typeof LiquidityRiskSignalScalarFieldEnum]
+
+
+export const LiquidityAuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  details: 'details',
+  userId: 'userId',
+  userName: 'userName',
+  userRole: 'userRole',
+  scenarioId: 'scenarioId',
+  dataReferenced: 'dataReferenced',
+  organizationId: 'organizationId',
+  timestamp: 'timestamp'
+} as const
+
+export type LiquidityAuditLogScalarFieldEnum = (typeof LiquidityAuditLogScalarFieldEnum)[keyof typeof LiquidityAuditLogScalarFieldEnum]
 
 
 export const LiquidityPositionScalarFieldEnum = {
@@ -2097,16 +3586,30 @@ export const LiquidityPositionScalarFieldEnum = {
   restrictedCash: 'restrictedCash',
   availableCredit: 'availableCredit',
   totalLiquidity: 'totalLiquidity',
+  minimumBuffer: 'minimumBuffer',
   expectedInflows: 'expectedInflows',
   expectedOutflows: 'expectedOutflows',
   netCashFlow: 'netCashFlow',
+  confirmedInflows: 'confirmedInflows',
+  expectedInflows2: 'expectedInflows2',
+  estimatedInflows: 'estimatedInflows',
+  confirmedOutflows: 'confirmedOutflows',
+  expectedOutflows2: 'expectedOutflows2',
+  estimatedOutflows: 'estimatedOutflows',
   projectedEndingCash: 'projectedEndingCash',
   runwayDays: 'runwayDays',
   runwayMonths: 'runwayMonths',
   currentRatio: 'currentRatio',
   quickRatio: 'quickRatio',
   cashBurnRate: 'cashBurnRate',
+  bufferDays: 'bufferDays',
+  concentrationIndex: 'concentrationIndex',
+  volatilityIndex: 'volatilityIndex',
   status: 'status',
+  riskLevel: 'riskLevel',
+  riskScore: 'riskScore',
+  dataCompleteness: 'dataCompleteness',
+  knownBlindSpots: 'knownBlindSpots',
   accountBreakdown: 'accountBreakdown',
   currency: 'currency',
   organizationId: 'organizationId',

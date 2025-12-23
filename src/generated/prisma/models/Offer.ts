@@ -27,47 +27,71 @@ export type AggregateOffer = {
 }
 
 export type OfferAvgAggregateOutputType = {
+  version: number | null
+  validityDays: number | null
   subtotal: runtime.Decimal | null
-  taxAmount: runtime.Decimal | null
-  discountAmount: runtime.Decimal | null
-  total: runtime.Decimal | null
+  totalDiscount: runtime.Decimal | null
+  taxTotal: runtime.Decimal | null
+  grandTotal: runtime.Decimal | null
   taxRate: runtime.Decimal | null
+  totalCost: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  grossMarginPercent: runtime.Decimal | null
 }
 
 export type OfferSumAggregateOutputType = {
+  version: number | null
+  validityDays: number | null
   subtotal: runtime.Decimal | null
-  taxAmount: runtime.Decimal | null
-  discountAmount: runtime.Decimal | null
-  total: runtime.Decimal | null
+  totalDiscount: runtime.Decimal | null
+  taxTotal: runtime.Decimal | null
+  grandTotal: runtime.Decimal | null
   taxRate: runtime.Decimal | null
+  totalCost: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  grossMarginPercent: runtime.Decimal | null
 }
 
 export type OfferMinAggregateOutputType = {
   id: string | null
   offerNumber: string | null
+  version: number | null
   status: string | null
-  type: string | null
   customerId: string | null
   customerName: string | null
-  customerEmail: string | null
   offerDate: Date | null
-  validUntil: Date | null
+  validityDays: number | null
+  expiryDate: Date | null
+  sentAt: Date | null
   acceptedAt: Date | null
   rejectedAt: Date | null
   convertedAt: Date | null
   currency: string | null
+  paymentTerms: string | null
+  deliveryTerms: string | null
   subtotal: runtime.Decimal | null
-  taxAmount: runtime.Decimal | null
-  discountAmount: runtime.Decimal | null
-  total: runtime.Decimal | null
+  totalDiscount: runtime.Decimal | null
+  taxTotal: runtime.Decimal | null
+  grandTotal: runtime.Decimal | null
   taxRate: runtime.Decimal | null
-  convertedToOrderId: string | null
-  convertedToInvoiceId: string | null
-  title: string | null
-  description: string | null
-  terms: string | null
-  notes: string | null
+  totalCost: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  grossMarginPercent: runtime.Decimal | null
   internalNotes: string | null
+  customerNotes: string | null
+  termsAndConditions: string | null
+  disclaimer: string | null
+  acceptanceMethod: string | null
+  rejectionReason: string | null
+  convertedOrderId: string | null
+  convertedOrderNumber: string | null
+  templateId: string | null
+  templateName: string | null
+  previousVersionId: string | null
+  createdBy: string | null
+  updatedBy: string | null
+  sentBy: string | null
+  approvedBy: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -76,29 +100,43 @@ export type OfferMinAggregateOutputType = {
 export type OfferMaxAggregateOutputType = {
   id: string | null
   offerNumber: string | null
+  version: number | null
   status: string | null
-  type: string | null
   customerId: string | null
   customerName: string | null
-  customerEmail: string | null
   offerDate: Date | null
-  validUntil: Date | null
+  validityDays: number | null
+  expiryDate: Date | null
+  sentAt: Date | null
   acceptedAt: Date | null
   rejectedAt: Date | null
   convertedAt: Date | null
   currency: string | null
+  paymentTerms: string | null
+  deliveryTerms: string | null
   subtotal: runtime.Decimal | null
-  taxAmount: runtime.Decimal | null
-  discountAmount: runtime.Decimal | null
-  total: runtime.Decimal | null
+  totalDiscount: runtime.Decimal | null
+  taxTotal: runtime.Decimal | null
+  grandTotal: runtime.Decimal | null
   taxRate: runtime.Decimal | null
-  convertedToOrderId: string | null
-  convertedToInvoiceId: string | null
-  title: string | null
-  description: string | null
-  terms: string | null
-  notes: string | null
+  totalCost: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  grossMarginPercent: runtime.Decimal | null
   internalNotes: string | null
+  customerNotes: string | null
+  termsAndConditions: string | null
+  disclaimer: string | null
+  acceptanceMethod: string | null
+  rejectionReason: string | null
+  convertedOrderId: string | null
+  convertedOrderNumber: string | null
+  templateId: string | null
+  templateName: string | null
+  previousVersionId: string | null
+  createdBy: string | null
+  updatedBy: string | null
+  sentBy: string | null
+  approvedBy: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -107,32 +145,45 @@ export type OfferMaxAggregateOutputType = {
 export type OfferCountAggregateOutputType = {
   id: number
   offerNumber: number
+  version: number
   status: number
-  type: number
+  counterparty: number
   customerId: number
   customerName: number
-  customerEmail: number
-  customerAddress: number
   offerDate: number
-  validUntil: number
+  validityDays: number
+  expiryDate: number
+  sentAt: number
   acceptedAt: number
   rejectedAt: number
   convertedAt: number
-  items: number
   currency: number
+  paymentTerms: number
+  deliveryTerms: number
+  lineItems: number
   subtotal: number
-  taxAmount: number
-  discountAmount: number
-  total: number
+  totalDiscount: number
+  taxTotal: number
+  grandTotal: number
   taxRate: number
-  convertedToOrderId: number
-  convertedToInvoiceId: number
-  title: number
-  description: number
-  terms: number
-  notes: number
+  totalCost: number
+  grossMargin: number
+  grossMarginPercent: number
   internalNotes: number
-  tags: number
+  customerNotes: number
+  termsAndConditions: number
+  disclaimer: number
+  acceptanceMethod: number
+  rejectionReason: number
+  convertedOrderId: number
+  convertedOrderNumber: number
+  templateId: number
+  templateName: number
+  previousVersionId: number
+  createdBy: number
+  updatedBy: number
+  sentBy: number
+  approvedBy: number
   organizationId: number
   createdAt: number
   updatedAt: number
@@ -141,47 +192,71 @@ export type OfferCountAggregateOutputType = {
 
 
 export type OfferAvgAggregateInputType = {
+  version?: true
+  validityDays?: true
   subtotal?: true
-  taxAmount?: true
-  discountAmount?: true
-  total?: true
+  totalDiscount?: true
+  taxTotal?: true
+  grandTotal?: true
   taxRate?: true
+  totalCost?: true
+  grossMargin?: true
+  grossMarginPercent?: true
 }
 
 export type OfferSumAggregateInputType = {
+  version?: true
+  validityDays?: true
   subtotal?: true
-  taxAmount?: true
-  discountAmount?: true
-  total?: true
+  totalDiscount?: true
+  taxTotal?: true
+  grandTotal?: true
   taxRate?: true
+  totalCost?: true
+  grossMargin?: true
+  grossMarginPercent?: true
 }
 
 export type OfferMinAggregateInputType = {
   id?: true
   offerNumber?: true
+  version?: true
   status?: true
-  type?: true
   customerId?: true
   customerName?: true
-  customerEmail?: true
   offerDate?: true
-  validUntil?: true
+  validityDays?: true
+  expiryDate?: true
+  sentAt?: true
   acceptedAt?: true
   rejectedAt?: true
   convertedAt?: true
   currency?: true
+  paymentTerms?: true
+  deliveryTerms?: true
   subtotal?: true
-  taxAmount?: true
-  discountAmount?: true
-  total?: true
+  totalDiscount?: true
+  taxTotal?: true
+  grandTotal?: true
   taxRate?: true
-  convertedToOrderId?: true
-  convertedToInvoiceId?: true
-  title?: true
-  description?: true
-  terms?: true
-  notes?: true
+  totalCost?: true
+  grossMargin?: true
+  grossMarginPercent?: true
   internalNotes?: true
+  customerNotes?: true
+  termsAndConditions?: true
+  disclaimer?: true
+  acceptanceMethod?: true
+  rejectionReason?: true
+  convertedOrderId?: true
+  convertedOrderNumber?: true
+  templateId?: true
+  templateName?: true
+  previousVersionId?: true
+  createdBy?: true
+  updatedBy?: true
+  sentBy?: true
+  approvedBy?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -190,29 +265,43 @@ export type OfferMinAggregateInputType = {
 export type OfferMaxAggregateInputType = {
   id?: true
   offerNumber?: true
+  version?: true
   status?: true
-  type?: true
   customerId?: true
   customerName?: true
-  customerEmail?: true
   offerDate?: true
-  validUntil?: true
+  validityDays?: true
+  expiryDate?: true
+  sentAt?: true
   acceptedAt?: true
   rejectedAt?: true
   convertedAt?: true
   currency?: true
+  paymentTerms?: true
+  deliveryTerms?: true
   subtotal?: true
-  taxAmount?: true
-  discountAmount?: true
-  total?: true
+  totalDiscount?: true
+  taxTotal?: true
+  grandTotal?: true
   taxRate?: true
-  convertedToOrderId?: true
-  convertedToInvoiceId?: true
-  title?: true
-  description?: true
-  terms?: true
-  notes?: true
+  totalCost?: true
+  grossMargin?: true
+  grossMarginPercent?: true
   internalNotes?: true
+  customerNotes?: true
+  termsAndConditions?: true
+  disclaimer?: true
+  acceptanceMethod?: true
+  rejectionReason?: true
+  convertedOrderId?: true
+  convertedOrderNumber?: true
+  templateId?: true
+  templateName?: true
+  previousVersionId?: true
+  createdBy?: true
+  updatedBy?: true
+  sentBy?: true
+  approvedBy?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -221,32 +310,45 @@ export type OfferMaxAggregateInputType = {
 export type OfferCountAggregateInputType = {
   id?: true
   offerNumber?: true
+  version?: true
   status?: true
-  type?: true
+  counterparty?: true
   customerId?: true
   customerName?: true
-  customerEmail?: true
-  customerAddress?: true
   offerDate?: true
-  validUntil?: true
+  validityDays?: true
+  expiryDate?: true
+  sentAt?: true
   acceptedAt?: true
   rejectedAt?: true
   convertedAt?: true
-  items?: true
   currency?: true
+  paymentTerms?: true
+  deliveryTerms?: true
+  lineItems?: true
   subtotal?: true
-  taxAmount?: true
-  discountAmount?: true
-  total?: true
+  totalDiscount?: true
+  taxTotal?: true
+  grandTotal?: true
   taxRate?: true
-  convertedToOrderId?: true
-  convertedToInvoiceId?: true
-  title?: true
-  description?: true
-  terms?: true
-  notes?: true
+  totalCost?: true
+  grossMargin?: true
+  grossMarginPercent?: true
   internalNotes?: true
-  tags?: true
+  customerNotes?: true
+  termsAndConditions?: true
+  disclaimer?: true
+  acceptanceMethod?: true
+  rejectionReason?: true
+  convertedOrderId?: true
+  convertedOrderNumber?: true
+  templateId?: true
+  templateName?: true
+  previousVersionId?: true
+  createdBy?: true
+  updatedBy?: true
+  sentBy?: true
+  approvedBy?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -342,32 +444,45 @@ export type OfferGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type OfferGroupByOutputType = {
   id: string
   offerNumber: string
+  version: number
   status: string
-  type: string
+  counterparty: runtime.JsonValue
   customerId: string | null
   customerName: string
-  customerEmail: string | null
-  customerAddress: runtime.JsonValue | null
   offerDate: Date
-  validUntil: Date
+  validityDays: number
+  expiryDate: Date
+  sentAt: Date | null
   acceptedAt: Date | null
   rejectedAt: Date | null
   convertedAt: Date | null
-  items: runtime.JsonValue
   currency: string
+  paymentTerms: string
+  deliveryTerms: string | null
+  lineItems: runtime.JsonValue
   subtotal: runtime.Decimal
-  taxAmount: runtime.Decimal
-  discountAmount: runtime.Decimal
-  total: runtime.Decimal
+  totalDiscount: runtime.Decimal
+  taxTotal: runtime.Decimal
+  grandTotal: runtime.Decimal
   taxRate: runtime.Decimal
-  convertedToOrderId: string | null
-  convertedToInvoiceId: string | null
-  title: string | null
-  description: string | null
-  terms: string | null
-  notes: string | null
+  totalCost: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  grossMarginPercent: runtime.Decimal | null
   internalNotes: string | null
-  tags: string[]
+  customerNotes: string | null
+  termsAndConditions: string | null
+  disclaimer: string | null
+  acceptanceMethod: string | null
+  rejectionReason: string | null
+  convertedOrderId: string | null
+  convertedOrderNumber: string | null
+  templateId: string | null
+  templateName: string | null
+  previousVersionId: string | null
+  createdBy: string | null
+  updatedBy: string | null
+  sentBy: string | null
+  approvedBy: string | null
   organizationId: string
   createdAt: Date
   updatedAt: Date
@@ -399,71 +514,101 @@ export type OfferWhereInput = {
   NOT?: Prisma.OfferWhereInput | Prisma.OfferWhereInput[]
   id?: Prisma.StringFilter<"Offer"> | string
   offerNumber?: Prisma.StringFilter<"Offer"> | string
+  version?: Prisma.IntFilter<"Offer"> | number
   status?: Prisma.StringFilter<"Offer"> | string
-  type?: Prisma.StringFilter<"Offer"> | string
+  counterparty?: Prisma.JsonFilter<"Offer">
   customerId?: Prisma.StringNullableFilter<"Offer"> | string | null
   customerName?: Prisma.StringFilter<"Offer"> | string
-  customerEmail?: Prisma.StringNullableFilter<"Offer"> | string | null
-  customerAddress?: Prisma.JsonNullableFilter<"Offer">
   offerDate?: Prisma.DateTimeFilter<"Offer"> | Date | string
-  validUntil?: Prisma.DateTimeFilter<"Offer"> | Date | string
+  validityDays?: Prisma.IntFilter<"Offer"> | number
+  expiryDate?: Prisma.DateTimeFilter<"Offer"> | Date | string
+  sentAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   acceptedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   convertedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
-  items?: Prisma.JsonFilter<"Offer">
   currency?: Prisma.StringFilter<"Offer"> | string
+  paymentTerms?: Prisma.StringFilter<"Offer"> | string
+  deliveryTerms?: Prisma.StringNullableFilter<"Offer"> | string | null
+  lineItems?: Prisma.JsonFilter<"Offer">
   subtotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.StringNullableFilter<"Offer"> | string | null
-  convertedToInvoiceId?: Prisma.StringNullableFilter<"Offer"> | string | null
-  title?: Prisma.StringNullableFilter<"Offer"> | string | null
-  description?: Prisma.StringNullableFilter<"Offer"> | string | null
-  terms?: Prisma.StringNullableFilter<"Offer"> | string | null
-  notes?: Prisma.StringNullableFilter<"Offer"> | string | null
+  totalCost?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.StringNullableFilter<"Offer"> | string | null
-  tags?: Prisma.StringNullableListFilter<"Offer">
+  customerNotes?: Prisma.StringNullableFilter<"Offer"> | string | null
+  termsAndConditions?: Prisma.StringNullableFilter<"Offer"> | string | null
+  disclaimer?: Prisma.StringNullableFilter<"Offer"> | string | null
+  acceptanceMethod?: Prisma.StringNullableFilter<"Offer"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"Offer"> | string | null
+  convertedOrderId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  convertedOrderNumber?: Prisma.StringNullableFilter<"Offer"> | string | null
+  templateId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  templateName?: Prisma.StringNullableFilter<"Offer"> | string | null
+  previousVersionId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  sentBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Offer"> | string | null
   organizationId?: Prisma.StringFilter<"Offer"> | string
   createdAt?: Prisma.DateTimeFilter<"Offer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Offer"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  versions?: Prisma.OfferVersionListRelationFilter
+  auditLogs?: Prisma.OfferAuditLogListRelationFilter
 }
 
 export type OfferOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   offerNumber?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  counterparty?: Prisma.SortOrder
   customerId?: Prisma.SortOrderInput | Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  customerEmail?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   offerDate?: Prisma.SortOrder
-  validUntil?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   convertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  items?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  deliveryTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  lineItems?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
-  convertedToOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
-  convertedToInvoiceId?: Prisma.SortOrderInput | Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
-  terms?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  grossMargin?: Prisma.SortOrderInput | Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
-  tags?: Prisma.SortOrder
+  customerNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  termsAndConditions?: Prisma.SortOrderInput | Prisma.SortOrder
+  disclaimer?: Prisma.SortOrderInput | Prisma.SortOrder
+  acceptanceMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  convertedOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  convertedOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  templateId?: Prisma.SortOrderInput | Prisma.SortOrder
+  templateName?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  versions?: Prisma.OfferVersionOrderByRelationAggregateInput
+  auditLogs?: Prisma.OfferAuditLogOrderByRelationAggregateInput
 }
 
 export type OfferWhereUniqueInput = Prisma.AtLeast<{
@@ -473,67 +618,95 @@ export type OfferWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OfferWhereInput[]
   NOT?: Prisma.OfferWhereInput | Prisma.OfferWhereInput[]
   offerNumber?: Prisma.StringFilter<"Offer"> | string
+  version?: Prisma.IntFilter<"Offer"> | number
   status?: Prisma.StringFilter<"Offer"> | string
-  type?: Prisma.StringFilter<"Offer"> | string
+  counterparty?: Prisma.JsonFilter<"Offer">
   customerId?: Prisma.StringNullableFilter<"Offer"> | string | null
   customerName?: Prisma.StringFilter<"Offer"> | string
-  customerEmail?: Prisma.StringNullableFilter<"Offer"> | string | null
-  customerAddress?: Prisma.JsonNullableFilter<"Offer">
   offerDate?: Prisma.DateTimeFilter<"Offer"> | Date | string
-  validUntil?: Prisma.DateTimeFilter<"Offer"> | Date | string
+  validityDays?: Prisma.IntFilter<"Offer"> | number
+  expiryDate?: Prisma.DateTimeFilter<"Offer"> | Date | string
+  sentAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   acceptedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   convertedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
-  items?: Prisma.JsonFilter<"Offer">
   currency?: Prisma.StringFilter<"Offer"> | string
+  paymentTerms?: Prisma.StringFilter<"Offer"> | string
+  deliveryTerms?: Prisma.StringNullableFilter<"Offer"> | string | null
+  lineItems?: Prisma.JsonFilter<"Offer">
   subtotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.StringNullableFilter<"Offer"> | string | null
-  convertedToInvoiceId?: Prisma.StringNullableFilter<"Offer"> | string | null
-  title?: Prisma.StringNullableFilter<"Offer"> | string | null
-  description?: Prisma.StringNullableFilter<"Offer"> | string | null
-  terms?: Prisma.StringNullableFilter<"Offer"> | string | null
-  notes?: Prisma.StringNullableFilter<"Offer"> | string | null
+  totalCost?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.StringNullableFilter<"Offer"> | string | null
-  tags?: Prisma.StringNullableListFilter<"Offer">
+  customerNotes?: Prisma.StringNullableFilter<"Offer"> | string | null
+  termsAndConditions?: Prisma.StringNullableFilter<"Offer"> | string | null
+  disclaimer?: Prisma.StringNullableFilter<"Offer"> | string | null
+  acceptanceMethod?: Prisma.StringNullableFilter<"Offer"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"Offer"> | string | null
+  convertedOrderId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  convertedOrderNumber?: Prisma.StringNullableFilter<"Offer"> | string | null
+  templateId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  templateName?: Prisma.StringNullableFilter<"Offer"> | string | null
+  previousVersionId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  sentBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Offer"> | string | null
   organizationId?: Prisma.StringFilter<"Offer"> | string
   createdAt?: Prisma.DateTimeFilter<"Offer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Offer"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  versions?: Prisma.OfferVersionListRelationFilter
+  auditLogs?: Prisma.OfferAuditLogListRelationFilter
 }, "id" | "organizationId_offerNumber">
 
 export type OfferOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   offerNumber?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  counterparty?: Prisma.SortOrder
   customerId?: Prisma.SortOrderInput | Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  customerEmail?: Prisma.SortOrderInput | Prisma.SortOrder
-  customerAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   offerDate?: Prisma.SortOrder
-  validUntil?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   convertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  items?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  deliveryTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  lineItems?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
-  convertedToOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
-  convertedToInvoiceId?: Prisma.SortOrderInput | Prisma.SortOrder
-  title?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
-  terms?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  grossMargin?: Prisma.SortOrderInput | Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
-  tags?: Prisma.SortOrder
+  customerNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  termsAndConditions?: Prisma.SortOrderInput | Prisma.SortOrder
+  disclaimer?: Prisma.SortOrderInput | Prisma.SortOrder
+  acceptanceMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  convertedOrderId?: Prisma.SortOrderInput | Prisma.SortOrder
+  convertedOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  templateId?: Prisma.SortOrderInput | Prisma.SortOrder
+  templateName?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -550,32 +723,45 @@ export type OfferScalarWhereWithAggregatesInput = {
   NOT?: Prisma.OfferScalarWhereWithAggregatesInput | Prisma.OfferScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Offer"> | string
   offerNumber?: Prisma.StringWithAggregatesFilter<"Offer"> | string
+  version?: Prisma.IntWithAggregatesFilter<"Offer"> | number
   status?: Prisma.StringWithAggregatesFilter<"Offer"> | string
-  type?: Prisma.StringWithAggregatesFilter<"Offer"> | string
+  counterparty?: Prisma.JsonWithAggregatesFilter<"Offer">
   customerId?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
   customerName?: Prisma.StringWithAggregatesFilter<"Offer"> | string
-  customerEmail?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  customerAddress?: Prisma.JsonNullableWithAggregatesFilter<"Offer">
   offerDate?: Prisma.DateTimeWithAggregatesFilter<"Offer"> | Date | string
-  validUntil?: Prisma.DateTimeWithAggregatesFilter<"Offer"> | Date | string
+  validityDays?: Prisma.IntWithAggregatesFilter<"Offer"> | number
+  expiryDate?: Prisma.DateTimeWithAggregatesFilter<"Offer"> | Date | string
+  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Offer"> | Date | string | null
   acceptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Offer"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Offer"> | Date | string | null
   convertedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Offer"> | Date | string | null
-  items?: Prisma.JsonWithAggregatesFilter<"Offer">
   currency?: Prisma.StringWithAggregatesFilter<"Offer"> | string
+  paymentTerms?: Prisma.StringWithAggregatesFilter<"Offer"> | string
+  deliveryTerms?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  lineItems?: Prisma.JsonWithAggregatesFilter<"Offer">
   subtotal?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  convertedToInvoiceId?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  title?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  description?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  terms?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  notes?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  totalCost?: Prisma.DecimalNullableWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.DecimalNullableWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.DecimalNullableWithAggregatesFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
-  tags?: Prisma.StringNullableListFilter<"Offer">
+  customerNotes?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  termsAndConditions?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  disclaimer?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  acceptanceMethod?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  convertedOrderId?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  convertedOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  templateId?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  templateName?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  previousVersionId?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  sentBy?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"Offer"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Offer"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Offer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Offer"> | Date | string
@@ -584,168 +770,241 @@ export type OfferScalarWhereWithAggregatesInput = {
 export type OfferCreateInput = {
   id?: string
   offerNumber: string
+  version?: number
   status?: string
-  type?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: string | null
   customerName: string
-  customerEmail?: string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate: Date | string
-  validUntil: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
   acceptedAt?: Date | string | null
   rejectedAt?: Date | string | null
   convertedAt?: Date | string | null
-  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: string | null
-  convertedToInvoiceId?: string | null
-  title?: string | null
-  description?: string | null
-  terms?: string | null
-  notes?: string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: string | null
-  tags?: Prisma.OfferCreatetagsInput | string[]
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutOffersInput
+  versions?: Prisma.OfferVersionCreateNestedManyWithoutOfferInput
+  auditLogs?: Prisma.OfferAuditLogCreateNestedManyWithoutOfferInput
 }
 
 export type OfferUncheckedCreateInput = {
   id?: string
   offerNumber: string
+  version?: number
   status?: string
-  type?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: string | null
   customerName: string
-  customerEmail?: string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate: Date | string
-  validUntil: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
   acceptedAt?: Date | string | null
   rejectedAt?: Date | string | null
   convertedAt?: Date | string | null
-  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: string | null
-  convertedToInvoiceId?: string | null
-  title?: string | null
-  description?: string | null
-  terms?: string | null
-  notes?: string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: string | null
-  tags?: Prisma.OfferCreatetagsInput | string[]
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  versions?: Prisma.OfferVersionUncheckedCreateNestedManyWithoutOfferInput
+  auditLogs?: Prisma.OfferAuditLogUncheckedCreateNestedManyWithoutOfferInput
 }
 
 export type OfferUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutOffersNestedInput
+  versions?: Prisma.OfferVersionUpdateManyWithoutOfferNestedInput
+  auditLogs?: Prisma.OfferAuditLogUpdateManyWithoutOfferNestedInput
 }
 
 export type OfferUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.OfferVersionUncheckedUpdateManyWithoutOfferNestedInput
+  auditLogs?: Prisma.OfferAuditLogUncheckedUpdateManyWithoutOfferNestedInput
 }
 
 export type OfferCreateManyInput = {
   id?: string
   offerNumber: string
+  version?: number
   status?: string
-  type?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: string | null
   customerName: string
-  customerEmail?: string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate: Date | string
-  validUntil: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
   acceptedAt?: Date | string | null
   rejectedAt?: Date | string | null
   convertedAt?: Date | string | null
-  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: string | null
-  convertedToInvoiceId?: string | null
-  title?: string | null
-  description?: string | null
-  terms?: string | null
-  notes?: string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: string | null
-  tags?: Prisma.OfferCreatetagsInput | string[]
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -754,32 +1013,45 @@ export type OfferCreateManyInput = {
 export type OfferUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -787,32 +1059,45 @@ export type OfferUpdateManyMutationInput = {
 export type OfferUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -836,71 +1121,103 @@ export type OfferOrganizationIdOfferNumberCompoundUniqueInput = {
 export type OfferCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   offerNumber?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  counterparty?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  customerEmail?: Prisma.SortOrder
-  customerAddress?: Prisma.SortOrder
   offerDate?: Prisma.SortOrder
-  validUntil?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
   acceptedAt?: Prisma.SortOrder
   rejectedAt?: Prisma.SortOrder
   convertedAt?: Prisma.SortOrder
-  items?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  deliveryTerms?: Prisma.SortOrder
+  lineItems?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
-  convertedToOrderId?: Prisma.SortOrder
-  convertedToInvoiceId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  terms?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  totalCost?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
+  customerNotes?: Prisma.SortOrder
+  termsAndConditions?: Prisma.SortOrder
+  disclaimer?: Prisma.SortOrder
+  acceptanceMethod?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  convertedOrderId?: Prisma.SortOrder
+  convertedOrderNumber?: Prisma.SortOrder
+  templateId?: Prisma.SortOrder
+  templateName?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
+  sentBy?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OfferAvgOrderByAggregateInput = {
+  version?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  totalCost?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrder
 }
 
 export type OfferMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   offerNumber?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  customerEmail?: Prisma.SortOrder
   offerDate?: Prisma.SortOrder
-  validUntil?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
   acceptedAt?: Prisma.SortOrder
   rejectedAt?: Prisma.SortOrder
   convertedAt?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  deliveryTerms?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
-  convertedToOrderId?: Prisma.SortOrder
-  convertedToInvoiceId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  terms?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  totalCost?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
+  customerNotes?: Prisma.SortOrder
+  termsAndConditions?: Prisma.SortOrder
+  disclaimer?: Prisma.SortOrder
+  acceptanceMethod?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  convertedOrderId?: Prisma.SortOrder
+  convertedOrderNumber?: Prisma.SortOrder
+  templateId?: Prisma.SortOrder
+  templateName?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
+  sentBy?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -909,40 +1226,64 @@ export type OfferMaxOrderByAggregateInput = {
 export type OfferMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   offerNumber?: Prisma.SortOrder
+  version?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   customerName?: Prisma.SortOrder
-  customerEmail?: Prisma.SortOrder
   offerDate?: Prisma.SortOrder
-  validUntil?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
   acceptedAt?: Prisma.SortOrder
   rejectedAt?: Prisma.SortOrder
   convertedAt?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  deliveryTerms?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
-  convertedToOrderId?: Prisma.SortOrder
-  convertedToInvoiceId?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  terms?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  totalCost?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
+  customerNotes?: Prisma.SortOrder
+  termsAndConditions?: Prisma.SortOrder
+  disclaimer?: Prisma.SortOrder
+  acceptanceMethod?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  convertedOrderId?: Prisma.SortOrder
+  convertedOrderNumber?: Prisma.SortOrder
+  templateId?: Prisma.SortOrder
+  templateName?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  updatedBy?: Prisma.SortOrder
+  sentBy?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OfferSumOrderByAggregateInput = {
+  version?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
-  taxAmount?: Prisma.SortOrder
-  discountAmount?: Prisma.SortOrder
-  total?: Prisma.SortOrder
+  totalDiscount?: Prisma.SortOrder
+  taxTotal?: Prisma.SortOrder
+  grandTotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  totalCost?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  grossMarginPercent?: Prisma.SortOrder
+}
+
+export type OfferScalarRelationFilter = {
+  is?: Prisma.OfferWhereInput
+  isNot?: Prisma.OfferWhereInput
 }
 
 export type OfferCreateNestedManyWithoutOrganizationInput = {
@@ -987,79 +1328,128 @@ export type OfferUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.OfferScalarWhereInput | Prisma.OfferScalarWhereInput[]
 }
 
-export type OfferCreatetagsInput = {
-  set: string[]
+export type OfferCreateNestedOneWithoutVersionsInput = {
+  create?: Prisma.XOR<Prisma.OfferCreateWithoutVersionsInput, Prisma.OfferUncheckedCreateWithoutVersionsInput>
+  connectOrCreate?: Prisma.OfferCreateOrConnectWithoutVersionsInput
+  connect?: Prisma.OfferWhereUniqueInput
 }
 
-export type OfferUpdatetagsInput = {
-  set?: string[]
-  push?: string | string[]
+export type OfferUpdateOneRequiredWithoutVersionsNestedInput = {
+  create?: Prisma.XOR<Prisma.OfferCreateWithoutVersionsInput, Prisma.OfferUncheckedCreateWithoutVersionsInput>
+  connectOrCreate?: Prisma.OfferCreateOrConnectWithoutVersionsInput
+  upsert?: Prisma.OfferUpsertWithoutVersionsInput
+  connect?: Prisma.OfferWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OfferUpdateToOneWithWhereWithoutVersionsInput, Prisma.OfferUpdateWithoutVersionsInput>, Prisma.OfferUncheckedUpdateWithoutVersionsInput>
+}
+
+export type OfferCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.OfferCreateWithoutAuditLogsInput, Prisma.OfferUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.OfferCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.OfferWhereUniqueInput
+}
+
+export type OfferUpdateOneRequiredWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.OfferCreateWithoutAuditLogsInput, Prisma.OfferUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.OfferCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.OfferUpsertWithoutAuditLogsInput
+  connect?: Prisma.OfferWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OfferUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.OfferUpdateWithoutAuditLogsInput>, Prisma.OfferUncheckedUpdateWithoutAuditLogsInput>
 }
 
 export type OfferCreateWithoutOrganizationInput = {
   id?: string
   offerNumber: string
+  version?: number
   status?: string
-  type?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: string | null
   customerName: string
-  customerEmail?: string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate: Date | string
-  validUntil: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
   acceptedAt?: Date | string | null
   rejectedAt?: Date | string | null
   convertedAt?: Date | string | null
-  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: string | null
-  convertedToInvoiceId?: string | null
-  title?: string | null
-  description?: string | null
-  terms?: string | null
-  notes?: string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: string | null
-  tags?: Prisma.OfferCreatetagsInput | string[]
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  versions?: Prisma.OfferVersionCreateNestedManyWithoutOfferInput
+  auditLogs?: Prisma.OfferAuditLogCreateNestedManyWithoutOfferInput
 }
 
 export type OfferUncheckedCreateWithoutOrganizationInput = {
   id?: string
   offerNumber: string
+  version?: number
   status?: string
-  type?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: string | null
   customerName: string
-  customerEmail?: string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate: Date | string
-  validUntil: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
   acceptedAt?: Date | string | null
   rejectedAt?: Date | string | null
   convertedAt?: Date | string | null
-  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: string | null
-  convertedToInvoiceId?: string | null
-  title?: string | null
-  description?: string | null
-  terms?: string | null
-  notes?: string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: string | null
-  tags?: Prisma.OfferCreatetagsInput | string[]
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  versions?: Prisma.OfferVersionUncheckedCreateNestedManyWithoutOfferInput
+  auditLogs?: Prisma.OfferAuditLogUncheckedCreateNestedManyWithoutOfferInput
 }
 
 export type OfferCreateOrConnectWithoutOrganizationInput = {
@@ -1094,66 +1484,508 @@ export type OfferScalarWhereInput = {
   NOT?: Prisma.OfferScalarWhereInput | Prisma.OfferScalarWhereInput[]
   id?: Prisma.StringFilter<"Offer"> | string
   offerNumber?: Prisma.StringFilter<"Offer"> | string
+  version?: Prisma.IntFilter<"Offer"> | number
   status?: Prisma.StringFilter<"Offer"> | string
-  type?: Prisma.StringFilter<"Offer"> | string
+  counterparty?: Prisma.JsonFilter<"Offer">
   customerId?: Prisma.StringNullableFilter<"Offer"> | string | null
   customerName?: Prisma.StringFilter<"Offer"> | string
-  customerEmail?: Prisma.StringNullableFilter<"Offer"> | string | null
-  customerAddress?: Prisma.JsonNullableFilter<"Offer">
   offerDate?: Prisma.DateTimeFilter<"Offer"> | Date | string
-  validUntil?: Prisma.DateTimeFilter<"Offer"> | Date | string
+  validityDays?: Prisma.IntFilter<"Offer"> | number
+  expiryDate?: Prisma.DateTimeFilter<"Offer"> | Date | string
+  sentAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   acceptedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
   convertedAt?: Prisma.DateTimeNullableFilter<"Offer"> | Date | string | null
-  items?: Prisma.JsonFilter<"Offer">
   currency?: Prisma.StringFilter<"Offer"> | string
+  paymentTerms?: Prisma.StringFilter<"Offer"> | string
+  deliveryTerms?: Prisma.StringNullableFilter<"Offer"> | string | null
+  lineItems?: Prisma.JsonFilter<"Offer">
   subtotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.StringNullableFilter<"Offer"> | string | null
-  convertedToInvoiceId?: Prisma.StringNullableFilter<"Offer"> | string | null
-  title?: Prisma.StringNullableFilter<"Offer"> | string | null
-  description?: Prisma.StringNullableFilter<"Offer"> | string | null
-  terms?: Prisma.StringNullableFilter<"Offer"> | string | null
-  notes?: Prisma.StringNullableFilter<"Offer"> | string | null
+  totalCost?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.DecimalNullableFilter<"Offer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.StringNullableFilter<"Offer"> | string | null
-  tags?: Prisma.StringNullableListFilter<"Offer">
+  customerNotes?: Prisma.StringNullableFilter<"Offer"> | string | null
+  termsAndConditions?: Prisma.StringNullableFilter<"Offer"> | string | null
+  disclaimer?: Prisma.StringNullableFilter<"Offer"> | string | null
+  acceptanceMethod?: Prisma.StringNullableFilter<"Offer"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"Offer"> | string | null
+  convertedOrderId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  convertedOrderNumber?: Prisma.StringNullableFilter<"Offer"> | string | null
+  templateId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  templateName?: Prisma.StringNullableFilter<"Offer"> | string | null
+  previousVersionId?: Prisma.StringNullableFilter<"Offer"> | string | null
+  createdBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  updatedBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  sentBy?: Prisma.StringNullableFilter<"Offer"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Offer"> | string | null
   organizationId?: Prisma.StringFilter<"Offer"> | string
   createdAt?: Prisma.DateTimeFilter<"Offer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Offer"> | Date | string
 }
 
-export type OfferCreateManyOrganizationInput = {
+export type OfferCreateWithoutVersionsInput = {
   id?: string
   offerNumber: string
+  version?: number
   status?: string
-  type?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: string | null
   customerName: string
-  customerEmail?: string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate: Date | string
-  validUntil: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
   acceptedAt?: Date | string | null
   rejectedAt?: Date | string | null
   convertedAt?: Date | string | null
-  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: string | null
-  convertedToInvoiceId?: string | null
-  title?: string | null
-  description?: string | null
-  terms?: string | null
-  notes?: string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: string | null
-  tags?: Prisma.OfferCreatetagsInput | string[]
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutOffersInput
+  auditLogs?: Prisma.OfferAuditLogCreateNestedManyWithoutOfferInput
+}
+
+export type OfferUncheckedCreateWithoutVersionsInput = {
+  id?: string
+  offerNumber: string
+  version?: number
+  status?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: string | null
+  customerName: string
+  offerDate: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
+  acceptedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  convertedAt?: Date | string | null
+  currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: string | null
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  auditLogs?: Prisma.OfferAuditLogUncheckedCreateNestedManyWithoutOfferInput
+}
+
+export type OfferCreateOrConnectWithoutVersionsInput = {
+  where: Prisma.OfferWhereUniqueInput
+  create: Prisma.XOR<Prisma.OfferCreateWithoutVersionsInput, Prisma.OfferUncheckedCreateWithoutVersionsInput>
+}
+
+export type OfferUpsertWithoutVersionsInput = {
+  update: Prisma.XOR<Prisma.OfferUpdateWithoutVersionsInput, Prisma.OfferUncheckedUpdateWithoutVersionsInput>
+  create: Prisma.XOR<Prisma.OfferCreateWithoutVersionsInput, Prisma.OfferUncheckedCreateWithoutVersionsInput>
+  where?: Prisma.OfferWhereInput
+}
+
+export type OfferUpdateToOneWithWhereWithoutVersionsInput = {
+  where?: Prisma.OfferWhereInput
+  data: Prisma.XOR<Prisma.OfferUpdateWithoutVersionsInput, Prisma.OfferUncheckedUpdateWithoutVersionsInput>
+}
+
+export type OfferUpdateWithoutVersionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutOffersNestedInput
+  auditLogs?: Prisma.OfferAuditLogUpdateManyWithoutOfferNestedInput
+}
+
+export type OfferUncheckedUpdateWithoutVersionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  auditLogs?: Prisma.OfferAuditLogUncheckedUpdateManyWithoutOfferNestedInput
+}
+
+export type OfferCreateWithoutAuditLogsInput = {
+  id?: string
+  offerNumber: string
+  version?: number
+  status?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: string | null
+  customerName: string
+  offerDate: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
+  acceptedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  convertedAt?: Date | string | null
+  currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: string | null
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutOffersInput
+  versions?: Prisma.OfferVersionCreateNestedManyWithoutOfferInput
+}
+
+export type OfferUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  offerNumber: string
+  version?: number
+  status?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: string | null
+  customerName: string
+  offerDate: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
+  acceptedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  convertedAt?: Date | string | null
+  currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: string | null
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  versions?: Prisma.OfferVersionUncheckedCreateNestedManyWithoutOfferInput
+}
+
+export type OfferCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.OfferWhereUniqueInput
+  create: Prisma.XOR<Prisma.OfferCreateWithoutAuditLogsInput, Prisma.OfferUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type OfferUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.OfferUpdateWithoutAuditLogsInput, Prisma.OfferUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.OfferCreateWithoutAuditLogsInput, Prisma.OfferUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.OfferWhereInput
+}
+
+export type OfferUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.OfferWhereInput
+  data: Prisma.XOR<Prisma.OfferUpdateWithoutAuditLogsInput, Prisma.OfferUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type OfferUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutOffersNestedInput
+  versions?: Prisma.OfferVersionUpdateManyWithoutOfferNestedInput
+}
+
+export type OfferUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.OfferVersionUncheckedUpdateManyWithoutOfferNestedInput
+}
+
+export type OfferCreateManyOrganizationInput = {
+  id?: string
+  offerNumber: string
+  version?: number
+  status?: string
+  counterparty: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  customerId?: string | null
+  customerName: string
+  offerDate: Date | string
+  validityDays?: number
+  expiryDate: Date | string
+  sentAt?: Date | string | null
+  acceptedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  convertedAt?: Date | string | null
+  currency?: string
+  paymentTerms?: string
+  deliveryTerms?: string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  internalNotes?: string | null
+  customerNotes?: string | null
+  termsAndConditions?: string | null
+  disclaimer?: string | null
+  acceptanceMethod?: string | null
+  rejectionReason?: string | null
+  convertedOrderId?: string | null
+  convertedOrderNumber?: string | null
+  templateId?: string | null
+  templateName?: string | null
+  previousVersionId?: string | null
+  createdBy?: string | null
+  updatedBy?: string | null
+  sentBy?: string | null
+  approvedBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1161,168 +1993,278 @@ export type OfferCreateManyOrganizationInput = {
 export type OfferUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.OfferVersionUpdateManyWithoutOfferNestedInput
+  auditLogs?: Prisma.OfferAuditLogUpdateManyWithoutOfferNestedInput
 }
 
 export type OfferUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.OfferVersionUncheckedUpdateManyWithoutOfferNestedInput
+  auditLogs?: Prisma.OfferAuditLogUncheckedUpdateManyWithoutOfferNestedInput
 }
 
 export type OfferUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   offerNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  counterparty?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerName?: Prisma.StringFieldUpdateOperationsInput | string
-  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   offerDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   convertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineItems?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalDiscount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  convertedToOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  convertedToInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMargin?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  grossMarginPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.OfferUpdatetagsInput | string[]
+  customerNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  termsAndConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disclaimer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptanceMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  convertedOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
+/**
+ * Count Type OfferCountOutputType
+ */
+
+export type OfferCountOutputType = {
+  versions: number
+  auditLogs: number
+}
+
+export type OfferCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  versions?: boolean | OfferCountOutputTypeCountVersionsArgs
+  auditLogs?: boolean | OfferCountOutputTypeCountAuditLogsArgs
+}
+
+/**
+ * OfferCountOutputType without action
+ */
+export type OfferCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfferCountOutputType
+   */
+  select?: Prisma.OfferCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * OfferCountOutputType without action
+ */
+export type OfferCountOutputTypeCountVersionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OfferVersionWhereInput
+}
+
+/**
+ * OfferCountOutputType without action
+ */
+export type OfferCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OfferAuditLogWhereInput
+}
+
 
 export type OfferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   offerNumber?: boolean
+  version?: boolean
   status?: boolean
-  type?: boolean
+  counterparty?: boolean
   customerId?: boolean
   customerName?: boolean
-  customerEmail?: boolean
-  customerAddress?: boolean
   offerDate?: boolean
-  validUntil?: boolean
+  validityDays?: boolean
+  expiryDate?: boolean
+  sentAt?: boolean
   acceptedAt?: boolean
   rejectedAt?: boolean
   convertedAt?: boolean
-  items?: boolean
   currency?: boolean
+  paymentTerms?: boolean
+  deliveryTerms?: boolean
+  lineItems?: boolean
   subtotal?: boolean
-  taxAmount?: boolean
-  discountAmount?: boolean
-  total?: boolean
+  totalDiscount?: boolean
+  taxTotal?: boolean
+  grandTotal?: boolean
   taxRate?: boolean
-  convertedToOrderId?: boolean
-  convertedToInvoiceId?: boolean
-  title?: boolean
-  description?: boolean
-  terms?: boolean
-  notes?: boolean
+  totalCost?: boolean
+  grossMargin?: boolean
+  grossMarginPercent?: boolean
   internalNotes?: boolean
-  tags?: boolean
+  customerNotes?: boolean
+  termsAndConditions?: boolean
+  disclaimer?: boolean
+  acceptanceMethod?: boolean
+  rejectionReason?: boolean
+  convertedOrderId?: boolean
+  convertedOrderNumber?: boolean
+  templateId?: boolean
+  templateName?: boolean
+  previousVersionId?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
+  sentBy?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  versions?: boolean | Prisma.Offer$versionsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.Offer$auditLogsArgs<ExtArgs>
+  _count?: boolean | Prisma.OfferCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["offer"]>
 
 export type OfferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   offerNumber?: boolean
+  version?: boolean
   status?: boolean
-  type?: boolean
+  counterparty?: boolean
   customerId?: boolean
   customerName?: boolean
-  customerEmail?: boolean
-  customerAddress?: boolean
   offerDate?: boolean
-  validUntil?: boolean
+  validityDays?: boolean
+  expiryDate?: boolean
+  sentAt?: boolean
   acceptedAt?: boolean
   rejectedAt?: boolean
   convertedAt?: boolean
-  items?: boolean
   currency?: boolean
+  paymentTerms?: boolean
+  deliveryTerms?: boolean
+  lineItems?: boolean
   subtotal?: boolean
-  taxAmount?: boolean
-  discountAmount?: boolean
-  total?: boolean
+  totalDiscount?: boolean
+  taxTotal?: boolean
+  grandTotal?: boolean
   taxRate?: boolean
-  convertedToOrderId?: boolean
-  convertedToInvoiceId?: boolean
-  title?: boolean
-  description?: boolean
-  terms?: boolean
-  notes?: boolean
+  totalCost?: boolean
+  grossMargin?: boolean
+  grossMarginPercent?: boolean
   internalNotes?: boolean
-  tags?: boolean
+  customerNotes?: boolean
+  termsAndConditions?: boolean
+  disclaimer?: boolean
+  acceptanceMethod?: boolean
+  rejectionReason?: boolean
+  convertedOrderId?: boolean
+  convertedOrderNumber?: boolean
+  templateId?: boolean
+  templateName?: boolean
+  previousVersionId?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
+  sentBy?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1332,32 +2274,45 @@ export type OfferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type OfferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   offerNumber?: boolean
+  version?: boolean
   status?: boolean
-  type?: boolean
+  counterparty?: boolean
   customerId?: boolean
   customerName?: boolean
-  customerEmail?: boolean
-  customerAddress?: boolean
   offerDate?: boolean
-  validUntil?: boolean
+  validityDays?: boolean
+  expiryDate?: boolean
+  sentAt?: boolean
   acceptedAt?: boolean
   rejectedAt?: boolean
   convertedAt?: boolean
-  items?: boolean
   currency?: boolean
+  paymentTerms?: boolean
+  deliveryTerms?: boolean
+  lineItems?: boolean
   subtotal?: boolean
-  taxAmount?: boolean
-  discountAmount?: boolean
-  total?: boolean
+  totalDiscount?: boolean
+  taxTotal?: boolean
+  grandTotal?: boolean
   taxRate?: boolean
-  convertedToOrderId?: boolean
-  convertedToInvoiceId?: boolean
-  title?: boolean
-  description?: boolean
-  terms?: boolean
-  notes?: boolean
+  totalCost?: boolean
+  grossMargin?: boolean
+  grossMarginPercent?: boolean
   internalNotes?: boolean
-  tags?: boolean
+  customerNotes?: boolean
+  termsAndConditions?: boolean
+  disclaimer?: boolean
+  acceptanceMethod?: boolean
+  rejectionReason?: boolean
+  convertedOrderId?: boolean
+  convertedOrderNumber?: boolean
+  templateId?: boolean
+  templateName?: boolean
+  previousVersionId?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
+  sentBy?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1367,40 +2322,56 @@ export type OfferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type OfferSelectScalar = {
   id?: boolean
   offerNumber?: boolean
+  version?: boolean
   status?: boolean
-  type?: boolean
+  counterparty?: boolean
   customerId?: boolean
   customerName?: boolean
-  customerEmail?: boolean
-  customerAddress?: boolean
   offerDate?: boolean
-  validUntil?: boolean
+  validityDays?: boolean
+  expiryDate?: boolean
+  sentAt?: boolean
   acceptedAt?: boolean
   rejectedAt?: boolean
   convertedAt?: boolean
-  items?: boolean
   currency?: boolean
+  paymentTerms?: boolean
+  deliveryTerms?: boolean
+  lineItems?: boolean
   subtotal?: boolean
-  taxAmount?: boolean
-  discountAmount?: boolean
-  total?: boolean
+  totalDiscount?: boolean
+  taxTotal?: boolean
+  grandTotal?: boolean
   taxRate?: boolean
-  convertedToOrderId?: boolean
-  convertedToInvoiceId?: boolean
-  title?: boolean
-  description?: boolean
-  terms?: boolean
-  notes?: boolean
+  totalCost?: boolean
+  grossMargin?: boolean
+  grossMarginPercent?: boolean
   internalNotes?: boolean
-  tags?: boolean
+  customerNotes?: boolean
+  termsAndConditions?: boolean
+  disclaimer?: boolean
+  acceptanceMethod?: boolean
+  rejectionReason?: boolean
+  convertedOrderId?: boolean
+  convertedOrderNumber?: boolean
+  templateId?: boolean
+  templateName?: boolean
+  previousVersionId?: boolean
+  createdBy?: boolean
+  updatedBy?: boolean
+  sentBy?: boolean
+  approvedBy?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OfferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "offerNumber" | "status" | "type" | "customerId" | "customerName" | "customerEmail" | "customerAddress" | "offerDate" | "validUntil" | "acceptedAt" | "rejectedAt" | "convertedAt" | "items" | "currency" | "subtotal" | "taxAmount" | "discountAmount" | "total" | "taxRate" | "convertedToOrderId" | "convertedToInvoiceId" | "title" | "description" | "terms" | "notes" | "internalNotes" | "tags" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["offer"]>
+export type OfferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "offerNumber" | "version" | "status" | "counterparty" | "customerId" | "customerName" | "offerDate" | "validityDays" | "expiryDate" | "sentAt" | "acceptedAt" | "rejectedAt" | "convertedAt" | "currency" | "paymentTerms" | "deliveryTerms" | "lineItems" | "subtotal" | "totalDiscount" | "taxTotal" | "grandTotal" | "taxRate" | "totalCost" | "grossMargin" | "grossMarginPercent" | "internalNotes" | "customerNotes" | "termsAndConditions" | "disclaimer" | "acceptanceMethod" | "rejectionReason" | "convertedOrderId" | "convertedOrderNumber" | "templateId" | "templateName" | "previousVersionId" | "createdBy" | "updatedBy" | "sentBy" | "approvedBy" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["offer"]>
 export type OfferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  versions?: boolean | Prisma.Offer$versionsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.Offer$auditLogsArgs<ExtArgs>
+  _count?: boolean | Prisma.OfferCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OfferIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1413,36 +2384,51 @@ export type $OfferPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Offer"
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
+    versions: Prisma.$OfferVersionPayload<ExtArgs>[]
+    auditLogs: Prisma.$OfferAuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     offerNumber: string
+    version: number
     status: string
-    type: string
+    counterparty: runtime.JsonValue
     customerId: string | null
     customerName: string
-    customerEmail: string | null
-    customerAddress: runtime.JsonValue | null
     offerDate: Date
-    validUntil: Date
+    validityDays: number
+    expiryDate: Date
+    sentAt: Date | null
     acceptedAt: Date | null
     rejectedAt: Date | null
     convertedAt: Date | null
-    items: runtime.JsonValue
     currency: string
+    paymentTerms: string
+    deliveryTerms: string | null
+    lineItems: runtime.JsonValue
     subtotal: runtime.Decimal
-    taxAmount: runtime.Decimal
-    discountAmount: runtime.Decimal
-    total: runtime.Decimal
+    totalDiscount: runtime.Decimal
+    taxTotal: runtime.Decimal
+    grandTotal: runtime.Decimal
     taxRate: runtime.Decimal
-    convertedToOrderId: string | null
-    convertedToInvoiceId: string | null
-    title: string | null
-    description: string | null
-    terms: string | null
-    notes: string | null
+    totalCost: runtime.Decimal | null
+    grossMargin: runtime.Decimal | null
+    grossMarginPercent: runtime.Decimal | null
     internalNotes: string | null
-    tags: string[]
+    customerNotes: string | null
+    termsAndConditions: string | null
+    disclaimer: string | null
+    acceptanceMethod: string | null
+    rejectionReason: string | null
+    convertedOrderId: string | null
+    convertedOrderNumber: string | null
+    templateId: string | null
+    templateName: string | null
+    previousVersionId: string | null
+    createdBy: string | null
+    updatedBy: string | null
+    sentBy: string | null
+    approvedBy: string | null
     organizationId: string
     createdAt: Date
     updatedAt: Date
@@ -1841,6 +2827,8 @@ readonly fields: OfferFieldRefs;
 export interface Prisma__OfferClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  versions<T extends Prisma.Offer$versionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Offer$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfferVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.Offer$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Offer$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfferAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1872,32 +2860,45 @@ export interface Prisma__OfferClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface OfferFieldRefs {
   readonly id: Prisma.FieldRef<"Offer", 'String'>
   readonly offerNumber: Prisma.FieldRef<"Offer", 'String'>
+  readonly version: Prisma.FieldRef<"Offer", 'Int'>
   readonly status: Prisma.FieldRef<"Offer", 'String'>
-  readonly type: Prisma.FieldRef<"Offer", 'String'>
+  readonly counterparty: Prisma.FieldRef<"Offer", 'Json'>
   readonly customerId: Prisma.FieldRef<"Offer", 'String'>
   readonly customerName: Prisma.FieldRef<"Offer", 'String'>
-  readonly customerEmail: Prisma.FieldRef<"Offer", 'String'>
-  readonly customerAddress: Prisma.FieldRef<"Offer", 'Json'>
   readonly offerDate: Prisma.FieldRef<"Offer", 'DateTime'>
-  readonly validUntil: Prisma.FieldRef<"Offer", 'DateTime'>
+  readonly validityDays: Prisma.FieldRef<"Offer", 'Int'>
+  readonly expiryDate: Prisma.FieldRef<"Offer", 'DateTime'>
+  readonly sentAt: Prisma.FieldRef<"Offer", 'DateTime'>
   readonly acceptedAt: Prisma.FieldRef<"Offer", 'DateTime'>
   readonly rejectedAt: Prisma.FieldRef<"Offer", 'DateTime'>
   readonly convertedAt: Prisma.FieldRef<"Offer", 'DateTime'>
-  readonly items: Prisma.FieldRef<"Offer", 'Json'>
   readonly currency: Prisma.FieldRef<"Offer", 'String'>
+  readonly paymentTerms: Prisma.FieldRef<"Offer", 'String'>
+  readonly deliveryTerms: Prisma.FieldRef<"Offer", 'String'>
+  readonly lineItems: Prisma.FieldRef<"Offer", 'Json'>
   readonly subtotal: Prisma.FieldRef<"Offer", 'Decimal'>
-  readonly taxAmount: Prisma.FieldRef<"Offer", 'Decimal'>
-  readonly discountAmount: Prisma.FieldRef<"Offer", 'Decimal'>
-  readonly total: Prisma.FieldRef<"Offer", 'Decimal'>
+  readonly totalDiscount: Prisma.FieldRef<"Offer", 'Decimal'>
+  readonly taxTotal: Prisma.FieldRef<"Offer", 'Decimal'>
+  readonly grandTotal: Prisma.FieldRef<"Offer", 'Decimal'>
   readonly taxRate: Prisma.FieldRef<"Offer", 'Decimal'>
-  readonly convertedToOrderId: Prisma.FieldRef<"Offer", 'String'>
-  readonly convertedToInvoiceId: Prisma.FieldRef<"Offer", 'String'>
-  readonly title: Prisma.FieldRef<"Offer", 'String'>
-  readonly description: Prisma.FieldRef<"Offer", 'String'>
-  readonly terms: Prisma.FieldRef<"Offer", 'String'>
-  readonly notes: Prisma.FieldRef<"Offer", 'String'>
+  readonly totalCost: Prisma.FieldRef<"Offer", 'Decimal'>
+  readonly grossMargin: Prisma.FieldRef<"Offer", 'Decimal'>
+  readonly grossMarginPercent: Prisma.FieldRef<"Offer", 'Decimal'>
   readonly internalNotes: Prisma.FieldRef<"Offer", 'String'>
-  readonly tags: Prisma.FieldRef<"Offer", 'String[]'>
+  readonly customerNotes: Prisma.FieldRef<"Offer", 'String'>
+  readonly termsAndConditions: Prisma.FieldRef<"Offer", 'String'>
+  readonly disclaimer: Prisma.FieldRef<"Offer", 'String'>
+  readonly acceptanceMethod: Prisma.FieldRef<"Offer", 'String'>
+  readonly rejectionReason: Prisma.FieldRef<"Offer", 'String'>
+  readonly convertedOrderId: Prisma.FieldRef<"Offer", 'String'>
+  readonly convertedOrderNumber: Prisma.FieldRef<"Offer", 'String'>
+  readonly templateId: Prisma.FieldRef<"Offer", 'String'>
+  readonly templateName: Prisma.FieldRef<"Offer", 'String'>
+  readonly previousVersionId: Prisma.FieldRef<"Offer", 'String'>
+  readonly createdBy: Prisma.FieldRef<"Offer", 'String'>
+  readonly updatedBy: Prisma.FieldRef<"Offer", 'String'>
+  readonly sentBy: Prisma.FieldRef<"Offer", 'String'>
+  readonly approvedBy: Prisma.FieldRef<"Offer", 'String'>
   readonly organizationId: Prisma.FieldRef<"Offer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Offer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Offer", 'DateTime'>
@@ -2294,6 +3295,54 @@ export type OfferDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Offers to delete.
    */
   limit?: number
+}
+
+/**
+ * Offer.versions
+ */
+export type Offer$versionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfferVersion
+   */
+  select?: Prisma.OfferVersionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OfferVersion
+   */
+  omit?: Prisma.OfferVersionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OfferVersionInclude<ExtArgs> | null
+  where?: Prisma.OfferVersionWhereInput
+  orderBy?: Prisma.OfferVersionOrderByWithRelationInput | Prisma.OfferVersionOrderByWithRelationInput[]
+  cursor?: Prisma.OfferVersionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OfferVersionScalarFieldEnum | Prisma.OfferVersionScalarFieldEnum[]
+}
+
+/**
+ * Offer.auditLogs
+ */
+export type Offer$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfferAuditLog
+   */
+  select?: Prisma.OfferAuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OfferAuditLog
+   */
+  omit?: Prisma.OfferAuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OfferAuditLogInclude<ExtArgs> | null
+  where?: Prisma.OfferAuditLogWhereInput
+  orderBy?: Prisma.OfferAuditLogOrderByWithRelationInput | Prisma.OfferAuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.OfferAuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OfferAuditLogScalarFieldEnum | Prisma.OfferAuditLogScalarFieldEnum[]
 }
 
 /**

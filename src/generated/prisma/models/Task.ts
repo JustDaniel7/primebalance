@@ -47,19 +47,28 @@ export type TaskMinAggregateOutputType = {
   type: string | null
   category: string | null
   dueDate: Date | null
+  dueTime: string | null
   startDate: Date | null
   completedAt: Date | null
+  snoozedUntil: Date | null
   reminderDate: Date | null
-  assigneeId: string | null
-  assigneeName: string | null
+  ownerId: string | null
+  ownerName: string | null
   createdById: string | null
   createdByName: string | null
-  referenceType: string | null
-  referenceId: string | null
+  assignmentReason: string | null
+  sourceSystem: string | null
+  sourceEntityId: string | null
+  sourceEntityType: string | null
+  slaDeadline: Date | null
+  slaBreach: boolean | null
+  slaWarning: boolean | null
+  isBlocked: boolean | null
   progress: number | null
   estimatedHours: runtime.Decimal | null
   actualHours: runtime.Decimal | null
-  notes: string | null
+  hasUnreadUpdates: boolean | null
+  hasMentions: boolean | null
   isRecurring: boolean | null
   recurringInterval: string | null
   organizationId: string | null
@@ -77,19 +86,28 @@ export type TaskMaxAggregateOutputType = {
   type: string | null
   category: string | null
   dueDate: Date | null
+  dueTime: string | null
   startDate: Date | null
   completedAt: Date | null
+  snoozedUntil: Date | null
   reminderDate: Date | null
-  assigneeId: string | null
-  assigneeName: string | null
+  ownerId: string | null
+  ownerName: string | null
   createdById: string | null
   createdByName: string | null
-  referenceType: string | null
-  referenceId: string | null
+  assignmentReason: string | null
+  sourceSystem: string | null
+  sourceEntityId: string | null
+  sourceEntityType: string | null
+  slaDeadline: Date | null
+  slaBreach: boolean | null
+  slaWarning: boolean | null
+  isBlocked: boolean | null
   progress: number | null
   estimatedHours: runtime.Decimal | null
   actualHours: runtime.Decimal | null
-  notes: string | null
+  hasUnreadUpdates: boolean | null
+  hasMentions: boolean | null
   isRecurring: boolean | null
   recurringInterval: string | null
   organizationId: string | null
@@ -107,23 +125,31 @@ export type TaskCountAggregateOutputType = {
   type: number
   category: number
   dueDate: number
+  dueTime: number
   startDate: number
   completedAt: number
+  snoozedUntil: number
   reminderDate: number
-  assigneeId: number
-  assigneeName: number
+  ownerId: number
+  ownerName: number
   createdById: number
   createdByName: number
-  referenceType: number
-  referenceId: number
+  assignmentReason: number
+  sourceSystem: number
+  sourceEntityId: number
+  sourceEntityType: number
+  slaDeadline: number
+  slaBreach: number
+  slaWarning: number
+  isBlocked: number
   progress: number
   estimatedHours: number
   actualHours: number
-  tags: number
-  attachments: number
-  notes: number
+  hasUnreadUpdates: number
+  hasMentions: number
   isRecurring: number
   recurringInterval: number
+  metadata: number
   organizationId: number
   parentId: number
   createdAt: number
@@ -153,19 +179,28 @@ export type TaskMinAggregateInputType = {
   type?: true
   category?: true
   dueDate?: true
+  dueTime?: true
   startDate?: true
   completedAt?: true
+  snoozedUntil?: true
   reminderDate?: true
-  assigneeId?: true
-  assigneeName?: true
+  ownerId?: true
+  ownerName?: true
   createdById?: true
   createdByName?: true
-  referenceType?: true
-  referenceId?: true
+  assignmentReason?: true
+  sourceSystem?: true
+  sourceEntityId?: true
+  sourceEntityType?: true
+  slaDeadline?: true
+  slaBreach?: true
+  slaWarning?: true
+  isBlocked?: true
   progress?: true
   estimatedHours?: true
   actualHours?: true
-  notes?: true
+  hasUnreadUpdates?: true
+  hasMentions?: true
   isRecurring?: true
   recurringInterval?: true
   organizationId?: true
@@ -183,19 +218,28 @@ export type TaskMaxAggregateInputType = {
   type?: true
   category?: true
   dueDate?: true
+  dueTime?: true
   startDate?: true
   completedAt?: true
+  snoozedUntil?: true
   reminderDate?: true
-  assigneeId?: true
-  assigneeName?: true
+  ownerId?: true
+  ownerName?: true
   createdById?: true
   createdByName?: true
-  referenceType?: true
-  referenceId?: true
+  assignmentReason?: true
+  sourceSystem?: true
+  sourceEntityId?: true
+  sourceEntityType?: true
+  slaDeadline?: true
+  slaBreach?: true
+  slaWarning?: true
+  isBlocked?: true
   progress?: true
   estimatedHours?: true
   actualHours?: true
-  notes?: true
+  hasUnreadUpdates?: true
+  hasMentions?: true
   isRecurring?: true
   recurringInterval?: true
   organizationId?: true
@@ -213,23 +257,31 @@ export type TaskCountAggregateInputType = {
   type?: true
   category?: true
   dueDate?: true
+  dueTime?: true
   startDate?: true
   completedAt?: true
+  snoozedUntil?: true
   reminderDate?: true
-  assigneeId?: true
-  assigneeName?: true
+  ownerId?: true
+  ownerName?: true
   createdById?: true
   createdByName?: true
-  referenceType?: true
-  referenceId?: true
+  assignmentReason?: true
+  sourceSystem?: true
+  sourceEntityId?: true
+  sourceEntityType?: true
+  slaDeadline?: true
+  slaBreach?: true
+  slaWarning?: true
+  isBlocked?: true
   progress?: true
   estimatedHours?: true
   actualHours?: true
-  tags?: true
-  attachments?: true
-  notes?: true
+  hasUnreadUpdates?: true
+  hasMentions?: true
   isRecurring?: true
   recurringInterval?: true
+  metadata?: true
   organizationId?: true
   parentId?: true
   createdAt?: true
@@ -332,23 +384,31 @@ export type TaskGroupByOutputType = {
   type: string
   category: string | null
   dueDate: Date | null
+  dueTime: string | null
   startDate: Date | null
   completedAt: Date | null
+  snoozedUntil: Date | null
   reminderDate: Date | null
-  assigneeId: string | null
-  assigneeName: string | null
+  ownerId: string | null
+  ownerName: string | null
   createdById: string | null
   createdByName: string | null
-  referenceType: string | null
-  referenceId: string | null
+  assignmentReason: string
+  sourceSystem: string
+  sourceEntityId: string | null
+  sourceEntityType: string | null
+  slaDeadline: Date | null
+  slaBreach: boolean
+  slaWarning: boolean
+  isBlocked: boolean
   progress: number
   estimatedHours: runtime.Decimal | null
   actualHours: runtime.Decimal | null
-  tags: string[]
-  attachments: runtime.JsonValue | null
-  notes: string | null
+  hasUnreadUpdates: boolean
+  hasMentions: boolean
   isRecurring: boolean
   recurringInterval: string | null
+  metadata: runtime.JsonValue | null
   organizationId: string
   parentId: string | null
   createdAt: Date
@@ -387,23 +447,31 @@ export type TaskWhereInput = {
   type?: Prisma.StringFilter<"Task"> | string
   category?: Prisma.StringNullableFilter<"Task"> | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  dueTime?: Prisma.StringNullableFilter<"Task"> | string | null
   startDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  snoozedUntil?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   reminderDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
-  assigneeId?: Prisma.StringNullableFilter<"Task"> | string | null
-  assigneeName?: Prisma.StringNullableFilter<"Task"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"Task"> | string | null
+  ownerName?: Prisma.StringNullableFilter<"Task"> | string | null
   createdById?: Prisma.StringNullableFilter<"Task"> | string | null
   createdByName?: Prisma.StringNullableFilter<"Task"> | string | null
-  referenceType?: Prisma.StringNullableFilter<"Task"> | string | null
-  referenceId?: Prisma.StringNullableFilter<"Task"> | string | null
+  assignmentReason?: Prisma.StringFilter<"Task"> | string
+  sourceSystem?: Prisma.StringFilter<"Task"> | string
+  sourceEntityId?: Prisma.StringNullableFilter<"Task"> | string | null
+  sourceEntityType?: Prisma.StringNullableFilter<"Task"> | string | null
+  slaDeadline?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  slaBreach?: Prisma.BoolFilter<"Task"> | boolean
+  slaWarning?: Prisma.BoolFilter<"Task"> | boolean
+  isBlocked?: Prisma.BoolFilter<"Task"> | boolean
   progress?: Prisma.IntFilter<"Task"> | number
   estimatedHours?: Prisma.DecimalNullableFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.DecimalNullableFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.StringNullableListFilter<"Task">
-  attachments?: Prisma.JsonNullableFilter<"Task">
-  notes?: Prisma.StringNullableFilter<"Task"> | string | null
+  hasUnreadUpdates?: Prisma.BoolFilter<"Task"> | boolean
+  hasMentions?: Prisma.BoolFilter<"Task"> | boolean
   isRecurring?: Prisma.BoolFilter<"Task"> | boolean
   recurringInterval?: Prisma.StringNullableFilter<"Task"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"Task">
   organizationId?: Prisma.StringFilter<"Task"> | string
   parentId?: Prisma.StringNullableFilter<"Task"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
@@ -411,6 +479,16 @@ export type TaskWhereInput = {
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   parent?: Prisma.XOR<Prisma.TaskNullableScalarRelationFilter, Prisma.TaskWhereInput> | null
   subtasks?: Prisma.TaskListRelationFilter
+  assignees?: Prisma.TaskAssigneeListRelationFilter
+  watchers?: Prisma.TaskWatcherListRelationFilter
+  tags?: Prisma.TaskTagLinkListRelationFilter
+  comments?: Prisma.TaskCommentListRelationFilter
+  activities?: Prisma.TaskActivityListRelationFilter
+  attachments?: Prisma.TaskAttachmentListRelationFilter
+  dependencies?: Prisma.TaskDependencyListRelationFilter
+  dependents?: Prisma.TaskDependencyListRelationFilter
+  linkedRisks?: Prisma.TaskRiskLinkListRelationFilter
+  notifications?: Prisma.TaskNotificationListRelationFilter
 }
 
 export type TaskOrderByWithRelationInput = {
@@ -422,23 +500,31 @@ export type TaskOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  dueTime?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  snoozedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   reminderDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  assigneeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  assigneeName?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdByName?: Prisma.SortOrderInput | Prisma.SortOrder
-  referenceType?: Prisma.SortOrderInput | Prisma.SortOrder
-  referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  assignmentReason?: Prisma.SortOrder
+  sourceSystem?: Prisma.SortOrder
+  sourceEntityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceEntityType?: Prisma.SortOrderInput | Prisma.SortOrder
+  slaDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
+  slaBreach?: Prisma.SortOrder
+  slaWarning?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   estimatedHours?: Prisma.SortOrderInput | Prisma.SortOrder
   actualHours?: Prisma.SortOrderInput | Prisma.SortOrder
-  tags?: Prisma.SortOrder
-  attachments?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasUnreadUpdates?: Prisma.SortOrder
+  hasMentions?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -446,6 +532,16 @@ export type TaskOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   parent?: Prisma.TaskOrderByWithRelationInput
   subtasks?: Prisma.TaskOrderByRelationAggregateInput
+  assignees?: Prisma.TaskAssigneeOrderByRelationAggregateInput
+  watchers?: Prisma.TaskWatcherOrderByRelationAggregateInput
+  tags?: Prisma.TaskTagLinkOrderByRelationAggregateInput
+  comments?: Prisma.TaskCommentOrderByRelationAggregateInput
+  activities?: Prisma.TaskActivityOrderByRelationAggregateInput
+  attachments?: Prisma.TaskAttachmentOrderByRelationAggregateInput
+  dependencies?: Prisma.TaskDependencyOrderByRelationAggregateInput
+  dependents?: Prisma.TaskDependencyOrderByRelationAggregateInput
+  linkedRisks?: Prisma.TaskRiskLinkOrderByRelationAggregateInput
+  notifications?: Prisma.TaskNotificationOrderByRelationAggregateInput
 }
 
 export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -460,23 +556,31 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.StringFilter<"Task"> | string
   category?: Prisma.StringNullableFilter<"Task"> | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  dueTime?: Prisma.StringNullableFilter<"Task"> | string | null
   startDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  snoozedUntil?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   reminderDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
-  assigneeId?: Prisma.StringNullableFilter<"Task"> | string | null
-  assigneeName?: Prisma.StringNullableFilter<"Task"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"Task"> | string | null
+  ownerName?: Prisma.StringNullableFilter<"Task"> | string | null
   createdById?: Prisma.StringNullableFilter<"Task"> | string | null
   createdByName?: Prisma.StringNullableFilter<"Task"> | string | null
-  referenceType?: Prisma.StringNullableFilter<"Task"> | string | null
-  referenceId?: Prisma.StringNullableFilter<"Task"> | string | null
+  assignmentReason?: Prisma.StringFilter<"Task"> | string
+  sourceSystem?: Prisma.StringFilter<"Task"> | string
+  sourceEntityId?: Prisma.StringNullableFilter<"Task"> | string | null
+  sourceEntityType?: Prisma.StringNullableFilter<"Task"> | string | null
+  slaDeadline?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  slaBreach?: Prisma.BoolFilter<"Task"> | boolean
+  slaWarning?: Prisma.BoolFilter<"Task"> | boolean
+  isBlocked?: Prisma.BoolFilter<"Task"> | boolean
   progress?: Prisma.IntFilter<"Task"> | number
   estimatedHours?: Prisma.DecimalNullableFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.DecimalNullableFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.StringNullableListFilter<"Task">
-  attachments?: Prisma.JsonNullableFilter<"Task">
-  notes?: Prisma.StringNullableFilter<"Task"> | string | null
+  hasUnreadUpdates?: Prisma.BoolFilter<"Task"> | boolean
+  hasMentions?: Prisma.BoolFilter<"Task"> | boolean
   isRecurring?: Prisma.BoolFilter<"Task"> | boolean
   recurringInterval?: Prisma.StringNullableFilter<"Task"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"Task">
   organizationId?: Prisma.StringFilter<"Task"> | string
   parentId?: Prisma.StringNullableFilter<"Task"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
@@ -484,6 +588,16 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   parent?: Prisma.XOR<Prisma.TaskNullableScalarRelationFilter, Prisma.TaskWhereInput> | null
   subtasks?: Prisma.TaskListRelationFilter
+  assignees?: Prisma.TaskAssigneeListRelationFilter
+  watchers?: Prisma.TaskWatcherListRelationFilter
+  tags?: Prisma.TaskTagLinkListRelationFilter
+  comments?: Prisma.TaskCommentListRelationFilter
+  activities?: Prisma.TaskActivityListRelationFilter
+  attachments?: Prisma.TaskAttachmentListRelationFilter
+  dependencies?: Prisma.TaskDependencyListRelationFilter
+  dependents?: Prisma.TaskDependencyListRelationFilter
+  linkedRisks?: Prisma.TaskRiskLinkListRelationFilter
+  notifications?: Prisma.TaskNotificationListRelationFilter
 }, "id">
 
 export type TaskOrderByWithAggregationInput = {
@@ -495,23 +609,31 @@ export type TaskOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  dueTime?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  snoozedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   reminderDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  assigneeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  assigneeName?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdByName?: Prisma.SortOrderInput | Prisma.SortOrder
-  referenceType?: Prisma.SortOrderInput | Prisma.SortOrder
-  referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  assignmentReason?: Prisma.SortOrder
+  sourceSystem?: Prisma.SortOrder
+  sourceEntityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceEntityType?: Prisma.SortOrderInput | Prisma.SortOrder
+  slaDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
+  slaBreach?: Prisma.SortOrder
+  slaWarning?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   estimatedHours?: Prisma.SortOrderInput | Prisma.SortOrder
   actualHours?: Prisma.SortOrderInput | Prisma.SortOrder
-  tags?: Prisma.SortOrder
-  attachments?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  hasUnreadUpdates?: Prisma.SortOrder
+  hasMentions?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrderInput | Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -535,23 +657,31 @@ export type TaskScalarWhereWithAggregatesInput = {
   type?: Prisma.StringWithAggregatesFilter<"Task"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
   dueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
+  dueTime?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
   startDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
+  snoozedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
   reminderDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
-  assigneeId?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
-  assigneeName?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  ownerId?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  ownerName?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
   createdByName?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
-  referenceType?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
-  referenceId?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  assignmentReason?: Prisma.StringWithAggregatesFilter<"Task"> | string
+  sourceSystem?: Prisma.StringWithAggregatesFilter<"Task"> | string
+  sourceEntityId?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  sourceEntityType?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  slaDeadline?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
+  slaBreach?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
+  slaWarning?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
+  isBlocked?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
   progress?: Prisma.IntWithAggregatesFilter<"Task"> | number
   estimatedHours?: Prisma.DecimalNullableWithAggregatesFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.DecimalNullableWithAggregatesFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.StringNullableListFilter<"Task">
-  attachments?: Prisma.JsonNullableWithAggregatesFilter<"Task">
-  notes?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  hasUnreadUpdates?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
+  hasMentions?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
   isRecurring?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
   recurringInterval?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  metadata?: Prisma.JsonNullableWithAggregatesFilter<"Task">
   organizationId?: Prisma.StringWithAggregatesFilter<"Task"> | string
   parentId?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Task"> | Date | string
@@ -567,28 +697,46 @@ export type TaskCreateInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
   parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
   subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateInput = {
@@ -600,28 +748,46 @@ export type TaskUncheckedCreateInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId: string
   parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUpdateInput = {
@@ -633,28 +799,46 @@ export type TaskUpdateInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
   parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
   subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateInput = {
@@ -666,28 +850,46 @@ export type TaskUncheckedUpdateInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskCreateManyInput = {
@@ -699,23 +901,31 @@ export type TaskCreateManyInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId: string
   parentId?: string | null
   createdAt?: Date | string
@@ -731,23 +941,31 @@ export type TaskUpdateManyMutationInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -761,23 +979,31 @@ export type TaskUncheckedUpdateManyInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -808,23 +1034,31 @@ export type TaskCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   category?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  dueTime?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
+  snoozedUntil?: Prisma.SortOrder
   reminderDate?: Prisma.SortOrder
-  assigneeId?: Prisma.SortOrder
-  assigneeName?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdByName?: Prisma.SortOrder
-  referenceType?: Prisma.SortOrder
-  referenceId?: Prisma.SortOrder
+  assignmentReason?: Prisma.SortOrder
+  sourceSystem?: Prisma.SortOrder
+  sourceEntityId?: Prisma.SortOrder
+  sourceEntityType?: Prisma.SortOrder
+  slaDeadline?: Prisma.SortOrder
+  slaBreach?: Prisma.SortOrder
+  slaWarning?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   estimatedHours?: Prisma.SortOrder
   actualHours?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
-  attachments?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  hasUnreadUpdates?: Prisma.SortOrder
+  hasMentions?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrder
+  metadata?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -846,19 +1080,28 @@ export type TaskMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   category?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  dueTime?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
+  snoozedUntil?: Prisma.SortOrder
   reminderDate?: Prisma.SortOrder
-  assigneeId?: Prisma.SortOrder
-  assigneeName?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdByName?: Prisma.SortOrder
-  referenceType?: Prisma.SortOrder
-  referenceId?: Prisma.SortOrder
+  assignmentReason?: Prisma.SortOrder
+  sourceSystem?: Prisma.SortOrder
+  sourceEntityId?: Prisma.SortOrder
+  sourceEntityType?: Prisma.SortOrder
+  slaDeadline?: Prisma.SortOrder
+  slaBreach?: Prisma.SortOrder
+  slaWarning?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   estimatedHours?: Prisma.SortOrder
   actualHours?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  hasUnreadUpdates?: Prisma.SortOrder
+  hasMentions?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -876,19 +1119,28 @@ export type TaskMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   category?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  dueTime?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
+  snoozedUntil?: Prisma.SortOrder
   reminderDate?: Prisma.SortOrder
-  assigneeId?: Prisma.SortOrder
-  assigneeName?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdByName?: Prisma.SortOrder
-  referenceType?: Prisma.SortOrder
-  referenceId?: Prisma.SortOrder
+  assignmentReason?: Prisma.SortOrder
+  sourceSystem?: Prisma.SortOrder
+  sourceEntityId?: Prisma.SortOrder
+  sourceEntityType?: Prisma.SortOrder
+  slaDeadline?: Prisma.SortOrder
+  slaBreach?: Prisma.SortOrder
+  slaWarning?: Prisma.SortOrder
+  isBlocked?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   estimatedHours?: Prisma.SortOrder
   actualHours?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  hasUnreadUpdates?: Prisma.SortOrder
+  hasMentions?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -901,6 +1153,11 @@ export type TaskSumOrderByAggregateInput = {
   progress?: Prisma.SortOrder
   estimatedHours?: Prisma.SortOrder
   actualHours?: Prisma.SortOrder
+}
+
+export type TaskScalarRelationFilter = {
+  is?: Prisma.TaskWhereInput
+  isNot?: Prisma.TaskWhereInput
 }
 
 export type TaskCreateNestedManyWithoutOrganizationInput = {
@@ -945,10 +1202,6 @@ export type TaskUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
 }
 
-export type TaskCreatetagsInput = {
-  set: string[]
-}
-
 export type TaskCreateNestedOneWithoutSubtasksInput = {
   create?: Prisma.XOR<Prisma.TaskCreateWithoutSubtasksInput, Prisma.TaskUncheckedCreateWithoutSubtasksInput>
   connectOrCreate?: Prisma.TaskCreateOrConnectWithoutSubtasksInput
@@ -967,11 +1220,6 @@ export type TaskUncheckedCreateNestedManyWithoutParentInput = {
   connectOrCreate?: Prisma.TaskCreateOrConnectWithoutParentInput | Prisma.TaskCreateOrConnectWithoutParentInput[]
   createMany?: Prisma.TaskCreateManyParentInputEnvelope
   connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
-}
-
-export type TaskUpdatetagsInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type TaskUpdateOneWithoutSubtasksNestedInput = {
@@ -1012,6 +1260,148 @@ export type TaskUncheckedUpdateManyWithoutParentNestedInput = {
   deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
 }
 
+export type TaskCreateNestedOneWithoutAssigneesInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutAssigneesInput, Prisma.TaskUncheckedCreateWithoutAssigneesInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutAssigneesInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutAssigneesNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutAssigneesInput, Prisma.TaskUncheckedCreateWithoutAssigneesInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutAssigneesInput
+  upsert?: Prisma.TaskUpsertWithoutAssigneesInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutAssigneesInput, Prisma.TaskUpdateWithoutAssigneesInput>, Prisma.TaskUncheckedUpdateWithoutAssigneesInput>
+}
+
+export type TaskCreateNestedOneWithoutWatchersInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutWatchersInput, Prisma.TaskUncheckedCreateWithoutWatchersInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutWatchersInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutWatchersNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutWatchersInput, Prisma.TaskUncheckedCreateWithoutWatchersInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutWatchersInput
+  upsert?: Prisma.TaskUpsertWithoutWatchersInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutWatchersInput, Prisma.TaskUpdateWithoutWatchersInput>, Prisma.TaskUncheckedUpdateWithoutWatchersInput>
+}
+
+export type TaskCreateNestedOneWithoutTagsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutTagsInput, Prisma.TaskUncheckedCreateWithoutTagsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutTagsInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutTagsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutTagsInput, Prisma.TaskUncheckedCreateWithoutTagsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutTagsInput
+  upsert?: Prisma.TaskUpsertWithoutTagsInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutTagsInput, Prisma.TaskUpdateWithoutTagsInput>, Prisma.TaskUncheckedUpdateWithoutTagsInput>
+}
+
+export type TaskCreateNestedOneWithoutDependenciesInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutDependenciesInput, Prisma.TaskUncheckedCreateWithoutDependenciesInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutDependenciesInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskCreateNestedOneWithoutDependentsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutDependentsInput, Prisma.TaskUncheckedCreateWithoutDependentsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutDependentsInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutDependenciesNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutDependenciesInput, Prisma.TaskUncheckedCreateWithoutDependenciesInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutDependenciesInput
+  upsert?: Prisma.TaskUpsertWithoutDependenciesInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutDependenciesInput, Prisma.TaskUpdateWithoutDependenciesInput>, Prisma.TaskUncheckedUpdateWithoutDependenciesInput>
+}
+
+export type TaskUpdateOneRequiredWithoutDependentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutDependentsInput, Prisma.TaskUncheckedCreateWithoutDependentsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutDependentsInput
+  upsert?: Prisma.TaskUpsertWithoutDependentsInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutDependentsInput, Prisma.TaskUpdateWithoutDependentsInput>, Prisma.TaskUncheckedUpdateWithoutDependentsInput>
+}
+
+export type TaskCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutCommentsInput, Prisma.TaskUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutCommentsInput, Prisma.TaskUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.TaskUpsertWithoutCommentsInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutCommentsInput, Prisma.TaskUpdateWithoutCommentsInput>, Prisma.TaskUncheckedUpdateWithoutCommentsInput>
+}
+
+export type TaskCreateNestedOneWithoutActivitiesInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutActivitiesInput, Prisma.TaskUncheckedCreateWithoutActivitiesInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutActivitiesInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutActivitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutActivitiesInput, Prisma.TaskUncheckedCreateWithoutActivitiesInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutActivitiesInput
+  upsert?: Prisma.TaskUpsertWithoutActivitiesInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutActivitiesInput, Prisma.TaskUpdateWithoutActivitiesInput>, Prisma.TaskUncheckedUpdateWithoutActivitiesInput>
+}
+
+export type TaskCreateNestedOneWithoutAttachmentsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutAttachmentsInput, Prisma.TaskUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutAttachmentsInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutAttachmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutAttachmentsInput, Prisma.TaskUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutAttachmentsInput
+  upsert?: Prisma.TaskUpsertWithoutAttachmentsInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutAttachmentsInput, Prisma.TaskUpdateWithoutAttachmentsInput>, Prisma.TaskUncheckedUpdateWithoutAttachmentsInput>
+}
+
+export type TaskCreateNestedOneWithoutLinkedRisksInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutLinkedRisksInput, Prisma.TaskUncheckedCreateWithoutLinkedRisksInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutLinkedRisksInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneRequiredWithoutLinkedRisksNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutLinkedRisksInput, Prisma.TaskUncheckedCreateWithoutLinkedRisksInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutLinkedRisksInput
+  upsert?: Prisma.TaskUpsertWithoutLinkedRisksInput
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutLinkedRisksInput, Prisma.TaskUpdateWithoutLinkedRisksInput>, Prisma.TaskUncheckedUpdateWithoutLinkedRisksInput>
+}
+
+export type TaskCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutNotificationsInput, Prisma.TaskUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutNotificationsInput, Prisma.TaskUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.TaskUpsertWithoutNotificationsInput
+  disconnect?: Prisma.TaskWhereInput | boolean
+  delete?: Prisma.TaskWhereInput | boolean
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutNotificationsInput, Prisma.TaskUpdateWithoutNotificationsInput>, Prisma.TaskUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type TaskCreateWithoutOrganizationInput = {
   id?: string
   title: string
@@ -1021,27 +1411,45 @@ export type TaskCreateWithoutOrganizationInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
   subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutOrganizationInput = {
@@ -1053,27 +1461,45 @@ export type TaskUncheckedCreateWithoutOrganizationInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutOrganizationInput = {
@@ -1114,23 +1540,31 @@ export type TaskScalarWhereInput = {
   type?: Prisma.StringFilter<"Task"> | string
   category?: Prisma.StringNullableFilter<"Task"> | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  dueTime?: Prisma.StringNullableFilter<"Task"> | string | null
   startDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  snoozedUntil?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   reminderDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
-  assigneeId?: Prisma.StringNullableFilter<"Task"> | string | null
-  assigneeName?: Prisma.StringNullableFilter<"Task"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"Task"> | string | null
+  ownerName?: Prisma.StringNullableFilter<"Task"> | string | null
   createdById?: Prisma.StringNullableFilter<"Task"> | string | null
   createdByName?: Prisma.StringNullableFilter<"Task"> | string | null
-  referenceType?: Prisma.StringNullableFilter<"Task"> | string | null
-  referenceId?: Prisma.StringNullableFilter<"Task"> | string | null
+  assignmentReason?: Prisma.StringFilter<"Task"> | string
+  sourceSystem?: Prisma.StringFilter<"Task"> | string
+  sourceEntityId?: Prisma.StringNullableFilter<"Task"> | string | null
+  sourceEntityType?: Prisma.StringNullableFilter<"Task"> | string | null
+  slaDeadline?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
+  slaBreach?: Prisma.BoolFilter<"Task"> | boolean
+  slaWarning?: Prisma.BoolFilter<"Task"> | boolean
+  isBlocked?: Prisma.BoolFilter<"Task"> | boolean
   progress?: Prisma.IntFilter<"Task"> | number
   estimatedHours?: Prisma.DecimalNullableFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.DecimalNullableFilter<"Task"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.StringNullableListFilter<"Task">
-  attachments?: Prisma.JsonNullableFilter<"Task">
-  notes?: Prisma.StringNullableFilter<"Task"> | string | null
+  hasUnreadUpdates?: Prisma.BoolFilter<"Task"> | boolean
+  hasMentions?: Prisma.BoolFilter<"Task"> | boolean
   isRecurring?: Prisma.BoolFilter<"Task"> | boolean
   recurringInterval?: Prisma.StringNullableFilter<"Task"> | string | null
+  metadata?: Prisma.JsonNullableFilter<"Task">
   organizationId?: Prisma.StringFilter<"Task"> | string
   parentId?: Prisma.StringNullableFilter<"Task"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
@@ -1146,27 +1580,45 @@ export type TaskCreateWithoutSubtasksInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
   parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutSubtasksInput = {
@@ -1178,27 +1630,45 @@ export type TaskUncheckedCreateWithoutSubtasksInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId: string
   parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutSubtasksInput = {
@@ -1215,27 +1685,45 @@ export type TaskCreateWithoutParentInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
   subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutParentInput = {
@@ -1247,27 +1735,45 @@ export type TaskUncheckedCreateWithoutParentInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutParentInput = {
@@ -1300,27 +1806,45 @@ export type TaskUpdateWithoutSubtasksInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
   parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutSubtasksInput = {
@@ -1332,27 +1856,45 @@ export type TaskUncheckedUpdateWithoutSubtasksInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUpsertWithWhereUniqueWithoutParentInput = {
@@ -1371,6 +1913,2166 @@ export type TaskUpdateManyWithWhereWithoutParentInput = {
   data: Prisma.XOR<Prisma.TaskUpdateManyMutationInput, Prisma.TaskUncheckedUpdateManyWithoutParentInput>
 }
 
+export type TaskCreateWithoutAssigneesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutAssigneesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutAssigneesInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutAssigneesInput, Prisma.TaskUncheckedCreateWithoutAssigneesInput>
+}
+
+export type TaskUpsertWithoutAssigneesInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutAssigneesInput, Prisma.TaskUncheckedUpdateWithoutAssigneesInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutAssigneesInput, Prisma.TaskUncheckedCreateWithoutAssigneesInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutAssigneesInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutAssigneesInput, Prisma.TaskUncheckedUpdateWithoutAssigneesInput>
+}
+
+export type TaskUpdateWithoutAssigneesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutAssigneesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutWatchersInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutWatchersInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutWatchersInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutWatchersInput, Prisma.TaskUncheckedCreateWithoutWatchersInput>
+}
+
+export type TaskUpsertWithoutWatchersInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutWatchersInput, Prisma.TaskUncheckedUpdateWithoutWatchersInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutWatchersInput, Prisma.TaskUncheckedCreateWithoutWatchersInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutWatchersInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutWatchersInput, Prisma.TaskUncheckedUpdateWithoutWatchersInput>
+}
+
+export type TaskUpdateWithoutWatchersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutWatchersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutTagsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutTagsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutTagsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutTagsInput, Prisma.TaskUncheckedCreateWithoutTagsInput>
+}
+
+export type TaskUpsertWithoutTagsInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutTagsInput, Prisma.TaskUncheckedUpdateWithoutTagsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutTagsInput, Prisma.TaskUncheckedCreateWithoutTagsInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutTagsInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutTagsInput, Prisma.TaskUncheckedUpdateWithoutTagsInput>
+}
+
+export type TaskUpdateWithoutTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutDependenciesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutDependenciesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutDependenciesInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutDependenciesInput, Prisma.TaskUncheckedCreateWithoutDependenciesInput>
+}
+
+export type TaskCreateWithoutDependentsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutDependentsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutDependentsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutDependentsInput, Prisma.TaskUncheckedCreateWithoutDependentsInput>
+}
+
+export type TaskUpsertWithoutDependenciesInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutDependenciesInput, Prisma.TaskUncheckedUpdateWithoutDependenciesInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutDependenciesInput, Prisma.TaskUncheckedCreateWithoutDependenciesInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutDependenciesInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutDependenciesInput, Prisma.TaskUncheckedUpdateWithoutDependenciesInput>
+}
+
+export type TaskUpdateWithoutDependenciesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutDependenciesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUpsertWithoutDependentsInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutDependentsInput, Prisma.TaskUncheckedUpdateWithoutDependentsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutDependentsInput, Prisma.TaskUncheckedCreateWithoutDependentsInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutDependentsInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutDependentsInput, Prisma.TaskUncheckedUpdateWithoutDependentsInput>
+}
+
+export type TaskUpdateWithoutDependentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutDependentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutCommentsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutCommentsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutCommentsInput, Prisma.TaskUncheckedCreateWithoutCommentsInput>
+}
+
+export type TaskUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutCommentsInput, Prisma.TaskUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutCommentsInput, Prisma.TaskUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutCommentsInput, Prisma.TaskUncheckedUpdateWithoutCommentsInput>
+}
+
+export type TaskUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutActivitiesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutActivitiesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutActivitiesInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutActivitiesInput, Prisma.TaskUncheckedCreateWithoutActivitiesInput>
+}
+
+export type TaskUpsertWithoutActivitiesInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutActivitiesInput, Prisma.TaskUncheckedUpdateWithoutActivitiesInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutActivitiesInput, Prisma.TaskUncheckedCreateWithoutActivitiesInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutActivitiesInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutActivitiesInput, Prisma.TaskUncheckedUpdateWithoutActivitiesInput>
+}
+
+export type TaskUpdateWithoutActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutAttachmentsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutAttachmentsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutAttachmentsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutAttachmentsInput, Prisma.TaskUncheckedCreateWithoutAttachmentsInput>
+}
+
+export type TaskUpsertWithoutAttachmentsInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutAttachmentsInput, Prisma.TaskUncheckedUpdateWithoutAttachmentsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutAttachmentsInput, Prisma.TaskUncheckedCreateWithoutAttachmentsInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutAttachmentsInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutAttachmentsInput, Prisma.TaskUncheckedUpdateWithoutAttachmentsInput>
+}
+
+export type TaskUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutLinkedRisksInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  notifications?: Prisma.TaskNotificationCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutLinkedRisksInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  notifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutLinkedRisksInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutLinkedRisksInput, Prisma.TaskUncheckedCreateWithoutLinkedRisksInput>
+}
+
+export type TaskUpsertWithoutLinkedRisksInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutLinkedRisksInput, Prisma.TaskUncheckedUpdateWithoutLinkedRisksInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutLinkedRisksInput, Prisma.TaskUncheckedCreateWithoutLinkedRisksInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutLinkedRisksInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutLinkedRisksInput, Prisma.TaskUncheckedUpdateWithoutLinkedRisksInput>
+}
+
+export type TaskUpdateWithoutLinkedRisksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutLinkedRisksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskCreateWithoutNotificationsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutTasksInput
+  parent?: Prisma.TaskCreateNestedOneWithoutSubtasksInput
+  subtasks?: Prisma.TaskCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  status?: string
+  priority?: string
+  type?: string
+  category?: string | null
+  dueDate?: Date | string | null
+  dueTime?: string | null
+  startDate?: Date | string | null
+  completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
+  reminderDate?: Date | string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  createdById?: string | null
+  createdByName?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
+  progress?: number
+  estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId: string
+  parentId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subtasks?: Prisma.TaskUncheckedCreateNestedManyWithoutParentInput
+  assignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
+  watchers?: Prisma.TaskWatcherUncheckedCreateNestedManyWithoutTaskInput
+  tags?: Prisma.TaskTagLinkUncheckedCreateNestedManyWithoutTaskInput
+  comments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutTaskInput
+  activities?: Prisma.TaskActivityUncheckedCreateNestedManyWithoutTaskInput
+  attachments?: Prisma.TaskAttachmentUncheckedCreateNestedManyWithoutTaskInput
+  dependencies?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutDependentTaskInput
+  dependents?: Prisma.TaskDependencyUncheckedCreateNestedManyWithoutBlockingTaskInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutNotificationsInput, Prisma.TaskUncheckedCreateWithoutNotificationsInput>
+}
+
+export type TaskUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutNotificationsInput, Prisma.TaskUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutNotificationsInput, Prisma.TaskUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutNotificationsInput, Prisma.TaskUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type TaskUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
+  parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
+  subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+}
+
 export type TaskCreateManyOrganizationInput = {
   id?: string
   title: string
@@ -1380,23 +4082,31 @@ export type TaskCreateManyOrganizationInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   parentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1411,27 +4121,45 @@ export type TaskUpdateWithoutOrganizationInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.TaskUpdateOneWithoutSubtasksNestedInput
   subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutOrganizationInput = {
@@ -1443,27 +4171,45 @@ export type TaskUncheckedUpdateWithoutOrganizationInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1475,23 +4221,31 @@ export type TaskUncheckedUpdateManyWithoutOrganizationInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1506,23 +4260,31 @@ export type TaskCreateManyParentInput = {
   type?: string
   category?: string | null
   dueDate?: Date | string | null
+  dueTime?: string | null
   startDate?: Date | string | null
   completedAt?: Date | string | null
+  snoozedUntil?: Date | string | null
   reminderDate?: Date | string | null
-  assigneeId?: string | null
-  assigneeName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
   createdById?: string | null
   createdByName?: string | null
-  referenceType?: string | null
-  referenceId?: string | null
+  assignmentReason?: string
+  sourceSystem?: string
+  sourceEntityId?: string | null
+  sourceEntityType?: string | null
+  slaDeadline?: Date | string | null
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: number
   estimatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskCreatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: string | null
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1537,27 +4299,45 @@ export type TaskUpdateWithoutParentInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTasksNestedInput
   subtasks?: Prisma.TaskUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutParentInput = {
@@ -1569,27 +4349,45 @@ export type TaskUncheckedUpdateWithoutParentInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subtasks?: Prisma.TaskUncheckedUpdateManyWithoutParentNestedInput
+  assignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
+  watchers?: Prisma.TaskWatcherUncheckedUpdateManyWithoutTaskNestedInput
+  tags?: Prisma.TaskTagLinkUncheckedUpdateManyWithoutTaskNestedInput
+  comments?: Prisma.TaskCommentUncheckedUpdateManyWithoutTaskNestedInput
+  activities?: Prisma.TaskActivityUncheckedUpdateManyWithoutTaskNestedInput
+  attachments?: Prisma.TaskAttachmentUncheckedUpdateManyWithoutTaskNestedInput
+  dependencies?: Prisma.TaskDependencyUncheckedUpdateManyWithoutDependentTaskNestedInput
+  dependents?: Prisma.TaskDependencyUncheckedUpdateManyWithoutBlockingTaskNestedInput
+  linkedRisks?: Prisma.TaskRiskLinkUncheckedUpdateManyWithoutTaskNestedInput
+  notifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateManyWithoutParentInput = {
@@ -1601,23 +4399,31 @@ export type TaskUncheckedUpdateManyWithoutParentInput = {
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  snoozedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reminderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  assigneeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  assigneeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignmentReason?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceSystem?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceEntityType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slaDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  slaBreach?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  slaWarning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isBlocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   estimatedHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   actualHours?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tags?: Prisma.TaskUpdatetagsInput | string[]
-  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hasUnreadUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasMentions?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1630,10 +4436,30 @@ export type TaskUncheckedUpdateManyWithoutParentInput = {
 
 export type TaskCountOutputType = {
   subtasks: number
+  assignees: number
+  watchers: number
+  tags: number
+  comments: number
+  activities: number
+  attachments: number
+  dependencies: number
+  dependents: number
+  linkedRisks: number
+  notifications: number
 }
 
 export type TaskCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subtasks?: boolean | TaskCountOutputTypeCountSubtasksArgs
+  assignees?: boolean | TaskCountOutputTypeCountAssigneesArgs
+  watchers?: boolean | TaskCountOutputTypeCountWatchersArgs
+  tags?: boolean | TaskCountOutputTypeCountTagsArgs
+  comments?: boolean | TaskCountOutputTypeCountCommentsArgs
+  activities?: boolean | TaskCountOutputTypeCountActivitiesArgs
+  attachments?: boolean | TaskCountOutputTypeCountAttachmentsArgs
+  dependencies?: boolean | TaskCountOutputTypeCountDependenciesArgs
+  dependents?: boolean | TaskCountOutputTypeCountDependentsArgs
+  linkedRisks?: boolean | TaskCountOutputTypeCountLinkedRisksArgs
+  notifications?: boolean | TaskCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -1653,6 +4479,76 @@ export type TaskCountOutputTypeCountSubtasksArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.TaskWhereInput
 }
 
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountAssigneesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskAssigneeWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountWatchersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWatcherWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskTagLinkWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskCommentWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskActivityWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountAttachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskAttachmentWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountDependenciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskDependencyWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountDependentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskDependencyWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountLinkedRisksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskRiskLinkWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskNotificationWhereInput
+}
+
 
 export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1663,23 +4559,31 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   type?: boolean
   category?: boolean
   dueDate?: boolean
+  dueTime?: boolean
   startDate?: boolean
   completedAt?: boolean
+  snoozedUntil?: boolean
   reminderDate?: boolean
-  assigneeId?: boolean
-  assigneeName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
   createdById?: boolean
   createdByName?: boolean
-  referenceType?: boolean
-  referenceId?: boolean
+  assignmentReason?: boolean
+  sourceSystem?: boolean
+  sourceEntityId?: boolean
+  sourceEntityType?: boolean
+  slaDeadline?: boolean
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: boolean
   estimatedHours?: boolean
   actualHours?: boolean
-  tags?: boolean
-  attachments?: boolean
-  notes?: boolean
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  metadata?: boolean
   organizationId?: boolean
   parentId?: boolean
   createdAt?: boolean
@@ -1687,6 +4591,16 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Task$parentArgs<ExtArgs>
   subtasks?: boolean | Prisma.Task$subtasksArgs<ExtArgs>
+  assignees?: boolean | Prisma.Task$assigneesArgs<ExtArgs>
+  watchers?: boolean | Prisma.Task$watchersArgs<ExtArgs>
+  tags?: boolean | Prisma.Task$tagsArgs<ExtArgs>
+  comments?: boolean | Prisma.Task$commentsArgs<ExtArgs>
+  activities?: boolean | Prisma.Task$activitiesArgs<ExtArgs>
+  attachments?: boolean | Prisma.Task$attachmentsArgs<ExtArgs>
+  dependencies?: boolean | Prisma.Task$dependenciesArgs<ExtArgs>
+  dependents?: boolean | Prisma.Task$dependentsArgs<ExtArgs>
+  linkedRisks?: boolean | Prisma.Task$linkedRisksArgs<ExtArgs>
+  notifications?: boolean | Prisma.Task$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.TaskCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
@@ -1699,23 +4613,31 @@ export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   type?: boolean
   category?: boolean
   dueDate?: boolean
+  dueTime?: boolean
   startDate?: boolean
   completedAt?: boolean
+  snoozedUntil?: boolean
   reminderDate?: boolean
-  assigneeId?: boolean
-  assigneeName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
   createdById?: boolean
   createdByName?: boolean
-  referenceType?: boolean
-  referenceId?: boolean
+  assignmentReason?: boolean
+  sourceSystem?: boolean
+  sourceEntityId?: boolean
+  sourceEntityType?: boolean
+  slaDeadline?: boolean
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: boolean
   estimatedHours?: boolean
   actualHours?: boolean
-  tags?: boolean
-  attachments?: boolean
-  notes?: boolean
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  metadata?: boolean
   organizationId?: boolean
   parentId?: boolean
   createdAt?: boolean
@@ -1733,23 +4655,31 @@ export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   type?: boolean
   category?: boolean
   dueDate?: boolean
+  dueTime?: boolean
   startDate?: boolean
   completedAt?: boolean
+  snoozedUntil?: boolean
   reminderDate?: boolean
-  assigneeId?: boolean
-  assigneeName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
   createdById?: boolean
   createdByName?: boolean
-  referenceType?: boolean
-  referenceId?: boolean
+  assignmentReason?: boolean
+  sourceSystem?: boolean
+  sourceEntityId?: boolean
+  sourceEntityType?: boolean
+  slaDeadline?: boolean
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: boolean
   estimatedHours?: boolean
   actualHours?: boolean
-  tags?: boolean
-  attachments?: boolean
-  notes?: boolean
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  metadata?: boolean
   organizationId?: boolean
   parentId?: boolean
   createdAt?: boolean
@@ -1767,34 +4697,52 @@ export type TaskSelectScalar = {
   type?: boolean
   category?: boolean
   dueDate?: boolean
+  dueTime?: boolean
   startDate?: boolean
   completedAt?: boolean
+  snoozedUntil?: boolean
   reminderDate?: boolean
-  assigneeId?: boolean
-  assigneeName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
   createdById?: boolean
   createdByName?: boolean
-  referenceType?: boolean
-  referenceId?: boolean
+  assignmentReason?: boolean
+  sourceSystem?: boolean
+  sourceEntityId?: boolean
+  sourceEntityType?: boolean
+  slaDeadline?: boolean
+  slaBreach?: boolean
+  slaWarning?: boolean
+  isBlocked?: boolean
   progress?: boolean
   estimatedHours?: boolean
   actualHours?: boolean
-  tags?: boolean
-  attachments?: boolean
-  notes?: boolean
+  hasUnreadUpdates?: boolean
+  hasMentions?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  metadata?: boolean
   organizationId?: boolean
   parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "status" | "priority" | "type" | "category" | "dueDate" | "startDate" | "completedAt" | "reminderDate" | "assigneeId" | "assigneeName" | "createdById" | "createdByName" | "referenceType" | "referenceId" | "progress" | "estimatedHours" | "actualHours" | "tags" | "attachments" | "notes" | "isRecurring" | "recurringInterval" | "organizationId" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "status" | "priority" | "type" | "category" | "dueDate" | "dueTime" | "startDate" | "completedAt" | "snoozedUntil" | "reminderDate" | "ownerId" | "ownerName" | "createdById" | "createdByName" | "assignmentReason" | "sourceSystem" | "sourceEntityId" | "sourceEntityType" | "slaDeadline" | "slaBreach" | "slaWarning" | "isBlocked" | "progress" | "estimatedHours" | "actualHours" | "hasUnreadUpdates" | "hasMentions" | "isRecurring" | "recurringInterval" | "metadata" | "organizationId" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
 export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Task$parentArgs<ExtArgs>
   subtasks?: boolean | Prisma.Task$subtasksArgs<ExtArgs>
+  assignees?: boolean | Prisma.Task$assigneesArgs<ExtArgs>
+  watchers?: boolean | Prisma.Task$watchersArgs<ExtArgs>
+  tags?: boolean | Prisma.Task$tagsArgs<ExtArgs>
+  comments?: boolean | Prisma.Task$commentsArgs<ExtArgs>
+  activities?: boolean | Prisma.Task$activitiesArgs<ExtArgs>
+  attachments?: boolean | Prisma.Task$attachmentsArgs<ExtArgs>
+  dependencies?: boolean | Prisma.Task$dependenciesArgs<ExtArgs>
+  dependents?: boolean | Prisma.Task$dependentsArgs<ExtArgs>
+  linkedRisks?: boolean | Prisma.Task$linkedRisksArgs<ExtArgs>
+  notifications?: boolean | Prisma.Task$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.TaskCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1812,6 +4760,16 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     organization: Prisma.$OrganizationPayload<ExtArgs>
     parent: Prisma.$TaskPayload<ExtArgs> | null
     subtasks: Prisma.$TaskPayload<ExtArgs>[]
+    assignees: Prisma.$TaskAssigneePayload<ExtArgs>[]
+    watchers: Prisma.$TaskWatcherPayload<ExtArgs>[]
+    tags: Prisma.$TaskTagLinkPayload<ExtArgs>[]
+    comments: Prisma.$TaskCommentPayload<ExtArgs>[]
+    activities: Prisma.$TaskActivityPayload<ExtArgs>[]
+    attachments: Prisma.$TaskAttachmentPayload<ExtArgs>[]
+    dependencies: Prisma.$TaskDependencyPayload<ExtArgs>[]
+    dependents: Prisma.$TaskDependencyPayload<ExtArgs>[]
+    linkedRisks: Prisma.$TaskRiskLinkPayload<ExtArgs>[]
+    notifications: Prisma.$TaskNotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1822,23 +4780,31 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     type: string
     category: string | null
     dueDate: Date | null
+    dueTime: string | null
     startDate: Date | null
     completedAt: Date | null
+    snoozedUntil: Date | null
     reminderDate: Date | null
-    assigneeId: string | null
-    assigneeName: string | null
+    ownerId: string | null
+    ownerName: string | null
     createdById: string | null
     createdByName: string | null
-    referenceType: string | null
-    referenceId: string | null
+    assignmentReason: string
+    sourceSystem: string
+    sourceEntityId: string | null
+    sourceEntityType: string | null
+    slaDeadline: Date | null
+    slaBreach: boolean
+    slaWarning: boolean
+    isBlocked: boolean
     progress: number
     estimatedHours: runtime.Decimal | null
     actualHours: runtime.Decimal | null
-    tags: string[]
-    attachments: runtime.JsonValue | null
-    notes: string | null
+    hasUnreadUpdates: boolean
+    hasMentions: boolean
     isRecurring: boolean
     recurringInterval: string | null
+    metadata: runtime.JsonValue | null
     organizationId: string
     parentId: string | null
     createdAt: Date
@@ -2240,6 +5206,16 @@ export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Typ
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   parent<T extends Prisma.Task$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$parentArgs<ExtArgs>>): Prisma.Prisma__TaskClient<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   subtasks<T extends Prisma.Task$subtasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$subtasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignees<T extends Prisma.Task$assigneesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$assigneesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskAssigneePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  watchers<T extends Prisma.Task$watchersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$watchersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskWatcherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tags<T extends Prisma.Task$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskTagLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.Task$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  activities<T extends Prisma.Task$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attachments<T extends Prisma.Task$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dependencies<T extends Prisma.Task$dependenciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$dependenciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskDependencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dependents<T extends Prisma.Task$dependentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$dependentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskDependencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  linkedRisks<T extends Prisma.Task$linkedRisksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$linkedRisksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskRiskLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.Task$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2277,23 +5253,31 @@ export interface TaskFieldRefs {
   readonly type: Prisma.FieldRef<"Task", 'String'>
   readonly category: Prisma.FieldRef<"Task", 'String'>
   readonly dueDate: Prisma.FieldRef<"Task", 'DateTime'>
+  readonly dueTime: Prisma.FieldRef<"Task", 'String'>
   readonly startDate: Prisma.FieldRef<"Task", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"Task", 'DateTime'>
+  readonly snoozedUntil: Prisma.FieldRef<"Task", 'DateTime'>
   readonly reminderDate: Prisma.FieldRef<"Task", 'DateTime'>
-  readonly assigneeId: Prisma.FieldRef<"Task", 'String'>
-  readonly assigneeName: Prisma.FieldRef<"Task", 'String'>
+  readonly ownerId: Prisma.FieldRef<"Task", 'String'>
+  readonly ownerName: Prisma.FieldRef<"Task", 'String'>
   readonly createdById: Prisma.FieldRef<"Task", 'String'>
   readonly createdByName: Prisma.FieldRef<"Task", 'String'>
-  readonly referenceType: Prisma.FieldRef<"Task", 'String'>
-  readonly referenceId: Prisma.FieldRef<"Task", 'String'>
+  readonly assignmentReason: Prisma.FieldRef<"Task", 'String'>
+  readonly sourceSystem: Prisma.FieldRef<"Task", 'String'>
+  readonly sourceEntityId: Prisma.FieldRef<"Task", 'String'>
+  readonly sourceEntityType: Prisma.FieldRef<"Task", 'String'>
+  readonly slaDeadline: Prisma.FieldRef<"Task", 'DateTime'>
+  readonly slaBreach: Prisma.FieldRef<"Task", 'Boolean'>
+  readonly slaWarning: Prisma.FieldRef<"Task", 'Boolean'>
+  readonly isBlocked: Prisma.FieldRef<"Task", 'Boolean'>
   readonly progress: Prisma.FieldRef<"Task", 'Int'>
   readonly estimatedHours: Prisma.FieldRef<"Task", 'Decimal'>
   readonly actualHours: Prisma.FieldRef<"Task", 'Decimal'>
-  readonly tags: Prisma.FieldRef<"Task", 'String[]'>
-  readonly attachments: Prisma.FieldRef<"Task", 'Json'>
-  readonly notes: Prisma.FieldRef<"Task", 'String'>
+  readonly hasUnreadUpdates: Prisma.FieldRef<"Task", 'Boolean'>
+  readonly hasMentions: Prisma.FieldRef<"Task", 'Boolean'>
   readonly isRecurring: Prisma.FieldRef<"Task", 'Boolean'>
   readonly recurringInterval: Prisma.FieldRef<"Task", 'String'>
+  readonly metadata: Prisma.FieldRef<"Task", 'Json'>
   readonly organizationId: Prisma.FieldRef<"Task", 'String'>
   readonly parentId: Prisma.FieldRef<"Task", 'String'>
   readonly createdAt: Prisma.FieldRef<"Task", 'DateTime'>
@@ -2734,6 +5718,246 @@ export type Task$subtasksArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * Task.assignees
+ */
+export type Task$assigneesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskAssignee
+   */
+  select?: Prisma.TaskAssigneeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskAssignee
+   */
+  omit?: Prisma.TaskAssigneeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskAssigneeInclude<ExtArgs> | null
+  where?: Prisma.TaskAssigneeWhereInput
+  orderBy?: Prisma.TaskAssigneeOrderByWithRelationInput | Prisma.TaskAssigneeOrderByWithRelationInput[]
+  cursor?: Prisma.TaskAssigneeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskAssigneeScalarFieldEnum | Prisma.TaskAssigneeScalarFieldEnum[]
+}
+
+/**
+ * Task.watchers
+ */
+export type Task$watchersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskWatcher
+   */
+  select?: Prisma.TaskWatcherSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskWatcher
+   */
+  omit?: Prisma.TaskWatcherOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskWatcherInclude<ExtArgs> | null
+  where?: Prisma.TaskWatcherWhereInput
+  orderBy?: Prisma.TaskWatcherOrderByWithRelationInput | Prisma.TaskWatcherOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWatcherWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskWatcherScalarFieldEnum | Prisma.TaskWatcherScalarFieldEnum[]
+}
+
+/**
+ * Task.tags
+ */
+export type Task$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskTagLink
+   */
+  select?: Prisma.TaskTagLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskTagLink
+   */
+  omit?: Prisma.TaskTagLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskTagLinkInclude<ExtArgs> | null
+  where?: Prisma.TaskTagLinkWhereInput
+  orderBy?: Prisma.TaskTagLinkOrderByWithRelationInput | Prisma.TaskTagLinkOrderByWithRelationInput[]
+  cursor?: Prisma.TaskTagLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskTagLinkScalarFieldEnum | Prisma.TaskTagLinkScalarFieldEnum[]
+}
+
+/**
+ * Task.comments
+ */
+export type Task$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskComment
+   */
+  select?: Prisma.TaskCommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskComment
+   */
+  omit?: Prisma.TaskCommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskCommentInclude<ExtArgs> | null
+  where?: Prisma.TaskCommentWhereInput
+  orderBy?: Prisma.TaskCommentOrderByWithRelationInput | Prisma.TaskCommentOrderByWithRelationInput[]
+  cursor?: Prisma.TaskCommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskCommentScalarFieldEnum | Prisma.TaskCommentScalarFieldEnum[]
+}
+
+/**
+ * Task.activities
+ */
+export type Task$activitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskActivity
+   */
+  select?: Prisma.TaskActivitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskActivity
+   */
+  omit?: Prisma.TaskActivityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskActivityInclude<ExtArgs> | null
+  where?: Prisma.TaskActivityWhereInput
+  orderBy?: Prisma.TaskActivityOrderByWithRelationInput | Prisma.TaskActivityOrderByWithRelationInput[]
+  cursor?: Prisma.TaskActivityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskActivityScalarFieldEnum | Prisma.TaskActivityScalarFieldEnum[]
+}
+
+/**
+ * Task.attachments
+ */
+export type Task$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskAttachment
+   */
+  select?: Prisma.TaskAttachmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskAttachment
+   */
+  omit?: Prisma.TaskAttachmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskAttachmentInclude<ExtArgs> | null
+  where?: Prisma.TaskAttachmentWhereInput
+  orderBy?: Prisma.TaskAttachmentOrderByWithRelationInput | Prisma.TaskAttachmentOrderByWithRelationInput[]
+  cursor?: Prisma.TaskAttachmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskAttachmentScalarFieldEnum | Prisma.TaskAttachmentScalarFieldEnum[]
+}
+
+/**
+ * Task.dependencies
+ */
+export type Task$dependenciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskDependency
+   */
+  select?: Prisma.TaskDependencySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskDependency
+   */
+  omit?: Prisma.TaskDependencyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskDependencyInclude<ExtArgs> | null
+  where?: Prisma.TaskDependencyWhereInput
+  orderBy?: Prisma.TaskDependencyOrderByWithRelationInput | Prisma.TaskDependencyOrderByWithRelationInput[]
+  cursor?: Prisma.TaskDependencyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskDependencyScalarFieldEnum | Prisma.TaskDependencyScalarFieldEnum[]
+}
+
+/**
+ * Task.dependents
+ */
+export type Task$dependentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskDependency
+   */
+  select?: Prisma.TaskDependencySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskDependency
+   */
+  omit?: Prisma.TaskDependencyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskDependencyInclude<ExtArgs> | null
+  where?: Prisma.TaskDependencyWhereInput
+  orderBy?: Prisma.TaskDependencyOrderByWithRelationInput | Prisma.TaskDependencyOrderByWithRelationInput[]
+  cursor?: Prisma.TaskDependencyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskDependencyScalarFieldEnum | Prisma.TaskDependencyScalarFieldEnum[]
+}
+
+/**
+ * Task.linkedRisks
+ */
+export type Task$linkedRisksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskRiskLink
+   */
+  select?: Prisma.TaskRiskLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskRiskLink
+   */
+  omit?: Prisma.TaskRiskLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskRiskLinkInclude<ExtArgs> | null
+  where?: Prisma.TaskRiskLinkWhereInput
+  orderBy?: Prisma.TaskRiskLinkOrderByWithRelationInput | Prisma.TaskRiskLinkOrderByWithRelationInput[]
+  cursor?: Prisma.TaskRiskLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskRiskLinkScalarFieldEnum | Prisma.TaskRiskLinkScalarFieldEnum[]
+}
+
+/**
+ * Task.notifications
+ */
+export type Task$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskNotification
+   */
+  select?: Prisma.TaskNotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskNotification
+   */
+  omit?: Prisma.TaskNotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskNotificationInclude<ExtArgs> | null
+  where?: Prisma.TaskNotificationWhereInput
+  orderBy?: Prisma.TaskNotificationOrderByWithRelationInput | Prisma.TaskNotificationOrderByWithRelationInput[]
+  cursor?: Prisma.TaskNotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskNotificationScalarFieldEnum | Prisma.TaskNotificationScalarFieldEnum[]
 }
 
 /**

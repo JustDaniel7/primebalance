@@ -27,62 +27,82 @@ export type AggregateSupplier = {
 }
 
 export type SupplierAvgAggregateOutputType = {
-  totalPurchases: runtime.Decimal | null
+  founded: number | null
+  employeeCount: number | null
+  totalSpend: runtime.Decimal | null
   totalOrders: number | null
   averageOrderValue: runtime.Decimal | null
-  outstandingPayables: runtime.Decimal | null
-  overdueAmount: runtime.Decimal | null
-  qualityRating: runtime.Decimal | null
-  deliveryRating: runtime.Decimal | null
-  responseRating: runtime.Decimal | null
-  overallRating: runtime.Decimal | null
+  outstandingBalance: runtime.Decimal | null
+  earlyPaymentDiscount: runtime.Decimal | null
+  reliabilityScore: number | null
   onTimeDeliveryRate: runtime.Decimal | null
+  qualityScore: number | null
+  defectRate: runtime.Decimal | null
+  avgLeadTime: number | null
+  dependencyScore: number | null
+  spendPercentage: runtime.Decimal | null
+  alternativeSuppliers: number | null
+  criticalItems: number | null
 }
 
 export type SupplierSumAggregateOutputType = {
-  totalPurchases: runtime.Decimal | null
+  founded: number | null
+  employeeCount: number | null
+  totalSpend: runtime.Decimal | null
   totalOrders: number | null
   averageOrderValue: runtime.Decimal | null
-  outstandingPayables: runtime.Decimal | null
-  overdueAmount: runtime.Decimal | null
-  qualityRating: runtime.Decimal | null
-  deliveryRating: runtime.Decimal | null
-  responseRating: runtime.Decimal | null
-  overallRating: runtime.Decimal | null
+  outstandingBalance: runtime.Decimal | null
+  earlyPaymentDiscount: runtime.Decimal | null
+  reliabilityScore: number | null
   onTimeDeliveryRate: runtime.Decimal | null
+  qualityScore: number | null
+  defectRate: runtime.Decimal | null
+  avgLeadTime: number | null
+  dependencyScore: number | null
+  spendPercentage: runtime.Decimal | null
+  alternativeSuppliers: number | null
+  criticalItems: number | null
 }
 
 export type SupplierMinAggregateOutputType = {
   id: string | null
   supplierNumber: string | null
   name: string | null
-  type: string | null
+  legalName: string | null
   status: string | null
-  industry: string | null
+  category: string | null
   email: string | null
   phone: string | null
   website: string | null
   taxId: string | null
-  vatNumber: string | null
-  legalName: string | null
-  paymentTerms: string | null
-  preferredPaymentMethod: string | null
-  currency: string | null
-  totalPurchases: runtime.Decimal | null
-  totalOrders: number | null
-  averageOrderValue: runtime.Decimal | null
-  outstandingPayables: runtime.Decimal | null
-  overdueAmount: runtime.Decimal | null
-  qualityRating: runtime.Decimal | null
-  deliveryRating: runtime.Decimal | null
-  responseRating: runtime.Decimal | null
-  overallRating: runtime.Decimal | null
-  onTimeDeliveryRate: runtime.Decimal | null
-  riskLevel: string | null
+  registrationNumber: string | null
+  founded: number | null
+  employeeCount: number | null
+  accountManagerId: string | null
+  accountManagerName: string | null
   supplierSince: Date | null
   lastOrderDate: Date | null
   lastPaymentDate: Date | null
-  accountManagerId: string | null
+  contractExpiryDate: Date | null
+  totalSpend: runtime.Decimal | null
+  totalOrders: number | null
+  averageOrderValue: runtime.Decimal | null
+  outstandingBalance: runtime.Decimal | null
+  currency: string | null
+  paymentTerms: string | null
+  preferredPaymentMethod: string | null
+  earlyPaymentDiscount: runtime.Decimal | null
+  reliabilityRating: string | null
+  reliabilityScore: number | null
+  onTimeDeliveryRate: runtime.Decimal | null
+  qualityScore: number | null
+  defectRate: runtime.Decimal | null
+  avgLeadTime: number | null
+  dependencyLevel: string | null
+  dependencyScore: number | null
+  spendPercentage: runtime.Decimal | null
+  alternativeSuppliers: number | null
+  criticalItems: number | null
   notes: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -93,33 +113,41 @@ export type SupplierMaxAggregateOutputType = {
   id: string | null
   supplierNumber: string | null
   name: string | null
-  type: string | null
+  legalName: string | null
   status: string | null
-  industry: string | null
+  category: string | null
   email: string | null
   phone: string | null
   website: string | null
   taxId: string | null
-  vatNumber: string | null
-  legalName: string | null
-  paymentTerms: string | null
-  preferredPaymentMethod: string | null
-  currency: string | null
-  totalPurchases: runtime.Decimal | null
-  totalOrders: number | null
-  averageOrderValue: runtime.Decimal | null
-  outstandingPayables: runtime.Decimal | null
-  overdueAmount: runtime.Decimal | null
-  qualityRating: runtime.Decimal | null
-  deliveryRating: runtime.Decimal | null
-  responseRating: runtime.Decimal | null
-  overallRating: runtime.Decimal | null
-  onTimeDeliveryRate: runtime.Decimal | null
-  riskLevel: string | null
+  registrationNumber: string | null
+  founded: number | null
+  employeeCount: number | null
+  accountManagerId: string | null
+  accountManagerName: string | null
   supplierSince: Date | null
   lastOrderDate: Date | null
   lastPaymentDate: Date | null
-  accountManagerId: string | null
+  contractExpiryDate: Date | null
+  totalSpend: runtime.Decimal | null
+  totalOrders: number | null
+  averageOrderValue: runtime.Decimal | null
+  outstandingBalance: runtime.Decimal | null
+  currency: string | null
+  paymentTerms: string | null
+  preferredPaymentMethod: string | null
+  earlyPaymentDiscount: runtime.Decimal | null
+  reliabilityRating: string | null
+  reliabilityScore: number | null
+  onTimeDeliveryRate: runtime.Decimal | null
+  qualityScore: number | null
+  defectRate: runtime.Decimal | null
+  avgLeadTime: number | null
+  dependencyLevel: string | null
+  dependencyScore: number | null
+  spendPercentage: runtime.Decimal | null
+  alternativeSuppliers: number | null
+  criticalItems: number | null
   notes: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -130,37 +158,44 @@ export type SupplierCountAggregateOutputType = {
   id: number
   supplierNumber: number
   name: number
-  type: number
+  legalName: number
   status: number
-  industry: number
+  category: number
   email: number
   phone: number
   website: number
   address: number
   taxId: number
-  vatNumber: number
-  legalName: number
-  paymentTerms: number
-  preferredPaymentMethod: number
-  bankDetails: number
-  currency: number
-  totalPurchases: number
-  totalOrders: number
-  averageOrderValue: number
-  outstandingPayables: number
-  overdueAmount: number
-  qualityRating: number
-  deliveryRating: number
-  responseRating: number
-  overallRating: number
-  onTimeDeliveryRate: number
-  riskLevel: number
+  registrationNumber: number
+  founded: number
+  employeeCount: number
+  accountManagerId: number
+  accountManagerName: number
+  tags: number
   supplierSince: number
   lastOrderDate: number
   lastPaymentDate: number
-  accountManagerId: number
-  categories: number
-  tags: number
+  contractExpiryDate: number
+  totalSpend: number
+  totalOrders: number
+  averageOrderValue: number
+  outstandingBalance: number
+  currency: number
+  paymentTerms: number
+  preferredPaymentMethod: number
+  earlyPaymentDiscount: number
+  bankDetails: number
+  reliabilityRating: number
+  reliabilityScore: number
+  onTimeDeliveryRate: number
+  qualityScore: number
+  defectRate: number
+  avgLeadTime: number
+  dependencyLevel: number
+  dependencyScore: number
+  spendPercentage: number
+  alternativeSuppliers: number
+  criticalItems: number
   notes: number
   organizationId: number
   createdAt: number
@@ -170,62 +205,82 @@ export type SupplierCountAggregateOutputType = {
 
 
 export type SupplierAvgAggregateInputType = {
-  totalPurchases?: true
+  founded?: true
+  employeeCount?: true
+  totalSpend?: true
   totalOrders?: true
   averageOrderValue?: true
-  outstandingPayables?: true
-  overdueAmount?: true
-  qualityRating?: true
-  deliveryRating?: true
-  responseRating?: true
-  overallRating?: true
+  outstandingBalance?: true
+  earlyPaymentDiscount?: true
+  reliabilityScore?: true
   onTimeDeliveryRate?: true
+  qualityScore?: true
+  defectRate?: true
+  avgLeadTime?: true
+  dependencyScore?: true
+  spendPercentage?: true
+  alternativeSuppliers?: true
+  criticalItems?: true
 }
 
 export type SupplierSumAggregateInputType = {
-  totalPurchases?: true
+  founded?: true
+  employeeCount?: true
+  totalSpend?: true
   totalOrders?: true
   averageOrderValue?: true
-  outstandingPayables?: true
-  overdueAmount?: true
-  qualityRating?: true
-  deliveryRating?: true
-  responseRating?: true
-  overallRating?: true
+  outstandingBalance?: true
+  earlyPaymentDiscount?: true
+  reliabilityScore?: true
   onTimeDeliveryRate?: true
+  qualityScore?: true
+  defectRate?: true
+  avgLeadTime?: true
+  dependencyScore?: true
+  spendPercentage?: true
+  alternativeSuppliers?: true
+  criticalItems?: true
 }
 
 export type SupplierMinAggregateInputType = {
   id?: true
   supplierNumber?: true
   name?: true
-  type?: true
+  legalName?: true
   status?: true
-  industry?: true
+  category?: true
   email?: true
   phone?: true
   website?: true
   taxId?: true
-  vatNumber?: true
-  legalName?: true
-  paymentTerms?: true
-  preferredPaymentMethod?: true
-  currency?: true
-  totalPurchases?: true
-  totalOrders?: true
-  averageOrderValue?: true
-  outstandingPayables?: true
-  overdueAmount?: true
-  qualityRating?: true
-  deliveryRating?: true
-  responseRating?: true
-  overallRating?: true
-  onTimeDeliveryRate?: true
-  riskLevel?: true
+  registrationNumber?: true
+  founded?: true
+  employeeCount?: true
+  accountManagerId?: true
+  accountManagerName?: true
   supplierSince?: true
   lastOrderDate?: true
   lastPaymentDate?: true
-  accountManagerId?: true
+  contractExpiryDate?: true
+  totalSpend?: true
+  totalOrders?: true
+  averageOrderValue?: true
+  outstandingBalance?: true
+  currency?: true
+  paymentTerms?: true
+  preferredPaymentMethod?: true
+  earlyPaymentDiscount?: true
+  reliabilityRating?: true
+  reliabilityScore?: true
+  onTimeDeliveryRate?: true
+  qualityScore?: true
+  defectRate?: true
+  avgLeadTime?: true
+  dependencyLevel?: true
+  dependencyScore?: true
+  spendPercentage?: true
+  alternativeSuppliers?: true
+  criticalItems?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -236,33 +291,41 @@ export type SupplierMaxAggregateInputType = {
   id?: true
   supplierNumber?: true
   name?: true
-  type?: true
+  legalName?: true
   status?: true
-  industry?: true
+  category?: true
   email?: true
   phone?: true
   website?: true
   taxId?: true
-  vatNumber?: true
-  legalName?: true
-  paymentTerms?: true
-  preferredPaymentMethod?: true
-  currency?: true
-  totalPurchases?: true
-  totalOrders?: true
-  averageOrderValue?: true
-  outstandingPayables?: true
-  overdueAmount?: true
-  qualityRating?: true
-  deliveryRating?: true
-  responseRating?: true
-  overallRating?: true
-  onTimeDeliveryRate?: true
-  riskLevel?: true
+  registrationNumber?: true
+  founded?: true
+  employeeCount?: true
+  accountManagerId?: true
+  accountManagerName?: true
   supplierSince?: true
   lastOrderDate?: true
   lastPaymentDate?: true
-  accountManagerId?: true
+  contractExpiryDate?: true
+  totalSpend?: true
+  totalOrders?: true
+  averageOrderValue?: true
+  outstandingBalance?: true
+  currency?: true
+  paymentTerms?: true
+  preferredPaymentMethod?: true
+  earlyPaymentDiscount?: true
+  reliabilityRating?: true
+  reliabilityScore?: true
+  onTimeDeliveryRate?: true
+  qualityScore?: true
+  defectRate?: true
+  avgLeadTime?: true
+  dependencyLevel?: true
+  dependencyScore?: true
+  spendPercentage?: true
+  alternativeSuppliers?: true
+  criticalItems?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -273,37 +336,44 @@ export type SupplierCountAggregateInputType = {
   id?: true
   supplierNumber?: true
   name?: true
-  type?: true
+  legalName?: true
   status?: true
-  industry?: true
+  category?: true
   email?: true
   phone?: true
   website?: true
   address?: true
   taxId?: true
-  vatNumber?: true
-  legalName?: true
-  paymentTerms?: true
-  preferredPaymentMethod?: true
-  bankDetails?: true
-  currency?: true
-  totalPurchases?: true
-  totalOrders?: true
-  averageOrderValue?: true
-  outstandingPayables?: true
-  overdueAmount?: true
-  qualityRating?: true
-  deliveryRating?: true
-  responseRating?: true
-  overallRating?: true
-  onTimeDeliveryRate?: true
-  riskLevel?: true
+  registrationNumber?: true
+  founded?: true
+  employeeCount?: true
+  accountManagerId?: true
+  accountManagerName?: true
+  tags?: true
   supplierSince?: true
   lastOrderDate?: true
   lastPaymentDate?: true
-  accountManagerId?: true
-  categories?: true
-  tags?: true
+  contractExpiryDate?: true
+  totalSpend?: true
+  totalOrders?: true
+  averageOrderValue?: true
+  outstandingBalance?: true
+  currency?: true
+  paymentTerms?: true
+  preferredPaymentMethod?: true
+  earlyPaymentDiscount?: true
+  bankDetails?: true
+  reliabilityRating?: true
+  reliabilityScore?: true
+  onTimeDeliveryRate?: true
+  qualityScore?: true
+  defectRate?: true
+  avgLeadTime?: true
+  dependencyLevel?: true
+  dependencyScore?: true
+  spendPercentage?: true
+  alternativeSuppliers?: true
+  criticalItems?: true
   notes?: true
   organizationId?: true
   createdAt?: true
@@ -401,37 +471,44 @@ export type SupplierGroupByOutputType = {
   id: string
   supplierNumber: string
   name: string
-  type: string
+  legalName: string | null
   status: string
-  industry: string | null
-  email: string | null
+  category: string
+  email: string
   phone: string | null
   website: string | null
   address: runtime.JsonValue | null
   taxId: string | null
-  vatNumber: string | null
-  legalName: string | null
-  paymentTerms: string
-  preferredPaymentMethod: string | null
-  bankDetails: runtime.JsonValue | null
-  currency: string
-  totalPurchases: runtime.Decimal
-  totalOrders: number
-  averageOrderValue: runtime.Decimal
-  outstandingPayables: runtime.Decimal
-  overdueAmount: runtime.Decimal
-  qualityRating: runtime.Decimal | null
-  deliveryRating: runtime.Decimal | null
-  responseRating: runtime.Decimal | null
-  overallRating: runtime.Decimal | null
-  onTimeDeliveryRate: runtime.Decimal | null
-  riskLevel: string
+  registrationNumber: string | null
+  founded: number | null
+  employeeCount: number | null
+  accountManagerId: string | null
+  accountManagerName: string | null
+  tags: string[]
   supplierSince: Date
   lastOrderDate: Date | null
   lastPaymentDate: Date | null
-  accountManagerId: string | null
-  categories: string[]
-  tags: string[]
+  contractExpiryDate: Date | null
+  totalSpend: runtime.Decimal
+  totalOrders: number
+  averageOrderValue: runtime.Decimal
+  outstandingBalance: runtime.Decimal
+  currency: string
+  paymentTerms: string
+  preferredPaymentMethod: string
+  earlyPaymentDiscount: runtime.Decimal | null
+  bankDetails: runtime.JsonValue | null
+  reliabilityRating: string
+  reliabilityScore: number
+  onTimeDeliveryRate: runtime.Decimal
+  qualityScore: number
+  defectRate: runtime.Decimal
+  avgLeadTime: number
+  dependencyLevel: string
+  dependencyScore: number
+  spendPercentage: runtime.Decimal
+  alternativeSuppliers: number
+  criticalItems: number
   notes: string | null
   organizationId: string
   createdAt: Date
@@ -465,86 +542,110 @@ export type SupplierWhereInput = {
   id?: Prisma.StringFilter<"Supplier"> | string
   supplierNumber?: Prisma.StringFilter<"Supplier"> | string
   name?: Prisma.StringFilter<"Supplier"> | string
-  type?: Prisma.StringFilter<"Supplier"> | string
+  legalName?: Prisma.StringNullableFilter<"Supplier"> | string | null
   status?: Prisma.StringFilter<"Supplier"> | string
-  industry?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  email?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  category?: Prisma.StringFilter<"Supplier"> | string
+  email?: Prisma.StringFilter<"Supplier"> | string
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
   website?: Prisma.StringNullableFilter<"Supplier"> | string | null
   address?: Prisma.JsonNullableFilter<"Supplier">
   taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  vatNumber?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  legalName?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  paymentTerms?: Prisma.StringFilter<"Supplier"> | string
-  preferredPaymentMethod?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  bankDetails?: Prisma.JsonNullableFilter<"Supplier">
-  currency?: Prisma.StringFilter<"Supplier"> | string
-  totalPurchases?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFilter<"Supplier"> | number
-  averageOrderValue?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFilter<"Supplier"> | string
+  registrationNumber?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  founded?: Prisma.IntNullableFilter<"Supplier"> | number | null
+  employeeCount?: Prisma.IntNullableFilter<"Supplier"> | number | null
+  accountManagerId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  accountManagerName?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Supplier">
   supplierSince?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   lastOrderDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  categories?: Prisma.StringNullableListFilter<"Supplier">
-  tags?: Prisma.StringNullableListFilter<"Supplier">
+  contractExpiryDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
+  totalSpend?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFilter<"Supplier"> | number
+  averageOrderValue?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Supplier"> | string
+  paymentTerms?: Prisma.StringFilter<"Supplier"> | string
+  preferredPaymentMethod?: Prisma.StringFilter<"Supplier"> | string
+  earlyPaymentDiscount?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.JsonNullableFilter<"Supplier">
+  reliabilityRating?: Prisma.StringFilter<"Supplier"> | string
+  reliabilityScore?: Prisma.IntFilter<"Supplier"> | number
+  onTimeDeliveryRate?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFilter<"Supplier"> | number
+  defectRate?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFilter<"Supplier"> | number
+  dependencyLevel?: Prisma.StringFilter<"Supplier"> | string
+  dependencyScore?: Prisma.IntFilter<"Supplier"> | number
+  spendPercentage?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFilter<"Supplier"> | number
+  criticalItems?: Prisma.IntFilter<"Supplier"> | number
   notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
   organizationId?: Prisma.StringFilter<"Supplier"> | string
   createdAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   contacts?: Prisma.SupplierContactListRelationFilter
+  balance?: Prisma.XOR<Prisma.SupplierBalanceNullableScalarRelationFilter, Prisma.SupplierBalanceWhereInput> | null
+  payments?: Prisma.SupplierPaymentListRelationFilter
+  reliability?: Prisma.SupplierReliabilityListRelationFilter
+  spend?: Prisma.SupplierSpendListRelationFilter
+  risks?: Prisma.SupplierRiskListRelationFilter
 }
 
 export type SupplierOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   supplierNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  industry?: Prisma.SortOrderInput | Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
-  vatNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentTerms?: Prisma.SortOrder
-  preferredPaymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
-  bankDetails?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  totalPurchases?: Prisma.SortOrder
-  totalOrders?: Prisma.SortOrder
-  averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  responseRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  overallRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  onTimeDeliveryRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  founded?: Prisma.SortOrderInput | Prisma.SortOrder
+  employeeCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   supplierSince?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  categories?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
+  contractExpiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
+  totalOrders?: Prisma.SortOrder
+  averageOrderValue?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  preferredPaymentMethod?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrderInput | Prisma.SortOrder
+  bankDetails?: Prisma.SortOrderInput | Prisma.SortOrder
+  reliabilityRating?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
+  onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyLevel?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
   contacts?: Prisma.SupplierContactOrderByRelationAggregateInput
+  balance?: Prisma.SupplierBalanceOrderByWithRelationInput
+  payments?: Prisma.SupplierPaymentOrderByRelationAggregateInput
+  reliability?: Prisma.SupplierReliabilityOrderByRelationAggregateInput
+  spend?: Prisma.SupplierSpendOrderByRelationAggregateInput
+  risks?: Prisma.SupplierRiskOrderByRelationAggregateInput
 }
 
 export type SupplierWhereUniqueInput = Prisma.AtLeast<{
@@ -555,80 +656,99 @@ export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SupplierWhereInput | Prisma.SupplierWhereInput[]
   supplierNumber?: Prisma.StringFilter<"Supplier"> | string
   name?: Prisma.StringFilter<"Supplier"> | string
-  type?: Prisma.StringFilter<"Supplier"> | string
+  legalName?: Prisma.StringNullableFilter<"Supplier"> | string | null
   status?: Prisma.StringFilter<"Supplier"> | string
-  industry?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  email?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  category?: Prisma.StringFilter<"Supplier"> | string
+  email?: Prisma.StringFilter<"Supplier"> | string
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
   website?: Prisma.StringNullableFilter<"Supplier"> | string | null
   address?: Prisma.JsonNullableFilter<"Supplier">
   taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  vatNumber?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  legalName?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  paymentTerms?: Prisma.StringFilter<"Supplier"> | string
-  preferredPaymentMethod?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  bankDetails?: Prisma.JsonNullableFilter<"Supplier">
-  currency?: Prisma.StringFilter<"Supplier"> | string
-  totalPurchases?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFilter<"Supplier"> | number
-  averageOrderValue?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFilter<"Supplier"> | string
+  registrationNumber?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  founded?: Prisma.IntNullableFilter<"Supplier"> | number | null
+  employeeCount?: Prisma.IntNullableFilter<"Supplier"> | number | null
+  accountManagerId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  accountManagerName?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Supplier">
   supplierSince?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   lastOrderDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  categories?: Prisma.StringNullableListFilter<"Supplier">
-  tags?: Prisma.StringNullableListFilter<"Supplier">
+  contractExpiryDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
+  totalSpend?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFilter<"Supplier"> | number
+  averageOrderValue?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Supplier"> | string
+  paymentTerms?: Prisma.StringFilter<"Supplier"> | string
+  preferredPaymentMethod?: Prisma.StringFilter<"Supplier"> | string
+  earlyPaymentDiscount?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.JsonNullableFilter<"Supplier">
+  reliabilityRating?: Prisma.StringFilter<"Supplier"> | string
+  reliabilityScore?: Prisma.IntFilter<"Supplier"> | number
+  onTimeDeliveryRate?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFilter<"Supplier"> | number
+  defectRate?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFilter<"Supplier"> | number
+  dependencyLevel?: Prisma.StringFilter<"Supplier"> | string
+  dependencyScore?: Prisma.IntFilter<"Supplier"> | number
+  spendPercentage?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFilter<"Supplier"> | number
+  criticalItems?: Prisma.IntFilter<"Supplier"> | number
   notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
   organizationId?: Prisma.StringFilter<"Supplier"> | string
   createdAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   contacts?: Prisma.SupplierContactListRelationFilter
+  balance?: Prisma.XOR<Prisma.SupplierBalanceNullableScalarRelationFilter, Prisma.SupplierBalanceWhereInput> | null
+  payments?: Prisma.SupplierPaymentListRelationFilter
+  reliability?: Prisma.SupplierReliabilityListRelationFilter
+  spend?: Prisma.SupplierSpendListRelationFilter
+  risks?: Prisma.SupplierRiskListRelationFilter
 }, "id" | "organizationId_supplierNumber">
 
 export type SupplierOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   supplierNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  industry?: Prisma.SortOrderInput | Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
-  vatNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  legalName?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentTerms?: Prisma.SortOrder
-  preferredPaymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
-  bankDetails?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  totalPurchases?: Prisma.SortOrder
-  totalOrders?: Prisma.SortOrder
-  averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  responseRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  overallRating?: Prisma.SortOrderInput | Prisma.SortOrder
-  onTimeDeliveryRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  founded?: Prisma.SortOrderInput | Prisma.SortOrder
+  employeeCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   supplierSince?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  categories?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
+  contractExpiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
+  totalOrders?: Prisma.SortOrder
+  averageOrderValue?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  preferredPaymentMethod?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrderInput | Prisma.SortOrder
+  bankDetails?: Prisma.SortOrderInput | Prisma.SortOrder
+  reliabilityRating?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
+  onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyLevel?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -647,37 +767,44 @@ export type SupplierScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   supplierNumber?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   name?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
-  type?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  legalName?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
-  industry?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
-  email?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  category?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  email?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   website?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   address?: Prisma.JsonNullableWithAggregatesFilter<"Supplier">
   taxId?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
-  vatNumber?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
-  legalName?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
-  paymentTerms?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
-  preferredPaymentMethod?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
-  bankDetails?: Prisma.JsonNullableWithAggregatesFilter<"Supplier">
-  currency?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
-  totalPurchases?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
-  averageOrderValue?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.DecimalNullableWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.DecimalNullableWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.DecimalNullableWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.DecimalNullableWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.DecimalNullableWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  registrationNumber?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  founded?: Prisma.IntNullableWithAggregatesFilter<"Supplier"> | number | null
+  employeeCount?: Prisma.IntNullableWithAggregatesFilter<"Supplier"> | number | null
+  accountManagerId?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  accountManagerName?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Supplier">
   supplierSince?: Prisma.DateTimeWithAggregatesFilter<"Supplier"> | Date | string
   lastOrderDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Supplier"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Supplier"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
-  categories?: Prisma.StringNullableListFilter<"Supplier">
-  tags?: Prisma.StringNullableListFilter<"Supplier">
+  contractExpiryDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Supplier"> | Date | string | null
+  totalSpend?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
+  averageOrderValue?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  paymentTerms?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  preferredPaymentMethod?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  earlyPaymentDiscount?: Prisma.DecimalNullableWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.JsonNullableWithAggregatesFilter<"Supplier">
+  reliabilityRating?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  reliabilityScore?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
+  onTimeDeliveryRate?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
+  defectRate?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
+  dependencyLevel?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  dependencyScore?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
+  spendPercentage?: Prisma.DecimalWithAggregatesFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
+  criticalItems?: Prisma.IntWithAggregatesFilter<"Supplier"> | number
   notes?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Supplier"> | Date | string
@@ -688,205 +815,260 @@ export type SupplierCreateInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
   contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
   contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierCreateManyInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -897,37 +1079,44 @@ export type SupplierUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -937,37 +1126,44 @@ export type SupplierUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -993,37 +1189,44 @@ export type SupplierCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   supplierNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  legalName?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  industry?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   website?: Prisma.SortOrder
   address?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
-  vatNumber?: Prisma.SortOrder
-  legalName?: Prisma.SortOrder
-  paymentTerms?: Prisma.SortOrder
-  preferredPaymentMethod?: Prisma.SortOrder
-  bankDetails?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  totalPurchases?: Prisma.SortOrder
-  totalOrders?: Prisma.SortOrder
-  averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrder
-  responseRating?: Prisma.SortOrder
-  overallRating?: Prisma.SortOrder
-  onTimeDeliveryRate?: Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  founded?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
   supplierSince?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrder
-  categories?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
+  contractExpiryDate?: Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
+  totalOrders?: Prisma.SortOrder
+  averageOrderValue?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  preferredPaymentMethod?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrder
+  bankDetails?: Prisma.SortOrder
+  reliabilityRating?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
+  onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyLevel?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1031,49 +1234,63 @@ export type SupplierCountOrderByAggregateInput = {
 }
 
 export type SupplierAvgOrderByAggregateInput = {
-  totalPurchases?: Prisma.SortOrder
+  founded?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
   totalOrders?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrder
-  responseRating?: Prisma.SortOrder
-  overallRating?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
   onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
 }
 
 export type SupplierMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   supplierNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  legalName?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  industry?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   website?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
-  vatNumber?: Prisma.SortOrder
-  legalName?: Prisma.SortOrder
-  paymentTerms?: Prisma.SortOrder
-  preferredPaymentMethod?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  totalPurchases?: Prisma.SortOrder
-  totalOrders?: Prisma.SortOrder
-  averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrder
-  responseRating?: Prisma.SortOrder
-  overallRating?: Prisma.SortOrder
-  onTimeDeliveryRate?: Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  founded?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrder
   supplierSince?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrder
+  contractExpiryDate?: Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
+  totalOrders?: Prisma.SortOrder
+  averageOrderValue?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  preferredPaymentMethod?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrder
+  reliabilityRating?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
+  onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyLevel?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1084,33 +1301,41 @@ export type SupplierMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   supplierNumber?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  legalName?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  industry?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   website?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
-  vatNumber?: Prisma.SortOrder
-  legalName?: Prisma.SortOrder
-  paymentTerms?: Prisma.SortOrder
-  preferredPaymentMethod?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  totalPurchases?: Prisma.SortOrder
-  totalOrders?: Prisma.SortOrder
-  averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrder
-  responseRating?: Prisma.SortOrder
-  overallRating?: Prisma.SortOrder
-  onTimeDeliveryRate?: Prisma.SortOrder
-  riskLevel?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  founded?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  accountManagerId?: Prisma.SortOrder
+  accountManagerName?: Prisma.SortOrder
   supplierSince?: Prisma.SortOrder
   lastOrderDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
-  accountManagerId?: Prisma.SortOrder
+  contractExpiryDate?: Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
+  totalOrders?: Prisma.SortOrder
+  averageOrderValue?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  preferredPaymentMethod?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrder
+  reliabilityRating?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
+  onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyLevel?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -1118,16 +1343,22 @@ export type SupplierMinOrderByAggregateInput = {
 }
 
 export type SupplierSumOrderByAggregateInput = {
-  totalPurchases?: Prisma.SortOrder
+  founded?: Prisma.SortOrder
+  employeeCount?: Prisma.SortOrder
+  totalSpend?: Prisma.SortOrder
   totalOrders?: Prisma.SortOrder
   averageOrderValue?: Prisma.SortOrder
-  outstandingPayables?: Prisma.SortOrder
-  overdueAmount?: Prisma.SortOrder
-  qualityRating?: Prisma.SortOrder
-  deliveryRating?: Prisma.SortOrder
-  responseRating?: Prisma.SortOrder
-  overallRating?: Prisma.SortOrder
+  outstandingBalance?: Prisma.SortOrder
+  earlyPaymentDiscount?: Prisma.SortOrder
+  reliabilityScore?: Prisma.SortOrder
   onTimeDeliveryRate?: Prisma.SortOrder
+  qualityScore?: Prisma.SortOrder
+  defectRate?: Prisma.SortOrder
+  avgLeadTime?: Prisma.SortOrder
+  dependencyScore?: Prisma.SortOrder
+  spendPercentage?: Prisma.SortOrder
+  alternativeSuppliers?: Prisma.SortOrder
+  criticalItems?: Prisma.SortOrder
 }
 
 export type SupplierScalarRelationFilter = {
@@ -1177,17 +1408,8 @@ export type SupplierUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.SupplierScalarWhereInput | Prisma.SupplierScalarWhereInput[]
 }
 
-export type SupplierCreatecategoriesInput = {
-  set: string[]
-}
-
 export type SupplierCreatetagsInput = {
   set: string[]
-}
-
-export type SupplierUpdatecategoriesInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type SupplierUpdatetagsInput = {
@@ -1209,86 +1431,180 @@ export type SupplierUpdateOneRequiredWithoutContactsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutContactsInput, Prisma.SupplierUpdateWithoutContactsInput>, Prisma.SupplierUncheckedUpdateWithoutContactsInput>
 }
 
+export type SupplierCreateNestedOneWithoutBalanceInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutBalanceInput, Prisma.SupplierUncheckedCreateWithoutBalanceInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutBalanceInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutBalanceNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutBalanceInput, Prisma.SupplierUncheckedCreateWithoutBalanceInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutBalanceInput
+  upsert?: Prisma.SupplierUpsertWithoutBalanceInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutBalanceInput, Prisma.SupplierUpdateWithoutBalanceInput>, Prisma.SupplierUncheckedUpdateWithoutBalanceInput>
+}
+
+export type SupplierCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutPaymentsInput, Prisma.SupplierUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutPaymentsInput, Prisma.SupplierUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.SupplierUpsertWithoutPaymentsInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutPaymentsInput, Prisma.SupplierUpdateWithoutPaymentsInput>, Prisma.SupplierUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type SupplierCreateNestedOneWithoutReliabilityInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutReliabilityInput, Prisma.SupplierUncheckedCreateWithoutReliabilityInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutReliabilityInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutReliabilityNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutReliabilityInput, Prisma.SupplierUncheckedCreateWithoutReliabilityInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutReliabilityInput
+  upsert?: Prisma.SupplierUpsertWithoutReliabilityInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutReliabilityInput, Prisma.SupplierUpdateWithoutReliabilityInput>, Prisma.SupplierUncheckedUpdateWithoutReliabilityInput>
+}
+
+export type SupplierCreateNestedOneWithoutSpendInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutSpendInput, Prisma.SupplierUncheckedCreateWithoutSpendInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutSpendInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutSpendNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutSpendInput, Prisma.SupplierUncheckedCreateWithoutSpendInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutSpendInput
+  upsert?: Prisma.SupplierUpsertWithoutSpendInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutSpendInput, Prisma.SupplierUpdateWithoutSpendInput>, Prisma.SupplierUncheckedUpdateWithoutSpendInput>
+}
+
+export type SupplierCreateNestedOneWithoutRisksInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutRisksInput, Prisma.SupplierUncheckedCreateWithoutRisksInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutRisksInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutRisksNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutRisksInput, Prisma.SupplierUncheckedCreateWithoutRisksInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutRisksInput
+  upsert?: Prisma.SupplierUpsertWithoutRisksInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutRisksInput, Prisma.SupplierUpdateWithoutRisksInput>, Prisma.SupplierUncheckedUpdateWithoutRisksInput>
+}
+
 export type SupplierCreateWithoutOrganizationInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateWithoutOrganizationInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierCreateOrConnectWithoutOrganizationInput = {
@@ -1324,37 +1640,44 @@ export type SupplierScalarWhereInput = {
   id?: Prisma.StringFilter<"Supplier"> | string
   supplierNumber?: Prisma.StringFilter<"Supplier"> | string
   name?: Prisma.StringFilter<"Supplier"> | string
-  type?: Prisma.StringFilter<"Supplier"> | string
+  legalName?: Prisma.StringNullableFilter<"Supplier"> | string | null
   status?: Prisma.StringFilter<"Supplier"> | string
-  industry?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  email?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  category?: Prisma.StringFilter<"Supplier"> | string
+  email?: Prisma.StringFilter<"Supplier"> | string
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
   website?: Prisma.StringNullableFilter<"Supplier"> | string | null
   address?: Prisma.JsonNullableFilter<"Supplier">
   taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  vatNumber?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  legalName?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  paymentTerms?: Prisma.StringFilter<"Supplier"> | string
-  preferredPaymentMethod?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  bankDetails?: Prisma.JsonNullableFilter<"Supplier">
-  currency?: Prisma.StringFilter<"Supplier"> | string
-  totalPurchases?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFilter<"Supplier"> | number
-  averageOrderValue?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFilter<"Supplier"> | string
+  registrationNumber?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  founded?: Prisma.IntNullableFilter<"Supplier"> | number | null
+  employeeCount?: Prisma.IntNullableFilter<"Supplier"> | number | null
+  accountManagerId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  accountManagerName?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Supplier">
   supplierSince?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   lastOrderDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
-  accountManagerId?: Prisma.StringNullableFilter<"Supplier"> | string | null
-  categories?: Prisma.StringNullableListFilter<"Supplier">
-  tags?: Prisma.StringNullableListFilter<"Supplier">
+  contractExpiryDate?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
+  totalSpend?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFilter<"Supplier"> | number
+  averageOrderValue?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Supplier"> | string
+  paymentTerms?: Prisma.StringFilter<"Supplier"> | string
+  preferredPaymentMethod?: Prisma.StringFilter<"Supplier"> | string
+  earlyPaymentDiscount?: Prisma.DecimalNullableFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.JsonNullableFilter<"Supplier">
+  reliabilityRating?: Prisma.StringFilter<"Supplier"> | string
+  reliabilityScore?: Prisma.IntFilter<"Supplier"> | number
+  onTimeDeliveryRate?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFilter<"Supplier"> | number
+  defectRate?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFilter<"Supplier"> | number
+  dependencyLevel?: Prisma.StringFilter<"Supplier"> | string
+  dependencyScore?: Prisma.IntFilter<"Supplier"> | number
+  spendPercentage?: Prisma.DecimalFilter<"Supplier"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFilter<"Supplier"> | number
+  criticalItems?: Prisma.IntFilter<"Supplier"> | number
   notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
   organizationId?: Prisma.StringFilter<"Supplier"> | string
   createdAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
@@ -1365,82 +1688,106 @@ export type SupplierCreateWithoutContactsInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateWithoutContactsInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierCreateOrConnectWithoutContactsInput = {
@@ -1463,119 +1810,1290 @@ export type SupplierUpdateWithoutContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateWithoutContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutBalanceInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
+  contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutBalanceInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutBalanceInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutBalanceInput, Prisma.SupplierUncheckedCreateWithoutBalanceInput>
+}
+
+export type SupplierUpsertWithoutBalanceInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutBalanceInput, Prisma.SupplierUncheckedUpdateWithoutBalanceInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutBalanceInput, Prisma.SupplierUncheckedCreateWithoutBalanceInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutBalanceInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutBalanceInput, Prisma.SupplierUncheckedUpdateWithoutBalanceInput>
+}
+
+export type SupplierUpdateWithoutBalanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
+  contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutBalanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutPaymentsInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
+  contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutPaymentsInput, Prisma.SupplierUncheckedCreateWithoutPaymentsInput>
+}
+
+export type SupplierUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutPaymentsInput, Prisma.SupplierUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutPaymentsInput, Prisma.SupplierUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutPaymentsInput, Prisma.SupplierUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type SupplierUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
+  contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutReliabilityInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
+  contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutReliabilityInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutReliabilityInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutReliabilityInput, Prisma.SupplierUncheckedCreateWithoutReliabilityInput>
+}
+
+export type SupplierUpsertWithoutReliabilityInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutReliabilityInput, Prisma.SupplierUncheckedUpdateWithoutReliabilityInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutReliabilityInput, Prisma.SupplierUncheckedCreateWithoutReliabilityInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutReliabilityInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutReliabilityInput, Prisma.SupplierUncheckedUpdateWithoutReliabilityInput>
+}
+
+export type SupplierUpdateWithoutReliabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
+  contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutReliabilityInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutSpendInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
+  contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutSpendInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  risks?: Prisma.SupplierRiskUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutSpendInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutSpendInput, Prisma.SupplierUncheckedCreateWithoutSpendInput>
+}
+
+export type SupplierUpsertWithoutSpendInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutSpendInput, Prisma.SupplierUncheckedUpdateWithoutSpendInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutSpendInput, Prisma.SupplierUncheckedCreateWithoutSpendInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutSpendInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutSpendInput, Prisma.SupplierUncheckedUpdateWithoutSpendInput>
+}
+
+export type SupplierUpdateWithoutSpendInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
+  contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutSpendInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutRisksInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutSuppliersInput
+  contacts?: Prisma.SupplierContactCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutRisksInput = {
+  id?: string
+  supplierNumber: string
+  name: string
+  legalName?: string | null
+  status?: string
+  category?: string
+  email: string
+  phone?: string | null
+  website?: string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: string | null
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
+  supplierSince?: Date | string
+  lastOrderDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.SupplierContactUncheckedCreateNestedManyWithoutSupplierInput
+  balance?: Prisma.SupplierBalanceUncheckedCreateNestedOneWithoutSupplierInput
+  payments?: Prisma.SupplierPaymentUncheckedCreateNestedManyWithoutSupplierInput
+  reliability?: Prisma.SupplierReliabilityUncheckedCreateNestedManyWithoutSupplierInput
+  spend?: Prisma.SupplierSpendUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutRisksInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutRisksInput, Prisma.SupplierUncheckedCreateWithoutRisksInput>
+}
+
+export type SupplierUpsertWithoutRisksInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutRisksInput, Prisma.SupplierUncheckedUpdateWithoutRisksInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutRisksInput, Prisma.SupplierUncheckedCreateWithoutRisksInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutRisksInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutRisksInput, Prisma.SupplierUncheckedUpdateWithoutRisksInput>
+}
+
+export type SupplierUpdateWithoutRisksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutSuppliersNestedInput
+  contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutRisksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierCreateManyOrganizationInput = {
   id?: string
   supplierNumber: string
   name: string
-  type?: string
+  legalName?: string | null
   status?: string
-  industry?: string | null
-  email?: string | null
+  category?: string
+  email: string
   phone?: string | null
   website?: string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: string | null
-  vatNumber?: string | null
-  legalName?: string | null
-  paymentTerms?: string
-  preferredPaymentMethod?: string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: string
-  totalPurchases?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: number
-  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: string
+  registrationNumber?: string | null
+  founded?: number | null
+  employeeCount?: number | null
+  accountManagerId?: string | null
+  accountManagerName?: string | null
+  tags?: Prisma.SupplierCreatetagsInput | string[]
   supplierSince?: Date | string
   lastOrderDate?: Date | string | null
   lastPaymentDate?: Date | string | null
-  accountManagerId?: string | null
-  categories?: Prisma.SupplierCreatecategoriesInput | string[]
-  tags?: Prisma.SupplierCreatetagsInput | string[]
+  contractExpiryDate?: Date | string | null
+  totalSpend?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: number
+  averageOrderValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  paymentTerms?: string
+  preferredPaymentMethod?: string
+  earlyPaymentDiscount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: string
+  reliabilityScore?: number
+  onTimeDeliveryRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: number
+  defectRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: number
+  dependencyLevel?: string
+  dependencyScore?: number
+  spendPercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: number
+  criticalItems?: number
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1585,119 +3103,150 @@ export type SupplierUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.SupplierContactUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.SupplierContactUncheckedUpdateManyWithoutSupplierNestedInput
+  balance?: Prisma.SupplierBalanceUncheckedUpdateOneWithoutSupplierNestedInput
+  payments?: Prisma.SupplierPaymentUncheckedUpdateManyWithoutSupplierNestedInput
+  reliability?: Prisma.SupplierReliabilityUncheckedUpdateManyWithoutSupplierNestedInput
+  spend?: Prisma.SupplierSpendUncheckedUpdateManyWithoutSupplierNestedInput
+  risks?: Prisma.SupplierRiskUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierNumber?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
+  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  vatNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  legalName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
-  preferredPaymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  totalPurchases?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
-  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingPayables?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  overdueAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  qualityRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  deliveryRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  responseRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  overallRating?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  onTimeDeliveryRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  registrationNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  founded?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employeeCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountManagerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.SupplierUpdatetagsInput | string[]
   supplierSince?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastOrderDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  accountManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categories?: Prisma.SupplierUpdatecategoriesInput | string[]
-  tags?: Prisma.SupplierUpdatetagsInput | string[]
+  contractExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  totalSpend?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOrders?: Prisma.IntFieldUpdateOperationsInput | number
+  averageOrderValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingBalance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredPaymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  earlyPaymentDiscount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  reliabilityRating?: Prisma.StringFieldUpdateOperationsInput | string
+  reliabilityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  onTimeDeliveryRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  qualityScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defectRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  avgLeadTime?: Prisma.IntFieldUpdateOperationsInput | number
+  dependencyLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  dependencyScore?: Prisma.IntFieldUpdateOperationsInput | number
+  spendPercentage?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  alternativeSuppliers?: Prisma.IntFieldUpdateOperationsInput | number
+  criticalItems?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1710,10 +3259,18 @@ export type SupplierUncheckedUpdateManyWithoutOrganizationInput = {
 
 export type SupplierCountOutputType = {
   contacts: number
+  payments: number
+  reliability: number
+  spend: number
+  risks: number
 }
 
 export type SupplierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contacts?: boolean | SupplierCountOutputTypeCountContactsArgs
+  payments?: boolean | SupplierCountOutputTypeCountPaymentsArgs
+  reliability?: boolean | SupplierCountOutputTypeCountReliabilityArgs
+  spend?: boolean | SupplierCountOutputTypeCountSpendArgs
+  risks?: boolean | SupplierCountOutputTypeCountRisksArgs
 }
 
 /**
@@ -1733,48 +3290,88 @@ export type SupplierCountOutputTypeCountContactsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.SupplierContactWhereInput
 }
 
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierPaymentWhereInput
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountReliabilityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierReliabilityWhereInput
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountSpendArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierSpendWhereInput
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountRisksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierRiskWhereInput
+}
+
 
 export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   supplierNumber?: boolean
   name?: boolean
-  type?: boolean
+  legalName?: boolean
   status?: boolean
-  industry?: boolean
+  category?: boolean
   email?: boolean
   phone?: boolean
   website?: boolean
   address?: boolean
   taxId?: boolean
-  vatNumber?: boolean
-  legalName?: boolean
-  paymentTerms?: boolean
-  preferredPaymentMethod?: boolean
-  bankDetails?: boolean
-  currency?: boolean
-  totalPurchases?: boolean
-  totalOrders?: boolean
-  averageOrderValue?: boolean
-  outstandingPayables?: boolean
-  overdueAmount?: boolean
-  qualityRating?: boolean
-  deliveryRating?: boolean
-  responseRating?: boolean
-  overallRating?: boolean
-  onTimeDeliveryRate?: boolean
-  riskLevel?: boolean
+  registrationNumber?: boolean
+  founded?: boolean
+  employeeCount?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  tags?: boolean
   supplierSince?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
-  accountManagerId?: boolean
-  categories?: boolean
-  tags?: boolean
+  contractExpiryDate?: boolean
+  totalSpend?: boolean
+  totalOrders?: boolean
+  averageOrderValue?: boolean
+  outstandingBalance?: boolean
+  currency?: boolean
+  paymentTerms?: boolean
+  preferredPaymentMethod?: boolean
+  earlyPaymentDiscount?: boolean
+  bankDetails?: boolean
+  reliabilityRating?: boolean
+  reliabilityScore?: boolean
+  onTimeDeliveryRate?: boolean
+  qualityScore?: boolean
+  defectRate?: boolean
+  avgLeadTime?: boolean
+  dependencyLevel?: boolean
+  dependencyScore?: boolean
+  spendPercentage?: boolean
+  alternativeSuppliers?: boolean
+  criticalItems?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   contacts?: boolean | Prisma.Supplier$contactsArgs<ExtArgs>
+  balance?: boolean | Prisma.Supplier$balanceArgs<ExtArgs>
+  payments?: boolean | Prisma.Supplier$paymentsArgs<ExtArgs>
+  reliability?: boolean | Prisma.Supplier$reliabilityArgs<ExtArgs>
+  spend?: boolean | Prisma.Supplier$spendArgs<ExtArgs>
+  risks?: boolean | Prisma.Supplier$risksArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["supplier"]>
 
@@ -1782,37 +3379,44 @@ export type SupplierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   supplierNumber?: boolean
   name?: boolean
-  type?: boolean
+  legalName?: boolean
   status?: boolean
-  industry?: boolean
+  category?: boolean
   email?: boolean
   phone?: boolean
   website?: boolean
   address?: boolean
   taxId?: boolean
-  vatNumber?: boolean
-  legalName?: boolean
-  paymentTerms?: boolean
-  preferredPaymentMethod?: boolean
-  bankDetails?: boolean
-  currency?: boolean
-  totalPurchases?: boolean
-  totalOrders?: boolean
-  averageOrderValue?: boolean
-  outstandingPayables?: boolean
-  overdueAmount?: boolean
-  qualityRating?: boolean
-  deliveryRating?: boolean
-  responseRating?: boolean
-  overallRating?: boolean
-  onTimeDeliveryRate?: boolean
-  riskLevel?: boolean
+  registrationNumber?: boolean
+  founded?: boolean
+  employeeCount?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  tags?: boolean
   supplierSince?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
-  accountManagerId?: boolean
-  categories?: boolean
-  tags?: boolean
+  contractExpiryDate?: boolean
+  totalSpend?: boolean
+  totalOrders?: boolean
+  averageOrderValue?: boolean
+  outstandingBalance?: boolean
+  currency?: boolean
+  paymentTerms?: boolean
+  preferredPaymentMethod?: boolean
+  earlyPaymentDiscount?: boolean
+  bankDetails?: boolean
+  reliabilityRating?: boolean
+  reliabilityScore?: boolean
+  onTimeDeliveryRate?: boolean
+  qualityScore?: boolean
+  defectRate?: boolean
+  avgLeadTime?: boolean
+  dependencyLevel?: boolean
+  dependencyScore?: boolean
+  spendPercentage?: boolean
+  alternativeSuppliers?: boolean
+  criticalItems?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1824,37 +3428,44 @@ export type SupplierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   supplierNumber?: boolean
   name?: boolean
-  type?: boolean
+  legalName?: boolean
   status?: boolean
-  industry?: boolean
+  category?: boolean
   email?: boolean
   phone?: boolean
   website?: boolean
   address?: boolean
   taxId?: boolean
-  vatNumber?: boolean
-  legalName?: boolean
-  paymentTerms?: boolean
-  preferredPaymentMethod?: boolean
-  bankDetails?: boolean
-  currency?: boolean
-  totalPurchases?: boolean
-  totalOrders?: boolean
-  averageOrderValue?: boolean
-  outstandingPayables?: boolean
-  overdueAmount?: boolean
-  qualityRating?: boolean
-  deliveryRating?: boolean
-  responseRating?: boolean
-  overallRating?: boolean
-  onTimeDeliveryRate?: boolean
-  riskLevel?: boolean
+  registrationNumber?: boolean
+  founded?: boolean
+  employeeCount?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  tags?: boolean
   supplierSince?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
-  accountManagerId?: boolean
-  categories?: boolean
-  tags?: boolean
+  contractExpiryDate?: boolean
+  totalSpend?: boolean
+  totalOrders?: boolean
+  averageOrderValue?: boolean
+  outstandingBalance?: boolean
+  currency?: boolean
+  paymentTerms?: boolean
+  preferredPaymentMethod?: boolean
+  earlyPaymentDiscount?: boolean
+  bankDetails?: boolean
+  reliabilityRating?: boolean
+  reliabilityScore?: boolean
+  onTimeDeliveryRate?: boolean
+  qualityScore?: boolean
+  defectRate?: boolean
+  avgLeadTime?: boolean
+  dependencyLevel?: boolean
+  dependencyScore?: boolean
+  spendPercentage?: boolean
+  alternativeSuppliers?: boolean
+  criticalItems?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1866,47 +3477,59 @@ export type SupplierSelectScalar = {
   id?: boolean
   supplierNumber?: boolean
   name?: boolean
-  type?: boolean
+  legalName?: boolean
   status?: boolean
-  industry?: boolean
+  category?: boolean
   email?: boolean
   phone?: boolean
   website?: boolean
   address?: boolean
   taxId?: boolean
-  vatNumber?: boolean
-  legalName?: boolean
-  paymentTerms?: boolean
-  preferredPaymentMethod?: boolean
-  bankDetails?: boolean
-  currency?: boolean
-  totalPurchases?: boolean
-  totalOrders?: boolean
-  averageOrderValue?: boolean
-  outstandingPayables?: boolean
-  overdueAmount?: boolean
-  qualityRating?: boolean
-  deliveryRating?: boolean
-  responseRating?: boolean
-  overallRating?: boolean
-  onTimeDeliveryRate?: boolean
-  riskLevel?: boolean
+  registrationNumber?: boolean
+  founded?: boolean
+  employeeCount?: boolean
+  accountManagerId?: boolean
+  accountManagerName?: boolean
+  tags?: boolean
   supplierSince?: boolean
   lastOrderDate?: boolean
   lastPaymentDate?: boolean
-  accountManagerId?: boolean
-  categories?: boolean
-  tags?: boolean
+  contractExpiryDate?: boolean
+  totalSpend?: boolean
+  totalOrders?: boolean
+  averageOrderValue?: boolean
+  outstandingBalance?: boolean
+  currency?: boolean
+  paymentTerms?: boolean
+  preferredPaymentMethod?: boolean
+  earlyPaymentDiscount?: boolean
+  bankDetails?: boolean
+  reliabilityRating?: boolean
+  reliabilityScore?: boolean
+  onTimeDeliveryRate?: boolean
+  qualityScore?: boolean
+  defectRate?: boolean
+  avgLeadTime?: boolean
+  dependencyLevel?: boolean
+  dependencyScore?: boolean
+  spendPercentage?: boolean
+  alternativeSuppliers?: boolean
+  criticalItems?: boolean
   notes?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierNumber" | "name" | "type" | "status" | "industry" | "email" | "phone" | "website" | "address" | "taxId" | "vatNumber" | "legalName" | "paymentTerms" | "preferredPaymentMethod" | "bankDetails" | "currency" | "totalPurchases" | "totalOrders" | "averageOrderValue" | "outstandingPayables" | "overdueAmount" | "qualityRating" | "deliveryRating" | "responseRating" | "overallRating" | "onTimeDeliveryRate" | "riskLevel" | "supplierSince" | "lastOrderDate" | "lastPaymentDate" | "accountManagerId" | "categories" | "tags" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
+export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierNumber" | "name" | "legalName" | "status" | "category" | "email" | "phone" | "website" | "address" | "taxId" | "registrationNumber" | "founded" | "employeeCount" | "accountManagerId" | "accountManagerName" | "tags" | "supplierSince" | "lastOrderDate" | "lastPaymentDate" | "contractExpiryDate" | "totalSpend" | "totalOrders" | "averageOrderValue" | "outstandingBalance" | "currency" | "paymentTerms" | "preferredPaymentMethod" | "earlyPaymentDiscount" | "bankDetails" | "reliabilityRating" | "reliabilityScore" | "onTimeDeliveryRate" | "qualityScore" | "defectRate" | "avgLeadTime" | "dependencyLevel" | "dependencyScore" | "spendPercentage" | "alternativeSuppliers" | "criticalItems" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
 export type SupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   contacts?: boolean | Prisma.Supplier$contactsArgs<ExtArgs>
+  balance?: boolean | Prisma.Supplier$balanceArgs<ExtArgs>
+  payments?: boolean | Prisma.Supplier$paymentsArgs<ExtArgs>
+  reliability?: boolean | Prisma.Supplier$reliabilityArgs<ExtArgs>
+  spend?: boolean | Prisma.Supplier$spendArgs<ExtArgs>
+  risks?: boolean | Prisma.Supplier$risksArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SupplierIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1921,42 +3544,54 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
     contacts: Prisma.$SupplierContactPayload<ExtArgs>[]
+    balance: Prisma.$SupplierBalancePayload<ExtArgs> | null
+    payments: Prisma.$SupplierPaymentPayload<ExtArgs>[]
+    reliability: Prisma.$SupplierReliabilityPayload<ExtArgs>[]
+    spend: Prisma.$SupplierSpendPayload<ExtArgs>[]
+    risks: Prisma.$SupplierRiskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     supplierNumber: string
     name: string
-    type: string
+    legalName: string | null
     status: string
-    industry: string | null
-    email: string | null
+    category: string
+    email: string
     phone: string | null
     website: string | null
     address: runtime.JsonValue | null
     taxId: string | null
-    vatNumber: string | null
-    legalName: string | null
-    paymentTerms: string
-    preferredPaymentMethod: string | null
-    bankDetails: runtime.JsonValue | null
-    currency: string
-    totalPurchases: runtime.Decimal
-    totalOrders: number
-    averageOrderValue: runtime.Decimal
-    outstandingPayables: runtime.Decimal
-    overdueAmount: runtime.Decimal
-    qualityRating: runtime.Decimal | null
-    deliveryRating: runtime.Decimal | null
-    responseRating: runtime.Decimal | null
-    overallRating: runtime.Decimal | null
-    onTimeDeliveryRate: runtime.Decimal | null
-    riskLevel: string
+    registrationNumber: string | null
+    founded: number | null
+    employeeCount: number | null
+    accountManagerId: string | null
+    accountManagerName: string | null
+    tags: string[]
     supplierSince: Date
     lastOrderDate: Date | null
     lastPaymentDate: Date | null
-    accountManagerId: string | null
-    categories: string[]
-    tags: string[]
+    contractExpiryDate: Date | null
+    totalSpend: runtime.Decimal
+    totalOrders: number
+    averageOrderValue: runtime.Decimal
+    outstandingBalance: runtime.Decimal
+    currency: string
+    paymentTerms: string
+    preferredPaymentMethod: string
+    earlyPaymentDiscount: runtime.Decimal | null
+    bankDetails: runtime.JsonValue | null
+    reliabilityRating: string
+    reliabilityScore: number
+    onTimeDeliveryRate: runtime.Decimal
+    qualityScore: number
+    defectRate: runtime.Decimal
+    avgLeadTime: number
+    dependencyLevel: string
+    dependencyScore: number
+    spendPercentage: runtime.Decimal
+    alternativeSuppliers: number
+    criticalItems: number
     notes: string | null
     organizationId: string
     createdAt: Date
@@ -2357,6 +3992,11 @@ export interface Prisma__SupplierClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   contacts<T extends Prisma.Supplier$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  balance<T extends Prisma.Supplier$balanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$balanceArgs<ExtArgs>>): Prisma.Prisma__SupplierBalanceClient<runtime.Types.Result.GetResult<Prisma.$SupplierBalancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  payments<T extends Prisma.Supplier$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reliability<T extends Prisma.Supplier$reliabilityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$reliabilityArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierReliabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  spend<T extends Prisma.Supplier$spendArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$spendArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierSpendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  risks<T extends Prisma.Supplier$risksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$risksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierRiskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2389,37 +4029,44 @@ export interface SupplierFieldRefs {
   readonly id: Prisma.FieldRef<"Supplier", 'String'>
   readonly supplierNumber: Prisma.FieldRef<"Supplier", 'String'>
   readonly name: Prisma.FieldRef<"Supplier", 'String'>
-  readonly type: Prisma.FieldRef<"Supplier", 'String'>
+  readonly legalName: Prisma.FieldRef<"Supplier", 'String'>
   readonly status: Prisma.FieldRef<"Supplier", 'String'>
-  readonly industry: Prisma.FieldRef<"Supplier", 'String'>
+  readonly category: Prisma.FieldRef<"Supplier", 'String'>
   readonly email: Prisma.FieldRef<"Supplier", 'String'>
   readonly phone: Prisma.FieldRef<"Supplier", 'String'>
   readonly website: Prisma.FieldRef<"Supplier", 'String'>
   readonly address: Prisma.FieldRef<"Supplier", 'Json'>
   readonly taxId: Prisma.FieldRef<"Supplier", 'String'>
-  readonly vatNumber: Prisma.FieldRef<"Supplier", 'String'>
-  readonly legalName: Prisma.FieldRef<"Supplier", 'String'>
-  readonly paymentTerms: Prisma.FieldRef<"Supplier", 'String'>
-  readonly preferredPaymentMethod: Prisma.FieldRef<"Supplier", 'String'>
-  readonly bankDetails: Prisma.FieldRef<"Supplier", 'Json'>
-  readonly currency: Prisma.FieldRef<"Supplier", 'String'>
-  readonly totalPurchases: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly totalOrders: Prisma.FieldRef<"Supplier", 'Int'>
-  readonly averageOrderValue: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly outstandingPayables: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly overdueAmount: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly qualityRating: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly deliveryRating: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly responseRating: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly overallRating: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly onTimeDeliveryRate: Prisma.FieldRef<"Supplier", 'Decimal'>
-  readonly riskLevel: Prisma.FieldRef<"Supplier", 'String'>
+  readonly registrationNumber: Prisma.FieldRef<"Supplier", 'String'>
+  readonly founded: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly employeeCount: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly accountManagerId: Prisma.FieldRef<"Supplier", 'String'>
+  readonly accountManagerName: Prisma.FieldRef<"Supplier", 'String'>
+  readonly tags: Prisma.FieldRef<"Supplier", 'String[]'>
   readonly supplierSince: Prisma.FieldRef<"Supplier", 'DateTime'>
   readonly lastOrderDate: Prisma.FieldRef<"Supplier", 'DateTime'>
   readonly lastPaymentDate: Prisma.FieldRef<"Supplier", 'DateTime'>
-  readonly accountManagerId: Prisma.FieldRef<"Supplier", 'String'>
-  readonly categories: Prisma.FieldRef<"Supplier", 'String[]'>
-  readonly tags: Prisma.FieldRef<"Supplier", 'String[]'>
+  readonly contractExpiryDate: Prisma.FieldRef<"Supplier", 'DateTime'>
+  readonly totalSpend: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly totalOrders: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly averageOrderValue: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly outstandingBalance: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly currency: Prisma.FieldRef<"Supplier", 'String'>
+  readonly paymentTerms: Prisma.FieldRef<"Supplier", 'String'>
+  readonly preferredPaymentMethod: Prisma.FieldRef<"Supplier", 'String'>
+  readonly earlyPaymentDiscount: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly bankDetails: Prisma.FieldRef<"Supplier", 'Json'>
+  readonly reliabilityRating: Prisma.FieldRef<"Supplier", 'String'>
+  readonly reliabilityScore: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly onTimeDeliveryRate: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly qualityScore: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly defectRate: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly avgLeadTime: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly dependencyLevel: Prisma.FieldRef<"Supplier", 'String'>
+  readonly dependencyScore: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly spendPercentage: Prisma.FieldRef<"Supplier", 'Decimal'>
+  readonly alternativeSuppliers: Prisma.FieldRef<"Supplier", 'Int'>
+  readonly criticalItems: Prisma.FieldRef<"Supplier", 'Int'>
   readonly notes: Prisma.FieldRef<"Supplier", 'String'>
   readonly organizationId: Prisma.FieldRef<"Supplier", 'String'>
   readonly createdAt: Prisma.FieldRef<"Supplier", 'DateTime'>
@@ -2841,6 +4488,121 @@ export type Supplier$contactsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.SupplierContactScalarFieldEnum | Prisma.SupplierContactScalarFieldEnum[]
+}
+
+/**
+ * Supplier.balance
+ */
+export type Supplier$balanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierBalance
+   */
+  select?: Prisma.SupplierBalanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierBalance
+   */
+  omit?: Prisma.SupplierBalanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierBalanceInclude<ExtArgs> | null
+  where?: Prisma.SupplierBalanceWhereInput
+}
+
+/**
+ * Supplier.payments
+ */
+export type Supplier$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierPayment
+   */
+  select?: Prisma.SupplierPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierPayment
+   */
+  omit?: Prisma.SupplierPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierPaymentInclude<ExtArgs> | null
+  where?: Prisma.SupplierPaymentWhereInput
+  orderBy?: Prisma.SupplierPaymentOrderByWithRelationInput | Prisma.SupplierPaymentOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierPaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierPaymentScalarFieldEnum | Prisma.SupplierPaymentScalarFieldEnum[]
+}
+
+/**
+ * Supplier.reliability
+ */
+export type Supplier$reliabilityArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierReliability
+   */
+  select?: Prisma.SupplierReliabilitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierReliability
+   */
+  omit?: Prisma.SupplierReliabilityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierReliabilityInclude<ExtArgs> | null
+  where?: Prisma.SupplierReliabilityWhereInput
+  orderBy?: Prisma.SupplierReliabilityOrderByWithRelationInput | Prisma.SupplierReliabilityOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierReliabilityWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierReliabilityScalarFieldEnum | Prisma.SupplierReliabilityScalarFieldEnum[]
+}
+
+/**
+ * Supplier.spend
+ */
+export type Supplier$spendArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierSpend
+   */
+  select?: Prisma.SupplierSpendSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierSpend
+   */
+  omit?: Prisma.SupplierSpendOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierSpendInclude<ExtArgs> | null
+  where?: Prisma.SupplierSpendWhereInput
+  orderBy?: Prisma.SupplierSpendOrderByWithRelationInput | Prisma.SupplierSpendOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierSpendWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierSpendScalarFieldEnum | Prisma.SupplierSpendScalarFieldEnum[]
+}
+
+/**
+ * Supplier.risks
+ */
+export type Supplier$risksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierRisk
+   */
+  select?: Prisma.SupplierRiskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierRisk
+   */
+  omit?: Prisma.SupplierRiskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierRiskInclude<ExtArgs> | null
+  where?: Prisma.SupplierRiskWhereInput
+  orderBy?: Prisma.SupplierRiskOrderByWithRelationInput | Prisma.SupplierRiskOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierRiskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierRiskScalarFieldEnum | Prisma.SupplierRiskScalarFieldEnum[]
 }
 
 /**

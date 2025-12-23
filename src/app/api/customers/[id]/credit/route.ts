@@ -1,100 +1,65 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils'
+// src/app/api/customers/[id]/credit/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils';
 
-// GET /api/customers/[id]/credit
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+type Params = { params: Promise<{ id: string }> };
 
-  const { id } = await params
+export async function POST(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const customer = await prisma.customer.findFirst({
-    where: { id, organizationId: user.organizationId },
-    select: {
-      id: true,
-      creditLimit: true,
-      creditUsed: true,
-      creditAvailable: true,
-      creditStatus: true,
-      paymentTerms: true,
-    },
-  })
-  if (!customer) return notFound('Customer not found')
+  const { id: customerId } = await params;
+  const body = await req.json();
 
-  const creditEvents = await prisma.customerCreditEvent.findMany({
-    where: { customerId: id },
-    orderBy: { createdAt: 'desc' },
-    take: 20,
-  })
-
-  return NextResponse.json({ credit: customer, events: creditEvents })
-}
-
-// POST /api/customers/[id]/credit
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
-
-  const { id } = await params
-  const body = await req.json()
-
-  const customer = await prisma.customer.findFirst({
-    where: { id, organizationId: user.organizationId },
-  })
-  if (!customer) return notFound('Customer not found')
-
-  const { type, newValue, reason } = body
-
-  if (!type || !newValue || !reason) {
-    return badRequest('Type, newValue, and reason are required')
+  if (!body.type || !body.newValue || !body.reason) {
+    return badRequest('type, newValue, and reason are required');
   }
 
-  let previousValue: string | undefined
-  const updateData: Record<string, unknown> = {}
+  // Verify customer belongs to organization
+  const customer = await prisma.customer.findFirst({
+    where: { id: customerId, organizationId: user.organizationId },
+  });
+  if (!customer) return notFound('Customer');
 
-  switch (type) {
-    case 'limit_increase':
-    case 'limit_decrease':
-      previousValue = customer.creditLimit.toString()
-      updateData.creditLimit = parseFloat(newValue)
-      updateData.creditAvailable = Math.max(0, parseFloat(newValue) - Number(customer.creditUsed))
-      break
-    case 'status_change':
-      previousValue = customer.creditStatus
-      updateData.creditStatus = newValue
-      break
-    case 'terms_change':
-      previousValue = customer.paymentTerms
-      updateData.paymentTerms = newValue
-      break
+  // Get previous value based on type
+  let previousValue: string | undefined;
+  const customerUpdate: Record<string, unknown> = {};
+
+  if (body.type === 'limit_increase' || body.type === 'limit_decrease') {
+    previousValue = customer.creditLimit.toString();
+    const newLimit = parseFloat(body.newValue);
+    customerUpdate.creditLimit = newLimit;
+    customerUpdate.creditAvailable = newLimit - Number(customer.creditUsed);
+  } else if (body.type === 'status_change') {
+    previousValue = customer.creditStatus;
+    customerUpdate.creditStatus = body.newValue;
+  } else if (body.type === 'terms_change') {
+    previousValue = customer.paymentTerms;
+    customerUpdate.paymentTerms = body.newValue;
   }
 
-  const event = await prisma.customerCreditEvent.create({
+  // Create credit event
+  const creditEvent = await prisma.customerCreditEvent.create({
     data: {
-      customerId: id,
-      type,
+      customerId,
+      type: body.type,
       previousValue,
-      newValue,
-      reason,
+      newValue: body.newValue,
+      reason: body.reason,
       changedBy: user.id,
-      changedByName: user.name || undefined,
+      changedByName: user.name || 'Unknown',
       organizationId: user.organizationId,
     },
-  })
+  });
 
-  if (Object.keys(updateData).length > 0) {
+  // Update customer
+  if (Object.keys(customerUpdate).length > 0) {
     await prisma.customer.update({
-      where: { id },
-      data: updateData,
-    })
+      where: { id: customerId },
+      data: customerUpdate,
+    });
   }
 
-  return NextResponse.json(event, { status: 201 })
+  return NextResponse.json(creditEvent, { status: 201 });
 }

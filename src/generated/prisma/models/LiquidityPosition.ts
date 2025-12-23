@@ -33,15 +33,27 @@ export type LiquidityPositionAvgAggregateOutputType = {
   restrictedCash: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   totalLiquidity: runtime.Decimal | null
+  minimumBuffer: runtime.Decimal | null
   expectedInflows: runtime.Decimal | null
   expectedOutflows: runtime.Decimal | null
   netCashFlow: runtime.Decimal | null
+  confirmedInflows: runtime.Decimal | null
+  expectedInflows2: runtime.Decimal | null
+  estimatedInflows: runtime.Decimal | null
+  confirmedOutflows: runtime.Decimal | null
+  expectedOutflows2: runtime.Decimal | null
+  estimatedOutflows: runtime.Decimal | null
   projectedEndingCash: runtime.Decimal | null
   runwayDays: number | null
   runwayMonths: runtime.Decimal | null
   currentRatio: runtime.Decimal | null
   quickRatio: runtime.Decimal | null
   cashBurnRate: runtime.Decimal | null
+  bufferDays: number | null
+  concentrationIndex: runtime.Decimal | null
+  volatilityIndex: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  dataCompleteness: runtime.Decimal | null
 }
 
 export type LiquidityPositionSumAggregateOutputType = {
@@ -51,15 +63,27 @@ export type LiquidityPositionSumAggregateOutputType = {
   restrictedCash: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   totalLiquidity: runtime.Decimal | null
+  minimumBuffer: runtime.Decimal | null
   expectedInflows: runtime.Decimal | null
   expectedOutflows: runtime.Decimal | null
   netCashFlow: runtime.Decimal | null
+  confirmedInflows: runtime.Decimal | null
+  expectedInflows2: runtime.Decimal | null
+  estimatedInflows: runtime.Decimal | null
+  confirmedOutflows: runtime.Decimal | null
+  expectedOutflows2: runtime.Decimal | null
+  estimatedOutflows: runtime.Decimal | null
   projectedEndingCash: runtime.Decimal | null
   runwayDays: number | null
   runwayMonths: runtime.Decimal | null
   currentRatio: runtime.Decimal | null
   quickRatio: runtime.Decimal | null
   cashBurnRate: runtime.Decimal | null
+  bufferDays: number | null
+  concentrationIndex: runtime.Decimal | null
+  volatilityIndex: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  dataCompleteness: runtime.Decimal | null
 }
 
 export type LiquidityPositionMinAggregateOutputType = {
@@ -72,16 +96,29 @@ export type LiquidityPositionMinAggregateOutputType = {
   restrictedCash: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   totalLiquidity: runtime.Decimal | null
+  minimumBuffer: runtime.Decimal | null
   expectedInflows: runtime.Decimal | null
   expectedOutflows: runtime.Decimal | null
   netCashFlow: runtime.Decimal | null
+  confirmedInflows: runtime.Decimal | null
+  expectedInflows2: runtime.Decimal | null
+  estimatedInflows: runtime.Decimal | null
+  confirmedOutflows: runtime.Decimal | null
+  expectedOutflows2: runtime.Decimal | null
+  estimatedOutflows: runtime.Decimal | null
   projectedEndingCash: runtime.Decimal | null
   runwayDays: number | null
   runwayMonths: runtime.Decimal | null
   currentRatio: runtime.Decimal | null
   quickRatio: runtime.Decimal | null
   cashBurnRate: runtime.Decimal | null
+  bufferDays: number | null
+  concentrationIndex: runtime.Decimal | null
+  volatilityIndex: runtime.Decimal | null
   status: string | null
+  riskLevel: string | null
+  riskScore: runtime.Decimal | null
+  dataCompleteness: runtime.Decimal | null
   currency: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -97,16 +134,29 @@ export type LiquidityPositionMaxAggregateOutputType = {
   restrictedCash: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   totalLiquidity: runtime.Decimal | null
+  minimumBuffer: runtime.Decimal | null
   expectedInflows: runtime.Decimal | null
   expectedOutflows: runtime.Decimal | null
   netCashFlow: runtime.Decimal | null
+  confirmedInflows: runtime.Decimal | null
+  expectedInflows2: runtime.Decimal | null
+  estimatedInflows: runtime.Decimal | null
+  confirmedOutflows: runtime.Decimal | null
+  expectedOutflows2: runtime.Decimal | null
+  estimatedOutflows: runtime.Decimal | null
   projectedEndingCash: runtime.Decimal | null
   runwayDays: number | null
   runwayMonths: runtime.Decimal | null
   currentRatio: runtime.Decimal | null
   quickRatio: runtime.Decimal | null
   cashBurnRate: runtime.Decimal | null
+  bufferDays: number | null
+  concentrationIndex: runtime.Decimal | null
+  volatilityIndex: runtime.Decimal | null
   status: string | null
+  riskLevel: string | null
+  riskScore: runtime.Decimal | null
+  dataCompleteness: runtime.Decimal | null
   currency: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -122,16 +172,30 @@ export type LiquidityPositionCountAggregateOutputType = {
   restrictedCash: number
   availableCredit: number
   totalLiquidity: number
+  minimumBuffer: number
   expectedInflows: number
   expectedOutflows: number
   netCashFlow: number
+  confirmedInflows: number
+  expectedInflows2: number
+  estimatedInflows: number
+  confirmedOutflows: number
+  expectedOutflows2: number
+  estimatedOutflows: number
   projectedEndingCash: number
   runwayDays: number
   runwayMonths: number
   currentRatio: number
   quickRatio: number
   cashBurnRate: number
+  bufferDays: number
+  concentrationIndex: number
+  volatilityIndex: number
   status: number
+  riskLevel: number
+  riskScore: number
+  dataCompleteness: number
+  knownBlindSpots: number
   accountBreakdown: number
   currency: number
   organizationId: number
@@ -147,15 +211,27 @@ export type LiquidityPositionAvgAggregateInputType = {
   restrictedCash?: true
   availableCredit?: true
   totalLiquidity?: true
+  minimumBuffer?: true
   expectedInflows?: true
   expectedOutflows?: true
   netCashFlow?: true
+  confirmedInflows?: true
+  expectedInflows2?: true
+  estimatedInflows?: true
+  confirmedOutflows?: true
+  expectedOutflows2?: true
+  estimatedOutflows?: true
   projectedEndingCash?: true
   runwayDays?: true
   runwayMonths?: true
   currentRatio?: true
   quickRatio?: true
   cashBurnRate?: true
+  bufferDays?: true
+  concentrationIndex?: true
+  volatilityIndex?: true
+  riskScore?: true
+  dataCompleteness?: true
 }
 
 export type LiquidityPositionSumAggregateInputType = {
@@ -165,15 +241,27 @@ export type LiquidityPositionSumAggregateInputType = {
   restrictedCash?: true
   availableCredit?: true
   totalLiquidity?: true
+  minimumBuffer?: true
   expectedInflows?: true
   expectedOutflows?: true
   netCashFlow?: true
+  confirmedInflows?: true
+  expectedInflows2?: true
+  estimatedInflows?: true
+  confirmedOutflows?: true
+  expectedOutflows2?: true
+  estimatedOutflows?: true
   projectedEndingCash?: true
   runwayDays?: true
   runwayMonths?: true
   currentRatio?: true
   quickRatio?: true
   cashBurnRate?: true
+  bufferDays?: true
+  concentrationIndex?: true
+  volatilityIndex?: true
+  riskScore?: true
+  dataCompleteness?: true
 }
 
 export type LiquidityPositionMinAggregateInputType = {
@@ -186,16 +274,29 @@ export type LiquidityPositionMinAggregateInputType = {
   restrictedCash?: true
   availableCredit?: true
   totalLiquidity?: true
+  minimumBuffer?: true
   expectedInflows?: true
   expectedOutflows?: true
   netCashFlow?: true
+  confirmedInflows?: true
+  expectedInflows2?: true
+  estimatedInflows?: true
+  confirmedOutflows?: true
+  expectedOutflows2?: true
+  estimatedOutflows?: true
   projectedEndingCash?: true
   runwayDays?: true
   runwayMonths?: true
   currentRatio?: true
   quickRatio?: true
   cashBurnRate?: true
+  bufferDays?: true
+  concentrationIndex?: true
+  volatilityIndex?: true
   status?: true
+  riskLevel?: true
+  riskScore?: true
+  dataCompleteness?: true
   currency?: true
   organizationId?: true
   createdAt?: true
@@ -211,16 +312,29 @@ export type LiquidityPositionMaxAggregateInputType = {
   restrictedCash?: true
   availableCredit?: true
   totalLiquidity?: true
+  minimumBuffer?: true
   expectedInflows?: true
   expectedOutflows?: true
   netCashFlow?: true
+  confirmedInflows?: true
+  expectedInflows2?: true
+  estimatedInflows?: true
+  confirmedOutflows?: true
+  expectedOutflows2?: true
+  estimatedOutflows?: true
   projectedEndingCash?: true
   runwayDays?: true
   runwayMonths?: true
   currentRatio?: true
   quickRatio?: true
   cashBurnRate?: true
+  bufferDays?: true
+  concentrationIndex?: true
+  volatilityIndex?: true
   status?: true
+  riskLevel?: true
+  riskScore?: true
+  dataCompleteness?: true
   currency?: true
   organizationId?: true
   createdAt?: true
@@ -236,16 +350,30 @@ export type LiquidityPositionCountAggregateInputType = {
   restrictedCash?: true
   availableCredit?: true
   totalLiquidity?: true
+  minimumBuffer?: true
   expectedInflows?: true
   expectedOutflows?: true
   netCashFlow?: true
+  confirmedInflows?: true
+  expectedInflows2?: true
+  estimatedInflows?: true
+  confirmedOutflows?: true
+  expectedOutflows2?: true
+  estimatedOutflows?: true
   projectedEndingCash?: true
   runwayDays?: true
   runwayMonths?: true
   currentRatio?: true
   quickRatio?: true
   cashBurnRate?: true
+  bufferDays?: true
+  concentrationIndex?: true
+  volatilityIndex?: true
   status?: true
+  riskLevel?: true
+  riskScore?: true
+  dataCompleteness?: true
+  knownBlindSpots?: true
   accountBreakdown?: true
   currency?: true
   organizationId?: true
@@ -349,16 +477,30 @@ export type LiquidityPositionGroupByOutputType = {
   restrictedCash: runtime.Decimal
   availableCredit: runtime.Decimal
   totalLiquidity: runtime.Decimal
+  minimumBuffer: runtime.Decimal
   expectedInflows: runtime.Decimal
   expectedOutflows: runtime.Decimal
   netCashFlow: runtime.Decimal
+  confirmedInflows: runtime.Decimal
+  expectedInflows2: runtime.Decimal
+  estimatedInflows: runtime.Decimal
+  confirmedOutflows: runtime.Decimal
+  expectedOutflows2: runtime.Decimal
+  estimatedOutflows: runtime.Decimal
   projectedEndingCash: runtime.Decimal | null
   runwayDays: number | null
   runwayMonths: runtime.Decimal | null
   currentRatio: runtime.Decimal | null
   quickRatio: runtime.Decimal | null
   cashBurnRate: runtime.Decimal | null
+  bufferDays: number | null
+  concentrationIndex: runtime.Decimal | null
+  volatilityIndex: runtime.Decimal | null
   status: string
+  riskLevel: string
+  riskScore: runtime.Decimal | null
+  dataCompleteness: runtime.Decimal
+  knownBlindSpots: runtime.JsonValue | null
   accountBreakdown: runtime.JsonValue | null
   currency: string
   organizationId: string
@@ -398,16 +540,30 @@ export type LiquidityPositionWhereInput = {
   restrictedCash?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.IntNullableFilter<"LiquidityPosition"> | number | null
   runwayMonths?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.IntNullableFilter<"LiquidityPosition"> | number | null
+  concentrationIndex?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFilter<"LiquidityPosition"> | string
+  riskLevel?: Prisma.StringFilter<"LiquidityPosition"> | string
+  riskScore?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.JsonNullableFilter<"LiquidityPosition">
   accountBreakdown?: Prisma.JsonNullableFilter<"LiquidityPosition">
   currency?: Prisma.StringFilter<"LiquidityPosition"> | string
   organizationId?: Prisma.StringFilter<"LiquidityPosition"> | string
@@ -425,16 +581,30 @@ export type LiquidityPositionOrderByWithRelationInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrderInput | Prisma.SortOrder
   runwayDays?: Prisma.SortOrderInput | Prisma.SortOrder
   runwayMonths?: Prisma.SortOrderInput | Prisma.SortOrder
   currentRatio?: Prisma.SortOrderInput | Prisma.SortOrder
   quickRatio?: Prisma.SortOrderInput | Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  bufferDays?: Prisma.SortOrderInput | Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrderInput | Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
+  knownBlindSpots?: Prisma.SortOrderInput | Prisma.SortOrder
   accountBreakdown?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -456,16 +626,30 @@ export type LiquidityPositionWhereUniqueInput = Prisma.AtLeast<{
   restrictedCash?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.IntNullableFilter<"LiquidityPosition"> | number | null
   runwayMonths?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.IntNullableFilter<"LiquidityPosition"> | number | null
+  concentrationIndex?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFilter<"LiquidityPosition"> | string
+  riskLevel?: Prisma.StringFilter<"LiquidityPosition"> | string
+  riskScore?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.JsonNullableFilter<"LiquidityPosition">
   accountBreakdown?: Prisma.JsonNullableFilter<"LiquidityPosition">
   currency?: Prisma.StringFilter<"LiquidityPosition"> | string
   organizationId?: Prisma.StringFilter<"LiquidityPosition"> | string
@@ -483,16 +667,30 @@ export type LiquidityPositionOrderByWithAggregationInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrderInput | Prisma.SortOrder
   runwayDays?: Prisma.SortOrderInput | Prisma.SortOrder
   runwayMonths?: Prisma.SortOrderInput | Prisma.SortOrder
   currentRatio?: Prisma.SortOrderInput | Prisma.SortOrder
   quickRatio?: Prisma.SortOrderInput | Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  bufferDays?: Prisma.SortOrderInput | Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrderInput | Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
+  knownBlindSpots?: Prisma.SortOrderInput | Prisma.SortOrder
   accountBreakdown?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -517,16 +715,30 @@ export type LiquidityPositionScalarWhereWithAggregatesInput = {
   restrictedCash?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.IntNullableWithAggregatesFilter<"LiquidityPosition"> | number | null
   runwayMonths?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.IntNullableWithAggregatesFilter<"LiquidityPosition"> | number | null
+  concentrationIndex?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringWithAggregatesFilter<"LiquidityPosition"> | string
+  riskLevel?: Prisma.StringWithAggregatesFilter<"LiquidityPosition"> | string
+  riskScore?: Prisma.DecimalNullableWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalWithAggregatesFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.JsonNullableWithAggregatesFilter<"LiquidityPosition">
   accountBreakdown?: Prisma.JsonNullableWithAggregatesFilter<"LiquidityPosition">
   currency?: Prisma.StringWithAggregatesFilter<"LiquidityPosition"> | string
   organizationId?: Prisma.StringWithAggregatesFilter<"LiquidityPosition"> | string
@@ -543,16 +755,30 @@ export type LiquidityPositionCreateInput = {
   restrictedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: number | null
   runwayMonths?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: number | null
+  concentrationIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: string
   createdAt?: Date | string
@@ -569,16 +795,30 @@ export type LiquidityPositionUncheckedCreateInput = {
   restrictedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: number | null
   runwayMonths?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: number | null
+  concentrationIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: string
   organizationId: string
@@ -595,16 +835,30 @@ export type LiquidityPositionUpdateInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -621,16 +875,30 @@ export type LiquidityPositionUncheckedUpdateInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -647,16 +915,30 @@ export type LiquidityPositionCreateManyInput = {
   restrictedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: number | null
   runwayMonths?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: number | null
+  concentrationIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: string
   organizationId: string
@@ -673,16 +955,30 @@ export type LiquidityPositionUpdateManyMutationInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -698,16 +994,30 @@ export type LiquidityPositionUncheckedUpdateManyInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -740,16 +1050,30 @@ export type LiquidityPositionCountOrderByAggregateInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrder
   runwayDays?: Prisma.SortOrder
   runwayMonths?: Prisma.SortOrder
   currentRatio?: Prisma.SortOrder
   quickRatio?: Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrder
+  bufferDays?: Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
+  knownBlindSpots?: Prisma.SortOrder
   accountBreakdown?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -763,15 +1087,27 @@ export type LiquidityPositionAvgOrderByAggregateInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrder
   runwayDays?: Prisma.SortOrder
   runwayMonths?: Prisma.SortOrder
   currentRatio?: Prisma.SortOrder
   quickRatio?: Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrder
+  bufferDays?: Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
 }
 
 export type LiquidityPositionMaxOrderByAggregateInput = {
@@ -784,16 +1120,29 @@ export type LiquidityPositionMaxOrderByAggregateInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrder
   runwayDays?: Prisma.SortOrder
   runwayMonths?: Prisma.SortOrder
   currentRatio?: Prisma.SortOrder
   quickRatio?: Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrder
+  bufferDays?: Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -809,16 +1158,29 @@ export type LiquidityPositionMinOrderByAggregateInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrder
   runwayDays?: Prisma.SortOrder
   runwayMonths?: Prisma.SortOrder
   currentRatio?: Prisma.SortOrder
   quickRatio?: Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrder
+  bufferDays?: Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -831,15 +1193,27 @@ export type LiquidityPositionSumOrderByAggregateInput = {
   restrictedCash?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   totalLiquidity?: Prisma.SortOrder
+  minimumBuffer?: Prisma.SortOrder
   expectedInflows?: Prisma.SortOrder
   expectedOutflows?: Prisma.SortOrder
   netCashFlow?: Prisma.SortOrder
+  confirmedInflows?: Prisma.SortOrder
+  expectedInflows2?: Prisma.SortOrder
+  estimatedInflows?: Prisma.SortOrder
+  confirmedOutflows?: Prisma.SortOrder
+  expectedOutflows2?: Prisma.SortOrder
+  estimatedOutflows?: Prisma.SortOrder
   projectedEndingCash?: Prisma.SortOrder
   runwayDays?: Prisma.SortOrder
   runwayMonths?: Prisma.SortOrder
   currentRatio?: Prisma.SortOrder
   quickRatio?: Prisma.SortOrder
   cashBurnRate?: Prisma.SortOrder
+  bufferDays?: Prisma.SortOrder
+  concentrationIndex?: Prisma.SortOrder
+  volatilityIndex?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  dataCompleteness?: Prisma.SortOrder
 }
 
 export type LiquidityPositionCreateNestedManyWithoutOrganizationInput = {
@@ -894,16 +1268,30 @@ export type LiquidityPositionCreateWithoutOrganizationInput = {
   restrictedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: number | null
   runwayMonths?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: number | null
+  concentrationIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: string
   createdAt?: Date | string
@@ -919,16 +1307,30 @@ export type LiquidityPositionUncheckedCreateWithoutOrganizationInput = {
   restrictedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: number | null
   runwayMonths?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: number | null
+  concentrationIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: string
   createdAt?: Date | string
@@ -973,16 +1375,30 @@ export type LiquidityPositionScalarWhereInput = {
   restrictedCash?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.IntNullableFilter<"LiquidityPosition"> | number | null
   runwayMonths?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.IntNullableFilter<"LiquidityPosition"> | number | null
+  concentrationIndex?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFilter<"LiquidityPosition"> | string
+  riskLevel?: Prisma.StringFilter<"LiquidityPosition"> | string
+  riskScore?: Prisma.DecimalNullableFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFilter<"LiquidityPosition"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.JsonNullableFilter<"LiquidityPosition">
   accountBreakdown?: Prisma.JsonNullableFilter<"LiquidityPosition">
   currency?: Prisma.StringFilter<"LiquidityPosition"> | string
   organizationId?: Prisma.StringFilter<"LiquidityPosition"> | string
@@ -999,16 +1415,30 @@ export type LiquidityPositionCreateManyOrganizationInput = {
   restrictedCash?: runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: number | null
   runwayMonths?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: number | null
+  concentrationIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: string
   createdAt?: Date | string
@@ -1024,16 +1454,30 @@ export type LiquidityPositionUpdateWithoutOrganizationInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1049,16 +1493,30 @@ export type LiquidityPositionUncheckedUpdateWithoutOrganizationInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1074,16 +1532,30 @@ export type LiquidityPositionUncheckedUpdateManyWithoutOrganizationInput = {
   restrictedCash?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   availableCredit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   totalLiquidity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  minimumBuffer?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   netCashFlow?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedInflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedInflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  confirmedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  expectedOutflows2?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedOutflows?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   projectedEndingCash?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   runwayDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   runwayMonths?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   currentRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   quickRatio?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   cashBurnRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bufferDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  concentrationIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatilityIndex?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  dataCompleteness?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  knownBlindSpots?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   accountBreakdown?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1101,16 +1573,30 @@ export type LiquidityPositionSelect<ExtArgs extends runtime.Types.Extensions.Int
   restrictedCash?: boolean
   availableCredit?: boolean
   totalLiquidity?: boolean
+  minimumBuffer?: boolean
   expectedInflows?: boolean
   expectedOutflows?: boolean
   netCashFlow?: boolean
+  confirmedInflows?: boolean
+  expectedInflows2?: boolean
+  estimatedInflows?: boolean
+  confirmedOutflows?: boolean
+  expectedOutflows2?: boolean
+  estimatedOutflows?: boolean
   projectedEndingCash?: boolean
   runwayDays?: boolean
   runwayMonths?: boolean
   currentRatio?: boolean
   quickRatio?: boolean
   cashBurnRate?: boolean
+  bufferDays?: boolean
+  concentrationIndex?: boolean
+  volatilityIndex?: boolean
   status?: boolean
+  riskLevel?: boolean
+  riskScore?: boolean
+  dataCompleteness?: boolean
+  knownBlindSpots?: boolean
   accountBreakdown?: boolean
   currency?: boolean
   organizationId?: boolean
@@ -1128,16 +1614,30 @@ export type LiquidityPositionSelectCreateManyAndReturn<ExtArgs extends runtime.T
   restrictedCash?: boolean
   availableCredit?: boolean
   totalLiquidity?: boolean
+  minimumBuffer?: boolean
   expectedInflows?: boolean
   expectedOutflows?: boolean
   netCashFlow?: boolean
+  confirmedInflows?: boolean
+  expectedInflows2?: boolean
+  estimatedInflows?: boolean
+  confirmedOutflows?: boolean
+  expectedOutflows2?: boolean
+  estimatedOutflows?: boolean
   projectedEndingCash?: boolean
   runwayDays?: boolean
   runwayMonths?: boolean
   currentRatio?: boolean
   quickRatio?: boolean
   cashBurnRate?: boolean
+  bufferDays?: boolean
+  concentrationIndex?: boolean
+  volatilityIndex?: boolean
   status?: boolean
+  riskLevel?: boolean
+  riskScore?: boolean
+  dataCompleteness?: boolean
+  knownBlindSpots?: boolean
   accountBreakdown?: boolean
   currency?: boolean
   organizationId?: boolean
@@ -1155,16 +1655,30 @@ export type LiquidityPositionSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   restrictedCash?: boolean
   availableCredit?: boolean
   totalLiquidity?: boolean
+  minimumBuffer?: boolean
   expectedInflows?: boolean
   expectedOutflows?: boolean
   netCashFlow?: boolean
+  confirmedInflows?: boolean
+  expectedInflows2?: boolean
+  estimatedInflows?: boolean
+  confirmedOutflows?: boolean
+  expectedOutflows2?: boolean
+  estimatedOutflows?: boolean
   projectedEndingCash?: boolean
   runwayDays?: boolean
   runwayMonths?: boolean
   currentRatio?: boolean
   quickRatio?: boolean
   cashBurnRate?: boolean
+  bufferDays?: boolean
+  concentrationIndex?: boolean
+  volatilityIndex?: boolean
   status?: boolean
+  riskLevel?: boolean
+  riskScore?: boolean
+  dataCompleteness?: boolean
+  knownBlindSpots?: boolean
   accountBreakdown?: boolean
   currency?: boolean
   organizationId?: boolean
@@ -1182,23 +1696,37 @@ export type LiquidityPositionSelectScalar = {
   restrictedCash?: boolean
   availableCredit?: boolean
   totalLiquidity?: boolean
+  minimumBuffer?: boolean
   expectedInflows?: boolean
   expectedOutflows?: boolean
   netCashFlow?: boolean
+  confirmedInflows?: boolean
+  expectedInflows2?: boolean
+  estimatedInflows?: boolean
+  confirmedOutflows?: boolean
+  expectedOutflows2?: boolean
+  estimatedOutflows?: boolean
   projectedEndingCash?: boolean
   runwayDays?: boolean
   runwayMonths?: boolean
   currentRatio?: boolean
   quickRatio?: boolean
   cashBurnRate?: boolean
+  bufferDays?: boolean
+  concentrationIndex?: boolean
+  volatilityIndex?: boolean
   status?: boolean
+  riskLevel?: boolean
+  riskScore?: boolean
+  dataCompleteness?: boolean
+  knownBlindSpots?: boolean
   accountBreakdown?: boolean
   currency?: boolean
   organizationId?: boolean
   createdAt?: boolean
 }
 
-export type LiquidityPositionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "positionDate" | "periodType" | "totalCash" | "operatingCash" | "reserveCash" | "restrictedCash" | "availableCredit" | "totalLiquidity" | "expectedInflows" | "expectedOutflows" | "netCashFlow" | "projectedEndingCash" | "runwayDays" | "runwayMonths" | "currentRatio" | "quickRatio" | "cashBurnRate" | "status" | "accountBreakdown" | "currency" | "organizationId" | "createdAt", ExtArgs["result"]["liquidityPosition"]>
+export type LiquidityPositionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "positionDate" | "periodType" | "totalCash" | "operatingCash" | "reserveCash" | "restrictedCash" | "availableCredit" | "totalLiquidity" | "minimumBuffer" | "expectedInflows" | "expectedOutflows" | "netCashFlow" | "confirmedInflows" | "expectedInflows2" | "estimatedInflows" | "confirmedOutflows" | "expectedOutflows2" | "estimatedOutflows" | "projectedEndingCash" | "runwayDays" | "runwayMonths" | "currentRatio" | "quickRatio" | "cashBurnRate" | "bufferDays" | "concentrationIndex" | "volatilityIndex" | "status" | "riskLevel" | "riskScore" | "dataCompleteness" | "knownBlindSpots" | "accountBreakdown" | "currency" | "organizationId" | "createdAt", ExtArgs["result"]["liquidityPosition"]>
 export type LiquidityPositionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
@@ -1224,16 +1752,30 @@ export type $LiquidityPositionPayload<ExtArgs extends runtime.Types.Extensions.I
     restrictedCash: runtime.Decimal
     availableCredit: runtime.Decimal
     totalLiquidity: runtime.Decimal
+    minimumBuffer: runtime.Decimal
     expectedInflows: runtime.Decimal
     expectedOutflows: runtime.Decimal
     netCashFlow: runtime.Decimal
+    confirmedInflows: runtime.Decimal
+    expectedInflows2: runtime.Decimal
+    estimatedInflows: runtime.Decimal
+    confirmedOutflows: runtime.Decimal
+    expectedOutflows2: runtime.Decimal
+    estimatedOutflows: runtime.Decimal
     projectedEndingCash: runtime.Decimal | null
     runwayDays: number | null
     runwayMonths: runtime.Decimal | null
     currentRatio: runtime.Decimal | null
     quickRatio: runtime.Decimal | null
     cashBurnRate: runtime.Decimal | null
+    bufferDays: number | null
+    concentrationIndex: runtime.Decimal | null
+    volatilityIndex: runtime.Decimal | null
     status: string
+    riskLevel: string
+    riskScore: runtime.Decimal | null
+    dataCompleteness: runtime.Decimal
+    knownBlindSpots: runtime.JsonValue | null
     accountBreakdown: runtime.JsonValue | null
     currency: string
     organizationId: string
@@ -1671,16 +2213,30 @@ export interface LiquidityPositionFieldRefs {
   readonly restrictedCash: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly availableCredit: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly totalLiquidity: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly minimumBuffer: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly expectedInflows: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly expectedOutflows: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly netCashFlow: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly confirmedInflows: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly expectedInflows2: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly estimatedInflows: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly confirmedOutflows: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly expectedOutflows2: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly estimatedOutflows: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly projectedEndingCash: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly runwayDays: Prisma.FieldRef<"LiquidityPosition", 'Int'>
   readonly runwayMonths: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly currentRatio: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly quickRatio: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly cashBurnRate: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly bufferDays: Prisma.FieldRef<"LiquidityPosition", 'Int'>
+  readonly concentrationIndex: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly volatilityIndex: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
   readonly status: Prisma.FieldRef<"LiquidityPosition", 'String'>
+  readonly riskLevel: Prisma.FieldRef<"LiquidityPosition", 'String'>
+  readonly riskScore: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly dataCompleteness: Prisma.FieldRef<"LiquidityPosition", 'Decimal'>
+  readonly knownBlindSpots: Prisma.FieldRef<"LiquidityPosition", 'Json'>
   readonly accountBreakdown: Prisma.FieldRef<"LiquidityPosition", 'Json'>
   readonly currency: Prisma.FieldRef<"LiquidityPosition", 'String'>
   readonly organizationId: Prisma.FieldRef<"LiquidityPosition", 'String'>

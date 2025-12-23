@@ -1,114 +1,81 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
-import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils'
+// src/app/api/customers/[id]/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils';
 
-// GET /api/customers/[id]
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+type Params = { params: Promise<{ id: string }> };
 
-  const { id } = await params
+export async function GET(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
+
+  const { id } = await params;
 
   const customer = await prisma.customer.findFirst({
     where: { id, organizationId: user.organizationId },
     include: {
-      contacts: { orderBy: [{ isPrimary: 'desc' }, { name: 'asc' }] },
-      payments: { orderBy: { invoiceDate: 'desc' }, take: 20 },
-      creditEvents: { orderBy: { createdAt: 'desc' }, take: 10 },
-      revenueRecords: { orderBy: { period: 'desc' } },
-      riskIndicators: { orderBy: [{ status: 'asc' }, { severity: 'desc' }] },
+      contacts: true,
+      payments: { orderBy: { paymentDate: 'desc' }, take: 50 },
+      creditEvents: { orderBy: { createdAt: 'desc' }, take: 20 },
+      revenueRecords: { orderBy: { period: 'desc' }, take: 24 },
+      riskIndicators: { orderBy: { createdAt: 'desc' } },
     },
-  })
+  });
 
-  if (!customer) return notFound('Customer not found')
-
-  return NextResponse.json(customer)
+  if (!customer) return notFound('Customer');
+  return NextResponse.json(customer);
 }
 
-// PATCH /api/customers/[id]
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+export async function PATCH(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const { id } = await params
-  const body = await req.json()
+  const { id } = await params;
+  const body = await req.json();
 
-  const current = await prisma.customer.findFirst({
+  // Build update data, converting dates
+  const updateData: Record<string, unknown> = { ...body };
+  const dateFields = ['customerSince', 'lastActivityDate', 'lastPurchaseDate', 'lastOrderDate', 'lastPaymentDate', 'lastContactDate'];
+  dateFields.forEach((field) => {
+    if (body[field]) updateData[field] = new Date(body[field]);
+  });
+
+  // Recalculate credit available if credit limit changed
+  if (body.creditLimit !== undefined) {
+    const existing = await prisma.customer.findUnique({ where: { id } });
+    if (existing) {
+      updateData.creditAvailable = body.creditLimit - Number(existing.creditUsed);
+    }
+  }
+
+  const result = await prisma.customer.updateMany({
     where: { id, organizationId: user.organizationId },
-  })
-  if (!current) return notFound('Customer not found')
+    data: updateData,
+  });
 
-  // Handle credit limit changes
-  if (body.creditLimit !== undefined && body.creditLimit !== Number(current.creditLimit)) {
-    const newLimit = body.creditLimit
-    const creditUsed = Number(current.creditUsed)
-    body.creditAvailable = Math.max(0, newLimit - creditUsed)
+  if (result.count === 0) return notFound('Customer');
 
-    await prisma.customerCreditEvent.create({
-      data: {
-        customerId: id,
-        type: newLimit > Number(current.creditLimit) ? 'limit_increase' : 'limit_decrease',
-        previousValue: current.creditLimit.toString(),
-        newValue: newLimit.toString(),
-        reason: body.creditChangeReason || 'Credit limit adjusted',
-        changedBy: user.id,
-        changedByName: user.name || undefined,
-        organizationId: user.organizationId,
-      },
-    })
-    delete body.creditChangeReason
-  }
-
-  // Handle credit status changes
-  if (body.creditStatus && body.creditStatus !== current.creditStatus) {
-    await prisma.customerCreditEvent.create({
-      data: {
-        customerId: id,
-        type: 'status_change',
-        previousValue: current.creditStatus,
-        newValue: body.creditStatus,
-        reason: body.statusChangeReason || 'Credit status updated',
-        changedBy: user.id,
-        changedByName: user.name || undefined,
-        organizationId: user.organizationId,
-      },
-    })
-    delete body.statusChangeReason
-  }
-
-  const result = await prisma.customer.update({
+  const updated = await prisma.customer.findUnique({
     where: { id },
-    data: body,
     include: {
       contacts: true,
-      _count: { select: { payments: true, riskIndicators: true } },
+      riskIndicators: { where: { status: 'active' } },
     },
-  })
+  });
 
-  return NextResponse.json(result)
+  return NextResponse.json(updated);
 }
 
-// DELETE /api/customers/[id]
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const user = await getSessionWithOrg()
-  if (!user?.organizationId) return unauthorized()
+export async function DELETE(req: NextRequest, { params }: Params) {
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
-  const { id } = await params
+  const { id } = await params;
 
   const result = await prisma.customer.deleteMany({
     where: { id, organizationId: user.organizationId },
-  })
+  });
 
-  if (result.count === 0) return notFound('Customer not found')
-
-  return NextResponse.json({ success: true })
+  if (result.count === 0) return notFound('Customer');
+  return NextResponse.json({ success: true });
 }

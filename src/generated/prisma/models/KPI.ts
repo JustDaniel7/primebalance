@@ -31,6 +31,15 @@ export type KPIAvgAggregateOutputType = {
   previousValue: runtime.Decimal | null
   targetValue: runtime.Decimal | null
   baselineValue: runtime.Decimal | null
+  rollingAvg3M: runtime.Decimal | null
+  rollingAvg6M: runtime.Decimal | null
+  rollingAvg12M: runtime.Decimal | null
+  deltaVsPrior: runtime.Decimal | null
+  deltaVsPriorPercent: runtime.Decimal | null
+  deltaVsTarget: runtime.Decimal | null
+  deltaVsTargetPercent: runtime.Decimal | null
+  seasonalityFactor: runtime.Decimal | null
+  volatility: runtime.Decimal | null
   displayOrder: number | null
 }
 
@@ -39,6 +48,15 @@ export type KPISumAggregateOutputType = {
   previousValue: runtime.Decimal | null
   targetValue: runtime.Decimal | null
   baselineValue: runtime.Decimal | null
+  rollingAvg3M: runtime.Decimal | null
+  rollingAvg6M: runtime.Decimal | null
+  rollingAvg12M: runtime.Decimal | null
+  deltaVsPrior: runtime.Decimal | null
+  deltaVsPriorPercent: runtime.Decimal | null
+  deltaVsTarget: runtime.Decimal | null
+  deltaVsTargetPercent: runtime.Decimal | null
+  seasonalityFactor: runtime.Decimal | null
+  volatility: runtime.Decimal | null
   displayOrder: number | null
 }
 
@@ -46,19 +64,34 @@ export type KPIMinAggregateOutputType = {
   id: string | null
   code: string | null
   name: string | null
+  shortName: string | null
   description: string | null
   category: string | null
   calculationType: string | null
   formula: string | null
   dataSource: string | null
   unit: string | null
+  format: string | null
+  higherIsBetter: boolean | null
   currentValue: runtime.Decimal | null
   previousValue: runtime.Decimal | null
   targetValue: runtime.Decimal | null
   baselineValue: runtime.Decimal | null
+  rollingAvg3M: runtime.Decimal | null
+  rollingAvg6M: runtime.Decimal | null
+  rollingAvg12M: runtime.Decimal | null
+  deltaVsPrior: runtime.Decimal | null
+  deltaVsPriorPercent: runtime.Decimal | null
+  deltaVsTarget: runtime.Decimal | null
+  deltaVsTargetPercent: runtime.Decimal | null
   status: string | null
   trend: string | null
   trendMomentum: string | null
+  dataFreshness: string | null
+  lastCalculatedAt: Date | null
+  seasonalityFactor: runtime.Decimal | null
+  volatility: runtime.Decimal | null
+  isAnomaly: boolean | null
   displayOrder: number | null
   isVisible: boolean | null
   isPinned: boolean | null
@@ -72,19 +105,34 @@ export type KPIMaxAggregateOutputType = {
   id: string | null
   code: string | null
   name: string | null
+  shortName: string | null
   description: string | null
   category: string | null
   calculationType: string | null
   formula: string | null
   dataSource: string | null
   unit: string | null
+  format: string | null
+  higherIsBetter: boolean | null
   currentValue: runtime.Decimal | null
   previousValue: runtime.Decimal | null
   targetValue: runtime.Decimal | null
   baselineValue: runtime.Decimal | null
+  rollingAvg3M: runtime.Decimal | null
+  rollingAvg6M: runtime.Decimal | null
+  rollingAvg12M: runtime.Decimal | null
+  deltaVsPrior: runtime.Decimal | null
+  deltaVsPriorPercent: runtime.Decimal | null
+  deltaVsTarget: runtime.Decimal | null
+  deltaVsTargetPercent: runtime.Decimal | null
   status: string | null
   trend: string | null
   trendMomentum: string | null
+  dataFreshness: string | null
+  lastCalculatedAt: Date | null
+  seasonalityFactor: runtime.Decimal | null
+  volatility: runtime.Decimal | null
+  isAnomaly: boolean | null
   displayOrder: number | null
   isVisible: boolean | null
   isPinned: boolean | null
@@ -98,20 +146,36 @@ export type KPICountAggregateOutputType = {
   id: number
   code: number
   name: number
+  shortName: number
   description: number
   category: number
   calculationType: number
   formula: number
   dataSource: number
+  dataSources: number
   unit: number
+  format: number
+  higherIsBetter: number
   currentValue: number
   previousValue: number
   targetValue: number
   baselineValue: number
+  rollingAvg3M: number
+  rollingAvg6M: number
+  rollingAvg12M: number
+  deltaVsPrior: number
+  deltaVsPriorPercent: number
+  deltaVsTarget: number
+  deltaVsTargetPercent: number
   status: number
   trend: number
   trendMomentum: number
+  dataFreshness: number
+  lastCalculatedAt: number
   thresholds: number
+  seasonalityFactor: number
+  volatility: number
+  isAnomaly: number
   displayOrder: number
   isVisible: number
   isPinned: number
@@ -129,6 +193,15 @@ export type KPIAvgAggregateInputType = {
   previousValue?: true
   targetValue?: true
   baselineValue?: true
+  rollingAvg3M?: true
+  rollingAvg6M?: true
+  rollingAvg12M?: true
+  deltaVsPrior?: true
+  deltaVsPriorPercent?: true
+  deltaVsTarget?: true
+  deltaVsTargetPercent?: true
+  seasonalityFactor?: true
+  volatility?: true
   displayOrder?: true
 }
 
@@ -137,6 +210,15 @@ export type KPISumAggregateInputType = {
   previousValue?: true
   targetValue?: true
   baselineValue?: true
+  rollingAvg3M?: true
+  rollingAvg6M?: true
+  rollingAvg12M?: true
+  deltaVsPrior?: true
+  deltaVsPriorPercent?: true
+  deltaVsTarget?: true
+  deltaVsTargetPercent?: true
+  seasonalityFactor?: true
+  volatility?: true
   displayOrder?: true
 }
 
@@ -144,19 +226,34 @@ export type KPIMinAggregateInputType = {
   id?: true
   code?: true
   name?: true
+  shortName?: true
   description?: true
   category?: true
   calculationType?: true
   formula?: true
   dataSource?: true
   unit?: true
+  format?: true
+  higherIsBetter?: true
   currentValue?: true
   previousValue?: true
   targetValue?: true
   baselineValue?: true
+  rollingAvg3M?: true
+  rollingAvg6M?: true
+  rollingAvg12M?: true
+  deltaVsPrior?: true
+  deltaVsPriorPercent?: true
+  deltaVsTarget?: true
+  deltaVsTargetPercent?: true
   status?: true
   trend?: true
   trendMomentum?: true
+  dataFreshness?: true
+  lastCalculatedAt?: true
+  seasonalityFactor?: true
+  volatility?: true
+  isAnomaly?: true
   displayOrder?: true
   isVisible?: true
   isPinned?: true
@@ -170,19 +267,34 @@ export type KPIMaxAggregateInputType = {
   id?: true
   code?: true
   name?: true
+  shortName?: true
   description?: true
   category?: true
   calculationType?: true
   formula?: true
   dataSource?: true
   unit?: true
+  format?: true
+  higherIsBetter?: true
   currentValue?: true
   previousValue?: true
   targetValue?: true
   baselineValue?: true
+  rollingAvg3M?: true
+  rollingAvg6M?: true
+  rollingAvg12M?: true
+  deltaVsPrior?: true
+  deltaVsPriorPercent?: true
+  deltaVsTarget?: true
+  deltaVsTargetPercent?: true
   status?: true
   trend?: true
   trendMomentum?: true
+  dataFreshness?: true
+  lastCalculatedAt?: true
+  seasonalityFactor?: true
+  volatility?: true
+  isAnomaly?: true
   displayOrder?: true
   isVisible?: true
   isPinned?: true
@@ -196,20 +308,36 @@ export type KPICountAggregateInputType = {
   id?: true
   code?: true
   name?: true
+  shortName?: true
   description?: true
   category?: true
   calculationType?: true
   formula?: true
   dataSource?: true
+  dataSources?: true
   unit?: true
+  format?: true
+  higherIsBetter?: true
   currentValue?: true
   previousValue?: true
   targetValue?: true
   baselineValue?: true
+  rollingAvg3M?: true
+  rollingAvg6M?: true
+  rollingAvg12M?: true
+  deltaVsPrior?: true
+  deltaVsPriorPercent?: true
+  deltaVsTarget?: true
+  deltaVsTargetPercent?: true
   status?: true
   trend?: true
   trendMomentum?: true
+  dataFreshness?: true
+  lastCalculatedAt?: true
   thresholds?: true
+  seasonalityFactor?: true
+  volatility?: true
+  isAnomaly?: true
   displayOrder?: true
   isVisible?: true
   isPinned?: true
@@ -311,20 +439,36 @@ export type KPIGroupByOutputType = {
   id: string
   code: string
   name: string
+  shortName: string | null
   description: string | null
   category: string
   calculationType: string
   formula: string | null
   dataSource: string | null
+  dataSources: string[]
   unit: string
+  format: string
+  higherIsBetter: boolean
   currentValue: runtime.Decimal | null
   previousValue: runtime.Decimal | null
   targetValue: runtime.Decimal | null
   baselineValue: runtime.Decimal | null
+  rollingAvg3M: runtime.Decimal | null
+  rollingAvg6M: runtime.Decimal | null
+  rollingAvg12M: runtime.Decimal | null
+  deltaVsPrior: runtime.Decimal | null
+  deltaVsPriorPercent: runtime.Decimal | null
+  deltaVsTarget: runtime.Decimal | null
+  deltaVsTargetPercent: runtime.Decimal | null
   status: string
   trend: string
   trendMomentum: string
+  dataFreshness: string
+  lastCalculatedAt: Date
   thresholds: runtime.JsonValue | null
+  seasonalityFactor: runtime.Decimal | null
+  volatility: runtime.Decimal | null
+  isAnomaly: boolean
   displayOrder: number
   isVisible: boolean
   isPinned: boolean
@@ -362,20 +506,36 @@ export type KPIWhereInput = {
   id?: Prisma.StringFilter<"KPI"> | string
   code?: Prisma.StringFilter<"KPI"> | string
   name?: Prisma.StringFilter<"KPI"> | string
+  shortName?: Prisma.StringNullableFilter<"KPI"> | string | null
   description?: Prisma.StringNullableFilter<"KPI"> | string | null
   category?: Prisma.StringFilter<"KPI"> | string
   calculationType?: Prisma.StringFilter<"KPI"> | string
   formula?: Prisma.StringNullableFilter<"KPI"> | string | null
   dataSource?: Prisma.StringNullableFilter<"KPI"> | string | null
+  dataSources?: Prisma.StringNullableListFilter<"KPI">
   unit?: Prisma.StringFilter<"KPI"> | string
+  format?: Prisma.StringFilter<"KPI"> | string
+  higherIsBetter?: Prisma.BoolFilter<"KPI"> | boolean
   currentValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFilter<"KPI"> | string
   trend?: Prisma.StringFilter<"KPI"> | string
   trendMomentum?: Prisma.StringFilter<"KPI"> | string
+  dataFreshness?: Prisma.StringFilter<"KPI"> | string
+  lastCalculatedAt?: Prisma.DateTimeFilter<"KPI"> | Date | string
   thresholds?: Prisma.JsonNullableFilter<"KPI">
+  seasonalityFactor?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFilter<"KPI"> | boolean
   displayOrder?: Prisma.IntFilter<"KPI"> | number
   isVisible?: Prisma.BoolFilter<"KPI"> | boolean
   isPinned?: Prisma.BoolFilter<"KPI"> | boolean
@@ -386,26 +546,45 @@ export type KPIWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"KPI"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   history?: Prisma.KPIHistoryListRelationFilter
+  alerts?: Prisma.KPIAlertListRelationFilter
+  targets?: Prisma.KPITargetListRelationFilter
+  benchmarks?: Prisma.KPIBenchmarkListRelationFilter
 }
 
 export type KPIOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortName?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrder
   calculationType?: Prisma.SortOrder
   formula?: Prisma.SortOrderInput | Prisma.SortOrder
   dataSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataSources?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  higherIsBetter?: Prisma.SortOrder
   currentValue?: Prisma.SortOrderInput | Prisma.SortOrder
   previousValue?: Prisma.SortOrderInput | Prisma.SortOrder
   targetValue?: Prisma.SortOrderInput | Prisma.SortOrder
   baselineValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
   trendMomentum?: Prisma.SortOrder
+  dataFreshness?: Prisma.SortOrder
+  lastCalculatedAt?: Prisma.SortOrder
   thresholds?: Prisma.SortOrderInput | Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrderInput | Prisma.SortOrder
+  volatility?: Prisma.SortOrderInput | Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
@@ -416,6 +595,9 @@ export type KPIOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
   history?: Prisma.KPIHistoryOrderByRelationAggregateInput
+  alerts?: Prisma.KPIAlertOrderByRelationAggregateInput
+  targets?: Prisma.KPITargetOrderByRelationAggregateInput
+  benchmarks?: Prisma.KPIBenchmarkOrderByRelationAggregateInput
 }
 
 export type KPIWhereUniqueInput = Prisma.AtLeast<{
@@ -426,20 +608,36 @@ export type KPIWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.KPIWhereInput | Prisma.KPIWhereInput[]
   code?: Prisma.StringFilter<"KPI"> | string
   name?: Prisma.StringFilter<"KPI"> | string
+  shortName?: Prisma.StringNullableFilter<"KPI"> | string | null
   description?: Prisma.StringNullableFilter<"KPI"> | string | null
   category?: Prisma.StringFilter<"KPI"> | string
   calculationType?: Prisma.StringFilter<"KPI"> | string
   formula?: Prisma.StringNullableFilter<"KPI"> | string | null
   dataSource?: Prisma.StringNullableFilter<"KPI"> | string | null
+  dataSources?: Prisma.StringNullableListFilter<"KPI">
   unit?: Prisma.StringFilter<"KPI"> | string
+  format?: Prisma.StringFilter<"KPI"> | string
+  higherIsBetter?: Prisma.BoolFilter<"KPI"> | boolean
   currentValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFilter<"KPI"> | string
   trend?: Prisma.StringFilter<"KPI"> | string
   trendMomentum?: Prisma.StringFilter<"KPI"> | string
+  dataFreshness?: Prisma.StringFilter<"KPI"> | string
+  lastCalculatedAt?: Prisma.DateTimeFilter<"KPI"> | Date | string
   thresholds?: Prisma.JsonNullableFilter<"KPI">
+  seasonalityFactor?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFilter<"KPI"> | boolean
   displayOrder?: Prisma.IntFilter<"KPI"> | number
   isVisible?: Prisma.BoolFilter<"KPI"> | boolean
   isPinned?: Prisma.BoolFilter<"KPI"> | boolean
@@ -450,26 +648,45 @@ export type KPIWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"KPI"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   history?: Prisma.KPIHistoryListRelationFilter
+  alerts?: Prisma.KPIAlertListRelationFilter
+  targets?: Prisma.KPITargetListRelationFilter
+  benchmarks?: Prisma.KPIBenchmarkListRelationFilter
 }, "id" | "organizationId_code">
 
 export type KPIOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortName?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.SortOrder
   calculationType?: Prisma.SortOrder
   formula?: Prisma.SortOrderInput | Prisma.SortOrder
   dataSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  dataSources?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  higherIsBetter?: Prisma.SortOrder
   currentValue?: Prisma.SortOrderInput | Prisma.SortOrder
   previousValue?: Prisma.SortOrderInput | Prisma.SortOrder
   targetValue?: Prisma.SortOrderInput | Prisma.SortOrder
   baselineValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrderInput | Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
   trendMomentum?: Prisma.SortOrder
+  dataFreshness?: Prisma.SortOrder
+  lastCalculatedAt?: Prisma.SortOrder
   thresholds?: Prisma.SortOrderInput | Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrderInput | Prisma.SortOrder
+  volatility?: Prisma.SortOrderInput | Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
@@ -492,20 +709,36 @@ export type KPIScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"KPI"> | string
   code?: Prisma.StringWithAggregatesFilter<"KPI"> | string
   name?: Prisma.StringWithAggregatesFilter<"KPI"> | string
+  shortName?: Prisma.StringNullableWithAggregatesFilter<"KPI"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"KPI"> | string | null
   category?: Prisma.StringWithAggregatesFilter<"KPI"> | string
   calculationType?: Prisma.StringWithAggregatesFilter<"KPI"> | string
   formula?: Prisma.StringNullableWithAggregatesFilter<"KPI"> | string | null
   dataSource?: Prisma.StringNullableWithAggregatesFilter<"KPI"> | string | null
+  dataSources?: Prisma.StringNullableListFilter<"KPI">
   unit?: Prisma.StringWithAggregatesFilter<"KPI"> | string
+  format?: Prisma.StringWithAggregatesFilter<"KPI"> | string
+  higherIsBetter?: Prisma.BoolWithAggregatesFilter<"KPI"> | boolean
   currentValue?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringWithAggregatesFilter<"KPI"> | string
   trend?: Prisma.StringWithAggregatesFilter<"KPI"> | string
   trendMomentum?: Prisma.StringWithAggregatesFilter<"KPI"> | string
+  dataFreshness?: Prisma.StringWithAggregatesFilter<"KPI"> | string
+  lastCalculatedAt?: Prisma.DateTimeWithAggregatesFilter<"KPI"> | Date | string
   thresholds?: Prisma.JsonNullableWithAggregatesFilter<"KPI">
+  seasonalityFactor?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.DecimalNullableWithAggregatesFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolWithAggregatesFilter<"KPI"> | boolean
   displayOrder?: Prisma.IntWithAggregatesFilter<"KPI"> | number
   isVisible?: Prisma.BoolWithAggregatesFilter<"KPI"> | boolean
   isPinned?: Prisma.BoolWithAggregatesFilter<"KPI"> | boolean
@@ -520,20 +753,36 @@ export type KPICreateInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -543,26 +792,45 @@ export type KPICreateInput = {
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutKpisInput
   history?: Prisma.KPIHistoryCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkCreateNestedManyWithoutKpiInput
 }
 
 export type KPIUncheckedCreateInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -572,26 +840,45 @@ export type KPIUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   history?: Prisma.KPIHistoryUncheckedCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetUncheckedCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedCreateNestedManyWithoutKpiInput
 }
 
 export type KPIUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -601,26 +888,45 @@ export type KPIUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutKpisNestedInput
   history?: Prisma.KPIHistoryUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUpdateManyWithoutKpiNestedInput
 }
 
 export type KPIUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -630,26 +936,45 @@ export type KPIUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.KPIHistoryUncheckedUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUncheckedUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedUpdateManyWithoutKpiNestedInput
 }
 
 export type KPICreateManyInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -664,20 +989,36 @@ export type KPIUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -691,20 +1032,36 @@ export type KPIUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -734,20 +1091,36 @@ export type KPICountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortName?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
   calculationType?: Prisma.SortOrder
   formula?: Prisma.SortOrder
   dataSource?: Prisma.SortOrder
+  dataSources?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  higherIsBetter?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
   previousValue?: Prisma.SortOrder
   targetValue?: Prisma.SortOrder
   baselineValue?: Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
   trendMomentum?: Prisma.SortOrder
+  dataFreshness?: Prisma.SortOrder
+  lastCalculatedAt?: Prisma.SortOrder
   thresholds?: Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrder
+  volatility?: Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
@@ -763,6 +1136,15 @@ export type KPIAvgOrderByAggregateInput = {
   previousValue?: Prisma.SortOrder
   targetValue?: Prisma.SortOrder
   baselineValue?: Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrder
+  volatility?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
 }
 
@@ -770,19 +1152,34 @@ export type KPIMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortName?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
   calculationType?: Prisma.SortOrder
   formula?: Prisma.SortOrder
   dataSource?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  higherIsBetter?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
   previousValue?: Prisma.SortOrder
   targetValue?: Prisma.SortOrder
   baselineValue?: Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
   trendMomentum?: Prisma.SortOrder
+  dataFreshness?: Prisma.SortOrder
+  lastCalculatedAt?: Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrder
+  volatility?: Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
@@ -796,19 +1193,34 @@ export type KPIMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortName?: Prisma.SortOrder
   description?: Prisma.SortOrder
   category?: Prisma.SortOrder
   calculationType?: Prisma.SortOrder
   formula?: Prisma.SortOrder
   dataSource?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  format?: Prisma.SortOrder
+  higherIsBetter?: Prisma.SortOrder
   currentValue?: Prisma.SortOrder
   previousValue?: Prisma.SortOrder
   targetValue?: Prisma.SortOrder
   baselineValue?: Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrder
   status?: Prisma.SortOrder
   trend?: Prisma.SortOrder
   trendMomentum?: Prisma.SortOrder
+  dataFreshness?: Prisma.SortOrder
+  lastCalculatedAt?: Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrder
+  volatility?: Prisma.SortOrder
+  isAnomaly?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
   isVisible?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
@@ -823,6 +1235,15 @@ export type KPISumOrderByAggregateInput = {
   previousValue?: Prisma.SortOrder
   targetValue?: Prisma.SortOrder
   baselineValue?: Prisma.SortOrder
+  rollingAvg3M?: Prisma.SortOrder
+  rollingAvg6M?: Prisma.SortOrder
+  rollingAvg12M?: Prisma.SortOrder
+  deltaVsPrior?: Prisma.SortOrder
+  deltaVsPriorPercent?: Prisma.SortOrder
+  deltaVsTarget?: Prisma.SortOrder
+  deltaVsTargetPercent?: Prisma.SortOrder
+  seasonalityFactor?: Prisma.SortOrder
+  volatility?: Prisma.SortOrder
   displayOrder?: Prisma.SortOrder
 }
 
@@ -873,8 +1294,17 @@ export type KPIUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.KPIScalarWhereInput | Prisma.KPIScalarWhereInput[]
 }
 
+export type KPICreatedataSourcesInput = {
+  set: string[]
+}
+
 export type KPICreatetagsInput = {
   set: string[]
+}
+
+export type KPIUpdatedataSourcesInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type KPIUpdatetagsInput = {
@@ -896,24 +1326,82 @@ export type KPIUpdateOneRequiredWithoutHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.KPIUpdateToOneWithWhereWithoutHistoryInput, Prisma.KPIUpdateWithoutHistoryInput>, Prisma.KPIUncheckedUpdateWithoutHistoryInput>
 }
 
+export type KPICreateNestedOneWithoutAlertsInput = {
+  create?: Prisma.XOR<Prisma.KPICreateWithoutAlertsInput, Prisma.KPIUncheckedCreateWithoutAlertsInput>
+  connectOrCreate?: Prisma.KPICreateOrConnectWithoutAlertsInput
+  connect?: Prisma.KPIWhereUniqueInput
+}
+
+export type KPIUpdateOneRequiredWithoutAlertsNestedInput = {
+  create?: Prisma.XOR<Prisma.KPICreateWithoutAlertsInput, Prisma.KPIUncheckedCreateWithoutAlertsInput>
+  connectOrCreate?: Prisma.KPICreateOrConnectWithoutAlertsInput
+  upsert?: Prisma.KPIUpsertWithoutAlertsInput
+  connect?: Prisma.KPIWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KPIUpdateToOneWithWhereWithoutAlertsInput, Prisma.KPIUpdateWithoutAlertsInput>, Prisma.KPIUncheckedUpdateWithoutAlertsInput>
+}
+
+export type KPICreateNestedOneWithoutTargetsInput = {
+  create?: Prisma.XOR<Prisma.KPICreateWithoutTargetsInput, Prisma.KPIUncheckedCreateWithoutTargetsInput>
+  connectOrCreate?: Prisma.KPICreateOrConnectWithoutTargetsInput
+  connect?: Prisma.KPIWhereUniqueInput
+}
+
+export type KPIUpdateOneRequiredWithoutTargetsNestedInput = {
+  create?: Prisma.XOR<Prisma.KPICreateWithoutTargetsInput, Prisma.KPIUncheckedCreateWithoutTargetsInput>
+  connectOrCreate?: Prisma.KPICreateOrConnectWithoutTargetsInput
+  upsert?: Prisma.KPIUpsertWithoutTargetsInput
+  connect?: Prisma.KPIWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KPIUpdateToOneWithWhereWithoutTargetsInput, Prisma.KPIUpdateWithoutTargetsInput>, Prisma.KPIUncheckedUpdateWithoutTargetsInput>
+}
+
+export type KPICreateNestedOneWithoutBenchmarksInput = {
+  create?: Prisma.XOR<Prisma.KPICreateWithoutBenchmarksInput, Prisma.KPIUncheckedCreateWithoutBenchmarksInput>
+  connectOrCreate?: Prisma.KPICreateOrConnectWithoutBenchmarksInput
+  connect?: Prisma.KPIWhereUniqueInput
+}
+
+export type KPIUpdateOneRequiredWithoutBenchmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.KPICreateWithoutBenchmarksInput, Prisma.KPIUncheckedCreateWithoutBenchmarksInput>
+  connectOrCreate?: Prisma.KPICreateOrConnectWithoutBenchmarksInput
+  upsert?: Prisma.KPIUpsertWithoutBenchmarksInput
+  connect?: Prisma.KPIWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KPIUpdateToOneWithWhereWithoutBenchmarksInput, Prisma.KPIUpdateWithoutBenchmarksInput>, Prisma.KPIUncheckedUpdateWithoutBenchmarksInput>
+}
+
 export type KPICreateWithoutOrganizationInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -922,26 +1410,45 @@ export type KPICreateWithoutOrganizationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   history?: Prisma.KPIHistoryCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkCreateNestedManyWithoutKpiInput
 }
 
 export type KPIUncheckedCreateWithoutOrganizationInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -950,6 +1457,9 @@ export type KPIUncheckedCreateWithoutOrganizationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   history?: Prisma.KPIHistoryUncheckedCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetUncheckedCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedCreateNestedManyWithoutKpiInput
 }
 
 export type KPICreateOrConnectWithoutOrganizationInput = {
@@ -985,20 +1495,36 @@ export type KPIScalarWhereInput = {
   id?: Prisma.StringFilter<"KPI"> | string
   code?: Prisma.StringFilter<"KPI"> | string
   name?: Prisma.StringFilter<"KPI"> | string
+  shortName?: Prisma.StringNullableFilter<"KPI"> | string | null
   description?: Prisma.StringNullableFilter<"KPI"> | string | null
   category?: Prisma.StringFilter<"KPI"> | string
   calculationType?: Prisma.StringFilter<"KPI"> | string
   formula?: Prisma.StringNullableFilter<"KPI"> | string | null
   dataSource?: Prisma.StringNullableFilter<"KPI"> | string | null
+  dataSources?: Prisma.StringNullableListFilter<"KPI">
   unit?: Prisma.StringFilter<"KPI"> | string
+  format?: Prisma.StringFilter<"KPI"> | string
+  higherIsBetter?: Prisma.BoolFilter<"KPI"> | boolean
   currentValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFilter<"KPI"> | string
   trend?: Prisma.StringFilter<"KPI"> | string
   trendMomentum?: Prisma.StringFilter<"KPI"> | string
+  dataFreshness?: Prisma.StringFilter<"KPI"> | string
+  lastCalculatedAt?: Prisma.DateTimeFilter<"KPI"> | Date | string
   thresholds?: Prisma.JsonNullableFilter<"KPI">
+  seasonalityFactor?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.DecimalNullableFilter<"KPI"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFilter<"KPI"> | boolean
   displayOrder?: Prisma.IntFilter<"KPI"> | number
   isVisible?: Prisma.BoolFilter<"KPI"> | boolean
   isPinned?: Prisma.BoolFilter<"KPI"> | boolean
@@ -1013,20 +1539,36 @@ export type KPICreateWithoutHistoryInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -1035,26 +1577,45 @@ export type KPICreateWithoutHistoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutKpisInput
+  alerts?: Prisma.KPIAlertCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkCreateNestedManyWithoutKpiInput
 }
 
 export type KPIUncheckedCreateWithoutHistoryInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -1063,6 +1624,9 @@ export type KPIUncheckedCreateWithoutHistoryInput = {
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  alerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetUncheckedCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedCreateNestedManyWithoutKpiInput
 }
 
 export type KPICreateOrConnectWithoutHistoryInput = {
@@ -1085,20 +1649,36 @@ export type KPIUpdateWithoutHistoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1107,26 +1687,45 @@ export type KPIUpdateWithoutHistoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutKpisNestedInput
+  alerts?: Prisma.KPIAlertUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUpdateManyWithoutKpiNestedInput
 }
 
 export type KPIUncheckedUpdateWithoutHistoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1135,26 +1734,657 @@ export type KPIUncheckedUpdateWithoutHistoryInput = {
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUncheckedUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedUpdateManyWithoutKpiNestedInput
+}
+
+export type KPICreateWithoutAlertsInput = {
+  id?: string
+  code: string
+  name: string
+  shortName?: string | null
+  description?: string | null
+  category: string
+  calculationType?: string
+  formula?: string | null
+  dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
+  unit?: string
+  format?: string
+  higherIsBetter?: boolean
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  trend?: string
+  trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
+  displayOrder?: number
+  isVisible?: boolean
+  isPinned?: boolean
+  tags?: Prisma.KPICreatetagsInput | string[]
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutKpisInput
+  history?: Prisma.KPIHistoryCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkCreateNestedManyWithoutKpiInput
+}
+
+export type KPIUncheckedCreateWithoutAlertsInput = {
+  id?: string
+  code: string
+  name: string
+  shortName?: string | null
+  description?: string | null
+  category: string
+  calculationType?: string
+  formula?: string | null
+  dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
+  unit?: string
+  format?: string
+  higherIsBetter?: boolean
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  trend?: string
+  trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
+  displayOrder?: number
+  isVisible?: boolean
+  isPinned?: boolean
+  tags?: Prisma.KPICreatetagsInput | string[]
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.KPIHistoryUncheckedCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetUncheckedCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedCreateNestedManyWithoutKpiInput
+}
+
+export type KPICreateOrConnectWithoutAlertsInput = {
+  where: Prisma.KPIWhereUniqueInput
+  create: Prisma.XOR<Prisma.KPICreateWithoutAlertsInput, Prisma.KPIUncheckedCreateWithoutAlertsInput>
+}
+
+export type KPIUpsertWithoutAlertsInput = {
+  update: Prisma.XOR<Prisma.KPIUpdateWithoutAlertsInput, Prisma.KPIUncheckedUpdateWithoutAlertsInput>
+  create: Prisma.XOR<Prisma.KPICreateWithoutAlertsInput, Prisma.KPIUncheckedCreateWithoutAlertsInput>
+  where?: Prisma.KPIWhereInput
+}
+
+export type KPIUpdateToOneWithWhereWithoutAlertsInput = {
+  where?: Prisma.KPIWhereInput
+  data: Prisma.XOR<Prisma.KPIUpdateWithoutAlertsInput, Prisma.KPIUncheckedUpdateWithoutAlertsInput>
+}
+
+export type KPIUpdateWithoutAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  calculationType?: Prisma.StringFieldUpdateOperationsInput | string
+  formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  trend?: Prisma.StringFieldUpdateOperationsInput | string
+  trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tags?: Prisma.KPIUpdatetagsInput | string[]
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutKpisNestedInput
+  history?: Prisma.KPIHistoryUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUpdateManyWithoutKpiNestedInput
+}
+
+export type KPIUncheckedUpdateWithoutAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  calculationType?: Prisma.StringFieldUpdateOperationsInput | string
+  formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  trend?: Prisma.StringFieldUpdateOperationsInput | string
+  trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tags?: Prisma.KPIUpdatetagsInput | string[]
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.KPIHistoryUncheckedUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUncheckedUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedUpdateManyWithoutKpiNestedInput
+}
+
+export type KPICreateWithoutTargetsInput = {
+  id?: string
+  code: string
+  name: string
+  shortName?: string | null
+  description?: string | null
+  category: string
+  calculationType?: string
+  formula?: string | null
+  dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
+  unit?: string
+  format?: string
+  higherIsBetter?: boolean
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  trend?: string
+  trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
+  displayOrder?: number
+  isVisible?: boolean
+  isPinned?: boolean
+  tags?: Prisma.KPICreatetagsInput | string[]
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutKpisInput
+  history?: Prisma.KPIHistoryCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkCreateNestedManyWithoutKpiInput
+}
+
+export type KPIUncheckedCreateWithoutTargetsInput = {
+  id?: string
+  code: string
+  name: string
+  shortName?: string | null
+  description?: string | null
+  category: string
+  calculationType?: string
+  formula?: string | null
+  dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
+  unit?: string
+  format?: string
+  higherIsBetter?: boolean
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  trend?: string
+  trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
+  displayOrder?: number
+  isVisible?: boolean
+  isPinned?: boolean
+  tags?: Prisma.KPICreatetagsInput | string[]
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.KPIHistoryUncheckedCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutKpiInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedCreateNestedManyWithoutKpiInput
+}
+
+export type KPICreateOrConnectWithoutTargetsInput = {
+  where: Prisma.KPIWhereUniqueInput
+  create: Prisma.XOR<Prisma.KPICreateWithoutTargetsInput, Prisma.KPIUncheckedCreateWithoutTargetsInput>
+}
+
+export type KPIUpsertWithoutTargetsInput = {
+  update: Prisma.XOR<Prisma.KPIUpdateWithoutTargetsInput, Prisma.KPIUncheckedUpdateWithoutTargetsInput>
+  create: Prisma.XOR<Prisma.KPICreateWithoutTargetsInput, Prisma.KPIUncheckedCreateWithoutTargetsInput>
+  where?: Prisma.KPIWhereInput
+}
+
+export type KPIUpdateToOneWithWhereWithoutTargetsInput = {
+  where?: Prisma.KPIWhereInput
+  data: Prisma.XOR<Prisma.KPIUpdateWithoutTargetsInput, Prisma.KPIUncheckedUpdateWithoutTargetsInput>
+}
+
+export type KPIUpdateWithoutTargetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  calculationType?: Prisma.StringFieldUpdateOperationsInput | string
+  formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  trend?: Prisma.StringFieldUpdateOperationsInput | string
+  trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tags?: Prisma.KPIUpdatetagsInput | string[]
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutKpisNestedInput
+  history?: Prisma.KPIHistoryUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUpdateManyWithoutKpiNestedInput
+}
+
+export type KPIUncheckedUpdateWithoutTargetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  calculationType?: Prisma.StringFieldUpdateOperationsInput | string
+  formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  trend?: Prisma.StringFieldUpdateOperationsInput | string
+  trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tags?: Prisma.KPIUpdatetagsInput | string[]
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.KPIHistoryUncheckedUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedUpdateManyWithoutKpiNestedInput
+}
+
+export type KPICreateWithoutBenchmarksInput = {
+  id?: string
+  code: string
+  name: string
+  shortName?: string | null
+  description?: string | null
+  category: string
+  calculationType?: string
+  formula?: string | null
+  dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
+  unit?: string
+  format?: string
+  higherIsBetter?: boolean
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  trend?: string
+  trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
+  displayOrder?: number
+  isVisible?: boolean
+  isPinned?: boolean
+  tags?: Prisma.KPICreatetagsInput | string[]
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutKpisInput
+  history?: Prisma.KPIHistoryCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetCreateNestedManyWithoutKpiInput
+}
+
+export type KPIUncheckedCreateWithoutBenchmarksInput = {
+  id?: string
+  code: string
+  name: string
+  shortName?: string | null
+  description?: string | null
+  category: string
+  calculationType?: string
+  formula?: string | null
+  dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
+  unit?: string
+  format?: string
+  higherIsBetter?: boolean
+  currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  trend?: string
+  trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
+  displayOrder?: number
+  isVisible?: boolean
+  isPinned?: boolean
+  tags?: Prisma.KPICreatetagsInput | string[]
+  notes?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.KPIHistoryUncheckedCreateNestedManyWithoutKpiInput
+  alerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutKpiInput
+  targets?: Prisma.KPITargetUncheckedCreateNestedManyWithoutKpiInput
+}
+
+export type KPICreateOrConnectWithoutBenchmarksInput = {
+  where: Prisma.KPIWhereUniqueInput
+  create: Prisma.XOR<Prisma.KPICreateWithoutBenchmarksInput, Prisma.KPIUncheckedCreateWithoutBenchmarksInput>
+}
+
+export type KPIUpsertWithoutBenchmarksInput = {
+  update: Prisma.XOR<Prisma.KPIUpdateWithoutBenchmarksInput, Prisma.KPIUncheckedUpdateWithoutBenchmarksInput>
+  create: Prisma.XOR<Prisma.KPICreateWithoutBenchmarksInput, Prisma.KPIUncheckedCreateWithoutBenchmarksInput>
+  where?: Prisma.KPIWhereInput
+}
+
+export type KPIUpdateToOneWithWhereWithoutBenchmarksInput = {
+  where?: Prisma.KPIWhereInput
+  data: Prisma.XOR<Prisma.KPIUpdateWithoutBenchmarksInput, Prisma.KPIUncheckedUpdateWithoutBenchmarksInput>
+}
+
+export type KPIUpdateWithoutBenchmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  calculationType?: Prisma.StringFieldUpdateOperationsInput | string
+  formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  trend?: Prisma.StringFieldUpdateOperationsInput | string
+  trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tags?: Prisma.KPIUpdatetagsInput | string[]
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutKpisNestedInput
+  history?: Prisma.KPIHistoryUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUpdateManyWithoutKpiNestedInput
+}
+
+export type KPIUncheckedUpdateWithoutBenchmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  calculationType?: Prisma.StringFieldUpdateOperationsInput | string
+  formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  trend?: Prisma.StringFieldUpdateOperationsInput | string
+  trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tags?: Prisma.KPIUpdatetagsInput | string[]
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.KPIHistoryUncheckedUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUncheckedUpdateManyWithoutKpiNestedInput
 }
 
 export type KPICreateManyOrganizationInput = {
   id?: string
   code: string
   name: string
+  shortName?: string | null
   description?: string | null
   category: string
   calculationType?: string
   formula?: string | null
   dataSource?: string | null
+  dataSources?: Prisma.KPICreatedataSourcesInput | string[]
   unit?: string
+  format?: string
+  higherIsBetter?: boolean
   currentValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: string
   trend?: string
   trendMomentum?: string
+  dataFreshness?: string
+  lastCalculatedAt?: Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: boolean
   displayOrder?: number
   isVisible?: boolean
   isPinned?: boolean
@@ -1168,20 +2398,36 @@ export type KPIUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1190,26 +2436,45 @@ export type KPIUpdateWithoutOrganizationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.KPIHistoryUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUpdateManyWithoutKpiNestedInput
 }
 
 export type KPIUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1218,26 +2483,45 @@ export type KPIUncheckedUpdateWithoutOrganizationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.KPIHistoryUncheckedUpdateManyWithoutKpiNestedInput
+  alerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutKpiNestedInput
+  targets?: Prisma.KPITargetUncheckedUpdateManyWithoutKpiNestedInput
+  benchmarks?: Prisma.KPIBenchmarkUncheckedUpdateManyWithoutKpiNestedInput
 }
 
 export type KPIUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.StringFieldUpdateOperationsInput | string
   calculationType?: Prisma.StringFieldUpdateOperationsInput | string
   formula?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dataSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dataSources?: Prisma.KPIUpdatedataSourcesInput | string[]
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  higherIsBetter?: Prisma.BoolFieldUpdateOperationsInput | boolean
   currentValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   previousValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   targetValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   baselineValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg3M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg6M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rollingAvg12M?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPrior?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsPriorPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTarget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  deltaVsTargetPercent?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   trend?: Prisma.StringFieldUpdateOperationsInput | string
   trendMomentum?: Prisma.StringFieldUpdateOperationsInput | string
+  dataFreshness?: Prisma.StringFieldUpdateOperationsInput | string
+  lastCalculatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   thresholds?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  seasonalityFactor?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  volatility?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isAnomaly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
   isVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1254,10 +2538,16 @@ export type KPIUncheckedUpdateManyWithoutOrganizationInput = {
 
 export type KPICountOutputType = {
   history: number
+  alerts: number
+  targets: number
+  benchmarks: number
 }
 
 export type KPICountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   history?: boolean | KPICountOutputTypeCountHistoryArgs
+  alerts?: boolean | KPICountOutputTypeCountAlertsArgs
+  targets?: boolean | KPICountOutputTypeCountTargetsArgs
+  benchmarks?: boolean | KPICountOutputTypeCountBenchmarksArgs
 }
 
 /**
@@ -1277,25 +2567,62 @@ export type KPICountOutputTypeCountHistoryArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.KPIHistoryWhereInput
 }
 
+/**
+ * KPICountOutputType without action
+ */
+export type KPICountOutputTypeCountAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KPIAlertWhereInput
+}
+
+/**
+ * KPICountOutputType without action
+ */
+export type KPICountOutputTypeCountTargetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KPITargetWhereInput
+}
+
+/**
+ * KPICountOutputType without action
+ */
+export type KPICountOutputTypeCountBenchmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KPIBenchmarkWhereInput
+}
+
 
 export type KPISelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   code?: boolean
   name?: boolean
+  shortName?: boolean
   description?: boolean
   category?: boolean
   calculationType?: boolean
   formula?: boolean
   dataSource?: boolean
+  dataSources?: boolean
   unit?: boolean
+  format?: boolean
+  higherIsBetter?: boolean
   currentValue?: boolean
   previousValue?: boolean
   targetValue?: boolean
   baselineValue?: boolean
+  rollingAvg3M?: boolean
+  rollingAvg6M?: boolean
+  rollingAvg12M?: boolean
+  deltaVsPrior?: boolean
+  deltaVsPriorPercent?: boolean
+  deltaVsTarget?: boolean
+  deltaVsTargetPercent?: boolean
   status?: boolean
   trend?: boolean
   trendMomentum?: boolean
+  dataFreshness?: boolean
+  lastCalculatedAt?: boolean
   thresholds?: boolean
+  seasonalityFactor?: boolean
+  volatility?: boolean
+  isAnomaly?: boolean
   displayOrder?: boolean
   isVisible?: boolean
   isPinned?: boolean
@@ -1306,6 +2633,9 @@ export type KPISelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   history?: boolean | Prisma.KPI$historyArgs<ExtArgs>
+  alerts?: boolean | Prisma.KPI$alertsArgs<ExtArgs>
+  targets?: boolean | Prisma.KPI$targetsArgs<ExtArgs>
+  benchmarks?: boolean | Prisma.KPI$benchmarksArgs<ExtArgs>
   _count?: boolean | Prisma.KPICountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["kPI"]>
 
@@ -1313,20 +2643,36 @@ export type KPISelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   id?: boolean
   code?: boolean
   name?: boolean
+  shortName?: boolean
   description?: boolean
   category?: boolean
   calculationType?: boolean
   formula?: boolean
   dataSource?: boolean
+  dataSources?: boolean
   unit?: boolean
+  format?: boolean
+  higherIsBetter?: boolean
   currentValue?: boolean
   previousValue?: boolean
   targetValue?: boolean
   baselineValue?: boolean
+  rollingAvg3M?: boolean
+  rollingAvg6M?: boolean
+  rollingAvg12M?: boolean
+  deltaVsPrior?: boolean
+  deltaVsPriorPercent?: boolean
+  deltaVsTarget?: boolean
+  deltaVsTargetPercent?: boolean
   status?: boolean
   trend?: boolean
   trendMomentum?: boolean
+  dataFreshness?: boolean
+  lastCalculatedAt?: boolean
   thresholds?: boolean
+  seasonalityFactor?: boolean
+  volatility?: boolean
+  isAnomaly?: boolean
   displayOrder?: boolean
   isVisible?: boolean
   isPinned?: boolean
@@ -1342,20 +2688,36 @@ export type KPISelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   id?: boolean
   code?: boolean
   name?: boolean
+  shortName?: boolean
   description?: boolean
   category?: boolean
   calculationType?: boolean
   formula?: boolean
   dataSource?: boolean
+  dataSources?: boolean
   unit?: boolean
+  format?: boolean
+  higherIsBetter?: boolean
   currentValue?: boolean
   previousValue?: boolean
   targetValue?: boolean
   baselineValue?: boolean
+  rollingAvg3M?: boolean
+  rollingAvg6M?: boolean
+  rollingAvg12M?: boolean
+  deltaVsPrior?: boolean
+  deltaVsPriorPercent?: boolean
+  deltaVsTarget?: boolean
+  deltaVsTargetPercent?: boolean
   status?: boolean
   trend?: boolean
   trendMomentum?: boolean
+  dataFreshness?: boolean
+  lastCalculatedAt?: boolean
   thresholds?: boolean
+  seasonalityFactor?: boolean
+  volatility?: boolean
+  isAnomaly?: boolean
   displayOrder?: boolean
   isVisible?: boolean
   isPinned?: boolean
@@ -1371,20 +2733,36 @@ export type KPISelectScalar = {
   id?: boolean
   code?: boolean
   name?: boolean
+  shortName?: boolean
   description?: boolean
   category?: boolean
   calculationType?: boolean
   formula?: boolean
   dataSource?: boolean
+  dataSources?: boolean
   unit?: boolean
+  format?: boolean
+  higherIsBetter?: boolean
   currentValue?: boolean
   previousValue?: boolean
   targetValue?: boolean
   baselineValue?: boolean
+  rollingAvg3M?: boolean
+  rollingAvg6M?: boolean
+  rollingAvg12M?: boolean
+  deltaVsPrior?: boolean
+  deltaVsPriorPercent?: boolean
+  deltaVsTarget?: boolean
+  deltaVsTargetPercent?: boolean
   status?: boolean
   trend?: boolean
   trendMomentum?: boolean
+  dataFreshness?: boolean
+  lastCalculatedAt?: boolean
   thresholds?: boolean
+  seasonalityFactor?: boolean
+  volatility?: boolean
+  isAnomaly?: boolean
   displayOrder?: boolean
   isVisible?: boolean
   isPinned?: boolean
@@ -1395,10 +2773,13 @@ export type KPISelectScalar = {
   updatedAt?: boolean
 }
 
-export type KPIOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "category" | "calculationType" | "formula" | "dataSource" | "unit" | "currentValue" | "previousValue" | "targetValue" | "baselineValue" | "status" | "trend" | "trendMomentum" | "thresholds" | "displayOrder" | "isVisible" | "isPinned" | "tags" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["kPI"]>
+export type KPIOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "shortName" | "description" | "category" | "calculationType" | "formula" | "dataSource" | "dataSources" | "unit" | "format" | "higherIsBetter" | "currentValue" | "previousValue" | "targetValue" | "baselineValue" | "rollingAvg3M" | "rollingAvg6M" | "rollingAvg12M" | "deltaVsPrior" | "deltaVsPriorPercent" | "deltaVsTarget" | "deltaVsTargetPercent" | "status" | "trend" | "trendMomentum" | "dataFreshness" | "lastCalculatedAt" | "thresholds" | "seasonalityFactor" | "volatility" | "isAnomaly" | "displayOrder" | "isVisible" | "isPinned" | "tags" | "notes" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["kPI"]>
 export type KPIInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   history?: boolean | Prisma.KPI$historyArgs<ExtArgs>
+  alerts?: boolean | Prisma.KPI$alertsArgs<ExtArgs>
+  targets?: boolean | Prisma.KPI$targetsArgs<ExtArgs>
+  benchmarks?: boolean | Prisma.KPI$benchmarksArgs<ExtArgs>
   _count?: boolean | Prisma.KPICountOutputTypeDefaultArgs<ExtArgs>
 }
 export type KPIIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1413,25 +2794,44 @@ export type $KPIPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
     history: Prisma.$KPIHistoryPayload<ExtArgs>[]
+    alerts: Prisma.$KPIAlertPayload<ExtArgs>[]
+    targets: Prisma.$KPITargetPayload<ExtArgs>[]
+    benchmarks: Prisma.$KPIBenchmarkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     code: string
     name: string
+    shortName: string | null
     description: string | null
     category: string
     calculationType: string
     formula: string | null
     dataSource: string | null
+    dataSources: string[]
     unit: string
+    format: string
+    higherIsBetter: boolean
     currentValue: runtime.Decimal | null
     previousValue: runtime.Decimal | null
     targetValue: runtime.Decimal | null
     baselineValue: runtime.Decimal | null
+    rollingAvg3M: runtime.Decimal | null
+    rollingAvg6M: runtime.Decimal | null
+    rollingAvg12M: runtime.Decimal | null
+    deltaVsPrior: runtime.Decimal | null
+    deltaVsPriorPercent: runtime.Decimal | null
+    deltaVsTarget: runtime.Decimal | null
+    deltaVsTargetPercent: runtime.Decimal | null
     status: string
     trend: string
     trendMomentum: string
+    dataFreshness: string
+    lastCalculatedAt: Date
     thresholds: runtime.JsonValue | null
+    seasonalityFactor: runtime.Decimal | null
+    volatility: runtime.Decimal | null
+    isAnomaly: boolean
     displayOrder: number
     isVisible: boolean
     isPinned: boolean
@@ -1836,6 +3236,9 @@ export interface Prisma__KPIClient<T, Null = never, ExtArgs extends runtime.Type
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   history<T extends Prisma.KPI$historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KPI$historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPIHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  alerts<T extends Prisma.KPI$alertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KPI$alertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPIAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  targets<T extends Prisma.KPI$targetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KPI$targetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPITargetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  benchmarks<T extends Prisma.KPI$benchmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KPI$benchmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KPIBenchmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1868,20 +3271,36 @@ export interface KPIFieldRefs {
   readonly id: Prisma.FieldRef<"KPI", 'String'>
   readonly code: Prisma.FieldRef<"KPI", 'String'>
   readonly name: Prisma.FieldRef<"KPI", 'String'>
+  readonly shortName: Prisma.FieldRef<"KPI", 'String'>
   readonly description: Prisma.FieldRef<"KPI", 'String'>
   readonly category: Prisma.FieldRef<"KPI", 'String'>
   readonly calculationType: Prisma.FieldRef<"KPI", 'String'>
   readonly formula: Prisma.FieldRef<"KPI", 'String'>
   readonly dataSource: Prisma.FieldRef<"KPI", 'String'>
+  readonly dataSources: Prisma.FieldRef<"KPI", 'String[]'>
   readonly unit: Prisma.FieldRef<"KPI", 'String'>
+  readonly format: Prisma.FieldRef<"KPI", 'String'>
+  readonly higherIsBetter: Prisma.FieldRef<"KPI", 'Boolean'>
   readonly currentValue: Prisma.FieldRef<"KPI", 'Decimal'>
   readonly previousValue: Prisma.FieldRef<"KPI", 'Decimal'>
   readonly targetValue: Prisma.FieldRef<"KPI", 'Decimal'>
   readonly baselineValue: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly rollingAvg3M: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly rollingAvg6M: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly rollingAvg12M: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly deltaVsPrior: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly deltaVsPriorPercent: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly deltaVsTarget: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly deltaVsTargetPercent: Prisma.FieldRef<"KPI", 'Decimal'>
   readonly status: Prisma.FieldRef<"KPI", 'String'>
   readonly trend: Prisma.FieldRef<"KPI", 'String'>
   readonly trendMomentum: Prisma.FieldRef<"KPI", 'String'>
+  readonly dataFreshness: Prisma.FieldRef<"KPI", 'String'>
+  readonly lastCalculatedAt: Prisma.FieldRef<"KPI", 'DateTime'>
   readonly thresholds: Prisma.FieldRef<"KPI", 'Json'>
+  readonly seasonalityFactor: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly volatility: Prisma.FieldRef<"KPI", 'Decimal'>
+  readonly isAnomaly: Prisma.FieldRef<"KPI", 'Boolean'>
   readonly displayOrder: Prisma.FieldRef<"KPI", 'Int'>
   readonly isVisible: Prisma.FieldRef<"KPI", 'Boolean'>
   readonly isPinned: Prisma.FieldRef<"KPI", 'Boolean'>
@@ -2307,6 +3726,78 @@ export type KPI$historyArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.KPIHistoryScalarFieldEnum | Prisma.KPIHistoryScalarFieldEnum[]
+}
+
+/**
+ * KPI.alerts
+ */
+export type KPI$alertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KPIAlert
+   */
+  select?: Prisma.KPIAlertSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KPIAlert
+   */
+  omit?: Prisma.KPIAlertOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KPIAlertInclude<ExtArgs> | null
+  where?: Prisma.KPIAlertWhereInput
+  orderBy?: Prisma.KPIAlertOrderByWithRelationInput | Prisma.KPIAlertOrderByWithRelationInput[]
+  cursor?: Prisma.KPIAlertWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KPIAlertScalarFieldEnum | Prisma.KPIAlertScalarFieldEnum[]
+}
+
+/**
+ * KPI.targets
+ */
+export type KPI$targetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KPITarget
+   */
+  select?: Prisma.KPITargetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KPITarget
+   */
+  omit?: Prisma.KPITargetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KPITargetInclude<ExtArgs> | null
+  where?: Prisma.KPITargetWhereInput
+  orderBy?: Prisma.KPITargetOrderByWithRelationInput | Prisma.KPITargetOrderByWithRelationInput[]
+  cursor?: Prisma.KPITargetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KPITargetScalarFieldEnum | Prisma.KPITargetScalarFieldEnum[]
+}
+
+/**
+ * KPI.benchmarks
+ */
+export type KPI$benchmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KPIBenchmark
+   */
+  select?: Prisma.KPIBenchmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KPIBenchmark
+   */
+  omit?: Prisma.KPIBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KPIBenchmarkInclude<ExtArgs> | null
+  where?: Prisma.KPIBenchmarkWhereInput
+  orderBy?: Prisma.KPIBenchmarkOrderByWithRelationInput | Prisma.KPIBenchmarkOrderByWithRelationInput[]
+  cursor?: Prisma.KPIBenchmarkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KPIBenchmarkScalarFieldEnum | Prisma.KPIBenchmarkScalarFieldEnum[]
 }
 
 /**

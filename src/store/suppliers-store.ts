@@ -1,6 +1,5 @@
 // src/store/suppliers-store.ts
 // Suppliers Store - API-connected version
-// REPLACE: src/store/suppliers-store.ts
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -43,10 +42,10 @@ function mapApiToSupplier(api: Record<string, unknown>): Supplier {
     accountManagerId: api.accountManagerId as string | undefined,
     accountManagerName: api.accountManagerName as string | undefined,
     tags: (api.tags as string[]) || [],
-    supplierSince: api.supplierSince as string,
-    lastOrderDate: api.lastOrderDate as string | undefined,
-    lastPaymentDate: api.lastPaymentDate as string | undefined,
-    contractExpiryDate: api.contractExpiryDate as string | undefined,
+    supplierSince: api.supplierSince ? new Date(api.supplierSince as string).toISOString() : new Date().toISOString(),
+    lastOrderDate: api.lastOrderDate ? new Date(api.lastOrderDate as string).toISOString() : undefined,
+    lastPaymentDate: api.lastPaymentDate ? new Date(api.lastPaymentDate as string).toISOString() : undefined,
+    contractExpiryDate: api.contractExpiryDate ? new Date(api.contractExpiryDate as string).toISOString() : undefined,
     totalSpend: Number(api.totalSpend) || 0,
     totalOrders: (api.totalOrders as number) || 0,
     averageOrderValue: Number(api.averageOrderValue) || 0,
@@ -83,8 +82,8 @@ function mapApiToBalance(api: Record<string, unknown>): SupplierBalance {
     availableCredits: Number(api.availableCredits) || 0,
     pendingCredits: Number(api.pendingCredits) || 0,
     lastPaymentAmount: api.lastPaymentAmount ? Number(api.lastPaymentAmount) : undefined,
-    lastPaymentDate: api.lastPaymentDate as string | undefined,
-    nextPaymentDue: api.nextPaymentDue as string | undefined,
+    lastPaymentDate: api.lastPaymentDate ? new Date(api.lastPaymentDate as string).toISOString() : undefined,
+    nextPaymentDue: api.nextPaymentDue ? new Date(api.nextPaymentDue as string).toISOString() : undefined,
     nextPaymentAmount: api.nextPaymentAmount ? Number(api.nextPaymentAmount) : undefined,
     ytdPayments: Number(api.ytdPayments) || 0,
     ytdPurchases: Number(api.ytdPurchases) || 0,
@@ -100,9 +99,9 @@ function mapApiToPayment(api: Record<string, unknown>): SupplierPayment {
     invoiceIds: (api.invoiceIds as string[]) || [],
     amount: Number(api.amount) || 0,
     currency: (api.currency as string) || 'EUR',
-    paymentDate: api.paymentDate as string,
-    dueDate: api.dueDate as string | undefined,
-    paymentMethod: api.paymentMethod as PaymentMethod,
+    paymentDate: new Date(api.paymentDate as string).toISOString(),
+    dueDate: api.dueDate ? new Date(api.dueDate as string).toISOString() : undefined,
+    paymentMethod: (api.paymentMethod as PaymentMethod) || 'wire',
     referenceNumber: api.referenceNumber as string | undefined,
     bankAccount: api.bankAccount as string | undefined,
     status: (api.status as SupplierPayment['status']) || 'pending',
@@ -119,9 +118,9 @@ function mapApiToReliability(api: Record<string, unknown>): ReliabilityRecord {
     supplierId: api.supplierId as string,
     orderId: api.orderId as string,
     orderNumber: api.orderNumber as string,
-    orderDate: api.orderDate as string,
-    expectedDeliveryDate: api.expectedDeliveryDate as string,
-    actualDeliveryDate: api.actualDeliveryDate as string | undefined,
+    orderDate: new Date(api.orderDate as string).toISOString(),
+    expectedDeliveryDate: new Date(api.expectedDeliveryDate as string).toISOString(),
+    actualDeliveryDate: api.actualDeliveryDate ? new Date(api.actualDeliveryDate as string).toISOString() : undefined,
     daysVariance: (api.daysVariance as number) || 0,
     itemsOrdered: (api.itemsOrdered as number) || 0,
     itemsReceived: (api.itemsReceived as number) || 0,
@@ -140,7 +139,7 @@ function mapApiToSpend(api: Record<string, unknown>): SpendRecord {
     id: api.id as string,
     supplierId: api.supplierId as string,
     period: api.period as string,
-    periodType: api.periodType as SpendRecord['periodType'],
+    periodType: (api.periodType as SpendRecord['periodType']) || 'monthly',
     totalSpend: Number(api.totalSpend) || 0,
     directSpend: Number(api.directSpend) || 0,
     indirectSpend: Number(api.indirectSpend) || 0,
@@ -163,15 +162,15 @@ function mapApiToRisk(api: Record<string, unknown>): DependencyRisk {
     riskType: api.riskType as DependencyRisk['riskType'],
     title: api.title as string,
     description: api.description as string,
-    severity: api.severity as DependencyLevel,
+    severity: (api.severity as DependencyLevel) || 'medium',
     impactScore: (api.impactScore as number) || 5,
     probabilityScore: (api.probabilityScore as number) || 5,
     overallRiskScore: (api.overallRiskScore as number) || 25,
     mitigationPlan: api.mitigationPlan as string | undefined,
     mitigationStatus: (api.mitigationStatus as DependencyRisk['mitigationStatus']) || 'not_started',
     status: (api.status as DependencyRisk['status']) || 'identified',
-    identifiedAt: api.identifiedAt as string,
-    resolvedAt: api.resolvedAt as string | undefined,
+    identifiedAt: api.identifiedAt ? new Date(api.identifiedAt as string).toISOString() : new Date().toISOString(),
+    resolvedAt: api.resolvedAt ? new Date(api.resolvedAt as string).toISOString() : undefined,
     createdAt: api.createdAt as string,
     updatedAt: api.updatedAt as string,
   };
@@ -209,6 +208,7 @@ interface SuppliersState {
   selectedSupplierId: string | null;
   isLoading: boolean;
   isInitialized: boolean;
+  error: string | null;
 
   // Fetch
   fetchSuppliers: () => Promise<void>;
@@ -229,7 +229,7 @@ interface SuppliersState {
   updateContact: (supplierId: string, contactId: string, updates: Partial<SupplierContact>) => Promise<void>;
   deleteContact: (supplierId: string, contactId: string) => Promise<void>;
 
-  // Analytics
+  // Analytics (computed in store)
   getAnalytics: () => SupplierAnalytics;
   getSupplierBalance: (supplierId: string) => SupplierBalance | undefined;
   getSupplierPayments: (supplierId: string) => SupplierPayment[];
@@ -259,26 +259,41 @@ export const useSuppliersStore = create<SuppliersState>()(
       selectedSupplierId: null,
       isLoading: false,
       isInitialized: false,
+      error: null,
 
-      // =============================================================================
+      // =======================================================================
       // FETCH
-      // =============================================================================
+      // =======================================================================
 
       fetchSuppliers: async () => {
-        set({ isLoading: true });
+        set({ isLoading: true, error: null });
         try {
           const res = await fetch('/api/suppliers');
           if (!res.ok) throw new Error('Failed to fetch suppliers');
           const data = await res.json();
+
           const suppliers = (data.suppliers || []).map(mapApiToSupplier);
-          const balances = (data.suppliers || [])
-            .filter((s: Record<string, unknown>) => s.balance)
-            .map((s: Record<string, unknown>) => mapApiToBalance(s.balance as Record<string, unknown>));
-          set({ suppliers, balances, isInitialized: true });
+          const balances: SupplierBalance[] = [];
+          const risks: DependencyRisk[] = [];
+          const contacts: SupplierContact[] = [];
+
+          // Extract related data from included relations
+          (data.suppliers || []).forEach((s: Record<string, unknown>) => {
+            if (s.balance) {
+              balances.push(mapApiToBalance(s.balance as Record<string, unknown>));
+            }
+            if (Array.isArray(s.risks)) {
+              (s.risks as Record<string, unknown>[]).forEach((r) => risks.push(mapApiToRisk(r)));
+            }
+            if (Array.isArray(s.contacts)) {
+              (s.contacts as Record<string, unknown>[]).forEach((c) => contacts.push(mapApiToContact(c)));
+            }
+          });
+
+          set({ suppliers, balances, risks, contacts, isLoading: false, isInitialized: true });
         } catch (error) {
-          console.error('Error fetching suppliers:', error);
-        } finally {
-          set({ isLoading: false });
+          console.error('Failed to fetch suppliers:', error);
+          set({ error: (error as Error).message, isLoading: false, isInitialized: true });
         }
       },
 
@@ -287,7 +302,7 @@ export const useSuppliersStore = create<SuppliersState>()(
           const res = await fetch(`/api/suppliers/${id}`);
           if (!res.ok) throw new Error('Failed to fetch supplier');
           const data = await res.json();
-          
+
           const supplier = mapApiToSupplier(data);
           const balance = data.balance ? mapApiToBalance(data.balance) : undefined;
           const payments = (data.payments || []).map(mapApiToPayment);
@@ -308,13 +323,13 @@ export const useSuppliersStore = create<SuppliersState>()(
             contacts: [...state.contacts.filter((c) => c.supplierId !== id), ...contacts],
           }));
         } catch (error) {
-          console.error('Error fetching supplier:', error);
+          console.error('Failed to fetch supplier:', error);
         }
       },
 
-      // =============================================================================
-      // SUPPLIERS
-      // =============================================================================
+      // =======================================================================
+      // SUPPLIERS CRUD
+      // =======================================================================
 
       createSupplier: async (data) => {
         try {
@@ -329,7 +344,7 @@ export const useSuppliersStore = create<SuppliersState>()(
           set((state) => ({ suppliers: [...state.suppliers, supplier] }));
           return supplier;
         } catch (error) {
-          console.error('Error creating supplier:', error);
+          console.error('Failed to create supplier:', error);
           return null;
         }
       },
@@ -341,6 +356,7 @@ export const useSuppliersStore = create<SuppliersState>()(
             s.id === id ? { ...s, ...updates, updatedAt: new Date().toISOString() } : s
           ),
         }));
+
         try {
           const res = await fetch(`/api/suppliers/${id}`, {
             method: 'PATCH',
@@ -354,128 +370,143 @@ export const useSuppliersStore = create<SuppliersState>()(
             suppliers: state.suppliers.map((s) => (s.id === id ? supplier : s)),
           }));
         } catch (error) {
-          console.error('Error updating supplier:', error);
+          console.error('Failed to update supplier:', error);
+          // Revert on error - refetch
           get().fetchSuppliers();
         }
       },
 
       deleteSupplier: async (id) => {
-        set((state) => ({ suppliers: state.suppliers.filter((s) => s.id !== id) }));
         try {
           const res = await fetch(`/api/suppliers/${id}`, { method: 'DELETE' });
           if (!res.ok) throw new Error('Failed to delete supplier');
+          set((state) => ({
+            suppliers: state.suppliers.filter((s) => s.id !== id),
+            balances: state.balances.filter((b) => b.supplierId !== id),
+            payments: state.payments.filter((p) => p.supplierId !== id),
+            reliability: state.reliability.filter((r) => r.supplierId !== id),
+            spend: state.spend.filter((s) => s.supplierId !== id),
+            risks: state.risks.filter((r) => r.supplierId !== id),
+            contacts: state.contacts.filter((c) => c.supplierId !== id),
+            selectedSupplierId: state.selectedSupplierId === id ? null : state.selectedSupplierId,
+          }));
         } catch (error) {
-          console.error('Error deleting supplier:', error);
-          get().fetchSuppliers();
+          console.error('Failed to delete supplier:', error);
         }
       },
 
-      // =============================================================================
+      // =======================================================================
       // RISKS
-      // =============================================================================
+      // =======================================================================
 
-      addRisk: async (supplierId, data) => {
+      addRisk: async (supplierId, risk) => {
         try {
           const res = await fetch(`/api/suppliers/${supplierId}/risks`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: JSON.stringify(risk),
           });
           if (!res.ok) throw new Error('Failed to add risk');
           const created = await res.json();
-          const risk = mapApiToRisk(created);
-          set((state) => ({ risks: [...state.risks, risk] }));
-          get().fetchSupplier(supplierId);
-          return risk;
+          const newRisk = mapApiToRisk(created);
+          set((state) => ({ risks: [...state.risks, newRisk] }));
+          return newRisk;
         } catch (error) {
-          console.error('Error adding risk:', error);
+          console.error('Failed to add risk:', error);
           return null;
         }
       },
 
       updateRisk: async (supplierId, riskId, updates) => {
+        // Optimistic update
         set((state) => ({
           risks: state.risks.map((r) =>
             r.id === riskId ? { ...r, ...updates, updatedAt: new Date().toISOString() } : r
           ),
         }));
+
         try {
-          const res = await fetch(`/api/suppliers/${supplierId}/risks/${riskId}`, {
+          await fetch(`/api/suppliers/${supplierId}/risks/${riskId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates),
           });
-          if (!res.ok) throw new Error('Failed to update risk');
-          get().fetchSupplier(supplierId);
         } catch (error) {
-          console.error('Error updating risk:', error);
+          console.error('Failed to update risk:', error);
         }
       },
 
       resolveRisk: async (supplierId, riskId) => {
-        await get().updateRisk(supplierId, riskId, { status: 'resolved' });
+        await get().updateRisk(supplierId, riskId, {
+          status: 'resolved',
+          resolvedAt: new Date().toISOString(),
+        });
       },
 
-      // =============================================================================
+      // =======================================================================
       // CONTACTS
-      // =============================================================================
+      // =======================================================================
 
-      addContact: async (supplierId, data) => {
+      addContact: async (supplierId, contact) => {
         try {
           const res = await fetch(`/api/suppliers/${supplierId}/contacts`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: JSON.stringify(contact),
           });
           if (!res.ok) throw new Error('Failed to add contact');
           const created = await res.json();
-          const contact = mapApiToContact(created);
-          set((state) => ({ contacts: [...state.contacts, contact] }));
-          return contact;
+          const newContact = mapApiToContact(created);
+          set((state) => ({ contacts: [...state.contacts, newContact] }));
+          return newContact;
         } catch (error) {
-          console.error('Error adding contact:', error);
+          console.error('Failed to add contact:', error);
           return null;
         }
       },
 
       updateContact: async (supplierId, contactId, updates) => {
+        // Optimistic update
         set((state) => ({
           contacts: state.contacts.map((c) =>
             c.id === contactId ? { ...c, ...updates, updatedAt: new Date().toISOString() } : c
           ),
         }));
+
         try {
-          const res = await fetch(`/api/suppliers/${supplierId}/contacts/${contactId}`, {
+          await fetch(`/api/suppliers/${supplierId}/contacts/${contactId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updates),
           });
-          if (!res.ok) throw new Error('Failed to update contact');
         } catch (error) {
-          console.error('Error updating contact:', error);
+          console.error('Failed to update contact:', error);
         }
       },
 
       deleteContact: async (supplierId, contactId) => {
-        set((state) => ({ contacts: state.contacts.filter((c) => c.id !== contactId) }));
         try {
-          const res = await fetch(`/api/suppliers/${supplierId}/contacts/${contactId}`, {
+          await fetch(`/api/suppliers/${supplierId}/contacts/${contactId}`, {
             method: 'DELETE',
           });
-          if (!res.ok) throw new Error('Failed to delete contact');
+          set((state) => ({
+            contacts: state.contacts.filter((c) => c.id !== contactId),
+          }));
         } catch (error) {
-          console.error('Error deleting contact:', error);
+          console.error('Failed to delete contact:', error);
         }
       },
 
-      // =============================================================================
-      // ANALYTICS & GETTERS
-      // =============================================================================
+      // =======================================================================
+      // ANALYTICS (Computed in Store)
+      // =======================================================================
 
       getAnalytics: () => {
         const { suppliers, risks } = get();
-        const active = suppliers.filter((s) => s.status === 'active' || s.status === 'preferred');
+
+        const active = suppliers.filter((s) => s.status === 'active');
         const preferred = suppliers.filter((s) => s.status === 'preferred');
+
         const totalSpendYTD = suppliers.reduce((sum, s) => sum + s.totalSpend, 0);
         const totalOutstanding = suppliers.reduce((sum, s) => sum + s.outstandingBalance, 0);
 
@@ -496,7 +527,7 @@ export const useSuppliersStore = create<SuppliersState>()(
 
         const topSuppliersBySpend = [...suppliers]
           .sort((a, b) => b.totalSpend - a.totalSpend)
-          .slice(0, 5)
+          .slice(0, 10)
           .map((s) => ({ id: s.id, name: s.name, spend: s.totalSpend }));
 
         const highRiskSuppliers = suppliers
@@ -530,6 +561,10 @@ export const useSuppliersStore = create<SuppliersState>()(
       getSupplierSpend: (supplierId) => get().spend.filter((s) => s.supplierId === supplierId),
       getSupplierRisks: (supplierId) => get().risks.filter((r) => r.supplierId === supplierId),
       getSupplierContacts: (supplierId) => get().contacts.filter((c) => c.supplierId === supplierId),
+
+      // =======================================================================
+      // SELECTION
+      // =======================================================================
 
       selectSupplier: (id) => set({ selectedSupplierId: id }),
     }),
