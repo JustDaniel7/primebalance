@@ -438,3 +438,4 @@ export * from './investor-store';
 export * from './fx-store';
 export * from './offers-store';
 export * from './taskcenter-store';
+export * from './liquidity-store';

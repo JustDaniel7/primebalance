@@ -358,6 +358,7 @@ export * from './netting';
 export * from './investor';
 export * from './fx';
 export * from './offers';
+export * from './liquidity';
 export * from './taskcenter';
 export * from './forecast';
 export * from './scenarios';
