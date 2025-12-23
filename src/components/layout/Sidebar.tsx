@@ -52,6 +52,7 @@ export default function Sidebar() {
     { name: t('nav.investor'), href: '/dashboard/investor', icon: Shield },
     { name: t('nav.fx'), href: '/dashboard/fx', icon: Globe},
     { name: t('nav.taskCenter') || 'Task Center', href: '/dashboard/task-center', icon: ClipboardList },
+    { name: t('nav.Offers') || 'Offers & Quotes', href: '/dashboard/offers' , icon: FileText, label: t('nav.offers') },
   ];
 
   const secondaryNavigation = [

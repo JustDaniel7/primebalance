@@ -357,4 +357,5 @@ export * from './customers';
 export * from './netting';
 export * from './investor';
 export * from './fx';
-export * from './task';
+export * from './taskcenter';
+export * from './offers';

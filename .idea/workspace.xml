@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="well lots of stuff I guess">
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/fx/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/investor/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/export-utils.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/fx-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/investor-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/fx.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/investor.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/offers/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/offers-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/offers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/theme-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/theme-store.ts" afterDir="false" />
@@ -50,7 +44,7 @@
       <option value="200" />
       <option value="300" />
     </hideBySeverity>
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
