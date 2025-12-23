@@ -4,16 +4,70 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="liquidity">
-      <change afterPath="$PROJECT_DIR$/src/app/api/exchange-rates/convert/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/exchange-rates/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/wallet/[id]/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/wallet/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useExchangeRates.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/exchange-rates.ts" afterDir="false" />
+    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <change afterPath="$PROJECT_DIR$/src/app/api/receipts/[id]/permanent/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/receipts/[id]/restore/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/receipts/[id]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/receipts/analyze/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/receipts/upload/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/receipt-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/receipt.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/accounts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/accounts/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/wallet/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/wallet/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/receipts/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/receipts/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/receipts/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/receipts/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/browser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/browser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/enums.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/enums.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/AISuggestion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/AISuggestion.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Account.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Account.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Asset.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Asset.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/AssetDepreciation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/AssetDepreciation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/AssetDisposal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/AssetDisposal.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/AssetEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/AssetEvent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/AssetTransfer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/AssetTransfer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CapExBudget.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CapExBudget.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CapExItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CapExItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CapitalBucket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CapitalBucket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ChatChannel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ChatChannel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ChatMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ChatMessage.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CorporateEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CorporateEntity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CostCenter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CostCenter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CreditFacility.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CreditFacility.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FacilityDrawdown.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FacilityDrawdown.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FinancialAccount.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FinancialAccount.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InventoryBatch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InventoryBatch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InventoryItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InventoryItem.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InventoryMovement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InventoryMovement.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Invoice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Invoice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Liability.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Liability.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityPayment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityPayment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/NettingOpportunity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/NettingOpportunity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Order.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Organization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Organization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Project.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Project.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Receipt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Receipt.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Receivable.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Receivable.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ReceivableEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ReceivableEvent.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ReceivablePayment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ReceivablePayment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SavedReport.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SavedReport.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Session.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TimeEntry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TimeEntry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Transaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Transaction.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryAccount.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryAccount.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryCashMovement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryCashMovement.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryDecision.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryDecision.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryScenario.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TreasuryScenario.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/UserSettings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/UserSettings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/VerificationToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/VerificationToken.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Wallet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Wallet.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +196,7 @@
       <workItem from="1766315637196" duration="1302000" />
       <workItem from="1766317598562" duration="12586000" />
       <workItem from="1766486581555" duration="1853000" />
+      <workItem from="1766531311267" duration="1911000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -207,7 +262,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766497716118</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <option name="closed" value="true" />
+      <created>1766528930889</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766528930890</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,7 +284,8 @@
     <MESSAGE value="well lots of stuff I guess" />
     <MESSAGE value="offers" />
     <MESSAGE value="liquidity" />
-    <option name="LAST_COMMIT_MESSAGE" value="liquidity" />
+    <MESSAGE value="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates" />
+    <option name="LAST_COMMIT_MESSAGE" value="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -238,7 +302,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/app/dashboard/accounts/page.tsx</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

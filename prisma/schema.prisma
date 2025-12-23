@@ -327,6 +327,8 @@ model Transaction {
 // RECEIPTS
 // =============================================================================
 
+// UPDATE: Add deletedAt, status, category fields to Receipt model
+
 model Receipt {
   id       String @id @default(cuid())
   fileName String
@@ -340,6 +342,13 @@ model Receipt {
   date          DateTime?
   extractedText String?   @db.Text
   confidence    Float? // AI confidence score
+  category      String?
+
+  // Status tracking
+  status String @default("pending") // pending, matched, unmatched, archived, deleted
+
+  // Soft delete with 12-hour restore window
+  deletedAt DateTime?
 
   // Relations
   transactionId  String?
@@ -351,6 +360,8 @@ model Receipt {
   updatedAt DateTime @updatedAt
 
   @@index([organizationId])
+  @@index([organizationId, status])
+  @@index([deletedAt])
 }
 
 // =============================================================================
