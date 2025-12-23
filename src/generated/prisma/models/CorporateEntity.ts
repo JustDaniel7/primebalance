@@ -703,14 +703,6 @@ export type CorporateEntityUncheckedCreateNestedManyWithoutParentInput = {
   connect?: Prisma.CorporateEntityWhereUniqueInput | Prisma.CorporateEntityWhereUniqueInput[]
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type CorporateEntityUpdateOneWithoutChildrenNestedInput = {
   create?: Prisma.XOR<Prisma.CorporateEntityCreateWithoutChildrenInput, Prisma.CorporateEntityUncheckedCreateWithoutChildrenInput>
   connectOrCreate?: Prisma.CorporateEntityCreateOrConnectWithoutChildrenInput

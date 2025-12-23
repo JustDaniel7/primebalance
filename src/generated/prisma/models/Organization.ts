@@ -242,6 +242,8 @@ export type OrganizationWhereInput = {
   assetDisposals?: Prisma.AssetDisposalListRelationFilter
   capExBudgets?: Prisma.CapExBudgetListRelationFilter
   Invoice?: Prisma.InvoiceListRelationFilter
+  Project?: Prisma.ProjectListRelationFilter
+  CostCenter?: Prisma.CostCenterListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -275,6 +277,8 @@ export type OrganizationOrderByWithRelationInput = {
   assetDisposals?: Prisma.AssetDisposalOrderByRelationAggregateInput
   capExBudgets?: Prisma.CapExBudgetOrderByRelationAggregateInput
   Invoice?: Prisma.InvoiceOrderByRelationAggregateInput
+  Project?: Prisma.ProjectOrderByRelationAggregateInput
+  CostCenter?: Prisma.CostCenterOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -311,6 +315,8 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   assetDisposals?: Prisma.AssetDisposalListRelationFilter
   capExBudgets?: Prisma.CapExBudgetListRelationFilter
   Invoice?: Prisma.InvoiceListRelationFilter
+  Project?: Prisma.ProjectListRelationFilter
+  CostCenter?: Prisma.CostCenterListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -376,6 +382,8 @@ export type OrganizationCreateInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -409,6 +417,8 @@ export type OrganizationUncheckedCreateInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -442,6 +452,8 @@ export type OrganizationUpdateInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -475,6 +487,8 @@ export type OrganizationUncheckedUpdateInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -514,6 +528,11 @@ export type OrganizationUncheckedUpdateManyInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrganizationScalarRelationFilter = {
+  is?: Prisma.OrganizationWhereInput
+  isNot?: Prisma.OrganizationWhereInput
 }
 
 export type OrganizationNullableScalarRelationFilter = {
@@ -560,9 +579,32 @@ export type OrganizationMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type OrganizationScalarRelationFilter = {
-  is?: Prisma.OrganizationWhereInput
-  isNot?: Prisma.OrganizationWhereInput
+export type OrganizationCreateNestedOneWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutProjectInput, Prisma.OrganizationUncheckedCreateWithoutProjectInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutProjectInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutProjectInput, Prisma.OrganizationUncheckedCreateWithoutProjectInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutProjectInput
+  upsert?: Prisma.OrganizationUpsertWithoutProjectInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutProjectInput, Prisma.OrganizationUpdateWithoutProjectInput>, Prisma.OrganizationUncheckedUpdateWithoutProjectInput>
+}
+
+export type OrganizationCreateNestedOneWithoutCostCenterInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutCostCenterInput, Prisma.OrganizationUncheckedCreateWithoutCostCenterInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutCostCenterInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutCostCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutCostCenterInput, Prisma.OrganizationUncheckedCreateWithoutCostCenterInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutCostCenterInput
+  upsert?: Prisma.OrganizationUpsertWithoutCostCenterInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutCostCenterInput, Prisma.OrganizationUpdateWithoutCostCenterInput>, Prisma.OrganizationUncheckedUpdateWithoutCostCenterInput>
 }
 
 export type OrganizationCreateNestedOneWithoutUsersInput = {
@@ -847,6 +889,310 @@ export type OrganizationUpdateOneRequiredWithoutCapExBudgetsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutCapExBudgetsInput, Prisma.OrganizationUpdateWithoutCapExBudgetsInput>, Prisma.OrganizationUncheckedUpdateWithoutCapExBudgetsInput>
 }
 
+export type OrganizationCreateWithoutProjectInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutProjectInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutProjectInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutProjectInput, Prisma.OrganizationUncheckedCreateWithoutProjectInput>
+}
+
+export type OrganizationUpsertWithoutProjectInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutProjectInput, Prisma.OrganizationUncheckedUpdateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutProjectInput, Prisma.OrganizationUncheckedCreateWithoutProjectInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutProjectInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutProjectInput, Prisma.OrganizationUncheckedUpdateWithoutProjectInput>
+}
+
+export type OrganizationUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutCostCenterInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutCostCenterInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutCostCenterInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutCostCenterInput, Prisma.OrganizationUncheckedCreateWithoutCostCenterInput>
+}
+
+export type OrganizationUpsertWithoutCostCenterInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutCostCenterInput, Prisma.OrganizationUncheckedUpdateWithoutCostCenterInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutCostCenterInput, Prisma.OrganizationUncheckedCreateWithoutCostCenterInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutCostCenterInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutCostCenterInput, Prisma.OrganizationUncheckedUpdateWithoutCostCenterInput>
+}
+
+export type OrganizationUpdateWithoutCostCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
 export type OrganizationCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -877,6 +1223,8 @@ export type OrganizationCreateWithoutUsersInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutUsersInput = {
@@ -909,6 +1257,8 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutUsersInput = {
@@ -957,6 +1307,8 @@ export type OrganizationUpdateWithoutUsersInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutUsersInput = {
@@ -989,6 +1341,8 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFinancialAccountsInput = {
@@ -1021,6 +1375,8 @@ export type OrganizationCreateWithoutFinancialAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
@@ -1053,6 +1409,8 @@ export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFinancialAccountsInput = {
@@ -1101,6 +1459,8 @@ export type OrganizationUpdateWithoutFinancialAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
@@ -1133,6 +1493,8 @@ export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTransactionsInput = {
@@ -1165,6 +1527,8 @@ export type OrganizationCreateWithoutTransactionsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTransactionsInput = {
@@ -1197,6 +1561,8 @@ export type OrganizationUncheckedCreateWithoutTransactionsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTransactionsInput = {
@@ -1245,6 +1611,8 @@ export type OrganizationUpdateWithoutTransactionsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
@@ -1277,6 +1645,8 @@ export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReceiptsInput = {
@@ -1309,6 +1679,8 @@ export type OrganizationCreateWithoutReceiptsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReceiptsInput = {
@@ -1341,6 +1713,8 @@ export type OrganizationUncheckedCreateWithoutReceiptsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReceiptsInput = {
@@ -1389,6 +1763,8 @@ export type OrganizationUpdateWithoutReceiptsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
@@ -1421,6 +1797,8 @@ export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutChatChannelsInput = {
@@ -1453,6 +1831,8 @@ export type OrganizationCreateWithoutChatChannelsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
@@ -1485,6 +1865,8 @@ export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutChatChannelsInput = {
@@ -1533,6 +1915,8 @@ export type OrganizationUpdateWithoutChatChannelsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
@@ -1565,6 +1949,8 @@ export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInvoiceInput = {
@@ -1597,6 +1983,8 @@ export type OrganizationCreateWithoutInvoiceInput = {
   assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvoiceInput = {
@@ -1629,6 +2017,8 @@ export type OrganizationUncheckedCreateWithoutInvoiceInput = {
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInvoiceInput = {
@@ -1677,6 +2067,8 @@ export type OrganizationUpdateWithoutInvoiceInput = {
   assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
@@ -1709,6 +2101,8 @@ export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
   assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOrdersInput = {
@@ -1741,6 +2135,8 @@ export type OrganizationCreateWithoutOrdersInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOrdersInput = {
@@ -1773,6 +2169,8 @@ export type OrganizationUncheckedCreateWithoutOrdersInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOrdersInput = {
@@ -1821,6 +2219,8 @@ export type OrganizationUpdateWithoutOrdersInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOrdersInput = {
@@ -1853,6 +2253,8 @@ export type OrganizationUncheckedUpdateWithoutOrdersInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutArchiveItemsInput = {
@@ -1885,6 +2287,8 @@ export type OrganizationCreateWithoutArchiveItemsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
@@ -1917,6 +2321,8 @@ export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutArchiveItemsInput = {
@@ -1965,6 +2371,8 @@ export type OrganizationUpdateWithoutArchiveItemsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
@@ -1997,6 +2405,8 @@ export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiabilitiesInput = {
@@ -2029,6 +2439,8 @@ export type OrganizationCreateWithoutLiabilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
@@ -2061,6 +2473,8 @@ export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiabilitiesInput = {
@@ -2109,6 +2523,8 @@ export type OrganizationUpdateWithoutLiabilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
@@ -2141,6 +2557,8 @@ export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoryItemsInput = {
@@ -2173,6 +2591,8 @@ export type OrganizationCreateWithoutInventoryItemsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
@@ -2205,6 +2625,8 @@ export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoryItemsInput = {
@@ -2253,6 +2675,8 @@ export type OrganizationUpdateWithoutInventoryItemsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
@@ -2285,6 +2709,8 @@ export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReceivablesInput = {
@@ -2317,6 +2743,8 @@ export type OrganizationCreateWithoutReceivablesInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReceivablesInput = {
@@ -2349,6 +2777,8 @@ export type OrganizationUncheckedCreateWithoutReceivablesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReceivablesInput = {
@@ -2397,6 +2827,8 @@ export type OrganizationUpdateWithoutReceivablesInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
@@ -2429,6 +2861,8 @@ export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryAccountsInput = {
@@ -2461,6 +2895,8 @@ export type OrganizationCreateWithoutTreasuryAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
@@ -2493,6 +2929,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryAccountsInput = {
@@ -2541,6 +2979,8 @@ export type OrganizationUpdateWithoutTreasuryAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
@@ -2573,6 +3013,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCapitalBucketsInput = {
@@ -2605,6 +3047,8 @@ export type OrganizationCreateWithoutCapitalBucketsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
@@ -2637,6 +3081,8 @@ export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCapitalBucketsInput = {
@@ -2685,6 +3131,8 @@ export type OrganizationUpdateWithoutCapitalBucketsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
@@ -2717,6 +3165,8 @@ export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCreditFacilitiesInput = {
@@ -2749,6 +3199,8 @@ export type OrganizationCreateWithoutCreditFacilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
@@ -2781,6 +3233,8 @@ export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCreditFacilitiesInput = {
@@ -2829,6 +3283,8 @@ export type OrganizationUpdateWithoutCreditFacilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
@@ -2861,6 +3317,8 @@ export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryDecisionsInput = {
@@ -2893,6 +3351,8 @@ export type OrganizationCreateWithoutTreasuryDecisionsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
@@ -2925,6 +3385,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryDecisionsInput = {
@@ -2973,6 +3435,8 @@ export type OrganizationUpdateWithoutTreasuryDecisionsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
@@ -3005,6 +3469,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryScenariosInput = {
@@ -3037,6 +3503,8 @@ export type OrganizationCreateWithoutTreasuryScenariosInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
@@ -3069,6 +3537,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryScenariosInput = {
@@ -3117,6 +3587,8 @@ export type OrganizationUpdateWithoutTreasuryScenariosInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
@@ -3149,6 +3621,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutNettingOpportunitiesInput = {
@@ -3181,6 +3655,8 @@ export type OrganizationCreateWithoutNettingOpportunitiesInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
@@ -3213,6 +3689,8 @@ export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutNettingOpportunitiesInput = {
@@ -3261,6 +3739,8 @@ export type OrganizationUpdateWithoutNettingOpportunitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
@@ -3293,6 +3773,8 @@ export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAssetsInput = {
@@ -3325,6 +3807,8 @@ export type OrganizationCreateWithoutAssetsInput = {
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAssetsInput = {
@@ -3357,6 +3841,8 @@ export type OrganizationUncheckedCreateWithoutAssetsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAssetsInput = {
@@ -3405,6 +3891,8 @@ export type OrganizationUpdateWithoutAssetsInput = {
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAssetsInput = {
@@ -3437,6 +3925,8 @@ export type OrganizationUncheckedUpdateWithoutAssetsInput = {
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAssetDisposalsInput = {
@@ -3469,6 +3959,8 @@ export type OrganizationCreateWithoutAssetDisposalsInput = {
   assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
@@ -3501,6 +3993,8 @@ export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
   capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAssetDisposalsInput = {
@@ -3549,6 +4043,8 @@ export type OrganizationUpdateWithoutAssetDisposalsInput = {
   assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
@@ -3581,6 +4077,8 @@ export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
   assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
   capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCapExBudgetsInput = {
@@ -3613,6 +4111,8 @@ export type OrganizationCreateWithoutCapExBudgetsInput = {
   assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
   assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
@@ -3645,6 +4145,8 @@ export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
   assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
   assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
   Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCapExBudgetsInput = {
@@ -3693,6 +4195,8 @@ export type OrganizationUpdateWithoutCapExBudgetsInput = {
   assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
   assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
@@ -3725,6 +4229,8 @@ export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
   assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
   assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
   Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -3753,6 +4259,8 @@ export type OrganizationCountOutputType = {
   assetDisposals: number
   capExBudgets: number
   Invoice: number
+  Project: number
+  CostCenter: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3776,6 +4284,8 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   assetDisposals?: boolean | OrganizationCountOutputTypeCountAssetDisposalsArgs
   capExBudgets?: boolean | OrganizationCountOutputTypeCountCapExBudgetsArgs
   Invoice?: boolean | OrganizationCountOutputTypeCountInvoiceArgs
+  Project?: boolean | OrganizationCountOutputTypeCountProjectArgs
+  CostCenter?: boolean | OrganizationCountOutputTypeCountCostCenterArgs
 }
 
 /**
@@ -3928,6 +4438,20 @@ export type OrganizationCountOutputTypeCountInvoiceArgs<ExtArgs extends runtime.
   where?: Prisma.InvoiceWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountCostCenterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CostCenterWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3960,6 +4484,8 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   assetDisposals?: boolean | Prisma.Organization$assetDisposalsArgs<ExtArgs>
   capExBudgets?: boolean | Prisma.Organization$capExBudgetsArgs<ExtArgs>
   Invoice?: boolean | Prisma.Organization$InvoiceArgs<ExtArgs>
+  Project?: boolean | Prisma.Organization$ProjectArgs<ExtArgs>
+  CostCenter?: boolean | Prisma.Organization$CostCenterArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -4024,6 +4550,8 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   assetDisposals?: boolean | Prisma.Organization$assetDisposalsArgs<ExtArgs>
   capExBudgets?: boolean | Prisma.Organization$capExBudgetsArgs<ExtArgs>
   Invoice?: boolean | Prisma.Organization$InvoiceArgs<ExtArgs>
+  Project?: boolean | Prisma.Organization$ProjectArgs<ExtArgs>
+  CostCenter?: boolean | Prisma.Organization$CostCenterArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -4052,6 +4580,8 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     assetDisposals: Prisma.$AssetDisposalPayload<ExtArgs>[]
     capExBudgets: Prisma.$CapExBudgetPayload<ExtArgs>[]
     Invoice: Prisma.$InvoicePayload<ExtArgs>[]
+    Project: Prisma.$ProjectPayload<ExtArgs>[]
+    CostCenter: Prisma.$CostCenterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4478,6 +5008,8 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   assetDisposals<T extends Prisma.Organization$assetDisposalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$assetDisposalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssetDisposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   capExBudgets<T extends Prisma.Organization$capExBudgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$capExBudgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CapExBudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Invoice<T extends Prisma.Organization$InvoiceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$InvoiceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Project<T extends Prisma.Organization$ProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  CostCenter<T extends Prisma.Organization$CostCenterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$CostCenterArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CostCenterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5382,6 +5914,54 @@ export type Organization$InvoiceArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
+}
+
+/**
+ * Organization.Project
+ */
+export type Organization$ProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Project
+   */
+  select?: Prisma.ProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Project
+   */
+  omit?: Prisma.ProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectInclude<ExtArgs> | null
+  where?: Prisma.ProjectWhereInput
+  orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
+}
+
+/**
+ * Organization.CostCenter
+ */
+export type Organization$CostCenterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CostCenter
+   */
+  select?: Prisma.CostCenterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CostCenter
+   */
+  omit?: Prisma.CostCenterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CostCenterInclude<ExtArgs> | null
+  where?: Prisma.CostCenterWhereInput
+  orderBy?: Prisma.CostCenterOrderByWithRelationInput | Prisma.CostCenterOrderByWithRelationInput[]
+  cursor?: Prisma.CostCenterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CostCenterScalarFieldEnum | Prisma.CostCenterScalarFieldEnum[]
 }
 
 /**

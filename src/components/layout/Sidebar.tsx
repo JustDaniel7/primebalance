@@ -5,7 +5,7 @@ import { useThemeStore } from '@/store/theme-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft, FileText, Package, Archive, Landmark, TablePropertiesIcon, Wallet, Vault, Boxes } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PanelLeftClose,LineChart, Droplets, GitBranch, Gauge, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users, ClipboardList } from 'lucide-react';
 import {
   DashboardIcon,
   TransactionsIcon,
@@ -44,6 +44,19 @@ export default function Sidebar() {
     { name: t('nav.receivables'), href: '/dashboard/receivables', icon: Wallet },
     { name: t('nav.treasury'), href: '/dashboard/treasury', icon: Vault },
     { name: t('nav.assets'), href: '/dashboard/assets', icon: Boxes },
+    { name: t('nav.projects'), href: '/dashboard/projects', icon: FolderKanban },
+    { name: t('nav.periodClose'), href: '/dashboard/period-close', icon: CalendarCheck },
+    { name: t('nav.customers'), href: '/dashboard/customers', icon: Users },
+    { name: t('nav.suppliers'), href: '/dashboard/suppliers', icon: Truck },
+    { name: t('nav.netting'), href: '/dashboard/netting', icon: GitMerge },
+    { name: t('nav.investor'), href: '/dashboard/investor', icon: Shield },
+    { name: t('nav.fx'), href: '/dashboard/fx', icon: Globe},
+    { name: t('nav.Offers') , href: '/dashboard/offers' , icon: FileText, label: t('nav.offers') },
+    { name: t('nav.taskCenter'), href: '/dashboard/task-center', icon: ClipboardList },
+    { name: t('nav.forecasts'), href: '/dashboard/forecast', icon: LineChart },
+    { name: t('nav.scenarios'), href: '/dashboard/scenarios', icon: GitBranch },
+    { name: t('nav.kpis'), href: '/dashboard/kpi', icon: Gauge },
+    { name: t('nav.liquidity'), href: '/dashboard/liquidity', icon: Droplets,},
   ];
 
   const secondaryNavigation = [

@@ -617,10 +617,6 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type FinancialAccountUpdateOneWithoutChildrenNestedInput = {
   create?: Prisma.XOR<Prisma.FinancialAccountCreateWithoutChildrenInput, Prisma.FinancialAccountUncheckedCreateWithoutChildrenInput>
   connectOrCreate?: Prisma.FinancialAccountCreateOrConnectWithoutChildrenInput
