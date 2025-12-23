@@ -434,3 +434,5 @@ export { useCustomersStore } from './customers-store';
 export { useSuppliersStore } from './suppliers-store';
 export { useNettingStore } from './netting-store';
 export * from './netting-store';
+export * from './investor-store';
+export * from './fx-store';

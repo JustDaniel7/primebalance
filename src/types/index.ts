@@ -355,3 +355,5 @@ export * from './period-close'
 export * from './suppliers';
 export * from './customers';
 export * from './netting';
+export * from './investor';
+export * from './fx';

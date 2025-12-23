@@ -5,22 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="well lots of stuff I guess">
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/fx/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/investor/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/export-utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/fx-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/investor-store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/fx.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/investor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/projects/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/projects/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/browser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/browser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CorporateEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CorporateEntity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FinancialAccount.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FinancialAccount.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Invoice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Invoice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Organization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Organization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Transaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Transaction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/theme-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/theme-store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,6 +146,7 @@
       <workItem from="1766282208187" duration="705000" />
       <workItem from="1766315637196" duration="1302000" />
       <workItem from="1766317598562" duration="12586000" />
+      <workItem from="1766486581555" duration="1853000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
