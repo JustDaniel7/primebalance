@@ -112,15 +112,18 @@ model Organization {
   assetDisposals AssetDisposal[]
   capExBudgets   CapExBudget[]
 
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-  Invoice             Invoice[]
-  Project             Project[]
-  CostCenter          CostCenter[]
-  timeEntries         TimeEntry[]
-  internalChargebacks InternalChargeback[]
-  accountingPeriods   AccountingPeriod[]
-  periodAdjustments   PeriodAdjustment[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  Invoice              Invoice[]
+  Project              Project[]
+  CostCenter           CostCenter[]
+  timeEntries          TimeEntry[]
+  internalChargebacks  InternalChargeback[]
+  accountingPeriods    AccountingPeriod[]
+  periodAdjustments    PeriodAdjustment[]
+  customers            Customer[]
+  customerPayments     CustomerPayment[]
+  customerCreditEvents CustomerCreditEvent[]
 }
 
 // =============================================================================
@@ -2376,4 +2379,239 @@ model PeriodAuditEntry {
 
   @@index([periodId, createdAt])
   @@index([periodId, action])
+}
+
+// =============================================================================
+// CUSTOMERS MODULE
+// =============================================================================
+// ADD TO: prisma/schema.prisma (append at end)
+// ADD TO Organization model relations:
+//   customers            Customer[]
+//   customerPayments     CustomerPayment[]
+//   customerCreditEvents CustomerCreditEvent[]
+// THEN RUN: npx prisma migrate dev --name add_customers_module
+
+model Customer {
+  id             String @id @default(cuid())
+  customerNumber String
+
+  // Basic Info
+  name     String
+  type     String  @default("business") // individual, business, enterprise, government
+  status   String  @default("active") // active, inactive, prospect, churned, suspended
+  industry String?
+
+  // Contact
+  email   String?
+  phone   String?
+  website String?
+  address Json? // { street, city, state, postalCode, country }
+
+  // Tax & Legal
+  taxId          String?
+  vatNumber      String?
+  legalName      String?
+  classification String? // For tax purposes
+
+  // Credit Management
+  creditLimit     Decimal @default(0) @db.Decimal(15, 2)
+  creditUsed      Decimal @default(0) @db.Decimal(15, 2)
+  creditAvailable Decimal @default(0) @db.Decimal(15, 2)
+  creditStatus    String  @default("good") // good, warning, hold, blocked
+  paymentTerms    String  @default("Net 30")
+
+  // Payment Behavior
+  paymentBehavior      String   @default("good") // excellent, good, fair, poor, delinquent
+  averageDaysToPayment Int?
+  onTimePaymentRate    Decimal? @db.Decimal(5, 2)
+
+  // Risk Assessment
+  riskLevel String @default("low") // low, medium, high, critical
+  riskScore Int    @default(0)
+
+  // Financial Summary
+  totalRevenue       Decimal @default(0) @db.Decimal(15, 2)
+  totalOrders        Int     @default(0)
+  averageOrderValue  Decimal @default(0) @db.Decimal(15, 2)
+  outstandingBalance Decimal @default(0) @db.Decimal(15, 2)
+  overdueAmount      Decimal @default(0) @db.Decimal(15, 2)
+  currency           String  @default("EUR")
+
+  // Relationship
+  customerSince      DateTime  @default(now())
+  lastOrderDate      DateTime?
+  lastPaymentDate    DateTime?
+  lastContactDate    DateTime?
+  accountManagerId   String?
+  accountManagerName String?
+
+  // Preferences
+  preferredPaymentMethod String?
+  preferredLanguage      String  @default("en")
+  invoiceDelivery        String  @default("email") // email, mail, portal
+
+  // Meta
+  tags  String[]
+  notes String?  @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  contacts       CustomerContact[]
+  payments       CustomerPayment[]
+  creditEvents   CustomerCreditEvent[]
+  revenueRecords CustomerRevenue[]
+  riskIndicators CustomerRiskIndicator[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, customerNumber])
+  @@index([organizationId, status])
+  @@index([organizationId, type])
+  @@index([organizationId, riskLevel])
+  @@index([organizationId, creditStatus])
+}
+
+model CustomerContact {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  // Contact Info
+  name  String
+  title String?
+  email String
+  phone String?
+
+  // Role
+  isPrimary Boolean @default(false)
+  role      String  @default("general") // billing, technical, executive, purchasing, general
+
+  // Notes
+  notes String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([customerId])
+}
+
+model CustomerPayment {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  // Reference
+  invoiceId     String?
+  invoiceNumber String?
+
+  // Amount
+  amount   Decimal @db.Decimal(15, 2)
+  currency String  @default("EUR")
+
+  // Dates
+  invoiceDate DateTime
+  dueDate     DateTime
+  paymentDate DateTime?
+
+  // Status
+  status        String @default("pending") // pending, paid, partial, overdue, written_off
+  daysToPayment Int?
+  daysOverdue   Int?
+
+  // Payment Details
+  paymentMethod   String?
+  referenceNumber String?
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([customerId, status])
+  @@index([organizationId, status])
+}
+
+model CustomerCreditEvent {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  // Event Type
+  type String // limit_increase, limit_decrease, status_change, review, terms_change
+
+  // Details
+  previousValue String?
+  newValue      String
+  reason        String
+
+  // User
+  changedBy     String?
+  changedByName String?
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([customerId, createdAt])
+}
+
+model CustomerRevenue {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  // Period
+  period     String // e.g., "2024-01", "2024-Q1"
+  periodType String // monthly, quarterly, yearly
+
+  // Amounts
+  revenue Decimal  @db.Decimal(15, 2)
+  cost    Decimal? @db.Decimal(15, 2)
+  profit  Decimal? @db.Decimal(15, 2)
+  margin  Decimal? @db.Decimal(5, 2)
+
+  // Orders
+  orderCount        Int
+  averageOrderValue Decimal @db.Decimal(15, 2)
+
+  createdAt DateTime @default(now())
+
+  @@unique([customerId, period, periodType])
+  @@index([customerId, periodType])
+}
+
+model CustomerRiskIndicator {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  // Indicator
+  category    String // payment, credit, activity, financial, external
+  indicator   String
+  description String
+
+  // Severity
+  severity String @default("medium") // low, medium, high, critical
+  score    Int    @default(0)
+
+  // Status
+  status     String    @default("active") // active, resolved, monitoring
+  detectedAt DateTime  @default(now())
+  resolvedAt DateTime?
+
+  // Actions
+  recommendedAction String?
+  actionTaken       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([customerId, status])
+  @@index([customerId, severity])
 }

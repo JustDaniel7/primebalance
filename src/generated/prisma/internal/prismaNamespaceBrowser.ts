@@ -101,7 +101,13 @@ export const ModelName = {
   CloseChecklistItem: 'CloseChecklistItem',
   PeriodMissingItem: 'PeriodMissingItem',
   PeriodAdjustment: 'PeriodAdjustment',
-  PeriodAuditEntry: 'PeriodAuditEntry'
+  PeriodAuditEntry: 'PeriodAuditEntry',
+  Customer: 'Customer',
+  CustomerContact: 'CustomerContact',
+  CustomerPayment: 'CustomerPayment',
+  CustomerCreditEvent: 'CustomerCreditEvent',
+  CustomerRevenue: 'CustomerRevenue',
+  CustomerRiskIndicator: 'CustomerRiskIndicator'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1510,6 +1516,148 @@ export const PeriodAuditEntryScalarFieldEnum = {
 } as const
 
 export type PeriodAuditEntryScalarFieldEnum = (typeof PeriodAuditEntryScalarFieldEnum)[keyof typeof PeriodAuditEntryScalarFieldEnum]
+
+
+export const CustomerScalarFieldEnum = {
+  id: 'id',
+  customerNumber: 'customerNumber',
+  name: 'name',
+  type: 'type',
+  status: 'status',
+  industry: 'industry',
+  email: 'email',
+  phone: 'phone',
+  website: 'website',
+  address: 'address',
+  taxId: 'taxId',
+  vatNumber: 'vatNumber',
+  legalName: 'legalName',
+  classification: 'classification',
+  creditLimit: 'creditLimit',
+  creditUsed: 'creditUsed',
+  creditAvailable: 'creditAvailable',
+  creditStatus: 'creditStatus',
+  paymentTerms: 'paymentTerms',
+  paymentBehavior: 'paymentBehavior',
+  averageDaysToPayment: 'averageDaysToPayment',
+  onTimePaymentRate: 'onTimePaymentRate',
+  riskLevel: 'riskLevel',
+  riskScore: 'riskScore',
+  totalRevenue: 'totalRevenue',
+  totalOrders: 'totalOrders',
+  averageOrderValue: 'averageOrderValue',
+  outstandingBalance: 'outstandingBalance',
+  overdueAmount: 'overdueAmount',
+  currency: 'currency',
+  customerSince: 'customerSince',
+  lastOrderDate: 'lastOrderDate',
+  lastPaymentDate: 'lastPaymentDate',
+  lastContactDate: 'lastContactDate',
+  accountManagerId: 'accountManagerId',
+  accountManagerName: 'accountManagerName',
+  preferredPaymentMethod: 'preferredPaymentMethod',
+  preferredLanguage: 'preferredLanguage',
+  invoiceDelivery: 'invoiceDelivery',
+  tags: 'tags',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const CustomerContactScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  name: 'name',
+  title: 'title',
+  email: 'email',
+  phone: 'phone',
+  isPrimary: 'isPrimary',
+  role: 'role',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerContactScalarFieldEnum = (typeof CustomerContactScalarFieldEnum)[keyof typeof CustomerContactScalarFieldEnum]
+
+
+export const CustomerPaymentScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  invoiceId: 'invoiceId',
+  invoiceNumber: 'invoiceNumber',
+  amount: 'amount',
+  currency: 'currency',
+  invoiceDate: 'invoiceDate',
+  dueDate: 'dueDate',
+  paymentDate: 'paymentDate',
+  status: 'status',
+  daysToPayment: 'daysToPayment',
+  daysOverdue: 'daysOverdue',
+  paymentMethod: 'paymentMethod',
+  referenceNumber: 'referenceNumber',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomerPaymentScalarFieldEnum = (typeof CustomerPaymentScalarFieldEnum)[keyof typeof CustomerPaymentScalarFieldEnum]
+
+
+export const CustomerCreditEventScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  type: 'type',
+  previousValue: 'previousValue',
+  newValue: 'newValue',
+  reason: 'reason',
+  changedBy: 'changedBy',
+  changedByName: 'changedByName',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomerCreditEventScalarFieldEnum = (typeof CustomerCreditEventScalarFieldEnum)[keyof typeof CustomerCreditEventScalarFieldEnum]
+
+
+export const CustomerRevenueScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  period: 'period',
+  periodType: 'periodType',
+  revenue: 'revenue',
+  cost: 'cost',
+  profit: 'profit',
+  margin: 'margin',
+  orderCount: 'orderCount',
+  averageOrderValue: 'averageOrderValue',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomerRevenueScalarFieldEnum = (typeof CustomerRevenueScalarFieldEnum)[keyof typeof CustomerRevenueScalarFieldEnum]
+
+
+export const CustomerRiskIndicatorScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  category: 'category',
+  indicator: 'indicator',
+  description: 'description',
+  severity: 'severity',
+  score: 'score',
+  status: 'status',
+  detectedAt: 'detectedAt',
+  resolvedAt: 'resolvedAt',
+  recommendedAction: 'recommendedAction',
+  actionTaken: 'actionTaken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerRiskIndicatorScalarFieldEnum = (typeof CustomerRiskIndicatorScalarFieldEnum)[keyof typeof CustomerRiskIndicatorScalarFieldEnum]
 
 
 export const SortOrder = {

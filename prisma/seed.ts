@@ -37,6 +37,19 @@ async function main() {
   console.log('\n🧹 Cleaning existing data...')
   
   // Child tables first
+  await prisma.customerRiskIndicator.deleteMany({})
+  await prisma.customerRevenue.deleteMany({})
+  await prisma.customerCreditEvent.deleteMany({})
+  await prisma.customerPayment.deleteMany({})
+  await prisma.customerContact.deleteMany({})
+  await prisma.customer.deleteMany({})
+
+  await prisma.periodAuditEntry.deleteMany({})
+  await prisma.periodAdjustment.deleteMany({})
+  await prisma.periodMissingItem.deleteMany({})
+  await prisma.closeChecklistItem.deleteMany({})
+  await prisma.accountingPeriod.deleteMany({})
+
   await prisma.assetDisposal.deleteMany({})
   await prisma.assetTransfer.deleteMany({})
   await prisma.assetEvent.deleteMany({})
@@ -80,6 +93,7 @@ async function main() {
   await prisma.receipt.deleteMany({})
   await prisma.transaction.deleteMany({})
   await prisma.financialAccount.deleteMany({})
+
   
   await prisma.userSettings.deleteMany({})
   await prisma.session.deleteMany({})
@@ -2289,18 +2303,344 @@ async function main() {
   console.log('  ✓ Created', auditEntries.length, 'audit entries')
 
   // =============================================================================
-  // ADD TO SUMMARY OUTPUT:
+  // CUSTOMERS MODULE - ADD TO: prisma/seed.ts (before SUMMARY section)
   // =============================================================================
-  
+  // Also add to CLEANUP section at top:
+  //   await prisma.customerRiskIndicator.deleteMany({})
+  //   await prisma.customerRevenue.deleteMany({})
+  //   await prisma.customerCreditEvent.deleteMany({})
+  //   await prisma.customerPayment.deleteMany({})
+  //   await prisma.customerContact.deleteMany({})
+  //   await prisma.customer.deleteMany({})
 
   // =============================================================================
-  // ADD TO SUMMARY OUTPUT:
+  // CUSTOMERS
   // =============================================================================
-  // console.log('  • ' + costCenters.length + ' Cost centers')
-  // console.log('  • ' + projects.length + ' Projects')
-  // console.log('  • ' + milestones.length + ' Project milestones')
-  // console.log('  • ' + timeEntries.length + ' Time entries')
-  // console.log('  • ' + chargebacks.length + ' Internal chargebacks')
+  console.log('\n👥 Creating Customers...')
+
+  const customers = [
+    {
+      customerNumber: 'C-10001',
+      name: 'Acme Corporation',
+      type: 'enterprise',
+      status: 'active',
+      industry: 'Technology',
+      email: 'accounts@acmecorp.com',
+      phone: '+1 (555) 123-4567',
+      website: 'https://acmecorp.com',
+      address: { street: '123 Tech Boulevard', city: 'San Francisco', state: 'CA', postalCode: '94105', country: 'US' },
+      taxId: 'US-123456789',
+      creditLimit: 500000,
+      creditUsed: 125000,
+      creditAvailable: 375000,
+      creditStatus: 'approved',
+      paymentTerms: 'Net 30',
+      paymentBehavior: 'excellent',
+      averageDaysToPayment: 18,
+      riskLevel: 'low',
+      riskScore: 12,
+      totalRevenue: 1250000,
+      totalOrders: 48,
+      averageOrderValue: 26041.67,
+      outstandingBalance: 125000,
+      customerSince: daysAgo(730),
+      accountManagerName: 'Sarah Johnson',
+    },
+    {
+      customerNumber: 'C-10002',
+      name: 'Global Industries Ltd',
+      type: 'enterprise',
+      status: 'active',
+      industry: 'Manufacturing',
+      email: 'finance@globalind.com',
+      phone: '+44 20 7123 4567',
+      website: 'https://globalindustries.co.uk',
+      address: { street: '45 Industrial Way', city: 'London', state: '', postalCode: 'EC1A 1BB', country: 'GB' },
+      taxId: 'GB987654321',
+      creditLimit: 750000,
+      creditUsed: 320000,
+      creditAvailable: 430000,
+      creditStatus: 'approved',
+      paymentTerms: 'Net 45',
+      paymentBehavior: 'good',
+      averageDaysToPayment: 38,
+      riskLevel: 'low',
+      riskScore: 18,
+      totalRevenue: 2800000,
+      totalOrders: 156,
+      averageOrderValue: 17948.72,
+      outstandingBalance: 320000,
+      customerSince: daysAgo(1095),
+      accountManagerName: 'Michael Chen',
+    },
+    {
+      customerNumber: 'C-10003',
+      name: 'Summit Solutions GmbH',
+      type: 'business',
+      status: 'active',
+      industry: 'Professional Services',
+      email: 'billing@summit-solutions.de',
+      phone: '+49 30 1234 5678',
+      address: { street: 'Alexanderplatz 10', city: 'Berlin', state: '', postalCode: '10178', country: 'DE' },
+      taxId: 'DE123456789',
+      creditLimit: 150000,
+      creditUsed: 45000,
+      creditAvailable: 105000,
+      creditStatus: 'approved',
+      paymentTerms: 'Net 30',
+      paymentBehavior: 'good',
+      averageDaysToPayment: 28,
+      riskLevel: 'low',
+      riskScore: 8,
+      totalRevenue: 380000,
+      totalOrders: 24,
+      averageOrderValue: 15833.33,
+      outstandingBalance: 45000,
+      customerSince: daysAgo(365),
+      accountManagerName: 'Sarah Johnson',
+    },
+    {
+      customerNumber: 'C-10004',
+      name: 'Pacific Trading Co',
+      type: 'business',
+      status: 'active',
+      industry: 'Retail',
+      email: 'ap@pacifictrading.com',
+      phone: '+1 (415) 555-0199',
+      address: { street: '500 Market Street', city: 'San Francisco', state: 'CA', postalCode: '94102', country: 'US' },
+      taxId: 'US-987654321',
+      creditLimit: 100000,
+      creditUsed: 85000,
+      creditAvailable: 15000,
+      creditStatus: 'under_review',
+      paymentTerms: 'Net 30',
+      paymentBehavior: 'fair',
+      averageDaysToPayment: 42,
+      riskLevel: 'medium',
+      riskScore: 45,
+      totalRevenue: 520000,
+      totalOrders: 65,
+      averageOrderValue: 8000.00,
+      outstandingBalance: 85000,
+      customerSince: daysAgo(540),
+      accountManagerName: 'Michael Chen',
+    },
+    {
+      customerNumber: 'C-10005',
+      name: 'Nordic Innovations AS',
+      type: 'business',
+      status: 'active',
+      industry: 'Technology',
+      email: 'invoices@nordicinnovations.no',
+      phone: '+47 22 12 34 56',
+      address: { street: 'Karl Johans gate 25', city: 'Oslo', state: '', postalCode: '0159', country: 'NO' },
+      creditLimit: 200000,
+      creditUsed: 0,
+      creditAvailable: 200000,
+      creditStatus: 'approved',
+      paymentTerms: 'Net 15',
+      paymentBehavior: 'excellent',
+      averageDaysToPayment: 12,
+      riskLevel: 'low',
+      riskScore: 5,
+      totalRevenue: 180000,
+      totalOrders: 12,
+      averageOrderValue: 15000.00,
+      outstandingBalance: 0,
+      customerSince: daysAgo(180),
+      accountManagerName: 'Sarah Johnson',
+    },
+    {
+      customerNumber: 'C-10006',
+      name: 'RedFlag Industries',
+      type: 'business',
+      status: 'suspended',
+      industry: 'Construction',
+      email: 'accounts@redflag.com',
+      phone: '+1 (212) 555-0188',
+      address: { street: '789 Builder Ave', city: 'New York', state: 'NY', postalCode: '10001', country: 'US' },
+      creditLimit: 50000,
+      creditUsed: 50000,
+      creditAvailable: 0,
+      creditStatus: 'suspended',
+      paymentTerms: 'Due on Receipt',
+      paymentBehavior: 'delinquent',
+      averageDaysToPayment: 95,
+      riskLevel: 'critical',
+      riskScore: 85,
+      totalRevenue: 150000,
+      totalOrders: 18,
+      averageOrderValue: 8333.33,
+      outstandingBalance: 50000,
+      customerSince: daysAgo(400),
+      accountManagerName: 'Michael Chen',
+    },
+  ]
+
+  const customerMap: Record<string, string> = {}
+  for (const c of customers) {
+    const created = await prisma.customer.create({
+      data: {
+        customerNumber: c.customerNumber,
+        name: c.name,
+        type: c.type,
+        status: c.status,
+        industry: c.industry,
+        email: c.email,
+        phone: c.phone,
+        website: c.website,
+        address: c.address,
+        taxId: c.taxId,
+        creditLimit: c.creditLimit,
+        creditUsed: c.creditUsed,
+        creditAvailable: c.creditAvailable,
+        creditStatus: c.creditStatus,
+        paymentTerms: c.paymentTerms,
+        paymentBehavior: c.paymentBehavior,
+        averageDaysToPayment: c.averageDaysToPayment,
+        riskLevel: c.riskLevel,
+        riskScore: c.riskScore,
+        totalRevenue: c.totalRevenue,
+        totalOrders: c.totalOrders,
+        averageOrderValue: c.averageOrderValue,
+        outstandingBalance: c.outstandingBalance,
+        customerSince: c.customerSince,
+        accountManagerName: c.accountManagerName,
+        organizationId: org.id,
+      },
+    })
+    customerMap[c.customerNumber] = created.id
+  }
+  console.log('  ✓ Created', customers.length, 'customers')
+
+  // =============================================================================
+  // CUSTOMER CONTACTS
+  // =============================================================================
+  console.log('\n📇 Creating Customer Contacts...')
+
+  const contacts = [
+    { customerNumber: 'C-10001', name: 'John Smith', title: 'CFO', email: 'jsmith@acmecorp.com', phone: '+1 (555) 123-4568', isPrimary: true, role: 'billing' },
+    { customerNumber: 'C-10001', name: 'Emily Davis', title: 'Procurement Manager', email: 'edavis@acmecorp.com', phone: '+1 (555) 123-4569', isPrimary: false, role: 'purchasing' },
+    { customerNumber: 'C-10001', name: 'Mark Thompson', title: 'CEO', email: 'mthompson@acmecorp.com', isPrimary: false, role: 'executive' },
+    { customerNumber: 'C-10002', name: 'Robert Wilson', title: 'VP Finance', email: 'rwilson@globalind.com', phone: '+44 20 7123 4568', isPrimary: true, role: 'executive' },
+    { customerNumber: 'C-10002', name: 'Lisa Brown', title: 'Accounts Payable', email: 'lbrown@globalind.com', phone: '+44 20 7123 4569', isPrimary: false, role: 'billing' },
+    { customerNumber: 'C-10003', name: 'Klaus Mueller', title: 'Managing Director', email: 'kmueller@summit-solutions.de', phone: '+49 30 1234 5679', isPrimary: true, role: 'executive' },
+    { customerNumber: 'C-10004', name: 'Jennifer Lee', title: 'Finance Director', email: 'jlee@pacifictrading.com', phone: '+1 (415) 555-0200', isPrimary: true, role: 'billing' },
+    { customerNumber: 'C-10005', name: 'Erik Andersen', title: 'CEO', email: 'eandersen@nordicinnovations.no', phone: '+47 22 12 34 57', isPrimary: true, role: 'executive' },
+  ]
+
+  for (const contact of contacts) {
+    await prisma.customerContact.create({
+      data: {
+        customerId: customerMap[contact.customerNumber],
+        name: contact.name,
+        title: contact.title,
+        email: contact.email,
+        phone: contact.phone,
+        isPrimary: contact.isPrimary,
+        role: contact.role,
+      },
+    })
+  }
+  console.log('  ✓ Created', contacts.length, 'customer contacts')
+
+  // =============================================================================
+  // CUSTOMER PAYMENTS
+  // =============================================================================
+  console.log('\n💳 Creating Customer Payments...')
+
+  const payments = [
+    { customerNumber: 'C-10001', invoiceNumber: 'INV-2024-001', amount: 45000, invoiceDate: daysAgo(60), dueDate: daysAgo(30), paymentDate: daysAgo(35), status: 'paid', daysToPayment: 25 },
+    { customerNumber: 'C-10001', invoiceNumber: 'INV-2024-015', amount: 38000, invoiceDate: daysAgo(45), dueDate: daysAgo(15), paymentDate: daysAgo(18), status: 'paid', daysToPayment: 27 },
+    { customerNumber: 'C-10001', invoiceNumber: 'INV-2024-028', amount: 52000, invoiceDate: daysAgo(20), dueDate: daysFromNow(10), status: 'pending' },
+    { customerNumber: 'C-10002', invoiceNumber: 'INV-2024-002', amount: 125000, invoiceDate: daysAgo(90), dueDate: daysAgo(45), paymentDate: daysAgo(42), status: 'paid', daysToPayment: 48 },
+    { customerNumber: 'C-10002', invoiceNumber: 'INV-2024-019', amount: 85000, invoiceDate: daysAgo(50), dueDate: daysAgo(5), paymentDate: daysAgo(2), status: 'paid', daysToPayment: 48 },
+    { customerNumber: 'C-10002', invoiceNumber: 'INV-2024-033', amount: 95000, invoiceDate: daysAgo(15), dueDate: daysFromNow(30), status: 'pending' },
+    { customerNumber: 'C-10004', invoiceNumber: 'INV-2024-008', amount: 25000, invoiceDate: daysAgo(75), dueDate: daysAgo(45), paymentDate: null, status: 'overdue', daysOverdue: 45 },
+    { customerNumber: 'C-10004', invoiceNumber: 'INV-2024-022', amount: 18000, invoiceDate: daysAgo(40), dueDate: daysAgo(10), paymentDate: null, status: 'overdue', daysOverdue: 10 },
+    { customerNumber: 'C-10006', invoiceNumber: 'INV-2024-005', amount: 35000, invoiceDate: daysAgo(150), dueDate: daysAgo(150), paymentDate: null, status: 'overdue', daysOverdue: 150 },
+    { customerNumber: 'C-10006', invoiceNumber: 'INV-2024-012', amount: 15000, invoiceDate: daysAgo(120), dueDate: daysAgo(120), paymentDate: null, status: 'overdue', daysOverdue: 120 },
+  ]
+
+  for (const payment of payments) {
+    await prisma.customerPayment.create({
+      data: {
+        customerId: customerMap[payment.customerNumber],
+        invoiceNumber: payment.invoiceNumber,
+        amount: payment.amount,
+        invoiceDate: payment.invoiceDate,
+        dueDate: payment.dueDate,
+        paymentDate: payment.paymentDate,
+        status: payment.status,
+        daysToPayment: payment.daysToPayment,
+        daysOverdue: payment.daysOverdue,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', payments.length, 'customer payments')
+
+  // =============================================================================
+  // CUSTOMER REVENUE
+  // =============================================================================
+  console.log('\n📈 Creating Customer Revenue Records...')
+
+  const revenueRecords = [
+    { customerNumber: 'C-10001', period: '2024-Q3', periodType: 'quarterly', revenue: 280000, cost: 168000, profit: 112000, margin: 40, orderCount: 12, averageOrderValue: 23333 },
+    { customerNumber: 'C-10001', period: '2024-Q4', periodType: 'quarterly', revenue: 320000, cost: 185000, profit: 135000, margin: 42, orderCount: 14, averageOrderValue: 22857 },
+    { customerNumber: 'C-10002', period: '2024-Q3', periodType: 'quarterly', revenue: 650000, cost: 420000, profit: 230000, margin: 35, orderCount: 38, averageOrderValue: 17105 },
+    { customerNumber: 'C-10002', period: '2024-Q4', periodType: 'quarterly', revenue: 720000, cost: 450000, profit: 270000, margin: 38, orderCount: 42, averageOrderValue: 17143 },
+    { customerNumber: 'C-10003', period: '2024-Q4', periodType: 'quarterly', revenue: 95000, cost: 55000, profit: 40000, margin: 42, orderCount: 6, averageOrderValue: 15833 },
+    { customerNumber: 'C-10004', period: '2024-Q3', periodType: 'quarterly', revenue: 120000, cost: 85000, profit: 35000, margin: 29, orderCount: 15, averageOrderValue: 8000 },
+    { customerNumber: 'C-10004', period: '2024-Q4', periodType: 'quarterly', revenue: 95000, cost: 70000, profit: 25000, margin: 26, orderCount: 12, averageOrderValue: 7917 },
+  ]
+
+  for (const rev of revenueRecords) {
+    await prisma.customerRevenue.create({
+      data: {
+        customerId: customerMap[rev.customerNumber],
+        period: rev.period,
+        periodType: rev.periodType,
+        revenue: rev.revenue,
+        cost: rev.cost,
+        profit: rev.profit,
+        margin: rev.margin,
+        orderCount: rev.orderCount,
+        averageOrderValue: rev.averageOrderValue,
+      },
+    })
+  }
+  console.log('  ✓ Created', revenueRecords.length, 'revenue records')
+
+  // =============================================================================
+  // CUSTOMER RISK INDICATORS
+  // =============================================================================
+  console.log('\n⚠️  Creating Customer Risk Indicators...')
+
+  const riskIndicators = [
+    { customerNumber: 'C-10004', category: 'payment', indicator: 'Late payments', description: 'Multiple invoices paid 15+ days late in last quarter', severity: 'medium', score: 25, status: 'active', recommendedAction: 'Review payment terms' },
+    { customerNumber: 'C-10004', category: 'credit', indicator: 'High credit utilization', description: 'Credit utilization at 85%, approaching limit', severity: 'medium', score: 20, status: 'monitoring', recommendedAction: 'Consider credit limit review' },
+    { customerNumber: 'C-10006', category: 'payment', indicator: 'Severely overdue', description: 'Outstanding invoices over 120 days past due', severity: 'critical', score: 40, status: 'active', recommendedAction: 'Initiate collection process' },
+    { customerNumber: 'C-10006', category: 'credit', indicator: 'Credit blocked', description: 'Account suspended due to non-payment', severity: 'critical', score: 35, status: 'active', recommendedAction: 'No new orders until payment received' },
+    { customerNumber: 'C-10006', category: 'financial', indicator: 'Cash flow concerns', description: 'Industry reports indicate financial distress', severity: 'high', score: 10, status: 'monitoring', recommendedAction: 'Monitor closely' },
+  ]
+
+  for (const risk of riskIndicators) {
+    await prisma.customerRiskIndicator.create({
+      data: {
+        customerId: customerMap[risk.customerNumber],
+        category: risk.category,
+        indicator: risk.indicator,
+        description: risk.description,
+        severity: risk.severity,
+        score: risk.score,
+        status: risk.status,
+        recommendedAction: risk.recommendedAction,
+      },
+    })
+  }
+  console.log('  ✓ Created', riskIndicators.length, 'risk indicators')
+
 
   // =============================================================================
   // SUMMARY
@@ -2355,6 +2695,11 @@ async function main() {
   console.log('  • ' + missingItems.length + ' Missing items')
   console.log('  • ' + adjustments.length + ' Period adjustments')
   console.log('  • ' + auditEntries.length + ' Audit entries')
+  console.log('  • ' + customers.length + ' Customers')
+  console.log('  • ' + contacts.length + ' Customer contacts')
+  console.log('  • ' + payments.length + ' Customer payments')
+  console.log('  • ' + revenueRecords.length + ' Revenue records')
+  console.log('  • ' + riskIndicators.length + ' Risk indicators')
   console.log('\n🎉 Ready to use!')
   console.log('   Login: demo@primebalance.app')
 }

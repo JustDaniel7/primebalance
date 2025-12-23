@@ -294,3 +294,33 @@ export type PeriodAdjustment = Prisma.PeriodAdjustmentModel
  * 
  */
 export type PeriodAuditEntry = Prisma.PeriodAuditEntryModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model CustomerContact
+ * 
+ */
+export type CustomerContact = Prisma.CustomerContactModel
+/**
+ * Model CustomerPayment
+ * 
+ */
+export type CustomerPayment = Prisma.CustomerPaymentModel
+/**
+ * Model CustomerCreditEvent
+ * 
+ */
+export type CustomerCreditEvent = Prisma.CustomerCreditEventModel
+/**
+ * Model CustomerRevenue
+ * 
+ */
+export type CustomerRevenue = Prisma.CustomerRevenueModel
+/**
+ * Model CustomerRiskIndicator
+ * 
+ */
+export type CustomerRiskIndicator = Prisma.CustomerRiskIndicatorModel
