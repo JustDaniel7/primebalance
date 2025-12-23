@@ -360,3 +360,4 @@ export * from './fx';
 export * from './taskcenter';
 export * from './forecast';
 export * from './scenarios';
+export * from './kpis';

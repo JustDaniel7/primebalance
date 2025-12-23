@@ -78,6 +78,7 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.taskCenter': 'Task Center',
     'nav.forecasts': 'Forecasts',
     'nav.scenarios': 'Scenarios',
+    'nav.kpis': 'KPIs',
 
 
     // Common
