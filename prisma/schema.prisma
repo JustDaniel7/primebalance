@@ -124,6 +124,18 @@ model Organization {
   customers            Customer[]
   customerPayments     CustomerPayment[]
   customerCreditEvents CustomerCreditEvent[]
+  suppliers            Supplier[]
+  offers               Offer[]
+  tasks                Task[]
+  forecasts            Forecast[]
+  scenarios            Scenario[]
+  kpis                 KPI[]
+  fxexposures          FXExposure[]
+  fxhedges             FXHedge[]
+  fxrates              FXRate[]
+  investors            Investor[]
+  investorUpdates      InvestorUpdate[]
+  liquidityPositions   LiquidityPosition[]
 }
 
 // =============================================================================
@@ -2614,4 +2626,749 @@ model CustomerRiskIndicator {
 
   @@index([customerId, status])
   @@index([customerId, severity])
+}
+
+// =============================================================================
+// SUPPLIERS
+// =============================================================================
+
+model Supplier {
+  id             String @id @default(cuid())
+  supplierNumber String
+
+  // Basic Info
+  name     String
+  type     String  @default("vendor") // vendor, contractor, service_provider, manufacturer, distributor
+  status   String  @default("active") // active, inactive, pending_approval, blocked, preferred
+  industry String?
+
+  // Contact
+  email   String?
+  phone   String?
+  website String?
+  address Json? // { street, city, state, postalCode, country }
+
+  // Tax & Legal
+  taxId     String?
+  vatNumber String?
+  legalName String?
+
+  // Payment Info
+  paymentTerms           String  @default("Net 30")
+  preferredPaymentMethod String? // wire, check, ach, card
+  bankDetails            Json? // { bankName, iban, swift, accountNumber }
+  currency               String  @default("EUR")
+
+  // Financial Summary
+  totalPurchases      Decimal @default(0) @db.Decimal(15, 2)
+  totalOrders         Int     @default(0)
+  averageOrderValue   Decimal @default(0) @db.Decimal(15, 2)
+  outstandingPayables Decimal @default(0) @db.Decimal(15, 2)
+  overdueAmount       Decimal @default(0) @db.Decimal(15, 2)
+
+  // Performance
+  qualityRating      Decimal? @db.Decimal(3, 2) // 0.00-5.00
+  deliveryRating     Decimal? @db.Decimal(3, 2)
+  responseRating     Decimal? @db.Decimal(3, 2)
+  overallRating      Decimal? @db.Decimal(3, 2)
+  onTimeDeliveryRate Decimal? @db.Decimal(5, 2)
+
+  // Risk
+  riskLevel String @default("low") // low, medium, high, critical
+
+  // Relationship
+  supplierSince    DateTime  @default(now())
+  lastOrderDate    DateTime?
+  lastPaymentDate  DateTime?
+  accountManagerId String?
+
+  // Categories & Tags
+  categories String[]
+  tags       String[]
+  notes      String?  @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  contacts SupplierContact[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, supplierNumber])
+  @@index([organizationId, status])
+  @@index([organizationId, type])
+}
+
+model SupplierContact {
+  id         String   @id @default(cuid())
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  name      String
+  title     String?
+  email     String
+  phone     String?
+  isPrimary Boolean @default(false)
+  role      String  @default("general") // billing, sales, support, executive, general
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([supplierId])
+}
+
+// =============================================================================
+// OFFERS (Quotes/Proposals)
+// =============================================================================
+
+model Offer {
+  id          String @id @default(cuid())
+  offerNumber String
+  status      String @default("draft") // draft, sent, viewed, accepted, rejected, expired, converted
+
+  // Type
+  type String @default("quote") // quote, proposal, estimate, tender
+
+  // Customer
+  customerId      String?
+  customerName    String
+  customerEmail   String?
+  customerAddress Json?
+
+  // Dates
+  offerDate   DateTime
+  validUntil  DateTime
+  acceptedAt  DateTime?
+  rejectedAt  DateTime?
+  convertedAt DateTime?
+
+  // Items
+  items Json // OfferItem[]
+
+  // Totals
+  currency       String  @default("EUR")
+  subtotal       Decimal @db.Decimal(15, 2)
+  taxAmount      Decimal @db.Decimal(15, 2)
+  discountAmount Decimal @default(0) @db.Decimal(15, 2)
+  total          Decimal @db.Decimal(15, 2)
+  taxRate        Decimal @default(0) @db.Decimal(5, 2)
+
+  // Conversion tracking
+  convertedToOrderId   String?
+  convertedToInvoiceId String?
+
+  // Meta
+  title         String?
+  description   String?  @db.Text
+  terms         String?  @db.Text
+  notes         String?  @db.Text
+  internalNotes String?  @db.Text
+  tags          String[]
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, offerNumber])
+  @@index([organizationId, status])
+  @@index([organizationId, customerId])
+}
+
+// =============================================================================
+// TASKS (Task Center)
+// =============================================================================
+
+model Task {
+  id String @id @default(cuid())
+
+  // Basic Info
+  title       String
+  description String? @db.Text
+  status      String  @default("pending") // pending, in_progress, completed, cancelled, blocked
+  priority    String  @default("normal") // low, normal, high, urgent
+
+  // Type & Category
+  type     String  @default("general") // general, approval, review, deadline, reminder, reconciliation, compliance
+  category String? // finance, tax, compliance, operations, hr, other
+
+  // Dates
+  dueDate      DateTime?
+  startDate    DateTime?
+  completedAt  DateTime?
+  reminderDate DateTime?
+
+  // Assignment
+  assigneeId    String?
+  assigneeName  String?
+  createdById   String?
+  createdByName String?
+
+  // Reference
+  referenceType String? // invoice, order, asset, liability, receivable, project, customer, supplier
+  referenceId   String?
+
+  // Progress
+  progress       Int      @default(0) // 0-100
+  estimatedHours Decimal? @db.Decimal(5, 2)
+  actualHours    Decimal? @db.Decimal(5, 2)
+
+  // Meta
+  tags        String[]
+  attachments Json?
+  notes       String?  @db.Text
+
+  // Recurrence
+  isRecurring       Boolean @default(false)
+  recurringInterval String? // daily, weekly, monthly, quarterly, yearly
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Subtasks
+  parentId String?
+  parent   Task?   @relation("TaskSubtasks", fields: [parentId], references: [id])
+  subtasks Task[]  @relation("TaskSubtasks")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, assigneeId])
+  @@index([organizationId, dueDate])
+  @@index([organizationId, priority])
+}
+
+// =============================================================================
+// FORECASTS
+// =============================================================================
+
+model Forecast {
+  id String @id @default(cuid())
+
+  // Basic Info
+  name        String
+  description String? @db.Text
+  type        String  @default("cash_flow") // cash_flow, revenue, expense, profit, balance_sheet
+  status      String  @default("draft") // draft, active, archived, superseded
+
+  // Time Period
+  periodType String // monthly, quarterly, yearly
+  startDate  DateTime
+  endDate    DateTime
+  fiscalYear Int?
+
+  // Version Control
+  version    Int     @default(1)
+  isBaseline Boolean @default(false)
+  baselineId String?
+  parentId   String?
+
+  // Totals (aggregated)
+  currency      String  @default("EUR")
+  totalRevenue  Decimal @default(0) @db.Decimal(15, 2)
+  totalExpense  Decimal @default(0) @db.Decimal(15, 2)
+  totalProfit   Decimal @default(0) @db.Decimal(15, 2)
+  totalCashFlow Decimal @default(0) @db.Decimal(15, 2)
+
+  // Assumptions
+  assumptions Json? // Key assumptions for the forecast
+
+  // Meta
+  tags  String[]
+  notes String?  @db.Text
+
+  // Approval
+  approvedBy String?
+  approvedAt DateTime?
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  periods ForecastPeriod[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, type])
+  @@index([organizationId, fiscalYear])
+}
+
+model ForecastPeriod {
+  id String @id @default(cuid())
+
+  // Period
+  periodLabel String // e.g., "2025-01", "Q1 2025"
+  periodStart DateTime
+  periodEnd   DateTime
+
+  // Amounts
+  revenue     Decimal @db.Decimal(15, 2)
+  expense     Decimal @db.Decimal(15, 2)
+  profit      Decimal @db.Decimal(15, 2)
+  cashInflow  Decimal @db.Decimal(15, 2)
+  cashOutflow Decimal @db.Decimal(15, 2)
+  netCashFlow Decimal @db.Decimal(15, 2)
+  closingCash Decimal @db.Decimal(15, 2)
+
+  // Actuals (for comparison)
+  actualRevenue  Decimal? @db.Decimal(15, 2)
+  actualExpense  Decimal? @db.Decimal(15, 2)
+  actualCashFlow Decimal? @db.Decimal(15, 2)
+
+  // Variance
+  revenueVariance  Decimal? @db.Decimal(15, 2)
+  expenseVariance  Decimal? @db.Decimal(15, 2)
+  cashFlowVariance Decimal? @db.Decimal(15, 2)
+
+  // Line items breakdown
+  lineItems Json? // Detailed breakdown by category
+
+  // Relations
+  forecastId String
+  forecast   Forecast @relation(fields: [forecastId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([forecastId, periodStart])
+}
+
+// =============================================================================
+// SCENARIOS (What-if Analysis)
+// =============================================================================
+
+model Scenario {
+  id String @id @default(cuid())
+
+  // Basic Info
+  name        String
+  description String? @db.Text
+  type        String  @default("what_if") // what_if, stress_test, sensitivity, monte_carlo
+  status      String  @default("draft") // draft, active, archived
+
+  // Base Reference
+  baseForecastId String?
+  baseScenarioId String?
+
+  // Parameters
+  parameters Json // { variableName: { baseValue, adjustedValue, adjustmentType, adjustmentAmount } }
+
+  // Results
+  results Json? // Calculated scenario outcomes
+
+  // Impact Summary
+  revenueImpact  Decimal? @db.Decimal(15, 2)
+  expenseImpact  Decimal? @db.Decimal(15, 2)
+  profitImpact   Decimal? @db.Decimal(15, 2)
+  cashFlowImpact Decimal? @db.Decimal(15, 2)
+
+  // Probability & Risk
+  probability     Decimal? @db.Decimal(5, 2) // 0-100%
+  riskLevel       String   @default("medium") // low, medium, high, critical
+  confidenceLevel Decimal? @db.Decimal(5, 2)
+
+  // Meta
+  tags  String[]
+  notes String?  @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, type])
+}
+
+// =============================================================================
+// KPIs (Key Performance Indicators)
+// =============================================================================
+
+model KPI {
+  id String @id @default(cuid())
+
+  // Basic Info
+  code        String
+  name        String
+  description String? @db.Text
+  category    String // margins, growth, efficiency, liquidity, leverage, profitability
+
+  // Configuration
+  calculationType String  @default("formula") // formula, manual, derived, aggregated
+  formula         String? // e.g., "(revenue - cogs) / revenue * 100"
+  dataSource      String? // Where data comes from
+  unit            String  @default("number") // number, percentage, currency, days, ratio
+
+  // Current Value
+  currentValue  Decimal? @db.Decimal(15, 4)
+  previousValue Decimal? @db.Decimal(15, 4)
+  targetValue   Decimal? @db.Decimal(15, 4)
+  baselineValue Decimal? @db.Decimal(15, 4)
+
+  // Status
+  status        String @default("on_track") // on_track, watch, off_track
+  trend         String @default("stable") // improving, stable, deteriorating
+  trendMomentum String @default("steady") // accelerating, steady, decelerating
+
+  // Thresholds
+  thresholds Json? // { softMin, softMax, hardMin, hardMax }
+
+  // Display
+  displayOrder Int     @default(0)
+  isVisible    Boolean @default(true)
+  isPinned     Boolean @default(false)
+
+  // Meta
+  tags  String[]
+  notes String?  @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  history KPIHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, code])
+  @@index([organizationId, category])
+  @@index([organizationId, status])
+}
+
+model KPIHistory {
+  id String @id @default(cuid())
+
+  // Period
+  periodType  String // daily, weekly, monthly, quarterly, yearly
+  periodStart DateTime
+  periodEnd   DateTime
+  periodLabel String // e.g., "2025-01", "Q1 2025"
+
+  // Values
+  value         Decimal  @db.Decimal(15, 4)
+  targetValue   Decimal? @db.Decimal(15, 4)
+  previousValue Decimal? @db.Decimal(15, 4)
+
+  // Variance
+  vsTarget   Decimal? @db.Decimal(15, 4)
+  vsPrevious Decimal? @db.Decimal(15, 4)
+
+  // Status at time
+  status String?
+  trend  String?
+
+  // Relations
+  kpiId String
+  kpi   KPI    @relation(fields: [kpiId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([kpiId, periodStart])
+}
+
+// =============================================================================
+// FX MANAGEMENT
+// =============================================================================
+
+model FXExposure {
+  id String @id @default(cuid())
+
+  // Currency Pair
+  baseCurrency  String // e.g., "EUR"
+  quoteCurrency String // e.g., "USD"
+
+  // Exposure Type
+  type   String // receivable, payable, forecast, investment, loan
+  status String @default("open") // open, hedged, partial_hedged, closed
+
+  // Amounts
+  exposureAmount  Decimal @db.Decimal(15, 2)
+  hedgedAmount    Decimal @default(0) @db.Decimal(15, 2)
+  unhedgedAmount  Decimal @db.Decimal(15, 2)
+  hedgePercentage Decimal @default(0) @db.Decimal(5, 2)
+
+  // Rates
+  bookingRate Decimal  @db.Decimal(12, 6)
+  currentRate Decimal? @db.Decimal(12, 6)
+  targetRate  Decimal? @db.Decimal(12, 6)
+
+  // Gain/Loss
+  unrealizedGainLoss Decimal @default(0) @db.Decimal(15, 2)
+  realizedGainLoss   Decimal @default(0) @db.Decimal(15, 2)
+
+  // Dates
+  exposureDate   DateTime
+  settlementDate DateTime?
+  maturityDate   DateTime?
+
+  // Reference
+  referenceType String? // invoice, order, contract, forecast
+  referenceId   String?
+  counterparty  String?
+
+  // Meta
+  notes String? @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  hedges FXHedge[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, baseCurrency, quoteCurrency])
+  @@index([organizationId, status])
+  @@index([organizationId, maturityDate])
+}
+
+model FXHedge {
+  id String @id @default(cuid())
+
+  // Hedge Type
+  type   String // forward, option, swap, natural
+  status String @default("active") // pending, active, matured, cancelled
+
+  // Currency
+  baseCurrency  String
+  quoteCurrency String
+
+  // Amounts
+  notionalAmount Decimal  @db.Decimal(15, 2)
+  strikeRate     Decimal  @db.Decimal(12, 6)
+  currentRate    Decimal? @db.Decimal(12, 6)
+
+  // Dates
+  tradeDate    DateTime
+  valueDate    DateTime
+  maturityDate DateTime
+
+  // Counterparty
+  counterparty  String?
+  dealReference String?
+
+  // Valuation
+  marketValue        Decimal @default(0) @db.Decimal(15, 2)
+  unrealizedGainLoss Decimal @default(0) @db.Decimal(15, 2)
+
+  // Effectiveness (for hedge accounting)
+  isDesignatedHedge Boolean  @default(false)
+  effectiveness     Decimal? @db.Decimal(5, 2)
+
+  // Meta
+  notes String? @db.Text
+
+  // Relations
+  exposureId     String?
+  exposure       FXExposure?  @relation(fields: [exposureId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, maturityDate])
+}
+
+model FXRate {
+  id String @id @default(cuid())
+
+  // Currency Pair
+  baseCurrency  String
+  quoteCurrency String
+
+  // Rate
+  rate     Decimal  @db.Decimal(12, 6)
+  rateDate DateTime
+
+  // Source
+  source String @default("manual") // manual, ecb, xe, oanda
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([organizationId, baseCurrency, quoteCurrency, rateDate])
+  @@index([organizationId, rateDate])
+}
+
+// =============================================================================
+// INVESTOR VIEW
+// =============================================================================
+
+model Investor {
+  id String @id @default(cuid())
+
+  // Basic Info
+  name   String
+  type   String @default("institutional") // individual, institutional, vc, pe, angel, strategic, family_office
+  status String @default("active") // prospect, active, former, blacklisted
+
+  // Contact
+  email          String?
+  phone          String?
+  primaryContact String?
+  address        Json?
+
+  // Investment Summary
+  currency              String  @default("EUR")
+  totalInvested         Decimal @default(0) @db.Decimal(15, 2)
+  currentValue          Decimal @default(0) @db.Decimal(15, 2)
+  ownershipPercent      Decimal @default(0) @db.Decimal(5, 4)
+  unrealizedGain        Decimal @default(0) @db.Decimal(15, 2)
+  distributionsReceived Decimal @default(0) @db.Decimal(15, 2)
+
+  // Terms
+  investmentDate  DateTime?
+  boardSeat       Boolean   @default(false)
+  votingRights    Decimal?  @db.Decimal(5, 4)
+  liquidationPref String?
+
+  // Communication
+  lastContactDate    DateTime?
+  reportingFrequency String    @default("quarterly") // monthly, quarterly, annually
+
+  // Meta
+  tags  String[]
+  notes String?  @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  investments InvestorInvestment[]
+  updates     InvestorUpdate[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, type])
+}
+
+model InvestorInvestment {
+  id String @id @default(cuid())
+
+  // Investment Details
+  round          String // seed, series_a, series_b, bridge, convertible_note, safe
+  investmentDate DateTime
+  amount         Decimal  @db.Decimal(15, 2)
+  currency       String   @default("EUR")
+
+  // Instrument
+  instrumentType String   @default("equity") // equity, convertible, safe, loan
+  sharesIssued   Int?
+  pricePerShare  Decimal? @db.Decimal(12, 4)
+  valuation      Decimal? @db.Decimal(15, 2)
+
+  // Terms
+  conversionTerms   String?  @db.Text
+  liquidationPref   Decimal? @db.Decimal(5, 2)
+  participatingPref Boolean  @default(false)
+
+  // Status
+  status String @default("active") // active, converted, redeemed, written_off
+
+  // Relations
+  investorId String
+  investor   Investor @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([investorId])
+}
+
+model InvestorUpdate {
+  id String @id @default(cuid())
+
+  // Update Info
+  type       String // quarterly_report, board_meeting, ad_hoc, milestone
+  title      String
+  content    String    @db.Text
+  sentAt     DateTime?
+  recipients Json? // Array of investor IDs or "all"
+
+  // Attachments
+  attachments Json?
+
+  // Relations
+  investorId     String? // null if sent to all
+  investor       Investor?    @relation(fields: [investorId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, sentAt])
+}
+
+// =============================================================================
+// LIQUIDITY
+// =============================================================================
+
+model LiquidityPosition {
+  id String @id @default(cuid())
+
+  // Position Date
+  positionDate DateTime
+  periodType   String   @default("daily") // daily, weekly, monthly
+
+  // Cash Positions
+  totalCash      Decimal @db.Decimal(15, 2)
+  operatingCash  Decimal @db.Decimal(15, 2)
+  reserveCash    Decimal @db.Decimal(15, 2)
+  restrictedCash Decimal @default(0) @db.Decimal(15, 2)
+
+  // Available Liquidity
+  availableCredit Decimal @default(0) @db.Decimal(15, 2)
+  totalLiquidity  Decimal @db.Decimal(15, 2)
+
+  // Flows
+  expectedInflows  Decimal @default(0) @db.Decimal(15, 2)
+  expectedOutflows Decimal @default(0) @db.Decimal(15, 2)
+  netCashFlow      Decimal @default(0) @db.Decimal(15, 2)
+
+  // Projections
+  projectedEndingCash Decimal? @db.Decimal(15, 2)
+  runwayDays          Int?
+  runwayMonths        Decimal? @db.Decimal(5, 2)
+
+  // Metrics
+  currentRatio Decimal? @db.Decimal(8, 4)
+  quickRatio   Decimal? @db.Decimal(8, 4)
+  cashBurnRate Decimal? @db.Decimal(15, 2)
+
+  // Status
+  status String @default("normal") // normal, watch, warning, critical
+
+  // Breakdown by account (JSON for flexibility)
+  accountBreakdown Json?
+  currency         String @default("EUR")
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([organizationId, positionDate, periodType])
+  @@index([organizationId, positionDate])
+  @@index([organizationId, status])
 }

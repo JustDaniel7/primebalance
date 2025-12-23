@@ -1,12 +1,15 @@
+// src/app/dashboard/suppliers/page.tsx
+
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Truck,
     Plus,
     Search,
     Building2,
+    Loader2,
     Mail,
     Phone,
     Globe,
@@ -35,6 +38,7 @@ import {
     Percent,
     AlertCircle,
     Ban,
+    User,
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
@@ -117,16 +121,16 @@ function SupplierCard({ supplier, onClick }: { supplier: Supplier; onClick: () =
         <Card variant="glass" padding="md" hover className="cursor-pointer" onClick={onClick}>
             <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${supplier.status === 'preferred' ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
-                        {supplier.status === 'preferred' ? <Star size={24} className="text-purple-500" /> : <Building2 size={24} className="text-blue-500" />}
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${supplier.status === 'preferred' ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+                        <Truck size={24} className={supplier.status === 'preferred' ? 'text-purple-500' : 'text-orange-500'} />
                     </div>
                     <div>
                         <h3 className="font-semibold text-gray-900 dark:text-white">{supplier.name}</h3>
-                        <p className="text-xs text-gray-500">{supplier.supplierNumber} • {t(`suppliers.category.${supplier.category}`) || supplier.category}</p>
+                        <p className="text-xs text-gray-500">{supplier.supplierNumber} • {supplier.category}</p>
                     </div>
                 </div>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[supplier.status]}`}>
-                    {t(`suppliers.status.${supplier.status}`) || supplier.status}
+                    {supplier.status}
                 </span>
             </div>
 
@@ -143,11 +147,11 @@ function SupplierCard({ supplier, onClick }: { supplier: Supplier; onClick: () =
 
             <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-surface-700">
                 <div className="flex items-center gap-2">
-                    <Activity size={14} className={reliabilityColors[supplier.reliabilityRating]} />
-                    <span className="text-xs text-gray-500">{t('suppliers.reliability') || 'Reliability'}: {supplier.reliabilityScore}%</span>
+                    <Star size={14} className={reliabilityColors[supplier.reliabilityRating]} />
+                    <span className="text-xs text-gray-500">{supplier.reliabilityScore}% {t('suppliers.reliability') || 'reliability'}</span>
                 </div>
                 <span className={`px-2 py-0.5 rounded text-xs ${dependencyColors[supplier.dependencyLevel]}`}>
-                    {t(`suppliers.dependency.${supplier.dependencyLevel}`) || supplier.dependencyLevel} {t('suppliers.dependency') || 'dependency'}
+                    {supplier.dependencyLevel} {t('suppliers.dependency') || 'dependency'}
                 </span>
             </div>
 
@@ -172,14 +176,29 @@ function SupplierCard({ supplier, onClick }: { supplier: Supplier; onClick: () =
 
 function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClose: () => void }) {
     const { t } = useThemeStore();
-    const { getSupplierBalance, getSupplierRisks, getSupplierContacts, getSupplierSpend, getSupplierReliability, resolveRisk } = useSuppliersStore();
-    const [activeTab, setActiveTab] = useState<'overview' | 'balance' | 'reliability' | 'spend' | 'risk' | 'contacts'>('overview');
+    const { 
+        getSupplierPayments, 
+        getSupplierRisks, 
+        getSupplierContacts, 
+        getSupplierSpend,
+        getSupplierReliability,
+        getSupplierBalance,
+        resolveRisk,
+        fetchSupplier
+    } = useSuppliersStore();
+    const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'reliability' | 'spend' | 'risks' | 'contacts'>('overview');
 
-    const balance = getSupplierBalance(supplier.id);
+    // Fetch full supplier data on mount
+    useEffect(() => {
+        fetchSupplier(supplier.id);
+    }, [supplier.id, fetchSupplier]);
+
+    const payments = getSupplierPayments(supplier.id);
     const risks = getSupplierRisks(supplier.id);
     const contacts = getSupplierContacts(supplier.id);
-    const spendRecords = getSupplierSpend(supplier.id);
-    const reliabilityRecords = getSupplierReliability(supplier.id);
+    const spend = getSupplierSpend(supplier.id);
+    const reliability = getSupplierReliability(supplier.id);
+    const balance = getSupplierBalance(supplier.id);
 
     const activeRisks = risks.filter((r) => r.status !== 'resolved');
 
@@ -198,20 +217,21 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
         critical: 'bg-red-100 text-red-700',
     };
 
-    const reliabilityColors: Record<string, string> = {
-        excellent: 'bg-emerald-100 text-emerald-700',
-        good: 'bg-blue-100 text-blue-700',
-        fair: 'bg-amber-100 text-amber-700',
-        poor: 'bg-orange-100 text-orange-700',
-        critical: 'bg-red-100 text-red-700',
+    const paymentStatusColors: Record<string, string> = {
+        completed: 'bg-emerald-100 text-emerald-700',
+        pending: 'bg-blue-100 text-blue-700',
+        processing: 'bg-amber-100 text-amber-700',
+        scheduled: 'bg-purple-100 text-purple-700',
+        failed: 'bg-red-100 text-red-700',
+        cancelled: 'bg-gray-100 text-gray-600',
     };
 
     const tabs = [
         { id: 'overview', label: t('suppliers.overview') || 'Overview', icon: Eye },
-        { id: 'balance', label: t('suppliers.balance') || 'Balance', icon: CreditCard },
-        { id: 'reliability', label: t('suppliers.reliability') || 'Reliability', icon: Activity, count: reliabilityRecords.length },
+        { id: 'payments', label: t('suppliers.payments') || 'Payments', icon: CreditCard, count: payments.length },
+        { id: 'reliability', label: t('suppliers.reliability') || 'Reliability', icon: Star },
         { id: 'spend', label: t('suppliers.spend') || 'Spend', icon: BarChart3 },
-        { id: 'risk', label: t('suppliers.risk') || 'Risk', icon: AlertTriangle, count: activeRisks.length },
+        { id: 'risks', label: t('suppliers.risks') || 'Risks', icon: AlertTriangle, count: activeRisks.length },
         { id: 'contacts', label: t('suppliers.contacts') || 'Contacts', icon: Users, count: contacts.length },
     ];
 
@@ -225,16 +245,15 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                 <div className="p-6 border-b border-gray-200 dark:border-surface-700">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-4">
-                            <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${supplier.status === 'preferred' ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
-                                {supplier.status === 'preferred' ? <Star size={32} className="text-purple-500" /> : <Building2 size={32} className="text-blue-500" />}
+                            <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${supplier.status === 'preferred' ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+                                <Truck size={32} className={supplier.status === 'preferred' ? 'text-purple-500' : 'text-orange-500'} />
                             </div>
                             <div>
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{supplier.name}</h2>
-                                <p className="text-gray-500">{supplier.supplierNumber} • {t(`suppliers.category.${supplier.category}`) || supplier.category}</p>
+                                <p className="text-gray-500">{supplier.supplierNumber} • {supplier.category}</p>
                                 <div className="flex items-center gap-2 mt-2">
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[supplier.status]}`}>{supplier.status}</span>
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${dependencyColors[supplier.dependencyLevel]}`}>{supplier.dependencyLevel} dependency</span>
-                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${reliabilityColors[supplier.reliabilityRating]}`}>{supplier.reliabilityRating}</span>
                                 </div>
                             </div>
                         </div>
@@ -246,7 +265,7 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                         {tabs.map((tab) => {
                             const Icon = tab.icon;
                             return (
-                                <button key={tab.id} onClick={() => setActiveTab(tab.id as any)}
+                                <button key={tab.id} onClick={() => setActiveTab(tab.id as typeof activeTab)}
                                         className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-colors ${activeTab === tab.id ? 'bg-[var(--accent-primary)] text-white' : 'text-gray-600 hover:bg-gray-100 dark:hover:bg-surface-800'}`}>
                                     <Icon size={16} />{tab.label}
                                     {tab.count !== undefined && tab.count > 0 && <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.id ? 'bg-white/20' : 'bg-gray-200 dark:bg-surface-700'}`}>{tab.count}</span>}
@@ -271,7 +290,7 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                                     <p className="text-xl font-bold text-gray-900 dark:text-white">{supplier.totalOrders}</p>
                                 </div>
                                 <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
-                                    <p className="text-xs text-gray-500">{t('suppliers.avgOrderValue') || 'Avg Order'}</p>
+                                    <p className="text-xs text-gray-500">{t('suppliers.avgOrder') || 'Avg Order'}</p>
                                     <p className="text-xl font-bold text-gray-900 dark:text-white">${supplier.averageOrderValue.toLocaleString()}</p>
                                 </div>
                                 <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
@@ -285,19 +304,39 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                                 <div>
                                     <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{t('suppliers.contactInfo') || 'Contact Information'}</h3>
                                     <div className="space-y-2">
-                                        <div className="flex items-center gap-3 text-sm"><Mail size={16} className="text-gray-400" /><span>{supplier.email}</span></div>
-                                        {supplier.phone && <div className="flex items-center gap-3 text-sm"><Phone size={16} className="text-gray-400" /><span>{supplier.phone}</span></div>}
-                                        {supplier.website && <div className="flex items-center gap-3 text-sm"><Globe size={16} className="text-gray-400" /><span>{supplier.website}</span></div>}
-                                        {supplier.address && <div className="flex items-start gap-3 text-sm"><MapPin size={16} className="text-gray-400 mt-0.5" /><span>{supplier.address.street}, {supplier.address.city}, {supplier.address.state}</span></div>}
+                                        <div className="flex items-center gap-3 text-sm">
+                                            <Mail size={16} className="text-gray-400" />
+                                            <span className="text-gray-700 dark:text-gray-300">{supplier.email}</span>
+                                        </div>
+                                        {supplier.phone && (
+                                            <div className="flex items-center gap-3 text-sm">
+                                                <Phone size={16} className="text-gray-400" />
+                                                <span className="text-gray-700 dark:text-gray-300">{supplier.phone}</span>
+                                            </div>
+                                        )}
+                                        {supplier.website && (
+                                            <div className="flex items-center gap-3 text-sm">
+                                                <Globe size={16} className="text-gray-400" />
+                                                <span className="text-gray-700 dark:text-gray-300">{supplier.website}</span>
+                                            </div>
+                                        )}
+                                        {supplier.address && (
+                                            <div className="flex items-start gap-3 text-sm">
+                                                <MapPin size={16} className="text-gray-400 mt-0.5" />
+                                                <span className="text-gray-700 dark:text-gray-300">{supplier.address.street}, {supplier.address.city}, {supplier.address.state} {supplier.address.postalCode}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{t('suppliers.accountInfo') || 'Account Information'}</h3>
                                     <div className="space-y-2 text-sm">
-                                        <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.supplierSince') || 'Supplier Since'}</span><span>{new Date(supplier.supplierSince).toLocaleDateString()}</span></div>
-                                        <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.paymentTerms') || 'Payment Terms'}</span><span>{supplier.paymentTerms}</span></div>
-                                        <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.paymentMethod') || 'Payment Method'}</span><span className="capitalize">{supplier.preferredPaymentMethod}</span></div>
-                                        {supplier.earlyPaymentDiscount && <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.earlyDiscount') || 'Early Payment Discount'}</span><span>{supplier.earlyPaymentDiscount}%</span></div>}
+                                        <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.supplierSince') || 'Supplier Since'}</span><span className="text-gray-900 dark:text-white">{new Date(supplier.supplierSince).toLocaleDateString()}</span></div>
+                                        <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.paymentTerms') || 'Payment Terms'}</span><span className="text-gray-900 dark:text-white">{supplier.paymentTerms}</span></div>
+                                        <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.paymentMethod') || 'Payment Method'}</span><span className="text-gray-900 dark:text-white capitalize">{supplier.preferredPaymentMethod}</span></div>
+                                        {supplier.earlyPaymentDiscount && (
+                                            <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.earlyDiscount') || 'Early Pay Discount'}</span><span className="text-emerald-600">{supplier.earlyPaymentDiscount}%</span></div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -305,163 +344,144 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                             {/* Reliability Metrics */}
                             <div>
                                 <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{t('suppliers.reliabilityMetrics') || 'Reliability Metrics'}</h3>
-                                <div className="grid grid-cols-4 gap-4">
-                                    <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl text-center">
-                                        <p className={`text-2xl font-bold ${supplier.onTimeDeliveryRate >= 95 ? 'text-emerald-600' : supplier.onTimeDeliveryRate >= 85 ? 'text-amber-600' : 'text-red-600'}`}>{supplier.onTimeDeliveryRate}%</p>
-                                        <p className="text-xs text-gray-500 mt-1">{t('suppliers.onTimeDelivery') || 'On-Time Delivery'}</p>
-                                    </div>
-                                    <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl text-center">
-                                        <p className={`text-2xl font-bold ${supplier.qualityScore >= 90 ? 'text-emerald-600' : supplier.qualityScore >= 75 ? 'text-amber-600' : 'text-red-600'}`}>{supplier.qualityScore}%</p>
-                                        <p className="text-xs text-gray-500 mt-1">{t('suppliers.qualityScore') || 'Quality Score'}</p>
-                                    </div>
-                                    <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl text-center">
-                                        <p className={`text-2xl font-bold ${supplier.defectRate <= 1 ? 'text-emerald-600' : supplier.defectRate <= 3 ? 'text-amber-600' : 'text-red-600'}`}>{supplier.defectRate}%</p>
-                                        <p className="text-xs text-gray-500 mt-1">{t('suppliers.defectRate') || 'Defect Rate'}</p>
-                                    </div>
-                                    <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl text-center">
-                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{supplier.avgLeadTime}d</p>
-                                        <p className="text-xs text-gray-500 mt-1">{t('suppliers.avgLeadTime') || 'Avg Lead Time'}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Dependency Info */}
-                            <div>
-                                <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{t('suppliers.dependencyAnalysis') || 'Dependency Analysis'}</h3>
                                 <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
                                     <div className="grid grid-cols-4 gap-4">
-                                        <div><p className="text-xs text-gray-500">{t('suppliers.spendShare') || 'Spend Share'}</p><p className="text-lg font-bold">{supplier.spendPercentage}%</p></div>
-                                        <div><p className="text-xs text-gray-500">{t('suppliers.alternatives') || 'Alternatives'}</p><p className="text-lg font-bold">{supplier.alternativeSuppliers}</p></div>
-                                        <div><p className="text-xs text-gray-500">{t('suppliers.criticalItems') || 'Critical Items'}</p><p className={`text-lg font-bold ${supplier.criticalItems > 0 ? 'text-red-600' : ''}`}>{supplier.criticalItems}</p></div>
-                                        <div><p className="text-xs text-gray-500">{t('suppliers.dependencyScore') || 'Dependency Score'}</p><p className={`text-lg font-bold ${supplier.dependencyScore >= 70 ? 'text-red-600' : supplier.dependencyScore >= 40 ? 'text-amber-600' : 'text-emerald-600'}`}>{supplier.dependencyScore}/100</p></div>
+                                        <div>
+                                            <p className="text-xs text-gray-500">{t('suppliers.onTimeDelivery') || 'On-Time Delivery'}</p>
+                                            <p className={`text-2xl font-bold ${supplier.onTimeDeliveryRate >= 95 ? 'text-emerald-600' : supplier.onTimeDeliveryRate >= 85 ? 'text-amber-600' : 'text-red-600'}`}>{supplier.onTimeDeliveryRate}%</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-500">{t('suppliers.qualityScore') || 'Quality Score'}</p>
+                                            <p className={`text-2xl font-bold ${supplier.qualityScore >= 90 ? 'text-emerald-600' : supplier.qualityScore >= 75 ? 'text-amber-600' : 'text-red-600'}`}>{supplier.qualityScore}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-500">{t('suppliers.defectRate') || 'Defect Rate'}</p>
+                                            <p className={`text-2xl font-bold ${supplier.defectRate <= 1 ? 'text-emerald-600' : supplier.defectRate <= 3 ? 'text-amber-600' : 'text-red-600'}`}>{supplier.defectRate}%</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-gray-500">{t('suppliers.avgLeadTime') || 'Avg Lead Time'}</p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{supplier.avgLeadTime}d</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {activeTab === 'balance' && balance && (
-                        <div className="space-y-6">
-                            {/* Balance Summary */}
-                            <div className="grid grid-cols-3 gap-4">
-                                <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
-                                    <p className="text-xs text-gray-500">{t('suppliers.totalOutstanding') || 'Total Outstanding'}</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">${balance.totalOutstanding.toLocaleString()}</p>
-                                </div>
-                                <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
-                                    <p className="text-xs text-gray-500">{t('suppliers.ytdPayments') || 'YTD Payments'}</p>
-                                    <p className="text-2xl font-bold text-emerald-600">${balance.ytdPayments.toLocaleString()}</p>
-                                </div>
-                                <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
-                                    <p className="text-xs text-gray-500">{t('suppliers.ytdPurchases') || 'YTD Purchases'}</p>
-                                    <p className="text-2xl font-bold text-blue-600">${balance.ytdPurchases.toLocaleString()}</p>
-                                </div>
+                    {activeTab === 'payments' && (
+                        <div className="space-y-4">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                    <tr className="border-b border-gray-200 dark:border-surface-700">
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.payment') || 'Payment'}</th>
+                                        <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.amount') || 'Amount'}</th>
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.date') || 'Date'}</th>
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.method') || 'Method'}</th>
+                                        <th className="text-center py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.status') || 'Status'}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {payments.map((payment) => (
+                                        <tr key={payment.id} className="border-b border-gray-100 dark:border-surface-800">
+                                            <td className="py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">{payment.paymentNumber}</td>
+                                            <td className="py-3 px-4 text-sm text-right font-medium text-gray-900 dark:text-white">${payment.amount.toLocaleString()}</td>
+                                            <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400">{new Date(payment.paymentDate).toLocaleDateString()}</td>
+                                            <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400 capitalize">{payment.paymentMethod}</td>
+                                            <td className="py-3 px-4 text-center"><span className={`px-2 py-1 rounded-full text-xs font-medium ${paymentStatusColors[payment.status]}`}>{payment.status}</span></td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                                {payments.length === 0 && <p className="text-center text-gray-500 py-8">{t('suppliers.noPayments') || 'No payment history'}</p>}
                             </div>
-
-                            {/* Aging */}
-                            <div>
-                                <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{t('suppliers.aging') || 'Aging Analysis'}</h3>
-                                <div className="grid grid-cols-4 gap-4">
-                                    <div className="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl">
-                                        <p className="text-xs text-emerald-600">{t('suppliers.current') || 'Current'}</p>
-                                        <p className="text-xl font-bold text-emerald-700">${balance.currentDue.toLocaleString()}</p>
-                                    </div>
-                                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl">
-                                        <p className="text-xs text-amber-600">1-30 {t('suppliers.days') || 'Days'}</p>
-                                        <p className="text-xl font-bold text-amber-700">${balance.overdue30.toLocaleString()}</p>
-                                    </div>
-                                    <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl">
-                                        <p className="text-xs text-orange-600">31-60 {t('suppliers.days') || 'Days'}</p>
-                                        <p className="text-xl font-bold text-orange-700">${balance.overdue60.toLocaleString()}</p>
-                                    </div>
-                                    <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
-                                        <p className="text-xs text-red-600">90+ {t('suppliers.days') || 'Days'}</p>
-                                        <p className="text-xl font-bold text-red-700">${balance.overdue90Plus.toLocaleString()}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Next Payment */}
-                            {balance.nextPaymentDue && (
-                                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <p className="text-sm text-blue-600">{t('suppliers.nextPaymentDue') || 'Next Payment Due'}</p>
-                                            <p className="text-xl font-bold text-blue-700">${balance.nextPaymentAmount?.toLocaleString()}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-sm text-blue-600">{t('suppliers.dueDate') || 'Due Date'}</p>
-                                            <p className="text-lg font-semibold text-blue-700">{new Date(balance.nextPaymentDue).toLocaleDateString()}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     )}
 
                     {activeTab === 'reliability' && (
                         <div className="space-y-4">
-                            {reliabilityRecords.map((record) => (
-                                <div key={record.id} className={`p-4 rounded-xl border ${record.hasIssues && !record.issueResolved ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800' : 'bg-gray-50 dark:bg-surface-800 border-gray-200 dark:border-surface-700'}`}>
-                                    <div className="flex items-start justify-between">
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <p className="font-medium text-gray-900 dark:text-white">{record.orderNumber}</p>
-                                                {record.hasIssues && !record.issueResolved && <AlertCircle size={16} className="text-red-500" />}
-                                                {record.issueResolved && <CheckCircle2 size={16} className="text-emerald-500" />}
-                                            </div>
-                                            <p className="text-sm text-gray-500 mt-1">{new Date(record.orderDate).toLocaleDateString()}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className={`font-semibold ${record.daysVariance <= 0 ? 'text-emerald-600' : record.daysVariance <= 3 ? 'text-amber-600' : 'text-red-600'}`}>
-                                                {record.daysVariance <= 0 ? `${Math.abs(record.daysVariance)}d early` : `${record.daysVariance}d late`}
-                                            </p>
-                                            <p className="text-sm text-gray-500">{t('suppliers.qualityScore') || 'Quality'}: {record.qualityScore}%</p>
-                                        </div>
-                                    </div>
-                                    {record.hasIssues && record.issueDescription && (
-                                        <p className="text-sm text-red-600 mt-2">{record.issueDescription}</p>
-                                    )}
-                                    <div className="flex gap-4 mt-3 text-xs text-gray-500">
-                                        <span>{t('suppliers.ordered') || 'Ordered'}: {record.itemsOrdered}</span>
-                                        <span>{t('suppliers.received') || 'Received'}: {record.itemsReceived}</span>
-                                        <span>{t('suppliers.defective') || 'Defective'}: {record.itemsDefective}</span>
-                                    </div>
-                                </div>
-                            ))}
-                            {reliabilityRecords.length === 0 && <p className="text-center text-gray-500 py-8">{t('suppliers.noReliabilityRecords') || 'No reliability records'}</p>}
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                    <tr className="border-b border-gray-200 dark:border-surface-700">
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.order') || 'Order'}</th>
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.expected') || 'Expected'}</th>
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.actual') || 'Actual'}</th>
+                                        <th className="text-center py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.variance') || 'Variance'}</th>
+                                        <th className="text-center py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.quality') || 'Quality'}</th>
+                                        <th className="text-center py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.issues') || 'Issues'}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {reliability.map((record) => (
+                                        <tr key={record.id} className="border-b border-gray-100 dark:border-surface-800">
+                                            <td className="py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">{record.orderNumber}</td>
+                                            <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400">{new Date(record.expectedDeliveryDate).toLocaleDateString()}</td>
+                                            <td className="py-3 px-4 text-sm text-gray-600 dark:text-gray-400">{record.actualDeliveryDate ? new Date(record.actualDeliveryDate).toLocaleDateString() : '—'}</td>
+                                            <td className="py-3 px-4 text-sm text-center">
+                                                {record.daysVariance === 0 ? <span className="text-emerald-600">On time</span> :
+                                                 record.daysVariance < 0 ? <span className="text-emerald-600">{record.daysVariance}d early</span> :
+                                                 <span className="text-red-600">+{record.daysVariance}d late</span>}
+                                            </td>
+                                            <td className="py-3 px-4 text-sm text-center"><span className={record.qualityScore >= 95 ? 'text-emerald-600' : record.qualityScore >= 80 ? 'text-amber-600' : 'text-red-600'}>{record.qualityScore}%</span></td>
+                                            <td className="py-3 px-4 text-center">
+                                                {record.hasIssues ? (
+                                                    <span className={`px-2 py-1 rounded-full text-xs ${record.issueResolved ? 'bg-gray-100 text-gray-600' : 'bg-red-100 text-red-700'}`}>
+                                                        {record.issueType?.replace('_', ' ')}
+                                                    </span>
+                                                ) : (
+                                                    <CheckCircle2 size={16} className="text-emerald-500 mx-auto" />
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                                {reliability.length === 0 && <p className="text-center text-gray-500 py-8">{t('suppliers.noReliability') || 'No reliability records'}</p>}
+                            </div>
                         </div>
                     )}
 
                     {activeTab === 'spend' && (
                         <div className="space-y-4">
-                            {spendRecords.map((record) => (
-                                <div key={record.id} className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
-                                    <div className="flex items-center justify-between mb-3">
-                                        <p className="font-semibold text-gray-900 dark:text-white">{record.period}</p>
-                                        {record.changePercentage !== undefined && (
-                                            <span className={`flex items-center gap-1 text-sm ${record.changePercentage >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                                                {record.changePercentage >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-                                                {Math.abs(record.changePercentage).toFixed(1)}%
-                                            </span>
-                                        )}
-                                    </div>
-                                    <div className="grid grid-cols-4 gap-4 text-sm">
-                                        <div><p className="text-gray-500">{t('suppliers.totalSpend') || 'Total'}</p><p className="font-semibold">${record.totalSpend.toLocaleString()}</p></div>
-                                        <div><p className="text-gray-500">{t('suppliers.directSpend') || 'Direct'}</p><p className="font-semibold">${record.directSpend.toLocaleString()}</p></div>
-                                        <div><p className="text-gray-500">{t('suppliers.orders') || 'Orders'}</p><p className="font-semibold">{record.orderCount}</p></div>
-                                        <div><p className="text-gray-500">{t('suppliers.avgOrder') || 'Avg Order'}</p><p className="font-semibold">${record.averageOrderValue.toLocaleString()}</p></div>
-                                    </div>
-                                </div>
-                            ))}
-                            {spendRecords.length === 0 && <p className="text-center text-gray-500 py-8">{t('suppliers.noSpendRecords') || 'No spend records'}</p>}
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                    <tr className="border-b border-gray-200 dark:border-surface-700">
+                                        <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.period') || 'Period'}</th>
+                                        <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.totalSpend') || 'Total Spend'}</th>
+                                        <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.orders') || 'Orders'}</th>
+                                        <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.avgOrder') || 'Avg Order'}</th>
+                                        <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">{t('suppliers.change') || 'Change'}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {spend.map((record) => (
+                                        <tr key={record.id} className="border-b border-gray-100 dark:border-surface-800">
+                                            <td className="py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">{record.period}</td>
+                                            <td className="py-3 px-4 text-sm text-right text-gray-900 dark:text-white">${record.totalSpend.toLocaleString()}</td>
+                                            <td className="py-3 px-4 text-sm text-right text-gray-600 dark:text-gray-400">{record.orderCount}</td>
+                                            <td className="py-3 px-4 text-sm text-right text-gray-600 dark:text-gray-400">${record.averageOrderValue.toLocaleString()}</td>
+                                            <td className="py-3 px-4 text-sm text-right">
+                                                {record.changePercentage !== undefined && (
+                                                    <span className={record.changePercentage >= 0 ? 'text-emerald-600' : 'text-red-600'}>
+                                                        {record.changePercentage >= 0 ? '+' : ''}{record.changePercentage.toFixed(1)}%
+                                                    </span>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                                {spend.length === 0 && <p className="text-center text-gray-500 py-8">{t('suppliers.noSpend') || 'No spend records'}</p>}
+                            </div>
                         </div>
                     )}
 
-                    {activeTab === 'risk' && (
+                    {activeTab === 'risks' && (
                         <div className="space-y-4">
                             {risks.map((risk) => (
-                                <div key={risk.id} className={`p-4 rounded-xl border ${risk.status === 'resolved' ? 'bg-gray-50 dark:bg-surface-800 border-gray-200' : risk.severity === 'critical' ? 'bg-red-50 dark:bg-red-900/20 border-red-200' : risk.severity === 'high' ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-200' : 'bg-amber-50 dark:bg-amber-900/20 border-amber-200'}`}>
+                                <div key={risk.id} className={`p-4 rounded-xl border ${risk.status === 'resolved' ? 'bg-gray-50 dark:bg-surface-800 border-gray-200 dark:border-surface-700' : risk.severity === 'critical' ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800' : risk.severity === 'high' ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800' : 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'}`}>
                                     <div className="flex items-start justify-between">
                                         <div className="flex items-start gap-3">
                                             <AlertTriangle size={20} className={risk.status === 'resolved' ? 'text-gray-400' : risk.severity === 'critical' ? 'text-red-500' : risk.severity === 'high' ? 'text-orange-500' : 'text-amber-500'} />
@@ -470,25 +490,24 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                                                     <p className={`font-medium ${risk.status === 'resolved' ? 'text-gray-500 line-through' : 'text-gray-900 dark:text-white'}`}>{risk.title}</p>
                                                     <span className={`px-2 py-0.5 rounded text-xs ${dependencyColors[risk.severity]}`}>{risk.severity}</span>
                                                 </div>
-                                                <p className="text-sm text-gray-600 mt-1">{risk.description}</p>
-                                                {risk.mitigationPlan && <p className="text-sm text-blue-600 mt-2">💡 {risk.mitigationPlan}</p>}
+                                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{risk.description}</p>
+                                                {risk.mitigationPlan && risk.status !== 'resolved' && (
+                                                    <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">💡 {risk.mitigationPlan}</p>
+                                                )}
                                             </div>
                                         </div>
                                         {risk.status !== 'resolved' && (
-                                            <Button variant="secondary" size="sm" onClick={() => resolveRisk(risk.id)}>{t('suppliers.resolve') || 'Resolve'}</Button>
+                                            <Button variant="secondary" size="sm" onClick={() => resolveRisk(risk.id)}>
+                                                {t('suppliers.resolve') || 'Resolve'}
+                                            </Button>
                                         )}
-                                    </div>
-                                    <div className="flex gap-4 mt-3 text-xs text-gray-500">
-                                        <span>{t('suppliers.impact') || 'Impact'}: {risk.impactScore}/10</span>
-                                        <span>{t('suppliers.probability') || 'Probability'}: {risk.probabilityScore}/10</span>
-                                        <span>{t('suppliers.riskScore') || 'Risk Score'}: {risk.overallRiskScore}</span>
                                     </div>
                                 </div>
                             ))}
                             {risks.length === 0 && (
                                 <div className="p-8 text-center">
                                     <CheckCircle2 className="w-12 h-12 mx-auto text-emerald-400 mb-3" />
-                                    <p className="text-gray-500">{t('suppliers.noRisks') || 'No risks identified'}</p>
+                                    <p className="text-gray-500">{t('suppliers.noRisks') || 'No dependency risks'}</p>
                                 </div>
                             )}
                         </div>
@@ -500,7 +519,7 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                                 <div key={contact.id} className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl flex items-center justify-between">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-full bg-[var(--accent-primary)]/10 flex items-center justify-center">
-                                            <Users size={24} className="text-[var(--accent-primary)]" />
+                                            <User size={24} className="text-[var(--accent-primary)]" />
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2">
@@ -535,20 +554,22 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         name: '',
+        legalName: '',
         status: 'active' as SupplierStatus,
         category: 'goods' as SupplierCategory,
         email: '',
         phone: '',
+        website: '',
         address: { street: '', city: '', state: '', postalCode: '', country: '' },
         paymentTerms: 'Net 30',
-        preferredPaymentMethod: 'ach' as any,
+        preferredPaymentMethod: 'wire' as const,
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.name || !formData.email) return;
-        createSupplier({
+        await createSupplier({
             ...formData,
-            supplierSince: new Date().toISOString().split('T')[0],
+            supplierSince: new Date().toISOString(),
             totalSpend: 0,
             totalOrders: 0,
             averageOrderValue: 0,
@@ -556,13 +577,13 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
             reliabilityRating: 'good',
             reliabilityScore: 80,
             onTimeDeliveryRate: 90,
-            qualityScore: 85,
-            defectRate: 1,
+            qualityScore: 80,
+            defectRate: 0,
             avgLeadTime: 14,
             dependencyLevel: 'low',
-            dependencyScore: 10,
+            dependencyScore: 0,
             spendPercentage: 0,
-            alternativeSuppliers: 5,
+            alternativeSuppliers: 0,
             criticalItems: 0,
         });
         onClose();
@@ -578,7 +599,9 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
                         <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg"><X size={20} /></button>
                     </div>
                     <div className="flex gap-2 mt-4">
-                        {[1, 2, 3].map((s) => <div key={s} className={`flex-1 h-2 rounded-full ${s <= step ? 'bg-[var(--accent-primary)]' : 'bg-gray-200 dark:bg-surface-700'}`} />)}
+                        {[1, 2, 3].map((s) => (
+                            <div key={s} className={`flex-1 h-2 rounded-full ${s <= step ? 'bg-[var(--accent-primary)]' : 'bg-gray-200 dark:bg-surface-700'}`} />
+                        ))}
                     </div>
                 </div>
 
@@ -593,17 +616,17 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">{t('suppliers.category') || 'Category'}</label>
-                                    <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value as SupplierCategory })}
-                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
-                                        {SUPPLIER_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-                                    </select>
-                                </div>
-                                <div>
                                     <label className="block text-sm font-medium mb-1">{t('suppliers.status') || 'Status'}</label>
                                     <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value as SupplierStatus })}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
                                         {SUPPLIER_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">{t('suppliers.category') || 'Category'}</label>
+                                    <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value as SupplierCategory })}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
+                                        {SUPPLIER_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                                     </select>
                                 </div>
                             </div>
@@ -670,7 +693,7 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium mb-1">{t('suppliers.paymentMethod') || 'Payment Method'}</label>
-                                    <select value={formData.preferredPaymentMethod} onChange={(e) => setFormData({ ...formData, preferredPaymentMethod: e.target.value as any })}
+                                    <select value={formData.preferredPaymentMethod} onChange={(e) => setFormData({ ...formData, preferredPaymentMethod: e.target.value as typeof formData.preferredPaymentMethod })}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
                                         {PAYMENT_METHODS.map((m) => <option key={m.value} value={m.value}>{m.label}</option>)}
                                     </select>
@@ -680,10 +703,10 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
                             <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl mt-4">
                                 <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-3">{t('suppliers.summary') || 'Summary'}</h4>
                                 <div className="space-y-2 text-sm">
-                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.name') || 'Name'}</span><span className="font-medium">{formData.name || '—'}</span></div>
-                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.category') || 'Category'}</span><span className="font-medium capitalize">{formData.category}</span></div>
-                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.email') || 'Email'}</span><span className="font-medium">{formData.email || '—'}</span></div>
-                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.paymentTerms') || 'Payment Terms'}</span><span className="font-medium">{formData.paymentTerms}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.name') || 'Name'}</span><span className="font-medium text-gray-900 dark:text-white">{formData.name || '—'}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.category') || 'Category'}</span><span className="font-medium text-gray-900 dark:text-white capitalize">{formData.category.replace('_', ' ')}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.email') || 'Email'}</span><span className="font-medium text-gray-900 dark:text-white">{formData.email || '—'}</span></div>
+                                    <div className="flex justify-between"><span className="text-gray-500">{t('suppliers.paymentTerms') || 'Payment Terms'}</span><span className="font-medium text-gray-900 dark:text-white">{formData.paymentTerms}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -714,22 +737,55 @@ function NewSupplierModal({ onClose }: { onClose: () => void }) {
 
 export default function SuppliersPage() {
     const { t } = useThemeStore();
-    const { suppliers, selectSupplier, selectedSupplierId } = useSuppliersStore();
+    const { 
+        suppliers, 
+        selectSupplier, 
+        selectedSupplierId,
+        fetchSuppliers,
+        fetchSupplier,
+        isLoading,
+        isInitialized 
+    } = useSuppliersStore();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState<SupplierStatus | 'all'>('all');
     const [filterCategory, setFilterCategory] = useState<SupplierCategory | 'all'>('all');
     const [showNewModal, setShowNewModal] = useState(false);
 
+    // Fetch suppliers on mount
+    useEffect(() => {
+        if (!isInitialized) {
+            fetchSuppliers();
+        }
+    }, [fetchSuppliers, isInitialized]);
+
+    // Fetch full supplier data when selected
+    useEffect(() => {
+        if (selectedSupplierId) {
+            fetchSupplier(selectedSupplierId);
+        }
+    }, [selectedSupplierId, fetchSupplier]);
+
     const selectedSupplier = suppliers.find((s) => s.id === selectedSupplierId);
 
     const filteredSuppliers = useMemo(() => {
         return suppliers.filter((s) => {
-            const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) || s.supplierNumber.toLowerCase().includes(searchQuery.toLowerCase()) || s.email.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  s.supplierNumber.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  s.email.toLowerCase().includes(searchQuery.toLowerCase());
             const matchesStatus = filterStatus === 'all' || s.status === filterStatus;
             const matchesCategory = filterCategory === 'all' || s.category === filterCategory;
             return matchesSearch && matchesStatus && matchesCategory;
         });
     }, [suppliers, searchQuery, filterStatus, filterCategory]);
+
+    // Loading state
+    if (isLoading && !isInitialized) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6">
@@ -761,12 +817,12 @@ export default function SuppliersPage() {
                                placeholder={t('suppliers.searchPlaceholder') || 'Search suppliers...'}
                                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800" />
                     </div>
-                    <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as any)}
+                    <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as SupplierStatus | 'all')}
                             className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
                         <option value="all">{t('suppliers.allStatuses') || 'All Statuses'}</option>
                         {SUPPLIER_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                     </select>
-                    <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value as any)}
+                    <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value as SupplierCategory | 'all')}
                             className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
                         <option value="all">{t('suppliers.allCategories') || 'All Categories'}</option>
                         {SUPPLIER_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}

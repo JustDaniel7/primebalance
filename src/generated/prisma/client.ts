@@ -324,3 +324,83 @@ export type CustomerRevenue = Prisma.CustomerRevenueModel
  * 
  */
 export type CustomerRiskIndicator = Prisma.CustomerRiskIndicatorModel
+/**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
+ * Model SupplierContact
+ * 
+ */
+export type SupplierContact = Prisma.SupplierContactModel
+/**
+ * Model Offer
+ * 
+ */
+export type Offer = Prisma.OfferModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
+ * Model Forecast
+ * 
+ */
+export type Forecast = Prisma.ForecastModel
+/**
+ * Model ForecastPeriod
+ * 
+ */
+export type ForecastPeriod = Prisma.ForecastPeriodModel
+/**
+ * Model Scenario
+ * 
+ */
+export type Scenario = Prisma.ScenarioModel
+/**
+ * Model KPI
+ * 
+ */
+export type KPI = Prisma.KPIModel
+/**
+ * Model KPIHistory
+ * 
+ */
+export type KPIHistory = Prisma.KPIHistoryModel
+/**
+ * Model FXExposure
+ * 
+ */
+export type FXExposure = Prisma.FXExposureModel
+/**
+ * Model FXHedge
+ * 
+ */
+export type FXHedge = Prisma.FXHedgeModel
+/**
+ * Model FXRate
+ * 
+ */
+export type FXRate = Prisma.FXRateModel
+/**
+ * Model Investor
+ * 
+ */
+export type Investor = Prisma.InvestorModel
+/**
+ * Model InvestorInvestment
+ * 
+ */
+export type InvestorInvestment = Prisma.InvestorInvestmentModel
+/**
+ * Model InvestorUpdate
+ * 
+ */
+export type InvestorUpdate = Prisma.InvestorUpdateModel
+/**
+ * Model LiquidityPosition
+ * 
+ */
+export type LiquidityPosition = Prisma.LiquidityPositionModel

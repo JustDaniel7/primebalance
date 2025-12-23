@@ -107,7 +107,23 @@ export const ModelName = {
   CustomerPayment: 'CustomerPayment',
   CustomerCreditEvent: 'CustomerCreditEvent',
   CustomerRevenue: 'CustomerRevenue',
-  CustomerRiskIndicator: 'CustomerRiskIndicator'
+  CustomerRiskIndicator: 'CustomerRiskIndicator',
+  Supplier: 'Supplier',
+  SupplierContact: 'SupplierContact',
+  Offer: 'Offer',
+  Task: 'Task',
+  Forecast: 'Forecast',
+  ForecastPeriod: 'ForecastPeriod',
+  Scenario: 'Scenario',
+  KPI: 'KPI',
+  KPIHistory: 'KPIHistory',
+  FXExposure: 'FXExposure',
+  FXHedge: 'FXHedge',
+  FXRate: 'FXRate',
+  Investor: 'Investor',
+  InvestorInvestment: 'InvestorInvestment',
+  InvestorUpdate: 'InvestorUpdate',
+  LiquidityPosition: 'LiquidityPosition'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1658,6 +1674,446 @@ export const CustomerRiskIndicatorScalarFieldEnum = {
 } as const
 
 export type CustomerRiskIndicatorScalarFieldEnum = (typeof CustomerRiskIndicatorScalarFieldEnum)[keyof typeof CustomerRiskIndicatorScalarFieldEnum]
+
+
+export const SupplierScalarFieldEnum = {
+  id: 'id',
+  supplierNumber: 'supplierNumber',
+  name: 'name',
+  type: 'type',
+  status: 'status',
+  industry: 'industry',
+  email: 'email',
+  phone: 'phone',
+  website: 'website',
+  address: 'address',
+  taxId: 'taxId',
+  vatNumber: 'vatNumber',
+  legalName: 'legalName',
+  paymentTerms: 'paymentTerms',
+  preferredPaymentMethod: 'preferredPaymentMethod',
+  bankDetails: 'bankDetails',
+  currency: 'currency',
+  totalPurchases: 'totalPurchases',
+  totalOrders: 'totalOrders',
+  averageOrderValue: 'averageOrderValue',
+  outstandingPayables: 'outstandingPayables',
+  overdueAmount: 'overdueAmount',
+  qualityRating: 'qualityRating',
+  deliveryRating: 'deliveryRating',
+  responseRating: 'responseRating',
+  overallRating: 'overallRating',
+  onTimeDeliveryRate: 'onTimeDeliveryRate',
+  riskLevel: 'riskLevel',
+  supplierSince: 'supplierSince',
+  lastOrderDate: 'lastOrderDate',
+  lastPaymentDate: 'lastPaymentDate',
+  accountManagerId: 'accountManagerId',
+  categories: 'categories',
+  tags: 'tags',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum]
+
+
+export const SupplierContactScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  name: 'name',
+  title: 'title',
+  email: 'email',
+  phone: 'phone',
+  isPrimary: 'isPrimary',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplierContactScalarFieldEnum = (typeof SupplierContactScalarFieldEnum)[keyof typeof SupplierContactScalarFieldEnum]
+
+
+export const OfferScalarFieldEnum = {
+  id: 'id',
+  offerNumber: 'offerNumber',
+  status: 'status',
+  type: 'type',
+  customerId: 'customerId',
+  customerName: 'customerName',
+  customerEmail: 'customerEmail',
+  customerAddress: 'customerAddress',
+  offerDate: 'offerDate',
+  validUntil: 'validUntil',
+  acceptedAt: 'acceptedAt',
+  rejectedAt: 'rejectedAt',
+  convertedAt: 'convertedAt',
+  items: 'items',
+  currency: 'currency',
+  subtotal: 'subtotal',
+  taxAmount: 'taxAmount',
+  discountAmount: 'discountAmount',
+  total: 'total',
+  taxRate: 'taxRate',
+  convertedToOrderId: 'convertedToOrderId',
+  convertedToInvoiceId: 'convertedToInvoiceId',
+  title: 'title',
+  description: 'description',
+  terms: 'terms',
+  notes: 'notes',
+  internalNotes: 'internalNotes',
+  tags: 'tags',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
+
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  type: 'type',
+  category: 'category',
+  dueDate: 'dueDate',
+  startDate: 'startDate',
+  completedAt: 'completedAt',
+  reminderDate: 'reminderDate',
+  assigneeId: 'assigneeId',
+  assigneeName: 'assigneeName',
+  createdById: 'createdById',
+  createdByName: 'createdByName',
+  referenceType: 'referenceType',
+  referenceId: 'referenceId',
+  progress: 'progress',
+  estimatedHours: 'estimatedHours',
+  actualHours: 'actualHours',
+  tags: 'tags',
+  attachments: 'attachments',
+  notes: 'notes',
+  isRecurring: 'isRecurring',
+  recurringInterval: 'recurringInterval',
+  organizationId: 'organizationId',
+  parentId: 'parentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const ForecastScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  status: 'status',
+  periodType: 'periodType',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  fiscalYear: 'fiscalYear',
+  version: 'version',
+  isBaseline: 'isBaseline',
+  baselineId: 'baselineId',
+  parentId: 'parentId',
+  currency: 'currency',
+  totalRevenue: 'totalRevenue',
+  totalExpense: 'totalExpense',
+  totalProfit: 'totalProfit',
+  totalCashFlow: 'totalCashFlow',
+  assumptions: 'assumptions',
+  tags: 'tags',
+  notes: 'notes',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ForecastScalarFieldEnum = (typeof ForecastScalarFieldEnum)[keyof typeof ForecastScalarFieldEnum]
+
+
+export const ForecastPeriodScalarFieldEnum = {
+  id: 'id',
+  periodLabel: 'periodLabel',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  revenue: 'revenue',
+  expense: 'expense',
+  profit: 'profit',
+  cashInflow: 'cashInflow',
+  cashOutflow: 'cashOutflow',
+  netCashFlow: 'netCashFlow',
+  closingCash: 'closingCash',
+  actualRevenue: 'actualRevenue',
+  actualExpense: 'actualExpense',
+  actualCashFlow: 'actualCashFlow',
+  revenueVariance: 'revenueVariance',
+  expenseVariance: 'expenseVariance',
+  cashFlowVariance: 'cashFlowVariance',
+  lineItems: 'lineItems',
+  forecastId: 'forecastId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ForecastPeriodScalarFieldEnum = (typeof ForecastPeriodScalarFieldEnum)[keyof typeof ForecastPeriodScalarFieldEnum]
+
+
+export const ScenarioScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  status: 'status',
+  baseForecastId: 'baseForecastId',
+  baseScenarioId: 'baseScenarioId',
+  parameters: 'parameters',
+  results: 'results',
+  revenueImpact: 'revenueImpact',
+  expenseImpact: 'expenseImpact',
+  profitImpact: 'profitImpact',
+  cashFlowImpact: 'cashFlowImpact',
+  probability: 'probability',
+  riskLevel: 'riskLevel',
+  confidenceLevel: 'confidenceLevel',
+  tags: 'tags',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScenarioScalarFieldEnum = (typeof ScenarioScalarFieldEnum)[keyof typeof ScenarioScalarFieldEnum]
+
+
+export const KPIScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  calculationType: 'calculationType',
+  formula: 'formula',
+  dataSource: 'dataSource',
+  unit: 'unit',
+  currentValue: 'currentValue',
+  previousValue: 'previousValue',
+  targetValue: 'targetValue',
+  baselineValue: 'baselineValue',
+  status: 'status',
+  trend: 'trend',
+  trendMomentum: 'trendMomentum',
+  thresholds: 'thresholds',
+  displayOrder: 'displayOrder',
+  isVisible: 'isVisible',
+  isPinned: 'isPinned',
+  tags: 'tags',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KPIScalarFieldEnum = (typeof KPIScalarFieldEnum)[keyof typeof KPIScalarFieldEnum]
+
+
+export const KPIHistoryScalarFieldEnum = {
+  id: 'id',
+  periodType: 'periodType',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  periodLabel: 'periodLabel',
+  value: 'value',
+  targetValue: 'targetValue',
+  previousValue: 'previousValue',
+  vsTarget: 'vsTarget',
+  vsPrevious: 'vsPrevious',
+  status: 'status',
+  trend: 'trend',
+  kpiId: 'kpiId',
+  createdAt: 'createdAt'
+} as const
+
+export type KPIHistoryScalarFieldEnum = (typeof KPIHistoryScalarFieldEnum)[keyof typeof KPIHistoryScalarFieldEnum]
+
+
+export const FXExposureScalarFieldEnum = {
+  id: 'id',
+  baseCurrency: 'baseCurrency',
+  quoteCurrency: 'quoteCurrency',
+  type: 'type',
+  status: 'status',
+  exposureAmount: 'exposureAmount',
+  hedgedAmount: 'hedgedAmount',
+  unhedgedAmount: 'unhedgedAmount',
+  hedgePercentage: 'hedgePercentage',
+  bookingRate: 'bookingRate',
+  currentRate: 'currentRate',
+  targetRate: 'targetRate',
+  unrealizedGainLoss: 'unrealizedGainLoss',
+  realizedGainLoss: 'realizedGainLoss',
+  exposureDate: 'exposureDate',
+  settlementDate: 'settlementDate',
+  maturityDate: 'maturityDate',
+  referenceType: 'referenceType',
+  referenceId: 'referenceId',
+  counterparty: 'counterparty',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FXExposureScalarFieldEnum = (typeof FXExposureScalarFieldEnum)[keyof typeof FXExposureScalarFieldEnum]
+
+
+export const FXHedgeScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  status: 'status',
+  baseCurrency: 'baseCurrency',
+  quoteCurrency: 'quoteCurrency',
+  notionalAmount: 'notionalAmount',
+  strikeRate: 'strikeRate',
+  currentRate: 'currentRate',
+  tradeDate: 'tradeDate',
+  valueDate: 'valueDate',
+  maturityDate: 'maturityDate',
+  counterparty: 'counterparty',
+  dealReference: 'dealReference',
+  marketValue: 'marketValue',
+  unrealizedGainLoss: 'unrealizedGainLoss',
+  isDesignatedHedge: 'isDesignatedHedge',
+  effectiveness: 'effectiveness',
+  notes: 'notes',
+  exposureId: 'exposureId',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FXHedgeScalarFieldEnum = (typeof FXHedgeScalarFieldEnum)[keyof typeof FXHedgeScalarFieldEnum]
+
+
+export const FXRateScalarFieldEnum = {
+  id: 'id',
+  baseCurrency: 'baseCurrency',
+  quoteCurrency: 'quoteCurrency',
+  rate: 'rate',
+  rateDate: 'rateDate',
+  source: 'source',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type FXRateScalarFieldEnum = (typeof FXRateScalarFieldEnum)[keyof typeof FXRateScalarFieldEnum]
+
+
+export const InvestorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  status: 'status',
+  email: 'email',
+  phone: 'phone',
+  primaryContact: 'primaryContact',
+  address: 'address',
+  currency: 'currency',
+  totalInvested: 'totalInvested',
+  currentValue: 'currentValue',
+  ownershipPercent: 'ownershipPercent',
+  unrealizedGain: 'unrealizedGain',
+  distributionsReceived: 'distributionsReceived',
+  investmentDate: 'investmentDate',
+  boardSeat: 'boardSeat',
+  votingRights: 'votingRights',
+  liquidationPref: 'liquidationPref',
+  lastContactDate: 'lastContactDate',
+  reportingFrequency: 'reportingFrequency',
+  tags: 'tags',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestorScalarFieldEnum = (typeof InvestorScalarFieldEnum)[keyof typeof InvestorScalarFieldEnum]
+
+
+export const InvestorInvestmentScalarFieldEnum = {
+  id: 'id',
+  round: 'round',
+  investmentDate: 'investmentDate',
+  amount: 'amount',
+  currency: 'currency',
+  instrumentType: 'instrumentType',
+  sharesIssued: 'sharesIssued',
+  pricePerShare: 'pricePerShare',
+  valuation: 'valuation',
+  conversionTerms: 'conversionTerms',
+  liquidationPref: 'liquidationPref',
+  participatingPref: 'participatingPref',
+  status: 'status',
+  investorId: 'investorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestorInvestmentScalarFieldEnum = (typeof InvestorInvestmentScalarFieldEnum)[keyof typeof InvestorInvestmentScalarFieldEnum]
+
+
+export const InvestorUpdateScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  sentAt: 'sentAt',
+  recipients: 'recipients',
+  attachments: 'attachments',
+  investorId: 'investorId',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestorUpdateScalarFieldEnum = (typeof InvestorUpdateScalarFieldEnum)[keyof typeof InvestorUpdateScalarFieldEnum]
+
+
+export const LiquidityPositionScalarFieldEnum = {
+  id: 'id',
+  positionDate: 'positionDate',
+  periodType: 'periodType',
+  totalCash: 'totalCash',
+  operatingCash: 'operatingCash',
+  reserveCash: 'reserveCash',
+  restrictedCash: 'restrictedCash',
+  availableCredit: 'availableCredit',
+  totalLiquidity: 'totalLiquidity',
+  expectedInflows: 'expectedInflows',
+  expectedOutflows: 'expectedOutflows',
+  netCashFlow: 'netCashFlow',
+  projectedEndingCash: 'projectedEndingCash',
+  runwayDays: 'runwayDays',
+  runwayMonths: 'runwayMonths',
+  currentRatio: 'currentRatio',
+  quickRatio: 'quickRatio',
+  cashBurnRate: 'cashBurnRate',
+  status: 'status',
+  accountBreakdown: 'accountBreakdown',
+  currency: 'currency',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt'
+} as const
+
+export type LiquidityPositionScalarFieldEnum = (typeof LiquidityPositionScalarFieldEnum)[keyof typeof LiquidityPositionScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1215,7 +1215,7 @@ async function main() {
   // 21. TREASURY SCENARIOS
   // =============================================================================
   console.log('\n📊 Creating Treasury Scenarios...')
-  const scenarios = [
+  const treasuryScenarios = [
     { name: 'Baseline Forecast', type: 'baseline', isBaseline: true, horizonDays: 90, assumptions: { revenueGrowth: 0.05, expenseGrowth: 0.03, collectionDays: 30 }, minimumCashAmount: 85000, endingCashAmount: 145000 },
     { name: 'Optimistic Scenario', type: 'best_case', horizonDays: 90, assumptions: { revenueGrowth: 0.15, expenseGrowth: 0.02, collectionDays: 25 }, minimumCashAmount: 95000, endingCashAmount: 185000, probabilityWeight: 20 },
     { name: 'Pessimistic Scenario', type: 'worst_case', horizonDays: 90, assumptions: { revenueGrowth: -0.10, expenseGrowth: 0.05, collectionDays: 45 }, minimumCashAmount: 45000, endingCashAmount: 75000, probabilityWeight: 15 },
@@ -1223,7 +1223,7 @@ async function main() {
   ]
 
   const today = new Date()
-  for (const scen of scenarios) {
+  for (const scen of treasuryScenarios) {
     const endDate = new Date(today)
     endDate.setDate(endDate.getDate() + scen.horizonDays)
     
@@ -1246,7 +1246,7 @@ async function main() {
       },
     })
   }
-  console.log('  ✓ Created', scenarios.length, 'treasury scenarios')
+  console.log('  ✓ Created', treasuryScenarios.length, 'treasury scenarios')
 
   // =============================================================================
   // 22. NETTING OPPORTUNITIES
@@ -2641,6 +2641,358 @@ async function main() {
   }
   console.log('  ✓ Created', riskIndicators.length, 'risk indicators')
 
+  // =============================================================================
+  // SUPPLIERS
+  // =============================================================================
+  console.log('\n🚚 Creating Suppliers...')
+  const suppliers = [
+    { supplierNumber: 'SUP-001', name: 'TechParts GmbH', type: 'manufacturer', status: 'preferred', industry: 'Electronics', email: 'orders@techparts.de', paymentTerms: 'Net 30', totalPurchases: 125000, qualityRating: 4.5, deliveryRating: 4.2, onTimeDeliveryRate: 92 },
+    { supplierNumber: 'SUP-002', name: 'CloudServices Inc', type: 'service_provider', status: 'active', industry: 'Technology', email: 'billing@cloudservices.com', paymentTerms: 'Net 15', totalPurchases: 85000, qualityRating: 4.8, deliveryRating: 4.9, onTimeDeliveryRate: 99 },
+    { supplierNumber: 'SUP-003', name: 'Office World AG', type: 'distributor', status: 'active', industry: 'Office Supplies', email: 'sales@officeworld.ch', paymentTerms: 'Net 45', totalPurchases: 22000, qualityRating: 4.0, deliveryRating: 3.8, onTimeDeliveryRate: 85 },
+    { supplierNumber: 'SUP-004', name: 'SecurIT Solutions', type: 'contractor', status: 'active', industry: 'Cybersecurity', email: 'accounts@securit.io', paymentTerms: 'Net 30', totalPurchases: 45000, qualityRating: 4.7, deliveryRating: 4.5, onTimeDeliveryRate: 95 },
+    { supplierNumber: 'SUP-005', name: 'Global Logistics Ltd', type: 'service_provider', status: 'active', industry: 'Logistics', email: 'finance@globallog.com', paymentTerms: 'Net 30', totalPurchases: 38000, qualityRating: 3.9, deliveryRating: 4.1, onTimeDeliveryRate: 88 },
+  ]
+
+  const supplierMap: Record<string, string> = {}
+  for (const sup of suppliers) {
+    const created = await prisma.supplier.create({
+      data: {
+        supplierNumber: sup.supplierNumber,
+        name: sup.name,
+        type: sup.type,
+        status: sup.status,
+        industry: sup.industry,
+        email: sup.email,
+        paymentTerms: sup.paymentTerms,
+        totalPurchases: sup.totalPurchases,
+        qualityRating: sup.qualityRating,
+        deliveryRating: sup.deliveryRating,
+        overallRating: (sup.qualityRating + sup.deliveryRating) / 2,
+        onTimeDeliveryRate: sup.onTimeDeliveryRate,
+        organizationId: org.id,
+      },
+    })
+    supplierMap[sup.supplierNumber] = created.id
+  }
+  console.log('  ✓ Created', suppliers.length, 'suppliers')
+
+  // =============================================================================
+  // OFFERS
+  // =============================================================================
+  console.log('\n📝 Creating Offers...')
+  const offers = [
+    { offerNumber: 'QUO-2025-001', status: 'sent', type: 'quote', customerName: 'Alpine Industries AG', offerDate: daysAgo(5), validUntil: daysFromNow(25), subtotal: 28500, taxAmount: 5415, total: 33915, taxRate: 19 },
+    { offerNumber: 'QUO-2025-002', status: 'accepted', type: 'proposal', customerName: 'TechStart GmbH', offerDate: daysAgo(15), validUntil: daysAgo(1), acceptedAt: daysAgo(3), subtotal: 75000, taxAmount: 14250, total: 89250, taxRate: 19 },
+    { offerNumber: 'QUO-2025-003', status: 'draft', type: 'estimate', customerName: 'Future Corp', offerDate: new Date(), validUntil: daysFromNow(30), subtotal: 15000, taxAmount: 2850, total: 17850, taxRate: 19 },
+    { offerNumber: 'QUO-2025-004', status: 'rejected', type: 'quote', customerName: 'SmallBiz Solutions', offerDate: daysAgo(20), validUntil: daysAgo(5), rejectedAt: daysAgo(8), subtotal: 8500, taxAmount: 1615, total: 10115, taxRate: 19 },
+    { offerNumber: 'QUO-2025-005', status: 'expired', type: 'tender', customerName: 'Government Agency XY', offerDate: daysAgo(45), validUntil: daysAgo(15), subtotal: 250000, taxAmount: 0, total: 250000, taxRate: 0 },
+  ]
+
+  for (const offer of offers) {
+    await prisma.offer.create({
+      data: {
+        offerNumber: offer.offerNumber,
+        status: offer.status,
+        type: offer.type,
+        customerName: offer.customerName,
+        offerDate: offer.offerDate,
+        validUntil: offer.validUntil,
+        acceptedAt: offer.acceptedAt,
+        rejectedAt: offer.rejectedAt,
+        items: [{ description: 'Professional Services', quantity: 1, unitPrice: offer.subtotal, total: offer.subtotal }],
+        currency: 'EUR',
+        subtotal: offer.subtotal,
+        taxAmount: offer.taxAmount,
+        total: offer.total,
+        taxRate: offer.taxRate,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', offers.length, 'offers')
+
+  // =============================================================================
+  // TASKS
+  // =============================================================================
+  console.log('\n✅ Creating Tasks...')
+  const tasks = [
+    { title: 'Review Q4 Financial Statements', status: 'in_progress', priority: 'high', type: 'review', category: 'finance', dueDate: daysFromNow(3), progress: 60 },
+    { title: 'Approve Vendor Payment Batch', status: 'pending', priority: 'urgent', type: 'approval', category: 'finance', dueDate: daysFromNow(1), progress: 0 },
+    { title: 'Monthly Bank Reconciliation', status: 'completed', priority: 'normal', type: 'reconciliation', category: 'finance', dueDate: daysAgo(2), completedAt: daysAgo(1), progress: 100 },
+    { title: 'Update Tax Registration', status: 'pending', priority: 'high', type: 'compliance', category: 'tax', dueDate: daysFromNow(14), progress: 0 },
+    { title: 'Prepare Board Meeting Materials', status: 'in_progress', priority: 'normal', type: 'deadline', category: 'operations', dueDate: daysFromNow(7), progress: 35 },
+    { title: 'Invoice Follow-up - Overdue Accounts', status: 'pending', priority: 'high', type: 'general', category: 'finance', dueDate: daysFromNow(2), progress: 0 },
+    { title: 'Annual Audit Preparation', status: 'pending', priority: 'normal', type: 'compliance', category: 'compliance', dueDate: daysFromNow(30), progress: 0 },
+  ]
+
+  for (const task of tasks) {
+    await prisma.task.create({
+      data: {
+        title: task.title,
+        status: task.status,
+        priority: task.priority,
+        type: task.type,
+        category: task.category,
+        dueDate: task.dueDate,
+        completedAt: task.completedAt,
+        progress: task.progress,
+        assigneeId: user.id,
+        assigneeName: user.name,
+        createdById: user.id,
+        createdByName: user.name,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', tasks.length, 'tasks')
+
+  // =============================================================================
+  // FORECASTS
+  // =============================================================================
+  console.log('\n📈 Creating Forecasts...')
+  const forecast = await prisma.forecast.create({
+    data: {
+      name: '2025 Annual Cash Flow Forecast',
+      description: 'Primary cash flow projection for fiscal year 2025',
+      type: 'cash_flow',
+      status: 'active',
+      periodType: 'monthly',
+      startDate: new Date('2025-01-01'),
+      endDate: new Date('2025-12-31'),
+      fiscalYear: 2025,
+      version: 1,
+      isBaseline: true,
+      totalRevenue: 1800000,
+      totalExpense: 1450000,
+      totalProfit: 350000,
+      totalCashFlow: 280000,
+      organizationId: org.id,
+    },
+  })
+
+  const forecastPeriods = [
+    { label: '2025-01', revenue: 140000, expense: 115000, cashInflow: 135000, cashOutflow: 120000 },
+    { label: '2025-02', revenue: 145000, expense: 118000, cashInflow: 142000, cashOutflow: 115000 },
+    { label: '2025-03', revenue: 155000, expense: 120000, cashInflow: 150000, cashOutflow: 125000 },
+    { label: '2025-04', revenue: 150000, expense: 122000, cashInflow: 148000, cashOutflow: 118000 },
+    { label: '2025-05', revenue: 160000, expense: 125000, cashInflow: 155000, cashOutflow: 122000 },
+    { label: '2025-06', revenue: 165000, expense: 128000, cashInflow: 160000, cashOutflow: 130000 },
+  ]
+
+  let closingCash = 250000
+  for (const fp of forecastPeriods) {
+    const netCash = fp.cashInflow - fp.cashOutflow
+    closingCash += netCash
+    await prisma.forecastPeriod.create({
+      data: {
+        periodLabel: fp.label,
+        periodStart: new Date(`${fp.label}-01`),
+        periodEnd: new Date(`${fp.label}-28`),
+        revenue: fp.revenue,
+        expense: fp.expense,
+        profit: fp.revenue - fp.expense,
+        cashInflow: fp.cashInflow,
+        cashOutflow: fp.cashOutflow,
+        netCashFlow: netCash,
+        closingCash: closingCash,
+        forecastId: forecast.id,
+      },
+    })
+  }
+  console.log('  ✓ Created 1 forecast with', forecastPeriods.length, 'periods')
+
+  // =============================================================================
+  // SCENARIOS
+  // =============================================================================
+  console.log('\n🎯 Creating Scenarios...')
+  const scenarios = [
+    {
+      name: 'Optimistic Growth',
+      description: 'Revenue growth 20% above baseline with moderate cost increases',
+      type: 'what_if',
+      status: 'active',
+      parameters: { revenueGrowth: { base: 10, adjusted: 20 }, costGrowth: { base: 5, adjusted: 8 } },
+      revenueImpact: 180000,
+      profitImpact: 126000,
+      probability: 25,
+      riskLevel: 'low',
+    },
+    {
+      name: 'Conservative Baseline',
+      description: 'Baseline assumptions with 5% safety buffer',
+      type: 'what_if',
+      status: 'active',
+      parameters: { revenueGrowth: { base: 10, adjusted: 5 }, costGrowth: { base: 5, adjusted: 5 } },
+      revenueImpact: -90000,
+      profitImpact: -90000,
+      probability: 50,
+      riskLevel: 'low',
+    },
+    {
+      name: 'Economic Downturn',
+      description: 'Stress test: 15% revenue decline, cost reduction measures',
+      type: 'stress_test',
+      status: 'active',
+      parameters: { revenueGrowth: { base: 10, adjusted: -15 }, costGrowth: { base: 5, adjusted: -10 } },
+      revenueImpact: -450000,
+      profitImpact: -305000,
+      probability: 15,
+      riskLevel: 'high',
+    },
+  ]
+
+  for (const sc of scenarios) {
+    await prisma.scenario.create({
+      data: {
+        name: sc.name,
+        description: sc.description,
+        type: sc.type,
+        status: sc.status,
+        parameters: sc.parameters,
+        revenueImpact: sc.revenueImpact,
+        profitImpact: sc.profitImpact,
+        probability: sc.probability,
+        riskLevel: sc.riskLevel,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', treasuryScenarios.length, 'scenarios')
+
+  // =============================================================================
+  // KPIs
+  // =============================================================================
+  console.log('\n📊 Creating KPIs...')
+  const kpis = [
+    { code: 'GROSS_MARGIN', name: 'Gross Margin', category: 'margins', unit: 'percentage', currentValue: 42.5, previousValue: 40.2, targetValue: 45, status: 'watch', trend: 'improving' },
+    { code: 'EBITDA_MARGIN', name: 'EBITDA Margin', category: 'margins', unit: 'percentage', currentValue: 18.3, previousValue: 17.8, targetValue: 20, status: 'on_track', trend: 'improving' },
+    { code: 'CASH_BURN', name: 'Monthly Cash Burn', category: 'burn_runway', unit: 'currency', currentValue: 45000, previousValue: 52000, targetValue: 40000, status: 'watch', trend: 'improving' },
+    { code: 'RUNWAY_MONTHS', name: 'Cash Runway', category: 'burn_runway', unit: 'number', currentValue: 18.5, previousValue: 16.2, targetValue: 24, status: 'watch', trend: 'improving' },
+    { code: 'DSO', name: 'Days Sales Outstanding', category: 'cash_conversion', unit: 'days', currentValue: 38, previousValue: 42, targetValue: 30, status: 'off_track', trend: 'improving' },
+    { code: 'DPO', name: 'Days Payable Outstanding', category: 'cash_conversion', unit: 'days', currentValue: 45, previousValue: 43, targetValue: 45, status: 'on_track', trend: 'stable' },
+    { code: 'REVENUE_GROWTH', name: 'Revenue Growth Rate', category: 'growth', unit: 'percentage', currentValue: 15.2, previousValue: 12.8, targetValue: 20, status: 'watch', trend: 'improving' },
+    { code: 'CAC', name: 'Customer Acquisition Cost', category: 'unit_economics', unit: 'currency', currentValue: 850, previousValue: 920, targetValue: 750, status: 'watch', trend: 'improving' },
+    { code: 'LTV', name: 'Customer Lifetime Value', category: 'unit_economics', unit: 'currency', currentValue: 4200, previousValue: 3800, targetValue: 5000, status: 'on_track', trend: 'improving' },
+    { code: 'LTV_CAC', name: 'LTV/CAC Ratio', category: 'unit_economics', unit: 'ratio', currentValue: 4.9, previousValue: 4.1, targetValue: 5, status: 'on_track', trend: 'improving' },
+  ]
+
+  for (const kpi of kpis) {
+    await prisma.kPI.create({
+      data: {
+        code: kpi.code,
+        name: kpi.name,
+        category: kpi.category,
+        unit: kpi.unit,
+        currentValue: kpi.currentValue,
+        previousValue: kpi.previousValue,
+        targetValue: kpi.targetValue,
+        status: kpi.status,
+        trend: kpi.trend,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', kpis.length, 'KPIs')
+
+  // =============================================================================
+  // FX MANAGEMENT
+  // =============================================================================
+  console.log('\n💱 Creating FX Exposures...')
+  const fxExposures = [
+    { baseCurrency: 'EUR', quoteCurrency: 'USD', type: 'receivable', exposureAmount: 125000, hedgedAmount: 75000, bookingRate: 1.0850, currentRate: 1.0920, maturityDate: daysFromNow(45) },
+    { baseCurrency: 'EUR', quoteCurrency: 'GBP', type: 'payable', exposureAmount: 85000, hedgedAmount: 85000, bookingRate: 0.8520, currentRate: 0.8480, maturityDate: daysFromNow(30) },
+    { baseCurrency: 'EUR', quoteCurrency: 'CHF', type: 'forecast', exposureAmount: 200000, hedgedAmount: 0, bookingRate: 0.9450, currentRate: 0.9380, maturityDate: daysFromNow(90) },
+    { baseCurrency: 'EUR', quoteCurrency: 'USD', type: 'payable', exposureAmount: 45000, hedgedAmount: 0, bookingRate: 1.0780, currentRate: 1.0920, maturityDate: daysFromNow(15) },
+  ]
+
+  for (const fx of fxExposures) {
+    const unhedgedAmount = fx.exposureAmount - fx.hedgedAmount
+    const hedgePercentage = (fx.hedgedAmount / fx.exposureAmount) * 100
+    const unrealizedGL = (fx.currentRate - fx.bookingRate) * unhedgedAmount
+    await prisma.fXExposure.create({
+      data: {
+        baseCurrency: fx.baseCurrency,
+        quoteCurrency: fx.quoteCurrency,
+        type: fx.type,
+        status: fx.hedgedAmount >= fx.exposureAmount ? 'hedged' : fx.hedgedAmount > 0 ? 'partial_hedged' : 'open',
+        exposureAmount: fx.exposureAmount,
+        hedgedAmount: fx.hedgedAmount,
+        unhedgedAmount: unhedgedAmount,
+        hedgePercentage: hedgePercentage,
+        bookingRate: fx.bookingRate,
+        currentRate: fx.currentRate,
+        unrealizedGainLoss: unrealizedGL,
+        exposureDate: new Date(),
+        maturityDate: fx.maturityDate,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', fxExposures.length, 'FX exposures')
+
+  // =============================================================================
+  // INVESTORS
+  // =============================================================================
+  console.log('\n🏦 Creating Investors...')
+  const investors = [
+    { name: 'Alpine Ventures', type: 'vc', totalInvested: 500000, ownershipPercent: 15, boardSeat: true, votingRights: 15 },
+    { name: 'Tech Angels Syndicate', type: 'angel', totalInvested: 150000, ownershipPercent: 5, boardSeat: false, votingRights: 5 },
+    { name: 'Strategic Partner AG', type: 'strategic', totalInvested: 250000, ownershipPercent: 8, boardSeat: false, votingRights: 8 },
+    { name: 'Founder Family Trust', type: 'family_office', totalInvested: 100000, ownershipPercent: 3, boardSeat: false, votingRights: 3 },
+  ]
+
+  for (const inv of investors) {
+    await prisma.investor.create({
+      data: {
+        name: inv.name,
+        type: inv.type,
+        status: 'active',
+        totalInvested: inv.totalInvested,
+        currentValue: inv.totalInvested * 1.35,
+        ownershipPercent: inv.ownershipPercent / 100,
+        unrealizedGain: inv.totalInvested * 0.35,
+        boardSeat: inv.boardSeat,
+        votingRights: inv.votingRights / 100,
+        investmentDate: daysAgo(365),
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', investors.length, 'investors')
+
+  // =============================================================================
+  // LIQUIDITY POSITIONS
+  // =============================================================================
+  console.log('\n💧 Creating Liquidity Positions...')
+  const liquidityPositions = [
+    { date: daysAgo(0), totalCash: 485000, operatingCash: 350000, reserveCash: 135000, availableCredit: 100000, expectedInflows: 125000, expectedOutflows: 95000, runwayMonths: 18.5 },
+    { date: daysAgo(7), totalCash: 465000, operatingCash: 330000, reserveCash: 135000, availableCredit: 100000, expectedInflows: 110000, expectedOutflows: 88000, runwayMonths: 17.8 },
+    { date: daysAgo(14), totalCash: 452000, operatingCash: 317000, reserveCash: 135000, availableCredit: 100000, expectedInflows: 98000, expectedOutflows: 92000, runwayMonths: 17.2 },
+    { date: daysAgo(21), totalCash: 478000, operatingCash: 343000, reserveCash: 135000, availableCredit: 100000, expectedInflows: 115000, expectedOutflows: 85000, runwayMonths: 18.1 },
+  ]
+
+  for (const lp of liquidityPositions) {
+    await prisma.liquidityPosition.create({
+      data: {
+        positionDate: lp.date,
+        periodType: 'daily',
+        totalCash: lp.totalCash,
+        operatingCash: lp.operatingCash,
+        reserveCash: lp.reserveCash,
+        availableCredit: lp.availableCredit,
+        totalLiquidity: lp.totalCash + lp.availableCredit,
+        expectedInflows: lp.expectedInflows,
+        expectedOutflows: lp.expectedOutflows,
+        netCashFlow: lp.expectedInflows - lp.expectedOutflows,
+        runwayMonths: lp.runwayMonths,
+        status: lp.runwayMonths > 12 ? 'normal' : lp.runwayMonths > 6 ? 'watch' : 'warning',
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', liquidityPositions.length, 'liquidity positions')
+  console.log('\n✅ Suppliers module seeded successfully!')
+
 
   // =============================================================================
   // SUMMARY
@@ -2677,7 +3029,7 @@ async function main() {
   console.log('  • ' + facilities.length + ' Credit facilities')
   console.log('  • ' + drawdowns.length + ' Facility drawdowns')
   console.log('  • ' + decisions.length + ' Treasury decisions')
-  console.log('  • ' + scenarios.length + ' Treasury scenarios')
+  console.log('  • ' + treasuryScenarios.length + ' Treasury scenarios')
   console.log('  • ' + netting.length + ' Netting opportunities')
   console.log('  • ' + assets.length + ' Assets')
   console.log('  • ' + depreciationEntries.length + ' Depreciation entries')
