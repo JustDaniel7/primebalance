@@ -37,13 +37,38 @@ async function main() {
   console.log('\n🧹 Cleaning existing data...')
   
   // Child tables first
+  await prisma.liquidityPosition.deleteMany({})
+  
+  await prisma.investorUpdate.deleteMany({})
+  await prisma.investorInvestment.deleteMany({})
+  await prisma.investor.deleteMany({})
+  
+  await prisma.fXRate.deleteMany({})
+  await prisma.fXHedge.deleteMany({})
+  await prisma.fXExposure.deleteMany({})
+  
+  await prisma.kPIHistory.deleteMany({})
+  await prisma.kPI.deleteMany({})
+  
+  await prisma.scenario.deleteMany({})
+  
+  await prisma.forecastPeriod.deleteMany({})
+  await prisma.forecast.deleteMany({})
+  
+  await prisma.task.deleteMany({})
+  
+  await prisma.offer.deleteMany({})
+  
+  await prisma.supplierContact.deleteMany({})
+  await prisma.supplier.deleteMany({})
+  
   await prisma.customerRiskIndicator.deleteMany({})
   await prisma.customerRevenue.deleteMany({})
   await prisma.customerCreditEvent.deleteMany({})
   await prisma.customerPayment.deleteMany({})
   await prisma.customerContact.deleteMany({})
   await prisma.customer.deleteMany({})
-
+  
   await prisma.periodAuditEntry.deleteMany({})
   await prisma.periodAdjustment.deleteMany({})
   await prisma.periodMissingItem.deleteMany({})
