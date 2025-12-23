@@ -1,36 +1,18 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+// =============================================================================
+// PROJECTS PAGE - PrimeBalance Finance OS
+// CHANGE TYPE: UPDATE - Added loading states, error handling, delete confirmations
+// FILE PATH: src/app/dashboard/projects/page.tsx
+// =============================================================================
+
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    FolderKanban,
-    Plus,
-    Search,
-    Filter,
-    MoreVertical,
-    Calendar,
-    DollarSign,
-    Clock,
-    Users,
-    TrendingUp,
-    TrendingDown,
-    AlertTriangle,
-    CheckCircle2,
-    PauseCircle,
-    XCircle,
-    Target,
-    Briefcase,
-    Building2,
-    BarChart3,
-    PieChart,
-    ArrowRight,
-    Edit,
-    Trash2,
-    Eye,
-    Receipt,
-    X,
-    ChevronRight,
-    Layers,
+    FolderKanban, Plus, Search, Calendar, DollarSign, Clock,
+    TrendingUp, AlertTriangle, CheckCircle2, PauseCircle, XCircle,
+    Target, Briefcase, Building2, Edit, Trash2, Eye, Receipt, X,
+    ChevronRight, ChevronLeft, Layers, Download, RefreshCw, Loader2, AlertCircle,
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
@@ -39,7 +21,29 @@ import type { Project, CostCenter, ProjectStatus, ProjectType } from '@/types/pr
 import { PROJECT_STATUSES, PROJECT_TYPES, BUDGET_TYPES } from '@/types/project';
 
 // =============================================================================
-// STATUS & TYPE ICONS
+// HELPERS
+// =============================================================================
+
+const formatCurrency = (value: number, currency = 'EUR'): string => {
+    return new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(value);
+};
+
+const formatDate = (dateString: string): string => {
+    if (!dateString) return '-';
+    return new Date(dateString).toLocaleDateString('de-DE', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+    });
+};
+
+// =============================================================================
+// STATUS & TYPE CONFIG
 // =============================================================================
 
 const STATUS_ICONS: Record<ProjectStatus, React.ElementType> = {
@@ -51,6 +55,15 @@ const STATUS_ICONS: Record<ProjectStatus, React.ElementType> = {
     archived: FolderKanban,
 };
 
+const STATUS_COLORS: Record<ProjectStatus, string> = {
+    planning: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+    active: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+    on_hold: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+    completed: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
+    cancelled: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+    archived: 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400',
+};
+
 const TYPE_ICONS: Record<ProjectType, React.ElementType> = {
     internal: Building2,
     client: Briefcase,
@@ -59,6 +72,95 @@ const TYPE_ICONS: Record<ProjectType, React.ElementType> = {
     opex: Receipt,
     maintenance: Layers,
 };
+
+// =============================================================================
+// DELETE CONFIRMATION DIALOG
+// =============================================================================
+
+function DeleteConfirmDialog({
+    isOpen,
+    title,
+    message,
+    onConfirm,
+    onCancel,
+    isDeleting,
+}: {
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+    isDeleting: boolean;
+}) {
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-md"
+            >
+                <div className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                            <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{message}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-surface-700">
+                    <Button variant="secondary" onClick={onCancel} disabled={isDeleting}>
+                        Cancel
+                    </Button>
+                    <button
+                        onClick={onConfirm}
+                        disabled={isDeleting}
+                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium disabled:opacity-50 flex items-center gap-2"
+                    >
+                        {isDeleting ? (
+                            <>
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                Deleting...
+                            </>
+                        ) : (
+                            'Delete'
+                        )}
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
+// ERROR ALERT
+// =============================================================================
+
+function ErrorAlert({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mb-4"
+        >
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <span className="text-red-800 dark:text-red-200">{message}</span>
+                </div>
+                <button onClick={onDismiss} className="text-red-600 hover:text-red-800">
+                    <X className="w-4 h-4" />
+                </button>
+            </div>
+        </motion.div>
+    );
+}
 
 // =============================================================================
 // METRIC CARDS
@@ -74,66 +176,59 @@ function MetricCards() {
             value: summary.activeProjects,
             total: summary.totalProjects,
             icon: FolderKanban,
-            color: 'emerald',
+            bgColor: 'bg-emerald-100 dark:bg-emerald-900/30',
+            iconColor: 'text-emerald-600 dark:text-emerald-400',
         },
         {
             label: 'Total Budget',
-            value: `$${(summary.totalBudget / 1000).toFixed(0)}K`,
-            subtext: `$${(summary.totalSpent / 1000).toFixed(0)}K spent`,
+            value: formatCurrency(summary.totalBudget),
+            subtext: `${formatCurrency(summary.totalSpent)} spent`,
             icon: DollarSign,
-            color: 'blue',
+            bgColor: 'bg-blue-100 dark:bg-blue-900/30',
+            iconColor: 'text-blue-600 dark:text-blue-400',
         },
         {
             label: 'Total Profit',
-            value: `$${(summary.totalProfit / 1000).toFixed(0)}K`,
+            value: formatCurrency(summary.totalProfit),
             subtext: `${summary.averageMargin.toFixed(1)}% avg margin`,
             icon: TrendingUp,
-            color: summary.totalProfit >= 0 ? 'emerald' : 'red',
+            bgColor: summary.totalProfit >= 0 ? 'bg-emerald-100 dark:bg-emerald-900/30' : 'bg-red-100 dark:bg-red-900/30',
+            iconColor: summary.totalProfit >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400',
         },
         {
-            label: 'At Risk',
+            label: 'Attention Needed',
             value: summary.overdueProjects + summary.overBudgetProjects,
             subtext: `${summary.overdueProjects} overdue, ${summary.overBudgetProjects} over budget`,
             icon: AlertTriangle,
-            color: 'amber',
+            bgColor: (summary.overdueProjects + summary.overBudgetProjects) > 0 ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-gray-100 dark:bg-gray-900/30',
+            iconColor: (summary.overdueProjects + summary.overBudgetProjects) > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400',
         },
     ];
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {metrics.map((metric, idx) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {metrics.map((metric) => {
                 const Icon = metric.icon;
                 return (
-                    <motion.div
-                        key={metric.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                    >
-                        <Card variant="glass" padding="md">
-                            <div className="flex items-start justify-between">
-                                <div>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">{metric.label}</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                                        {metric.value}
-                                        {metric.total && (
-                                            <span className="text-sm font-normal text-gray-500">
-                                                /{metric.total}
-                                            </span>
-                                        )}
-                                    </p>
-                                    {metric.subtext && (
-                                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                            {metric.subtext}
-                                        </p>
+                    <Card key={metric.label} variant="glass" padding="lg">
+                        <div className="flex items-start justify-between">
+                            <div>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{metric.label}</p>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+                                    {metric.value}
+                                    {metric.total !== undefined && (
+                                        <span className="text-lg text-gray-400">/{metric.total}</span>
                                     )}
-                                </div>
-                                <div className={`p-3 rounded-xl bg-${metric.color}-500/10`}>
-                                    <Icon className={`w-6 h-6 text-${metric.color}-500`} />
-                                </div>
+                                </p>
+                                {metric.subtext && (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{metric.subtext}</p>
+                                )}
                             </div>
-                        </Card>
-                    </motion.div>
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${metric.bgColor}`}>
+                                <Icon className={`w-6 h-6 ${metric.iconColor}`} />
+                            </div>
+                        </div>
+                    </Card>
                 );
             })}
         </div>
@@ -144,95 +239,117 @@ function MetricCards() {
 // PROJECT CARD
 // =============================================================================
 
-function ProjectCard({ project, onView, onEdit }: { project: Project; onView: () => void; onEdit: () => void }) {
-    const statusConfig = PROJECT_STATUSES.find((s) => s.value === project.status);
+function ProjectCard({
+    project,
+    onView,
+    onEdit,
+    onDelete,
+}: {
+    project: Project;
+    onView: () => void;
+    onEdit: () => void;
+    onDelete: () => void;
+}) {
     const StatusIcon = STATUS_ICONS[project.status];
     const TypeIcon = TYPE_ICONS[project.type];
-
-    const progressColor = project.budgetUtilization > 90
-        ? 'bg-red-500'
-        : project.budgetUtilization > 75
-            ? 'bg-amber-500'
-            : 'bg-emerald-500';
+    const budgetPercent = project.budgetUtilization || 0;
+    const isOverBudget = budgetPercent > 100;
 
     return (
-        <Card variant="glass" padding="md" hover className="cursor-pointer" onClick={onView}>
-            <div className="flex items-start justify-between mb-3">
+        <Card variant="glass" padding="lg" className="hover:shadow-lg transition-shadow">
+            <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg bg-${statusConfig?.color || 'gray'}-500/10`}>
-                        <TypeIcon className={`w-5 h-5 text-${statusConfig?.color || 'gray'}-500`} />
+                    <div className="w-10 h-10 rounded-xl bg-[var(--accent-primary)]/10 flex items-center justify-center">
+                        <TypeIcon className="w-5 h-5 text-[var(--accent-primary)]" />
                     </div>
                     <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{project.code}</p>
                         <h3 className="font-semibold text-gray-900 dark:text-white">{project.name}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{project.code}</p>
                     </div>
                 </div>
-                <Badge
-                    variant={
-                        project.status === 'active' ? 'success' :
-                            project.status === 'completed' ? 'info' :
-                                project.status === 'on_hold' ? 'warning' :
-                                    'neutral'
-                    }
-                >
-                    <StatusIcon className="w-3 h-3 mr-1" />
-                    {statusConfig?.label}
-                </Badge>
-            </div>
-
-            {project.clientName && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                    <Briefcase className="w-4 h-4 inline mr-1" />
-                    {project.clientName}
-                </p>
-            )}
-
-            {/* Progress */}
-            <div className="mb-3">
-                <div className="flex justify-between text-xs mb-1">
-                    <span className="text-gray-500">Progress</span>
-                    <span className="font-medium text-gray-900 dark:text-white">{project.percentComplete}%</span>
-                </div>
-                <div className="h-2 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
-                    <div
-                        className="h-full bg-[var(--accent-primary)] rounded-full transition-all"
-                        style={{ width: `${project.percentComplete}%` }}
-                    />
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={onEdit}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg transition-colors"
+                        title="Edit project"
+                    >
+                        <Edit className="w-4 h-4 text-gray-500" />
+                    </button>
+                    <button
+                        onClick={onDelete}
+                        className="p-2 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                        title="Delete project"
+                    >
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                    </button>
                 </div>
             </div>
 
-            {/* Budget */}
-            <div className="mb-3">
-                <div className="flex justify-between text-xs mb-1">
-                    <span className="text-gray-500">Budget</span>
-                    <span className="font-medium text-gray-900 dark:text-white">
-                        ${project.budgetSpent.toLocaleString()} / ${project.budgetAmount.toLocaleString()}
+            <div className="space-y-3">
+                {/* Status Badge */}
+                <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${STATUS_COLORS[project.status]}`}>
+                        <StatusIcon className="w-3 h-3" />
+                        {PROJECT_STATUSES.find((s) => s.value === project.status)?.label || project.status}
                     </span>
+                    {project.isBillable && (
+                        <span className="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                            Billable
+                        </span>
+                    )}
                 </div>
-                <div className="h-2 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
-                    <div
-                        className={`h-full ${progressColor} rounded-full transition-all`}
-                        style={{ width: `${Math.min(project.budgetUtilization, 100)}%` }}
-                    />
+
+                {/* Budget Progress */}
+                <div>
+                    <div className="flex justify-between text-sm mb-1">
+                        <span className="text-gray-500 dark:text-gray-400">Budget</span>
+                        <span className={`font-medium ${isOverBudget ? 'text-red-600' : 'text-gray-900 dark:text-white'}`}>
+                            {budgetPercent.toFixed(0)}%
+                        </span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
+                        <div
+                            className={`h-full rounded-full transition-all ${
+                                isOverBudget ? 'bg-red-500' : budgetPercent > 80 ? 'bg-amber-500' : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${Math.min(budgetPercent, 100)}%` }}
+                        />
+                    </div>
+                    <div className="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>{formatCurrency(project.budgetSpent || 0)}</span>
+                        <span>{formatCurrency(project.budgetAmount || 0)}</span>
+                    </div>
+                </div>
+
+                {/* Timeline */}
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Calendar className="w-4 h-4" />
+                    <span>{formatDate(project.plannedStartDate)} → {formatDate(project.plannedEndDate)}</span>
+                </div>
+
+                {/* Progress */}
+                <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-surface-700">
+                    <span className="text-sm text-gray-500">Progress</span>
+                    <div className="flex items-center gap-2">
+                        <div className="w-24 h-1.5 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
+                            <div
+                                className="h-full bg-[var(--accent-primary)] rounded-full"
+                                style={{ width: `${project.percentComplete || 0}%` }}
+                            />
+                        </div>
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                            {project.percentComplete || 0}%
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            {/* Stats */}
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-3 border-t border-gray-200 dark:border-surface-700">
-                <div className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5" />
-                    {project.actualHours}/{project.allocatedHours}h
-                </div>
-                <div className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5" />
-                    {new Date(project.plannedEndDate).toLocaleDateString()}
-                </div>
-                {project.isBillable && (
-                    <div className={`flex items-center gap-1 ${project.grossMargin >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
-                        {project.grossMargin >= 0 ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
-                        {project.grossMargin.toFixed(1)}%
-                    </div>
-                )}
+            {/* Actions */}
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-surface-700">
+                <Button variant="secondary" className="w-full" onClick={onView}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    View Details
+                </Button>
             </div>
         </Card>
     );
@@ -242,57 +359,71 @@ function ProjectCard({ project, onView, onEdit }: { project: Project; onView: ()
 // COST CENTER CARD
 // =============================================================================
 
-function CostCenterCard({ costCenter }: { costCenter: CostCenter }) {
+function CostCenterCard({
+    costCenter,
+    onEdit,
+    onDelete,
+}: {
+    costCenter: CostCenter;
+    onEdit: () => void;
+    onDelete: () => void;
+}) {
     const { getProjectsByCostCenter } = useProjectStore();
     const projects = getProjectsByCostCenter(costCenter.id);
-
-    const utilizationColor = costCenter.budgetUtilization > 90
-        ? 'text-red-500'
-        : costCenter.budgetUtilization > 75
-            ? 'text-amber-500'
-            : 'text-emerald-500';
+    const utilizationPercent = costCenter.budgetUtilization || 0;
 
     return (
-        <Card variant="glass" padding="md" hover className="cursor-pointer">
-            <div className="flex items-start justify-between mb-3">
+        <Card variant="glass" padding="lg">
+            <div className="flex items-start justify-between mb-4">
                 <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{costCenter.code}</p>
                     <h3 className="font-semibold text-gray-900 dark:text-white">{costCenter.name}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{costCenter.code}</p>
                 </div>
-                <Badge variant={costCenter.isActive ? 'success' : 'neutral'}>
-                    {costCenter.isActive ? 'Active' : 'Inactive'}
-                </Badge>
-            </div>
-
-            <div className="space-y-2 mb-3">
-                <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Annual Budget</span>
-                    <span className="font-medium text-gray-900 dark:text-white">
-                        ${costCenter.annualBudget.toLocaleString()}
-                    </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Spent</span>
-                    <span className="font-medium text-gray-900 dark:text-white">
-                        ${costCenter.budgetSpent.toLocaleString()}
-                    </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Utilization</span>
-                    <span className={`font-medium ${utilizationColor}`}>
-                        {costCenter.budgetUtilization.toFixed(1)}%
-                    </span>
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={onEdit}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg transition-colors"
+                    >
+                        <Edit className="w-4 h-4 text-gray-500" />
+                    </button>
+                    <button
+                        onClick={onDelete}
+                        className="p-2 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                    >
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                    </button>
                 </div>
             </div>
 
-            <div className="h-2 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden mb-3">
-                <div
-                    className={`h-full ${utilizationColor.replace('text-', 'bg-')} rounded-full transition-all`}
-                    style={{ width: `${Math.min(costCenter.budgetUtilization, 100)}%` }}
-                />
+            <div className="space-y-3">
+                <div>
+                    <div className="flex justify-between text-sm mb-1">
+                        <span className="text-gray-500">Budget Utilization</span>
+                        <span className="font-medium text-gray-900 dark:text-white">{utilizationPercent.toFixed(0)}%</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
+                        <div
+                            className={`h-full rounded-full ${
+                                utilizationPercent > 90 ? 'bg-red-500' : utilizationPercent > 70 ? 'bg-amber-500' : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${Math.min(utilizationPercent, 100)}%` }}
+                        />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p className="text-gray-500">Annual Budget</p>
+                        <p className="font-medium text-gray-900 dark:text-white">{formatCurrency(costCenter.annualBudget || 0)}</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-500">Spent</p>
+                        <p className="font-medium text-gray-900 dark:text-white">{formatCurrency(costCenter.budgetSpent || 0)}</p>
+                    </div>
+                </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-3 border-t border-gray-200 dark:border-surface-700">
+            <div className="flex justify-between text-xs text-gray-500 pt-3 border-t border-gray-200 dark:border-surface-700 mt-4">
                 <span>{projects.length} projects</span>
                 {costCenter.managerName && <span>Manager: {costCenter.managerName}</span>}
             </div>
@@ -307,14 +438,16 @@ function CostCenterCard({ costCenter }: { costCenter: CostCenter }) {
 function ProjectWizard({ onClose }: { onClose: () => void }) {
     const {
         wizardState,
+        editingProjectId,
         setWizardStep,
         updateWizardState,
         saveFromWizard,
         costCenters,
+        isSaving,
     } = useProjectStore();
 
-    const handleSave = () => {
-        const project = saveFromWizard();
+    const handleSave = async () => {
+        const project = await saveFromWizard();
         if (project) {
             onClose();
         }
@@ -336,39 +469,36 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
     }, [wizardState]);
 
     return (
-        <div className="fixed inset-0 z-50 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full max-w-2xl bg-white dark:bg-surface-900 rounded-2xl shadow-2xl overflow-hidden"
+                className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden"
             >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">New Project</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                            {editingProjectId ? 'Edit Project' : 'New Project'}
+                        </h2>
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                             Step {wizardState.step} of 4
                         </p>
                     </div>
-                    <button
-                        onClick={onClose}
-                        className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg transition-colors"
-                    >
-                        <X size={20} className="text-gray-500" />
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">
+                        <X className="w-5 h-5 text-gray-500" />
                     </button>
                 </div>
 
                 {/* Progress */}
-                <div className="px-6 py-3 border-b border-gray-200 dark:border-surface-700">
+                <div className="px-6 py-3 bg-gray-50 dark:bg-surface-900/50">
                     <div className="flex gap-2">
                         {[1, 2, 3, 4].map((step) => (
                             <div
                                 key={step}
-                                className={`flex-1 h-2 rounded-full ${
-                                    step <= wizardState.step
-                                        ? 'bg-[var(--accent-primary)]'
-                                        : 'bg-gray-200 dark:bg-surface-700'
+                                className={`flex-1 h-1.5 rounded-full ${
+                                    step <= wizardState.step ? 'bg-[var(--accent-primary)]' : 'bg-gray-200 dark:bg-surface-700'
                                 }`}
                             />
                         ))}
@@ -376,11 +506,10 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 max-h-[60vh] overflow-y-auto">
+                <div className="p-6 overflow-y-auto max-h-[60vh]">
+                    {/* Step 1: Basic Info */}
                     {wizardState.step === 1 && (
                         <div className="space-y-4">
-                            <h3 className="font-semibold text-gray-900 dark:text-white">Basic Information</h3>
-
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Project Name *
@@ -402,7 +531,7 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                     type="text"
                                     value={wizardState.code}
                                     onChange={(e) => updateWizardState({ code: e.target.value })}
-                                    placeholder="PRJ-2024-XXX"
+                                    placeholder="PRJ-2024-XXX (auto-generated if empty)"
                                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
                                 />
                             </div>
@@ -421,12 +550,14 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                                 className={`p-3 rounded-xl border-2 text-left transition-all ${
                                                     wizardState.type === type.value
                                                         ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5'
-                                                        : 'border-gray-200 dark:border-surface-700 hover:border-gray-300'
+                                                        : 'border-gray-200 dark:border-surface-600 hover:border-gray-300'
                                                 }`}
                                             >
-                                                <Icon className="w-5 h-5 mb-1 text-gray-600 dark:text-gray-400" />
-                                                <p className="font-medium text-gray-900 dark:text-white">{type.label}</p>
-                                                <p className="text-xs text-gray-500">{type.description}</p>
+                                                <div className="flex items-center gap-2">
+                                                    <Icon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                                                    <span className="font-medium text-gray-900 dark:text-white">{type.label}</span>
+                                                </div>
+                                                <p className="text-xs text-gray-500 mt-1">{type.description}</p>
                                             </button>
                                         );
                                     })}
@@ -440,18 +571,17 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                 <textarea
                                     value={wizardState.description}
                                     onChange={(e) => updateWizardState({ description: e.target.value })}
+                                    placeholder="Project description..."
                                     rows={3}
-                                    placeholder="Describe the project..."
                                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
                                 />
                             </div>
                         </div>
                     )}
 
+                    {/* Step 2: Timeline */}
                     {wizardState.step === 2 && (
                         <div className="space-y-4">
-                            <h3 className="font-semibold text-gray-900 dark:text-white">Timeline & Assignment</h3>
-
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -479,6 +609,22 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Priority
+                                </label>
+                                <select
+                                    value={wizardState.priority}
+                                    onChange={(e) => updateWizardState({ priority: e.target.value as any })}
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                                >
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Cost Center
                                 </label>
                                 <select
@@ -494,29 +640,12 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                     ))}
                                 </select>
                             </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Priority
-                                </label>
-                                <select
-                                    value={wizardState.priority}
-                                    onChange={(e) => updateWizardState({ priority: e.target.value as any })}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
-                                >
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
-                                    <option value="critical">Critical</option>
-                                </select>
-                            </div>
                         </div>
                     )}
 
+                    {/* Step 3: Budget */}
                     {wizardState.step === 3 && (
                         <div className="space-y-4">
-                            <h3 className="font-semibold text-gray-900 dark:text-white">Budget & Billing</h3>
-
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Budget Type *
@@ -529,10 +658,10 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                             className={`p-3 rounded-xl border-2 text-left transition-all ${
                                                 wizardState.budgetType === type.value
                                                     ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5'
-                                                    : 'border-gray-200 dark:border-surface-700 hover:border-gray-300'
+                                                    : 'border-gray-200 dark:border-surface-600 hover:border-gray-300'
                                             }`}
                                         >
-                                            <p className="font-medium text-gray-900 dark:text-white">{type.label}</p>
+                                            <span className="font-medium text-gray-900 dark:text-white">{type.label}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -547,7 +676,7 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                         type="number"
                                         value={wizardState.budgetAmount}
                                         onChange={(e) => updateWizardState({ budgetAmount: parseFloat(e.target.value) || 0 })}
-                                        placeholder="0.00"
+                                        placeholder="0"
                                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
                                     />
                                 </div>
@@ -560,136 +689,107 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                         onChange={(e) => updateWizardState({ currency: e.target.value })}
                                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
                                     >
-                                        <option value="USD">USD</option>
                                         <option value="EUR">EUR</option>
-                                        <option value="GBP">GBP</option>
+                                        <option value="USD">USD</option>
                                         <option value="CHF">CHF</option>
+                                        <option value="GBP">GBP</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Allocated Hours
+                                </label>
+                                <input
+                                    type="number"
+                                    value={wizardState.allocatedHours}
+                                    onChange={(e) => updateWizardState({ allocatedHours: parseFloat(e.target.value) || 0 })}
+                                    placeholder="0"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Step 4: Billing */}
+                    {wizardState.step === 4 && (
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3">
                                 <input
                                     type="checkbox"
-                                    id="billable"
+                                    id="isBillable"
                                     checked={wizardState.isBillable}
                                     onChange={(e) => updateWizardState({ isBillable: e.target.checked })}
-                                    className="w-5 h-5 rounded"
+                                    className="w-5 h-5 rounded border-gray-300"
                                 />
-                                <label htmlFor="billable" className="text-sm text-gray-700 dark:text-gray-300">
-                                    This is a billable project
+                                <label htmlFor="isBillable" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    This project is billable to client
                                 </label>
                             </div>
 
                             {wizardState.isBillable && (
-                                <div className="grid grid-cols-2 gap-4">
+                                <>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                            Contract Value
+                                            Billing Method
                                         </label>
-                                        <input
-                                            type="number"
-                                            value={wizardState.contractValue}
-                                            onChange={(e) => updateWizardState({ contractValue: parseFloat(e.target.value) || 0 })}
-                                            placeholder="0.00"
+                                        <select
+                                            value={wizardState.billingMethod || ''}
+                                            onChange={(e) => updateWizardState({ billingMethod: e.target.value as any })}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
-                                        />
+                                        >
+                                            <option value="">Select method...</option>
+                                            <option value="hourly">Hourly</option>
+                                            <option value="fixed">Fixed Price</option>
+                                            <option value="milestone">Milestone-Based</option>
+                                            <option value="retainer">Retainer</option>
+                                        </select>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                            Billing Rate (per hour)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            value={wizardState.billingRate}
-                                            onChange={(e) => updateWizardState({ billingRate: parseFloat(e.target.value) || 0 })}
-                                            placeholder="0.00"
-                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
-                                        />
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                Billing Rate (per hour)
+                                            </label>
+                                            <input
+                                                type="number"
+                                                value={wizardState.billingRate}
+                                                onChange={(e) => updateWizardState({ billingRate: parseFloat(e.target.value) || 0 })}
+                                                placeholder="0"
+                                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                Contract Value
+                                            </label>
+                                            <input
+                                                type="number"
+                                                value={wizardState.contractValue}
+                                                onChange={(e) => updateWizardState({ contractValue: parseFloat(e.target.value) || 0 })}
+                                                placeholder="0"
+                                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                </>
                             )}
-                        </div>
-                    )}
-
-                    {wizardState.step === 4 && (
-                        <div className="space-y-4">
-                            <h3 className="font-semibold text-gray-900 dark:text-white">Resources & Hours</h3>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Allocated Hours
-                                    </label>
-                                    <input
-                                        type="number"
-                                        value={wizardState.allocatedHours}
-                                        onChange={(e) => updateWizardState({ allocatedHours: parseFloat(e.target.value) || 0 })}
-                                        placeholder="0"
-                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                        Internal Hourly Rate
-                                    </label>
-                                    <input
-                                        type="number"
-                                        value={wizardState.hourlyRate}
-                                        onChange={(e) => updateWizardState({ hourlyRate: parseFloat(e.target.value) || 0 })}
-                                        placeholder="0.00"
-                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Summary */}
-                            <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
-                                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Project Summary</h4>
-                                <div className="space-y-2 text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-500">Name</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">{wizardState.name || '-'}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-500">Type</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                                            {PROJECT_TYPES.find((t) => t.value === wizardState.type)?.label || '-'}
-                                        </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-500">Budget</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                                            {wizardState.currency} {wizardState.budgetAmount.toLocaleString()}
-                                        </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-500">Timeline</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                                            {wizardState.plannedStartDate} → {wizardState.plannedEndDate}
-                                        </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-500">Hours</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">
-                                            {wizardState.allocatedHours}h @ ${wizardState.hourlyRate}/h
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     )}
                 </div>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between p-6 border-t border-gray-200 dark:border-surface-700">
+                <div className="flex items-center justify-between p-6 border-t border-gray-200 dark:border-surface-700 bg-gray-50 dark:bg-surface-900/50">
                     <Button
-                        variant="ghost"
+                        variant="secondary"
                         onClick={() => wizardState.step > 1 && setWizardStep(wizardState.step - 1)}
                         disabled={wizardState.step === 1}
                     >
+                        <ChevronLeft className="w-4 h-4 mr-1" />
                         Back
                     </Button>
+
                     <div className="flex gap-2">
                         <Button variant="secondary" onClick={onClose}>
                             Cancel
@@ -704,8 +804,17 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
                                 <ChevronRight className="w-4 h-4 ml-1" />
                             </Button>
                         ) : (
-                            <Button variant="primary" onClick={handleSave}>
-                                Create Project
+                            <Button variant="primary" onClick={handleSave} disabled={isSaving}>
+                                {isSaving ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                        Saving...
+                                    </>
+                                ) : editingProjectId ? (
+                                    'Update Project'
+                                ) : (
+                                    'Create Project'
+                                )}
                             </Button>
                         )}
                     </div>
@@ -720,7 +829,15 @@ function ProjectWizard({ onClose }: { onClose: () => void }) {
 // =============================================================================
 
 function TimeTrackingTab() {
-    const { projects, timeEntries, createTimeEntry, approveTimeEntry, rejectTimeEntry, deleteTimeEntry } = useProjectStore();
+    const { 
+        projects, 
+        timeEntries, 
+        createTimeEntry, 
+        approveTimeEntry, 
+        rejectTimeEntry,
+        openDeleteConfirm,
+        isSaving 
+    } = useProjectStore();
     const [showModal, setShowModal] = useState(false);
     const [filterStatus, setFilterStatus] = useState<'all' | 'draft' | 'submitted' | 'approved' | 'rejected'>('all');
 
@@ -729,126 +846,201 @@ function TimeTrackingTab() {
         date: new Date().toISOString().split('T')[0],
         hours: 0,
         description: '',
-        category: '',
-        isBillable: true,
-        hourlyRate: 0,
     });
 
     const filteredEntries = timeEntries.filter(e => filterStatus === 'all' || e.status === filterStatus);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.projectId || !formData.hours || !formData.description) return;
 
-        createTimeEntry({
-            userId: 'current-user',
-            userName: 'Current User',
+        const project = projects.find(p => p.id === formData.projectId);
+        await createTimeEntry({
             projectId: formData.projectId,
-            projectCode: projects.find(p => p.id === formData.projectId)?.code,
+            projectCode: project?.code,
             date: formData.date,
             hours: formData.hours,
             description: formData.description,
-            category: formData.category,
-            isBillable: formData.isBillable,
-            hourlyRate: formData.hourlyRate,
-            costRate: formData.hourlyRate * 0.7,
             status: 'draft',
         });
 
         setShowModal(false);
-        setFormData({ projectId: '', date: new Date().toISOString().split('T')[0], hours: 0, description: '', category: '', isBillable: true, hourlyRate: 0 });
-    };
-
-    const statusColors: Record<string, string> = {
-        draft: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-        submitted: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-        approved: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
-        rejected: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+        setFormData({
+            projectId: '',
+            date: new Date().toISOString().split('T')[0],
+            hours: 0,
+            description: '',
+        });
     };
 
     return (
         <div className="space-y-4">
+            {/* Header */}
             <div className="flex items-center justify-between">
-                <div className="flex gap-2">
-                    {['all', 'draft', 'submitted', 'approved', 'rejected'].map((status) => (
-                        <button key={status} onClick={() => setFilterStatus(status as any)}
-                                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filterStatus === status ? 'bg-[var(--accent-primary)] text-white' : 'bg-gray-100 dark:bg-surface-800 text-gray-600 dark:text-gray-400'}`}>
-                            {status.charAt(0).toUpperCase() + status.slice(1)}
-                        </button>
-                    ))}
-                </div>
-                <Button variant="primary" leftIcon={<Plus size={18} />} onClick={() => setShowModal(true)}>Log Time</Button>
+                <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value as any)}
+                    className="px-4 py-2 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                >
+                    <option value="all">All Status</option>
+                    <option value="draft">Draft</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+                <Button variant="primary" onClick={() => setShowModal(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Log Time
+                </Button>
             </div>
 
+            {/* Time Entries Table */}
             <Card variant="glass" padding="none">
                 <div className="overflow-x-auto">
                     <table className="w-full">
-                        <thead>
-                        <tr className="border-b border-gray-200 dark:border-surface-700">
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Date</th>
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Project</th>
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Description</th>
-                            <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Hours</th>
-                            <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Amount</th>
-                            <th className="text-center px-4 py-3 text-xs font-medium text-gray-500 uppercase">Status</th>
-                            <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {filteredEntries.map((entry) => (
-                            <tr key={entry.id} className="border-b border-gray-100 dark:border-surface-800 hover:bg-gray-50 dark:hover:bg-surface-800/50">
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{new Date(entry.date).toLocaleDateString()}</td>
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-white font-medium">{entry.projectCode}</td>
-                                <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400 max-w-xs truncate">{entry.description}</td>
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-white text-right">{entry.hours}h</td>
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-white text-right">${(entry.billableAmount || 0).toLocaleString()}</td>
-                                <td className="px-4 py-3 text-center"><span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[entry.status]}`}>{entry.status}</span></td>
-                                <td className="px-4 py-3 text-right">
-                                    <div className="flex items-center justify-end gap-1">
-                                        {entry.status === 'submitted' && (
-                                            <>
-                                                <button onClick={() => approveTimeEntry(entry.id, 'current-user')} className="p-1.5 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 rounded text-emerald-600"><CheckCircle2 size={16} /></button>
-                                                <button onClick={() => rejectTimeEntry(entry.id, 'Not approved')} className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 rounded text-red-600"><XCircle size={16} /></button>
-                                            </>
-                                        )}
-                                        <button onClick={() => deleteTimeEntry(entry.id)} className="p-1.5 hover:bg-gray-100 dark:hover:bg-surface-700 rounded text-gray-500"><Trash2 size={16} /></button>
-                                    </div>
-                                </td>
+                        <thead className="bg-gray-50 dark:bg-surface-900/50">
+                            <tr>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Project</th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Hours</th>
+                                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
-                        ))}
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-surface-700">
+                            {filteredEntries.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                                        No time entries found
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredEntries.map((entry) => (
+                                    <tr key={entry.id} className="hover:bg-gray-50 dark:hover:bg-surface-800/50">
+                                        <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                            {formatDate(entry.date)}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                            {entry.projectCode}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400 max-w-xs truncate">
+                                            {entry.description}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-right font-medium text-gray-900 dark:text-white">
+                                            {entry.hours}h
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
+                                                entry.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                                                entry.status === 'submitted' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
+                                                entry.status === 'rejected' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                                                'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400'
+                                            }`}>
+                                                {entry.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-4 py-3 text-right">
+                                            <div className="flex items-center justify-end gap-1">
+                                                {entry.status === 'submitted' && (
+                                                    <>
+                                                        <button
+                                                            onClick={() => approveTimeEntry(entry.id, 'current-user')}
+                                                            className="p-1.5 hover:bg-green-100 dark:hover:bg-green-900/30 rounded text-green-600"
+                                                            title="Approve"
+                                                        >
+                                                            <CheckCircle2 className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => rejectTimeEntry(entry.id, 'Not approved')}
+                                                            className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 rounded text-red-600"
+                                                            title="Reject"
+                                                        >
+                                                            <XCircle className="w-4 h-4" />
+                                                        </button>
+                                                    </>
+                                                )}
+                                                <button
+                                                    onClick={() => openDeleteConfirm(entry.id, 'timeEntry')}
+                                                    className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 rounded text-red-500"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
-                    {filteredEntries.length === 0 && <div className="text-center py-12"><Clock className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" /><p className="text-gray-500">No time entries found</p></div>}
                 </div>
             </Card>
 
+            {/* Add Time Entry Modal */}
             <AnimatePresence>
                 {showModal && (
-                    <div className="fixed inset-0 z-50 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="w-full max-w-lg bg-white dark:bg-surface-900 rounded-2xl shadow-2xl">
-                            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
-                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Log Time</h2>
-                                <button onClick={() => setShowModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg"><X size={20} className="text-gray-500" /></button>
+                    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-md"
+                        >
+                            <div className="p-6 border-b border-gray-200 dark:border-surface-700">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Log Time Entry</h3>
                             </div>
                             <div className="p-6 space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Project *</label>
-                                    <select value={formData.projectId} onChange={(e) => setFormData({ ...formData, projectId: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white">
+                                    <select
+                                        value={formData.projectId}
+                                        onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                    >
                                         <option value="">Select project...</option>
-                                        {projects.filter(p => p.status === 'active').map((p) => <option key={p.id} value={p.id}>{p.code} - {p.name}</option>)}
+                                        {projects.map((p) => (
+                                            <option key={p.id} value={p.id}>{p.code} - {p.name}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date *</label><input type="date" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hours *</label><input type="number" step="0.5" value={formData.hours} onChange={(e) => setFormData({ ...formData, hours: parseFloat(e.target.value) || 0 })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date *</label>
+                                        <input
+                                            type="date"
+                                            value={formData.date}
+                                            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hours *</label>
+                                        <input
+                                            type="number"
+                                            step="0.5"
+                                            value={formData.hours}
+                                            onChange={(e) => setFormData({ ...formData, hours: parseFloat(e.target.value) || 0 })}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                        />
+                                    </div>
                                 </div>
-                                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description *</label><textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} rows={3} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label><select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"><option value="">Select...</option><option value="development">Development</option><option value="design">Design</option><option value="meeting">Meeting</option><option value="review">Review</option><option value="other">Other</option></select></div>
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hourly Rate</label><input type="number" value={formData.hourlyRate} onChange={(e) => setFormData({ ...formData, hourlyRate: parseFloat(e.target.value) || 0 })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description *</label>
+                                    <textarea
+                                        value={formData.description}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                        rows={3}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                    />
                                 </div>
-                                <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-surface-800 rounded-xl"><input type="checkbox" id="billable" checked={formData.isBillable} onChange={(e) => setFormData({ ...formData, isBillable: e.target.checked })} className="w-4 h-4 rounded" /><label htmlFor="billable" className="text-sm text-gray-700 dark:text-gray-300">Billable time</label></div>
                             </div>
-                            <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700"><Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button><Button variant="primary" onClick={handleSubmit}>Save Entry</Button></div>
+                            <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700">
+                                <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+                                <Button variant="primary" onClick={handleSubmit} disabled={isSaving}>
+                                    {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                                    Log Time
+                                </Button>
+                            </div>
                         </motion.div>
                     </div>
                 )}
@@ -862,115 +1054,206 @@ function TimeTrackingTab() {
 // =============================================================================
 
 function ChargebacksTab() {
-    const { costCenters, chargebacks, projects, createChargeback, approveChargeback, rejectChargeback } = useProjectStore();
+    const { 
+        chargebacks, 
+        costCenters, 
+        createChargeback, 
+        approveChargeback,
+        openDeleteConfirm,
+        isSaving 
+    } = useProjectStore();
     const [showModal, setShowModal] = useState(false);
-    const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
-
     const [formData, setFormData] = useState({
-        fromCostCenterId: '', toCostCenterId: '', projectId: '', description: '', category: 'labor', amount: 0, quantity: 0, unitRate: 0,
-        periodStart: new Date().toISOString().split('T')[0], periodEnd: new Date().toISOString().split('T')[0], allocationMethod: 'direct' as const,
+        fromCostCenterId: '',
+        toCostCenterId: '',
+        description: '',
+        amount: 0,
+        periodStart: '',
+        periodEnd: '',
     });
 
-    const filteredChargebacks = chargebacks.filter(c => filterStatus === 'all' || c.status === filterStatus);
-
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.fromCostCenterId || !formData.toCostCenterId || !formData.amount) return;
-        createChargeback({
-            fromCostCenterId: formData.fromCostCenterId, fromCostCenterCode: costCenters.find(c => c.id === formData.fromCostCenterId)?.code,
-            toCostCenterId: formData.toCostCenterId, toCostCenterCode: costCenters.find(c => c.id === formData.toCostCenterId)?.code,
-            projectId: formData.projectId || undefined, projectCode: projects.find(p => p.id === formData.projectId)?.code,
-            date: new Date().toISOString().split('T')[0], description: formData.description, category: formData.category,
-            amount: formData.amount, currency: 'USD', allocationMethod: formData.allocationMethod,
-            quantity: formData.quantity, unitRate: formData.unitRate, periodStart: formData.periodStart, periodEnd: formData.periodEnd,
-            status: 'pending', createdBy: 'current-user',
-        });
-        setShowModal(false);
-        setFormData({ fromCostCenterId: '', toCostCenterId: '', projectId: '', description: '', category: 'labor', amount: 0, quantity: 0, unitRate: 0, periodStart: new Date().toISOString().split('T')[0], periodEnd: new Date().toISOString().split('T')[0], allocationMethod: 'direct' });
-    };
 
-    const statusColors: Record<string, string> = {
-        pending: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-        approved: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
-        rejected: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+        const fromCC = costCenters.find(c => c.id === formData.fromCostCenterId);
+        const toCC = costCenters.find(c => c.id === formData.toCostCenterId);
+
+        await createChargeback({
+            fromCostCenterId: formData.fromCostCenterId,
+            fromCostCenterCode: fromCC?.code,
+            toCostCenterId: formData.toCostCenterId,
+            toCostCenterCode: toCC?.code,
+            date: new Date().toISOString().split('T')[0],
+            description: formData.description,
+            category: 'labor',
+            amount: formData.amount,
+            currency: 'EUR',
+            allocationMethod: 'direct',
+            periodStart: formData.periodStart,
+            periodEnd: formData.periodEnd,
+            status: 'pending',
+        });
+
+        setShowModal(false);
+        setFormData({
+            fromCostCenterId: '',
+            toCostCenterId: '',
+            description: '',
+            amount: 0,
+            periodStart: '',
+            periodEnd: '',
+        });
     };
 
     return (
         <div className="space-y-4">
-            <div className="flex items-center justify-between">
-                <div className="flex gap-2">
-                    {['all', 'pending', 'approved', 'rejected'].map((status) => (
-                        <button key={status} onClick={() => setFilterStatus(status as any)}
-                                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filterStatus === status ? 'bg-[var(--accent-primary)] text-white' : 'bg-gray-100 dark:bg-surface-800 text-gray-600 dark:text-gray-400'}`}>
-                            {status.charAt(0).toUpperCase() + status.slice(1)}
-                        </button>
-                    ))}
-                </div>
-                <Button variant="primary" leftIcon={<Plus size={18} />} onClick={() => setShowModal(true)}>New Chargeback</Button>
+            <div className="flex justify-end">
+                <Button variant="primary" onClick={() => setShowModal(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Chargeback
+                </Button>
             </div>
 
             <Card variant="glass" padding="none">
                 <div className="overflow-x-auto">
                     <table className="w-full">
-                        <thead>
-                        <tr className="border-b border-gray-200 dark:border-surface-700">
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">ID</th>
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">From → To</th>
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Description</th>
-                            <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase">Period</th>
-                            <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Amount</th>
-                            <th className="text-center px-4 py-3 text-xs font-medium text-gray-500 uppercase">Status</th>
-                            <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {filteredChargebacks.map((cb) => (
-                            <tr key={cb.id} className="border-b border-gray-100 dark:border-surface-800 hover:bg-gray-50 dark:hover:bg-surface-800/50">
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-white font-mono">{cb.chargebackNumber}</td>
-                                <td className="px-4 py-3 text-sm"><span className="text-gray-900 dark:text-white">{cb.fromCostCenterCode}</span><ArrowRight className="inline w-4 h-4 mx-2 text-gray-400" /><span className="text-gray-900 dark:text-white">{cb.toCostCenterCode}</span></td>
-                                <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400 max-w-xs truncate">{cb.description}</td>
-                                <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{new Date(cb.periodStart).toLocaleDateString()} - {new Date(cb.periodEnd).toLocaleDateString()}</td>
-                                <td className="px-4 py-3 text-sm text-gray-900 dark:text-white text-right font-medium">${cb.amount.toLocaleString()}</td>
-                                <td className="px-4 py-3 text-center"><span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[cb.status]}`}>{cb.status}</span></td>
-                                <td className="px-4 py-3 text-right">
-                                    {cb.status === 'pending' && (
-                                        <div className="flex items-center justify-end gap-1">
-                                            <button onClick={() => approveChargeback(cb.id, 'current-user')} className="p-1.5 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 rounded text-emerald-600"><CheckCircle2 size={16} /></button>
-                                            <button onClick={() => rejectChargeback(cb.id, 'Not approved')} className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 rounded text-red-600"><XCircle size={16} /></button>
-                                        </div>
-                                    )}
-                                </td>
+                        <thead className="bg-gray-50 dark:bg-surface-900/50">
+                            <tr>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">From → To</th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
-                        ))}
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-surface-700">
+                            {chargebacks.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                                        No chargebacks found
+                                    </td>
+                                </tr>
+                            ) : (
+                                chargebacks.map((cb) => (
+                                    <tr key={cb.id} className="hover:bg-gray-50 dark:hover:bg-surface-800/50">
+                                        <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">
+                                            {cb.chargebackNumber}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
+                                            {cb.fromCostCenterCode} → {cb.toCostCenterCode}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400 max-w-xs truncate">
+                                            {cb.description}
+                                        </td>
+                                        <td className="px-4 py-3 text-sm text-right font-medium text-gray-900 dark:text-white">
+                                            {formatCurrency(cb.amount)}
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
+                                                cb.status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                                                cb.status === 'rejected' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                                                'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                                            }`}>
+                                                {cb.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-4 py-3 text-right">
+                                            <div className="flex items-center justify-end gap-1">
+                                                {cb.status === 'pending' && (
+                                                    <button
+                                                        onClick={() => approveChargeback(cb.id, 'current-user')}
+                                                        className="p-1.5 hover:bg-green-100 dark:hover:bg-green-900/30 rounded text-green-600"
+                                                        title="Approve"
+                                                    >
+                                                        <CheckCircle2 className="w-4 h-4" />
+                                                    </button>
+                                                )}
+                                                <button
+                                                    onClick={() => openDeleteConfirm(cb.id, 'chargeback')}
+                                                    className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 rounded text-red-500"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
-                    {filteredChargebacks.length === 0 && <div className="text-center py-12"><ArrowRight className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" /><p className="text-gray-500">No chargebacks found</p></div>}
                 </div>
             </Card>
 
+            {/* Add Chargeback Modal */}
             <AnimatePresence>
                 {showModal && (
-                    <div className="fixed inset-0 z-50 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="w-full max-w-lg bg-white dark:bg-surface-900 rounded-2xl shadow-2xl">
-                            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
-                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">New Chargeback</h2>
-                                <button onClick={() => setShowModal(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg"><X size={20} className="text-gray-500" /></button>
+                    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-md"
+                        >
+                            <div className="p-6 border-b border-gray-200 dark:border-surface-700">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Create Chargeback</h3>
                             </div>
-                            <div className="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
+                            <div className="p-6 space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">From Cost Center *</label><select value={formData.fromCostCenterId} onChange={(e) => setFormData({ ...formData, fromCostCenterId: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"><option value="">Select...</option>{costCenters.map((cc) => <option key={cc.id} value={cc.id}>{cc.code} - {cc.name}</option>)}</select></div>
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">To Cost Center *</label><select value={formData.toCostCenterId} onChange={(e) => setFormData({ ...formData, toCostCenterId: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"><option value="">Select...</option>{costCenters.filter(cc => cc.id !== formData.fromCostCenterId).map((cc) => <option key={cc.id} value={cc.id}>{cc.code} - {cc.name}</option>)}</select></div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">From *</label>
+                                        <select
+                                            value={formData.fromCostCenterId}
+                                            onChange={(e) => setFormData({ ...formData, fromCostCenterId: e.target.value })}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                        >
+                                            <option value="">Select...</option>
+                                            {costCenters.map((cc) => (
+                                                <option key={cc.id} value={cc.id}>{cc.code}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">To *</label>
+                                        <select
+                                            value={formData.toCostCenterId}
+                                            onChange={(e) => setFormData({ ...formData, toCostCenterId: e.target.value })}
+                                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                        >
+                                            <option value="">Select...</option>
+                                            {costCenters.map((cc) => (
+                                                <option key={cc.id} value={cc.id}>{cc.code}</option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
-                                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description *</label><input type="text" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label><select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"><option value="labor">Labor</option><option value="materials">Materials</option><option value="equipment">Equipment</option><option value="software">Software</option><option value="overhead">Overhead</option></select></div>
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount *</label><input type="number" value={formData.amount} onChange={(e) => setFormData({ ...formData, amount: parseFloat(e.target.value) || 0 })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount *</label>
+                                    <input
+                                        type="number"
+                                        value={formData.amount}
+                                        onChange={(e) => setFormData({ ...formData, amount: parseFloat(e.target.value) || 0 })}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                    />
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Period Start</label><input type="date" value={formData.periodStart} onChange={(e) => setFormData({ ...formData, periodStart: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
-                                    <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Period End</label><input type="date" value={formData.periodEnd} onChange={(e) => setFormData({ ...formData, periodEnd: e.target.value })} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white" /></div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                                    <textarea
+                                        value={formData.description}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                        rows={2}
+                                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                                    />
                                 </div>
                             </div>
-                            <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700"><Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button><Button variant="primary" onClick={handleSubmit}>Create Chargeback</Button></div>
+                            <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700">
+                                <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+                                <Button variant="primary" onClick={handleSubmit} disabled={isSaving}>
+                                    {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                                    Create Chargeback
+                                </Button>
+                            </div>
                         </motion.div>
                     </div>
                 )}
@@ -978,6 +1261,7 @@ function ChargebacksTab() {
         </div>
     );
 }
+
 // =============================================================================
 // MAIN PAGE
 // =============================================================================
@@ -991,12 +1275,33 @@ export default function ProjectsPage() {
         openWizard,
         closeWizard,
         selectProject,
+        fetchProjects,
+        fetchCostCenters,
+        fetchTimeEntries,
+        fetchChargebacks,
+        isLoading,
+        isSaving,
+        error,
+        clearError,
+        deleteConfirmId,
+        deleteConfirmType,
+        openDeleteConfirm,
+        closeDeleteConfirm,
+        confirmDelete,
     } = useProjectStore();
 
     const [activeTab, setActiveTab] = useState<'projects' | 'cost-centers' | 'time' | 'chargebacks'>('projects');
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'all'>('all');
     const [typeFilter, setTypeFilter] = useState<ProjectType | 'all'>('all');
+
+    // Fetch data on mount
+    useEffect(() => {
+        fetchProjects();
+        fetchCostCenters();
+        fetchTimeEntries();
+        fetchChargebacks();
+    }, [fetchProjects, fetchCostCenters, fetchTimeEntries, fetchChargebacks]);
 
     // Filter projects
     const filteredProjects = useMemo(() => {
@@ -1009,78 +1314,153 @@ export default function ProjectsPage() {
         });
     }, [projects, searchQuery, statusFilter, typeFilter]);
 
-    const tabs = [
-        { id: 'projects', label: 'Projects', icon: FolderKanban },
-        { id: 'cost-centers', label: 'Cost Centers', icon: Building2 },
-        { id: 'time', label: 'Time Tracking', icon: Clock },
-        { id: 'chargebacks', label: 'Chargebacks', icon: ArrowRight },
-    ];
+    // Get delete confirmation details
+    const getDeleteDetails = () => {
+        if (!deleteConfirmId || !deleteConfirmType) return { title: '', message: '' };
+        
+        switch (deleteConfirmType) {
+            case 'project':
+                const project = projects.find(p => p.id === deleteConfirmId);
+                return {
+                    title: 'Delete Project',
+                    message: `Are you sure you want to delete "${project?.name}"? This action cannot be undone.`,
+                };
+            case 'costCenter':
+                const cc = costCenters.find(c => c.id === deleteConfirmId);
+                return {
+                    title: 'Delete Cost Center',
+                    message: `Are you sure you want to delete "${cc?.name}"? This action cannot be undone.`,
+                };
+            case 'timeEntry':
+                return {
+                    title: 'Delete Time Entry',
+                    message: 'Are you sure you want to delete this time entry? This action cannot be undone.',
+                };
+            case 'chargeback':
+                return {
+                    title: 'Delete Chargeback',
+                    message: 'Are you sure you want to delete this chargeback? This action cannot be undone.',
+                };
+            default:
+                return { title: '', message: '' };
+        }
+    };
+
+    const deleteDetails = getDeleteDetails();
+
+    // Export projects to CSV
+    const handleExport = () => {
+        const headers = ['Code', 'Name', 'Type', 'Status', 'Budget', 'Spent', 'Progress'];
+        const rows = filteredProjects.map(p => [
+            p.code,
+            p.name,
+            p.type,
+            p.status,
+            p.budgetAmount?.toString() || '0',
+            p.budgetSpent?.toString() || '0',
+            `${p.percentComplete || 0}%`,
+        ]);
+
+        const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `projects-export-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
 
     return (
         <div className="space-y-6">
+            {/* Error Alert */}
+            <AnimatePresence>
+                {error && <ErrorAlert message={error} onDismiss={clearError} />}
+            </AnimatePresence>
+
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-600/10 border border-violet-500/20">
-                            <FolderKanban className="w-6 h-6 text-violet-400" />
-                        </div>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-display">
                         Projects & Cost Centers
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 mt-1">
-                        Manage projects, budgets, and cost attribution
+                        Manage projects, budgets, time tracking, and cost allocations
                     </p>
                 </div>
-                <Button variant="primary" leftIcon={<Plus size={18} />} onClick={() => openWizard()}>
-                    New Project
-                </Button>
+                <div className="flex items-center gap-3">
+                    <Button variant="secondary" onClick={handleExport}>
+                        <Download className="w-4 h-4 mr-2" />
+                        Export
+                    </Button>
+                    <Button variant="secondary" onClick={() => fetchProjects()} disabled={isLoading}>
+                        <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                        Refresh
+                    </Button>
+                    <Button variant="primary" onClick={() => openWizard()}>
+                        <Plus className="w-4 h-4 mr-2" />
+                        New Project
+                    </Button>
+                </div>
             </div>
 
-            {/* Metrics */}
+            {/* Metric Cards */}
             <MetricCards />
 
             {/* Tabs */}
-            <div className="flex gap-2 border-b border-gray-200 dark:border-surface-700">
-                {tabs.map((tab) => {
+            <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-surface-800 rounded-xl w-fit">
+                {[
+                    { id: 'projects', label: 'Projects', icon: FolderKanban },
+                    { id: 'cost-centers', label: 'Cost Centers', icon: Building2 },
+                    { id: 'time', label: 'Time Tracking', icon: Clock },
+                    { id: 'chargebacks', label: 'Chargebacks', icon: Receipt },
+                ].map((tab) => {
                     const Icon = tab.icon;
                     return (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id as any)}
-                            className={`flex items-center gap-2 px-4 py-3 font-medium transition-colors border-b-2 -mb-px ${
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                                 activeTab === tab.id
-                                    ? 'border-[var(--accent-primary)] text-[var(--accent-primary)]'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                                    ? 'bg-white dark:bg-surface-700 text-gray-900 dark:text-white shadow-sm'
+                                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900'
                             }`}
                         >
-                            <Icon size={18} />
+                            <Icon className="w-4 h-4" />
                             {tab.label}
                         </button>
                     );
                 })}
             </div>
 
+            {/* Loading State */}
+            {isLoading && (
+                <div className="flex items-center justify-center py-12">
+                    <Loader2 className="w-8 h-8 animate-spin text-[var(--accent-primary)]" />
+                </div>
+            )}
+
             {/* Projects Tab */}
-            {activeTab === 'projects' && (
+            {!isLoading && activeTab === 'projects' && (
                 <>
                     {/* Filters */}
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <div className="flex flex-wrap items-center gap-4">
+                        <div className="relative flex-1 min-w-[200px] max-w-md">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search projects..."
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                                className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
                             />
                         </div>
                         <select
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value as any)}
-                            className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                            className="px-4 py-2 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
                         >
-                            <option value="all">All Statuses</option>
+                            <option value="all">All Status</option>
                             {PROJECT_STATUSES.map((s) => (
                                 <option key={s.value} value={s.value}>{s.label}</option>
                             ))}
@@ -1088,7 +1468,7 @@ export default function ProjectsPage() {
                         <select
                             value={typeFilter}
                             onChange={(e) => setTypeFilter(e.target.value as any)}
-                            className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                            className="px-4 py-2 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
                         >
                             <option value="all">All Types</option>
                             {PROJECT_TYPES.map((t) => (
@@ -1105,11 +1485,12 @@ export default function ProjectsPage() {
                                 project={project}
                                 onView={() => selectProject(project.id)}
                                 onEdit={() => openWizard(project)}
+                                onDelete={() => openDeleteConfirm(project.id, 'project')}
                             />
                         ))}
                     </div>
 
-                    {filteredProjects.length === 0 && (
+                    {filteredProjects.length === 0 && !isLoading && (
                         <Card variant="glass" padding="lg" className="text-center">
                             <FolderKanban className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">No projects found</h3>
@@ -1130,28 +1511,48 @@ export default function ProjectsPage() {
             )}
 
             {/* Cost Centers Tab */}
-            {activeTab === 'cost-centers' && (
+            {!isLoading && activeTab === 'cost-centers' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {costCenters.map((cc) => (
-                        <CostCenterCard key={cc.id} costCenter={cc} />
+                        <CostCenterCard
+                            key={cc.id}
+                            costCenter={cc}
+                            onEdit={() => {/* TODO: Cost center edit wizard */}}
+                            onDelete={() => openDeleteConfirm(cc.id, 'costCenter')}
+                        />
                     ))}
+                    {costCenters.length === 0 && (
+                        <Card variant="glass" padding="lg" className="text-center col-span-full">
+                            <Building2 className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">No cost centers</h3>
+                            <p className="text-gray-500 dark:text-gray-400 mt-2">
+                                Create cost centers to organize project budgets
+                            </p>
+                        </Card>
+                    )}
                 </div>
             )}
 
             {/* Time Tracking Tab */}
-            {activeTab === 'time' && (
-                <TimeTrackingTab />
-            )}
+            {!isLoading && activeTab === 'time' && <TimeTrackingTab />}
 
             {/* Chargebacks Tab */}
-            {activeTab === 'chargebacks' && (
-                <ChargebacksTab />
-            )}
+            {!isLoading && activeTab === 'chargebacks' && <ChargebacksTab />}
 
             {/* Wizard Modal */}
             <AnimatePresence>
                 {wizardOpen && <ProjectWizard onClose={closeWizard} />}
             </AnimatePresence>
+
+            {/* Delete Confirmation Dialog */}
+            <DeleteConfirmDialog
+                isOpen={!!deleteConfirmId}
+                title={deleteDetails.title}
+                message={deleteDetails.message}
+                onConfirm={confirmDelete}
+                onCancel={closeDeleteConfirm}
+                isDeleting={isSaving}
+            />
         </div>
     );
 }

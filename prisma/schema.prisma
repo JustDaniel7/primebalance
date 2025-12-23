@@ -11,144 +11,6 @@ datasource db {
   provider = "postgresql"
 }
 
-model Project {
-  id String @id @default(cuid())
-
-  // Basic info
-  projectNumber String
-  name          String
-  description   String?
-
-  // Classification
-  type     String @default("internal") // internal, client, capital, research
-  status   String @default("planning") // planning, active, on_hold, completed, cancelled
-  priority String @default("medium") // low, medium, high, critical
-
-  // Timeline
-  startDate       DateTime?
-  endDate         DateTime?
-  actualStartDate DateTime?
-  actualEndDate   DateTime?
-
-  // Budget
-  currency      String  @default("EUR")
-  budgetAmount  Decimal @default(0) @db.Decimal(15, 2)
-  budgetSpent   Decimal @default(0) @db.Decimal(15, 2)
-  actualCost    Decimal @default(0) @db.Decimal(15, 2)
-  committedCost Decimal @default(0) @db.Decimal(15, 2)
-  totalCosts    Decimal @default(0) @db.Decimal(15, 2)
-
-  // Revenue (for client projects)
-  contractValue Decimal @default(0) @db.Decimal(15, 2)
-  totalRevenue  Decimal @default(0) @db.Decimal(15, 2)
-  billedAmount  Decimal @default(0) @db.Decimal(15, 2)
-
-  // Hours
-  allocatedHours Decimal @default(0) @db.Decimal(10, 2)
-  actualHours    Decimal @default(0) @db.Decimal(10, 2)
-
-  // Progress
-  progressPercent Decimal @default(0) @db.Decimal(5, 2)
-
-  // Ownership
-  managerId      String?
-  managerName    String?
-  departmentId   String?
-  departmentName String?
-  clientId       String?
-  clientName     String?
-
-  // Cost Center link
-  costCenterId String?
-  costCenter   CostCenter? @relation(fields: [costCenterId], references: [id])
-
-  // Time entries
-  timeEntries TimeEntry[]
-
-  // Meta
-  notes String?  @db.Text
-  tags  String[]
-
-  // Organization scope
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([organizationId, projectNumber])
-  @@index([organizationId, status])
-  @@index([organizationId, type])
-}
-
-model TimeEntry {
-  id String @id @default(cuid())
-
-  // Time
-  date  DateTime
-  hours Decimal  @db.Decimal(5, 2)
-
-  // Description
-  description String?
-
-  // Billing
-  billable   Boolean  @default(true)
-  billed     Boolean  @default(false)
-  hourlyRate Decimal? @db.Decimal(10, 2)
-
-  // User
-  userId   String?
-  userName String?
-
-  // Relations
-  projectId String
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([projectId, date])
-}
-
-model CostCenter {
-  id String @id @default(cuid())
-
-  // Basic info
-  code        String
-  name        String
-  description String?
-
-  // Hierarchy
-  parentId String?
-  parent   CostCenter?  @relation("CostCenterHierarchy", fields: [parentId], references: [id])
-  children CostCenter[] @relation("CostCenterHierarchy")
-
-  // Budget
-  currency     String  @default("EUR")
-  budgetAmount Decimal @default(0) @db.Decimal(15, 2)
-  actualAmount Decimal @default(0) @db.Decimal(15, 2)
-
-  // Status
-  isActive Boolean @default(true)
-
-  // Ownership
-  managerId   String?
-  managerName String?
-
-  // Relations
-  projects Project[]
-
-  // Organization scope
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([organizationId, code])
-  @@index([organizationId, isActive])
-}
-
 // =============================================================================
 // NEXTAUTH MODELS (existing, modified)
 // =============================================================================
@@ -250,11 +112,13 @@ model Organization {
   assetDisposals AssetDisposal[]
   capExBudgets   CapExBudget[]
 
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Invoice    Invoice[]
-  Project    Project[]
-  CostCenter CostCenter[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  Invoice             Invoice[]
+  Project             Project[]
+  CostCenter          CostCenter[]
+  timeEntries         TimeEntry[]
+  internalChargebacks InternalChargeback[]
 }
 
 // =============================================================================
@@ -1977,4 +1841,307 @@ model CapExItem {
   updatedAt DateTime @updatedAt
 
   @@index([budgetId, status])
+}
+
+// =============================================================================
+// PROJECTS & COST CENTERS
+// =============================================================================
+// ADD THIS TO: prisma/schema.prisma (append before closing)
+// THEN RUN: npx prisma migrate dev --name add_projects_module
+
+model CostCenter {
+  id String @id @default(cuid())
+
+  // Identification
+  code        String
+  name        String
+  description String? @db.Text
+
+  // Hierarchy
+  parentId String?
+  parent   CostCenter?  @relation("CostCenterHierarchy", fields: [parentId], references: [id])
+  children CostCenter[] @relation("CostCenterHierarchy")
+  level    Int          @default(0)
+  path     String? // e.g., "CC001/CC001-A/CC001-A-1"
+
+  // Manager
+  managerId   String?
+  managerName String?
+
+  // Budget
+  annualBudget      Decimal @default(0) @db.Decimal(15, 2)
+  budgetSpent       Decimal @default(0) @db.Decimal(15, 2)
+  budgetRemaining   Decimal @default(0) @db.Decimal(15, 2)
+  budgetUtilization Decimal @default(0) @db.Decimal(5, 2)
+  currency          String  @default("EUR")
+
+  // Allocation
+  allocationMethod String  @default("direct") // direct, percentage, hours, headcount, revenue, custom
+  allocationBasis  String?
+
+  // Status
+  isActive      Boolean   @default(true)
+  effectiveFrom DateTime  @default(now())
+  effectiveTo   DateTime?
+
+  // Meta
+  tags String[]
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Related
+  projects        Project[]
+  timeEntries     TimeEntry[]
+  chargebacksFrom InternalChargeback[] @relation("ChargebackFrom")
+  chargebacksTo   InternalChargeback[] @relation("ChargebackTo")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, code])
+  @@index([organizationId, isActive])
+  @@index([organizationId, parentId])
+}
+
+model Project {
+  id String @id @default(cuid())
+
+  // Identification
+  code        String
+  name        String
+  description String? @db.Text
+
+  // Classification
+  type     String @default("internal") // internal, client, rd, capex, opex, maintenance
+  status   String @default("planning") // planning, active, on_hold, completed, cancelled, archived
+  priority String @default("medium") // low, medium, high, critical
+
+  // Ownership
+  ownerId        String?
+  ownerName      String?
+  costCenterId   String?
+  costCenter     CostCenter? @relation(fields: [costCenterId], references: [id])
+  costCenterCode String?
+  departmentId   String?
+  clientId       String?
+  clientName     String?
+
+  // Timeline
+  plannedStartDate DateTime
+  plannedEndDate   DateTime
+  actualStartDate  DateTime?
+  actualEndDate    DateTime?
+
+  // Budget & Financials
+  budgetType        String  @default("fixed") // fixed, time_materials, retainer, milestone
+  budgetAmount      Decimal @default(0) @db.Decimal(15, 2)
+  budgetSpent       Decimal @default(0) @db.Decimal(15, 2)
+  budgetRemaining   Decimal @default(0) @db.Decimal(15, 2)
+  budgetVariance    Decimal @default(0) @db.Decimal(15, 2)
+  budgetUtilization Decimal @default(0) @db.Decimal(5, 2)
+  currency          String  @default("EUR")
+
+  // Revenue (for client projects)
+  contractValue   Decimal? @db.Decimal(15, 2)
+  billedAmount    Decimal  @default(0) @db.Decimal(15, 2)
+  collectedAmount Decimal  @default(0) @db.Decimal(15, 2)
+  unbilledAmount  Decimal  @default(0) @db.Decimal(15, 2)
+
+  // Profitability
+  totalRevenue Decimal @default(0) @db.Decimal(15, 2)
+  totalCosts   Decimal @default(0) @db.Decimal(15, 2)
+  grossProfit  Decimal @default(0) @db.Decimal(15, 2)
+  grossMargin  Decimal @default(0) @db.Decimal(5, 2)
+  netProfit    Decimal @default(0) @db.Decimal(15, 2)
+  netMargin    Decimal @default(0) @db.Decimal(5, 2)
+
+  // Resources
+  allocatedHours Decimal  @default(0) @db.Decimal(10, 2)
+  actualHours    Decimal  @default(0) @db.Decimal(10, 2)
+  remainingHours Decimal  @default(0) @db.Decimal(10, 2)
+  hourlyRate     Decimal? @db.Decimal(10, 2)
+
+  // Progress
+  percentComplete     Decimal @default(0) @db.Decimal(5, 2)
+  milestoneCount      Int     @default(0)
+  milestonesCompleted Int     @default(0)
+
+  // Billing
+  isBillable    Boolean  @default(false)
+  billingRate   Decimal? @db.Decimal(10, 2)
+  billingMethod String? // hourly, fixed, milestone, retainer
+
+  // Meta
+  tags String[]
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Related
+  milestones  ProjectMilestone[]
+  timeEntries TimeEntry[]
+  chargebacks InternalChargeback[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, code])
+  @@index([organizationId, status])
+  @@index([organizationId, type])
+  @@index([organizationId, costCenterId])
+}
+
+model ProjectMilestone {
+  id String @id @default(cuid())
+
+  // Details
+  name        String
+  description String? @db.Text
+
+  // Timeline
+  plannedDate DateTime
+  actualDate  DateTime?
+
+  // Status
+  status          String  @default("pending") // pending, in_progress, completed, delayed, cancelled
+  percentComplete Decimal @default(0) @db.Decimal(5, 2)
+
+  // Billing
+  isBillable    Boolean   @default(false)
+  billingAmount Decimal?  @db.Decimal(15, 2)
+  billedAt      DateTime?
+
+  // Dependencies
+  dependsOn String[] // milestone IDs
+
+  // Relations
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId, status])
+  @@index([projectId, plannedDate])
+}
+
+model TimeEntry {
+  id String @id @default(cuid())
+
+  // User
+  userId   String
+  userName String?
+
+  // Project/Task
+  projectId    String
+  project      Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectCode  String?
+  taskId       String?
+  taskName     String?
+  costCenterId String?
+  costCenter   CostCenter? @relation(fields: [costCenterId], references: [id])
+
+  // Time
+  date      DateTime
+  hours     Decimal  @db.Decimal(5, 2)
+  startTime String?
+  endTime   String?
+
+  // Description
+  description String
+  category    String?
+
+  // Billing
+  isBillable     Boolean  @default(false)
+  hourlyRate     Decimal? @db.Decimal(10, 2)
+  billableAmount Decimal? @db.Decimal(15, 2)
+
+  // Cost
+  costRate   Decimal? @db.Decimal(10, 2)
+  costAmount Decimal? @db.Decimal(15, 2)
+
+  // Status
+  status          String    @default("draft") // draft, submitted, approved, rejected, billed
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectionReason String?
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, userId])
+  @@index([organizationId, projectId])
+  @@index([organizationId, date])
+  @@index([organizationId, status])
+}
+
+model InternalChargeback {
+  id               String @id @default(cuid())
+  chargebackNumber String
+
+  // From/To Cost Centers
+  fromCostCenterId   String
+  fromCostCenter     CostCenter @relation("ChargebackFrom", fields: [fromCostCenterId], references: [id])
+  fromCostCenterCode String?
+  toCostCenterId     String
+  toCostCenter       CostCenter @relation("ChargebackTo", fields: [toCostCenterId], references: [id])
+  toCostCenterCode   String?
+
+  // Project (optional)
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  projectCode String?
+
+  // Details
+  date        DateTime
+  description String
+  category    String
+
+  // Amount
+  amount   Decimal @db.Decimal(15, 2)
+  currency String  @default("EUR")
+
+  // Basis
+  allocationMethod String   @default("direct") // direct, percentage, hours, headcount, revenue, custom
+  allocationBasis  String?
+  quantity         Decimal? @db.Decimal(15, 4)
+  unitRate         Decimal? @db.Decimal(15, 4)
+
+  // Period
+  periodStart DateTime
+  periodEnd   DateTime
+
+  // Status
+  status          String    @default("pending") // pending, approved, rejected, billed, paid
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectionReason String?
+
+  // References
+  invoiceId      String?
+  journalEntryId String?
+
+  // Meta
+  notes     String? @db.Text
+  createdBy String?
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, chargebackNumber])
+  @@index([organizationId, status])
+  @@index([organizationId, fromCostCenterId])
+  @@index([organizationId, toCostCenterId])
+  @@index([organizationId, date])
 }

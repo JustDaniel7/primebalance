@@ -18,21 +18,6 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Project
- * 
- */
-export type Project = Prisma.ProjectModel
-/**
- * Model TimeEntry
- * 
- */
-export type TimeEntry = Prisma.TimeEntryModel
-/**
- * Model CostCenter
- * 
- */
-export type CostCenter = Prisma.CostCenterModel
-/**
  * Model User
  * 
  */
@@ -237,3 +222,28 @@ export type CapExBudget = Prisma.CapExBudgetModel
  * 
  */
 export type CapExItem = Prisma.CapExItemModel
+/**
+ * Model CostCenter
+ * 
+ */
+export type CostCenter = Prisma.CostCenterModel
+/**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model ProjectMilestone
+ * 
+ */
+export type ProjectMilestone = Prisma.ProjectMilestoneModel
+/**
+ * Model TimeEntry
+ * 
+ */
+export type TimeEntry = Prisma.TimeEntryModel
+/**
+ * Model InternalChargeback
+ * 
+ */
+export type InternalChargeback = Prisma.InternalChargebackModel

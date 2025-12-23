@@ -51,9 +51,6 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Project: 'Project',
-  TimeEntry: 'TimeEntry',
-  CostCenter: 'CostCenter',
   User: 'User',
   Account: 'Account',
   Session: 'Session',
@@ -94,7 +91,12 @@ export const ModelName = {
   AssetTransfer: 'AssetTransfer',
   AssetDisposal: 'AssetDisposal',
   CapExBudget: 'CapExBudget',
-  CapExItem: 'CapExItem'
+  CapExItem: 'CapExItem',
+  CostCenter: 'CostCenter',
+  Project: 'Project',
+  ProjectMilestone: 'ProjectMilestone',
+  TimeEntry: 'TimeEntry',
+  InternalChargeback: 'InternalChargeback'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -111,85 +113,6 @@ export const TransactionIsolationLevel = {
 } as const
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
-
-
-export const ProjectScalarFieldEnum = {
-  id: 'id',
-  projectNumber: 'projectNumber',
-  name: 'name',
-  description: 'description',
-  type: 'type',
-  status: 'status',
-  priority: 'priority',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  actualStartDate: 'actualStartDate',
-  actualEndDate: 'actualEndDate',
-  currency: 'currency',
-  budgetAmount: 'budgetAmount',
-  budgetSpent: 'budgetSpent',
-  actualCost: 'actualCost',
-  committedCost: 'committedCost',
-  totalCosts: 'totalCosts',
-  contractValue: 'contractValue',
-  totalRevenue: 'totalRevenue',
-  billedAmount: 'billedAmount',
-  allocatedHours: 'allocatedHours',
-  actualHours: 'actualHours',
-  progressPercent: 'progressPercent',
-  managerId: 'managerId',
-  managerName: 'managerName',
-  departmentId: 'departmentId',
-  departmentName: 'departmentName',
-  clientId: 'clientId',
-  clientName: 'clientName',
-  costCenterId: 'costCenterId',
-  notes: 'notes',
-  tags: 'tags',
-  organizationId: 'organizationId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
-
-
-export const TimeEntryScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  hours: 'hours',
-  description: 'description',
-  billable: 'billable',
-  billed: 'billed',
-  hourlyRate: 'hourlyRate',
-  userId: 'userId',
-  userName: 'userName',
-  projectId: 'projectId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TimeEntryScalarFieldEnum = (typeof TimeEntryScalarFieldEnum)[keyof typeof TimeEntryScalarFieldEnum]
-
-
-export const CostCenterScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  name: 'name',
-  description: 'description',
-  parentId: 'parentId',
-  currency: 'currency',
-  budgetAmount: 'budgetAmount',
-  actualAmount: 'actualAmount',
-  isActive: 'isActive',
-  managerId: 'managerId',
-  managerName: 'managerName',
-  organizationId: 'organizationId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CostCenterScalarFieldEnum = (typeof CostCenterScalarFieldEnum)[keyof typeof CostCenterScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -1266,6 +1189,178 @@ export const CapExItemScalarFieldEnum = {
 } as const
 
 export type CapExItemScalarFieldEnum = (typeof CapExItemScalarFieldEnum)[keyof typeof CapExItemScalarFieldEnum]
+
+
+export const CostCenterScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  parentId: 'parentId',
+  level: 'level',
+  path: 'path',
+  managerId: 'managerId',
+  managerName: 'managerName',
+  annualBudget: 'annualBudget',
+  budgetSpent: 'budgetSpent',
+  budgetRemaining: 'budgetRemaining',
+  budgetUtilization: 'budgetUtilization',
+  currency: 'currency',
+  allocationMethod: 'allocationMethod',
+  allocationBasis: 'allocationBasis',
+  isActive: 'isActive',
+  effectiveFrom: 'effectiveFrom',
+  effectiveTo: 'effectiveTo',
+  tags: 'tags',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CostCenterScalarFieldEnum = (typeof CostCenterScalarFieldEnum)[keyof typeof CostCenterScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  status: 'status',
+  priority: 'priority',
+  ownerId: 'ownerId',
+  ownerName: 'ownerName',
+  costCenterId: 'costCenterId',
+  costCenterCode: 'costCenterCode',
+  departmentId: 'departmentId',
+  clientId: 'clientId',
+  clientName: 'clientName',
+  plannedStartDate: 'plannedStartDate',
+  plannedEndDate: 'plannedEndDate',
+  actualStartDate: 'actualStartDate',
+  actualEndDate: 'actualEndDate',
+  budgetType: 'budgetType',
+  budgetAmount: 'budgetAmount',
+  budgetSpent: 'budgetSpent',
+  budgetRemaining: 'budgetRemaining',
+  budgetVariance: 'budgetVariance',
+  budgetUtilization: 'budgetUtilization',
+  currency: 'currency',
+  contractValue: 'contractValue',
+  billedAmount: 'billedAmount',
+  collectedAmount: 'collectedAmount',
+  unbilledAmount: 'unbilledAmount',
+  totalRevenue: 'totalRevenue',
+  totalCosts: 'totalCosts',
+  grossProfit: 'grossProfit',
+  grossMargin: 'grossMargin',
+  netProfit: 'netProfit',
+  netMargin: 'netMargin',
+  allocatedHours: 'allocatedHours',
+  actualHours: 'actualHours',
+  remainingHours: 'remainingHours',
+  hourlyRate: 'hourlyRate',
+  percentComplete: 'percentComplete',
+  milestoneCount: 'milestoneCount',
+  milestonesCompleted: 'milestonesCompleted',
+  isBillable: 'isBillable',
+  billingRate: 'billingRate',
+  billingMethod: 'billingMethod',
+  tags: 'tags',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ProjectMilestoneScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  plannedDate: 'plannedDate',
+  actualDate: 'actualDate',
+  status: 'status',
+  percentComplete: 'percentComplete',
+  isBillable: 'isBillable',
+  billingAmount: 'billingAmount',
+  billedAt: 'billedAt',
+  dependsOn: 'dependsOn',
+  projectId: 'projectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectMilestoneScalarFieldEnum = (typeof ProjectMilestoneScalarFieldEnum)[keyof typeof ProjectMilestoneScalarFieldEnum]
+
+
+export const TimeEntryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  userName: 'userName',
+  projectId: 'projectId',
+  projectCode: 'projectCode',
+  taskId: 'taskId',
+  taskName: 'taskName',
+  costCenterId: 'costCenterId',
+  date: 'date',
+  hours: 'hours',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  description: 'description',
+  category: 'category',
+  isBillable: 'isBillable',
+  hourlyRate: 'hourlyRate',
+  billableAmount: 'billableAmount',
+  costRate: 'costRate',
+  costAmount: 'costAmount',
+  status: 'status',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  rejectionReason: 'rejectionReason',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TimeEntryScalarFieldEnum = (typeof TimeEntryScalarFieldEnum)[keyof typeof TimeEntryScalarFieldEnum]
+
+
+export const InternalChargebackScalarFieldEnum = {
+  id: 'id',
+  chargebackNumber: 'chargebackNumber',
+  fromCostCenterId: 'fromCostCenterId',
+  fromCostCenterCode: 'fromCostCenterCode',
+  toCostCenterId: 'toCostCenterId',
+  toCostCenterCode: 'toCostCenterCode',
+  projectId: 'projectId',
+  projectCode: 'projectCode',
+  date: 'date',
+  description: 'description',
+  category: 'category',
+  amount: 'amount',
+  currency: 'currency',
+  allocationMethod: 'allocationMethod',
+  allocationBasis: 'allocationBasis',
+  quantity: 'quantity',
+  unitRate: 'unitRate',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  status: 'status',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  rejectionReason: 'rejectionReason',
+  invoiceId: 'invoiceId',
+  journalEntryId: 'journalEntryId',
+  notes: 'notes',
+  createdBy: 'createdBy',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InternalChargebackScalarFieldEnum = (typeof InternalChargebackScalarFieldEnum)[keyof typeof InternalChargebackScalarFieldEnum]
 
 
 export const SortOrder = {

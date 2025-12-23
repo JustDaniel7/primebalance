@@ -1522,6 +1522,440 @@ async function main() {
   console.log('  ✓ Created 1 CapEx budget with', capexItems.length, 'items')
 
   // =============================================================================
+  // PROJECTS MODULE - ADD TO: prisma/seed.ts (after other data, before SUMMARY)
+  // =============================================================================
+
+  // =============================================================================
+  // COST CENTERS
+  // =============================================================================
+  console.log('\n🏢 Creating Cost Centers...')
+  const costCenters = [
+    { code: 'CC-EXEC', name: 'Executive', level: 0, annualBudget: 500000, budgetSpent: 125000, isActive: true },
+    { code: 'CC-ENG', name: 'Engineering', level: 0, annualBudget: 1200000, budgetSpent: 450000, isActive: true },
+    { code: 'CC-ENG-FE', name: 'Frontend Team', level: 1, parentCode: 'CC-ENG', annualBudget: 400000, budgetSpent: 150000, isActive: true },
+    { code: 'CC-ENG-BE', name: 'Backend Team', level: 1, parentCode: 'CC-ENG', annualBudget: 450000, budgetSpent: 180000, isActive: true },
+    { code: 'CC-ENG-INFRA', name: 'Infrastructure', level: 1, parentCode: 'CC-ENG', annualBudget: 350000, budgetSpent: 120000, isActive: true },
+    { code: 'CC-SALES', name: 'Sales & Marketing', level: 0, annualBudget: 800000, budgetSpent: 280000, isActive: true },
+    { code: 'CC-OPS', name: 'Operations', level: 0, annualBudget: 300000, budgetSpent: 95000, isActive: true },
+    { code: 'CC-FIN', name: 'Finance & Admin', level: 0, annualBudget: 250000, budgetSpent: 85000, isActive: true },
+  ]
+
+  const costCenterMap: Record<string, string> = {}
+  
+  // First pass: create all cost centers
+  for (const cc of costCenters) {
+    const created = await prisma.costCenter.create({
+      data: {
+        code: cc.code,
+        name: cc.name,
+        level: cc.level,
+        path: cc.code,
+        annualBudget: cc.annualBudget,
+        budgetSpent: cc.budgetSpent,
+        budgetRemaining: cc.annualBudget - cc.budgetSpent,
+        budgetUtilization: (cc.budgetSpent / cc.annualBudget) * 100,
+        isActive: cc.isActive,
+        allocationMethod: 'direct',
+        organizationId: org.id,
+      },
+    })
+    costCenterMap[cc.code] = created.id
+  }
+
+  // Second pass: set parent relationships
+  for (const cc of costCenters) {
+    if (cc.parentCode && costCenterMap[cc.parentCode]) {
+      await prisma.costCenter.update({
+        where: { id: costCenterMap[cc.code] },
+        data: { 
+          parentId: costCenterMap[cc.parentCode],
+          path: `${cc.parentCode}/${cc.code}`,
+        },
+      })
+    }
+  }
+  console.log('  ✓ Created', costCenters.length, 'cost centers')
+
+  // =============================================================================
+  // PROJECTS
+  // =============================================================================
+  console.log('\n📊 Creating Projects...')
+  const projects = [
+    {
+      code: 'PRJ-2025-001',
+      name: 'Platform Redesign',
+      description: 'Complete UI/UX redesign of the main platform',
+      type: 'internal',
+      status: 'active',
+      priority: 'high',
+      costCenterCode: 'CC-ENG-FE',
+      plannedStartDate: '2025-01-01',
+      plannedEndDate: '2025-06-30',
+      actualStartDate: '2025-01-08',
+      budgetType: 'fixed',
+      budgetAmount: 150000,
+      budgetSpent: 45000,
+      allocatedHours: 2000,
+      actualHours: 580,
+      percentComplete: 28,
+      isBillable: false,
+    },
+    {
+      code: 'PRJ-2025-002',
+      name: 'Enterprise API Integration',
+      description: 'Build enterprise-grade API integration for TechCorp',
+      type: 'client',
+      status: 'active',
+      priority: 'critical',
+      costCenterCode: 'CC-ENG-BE',
+      clientName: 'TechCorp Ltd',
+      plannedStartDate: '2025-01-15',
+      plannedEndDate: '2025-04-15',
+      actualStartDate: '2025-01-15',
+      budgetType: 'time_materials',
+      budgetAmount: 85000,
+      budgetSpent: 32000,
+      contractValue: 120000,
+      billedAmount: 40000,
+      collectedAmount: 40000,
+      totalRevenue: 40000,
+      totalCosts: 32000,
+      grossProfit: 8000,
+      grossMargin: 20,
+      allocatedHours: 800,
+      actualHours: 320,
+      percentComplete: 40,
+      isBillable: true,
+      billingRate: 150,
+      billingMethod: 'hourly',
+    },
+    {
+      code: 'PRJ-2025-003',
+      name: 'AI Features R&D',
+      description: 'Research and development for AI-powered features',
+      type: 'rd',
+      status: 'active',
+      priority: 'medium',
+      costCenterCode: 'CC-ENG',
+      plannedStartDate: '2025-01-01',
+      plannedEndDate: '2025-12-31',
+      actualStartDate: '2025-01-02',
+      budgetType: 'fixed',
+      budgetAmount: 200000,
+      budgetSpent: 28000,
+      allocatedHours: 3000,
+      actualHours: 420,
+      percentComplete: 14,
+      isBillable: false,
+    },
+    {
+      code: 'PRJ-2025-004',
+      name: 'Data Center Migration',
+      description: 'Migrate infrastructure to new cloud provider',
+      type: 'capex',
+      status: 'planning',
+      priority: 'high',
+      costCenterCode: 'CC-ENG-INFRA',
+      plannedStartDate: '2025-02-01',
+      plannedEndDate: '2025-05-31',
+      budgetType: 'milestone',
+      budgetAmount: 350000,
+      budgetSpent: 0,
+      allocatedHours: 1500,
+      actualHours: 0,
+      percentComplete: 0,
+      isBillable: false,
+    },
+    {
+      code: 'PRJ-2024-015',
+      name: 'Website Refresh',
+      description: 'Marketing website redesign completed in Q4 2024',
+      type: 'internal',
+      status: 'completed',
+      priority: 'medium',
+      costCenterCode: 'CC-SALES',
+      plannedStartDate: '2024-09-01',
+      plannedEndDate: '2024-12-15',
+      actualStartDate: '2024-09-05',
+      actualEndDate: '2024-12-10',
+      budgetType: 'fixed',
+      budgetAmount: 45000,
+      budgetSpent: 42500,
+      allocatedHours: 600,
+      actualHours: 575,
+      percentComplete: 100,
+      isBillable: false,
+    },
+    {
+      code: 'PRJ-2025-005',
+      name: 'GlobalTech Implementation',
+      description: 'Enterprise implementation for GlobalTech',
+      type: 'client',
+      status: 'active',
+      priority: 'high',
+      costCenterCode: 'CC-ENG',
+      clientName: 'GlobalTech Inc',
+      plannedStartDate: '2025-01-20',
+      plannedEndDate: '2025-07-20',
+      actualStartDate: '2025-01-22',
+      budgetType: 'milestone',
+      budgetAmount: 180000,
+      budgetSpent: 25000,
+      contractValue: 250000,
+      billedAmount: 50000,
+      collectedAmount: 50000,
+      totalRevenue: 50000,
+      totalCosts: 25000,
+      grossProfit: 25000,
+      grossMargin: 50,
+      allocatedHours: 1200,
+      actualHours: 180,
+      percentComplete: 15,
+      isBillable: true,
+      billingRate: 180,
+      billingMethod: 'milestone',
+    },
+  ]
+
+  const projectMap: Record<string, string> = {}
+
+  for (const proj of projects) {
+    const costCenterId = proj.costCenterCode ? costCenterMap[proj.costCenterCode] : null
+    const created = await prisma.project.create({
+      data: {
+        code: proj.code,
+        name: proj.name,
+        description: proj.description,
+        type: proj.type,
+        status: proj.status,
+        priority: proj.priority,
+        costCenterId,
+        costCenterCode: proj.costCenterCode,
+        clientName: proj.clientName,
+        plannedStartDate: new Date(proj.plannedStartDate),
+        plannedEndDate: new Date(proj.plannedEndDate),
+        actualStartDate: proj.actualStartDate ? new Date(proj.actualStartDate) : null,
+        actualEndDate: proj.actualEndDate ? new Date(proj.actualEndDate) : null,
+        budgetType: proj.budgetType,
+        budgetAmount: proj.budgetAmount,
+        budgetSpent: proj.budgetSpent,
+        budgetRemaining: proj.budgetAmount - proj.budgetSpent,
+        budgetVariance: proj.budgetAmount - proj.budgetSpent,
+        budgetUtilization: (proj.budgetSpent / proj.budgetAmount) * 100,
+        contractValue: proj.contractValue,
+        billedAmount: proj.billedAmount || 0,
+        collectedAmount: proj.collectedAmount || 0,
+        unbilledAmount: (proj.contractValue || 0) - (proj.billedAmount || 0),
+        totalRevenue: proj.totalRevenue || 0,
+        totalCosts: proj.totalCosts || proj.budgetSpent,
+        grossProfit: proj.grossProfit || 0,
+        grossMargin: proj.grossMargin || 0,
+        netProfit: proj.grossProfit || 0,
+        netMargin: proj.grossMargin || 0,
+        allocatedHours: proj.allocatedHours,
+        actualHours: proj.actualHours,
+        remainingHours: proj.allocatedHours - proj.actualHours,
+        percentComplete: proj.percentComplete,
+        isBillable: proj.isBillable,
+        billingRate: proj.billingRate,
+        billingMethod: proj.billingMethod,
+        organizationId: org.id,
+      },
+    })
+    projectMap[proj.code] = created.id
+  }
+  console.log('  ✓ Created', projects.length, 'projects')
+
+  // =============================================================================
+  // PROJECT MILESTONES
+  // =============================================================================
+  console.log('\n🎯 Creating Project Milestones...')
+  const milestones = [
+    { projectCode: 'PRJ-2025-001', name: 'Design Phase Complete', plannedDate: '2025-02-15', status: 'completed', percentComplete: 100, isBillable: false },
+    { projectCode: 'PRJ-2025-001', name: 'Development Sprint 1', plannedDate: '2025-03-15', status: 'in_progress', percentComplete: 45, isBillable: false },
+    { projectCode: 'PRJ-2025-001', name: 'Development Sprint 2', plannedDate: '2025-04-30', status: 'pending', percentComplete: 0, isBillable: false },
+    { projectCode: 'PRJ-2025-001', name: 'UAT & Launch', plannedDate: '2025-06-15', status: 'pending', percentComplete: 0, isBillable: false },
+    { projectCode: 'PRJ-2025-002', name: 'API Spec Finalized', plannedDate: '2025-02-01', status: 'completed', percentComplete: 100, isBillable: true, billingAmount: 15000 },
+    { projectCode: 'PRJ-2025-002', name: 'Core Integration Complete', plannedDate: '2025-03-01', status: 'in_progress', percentComplete: 60, isBillable: true, billingAmount: 40000 },
+    { projectCode: 'PRJ-2025-002', name: 'Testing & Go-Live', plannedDate: '2025-04-01', status: 'pending', percentComplete: 0, isBillable: true, billingAmount: 65000 },
+    { projectCode: 'PRJ-2025-005', name: 'Discovery & Planning', plannedDate: '2025-02-15', status: 'completed', percentComplete: 100, isBillable: true, billingAmount: 50000 },
+    { projectCode: 'PRJ-2025-005', name: 'Phase 1 Delivery', plannedDate: '2025-04-15', status: 'pending', percentComplete: 0, isBillable: true, billingAmount: 100000 },
+    { projectCode: 'PRJ-2025-005', name: 'Phase 2 & Handover', plannedDate: '2025-07-15', status: 'pending', percentComplete: 0, isBillable: true, billingAmount: 100000 },
+  ]
+
+  for (const ms of milestones) {
+    await prisma.projectMilestone.create({
+      data: {
+        name: ms.name,
+        plannedDate: new Date(ms.plannedDate),
+        status: ms.status,
+        percentComplete: ms.percentComplete,
+        isBillable: ms.isBillable,
+        billingAmount: ms.billingAmount,
+        projectId: projectMap[ms.projectCode],
+      },
+    })
+  }
+  console.log('  ✓ Created', milestones.length, 'project milestones')
+
+  // Update milestone counts on projects
+  for (const proj of projects) {
+    const projectMilestones = milestones.filter(m => m.projectCode === proj.code)
+    const completedMilestones = projectMilestones.filter(m => m.status === 'completed')
+    await prisma.project.update({
+      where: { id: projectMap[proj.code] },
+      data: {
+        milestoneCount: projectMilestones.length,
+        milestonesCompleted: completedMilestones.length,
+      },
+    })
+  }
+
+  // =============================================================================
+  // TIME ENTRIES
+  // =============================================================================
+  console.log('\n⏱️  Creating Time Entries...')
+  const timeEntries = [
+    { projectCode: 'PRJ-2025-001', costCenterCode: 'CC-ENG-FE', userId: user.id, userName: user.name, date: daysAgo(1), hours: 8, description: 'Component library development', category: 'Development', isBillable: false, status: 'approved' },
+    { projectCode: 'PRJ-2025-001', costCenterCode: 'CC-ENG-FE', userId: user.id, userName: user.name, date: daysAgo(2), hours: 6.5, description: 'Design system implementation', category: 'Development', isBillable: false, status: 'approved' },
+    { projectCode: 'PRJ-2025-001', costCenterCode: 'CC-ENG-FE', userId: user.id, userName: user.name, date: daysAgo(3), hours: 7, description: 'Code review and testing', category: 'Review', isBillable: false, status: 'approved' },
+    { projectCode: 'PRJ-2025-002', costCenterCode: 'CC-ENG-BE', userId: user.id, userName: user.name, date: daysAgo(1), hours: 4, description: 'API endpoint development', category: 'Development', isBillable: true, hourlyRate: 150, status: 'approved' },
+    { projectCode: 'PRJ-2025-002', costCenterCode: 'CC-ENG-BE', userId: user.id, userName: user.name, date: daysAgo(2), hours: 5, description: 'Integration testing', category: 'Testing', isBillable: true, hourlyRate: 150, status: 'submitted' },
+    { projectCode: 'PRJ-2025-002', costCenterCode: 'CC-ENG-BE', userId: user.id, userName: user.name, date: daysAgo(4), hours: 6, description: 'Client workshop - API design', category: 'Meeting', isBillable: true, hourlyRate: 150, status: 'approved' },
+    { projectCode: 'PRJ-2025-003', costCenterCode: 'CC-ENG', userId: user.id, userName: user.name, date: daysAgo(5), hours: 8, description: 'ML model research', category: 'Research', isBillable: false, status: 'approved' },
+    { projectCode: 'PRJ-2025-003', costCenterCode: 'CC-ENG', userId: user.id, userName: user.name, date: daysAgo(6), hours: 4, description: 'Prototype development', category: 'Development', isBillable: false, status: 'draft' },
+    { projectCode: 'PRJ-2025-005', costCenterCode: 'CC-ENG', userId: user.id, userName: user.name, date: daysAgo(2), hours: 3, description: 'Requirements gathering call', category: 'Meeting', isBillable: true, hourlyRate: 180, status: 'approved' },
+    { projectCode: 'PRJ-2025-005', costCenterCode: 'CC-ENG', userId: user.id, userName: user.name, date: daysAgo(3), hours: 6, description: 'Architecture planning', category: 'Planning', isBillable: true, hourlyRate: 180, status: 'submitted' },
+  ]
+
+  for (const te of timeEntries) {
+    const billableAmount = te.isBillable && te.hourlyRate ? te.hours * te.hourlyRate : null
+    await prisma.timeEntry.create({
+      data: {
+        userId: te.userId,
+        userName: te.userName,
+        projectId: projectMap[te.projectCode],
+        projectCode: te.projectCode,
+        costCenterId: costCenterMap[te.costCenterCode],
+        date: te.date,
+        hours: te.hours,
+        description: te.description,
+        category: te.category,
+        isBillable: te.isBillable,
+        hourlyRate: te.hourlyRate,
+        billableAmount,
+        status: te.status,
+        approvedBy: te.status === 'approved' ? user.id : null,
+        approvedAt: te.status === 'approved' ? new Date() : null,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', timeEntries.length, 'time entries')
+
+  // =============================================================================
+  // INTERNAL CHARGEBACKS
+  // =============================================================================
+  console.log('\n🔄 Creating Internal Chargebacks...')
+  const chargebacks = [
+    {
+      chargebackNumber: 'CB-2025-001',
+      fromCostCenterCode: 'CC-ENG-FE',
+      toCostCenterCode: 'CC-SALES',
+      projectCode: 'PRJ-2024-015',
+      date: daysAgo(30),
+      description: 'Website redesign development hours',
+      category: 'Labor',
+      amount: 18500,
+      periodStart: '2024-11-01',
+      periodEnd: '2024-12-15',
+      status: 'approved',
+    },
+    {
+      chargebackNumber: 'CB-2025-002',
+      fromCostCenterCode: 'CC-ENG-INFRA',
+      toCostCenterCode: 'CC-ENG-BE',
+      date: daysAgo(15),
+      description: 'Cloud infrastructure allocation - January',
+      category: 'Infrastructure',
+      amount: 4500,
+      allocationMethod: 'percentage',
+      allocationBasis: 'Resource usage 30%',
+      periodStart: '2025-01-01',
+      periodEnd: '2025-01-31',
+      status: 'approved',
+    },
+    {
+      chargebackNumber: 'CB-2025-003',
+      fromCostCenterCode: 'CC-OPS',
+      toCostCenterCode: 'CC-ENG',
+      date: daysAgo(10),
+      description: 'Shared services allocation - Q1',
+      category: 'Overhead',
+      amount: 8200,
+      allocationMethod: 'headcount',
+      allocationBasis: '12 FTEs in Engineering',
+      periodStart: '2025-01-01',
+      periodEnd: '2025-03-31',
+      status: 'pending',
+    },
+    {
+      chargebackNumber: 'CB-2025-004',
+      fromCostCenterCode: 'CC-ENG-BE',
+      toCostCenterCode: 'CC-ENG-FE',
+      projectCode: 'PRJ-2025-001',
+      date: daysAgo(5),
+      description: 'API development support for Platform Redesign',
+      category: 'Labor',
+      amount: 6000,
+      quantity: 40,
+      unitRate: 150,
+      periodStart: '2025-01-01',
+      periodEnd: '2025-01-31',
+      status: 'pending',
+    },
+  ]
+
+  for (const cb of chargebacks) {
+    await prisma.internalChargeback.create({
+      data: {
+        chargebackNumber: cb.chargebackNumber,
+        fromCostCenterId: costCenterMap[cb.fromCostCenterCode],
+        fromCostCenterCode: cb.fromCostCenterCode,
+        toCostCenterId: costCenterMap[cb.toCostCenterCode],
+        toCostCenterCode: cb.toCostCenterCode,
+        projectId: cb.projectCode ? projectMap[cb.projectCode] : null,
+        projectCode: cb.projectCode,
+        date: cb.date,
+        description: cb.description,
+        category: cb.category,
+        amount: cb.amount,
+        allocationMethod: cb.allocationMethod || 'direct',
+        allocationBasis: cb.allocationBasis,
+        quantity: cb.quantity,
+        unitRate: cb.unitRate,
+        periodStart: new Date(cb.periodStart),
+        periodEnd: new Date(cb.periodEnd),
+        status: cb.status,
+        approvedBy: cb.status === 'approved' ? user.id : null,
+        approvedAt: cb.status === 'approved' ? new Date() : null,
+        createdBy: user.id,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', chargebacks.length, 'internal chargebacks')
+
+  // =============================================================================
+  // ADD TO SUMMARY OUTPUT:
+  // =============================================================================
+  // console.log('  • ' + costCenters.length + ' Cost centers')
+  // console.log('  • ' + projects.length + ' Projects')
+  // console.log('  • ' + milestones.length + ' Project milestones')
+  // console.log('  • ' + timeEntries.length + ' Time entries')
+  // console.log('  • ' + chargebacks.length + ' Internal chargebacks')
+
+  // =============================================================================
   // SUMMARY
   // =============================================================================
   console.log('\n' + '=' .repeat(60))
@@ -1564,6 +1998,11 @@ async function main() {
   console.log('  • ' + assetTransfers.length + ' Asset transfers')
   console.log('  • 1 Asset disposal')
   console.log('  • 1 CapEx budget with ' + capexItems.length + ' items')
+  console.log('  • ' + costCenters.length + ' Cost centers')
+  console.log('  • ' + projects.length + ' Projects')
+  console.log('  • ' + milestones.length + ' Project milestones')
+  console.log('  • ' + timeEntries.length + ' Time entries')
+  console.log('  • ' + chargebacks.length + ' Internal chargebacks')
   console.log('\n🎉 Ready to use!')
   console.log('   Login: demo@primebalance.app')
 }
