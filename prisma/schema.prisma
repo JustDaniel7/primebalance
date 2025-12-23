@@ -119,6 +119,8 @@ model Organization {
   CostCenter          CostCenter[]
   timeEntries         TimeEntry[]
   internalChargebacks InternalChargeback[]
+  accountingPeriods   AccountingPeriod[]
+  periodAdjustments   PeriodAdjustment[]
 }
 
 // =============================================================================
@@ -2144,4 +2146,234 @@ model InternalChargeback {
   @@index([organizationId, fromCostCenterId])
   @@index([organizationId, toCostCenterId])
   @@index([organizationId, date])
+}
+
+// =============================================================================
+// PERIOD CLOSE MODULE
+// =============================================================================
+// ADD TO: prisma/schema.prisma (append at end)
+// ADD TO Organization model relations:
+//   accountingPeriods    AccountingPeriod[]
+//   periodAdjustments    PeriodAdjustment[]
+// THEN RUN: npx prisma migrate dev --name add_period_close_module
+
+model AccountingPeriod {
+  id   String @id @default(cuid())
+  name String
+  code String // e.g., "2024-01", "2024-Q1", "2024"
+
+  // Type & Dates
+  type          String   @default("monthly") // monthly, quarterly, yearly, custom
+  startDate     DateTime
+  endDate       DateTime
+  fiscalYear    Int
+  fiscalQuarter Int?
+  fiscalMonth   Int?
+
+  // Status
+  status       String    @default("open") // open, closing, closed, locked, reopened
+  closedAt     DateTime?
+  closedBy     String?
+  reopenedAt   DateTime?
+  reopenedBy   String?
+  reopenReason String?   @db.Text
+
+  // Checklist Progress
+  checklistTotal     Int     @default(0)
+  checklistCompleted Int     @default(0)
+  checklistProgress  Decimal @default(0) @db.Decimal(5, 2)
+
+  // Flags
+  hasUnreconciledItems     Boolean @default(false)
+  hasPendingTransactions   Boolean @default(false)
+  hasMissingDocuments      Boolean @default(false)
+  hasUnapprovedAdjustments Boolean @default(false)
+
+  // Financials (snapshot at close)
+  totalRevenue     Decimal? @db.Decimal(15, 2)
+  totalExpenses    Decimal? @db.Decimal(15, 2)
+  netIncome        Decimal? @db.Decimal(15, 2)
+  totalAssets      Decimal? @db.Decimal(15, 2)
+  totalLiabilities Decimal? @db.Decimal(15, 2)
+
+  // Meta
+  notes String? @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  checklistItems CloseChecklistItem[]
+  missingItems   PeriodMissingItem[]
+  adjustments    PeriodAdjustment[]
+  auditEntries   PeriodAuditEntry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, code])
+  @@index([organizationId, status])
+  @@index([organizationId, fiscalYear])
+}
+
+model CloseChecklistItem {
+  id       String           @id @default(cuid())
+  periodId String
+  period   AccountingPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+
+  // Item Details
+  name        String
+  description String? @db.Text
+  category    String // reconciliation, review, adjustment, approval, documentation, system
+  orderIndex  Int     @default(0)
+
+  // Status
+  status      String    @default("pending") // pending, in_progress, completed, skipped, blocked
+  completedAt DateTime?
+  completedBy String?
+
+  // Requirements
+  isRequired Boolean  @default(true)
+  isCritical Boolean  @default(false)
+  dependsOn  String[] // other checklist item IDs
+
+  // Automation
+  isAutomated     Boolean   @default(false)
+  automationRule  String?
+  lastAutoCheck   DateTime?
+  autoCheckResult String? // pass, fail, warning
+
+  // Evidence
+  attachments String[]
+  notes       String?  @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([periodId, status])
+  @@index([periodId, category])
+}
+
+model PeriodMissingItem {
+  id       String           @id @default(cuid())
+  periodId String
+  period   AccountingPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+
+  // Item Type
+  type     String // document, reconciliation, approval, transaction, entry
+  severity String @default("medium") // low, medium, high, critical
+
+  // Details
+  title             String
+  description       String  @db.Text
+  reference         String?
+  relatedEntityType String?
+  relatedEntityId   String?
+
+  // Assignment
+  assignedTo     String?
+  assignedToName String?
+  dueDate        DateTime?
+
+  // Resolution
+  status       String    @default("open") // open, in_progress, resolved, waived
+  resolvedAt   DateTime?
+  resolvedBy   String?
+  resolution   String?   @db.Text
+  waivedReason String?   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([periodId, status])
+  @@index([periodId, severity])
+}
+
+model PeriodAdjustment {
+  id               String           @id @default(cuid())
+  adjustmentNumber String
+  periodId         String
+  period           AccountingPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+
+  // Type
+  type   String @default("accrual") // accrual, deferral, reclassification, correction, reversal, provision
+  status String @default("draft") // draft, pending_approval, approved, posted, rejected
+
+  // Details
+  description String
+  reason      String @db.Text
+
+  // Amounts
+  debitAccountId    String?
+  debitAccountName  String?
+  creditAccountId   String?
+  creditAccountName String?
+  amount            Decimal @db.Decimal(15, 2)
+  currency          String  @default("EUR")
+
+  // Effective Date
+  effectiveDate DateTime
+
+  // Reversal (for accruals)
+  isReversing          Boolean   @default(false)
+  reversalDate         DateTime?
+  reversalPeriodId     String?
+  originalAdjustmentId String?
+
+  // Approval
+  requestedBy     String?
+  requestedByName String?
+  approvedBy      String?
+  approvedByName  String?
+  approvedAt      DateTime?
+  rejectedBy      String?
+  rejectionReason String?   @db.Text
+
+  // Posting
+  postedAt       DateTime?
+  journalEntryId String?
+
+  // Documentation
+  supportingDocuments String[]
+  notes               String?  @db.Text
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, adjustmentNumber])
+  @@index([periodId, status])
+  @@index([periodId, type])
+  @@index([organizationId, status])
+}
+
+model PeriodAuditEntry {
+  id       String           @id @default(cuid())
+  periodId String
+  period   AccountingPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+
+  // Action
+  action      String // created, opened, checklist_updated, adjustment_posted, closing_started, closed, reopened, locked
+  description String
+
+  // User
+  userId   String
+  userName String?
+
+  // Details
+  previousStatus String?
+  newStatus      String?
+  metadata       Json?
+
+  // IP/Session
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([periodId, createdAt])
+  @@index([periodId, action])
 }

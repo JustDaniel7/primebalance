@@ -1,3 +1,7 @@
+// src/store/period-close-store.ts
+// Period Close Store - API-connected version
+// REPLACE: src/store/period-close-store.ts
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
@@ -8,160 +12,152 @@ import type {
     PeriodAuditEntry,
     PeriodCloseSummary,
     PeriodStatus,
-    PeriodType,
     ChecklistItemStatus,
-    AdjustmentType,
-    AdjustmentStatus,
 } from '@/types/period-close';
-import { DEFAULT_CHECKLIST_TEMPLATES } from '@/types/period-close';
 
 // =============================================================================
-// DEMO DATA
+// API MAPPERS
 // =============================================================================
 
-const generateDemoPeriods = (): AccountingPeriod[] => {
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
+function mapApiToPeriod(api: Record<string, unknown>): AccountingPeriod {
+    return {
+        id: api.id as string,
+        name: api.name as string,
+        code: api.code as string,
+        type: (api.type as AccountingPeriod['type']) || 'monthly',
+        startDate: (api.startDate as string)?.split('T')[0] || '',
+        endDate: (api.endDate as string)?.split('T')[0] || '',
+        fiscalYear: api.fiscalYear as number,
+        fiscalQuarter: api.fiscalQuarter as number | undefined,
+        fiscalMonth: api.fiscalMonth as number | undefined,
+        status: (api.status as PeriodStatus) || 'open',
+        closedAt: api.closedAt as string | undefined,
+        closedBy: api.closedBy as string | undefined,
+        reopenedAt: api.reopenedAt as string | undefined,
+        reopenedBy: api.reopenedBy as string | undefined,
+        reopenReason: api.reopenReason as string | undefined,
+        checklistTotal: (api.checklistTotal as number) || 0,
+        checklistCompleted: (api.checklistCompleted as number) || 0,
+        checklistProgress: Number(api.checklistProgress) || 0,
+        hasUnreconciledItems: (api.hasUnreconciledItems as boolean) || false,
+        hasPendingTransactions: (api.hasPendingTransactions as boolean) || false,
+        hasMissingDocuments: (api.hasMissingDocuments as boolean) || false,
+        hasUnapprovedAdjustments: (api.hasUnapprovedAdjustments as boolean) || false,
+        totalRevenue: api.totalRevenue ? Number(api.totalRevenue) : undefined,
+        totalExpenses: api.totalExpenses ? Number(api.totalExpenses) : undefined,
+        netIncome: api.netIncome ? Number(api.netIncome) : undefined,
+        totalAssets: api.totalAssets ? Number(api.totalAssets) : undefined,
+        totalLiabilities: api.totalLiabilities ? Number(api.totalLiabilities) : undefined,
+        notes: api.notes as string | undefined,
+        createdAt: api.createdAt as string,
+        updatedAt: api.updatedAt as string,
+    };
+}
 
-    return [
-        {
-            id: 'period-current',
-            name: `${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`,
-            code: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`,
-            type: 'monthly',
-            startDate: new Date(currentYear, currentMonth, 1).toISOString().split('T')[0],
-            endDate: new Date(currentYear, currentMonth + 1, 0).toISOString().split('T')[0],
-            fiscalYear: currentYear,
-            fiscalMonth: currentMonth + 1,
-            status: 'open',
-            checklistTotal: 13,
-            checklistCompleted: 5,
-            checklistProgress: 38,
-            hasUnreconciledItems: true,
-            hasPendingTransactions: true,
-            hasMissingDocuments: true,
-            hasUnapprovedAdjustments: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        },
-        {
-            id: 'period-prev',
-            name: `${new Date(currentYear, currentMonth - 1).toLocaleString('default', { month: 'long' })} ${currentYear}`,
-            code: `${currentYear}-${String(currentMonth).padStart(2, '0')}`,
-            type: 'monthly',
-            startDate: new Date(currentYear, currentMonth - 1, 1).toISOString().split('T')[0],
-            endDate: new Date(currentYear, currentMonth, 0).toISOString().split('T')[0],
-            fiscalYear: currentYear,
-            fiscalMonth: currentMonth,
-            status: 'closed',
-            closedAt: new Date(currentYear, currentMonth, 5).toISOString(),
-            closedBy: 'user-1',
-            checklistTotal: 13,
-            checklistCompleted: 13,
-            checklistProgress: 100,
-            hasUnreconciledItems: false,
-            hasPendingTransactions: false,
-            hasMissingDocuments: false,
-            hasUnapprovedAdjustments: false,
-            totalRevenue: 125000,
-            totalExpenses: 98000,
-            netIncome: 27000,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-        },
-    ];
-};
+function mapApiToChecklistItem(api: Record<string, unknown>): CloseChecklistItem {
+    return {
+        id: api.id as string,
+        periodId: api.periodId as string,
+        name: api.name as string,
+        description: api.description as string | undefined,
+        category: api.category as CloseChecklistItem['category'],
+        order: (api.orderIndex as number) || 0,
+        status: (api.status as ChecklistItemStatus) || 'pending',
+        completedAt: api.completedAt as string | undefined,
+        completedBy: api.completedBy as string | undefined,
+        isRequired: (api.isRequired as boolean) ?? true,
+        isCritical: (api.isCritical as boolean) || false,
+        dependsOn: (api.dependsOn as string[]) || [],
+        isAutomated: (api.isAutomated as boolean) || false,
+        automationRule: api.automationRule as string | undefined,
+        lastAutoCheck: api.lastAutoCheck as string | undefined,
+        autoCheckResult: api.autoCheckResult as CloseChecklistItem['autoCheckResult'],
+        attachments: (api.attachments as string[]) || [],
+        notes: api.notes as string | undefined,
+        createdAt: api.createdAt as string,
+        updatedAt: api.updatedAt as string,
+    };
+}
 
-const generateDemoChecklist = (): CloseChecklistItem[] => {
-    const template = DEFAULT_CHECKLIST_TEMPLATES[0];
-    return template.items.map((item, idx) => ({
-        ...item,
-        id: `checklist-${idx + 1}`,
-        periodId: 'period-current',
-        status: idx < 5 ? 'completed' : idx === 5 ? 'in_progress' : 'pending',
-        completedAt: idx < 5 ? new Date().toISOString() : undefined,
-        completedBy: idx < 5 ? 'user-1' : undefined,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    })) as CloseChecklistItem[];
-};
+function mapApiToMissingItem(api: Record<string, unknown>): MissingItem {
+    return {
+        id: api.id as string,
+        periodId: api.periodId as string,
+        type: api.type as MissingItem['type'],
+        severity: (api.severity as MissingItem['severity']) || 'medium',
+        title: api.title as string,
+        description: api.description as string,
+        reference: api.reference as string | undefined,
+        relatedEntityType: api.relatedEntityType as string | undefined,
+        relatedEntityId: api.relatedEntityId as string | undefined,
+        assignedTo: api.assignedTo as string | undefined,
+        assignedToName: api.assignedToName as string | undefined,
+        dueDate: (api.dueDate as string)?.split('T')[0],
+        status: (api.status as MissingItem['status']) || 'open',
+        resolvedAt: api.resolvedAt as string | undefined,
+        resolvedBy: api.resolvedBy as string | undefined,
+        resolution: api.resolution as string | undefined,
+        waivedReason: api.waivedReason as string | undefined,
+        createdAt: api.createdAt as string,
+        updatedAt: api.updatedAt as string,
+    };
+}
 
-const generateDemoMissingItems = (): MissingItem[] => [
-    {
-        id: 'missing-1',
-        periodId: 'period-current',
-        type: 'document',
-        severity: 'high',
-        title: 'Missing vendor invoice #INV-4521',
-        description: 'Invoice from ABC Supplies for office equipment purchase',
-        reference: 'PO-2024-0892',
-        assignedTo: 'user-2',
-        assignedToName: 'Jane Doe',
-        dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        status: 'open',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'missing-2',
-        periodId: 'period-current',
-        type: 'reconciliation',
-        severity: 'critical',
-        title: 'Unreconciled bank transactions',
-        description: '12 transactions totaling $8,450 need to be matched',
-        status: 'in_progress',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-];
+function mapApiToAdjustment(api: Record<string, unknown>): PeriodAdjustment {
+    return {
+        id: api.id as string,
+        adjustmentNumber: api.adjustmentNumber as string,
+        periodId: api.periodId as string,
+        type: api.type as PeriodAdjustment['type'],
+        status: api.status as PeriodAdjustment['status'],
+        description: api.description as string,
+        reason: api.reason as string,
+        debitAccountId: api.debitAccountId as string | undefined,
+        debitAccountName: api.debitAccountName as string | undefined,
+        creditAccountId: api.creditAccountId as string | undefined,
+        creditAccountName: api.creditAccountName as string | undefined,
+        amount: Number(api.amount) || 0,
+        currency: (api.currency as string) || 'EUR',
+        effectiveDate: (api.effectiveDate as string)?.split('T')[0] || '',
+        isReversing: (api.isReversing as boolean) || false,
+        reversalDate: (api.reversalDate as string)?.split('T')[0],
+        reversalPeriodId: api.reversalPeriodId as string | undefined,
+        originalAdjustmentId: api.originalAdjustmentId as string | undefined,
+        requestedBy: api.requestedBy as string | undefined,
+        requestedByName: api.requestedByName as string | undefined,
+        approvedBy: api.approvedBy as string | undefined,
+        approvedByName: api.approvedByName as string | undefined,
+        approvedAt: api.approvedAt as string | undefined,
+        rejectedBy: api.rejectedBy as string | undefined,
+        rejectionReason: api.rejectionReason as string | undefined,
+        postedAt: api.postedAt as string | undefined,
+        journalEntryId: api.journalEntryId as string | undefined,
+        supportingDocuments: (api.supportingDocuments as string[]) || [],
+        notes: api.notes as string | undefined,
+        createdAt: api.createdAt as string,
+        updatedAt: api.updatedAt as string,
+    };
+}
 
-const generateDemoAdjustments = (): PeriodAdjustment[] => [
-    {
-        id: 'adj-1',
-        adjustmentNumber: 'ADJ-2024-001',
-        periodId: 'period-current',
-        type: 'accrual',
-        status: 'pending_approval',
-        description: 'Accrue December utilities expense',
-        reason: 'Utility bill not yet received',
-        debitAccountName: '6200 - Utilities Expense',
-        creditAccountName: '2100 - Accrued Expenses',
-        amount: 2500,
-        currency: 'USD',
-        effectiveDate: new Date().toISOString().split('T')[0],
-        isReversing: true,
-        reversalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        requestedBy: 'user-1',
-        requestedByName: 'John Smith',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-];
-
-const generateDemoAuditTrail = (): PeriodAuditEntry[] => [
-    {
-        id: 'audit-1',
-        periodId: 'period-current',
-        action: 'created',
-        description: 'Period created',
-        userId: 'user-1',
-        userName: 'John Smith',
-        createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-        id: 'audit-2',
-        periodId: 'period-current',
-        action: 'checklist_updated',
-        description: 'Completed: Bank Reconciliation',
-        userId: 'user-1',
-        userName: 'John Smith',
-        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-];
+function mapApiToAuditEntry(api: Record<string, unknown>): PeriodAuditEntry {
+    return {
+        id: api.id as string,
+        periodId: api.periodId as string,
+        action: api.action as PeriodAuditEntry['action'],
+        description: api.description as string,
+        userId: api.userId as string,
+        userName: api.userName as string | undefined,
+        previousStatus: api.previousStatus as PeriodStatus | undefined,
+        newStatus: api.newStatus as PeriodStatus | undefined,
+        metadata: api.metadata as Record<string, unknown> | undefined,
+        ipAddress: api.ipAddress as string | undefined,
+        userAgent: api.userAgent as string | undefined,
+        createdAt: api.createdAt as string,
+    };
+}
 
 // =============================================================================
-// STORE
+// STORE INTERFACE
 // =============================================================================
 
 interface PeriodCloseState {
@@ -170,39 +166,42 @@ interface PeriodCloseState {
     missingItems: MissingItem[];
     adjustments: PeriodAdjustment[];
     auditTrail: PeriodAuditEntry[];
-
     selectedPeriodId: string | null;
+    isLoading: boolean;
+    error: string | null;
+    isInitialized: boolean;
+
+    // API
+    fetchPeriods: () => Promise<void>;
+    fetchPeriod: (id: string) => Promise<void>;
 
     // Periods
-    createPeriod: (period: Omit<AccountingPeriod, 'id' | 'createdAt' | 'updatedAt' | 'checklistProgress'>) => AccountingPeriod;
-    updatePeriod: (id: string, updates: Partial<AccountingPeriod>) => void;
-    startClosing: (id: string) => void;
-    closePeriod: (id: string, closedBy: string) => boolean;
-    reopenPeriod: (id: string, reopenedBy: string, reason: string) => void;
-    lockPeriod: (id: string) => void;
+    createPeriod: (period: Omit<AccountingPeriod, 'id' | 'createdAt' | 'updatedAt' | 'checklistProgress'>) => Promise<AccountingPeriod | null>;
+    updatePeriod: (id: string, updates: Partial<AccountingPeriod>) => Promise<void>;
+    startClosing: (id: string) => Promise<void>;
+    closePeriod: (id: string, closedBy: string) => Promise<boolean>;
+    reopenPeriod: (id: string, reopenedBy: string, reason: string) => Promise<void>;
+    lockPeriod: (id: string) => Promise<void>;
 
     // Checklist
-    updateChecklistItem: (id: string, updates: Partial<CloseChecklistItem>) => void;
-    completeChecklistItem: (id: string, completedBy: string) => void;
-    skipChecklistItem: (id: string, reason: string) => void;
-    resetChecklistItem: (id: string) => void;
-    initializeChecklist: (periodId: string, templateId?: string) => void;
+    updateChecklistItem: (id: string, updates: Partial<CloseChecklistItem>) => Promise<void>;
+    completeChecklistItem: (id: string, completedBy: string) => Promise<void>;
+    skipChecklistItem: (id: string, reason: string) => Promise<void>;
+    resetChecklistItem: (id: string) => Promise<void>;
+    initializeChecklist: (periodId: string, templateId?: string) => Promise<void>;
 
     // Missing Items
-    createMissingItem: (item: Omit<MissingItem, 'id' | 'createdAt' | 'updatedAt'>) => MissingItem;
-    updateMissingItem: (id: string, updates: Partial<MissingItem>) => void;
-    resolveMissingItem: (id: string, resolvedBy: string, resolution: string) => void;
-    waiveMissingItem: (id: string, reason: string) => void;
+    createMissingItem: (item: Omit<MissingItem, 'id' | 'createdAt' | 'updatedAt'>) => Promise<MissingItem | null>;
+    updateMissingItem: (id: string, updates: Partial<MissingItem>) => Promise<void>;
+    resolveMissingItem: (id: string, resolvedBy: string, resolution: string) => Promise<void>;
+    waiveMissingItem: (id: string, reason: string) => Promise<void>;
 
     // Adjustments
-    createAdjustment: (adjustment: Omit<PeriodAdjustment, 'id' | 'adjustmentNumber' | 'createdAt' | 'updatedAt'>) => PeriodAdjustment;
-    updateAdjustment: (id: string, updates: Partial<PeriodAdjustment>) => void;
-    approveAdjustment: (id: string, approvedBy: string) => void;
-    rejectAdjustment: (id: string, rejectedBy: string, reason: string) => void;
-    postAdjustment: (id: string) => void;
-
-    // Audit
-    addAuditEntry: (entry: Omit<PeriodAuditEntry, 'id' | 'createdAt'>) => void;
+    createAdjustment: (adjustment: Omit<PeriodAdjustment, 'id' | 'adjustmentNumber' | 'createdAt' | 'updatedAt'>) => Promise<PeriodAdjustment | null>;
+    updateAdjustment: (id: string, updates: Partial<PeriodAdjustment>) => Promise<void>;
+    approveAdjustment: (id: string, approvedBy: string) => Promise<void>;
+    rejectAdjustment: (id: string, rejectedBy: string, reason: string) => Promise<void>;
+    postAdjustment: (id: string) => Promise<void>;
 
     // Analytics
     getSummary: () => PeriodCloseSummary;
@@ -213,254 +212,498 @@ interface PeriodCloseState {
     selectPeriod: (id: string | null) => void;
 }
 
+// =============================================================================
+// STORE IMPLEMENTATION
+// =============================================================================
+
 export const usePeriodCloseStore = create<PeriodCloseState>()(
     persist(
         (set, get) => ({
-            periods: generateDemoPeriods(),
-            checklistItems: generateDemoChecklist(),
-            missingItems: generateDemoMissingItems(),
-            adjustments: generateDemoAdjustments(),
-            auditTrail: generateDemoAuditTrail(),
-            selectedPeriodId: 'period-current',
+            periods: [],
+            checklistItems: [],
+            missingItems: [],
+            adjustments: [],
+            auditTrail: [],
+            selectedPeriodId: null,
+            isLoading: false,
+            error: null,
+            isInitialized: false,
 
-            // =========================================================================
+            // =================================================================
+            // API
+            // =================================================================
+
+            fetchPeriods: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/period-close');
+                    if (!response.ok) throw new Error('Failed to fetch periods');
+                    const data = await response.json();
+
+                    const periods = (data.periods || []).map(mapApiToPeriod);
+                    const checklistItems: CloseChecklistItem[] = [];
+                    const missingItems: MissingItem[] = [];
+                    const adjustments: PeriodAdjustment[] = [];
+                    const auditTrail: PeriodAuditEntry[] = [];
+
+                    for (const p of data.periods || []) {
+                        if (p.checklistItems) {
+                            checklistItems.push(...p.checklistItems.map(mapApiToChecklistItem));
+                        }
+                        if (p.missingItems) {
+                            missingItems.push(...p.missingItems.map(mapApiToMissingItem));
+                        }
+                        if (p.adjustments) {
+                            adjustments.push(...p.adjustments.map(mapApiToAdjustment));
+                        }
+                        if (p.auditEntries) {
+                            auditTrail.push(...p.auditEntries.map(mapApiToAuditEntry));
+                        }
+                    }
+
+                    set({
+                        periods,
+                        checklistItems,
+                        missingItems,
+                        adjustments,
+                        auditTrail,
+                        isLoading: false,
+                        isInitialized: true,
+                        selectedPeriodId: get().selectedPeriodId || (periods.find((p: AccountingPeriod) => p.status === 'open')?.id || null),
+                    });
+                } catch (error) {
+                    console.error('Failed to fetch periods:', error);
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+                }
+            },
+
+            fetchPeriod: async (id: string) => {
+                try {
+                    const response = await fetch(`/api/period-close/${id}`);
+                    if (!response.ok) return;
+                    const data = await response.json();
+
+                    const period = mapApiToPeriod(data);
+                    const checklistItems = (data.checklistItems || []).map(mapApiToChecklistItem);
+                    const missingItems = (data.missingItems || []).map(mapApiToMissingItem);
+                    const adjustments = (data.adjustments || []).map(mapApiToAdjustment);
+                    const auditEntries = (data.auditEntries || []).map(mapApiToAuditEntry);
+
+                    set((state) => ({
+                        periods: state.periods.map((p) => (p.id === id ? period : p)),
+                        checklistItems: [
+                            ...state.checklistItems.filter((i) => i.periodId !== id),
+                            ...checklistItems,
+                        ],
+                        missingItems: [
+                            ...state.missingItems.filter((i) => i.periodId !== id),
+                            ...missingItems,
+                        ],
+                        adjustments: [
+                            ...state.adjustments.filter((a) => a.periodId !== id),
+                            ...adjustments,
+                        ],
+                        auditTrail: [
+                            ...state.auditTrail.filter((e) => e.periodId !== id),
+                            ...auditEntries,
+                        ],
+                    }));
+                } catch (error) {
+                    console.error('Failed to fetch period:', error);
+                }
+            },
+
+            // =================================================================
             // PERIODS
-            // =========================================================================
+            // =================================================================
 
-            createPeriod: (data) => {
-                const now = new Date().toISOString();
-                const period: AccountingPeriod = {
-                    ...data,
-                    id: `period-${Date.now()}`,
-                    checklistProgress: data.checklistTotal > 0 ? (data.checklistCompleted / data.checklistTotal) * 100 : 0,
-                    createdAt: now,
-                    updatedAt: now,
-                };
+            createPeriod: async (data) => {
+                try {
+                    const response = await fetch('/api/period-close', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!response.ok) throw new Error('Failed to create period');
+                    const created = await response.json();
+                    const period = mapApiToPeriod(created);
 
-                set((state) => ({ periods: [...state.periods, period] }));
-                get().addAuditEntry({ periodId: period.id, action: 'created', description: 'Period created', userId: 'current-user' });
-                return period;
+                    set((state) => ({ periods: [...state.periods, period] }));
+                    return period;
+                } catch (error) {
+                    console.error('Failed to create period:', error);
+                    return null;
+                }
             },
 
-            updatePeriod: (id, updates) => {
+            updatePeriod: async (id, updates) => {
+                // Optimistic update
                 set((state) => ({
-                    periods: state.periods.map((p) => p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString() } : p),
+                    periods: state.periods.map((p) =>
+                        p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString() } : p
+                    ),
                 }));
+
+                fetch(`/api/period-close/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
             },
 
-            startClosing: (id) => {
+            startClosing: async (id) => {
                 const period = get().periods.find((p) => p.id === id);
                 if (!period || period.status !== 'open') return;
 
                 set((state) => ({
-                    periods: state.periods.map((p) => p.id === id ? { ...p, status: 'closing' as PeriodStatus, updatedAt: new Date().toISOString() } : p),
+                    periods: state.periods.map((p) =>
+                        p.id === id ? { ...p, status: 'closing' as PeriodStatus } : p
+                    ),
                 }));
-                get().addAuditEntry({ periodId: id, action: 'closing_started', description: 'Period close process initiated', userId: 'current-user', previousStatus: 'open', newStatus: 'closing' });
+
+                fetch(`/api/period-close/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'closing' }),
+                }).catch(console.error);
             },
 
-            closePeriod: (id, closedBy) => {
+            closePeriod: async (id, closedBy) => {
                 const blockers = get().getBlockers(id);
-                if (blockers.checklist.length > 0 || blockers.missing.length > 0 || blockers.adjustments.length > 0) {
+                if (blockers.checklist.length > 0 || blockers.missing.length > 0) {
                     return false;
                 }
 
                 const now = new Date().toISOString();
                 set((state) => ({
-                    periods: state.periods.map((p) => p.id === id ? { ...p, status: 'closed' as PeriodStatus, closedAt: now, closedBy, updatedAt: now } : p),
+                    periods: state.periods.map((p) =>
+                        p.id === id ? { ...p, status: 'closed' as PeriodStatus, closedAt: now, closedBy } : p
+                    ),
                 }));
-                get().addAuditEntry({ periodId: id, action: 'closed', description: 'Period closed', userId: closedBy, previousStatus: 'closing', newStatus: 'closed' });
+
+                fetch(`/api/period-close/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'closed' }),
+                }).catch(console.error);
+
                 return true;
             },
 
-            reopenPeriod: (id, reopenedBy, reason) => {
-                const period = get().periods.find((p) => p.id === id);
-                if (!period || (period.status !== 'closed' && period.status !== 'locked')) return;
-
+            reopenPeriod: async (id, reopenedBy, reason) => {
                 const now = new Date().toISOString();
                 set((state) => ({
-                    periods: state.periods.map((p) => p.id === id ? { ...p, status: 'reopened' as PeriodStatus, reopenedAt: now, reopenedBy, reopenReason: reason, updatedAt: now } : p),
+                    periods: state.periods.map((p) =>
+                        p.id === id
+                            ? { ...p, status: 'reopened' as PeriodStatus, reopenedAt: now, reopenedBy, reopenReason: reason }
+                            : p
+                    ),
                 }));
-                get().addAuditEntry({ periodId: id, action: 'reopened', description: `Period reopened: ${reason}`, userId: reopenedBy, previousStatus: period.status, newStatus: 'reopened', metadata: { reason } });
+
+                fetch(`/api/period-close/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'reopened', reopenReason: reason }),
+                }).catch(console.error);
             },
 
-            lockPeriod: (id) => {
-                const period = get().periods.find((p) => p.id === id);
-                if (!period || period.status !== 'closed') return;
-
+            lockPeriod: async (id) => {
                 set((state) => ({
-                    periods: state.periods.map((p) => p.id === id ? { ...p, status: 'locked' as PeriodStatus, updatedAt: new Date().toISOString() } : p),
+                    periods: state.periods.map((p) =>
+                        p.id === id ? { ...p, status: 'locked' as PeriodStatus } : p
+                    ),
                 }));
-                get().addAuditEntry({ periodId: id, action: 'locked', description: 'Period locked', userId: 'current-user', previousStatus: 'closed', newStatus: 'locked' });
+
+                fetch(`/api/period-close/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'locked' }),
+                }).catch(console.error);
             },
 
-            // =========================================================================
+            // =================================================================
             // CHECKLIST
-            // =========================================================================
+            // =================================================================
 
-            updateChecklistItem: (id, updates) => {
-                set((state) => ({
-                    checklistItems: state.checklistItems.map((i) => i.id === id ? { ...i, ...updates, updatedAt: new Date().toISOString() } : i),
-                }));
-            },
-
-            completeChecklistItem: (id, completedBy) => {
+            updateChecklistItem: async (id, updates) => {
                 const item = get().checklistItems.find((i) => i.id === id);
                 if (!item) return;
 
                 set((state) => ({
-                    checklistItems: state.checklistItems.map((i) => i.id === id ? { ...i, status: 'completed' as ChecklistItemStatus, completedAt: new Date().toISOString(), completedBy, updatedAt: new Date().toISOString() } : i),
+                    checklistItems: state.checklistItems.map((i) =>
+                        i.id === id ? { ...i, ...updates, updatedAt: new Date().toISOString() } : i
+                    ),
                 }));
 
-                // Update period progress
-                const periodItems = get().checklistItems.filter((i) => i.periodId === item.periodId);
-                const completed = periodItems.filter((i) => i.status === 'completed' || i.status === 'skipped').length;
-                get().updatePeriod(item.periodId, { checklistCompleted: completed, checklistProgress: (completed / periodItems.length) * 100 });
-                get().addAuditEntry({ periodId: item.periodId, action: 'checklist_updated', description: `Completed: ${item.name}`, userId: completedBy });
+                fetch(`/api/period-close/${item.periodId}/checklist/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                })
+                    .then(() => get().fetchPeriod(item.periodId))
+                    .catch(console.error);
             },
 
-            skipChecklistItem: (id, reason) => {
+            completeChecklistItem: async (id, completedBy) => {
                 const item = get().checklistItems.find((i) => i.id === id);
-                if (!item || item.isCritical) return;
+                if (!item) return;
 
-                set((state) => ({
-                    checklistItems: state.checklistItems.map((i) => i.id === id ? { ...i, status: 'skipped' as ChecklistItemStatus, notes: reason, updatedAt: new Date().toISOString() } : i),
-                }));
-            },
-
-            resetChecklistItem: (id) => {
-                set((state) => ({
-                    checklistItems: state.checklistItems.map((i) => i.id === id ? { ...i, status: 'pending' as ChecklistItemStatus, completedAt: undefined, completedBy: undefined, updatedAt: new Date().toISOString() } : i),
-                }));
-            },
-
-            initializeChecklist: (periodId, templateId = 'monthly-standard') => {
-                const template = DEFAULT_CHECKLIST_TEMPLATES.find((t) => t.id === templateId) || DEFAULT_CHECKLIST_TEMPLATES[0];
                 const now = new Date().toISOString();
-
-                const items: CloseChecklistItem[] = template.items.map((item, idx) => ({
-                    ...item,
-                    id: `checklist-${periodId}-${idx + 1}`,
-                    periodId,
-                    status: 'pending' as ChecklistItemStatus,
-                    createdAt: now,
-                    updatedAt: now,
-                }));
-
                 set((state) => ({
-                    checklistItems: [...state.checklistItems.filter((i) => i.periodId !== periodId), ...items],
+                    checklistItems: state.checklistItems.map((i) =>
+                        i.id === id ? { ...i, status: 'completed' as ChecklistItemStatus, completedAt: now, completedBy } : i
+                    ),
                 }));
-                get().updatePeriod(periodId, { checklistTotal: items.length, checklistCompleted: 0, checklistProgress: 0 });
+
+                fetch(`/api/period-close/${item.periodId}/checklist/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'completed' }),
+                })
+                    .then(() => get().fetchPeriod(item.periodId))
+                    .catch(console.error);
             },
 
-            // =========================================================================
+            skipChecklistItem: async (id, reason) => {
+                const item = get().checklistItems.find((i) => i.id === id);
+                if (!item) return;
+
+                set((state) => ({
+                    checklistItems: state.checklistItems.map((i) =>
+                        i.id === id ? { ...i, status: 'skipped' as ChecklistItemStatus, notes: reason } : i
+                    ),
+                }));
+
+                fetch(`/api/period-close/${item.periodId}/checklist/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'skipped', notes: reason }),
+                })
+                    .then(() => get().fetchPeriod(item.periodId))
+                    .catch(console.error);
+            },
+
+            resetChecklistItem: async (id) => {
+                const item = get().checklistItems.find((i) => i.id === id);
+                if (!item) return;
+
+                set((state) => ({
+                    checklistItems: state.checklistItems.map((i) =>
+                        i.id === id ? { ...i, status: 'pending' as ChecklistItemStatus, completedAt: undefined, completedBy: undefined } : i
+                    ),
+                }));
+
+                fetch(`/api/period-close/${item.periodId}/checklist/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'pending' }),
+                })
+                    .then(() => get().fetchPeriod(item.periodId))
+                    .catch(console.error);
+            },
+
+            initializeChecklist: async (periodId, templateId = 'monthly-standard') => {
+                try {
+                    await fetch(`/api/period-close/${periodId}/checklist`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ template: templateId }),
+                    });
+                    await get().fetchPeriod(periodId);
+                } catch (error) {
+                    console.error('Failed to initialize checklist:', error);
+                }
+            },
+
+            // =================================================================
             // MISSING ITEMS
-            // =========================================================================
+            // =================================================================
 
-            createMissingItem: (data) => {
+            createMissingItem: async (data) => {
+                try {
+                    const response = await fetch(`/api/period-close/${data.periodId}/missing`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!response.ok) throw new Error('Failed to create missing item');
+                    const created = await response.json();
+                    const item = mapApiToMissingItem(created);
+
+                    set((state) => ({ missingItems: [...state.missingItems, item] }));
+                    return item;
+                } catch (error) {
+                    console.error('Failed to create missing item:', error);
+                    return null;
+                }
+            },
+
+            updateMissingItem: async (id, updates) => {
+                const item = get().missingItems.find((i) => i.id === id);
+                if (!item) return;
+
+                set((state) => ({
+                    missingItems: state.missingItems.map((i) =>
+                        i.id === id ? { ...i, ...updates, updatedAt: new Date().toISOString() } : i
+                    ),
+                }));
+
+                fetch(`/api/period-close/${item.periodId}/missing/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
+            },
+
+            resolveMissingItem: async (id, resolvedBy, resolution) => {
+                const item = get().missingItems.find((i) => i.id === id);
+                if (!item) return;
+
                 const now = new Date().toISOString();
-                const item: MissingItem = { ...data, id: `missing-${Date.now()}`, createdAt: now, updatedAt: now };
-                set((state) => ({ missingItems: [...state.missingItems, item] }));
-                get().updatePeriod(data.periodId, { hasMissingDocuments: true });
-                return item;
-            },
-
-            updateMissingItem: (id, updates) => {
                 set((state) => ({
-                    missingItems: state.missingItems.map((i) => i.id === id ? { ...i, ...updates, updatedAt: new Date().toISOString() } : i),
+                    missingItems: state.missingItems.map((i) =>
+                        i.id === id ? { ...i, status: 'resolved', resolvedAt: now, resolvedBy, resolution } : i
+                    ),
                 }));
+
+                fetch(`/api/period-close/${item.periodId}/missing/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'resolved', resolution }),
+                }).catch(console.error);
             },
 
-            resolveMissingItem: (id, resolvedBy, resolution) => {
+            waiveMissingItem: async (id, reason) => {
+                const item = get().missingItems.find((i) => i.id === id);
+                if (!item) return;
+
                 set((state) => ({
-                    missingItems: state.missingItems.map((i) => i.id === id ? { ...i, status: 'resolved', resolvedAt: new Date().toISOString(), resolvedBy, resolution, updatedAt: new Date().toISOString() } : i),
+                    missingItems: state.missingItems.map((i) =>
+                        i.id === id ? { ...i, status: 'waived', waivedReason: reason } : i
+                    ),
                 }));
+
+                fetch(`/api/period-close/${item.periodId}/missing/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'waived', waivedReason: reason }),
+                }).catch(console.error);
             },
 
-            waiveMissingItem: (id, reason) => {
-                set((state) => ({
-                    missingItems: state.missingItems.map((i) => i.id === id ? { ...i, status: 'waived', waivedReason: reason, updatedAt: new Date().toISOString() } : i),
-                }));
-            },
-
-            // =========================================================================
+            // =================================================================
             // ADJUSTMENTS
-            // =========================================================================
+            // =================================================================
 
-            createAdjustment: (data) => {
+            createAdjustment: async (data) => {
+                try {
+                    const response = await fetch('/api/period-close/adjustments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!response.ok) throw new Error('Failed to create adjustment');
+                    const created = await response.json();
+                    const adjustment = mapApiToAdjustment(created);
+
+                    set((state) => ({ adjustments: [...state.adjustments, adjustment] }));
+                    return adjustment;
+                } catch (error) {
+                    console.error('Failed to create adjustment:', error);
+                    return null;
+                }
+            },
+
+            updateAdjustment: async (id, updates) => {
+                set((state) => ({
+                    adjustments: state.adjustments.map((a) =>
+                        a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a
+                    ),
+                }));
+
+                fetch(`/api/period-close/adjustments/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                }).catch(console.error);
+            },
+
+            approveAdjustment: async (id, approvedBy) => {
                 const now = new Date().toISOString();
-                const count = get().adjustments.length + 1;
-                const adjustment: PeriodAdjustment = {
-                    ...data,
-                    id: `adj-${Date.now()}`,
-                    adjustmentNumber: `ADJ-${new Date().getFullYear()}-${String(count).padStart(3, '0')}`,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-                set((state) => ({ adjustments: [...state.adjustments, adjustment] }));
-                get().updatePeriod(data.periodId, { hasUnapprovedAdjustments: true });
-                return adjustment;
-            },
-
-            updateAdjustment: (id, updates) => {
                 set((state) => ({
-                    adjustments: state.adjustments.map((a) => a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a),
+                    adjustments: state.adjustments.map((a) =>
+                        a.id === id ? { ...a, status: 'approved', approvedBy, approvedAt: now } : a
+                    ),
                 }));
+
+                fetch(`/api/period-close/adjustments/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'approved' }),
+                }).catch(console.error);
             },
 
-            approveAdjustment: (id, approvedBy) => {
+            rejectAdjustment: async (id, rejectedBy, reason) => {
                 set((state) => ({
-                    adjustments: state.adjustments.map((a) => a.id === id ? { ...a, status: 'approved' as AdjustmentStatus, approvedBy, approvedByName: 'Approver', approvedAt: new Date().toISOString(), updatedAt: new Date().toISOString() } : a),
+                    adjustments: state.adjustments.map((a) =>
+                        a.id === id ? { ...a, status: 'rejected', rejectedBy, rejectionReason: reason } : a
+                    ),
                 }));
+
+                fetch(`/api/period-close/adjustments/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'rejected', rejectionReason: reason }),
+                }).catch(console.error);
             },
 
-            rejectAdjustment: (id, rejectedBy, reason) => {
+            postAdjustment: async (id) => {
+                const now = new Date().toISOString();
                 set((state) => ({
-                    adjustments: state.adjustments.map((a) => a.id === id ? { ...a, status: 'rejected' as AdjustmentStatus, rejectedBy, rejectionReason: reason, updatedAt: new Date().toISOString() } : a),
+                    adjustments: state.adjustments.map((a) =>
+                        a.id === id ? { ...a, status: 'posted', postedAt: now, journalEntryId: `JE-${Date.now()}` } : a
+                    ),
                 }));
+
+                fetch(`/api/period-close/adjustments/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'posted' }),
+                }).catch(console.error);
             },
 
-            postAdjustment: (id) => {
-                const adj = get().adjustments.find((a) => a.id === id);
-                if (!adj || adj.status !== 'approved') return;
-
-                set((state) => ({
-                    adjustments: state.adjustments.map((a) => a.id === id ? { ...a, status: 'posted' as AdjustmentStatus, postedAt: new Date().toISOString(), journalEntryId: `JE-${Date.now()}`, updatedAt: new Date().toISOString() } : a),
-                }));
-                get().addAuditEntry({ periodId: adj.periodId, action: 'adjustment_posted', description: `Posted adjustment ${adj.adjustmentNumber}`, userId: 'current-user', metadata: { adjustmentId: id, amount: adj.amount } });
-            },
-
-            // =========================================================================
-            // AUDIT
-            // =========================================================================
-
-            addAuditEntry: (entry) => {
-                const auditEntry: PeriodAuditEntry = { ...entry, id: `audit-${Date.now()}`, createdAt: new Date().toISOString() };
-                set((state) => ({ auditTrail: [auditEntry, ...state.auditTrail] }));
-            },
-
-            // =========================================================================
+            // =================================================================
             // ANALYTICS
-            // =========================================================================
+            // =================================================================
 
             getSummary: () => {
                 const { periods, checklistItems, missingItems, adjustments } = get();
-                const currentPeriod = get().getCurrentPeriod();
+                const currentPeriod = periods.find((p) => p.status === 'open' || p.status === 'closing' || p.status === 'reopened') || null;
 
                 return {
                     currentPeriod,
-                    openPeriods: periods.filter((p) => p.status === 'open' || p.status === 'closing' || p.status === 'reopened').length,
+                    openPeriods: periods.filter((p) => p.status === 'open' || p.status === 'reopened').length,
                     closedPeriods: periods.filter((p) => p.status === 'closed').length,
                     lockedPeriods: periods.filter((p) => p.status === 'locked').length,
                     checklistProgress: currentPeriod?.checklistProgress || 0,
-                    pendingItems: currentPeriod ? checklistItems.filter((i) => i.periodId === currentPeriod.id && i.status === 'pending').length : 0,
-                    criticalBlockers: currentPeriod ? checklistItems.filter((i) => i.periodId === currentPeriod.id && i.isCritical && i.status !== 'completed').length : 0,
+                    pendingItems: currentPeriod
+                        ? checklistItems.filter((i) => i.periodId === currentPeriod.id && i.status === 'pending').length
+                        : 0,
+                    criticalBlockers: currentPeriod
+                        ? checklistItems.filter((i) => i.periodId === currentPeriod.id && i.isCritical && i.status !== 'completed').length
+                        : 0,
                     pendingAdjustments: adjustments.filter((a) => a.status === 'pending_approval').length,
-                    totalAdjustmentAmount: adjustments.filter((a) => a.status === 'pending_approval').reduce((sum, a) => sum + a.amount, 0),
+                    totalAdjustmentAmount: adjustments
+                        .filter((a) => a.status === 'pending_approval')
+                        .reduce((sum, a) => sum + a.amount, 0),
                     openMissingItems: missingItems.filter((i) => i.status === 'open' || i.status === 'in_progress').length,
-                    criticalMissingItems: missingItems.filter((i) => (i.status === 'open' || i.status === 'in_progress') && i.severity === 'critical').length,
+                    criticalMissingItems: missingItems.filter(
+                        (i) => (i.status === 'open' || i.status === 'in_progress') && i.severity === 'critical'
+                    ).length,
                     averageCloseTime: 5,
                     lastCloseDate: periods.find((p) => p.status === 'closed')?.closedAt,
-                    nextCloseDeadline: currentPeriod ? new Date(new Date(currentPeriod.endDate).getTime() + 5 * 24 * 60 * 60 * 1000).toISOString() : undefined,
+                    nextCloseDeadline: currentPeriod
+                        ? new Date(new Date(currentPeriod.endDate).getTime() + 5 * 24 * 60 * 60 * 1000).toISOString()
+                        : undefined,
                 };
             },
 
@@ -471,9 +714,15 @@ export const usePeriodCloseStore = create<PeriodCloseState>()(
             getBlockers: (periodId) => {
                 const { checklistItems, missingItems, adjustments } = get();
                 return {
-                    checklist: checklistItems.filter((i) => i.periodId === periodId && i.isCritical && i.status !== 'completed' && i.status !== 'skipped'),
-                    missing: missingItems.filter((i) => i.periodId === periodId && i.severity === 'critical' && i.status !== 'resolved' && i.status !== 'waived'),
-                    adjustments: adjustments.filter((a) => a.periodId === periodId && (a.status === 'pending_approval' || a.status === 'approved')),
+                    checklist: checklistItems.filter(
+                        (i) => i.periodId === periodId && i.isCritical && i.status !== 'completed' && i.status !== 'skipped'
+                    ),
+                    missing: missingItems.filter(
+                        (i) => i.periodId === periodId && i.severity === 'critical' && i.status !== 'resolved' && i.status !== 'waived'
+                    ),
+                    adjustments: adjustments.filter(
+                        (a) => a.periodId === periodId && (a.status === 'pending_approval' || a.status === 'approved')
+                    ),
                 };
             },
 
@@ -482,11 +731,7 @@ export const usePeriodCloseStore = create<PeriodCloseState>()(
         {
             name: 'primebalance-period-close',
             partialize: (state) => ({
-                periods: state.periods,
-                checklistItems: state.checklistItems,
-                missingItems: state.missingItems,
-                adjustments: state.adjustments,
-                auditTrail: state.auditTrail,
+                selectedPeriodId: state.selectedPeriodId,
             }),
         }
     )

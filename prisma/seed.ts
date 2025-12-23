@@ -1947,6 +1947,353 @@ async function main() {
   console.log('  ✓ Created', chargebacks.length, 'internal chargebacks')
 
   // =============================================================================
+  // PERIOD CLOSE MODULE - ADD TO: prisma/seed.ts (before SUMMARY section)
+  // =============================================================================
+  // Also add to CLEANUP section at top:
+  //   await prisma.periodAuditEntry.deleteMany({})
+  //   await prisma.periodAdjustment.deleteMany({})
+  //   await prisma.periodMissingItem.deleteMany({})
+  //   await prisma.closeChecklistItem.deleteMany({})
+  //   await prisma.accountingPeriod.deleteMany({})
+
+  // =============================================================================
+  // ACCOUNTING PERIODS
+  // =============================================================================
+  console.log('\n📅 Creating Accounting Periods...')
+  
+  const now = new Date()
+  const currentMonth = now.getMonth()
+  const currentYear = now.getFullYear()
+
+  const periods = [
+    {
+      name: `${new Date(currentYear, currentMonth - 2, 1).toLocaleString('default', { month: 'long' })} ${currentYear}`,
+      code: `${currentYear}-${String(currentMonth - 1).padStart(2, '0')}`,
+      type: 'monthly',
+      startDate: new Date(currentYear, currentMonth - 2, 1),
+      endDate: new Date(currentYear, currentMonth - 1, 0),
+      fiscalYear: currentYear,
+      fiscalMonth: currentMonth - 1,
+      status: 'locked',
+      closedAt: new Date(currentYear, currentMonth - 1, 5),
+      closedBy: user.id,
+      checklistTotal: 13,
+      checklistCompleted: 13,
+      checklistProgress: 100,
+      hasUnreconciledItems: false,
+      hasPendingTransactions: false,
+      hasMissingDocuments: false,
+      hasUnapprovedAdjustments: false,
+      totalRevenue: 118000,
+      totalExpenses: 89000,
+      netIncome: 29000,
+    },
+    {
+      name: `${new Date(currentYear, currentMonth - 1, 1).toLocaleString('default', { month: 'long' })} ${currentYear}`,
+      code: `${currentYear}-${String(currentMonth).padStart(2, '0')}`,
+      type: 'monthly',
+      startDate: new Date(currentYear, currentMonth - 1, 1),
+      endDate: new Date(currentYear, currentMonth, 0),
+      fiscalYear: currentYear,
+      fiscalMonth: currentMonth,
+      status: 'closed',
+      closedAt: new Date(currentYear, currentMonth, 5),
+      closedBy: user.id,
+      checklistTotal: 13,
+      checklistCompleted: 13,
+      checklistProgress: 100,
+      hasUnreconciledItems: false,
+      hasPendingTransactions: false,
+      hasMissingDocuments: false,
+      hasUnapprovedAdjustments: false,
+      totalRevenue: 125000,
+      totalExpenses: 98000,
+      netIncome: 27000,
+    },
+    {
+      name: `${new Date(currentYear, currentMonth, 1).toLocaleString('default', { month: 'long' })} ${currentYear}`,
+      code: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`,
+      type: 'monthly',
+      startDate: new Date(currentYear, currentMonth, 1),
+      endDate: new Date(currentYear, currentMonth + 1, 0),
+      fiscalYear: currentYear,
+      fiscalMonth: currentMonth + 1,
+      status: 'open',
+      checklistTotal: 13,
+      checklistCompleted: 5,
+      checklistProgress: 38,
+      hasUnreconciledItems: true,
+      hasPendingTransactions: true,
+      hasMissingDocuments: true,
+      hasUnapprovedAdjustments: true,
+    },
+  ]
+
+  const periodMap: Record<string, string> = {}
+  for (const p of periods) {
+    const created = await prisma.accountingPeriod.create({
+      data: {
+        name: p.name,
+        code: p.code,
+        type: p.type,
+        startDate: p.startDate,
+        endDate: p.endDate,
+        fiscalYear: p.fiscalYear,
+        fiscalMonth: p.fiscalMonth,
+        status: p.status,
+        closedAt: p.closedAt,
+        closedBy: p.closedBy,
+        checklistTotal: p.checklistTotal,
+        checklistCompleted: p.checklistCompleted,
+        checklistProgress: p.checklistProgress,
+        hasUnreconciledItems: p.hasUnreconciledItems,
+        hasPendingTransactions: p.hasPendingTransactions,
+        hasMissingDocuments: p.hasMissingDocuments,
+        hasUnapprovedAdjustments: p.hasUnapprovedAdjustments,
+        totalRevenue: p.totalRevenue,
+        totalExpenses: p.totalExpenses,
+        netIncome: p.netIncome,
+        organizationId: org.id,
+      },
+    })
+    periodMap[p.code] = created.id
+  }
+  console.log('  ✓ Created', periods.length, 'accounting periods')
+
+  // =============================================================================
+  // CLOSE CHECKLIST ITEMS
+  // =============================================================================
+  console.log('\n✅ Creating Close Checklist Items...')
+  
+  const currentPeriodCode = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`
+  const currentPeriodId = periodMap[currentPeriodCode]
+
+  const checklistItems = [
+    { name: 'Bank Reconciliation', category: 'reconciliation', orderIndex: 1, isRequired: true, isCritical: true, isAutomated: false, status: 'completed' },
+    { name: 'Credit Card Reconciliation', category: 'reconciliation', orderIndex: 2, isRequired: true, isCritical: false, isAutomated: false, status: 'completed' },
+    { name: 'Accounts Receivable Aging Review', category: 'review', orderIndex: 3, isRequired: true, isCritical: false, isAutomated: true, status: 'completed' },
+    { name: 'Accounts Payable Review', category: 'review', orderIndex: 4, isRequired: true, isCritical: false, isAutomated: true, status: 'completed' },
+    { name: 'Inventory Count Verification', category: 'reconciliation', orderIndex: 5, isRequired: false, isCritical: false, isAutomated: false, status: 'completed' },
+    { name: 'Prepaid Expenses Amortization', category: 'adjustment', orderIndex: 6, isRequired: true, isCritical: false, isAutomated: true, status: 'in_progress' },
+    { name: 'Depreciation Entry', category: 'adjustment', orderIndex: 7, isRequired: true, isCritical: false, isAutomated: true, status: 'pending' },
+    { name: 'Accrued Expenses Review', category: 'adjustment', orderIndex: 8, isRequired: true, isCritical: false, isAutomated: false, status: 'pending' },
+    { name: 'Revenue Recognition Review', category: 'review', orderIndex: 9, isRequired: true, isCritical: true, isAutomated: false, status: 'pending' },
+    { name: 'Intercompany Reconciliation', category: 'reconciliation', orderIndex: 10, isRequired: false, isCritical: false, isAutomated: false, status: 'pending' },
+    { name: 'Trial Balance Review', category: 'review', orderIndex: 11, isRequired: true, isCritical: true, isAutomated: true, status: 'pending' },
+    { name: 'Financial Statements Generation', category: 'system', orderIndex: 12, isRequired: true, isCritical: true, isAutomated: true, status: 'pending' },
+    { name: 'Management Approval', category: 'approval', orderIndex: 13, isRequired: true, isCritical: true, isAutomated: false, status: 'pending' },
+  ]
+
+  for (const item of checklistItems) {
+    await prisma.closeChecklistItem.create({
+      data: {
+        periodId: currentPeriodId,
+        name: item.name,
+        category: item.category,
+        orderIndex: item.orderIndex,
+        isRequired: item.isRequired,
+        isCritical: item.isCritical,
+        isAutomated: item.isAutomated,
+        status: item.status,
+        completedAt: item.status === 'completed' ? new Date() : null,
+        completedBy: item.status === 'completed' ? user.id : null,
+      },
+    })
+  }
+  console.log('  ✓ Created', checklistItems.length, 'checklist items')
+
+  // =============================================================================
+  // PERIOD MISSING ITEMS
+  // =============================================================================
+  console.log('\n⚠️  Creating Period Missing Items...')
+  
+  const missingItems = [
+    {
+      type: 'document',
+      severity: 'high',
+      title: 'Missing vendor invoice #INV-4521',
+      description: 'Invoice from ABC Supplies for office equipment purchase',
+      reference: 'PO-2024-0892',
+      assignedTo: user.id,
+      assignedToName: user.name,
+      dueDate: daysFromNow(3),
+      status: 'open',
+    },
+    {
+      type: 'reconciliation',
+      severity: 'critical',
+      title: 'Unreconciled bank transactions',
+      description: '12 transactions totaling €8,450 need to be matched',
+      status: 'in_progress',
+    },
+    {
+      type: 'approval',
+      severity: 'medium',
+      title: 'Expense report pending approval',
+      description: 'Q4 travel expenses for sales team require manager sign-off',
+      reference: 'EXP-2024-156',
+      assignedTo: user.id,
+      assignedToName: user.name,
+      dueDate: daysFromNow(5),
+      status: 'open',
+    },
+  ]
+
+  for (const item of missingItems) {
+    await prisma.periodMissingItem.create({
+      data: {
+        periodId: currentPeriodId,
+        type: item.type,
+        severity: item.severity,
+        title: item.title,
+        description: item.description,
+        reference: item.reference,
+        assignedTo: item.assignedTo,
+        assignedToName: item.assignedToName,
+        dueDate: item.dueDate,
+        status: item.status,
+      },
+    })
+  }
+  console.log('  ✓ Created', missingItems.length, 'missing items')
+
+  // =============================================================================
+  // PERIOD ADJUSTMENTS
+  // =============================================================================
+  console.log('\n📝 Creating Period Adjustments...')
+  
+  const adjustments = [
+    {
+      adjustmentNumber: 'ADJ-2025-001',
+      type: 'accrual',
+      status: 'pending_approval',
+      description: 'Accrue December utilities expense',
+      reason: 'Utility bill not yet received, estimate based on prior months',
+      debitAccountName: '6200 - Utilities Expense',
+      creditAccountName: '2100 - Accrued Expenses',
+      amount: 2500,
+      effectiveDate: new Date(currentYear, currentMonth, 0),
+      isReversing: true,
+      reversalDate: daysFromNow(30),
+      requestedBy: user.id,
+      requestedByName: user.name,
+    },
+    {
+      adjustmentNumber: 'ADJ-2025-002',
+      type: 'deferral',
+      status: 'draft',
+      description: 'Defer prepaid insurance to future periods',
+      reason: 'Annual insurance premium paid, defer 11 months',
+      debitAccountName: '1400 - Prepaid Insurance',
+      creditAccountName: '6300 - Insurance Expense',
+      amount: 4400,
+      effectiveDate: new Date(currentYear, currentMonth, 0),
+      isReversing: false,
+      requestedBy: user.id,
+      requestedByName: user.name,
+    },
+    {
+      adjustmentNumber: 'ADJ-2025-003',
+      type: 'provision',
+      status: 'approved',
+      description: 'Bad debt provision for doubtful accounts',
+      reason: 'Increase allowance based on aging analysis',
+      debitAccountName: '6500 - Bad Debt Expense',
+      creditAccountName: '1210 - Allowance for Doubtful Accounts',
+      amount: 3200,
+      effectiveDate: new Date(currentYear, currentMonth, 0),
+      isReversing: false,
+      requestedBy: user.id,
+      requestedByName: user.name,
+      approvedBy: user.id,
+      approvedByName: user.name,
+      approvedAt: daysAgo(1),
+    },
+  ]
+
+  for (const adj of adjustments) {
+    await prisma.periodAdjustment.create({
+      data: {
+        periodId: currentPeriodId,
+        adjustmentNumber: adj.adjustmentNumber,
+        type: adj.type,
+        status: adj.status,
+        description: adj.description,
+        reason: adj.reason,
+        debitAccountName: adj.debitAccountName,
+        creditAccountName: adj.creditAccountName,
+        amount: adj.amount,
+        currency: 'EUR',
+        effectiveDate: adj.effectiveDate,
+        isReversing: adj.isReversing,
+        reversalDate: adj.reversalDate,
+        requestedBy: adj.requestedBy,
+        requestedByName: adj.requestedByName,
+        approvedBy: adj.approvedBy,
+        approvedByName: adj.approvedByName,
+        approvedAt: adj.approvedAt,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', adjustments.length, 'period adjustments')
+
+  // =============================================================================
+  // PERIOD AUDIT ENTRIES
+  // =============================================================================
+  console.log('\n📋 Creating Period Audit Entries...')
+  
+  const auditEntries = [
+    {
+      action: 'created',
+      description: 'Period created',
+      userId: user.id,
+      userName: user.name,
+      createdAt: daysAgo(20),
+    },
+    {
+      action: 'checklist_updated',
+      description: 'Completed: Bank Reconciliation',
+      userId: user.id,
+      userName: user.name,
+      createdAt: daysAgo(5),
+    },
+    {
+      action: 'checklist_updated',
+      description: 'Completed: Credit Card Reconciliation',
+      userId: user.id,
+      userName: user.name,
+      createdAt: daysAgo(4),
+    },
+    {
+      action: 'adjustment_posted',
+      description: 'Adjustment ADJ-2025-003 approved',
+      userId: user.id,
+      userName: user.name,
+      createdAt: daysAgo(1),
+    },
+  ]
+
+  for (const entry of auditEntries) {
+    await prisma.periodAuditEntry.create({
+      data: {
+        periodId: currentPeriodId,
+        action: entry.action,
+        description: entry.description,
+        userId: entry.userId,
+        userName: entry.userName,
+        createdAt: entry.createdAt,
+      },
+    })
+  }
+  console.log('  ✓ Created', auditEntries.length, 'audit entries')
+
+  // =============================================================================
+  // ADD TO SUMMARY OUTPUT:
+  // =============================================================================
+  
+
+  // =============================================================================
   // ADD TO SUMMARY OUTPUT:
   // =============================================================================
   // console.log('  • ' + costCenters.length + ' Cost centers')
@@ -2003,6 +2350,11 @@ async function main() {
   console.log('  • ' + milestones.length + ' Project milestones')
   console.log('  • ' + timeEntries.length + ' Time entries')
   console.log('  • ' + chargebacks.length + ' Internal chargebacks')
+  console.log('  • ' + periods.length + ' Accounting periods')
+  console.log('  • ' + checklistItems.length + ' Checklist items')
+  console.log('  • ' + missingItems.length + ' Missing items')
+  console.log('  • ' + adjustments.length + ' Period adjustments')
+  console.log('  • ' + auditEntries.length + ' Audit entries')
   console.log('\n🎉 Ready to use!')
   console.log('   Login: demo@primebalance.app')
 }

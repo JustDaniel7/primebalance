@@ -269,3 +269,28 @@ export type TimeEntry = Prisma.TimeEntryModel
  * 
  */
 export type InternalChargeback = Prisma.InternalChargebackModel
+/**
+ * Model AccountingPeriod
+ * 
+ */
+export type AccountingPeriod = Prisma.AccountingPeriodModel
+/**
+ * Model CloseChecklistItem
+ * 
+ */
+export type CloseChecklistItem = Prisma.CloseChecklistItemModel
+/**
+ * Model PeriodMissingItem
+ * 
+ */
+export type PeriodMissingItem = Prisma.PeriodMissingItemModel
+/**
+ * Model PeriodAdjustment
+ * 
+ */
+export type PeriodAdjustment = Prisma.PeriodAdjustmentModel
+/**
+ * Model PeriodAuditEntry
+ * 
+ */
+export type PeriodAuditEntry = Prisma.PeriodAuditEntryModel

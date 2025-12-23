@@ -246,6 +246,8 @@ export type OrganizationWhereInput = {
   CostCenter?: Prisma.CostCenterListRelationFilter
   timeEntries?: Prisma.TimeEntryListRelationFilter
   internalChargebacks?: Prisma.InternalChargebackListRelationFilter
+  accountingPeriods?: Prisma.AccountingPeriodListRelationFilter
+  periodAdjustments?: Prisma.PeriodAdjustmentListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -283,6 +285,8 @@ export type OrganizationOrderByWithRelationInput = {
   CostCenter?: Prisma.CostCenterOrderByRelationAggregateInput
   timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
   internalChargebacks?: Prisma.InternalChargebackOrderByRelationAggregateInput
+  accountingPeriods?: Prisma.AccountingPeriodOrderByRelationAggregateInput
+  periodAdjustments?: Prisma.PeriodAdjustmentOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -323,6 +327,8 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   CostCenter?: Prisma.CostCenterListRelationFilter
   timeEntries?: Prisma.TimeEntryListRelationFilter
   internalChargebacks?: Prisma.InternalChargebackListRelationFilter
+  accountingPeriods?: Prisma.AccountingPeriodListRelationFilter
+  periodAdjustments?: Prisma.PeriodAdjustmentListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -392,6 +398,8 @@ export type OrganizationCreateInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -429,6 +437,8 @@ export type OrganizationUncheckedCreateInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -466,6 +476,8 @@ export type OrganizationUpdateInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -503,6 +515,8 @@ export type OrganizationUncheckedUpdateInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -931,6 +945,34 @@ export type OrganizationUpdateOneRequiredWithoutInternalChargebacksNestedInput =
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutInternalChargebacksInput, Prisma.OrganizationUpdateWithoutInternalChargebacksInput>, Prisma.OrganizationUncheckedUpdateWithoutInternalChargebacksInput>
 }
 
+export type OrganizationCreateNestedOneWithoutAccountingPeriodsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAccountingPeriodsInput, Prisma.OrganizationUncheckedCreateWithoutAccountingPeriodsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAccountingPeriodsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutAccountingPeriodsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutAccountingPeriodsInput, Prisma.OrganizationUncheckedCreateWithoutAccountingPeriodsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutAccountingPeriodsInput
+  upsert?: Prisma.OrganizationUpsertWithoutAccountingPeriodsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutAccountingPeriodsInput, Prisma.OrganizationUpdateWithoutAccountingPeriodsInput>, Prisma.OrganizationUncheckedUpdateWithoutAccountingPeriodsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutPeriodAdjustmentsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPeriodAdjustmentsInput, Prisma.OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPeriodAdjustmentsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutPeriodAdjustmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPeriodAdjustmentsInput, Prisma.OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPeriodAdjustmentsInput
+  upsert?: Prisma.OrganizationUpsertWithoutPeriodAdjustmentsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPeriodAdjustmentsInput, Prisma.OrganizationUpdateWithoutPeriodAdjustmentsInput>, Prisma.OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput>
+}
+
 export type OrganizationCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -965,6 +1007,8 @@ export type OrganizationCreateWithoutUsersInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutUsersInput = {
@@ -1001,6 +1045,8 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutUsersInput = {
@@ -1053,6 +1099,8 @@ export type OrganizationUpdateWithoutUsersInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutUsersInput = {
@@ -1089,6 +1137,8 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFinancialAccountsInput = {
@@ -1125,6 +1175,8 @@ export type OrganizationCreateWithoutFinancialAccountsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
@@ -1161,6 +1213,8 @@ export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFinancialAccountsInput = {
@@ -1213,6 +1267,8 @@ export type OrganizationUpdateWithoutFinancialAccountsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
@@ -1249,6 +1305,8 @@ export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTransactionsInput = {
@@ -1285,6 +1343,8 @@ export type OrganizationCreateWithoutTransactionsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTransactionsInput = {
@@ -1321,6 +1381,8 @@ export type OrganizationUncheckedCreateWithoutTransactionsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTransactionsInput = {
@@ -1373,6 +1435,8 @@ export type OrganizationUpdateWithoutTransactionsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
@@ -1409,6 +1473,8 @@ export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReceiptsInput = {
@@ -1445,6 +1511,8 @@ export type OrganizationCreateWithoutReceiptsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReceiptsInput = {
@@ -1481,6 +1549,8 @@ export type OrganizationUncheckedCreateWithoutReceiptsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReceiptsInput = {
@@ -1533,6 +1603,8 @@ export type OrganizationUpdateWithoutReceiptsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
@@ -1569,6 +1641,8 @@ export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutChatChannelsInput = {
@@ -1605,6 +1679,8 @@ export type OrganizationCreateWithoutChatChannelsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
@@ -1641,6 +1717,8 @@ export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutChatChannelsInput = {
@@ -1693,6 +1771,8 @@ export type OrganizationUpdateWithoutChatChannelsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
@@ -1729,6 +1809,8 @@ export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInvoiceInput = {
@@ -1765,6 +1847,8 @@ export type OrganizationCreateWithoutInvoiceInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvoiceInput = {
@@ -1801,6 +1885,8 @@ export type OrganizationUncheckedCreateWithoutInvoiceInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInvoiceInput = {
@@ -1853,6 +1939,8 @@ export type OrganizationUpdateWithoutInvoiceInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
@@ -1889,6 +1977,8 @@ export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOrdersInput = {
@@ -1925,6 +2015,8 @@ export type OrganizationCreateWithoutOrdersInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOrdersInput = {
@@ -1961,6 +2053,8 @@ export type OrganizationUncheckedCreateWithoutOrdersInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOrdersInput = {
@@ -2013,6 +2107,8 @@ export type OrganizationUpdateWithoutOrdersInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOrdersInput = {
@@ -2049,6 +2145,8 @@ export type OrganizationUncheckedUpdateWithoutOrdersInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutArchiveItemsInput = {
@@ -2085,6 +2183,8 @@ export type OrganizationCreateWithoutArchiveItemsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
@@ -2121,6 +2221,8 @@ export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutArchiveItemsInput = {
@@ -2173,6 +2275,8 @@ export type OrganizationUpdateWithoutArchiveItemsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
@@ -2209,6 +2313,8 @@ export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiabilitiesInput = {
@@ -2245,6 +2351,8 @@ export type OrganizationCreateWithoutLiabilitiesInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
@@ -2281,6 +2389,8 @@ export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiabilitiesInput = {
@@ -2333,6 +2443,8 @@ export type OrganizationUpdateWithoutLiabilitiesInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
@@ -2369,6 +2481,8 @@ export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoryItemsInput = {
@@ -2405,6 +2519,8 @@ export type OrganizationCreateWithoutInventoryItemsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
@@ -2441,6 +2557,8 @@ export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoryItemsInput = {
@@ -2493,6 +2611,8 @@ export type OrganizationUpdateWithoutInventoryItemsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
@@ -2529,6 +2649,8 @@ export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReceivablesInput = {
@@ -2565,6 +2687,8 @@ export type OrganizationCreateWithoutReceivablesInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReceivablesInput = {
@@ -2601,6 +2725,8 @@ export type OrganizationUncheckedCreateWithoutReceivablesInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReceivablesInput = {
@@ -2653,6 +2779,8 @@ export type OrganizationUpdateWithoutReceivablesInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
@@ -2689,6 +2817,8 @@ export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryAccountsInput = {
@@ -2725,6 +2855,8 @@ export type OrganizationCreateWithoutTreasuryAccountsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
@@ -2761,6 +2893,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryAccountsInput = {
@@ -2813,6 +2947,8 @@ export type OrganizationUpdateWithoutTreasuryAccountsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
@@ -2849,6 +2985,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCapitalBucketsInput = {
@@ -2885,6 +3023,8 @@ export type OrganizationCreateWithoutCapitalBucketsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
@@ -2921,6 +3061,8 @@ export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCapitalBucketsInput = {
@@ -2973,6 +3115,8 @@ export type OrganizationUpdateWithoutCapitalBucketsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
@@ -3009,6 +3153,8 @@ export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCreditFacilitiesInput = {
@@ -3045,6 +3191,8 @@ export type OrganizationCreateWithoutCreditFacilitiesInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
@@ -3081,6 +3229,8 @@ export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCreditFacilitiesInput = {
@@ -3133,6 +3283,8 @@ export type OrganizationUpdateWithoutCreditFacilitiesInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
@@ -3169,6 +3321,8 @@ export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryDecisionsInput = {
@@ -3205,6 +3359,8 @@ export type OrganizationCreateWithoutTreasuryDecisionsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
@@ -3241,6 +3397,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryDecisionsInput = {
@@ -3293,6 +3451,8 @@ export type OrganizationUpdateWithoutTreasuryDecisionsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
@@ -3329,6 +3489,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryScenariosInput = {
@@ -3365,6 +3527,8 @@ export type OrganizationCreateWithoutTreasuryScenariosInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
@@ -3401,6 +3565,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryScenariosInput = {
@@ -3453,6 +3619,8 @@ export type OrganizationUpdateWithoutTreasuryScenariosInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
@@ -3489,6 +3657,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutNettingOpportunitiesInput = {
@@ -3525,6 +3695,8 @@ export type OrganizationCreateWithoutNettingOpportunitiesInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
@@ -3561,6 +3733,8 @@ export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutNettingOpportunitiesInput = {
@@ -3613,6 +3787,8 @@ export type OrganizationUpdateWithoutNettingOpportunitiesInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
@@ -3649,6 +3825,8 @@ export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAssetsInput = {
@@ -3685,6 +3863,8 @@ export type OrganizationCreateWithoutAssetsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAssetsInput = {
@@ -3721,6 +3901,8 @@ export type OrganizationUncheckedCreateWithoutAssetsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAssetsInput = {
@@ -3773,6 +3955,8 @@ export type OrganizationUpdateWithoutAssetsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAssetsInput = {
@@ -3809,6 +3993,8 @@ export type OrganizationUncheckedUpdateWithoutAssetsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAssetDisposalsInput = {
@@ -3845,6 +4031,8 @@ export type OrganizationCreateWithoutAssetDisposalsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
@@ -3881,6 +4069,8 @@ export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAssetDisposalsInput = {
@@ -3933,6 +4123,8 @@ export type OrganizationUpdateWithoutAssetDisposalsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
@@ -3969,6 +4161,8 @@ export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCapExBudgetsInput = {
@@ -4005,6 +4199,8 @@ export type OrganizationCreateWithoutCapExBudgetsInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
@@ -4041,6 +4237,8 @@ export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCapExBudgetsInput = {
@@ -4093,6 +4291,8 @@ export type OrganizationUpdateWithoutCapExBudgetsInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
@@ -4129,6 +4329,8 @@ export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCostCenterInput = {
@@ -4165,6 +4367,8 @@ export type OrganizationCreateWithoutCostCenterInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCostCenterInput = {
@@ -4201,6 +4405,8 @@ export type OrganizationUncheckedCreateWithoutCostCenterInput = {
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCostCenterInput = {
@@ -4253,6 +4459,8 @@ export type OrganizationUpdateWithoutCostCenterInput = {
   Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
@@ -4289,6 +4497,8 @@ export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutProjectInput = {
@@ -4325,6 +4535,8 @@ export type OrganizationCreateWithoutProjectInput = {
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutProjectInput = {
@@ -4361,6 +4573,8 @@ export type OrganizationUncheckedCreateWithoutProjectInput = {
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutProjectInput = {
@@ -4413,6 +4627,8 @@ export type OrganizationUpdateWithoutProjectInput = {
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutProjectInput = {
@@ -4449,6 +4665,8 @@ export type OrganizationUncheckedUpdateWithoutProjectInput = {
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTimeEntriesInput = {
@@ -4485,6 +4703,8 @@ export type OrganizationCreateWithoutTimeEntriesInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTimeEntriesInput = {
@@ -4521,6 +4741,8 @@ export type OrganizationUncheckedCreateWithoutTimeEntriesInput = {
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTimeEntriesInput = {
@@ -4573,6 +4795,8 @@ export type OrganizationUpdateWithoutTimeEntriesInput = {
   Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTimeEntriesInput = {
@@ -4609,6 +4833,8 @@ export type OrganizationUncheckedUpdateWithoutTimeEntriesInput = {
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInternalChargebacksInput = {
@@ -4645,6 +4871,8 @@ export type OrganizationCreateWithoutInternalChargebacksInput = {
   Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
   CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInternalChargebacksInput = {
@@ -4681,6 +4909,8 @@ export type OrganizationUncheckedCreateWithoutInternalChargebacksInput = {
   Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
   CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInternalChargebacksInput = {
@@ -4733,6 +4963,8 @@ export type OrganizationUpdateWithoutInternalChargebacksInput = {
   Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
   CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInternalChargebacksInput = {
@@ -4769,6 +5001,344 @@ export type OrganizationUncheckedUpdateWithoutInternalChargebacksInput = {
   Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
   CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutAccountingPeriodsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutAccountingPeriodsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutAccountingPeriodsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAccountingPeriodsInput, Prisma.OrganizationUncheckedCreateWithoutAccountingPeriodsInput>
+}
+
+export type OrganizationUpsertWithoutAccountingPeriodsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutAccountingPeriodsInput, Prisma.OrganizationUncheckedUpdateWithoutAccountingPeriodsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutAccountingPeriodsInput, Prisma.OrganizationUncheckedCreateWithoutAccountingPeriodsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutAccountingPeriodsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutAccountingPeriodsInput, Prisma.OrganizationUncheckedUpdateWithoutAccountingPeriodsInput>
+}
+
+export type OrganizationUpdateWithoutAccountingPeriodsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutAccountingPeriodsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutPeriodAdjustmentsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutPeriodAdjustmentsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPeriodAdjustmentsInput, Prisma.OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput>
+}
+
+export type OrganizationUpsertWithoutPeriodAdjustmentsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutPeriodAdjustmentsInput, Prisma.OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPeriodAdjustmentsInput, Prisma.OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutPeriodAdjustmentsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutPeriodAdjustmentsInput, Prisma.OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput>
+}
+
+export type OrganizationUpdateWithoutPeriodAdjustmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -4801,6 +5371,8 @@ export type OrganizationCountOutputType = {
   CostCenter: number
   timeEntries: number
   internalChargebacks: number
+  accountingPeriods: number
+  periodAdjustments: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4828,6 +5400,8 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   CostCenter?: boolean | OrganizationCountOutputTypeCountCostCenterArgs
   timeEntries?: boolean | OrganizationCountOutputTypeCountTimeEntriesArgs
   internalChargebacks?: boolean | OrganizationCountOutputTypeCountInternalChargebacksArgs
+  accountingPeriods?: boolean | OrganizationCountOutputTypeCountAccountingPeriodsArgs
+  periodAdjustments?: boolean | OrganizationCountOutputTypeCountPeriodAdjustmentsArgs
 }
 
 /**
@@ -5008,6 +5582,20 @@ export type OrganizationCountOutputTypeCountInternalChargebacksArgs<ExtArgs exte
   where?: Prisma.InternalChargebackWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountAccountingPeriodsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountingPeriodWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountPeriodAdjustmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PeriodAdjustmentWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5044,6 +5632,8 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   CostCenter?: boolean | Prisma.Organization$CostCenterArgs<ExtArgs>
   timeEntries?: boolean | Prisma.Organization$timeEntriesArgs<ExtArgs>
   internalChargebacks?: boolean | Prisma.Organization$internalChargebacksArgs<ExtArgs>
+  accountingPeriods?: boolean | Prisma.Organization$accountingPeriodsArgs<ExtArgs>
+  periodAdjustments?: boolean | Prisma.Organization$periodAdjustmentsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -5112,6 +5702,8 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   CostCenter?: boolean | Prisma.Organization$CostCenterArgs<ExtArgs>
   timeEntries?: boolean | Prisma.Organization$timeEntriesArgs<ExtArgs>
   internalChargebacks?: boolean | Prisma.Organization$internalChargebacksArgs<ExtArgs>
+  accountingPeriods?: boolean | Prisma.Organization$accountingPeriodsArgs<ExtArgs>
+  periodAdjustments?: boolean | Prisma.Organization$periodAdjustmentsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -5144,6 +5736,8 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     CostCenter: Prisma.$CostCenterPayload<ExtArgs>[]
     timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
     internalChargebacks: Prisma.$InternalChargebackPayload<ExtArgs>[]
+    accountingPeriods: Prisma.$AccountingPeriodPayload<ExtArgs>[]
+    periodAdjustments: Prisma.$PeriodAdjustmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -5574,6 +6168,8 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   CostCenter<T extends Prisma.Organization$CostCenterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$CostCenterArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CostCenterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   timeEntries<T extends Prisma.Organization$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   internalChargebacks<T extends Prisma.Organization$internalChargebacksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$internalChargebacksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InternalChargebackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accountingPeriods<T extends Prisma.Organization$accountingPeriodsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$accountingPeriodsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountingPeriodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  periodAdjustments<T extends Prisma.Organization$periodAdjustmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$periodAdjustmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PeriodAdjustmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6574,6 +7170,54 @@ export type Organization$internalChargebacksArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.InternalChargebackScalarFieldEnum | Prisma.InternalChargebackScalarFieldEnum[]
+}
+
+/**
+ * Organization.accountingPeriods
+ */
+export type Organization$accountingPeriodsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountingPeriod
+   */
+  select?: Prisma.AccountingPeriodSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountingPeriod
+   */
+  omit?: Prisma.AccountingPeriodOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountingPeriodInclude<ExtArgs> | null
+  where?: Prisma.AccountingPeriodWhereInput
+  orderBy?: Prisma.AccountingPeriodOrderByWithRelationInput | Prisma.AccountingPeriodOrderByWithRelationInput[]
+  cursor?: Prisma.AccountingPeriodWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountingPeriodScalarFieldEnum | Prisma.AccountingPeriodScalarFieldEnum[]
+}
+
+/**
+ * Organization.periodAdjustments
+ */
+export type Organization$periodAdjustmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PeriodAdjustment
+   */
+  select?: Prisma.PeriodAdjustmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PeriodAdjustment
+   */
+  omit?: Prisma.PeriodAdjustmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PeriodAdjustmentInclude<ExtArgs> | null
+  where?: Prisma.PeriodAdjustmentWhereInput
+  orderBy?: Prisma.PeriodAdjustmentOrderByWithRelationInput | Prisma.PeriodAdjustmentOrderByWithRelationInput[]
+  cursor?: Prisma.PeriodAdjustmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PeriodAdjustmentScalarFieldEnum | Prisma.PeriodAdjustmentScalarFieldEnum[]
 }
 
 /**

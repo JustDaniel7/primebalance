@@ -96,7 +96,12 @@ export const ModelName = {
   Project: 'Project',
   ProjectMilestone: 'ProjectMilestone',
   TimeEntry: 'TimeEntry',
-  InternalChargeback: 'InternalChargeback'
+  InternalChargeback: 'InternalChargeback',
+  AccountingPeriod: 'AccountingPeriod',
+  CloseChecklistItem: 'CloseChecklistItem',
+  PeriodMissingItem: 'PeriodMissingItem',
+  PeriodAdjustment: 'PeriodAdjustment',
+  PeriodAuditEntry: 'PeriodAuditEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1361,6 +1366,150 @@ export const InternalChargebackScalarFieldEnum = {
 } as const
 
 export type InternalChargebackScalarFieldEnum = (typeof InternalChargebackScalarFieldEnum)[keyof typeof InternalChargebackScalarFieldEnum]
+
+
+export const AccountingPeriodScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  type: 'type',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  fiscalYear: 'fiscalYear',
+  fiscalQuarter: 'fiscalQuarter',
+  fiscalMonth: 'fiscalMonth',
+  status: 'status',
+  closedAt: 'closedAt',
+  closedBy: 'closedBy',
+  reopenedAt: 'reopenedAt',
+  reopenedBy: 'reopenedBy',
+  reopenReason: 'reopenReason',
+  checklistTotal: 'checklistTotal',
+  checklistCompleted: 'checklistCompleted',
+  checklistProgress: 'checklistProgress',
+  hasUnreconciledItems: 'hasUnreconciledItems',
+  hasPendingTransactions: 'hasPendingTransactions',
+  hasMissingDocuments: 'hasMissingDocuments',
+  hasUnapprovedAdjustments: 'hasUnapprovedAdjustments',
+  totalRevenue: 'totalRevenue',
+  totalExpenses: 'totalExpenses',
+  netIncome: 'netIncome',
+  totalAssets: 'totalAssets',
+  totalLiabilities: 'totalLiabilities',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountingPeriodScalarFieldEnum = (typeof AccountingPeriodScalarFieldEnum)[keyof typeof AccountingPeriodScalarFieldEnum]
+
+
+export const CloseChecklistItemScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  orderIndex: 'orderIndex',
+  status: 'status',
+  completedAt: 'completedAt',
+  completedBy: 'completedBy',
+  isRequired: 'isRequired',
+  isCritical: 'isCritical',
+  dependsOn: 'dependsOn',
+  isAutomated: 'isAutomated',
+  automationRule: 'automationRule',
+  lastAutoCheck: 'lastAutoCheck',
+  autoCheckResult: 'autoCheckResult',
+  attachments: 'attachments',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CloseChecklistItemScalarFieldEnum = (typeof CloseChecklistItemScalarFieldEnum)[keyof typeof CloseChecklistItemScalarFieldEnum]
+
+
+export const PeriodMissingItemScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  type: 'type',
+  severity: 'severity',
+  title: 'title',
+  description: 'description',
+  reference: 'reference',
+  relatedEntityType: 'relatedEntityType',
+  relatedEntityId: 'relatedEntityId',
+  assignedTo: 'assignedTo',
+  assignedToName: 'assignedToName',
+  dueDate: 'dueDate',
+  status: 'status',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  resolution: 'resolution',
+  waivedReason: 'waivedReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PeriodMissingItemScalarFieldEnum = (typeof PeriodMissingItemScalarFieldEnum)[keyof typeof PeriodMissingItemScalarFieldEnum]
+
+
+export const PeriodAdjustmentScalarFieldEnum = {
+  id: 'id',
+  adjustmentNumber: 'adjustmentNumber',
+  periodId: 'periodId',
+  type: 'type',
+  status: 'status',
+  description: 'description',
+  reason: 'reason',
+  debitAccountId: 'debitAccountId',
+  debitAccountName: 'debitAccountName',
+  creditAccountId: 'creditAccountId',
+  creditAccountName: 'creditAccountName',
+  amount: 'amount',
+  currency: 'currency',
+  effectiveDate: 'effectiveDate',
+  isReversing: 'isReversing',
+  reversalDate: 'reversalDate',
+  reversalPeriodId: 'reversalPeriodId',
+  originalAdjustmentId: 'originalAdjustmentId',
+  requestedBy: 'requestedBy',
+  requestedByName: 'requestedByName',
+  approvedBy: 'approvedBy',
+  approvedByName: 'approvedByName',
+  approvedAt: 'approvedAt',
+  rejectedBy: 'rejectedBy',
+  rejectionReason: 'rejectionReason',
+  postedAt: 'postedAt',
+  journalEntryId: 'journalEntryId',
+  supportingDocuments: 'supportingDocuments',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PeriodAdjustmentScalarFieldEnum = (typeof PeriodAdjustmentScalarFieldEnum)[keyof typeof PeriodAdjustmentScalarFieldEnum]
+
+
+export const PeriodAuditEntryScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  action: 'action',
+  description: 'description',
+  userId: 'userId',
+  userName: 'userName',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  metadata: 'metadata',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type PeriodAuditEntryScalarFieldEnum = (typeof PeriodAuditEntryScalarFieldEnum)[keyof typeof PeriodAuditEntryScalarFieldEnum]
 
 
 export const SortOrder = {

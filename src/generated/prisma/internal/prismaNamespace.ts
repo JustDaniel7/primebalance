@@ -429,7 +429,12 @@ export const ModelName = {
   Project: 'Project',
   ProjectMilestone: 'ProjectMilestone',
   TimeEntry: 'TimeEntry',
-  InternalChargeback: 'InternalChargeback'
+  InternalChargeback: 'InternalChargeback',
+  AccountingPeriod: 'AccountingPeriod',
+  CloseChecklistItem: 'CloseChecklistItem',
+  PeriodMissingItem: 'PeriodMissingItem',
+  PeriodAdjustment: 'PeriodAdjustment',
+  PeriodAuditEntry: 'PeriodAuditEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -445,7 +450,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "order" | "archiveItem" | "liability" | "liabilityPayment" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "order" | "archiveItem" | "liability" | "liabilityPayment" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3853,6 +3858,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AccountingPeriod: {
+      payload: Prisma.$AccountingPeriodPayload<ExtArgs>
+      fields: Prisma.AccountingPeriodFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AccountingPeriodFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AccountingPeriodFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>
+        }
+        findFirst: {
+          args: Prisma.AccountingPeriodFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AccountingPeriodFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>
+        }
+        findMany: {
+          args: Prisma.AccountingPeriodFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>[]
+        }
+        create: {
+          args: Prisma.AccountingPeriodCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>
+        }
+        createMany: {
+          args: Prisma.AccountingPeriodCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AccountingPeriodCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>[]
+        }
+        delete: {
+          args: Prisma.AccountingPeriodDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>
+        }
+        update: {
+          args: Prisma.AccountingPeriodUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>
+        }
+        deleteMany: {
+          args: Prisma.AccountingPeriodDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AccountingPeriodUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AccountingPeriodUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>[]
+        }
+        upsert: {
+          args: Prisma.AccountingPeriodUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountingPeriodPayload>
+        }
+        aggregate: {
+          args: Prisma.AccountingPeriodAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAccountingPeriod>
+        }
+        groupBy: {
+          args: Prisma.AccountingPeriodGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountingPeriodGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AccountingPeriodCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountingPeriodCountAggregateOutputType> | number
+        }
+      }
+    }
+    CloseChecklistItem: {
+      payload: Prisma.$CloseChecklistItemPayload<ExtArgs>
+      fields: Prisma.CloseChecklistItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CloseChecklistItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CloseChecklistItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>
+        }
+        findFirst: {
+          args: Prisma.CloseChecklistItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CloseChecklistItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>
+        }
+        findMany: {
+          args: Prisma.CloseChecklistItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>[]
+        }
+        create: {
+          args: Prisma.CloseChecklistItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>
+        }
+        createMany: {
+          args: Prisma.CloseChecklistItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CloseChecklistItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>[]
+        }
+        delete: {
+          args: Prisma.CloseChecklistItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>
+        }
+        update: {
+          args: Prisma.CloseChecklistItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.CloseChecklistItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CloseChecklistItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CloseChecklistItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.CloseChecklistItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CloseChecklistItemPayload>
+        }
+        aggregate: {
+          args: Prisma.CloseChecklistItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCloseChecklistItem>
+        }
+        groupBy: {
+          args: Prisma.CloseChecklistItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CloseChecklistItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CloseChecklistItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CloseChecklistItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    PeriodMissingItem: {
+      payload: Prisma.$PeriodMissingItemPayload<ExtArgs>
+      fields: Prisma.PeriodMissingItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PeriodMissingItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PeriodMissingItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>
+        }
+        findFirst: {
+          args: Prisma.PeriodMissingItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PeriodMissingItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>
+        }
+        findMany: {
+          args: Prisma.PeriodMissingItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>[]
+        }
+        create: {
+          args: Prisma.PeriodMissingItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>
+        }
+        createMany: {
+          args: Prisma.PeriodMissingItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PeriodMissingItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>[]
+        }
+        delete: {
+          args: Prisma.PeriodMissingItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>
+        }
+        update: {
+          args: Prisma.PeriodMissingItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.PeriodMissingItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PeriodMissingItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PeriodMissingItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.PeriodMissingItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodMissingItemPayload>
+        }
+        aggregate: {
+          args: Prisma.PeriodMissingItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePeriodMissingItem>
+        }
+        groupBy: {
+          args: Prisma.PeriodMissingItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodMissingItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PeriodMissingItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodMissingItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    PeriodAdjustment: {
+      payload: Prisma.$PeriodAdjustmentPayload<ExtArgs>
+      fields: Prisma.PeriodAdjustmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PeriodAdjustmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PeriodAdjustmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>
+        }
+        findFirst: {
+          args: Prisma.PeriodAdjustmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PeriodAdjustmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>
+        }
+        findMany: {
+          args: Prisma.PeriodAdjustmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>[]
+        }
+        create: {
+          args: Prisma.PeriodAdjustmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>
+        }
+        createMany: {
+          args: Prisma.PeriodAdjustmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PeriodAdjustmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>[]
+        }
+        delete: {
+          args: Prisma.PeriodAdjustmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>
+        }
+        update: {
+          args: Prisma.PeriodAdjustmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PeriodAdjustmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PeriodAdjustmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PeriodAdjustmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PeriodAdjustmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAdjustmentPayload>
+        }
+        aggregate: {
+          args: Prisma.PeriodAdjustmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePeriodAdjustment>
+        }
+        groupBy: {
+          args: Prisma.PeriodAdjustmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodAdjustmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PeriodAdjustmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodAdjustmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    PeriodAuditEntry: {
+      payload: Prisma.$PeriodAuditEntryPayload<ExtArgs>
+      fields: Prisma.PeriodAuditEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PeriodAuditEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PeriodAuditEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.PeriodAuditEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PeriodAuditEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>
+        }
+        findMany: {
+          args: Prisma.PeriodAuditEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>[]
+        }
+        create: {
+          args: Prisma.PeriodAuditEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>
+        }
+        createMany: {
+          args: Prisma.PeriodAuditEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PeriodAuditEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.PeriodAuditEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>
+        }
+        update: {
+          args: Prisma.PeriodAuditEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.PeriodAuditEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PeriodAuditEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PeriodAuditEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.PeriodAuditEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodAuditEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.PeriodAuditEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePeriodAuditEntry>
+        }
+        groupBy: {
+          args: Prisma.PeriodAuditEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodAuditEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PeriodAuditEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodAuditEntryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5140,6 +5515,150 @@ export const InternalChargebackScalarFieldEnum = {
 export type InternalChargebackScalarFieldEnum = (typeof InternalChargebackScalarFieldEnum)[keyof typeof InternalChargebackScalarFieldEnum]
 
 
+export const AccountingPeriodScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  type: 'type',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  fiscalYear: 'fiscalYear',
+  fiscalQuarter: 'fiscalQuarter',
+  fiscalMonth: 'fiscalMonth',
+  status: 'status',
+  closedAt: 'closedAt',
+  closedBy: 'closedBy',
+  reopenedAt: 'reopenedAt',
+  reopenedBy: 'reopenedBy',
+  reopenReason: 'reopenReason',
+  checklistTotal: 'checklistTotal',
+  checklistCompleted: 'checklistCompleted',
+  checklistProgress: 'checklistProgress',
+  hasUnreconciledItems: 'hasUnreconciledItems',
+  hasPendingTransactions: 'hasPendingTransactions',
+  hasMissingDocuments: 'hasMissingDocuments',
+  hasUnapprovedAdjustments: 'hasUnapprovedAdjustments',
+  totalRevenue: 'totalRevenue',
+  totalExpenses: 'totalExpenses',
+  netIncome: 'netIncome',
+  totalAssets: 'totalAssets',
+  totalLiabilities: 'totalLiabilities',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountingPeriodScalarFieldEnum = (typeof AccountingPeriodScalarFieldEnum)[keyof typeof AccountingPeriodScalarFieldEnum]
+
+
+export const CloseChecklistItemScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  orderIndex: 'orderIndex',
+  status: 'status',
+  completedAt: 'completedAt',
+  completedBy: 'completedBy',
+  isRequired: 'isRequired',
+  isCritical: 'isCritical',
+  dependsOn: 'dependsOn',
+  isAutomated: 'isAutomated',
+  automationRule: 'automationRule',
+  lastAutoCheck: 'lastAutoCheck',
+  autoCheckResult: 'autoCheckResult',
+  attachments: 'attachments',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CloseChecklistItemScalarFieldEnum = (typeof CloseChecklistItemScalarFieldEnum)[keyof typeof CloseChecklistItemScalarFieldEnum]
+
+
+export const PeriodMissingItemScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  type: 'type',
+  severity: 'severity',
+  title: 'title',
+  description: 'description',
+  reference: 'reference',
+  relatedEntityType: 'relatedEntityType',
+  relatedEntityId: 'relatedEntityId',
+  assignedTo: 'assignedTo',
+  assignedToName: 'assignedToName',
+  dueDate: 'dueDate',
+  status: 'status',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  resolution: 'resolution',
+  waivedReason: 'waivedReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PeriodMissingItemScalarFieldEnum = (typeof PeriodMissingItemScalarFieldEnum)[keyof typeof PeriodMissingItemScalarFieldEnum]
+
+
+export const PeriodAdjustmentScalarFieldEnum = {
+  id: 'id',
+  adjustmentNumber: 'adjustmentNumber',
+  periodId: 'periodId',
+  type: 'type',
+  status: 'status',
+  description: 'description',
+  reason: 'reason',
+  debitAccountId: 'debitAccountId',
+  debitAccountName: 'debitAccountName',
+  creditAccountId: 'creditAccountId',
+  creditAccountName: 'creditAccountName',
+  amount: 'amount',
+  currency: 'currency',
+  effectiveDate: 'effectiveDate',
+  isReversing: 'isReversing',
+  reversalDate: 'reversalDate',
+  reversalPeriodId: 'reversalPeriodId',
+  originalAdjustmentId: 'originalAdjustmentId',
+  requestedBy: 'requestedBy',
+  requestedByName: 'requestedByName',
+  approvedBy: 'approvedBy',
+  approvedByName: 'approvedByName',
+  approvedAt: 'approvedAt',
+  rejectedBy: 'rejectedBy',
+  rejectionReason: 'rejectionReason',
+  postedAt: 'postedAt',
+  journalEntryId: 'journalEntryId',
+  supportingDocuments: 'supportingDocuments',
+  notes: 'notes',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PeriodAdjustmentScalarFieldEnum = (typeof PeriodAdjustmentScalarFieldEnum)[keyof typeof PeriodAdjustmentScalarFieldEnum]
+
+
+export const PeriodAuditEntryScalarFieldEnum = {
+  id: 'id',
+  periodId: 'periodId',
+  action: 'action',
+  description: 'description',
+  userId: 'userId',
+  userName: 'userName',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  metadata: 'metadata',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type PeriodAuditEntryScalarFieldEnum = (typeof PeriodAuditEntryScalarFieldEnum)[keyof typeof PeriodAuditEntryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -5425,6 +5944,11 @@ export type GlobalOmitConfig = {
   projectMilestone?: Prisma.ProjectMilestoneOmit
   timeEntry?: Prisma.TimeEntryOmit
   internalChargeback?: Prisma.InternalChargebackOmit
+  accountingPeriod?: Prisma.AccountingPeriodOmit
+  closeChecklistItem?: Prisma.CloseChecklistItemOmit
+  periodMissingItem?: Prisma.PeriodMissingItemOmit
+  periodAdjustment?: Prisma.PeriodAdjustmentOmit
+  periodAuditEntry?: Prisma.PeriodAuditEntryOmit
 }
 
 /* Types for Logging */
