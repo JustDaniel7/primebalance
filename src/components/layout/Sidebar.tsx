@@ -5,7 +5,7 @@ import { useThemeStore } from '@/store/theme-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users, ClipboardList } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PanelLeftClose,LineChart, GitBranch, Gauge, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users, ClipboardList } from 'lucide-react';
 import {
   DashboardIcon,
   TransactionsIcon,
@@ -51,8 +51,11 @@ export default function Sidebar() {
     { name: t('nav.netting'), href: '/dashboard/netting', icon: GitMerge },
     { name: t('nav.investor'), href: '/dashboard/investor', icon: Shield },
     { name: t('nav.fx'), href: '/dashboard/fx', icon: Globe},
-    { name: t('nav.taskCenter') || 'Task Center', href: '/dashboard/task-center', icon: ClipboardList },
     { name: t('nav.Offers') || 'Offers & Quotes', href: '/dashboard/offers' , icon: FileText, label: t('nav.offers') },
+    { name: t('nav.taskCenter'), href: '/dashboard/task-center', icon: ClipboardList },
+    { name: t('nav.forecasts'), href: '/dashboard/forecast', icon: LineChart },
+    { name: t('nav.scenarios'), href: '/dashboard/scenarios', icon: GitBranch },
+    { name: t('nav.kpis'), href: '/dashboard/kpi', icon: Gauge },
   ];
 
   const secondaryNavigation = [

@@ -76,7 +76,11 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.investor': 'Investor View',
     'nav.fx': 'FX Management',
     'nav.taskCenter': 'Task Center',
-    'nav.offers': 'Offers & Quotes',
+    'nav.forecasts': 'Forecasts',
+    'nav.scenarios': 'Scenarios',
+    'nav.kpis': 'KPIs',
+    'nav.offers': 'Offers',
+
 
     // Common
     'common.user': 'User',
