@@ -5,7 +5,7 @@ import { useThemeStore } from '@/store/theme-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users, ClipboardList } from 'lucide-react';
 import {
   DashboardIcon,
   TransactionsIcon,
@@ -44,13 +44,14 @@ export default function Sidebar() {
     { name: t('nav.receivables'), href: '/dashboard/receivables', icon: Wallet },
     { name: t('nav.treasury'), href: '/dashboard/treasury', icon: Vault },
     { name: t('nav.assets'), href: '/dashboard/assets', icon: Boxes },
-    { name: t('nav.projects') || 'Projects', href: '/dashboard/projects', icon: FolderKanban },
-    { name: t('nav.periodClose') || 'Period Close', href: '/dashboard/period-close', icon: CalendarCheck },
-    { name: t('nav.customers') || 'Customers', href: '/dashboard/customers', icon: Users },
-    { name: t('nav.suppliers') || 'Suppliers', href: '/dashboard/suppliers', icon: Truck },
-    { name: t('nav.netting') || 'Netting & Offsets', href: '/dashboard/netting', icon: GitMerge },
-    { icon: Shield, label: t('nav.investor') || 'Investor View', href: '/dashboard/investor' },
-    { icon: Globe, label: t('nav.fx') || 'FX Management', href: '/dashboard/fx' },
+    { name: t('nav.projects'), href: '/dashboard/projects', icon: FolderKanban },
+    { name: t('nav.periodClose'), href: '/dashboard/period-close', icon: CalendarCheck },
+    { name: t('nav.customers'), href: '/dashboard/customers', icon: Users },
+    { name: t('nav.suppliers'), href: '/dashboard/suppliers', icon: Truck },
+    { name: t('nav.netting'), href: '/dashboard/netting', icon: GitMerge },
+    { name: t('nav.investor'), href: '/dashboard/investor', icon: Shield },
+    { name: t('nav.fx'), href: '/dashboard/fx', icon: Globe},
+    { name: t('nav.taskCenter') || 'Task Center', href: '/dashboard/task-center', icon: ClipboardList },
   ];
 
   const secondaryNavigation = [

@@ -70,6 +70,12 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.assets': 'Assets',
     'nav.projects': 'Projects',
     'nav.periodClose': 'Period Close',
+    'nav.customers': 'Customers',
+    'nav.suppliers': 'Suppliers',
+    'nav.netting': 'Netting & Offsets',
+    'nav.investor': 'Investor View',
+    'nav.fx': 'FX Management',
+    'nav.taskCenter': 'Task Center',
 
     // Common
     'common.user': 'User',
@@ -1317,7 +1323,6 @@ export const translations: Record<Language, Record<string, string>> = {
     'periodClose.severity.critical': 'Critical',
 
     // Customers
-    'nav.customers': 'Customers',
     'customers.title': 'Customers',
     'customers.subtitle': 'Manage customer relationships and credit',
     'customers.totalCustomers': 'Total Customers',
@@ -1406,7 +1411,6 @@ export const translations: Record<Language, Record<string, string>> = {
     'customers.createCustomer': 'Create Customer',
 
     // Suppliers - COMPLETE
-    'nav.suppliers': 'Suppliers',
     'suppliers.title': 'Suppliers',
     'suppliers.subtitle': 'Manage supplier relationships and spend',
     'suppliers.totalSuppliers': 'Total Suppliers',
@@ -1506,7 +1510,6 @@ export const translations: Record<Language, Record<string, string>> = {
     'suppliers.createSupplier': 'Create Supplier',
 
     // Netting - COMPLETE
-    'nav.netting': 'Netting & Offsets',
     'netting.title': 'Netting & Offsets',
     'netting.subtitle': 'Manage counterparty and intercompany netting',
     'netting.totalSessions': 'Total Sessions',
@@ -1609,7 +1612,6 @@ export const translations: Record<Language, Record<string, string>> = {
     'netting.customer': 'Customer',
     'netting.supplier': 'Supplier',
 
-    'nav.investor': 'Investor View',
     'investor.title': 'Investor & Board View',
     'investor.subtitle': 'Executive governance and financial oversight dashboard',
     'investor.readOnly': 'Read-Only Access',
