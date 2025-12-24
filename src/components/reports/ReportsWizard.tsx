@@ -155,19 +155,21 @@ export function ReportsWizard({ onClose }: ReportsWizardProps) {
         return getJurisdiction(wizardState.jurisdiction.primaryJurisdiction);
     }, [wizardState.jurisdiction.primaryJurisdiction]);
 
-    // Check if can proceed to next step
+
+
     const canProceed = useMemo(() => {
         switch (wizardState.currentStep) {
             case 'type':
-                return wizardState.reportType !== null;
+                // Now require both report type AND name
+                return wizardState.reportType !== null && wizardState.reportName.trim().length > 0;
             case 'scope':
-                return true; // Date range has defaults
+                return true;
             case 'dimensions':
-                return true; // Optional
+                return true;
             case 'measures':
-                return true; // Optional
+                return true;
             case 'filters':
-                return true; // Optional
+                return true;
             case 'preview':
                 return true;
             case 'validate':
@@ -279,7 +281,9 @@ export function ReportsWizard({ onClose }: ReportsWizardProps) {
                             <StepSelectType
                                 selectedType={wizardState.reportType}
                                 selectedCategory={wizardState.category}
+                                reportName={wizardState.reportName}
                                 onSelect={selectReportType}
+                                onUpdateName={(name) => updateWizardState({ reportName: name })}
                             />
                         )}
 
@@ -405,16 +409,32 @@ export function ReportsWizard({ onClose }: ReportsWizardProps) {
 function StepSelectType({
                             selectedType,
                             selectedCategory,
+                            reportName,
                             onSelect,
+                            onUpdateName,
                         }: {
     selectedType: ReportType | null;
     selectedCategory: ReportCategory | null;
+    reportName: string;
     onSelect: (type: ReportType, category: ReportCategory) => void;
+    onUpdateName: (name: string) => void;
 }) {
     const { t } = useThemeStore();
     const [expandedCategory, setExpandedCategory] = useState<ReportCategory | null>(selectedCategory);
 
     const categories = Object.entries(REPORT_CATEGORIES) as [ReportCategory, typeof REPORT_CATEGORIES[ReportCategory]][];
+
+    // Auto-generate name when type is selected
+    const handleSelect = (type: ReportType, category: ReportCategory) => {
+        onSelect(type, category);
+
+        // Auto-generate default name if empty
+        if (!reportName.trim()) {
+            const template = REPORT_TEMPLATES[type];
+            const date = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            onUpdateName(`${template?.name || type} - ${date}`);
+        }
+    };
 
     return (
         <motion.div
@@ -429,6 +449,23 @@ function StepSelectType({
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                     {t('reports.wizard.selectTypeDesc') || 'Choose the type of report you want to create'}
+                </p>
+            </div>
+
+            {/* Report Name Input - Added here for early entry */}
+            <div className="bg-gray-50 dark:bg-surface-800/50 rounded-xl p-4">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Report Name *
+                </label>
+                <input
+                    type="text"
+                    value={reportName}
+                    onChange={(e) => onUpdateName(e.target.value)}
+                    placeholder="Enter report name or select a type to auto-generate"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-700 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                    A default name will be generated when you select a report type
                 </p>
             </div>
 
@@ -480,7 +517,7 @@ function StepSelectType({
                                                 return (
                                                     <button
                                                         key={reportType}
-                                                        onClick={() => onSelect(reportType, categoryKey)}
+                                                        onClick={() => handleSelect(reportType, categoryKey)}
                                                         className={`p-4 rounded-lg border-2 text-left transition-all ${
                                                             isSelected
                                                                 ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5'
@@ -515,7 +552,6 @@ function StepSelectType({
         </motion.div>
     );
 }
-
 // =============================================================================
 // STEP 2: DATA SCOPE
 // =============================================================================

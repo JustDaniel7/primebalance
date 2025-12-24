@@ -482,14 +482,26 @@ model AISuggestion {
 // SAVED REPORTS
 // =============================================================================
 
+// UPDATE: prisma/schema.prisma - SavedReport model
+// Add these fields to the existing SavedReport model
+
 model SavedReport {
   id            String    @id @default(cuid())
   name          String
-  type          String // PROFIT_LOSS, BALANCE_SHEET, CASH_FLOW, TAX_SUMMARY, EXPENSE_REPORT, INCOME_REPORT
+  type          String // PROFIT_LOSS, BALANCE_SHEET, CASH_FLOW, TAX_SUMMARY, EXPENSE_REPORT, INCOME_REPORT, AR_AGING, AP_AGING, etc.
+  description   String?   @db.Text
   parameters    Json?
   isScheduled   Boolean   @default(false)
   scheduleFreq  String? // daily, weekly, monthly
   lastGenerated DateTime?
+
+  // Status & Archive
+  status     String    @default("active") // active, archived, deleted
+  archivedAt DateTime?
+
+  // Generated data cache
+  cachedData  Json?
+  cacheExpiry DateTime?
 
   // Relations
   userId String
@@ -499,7 +511,8 @@ model SavedReport {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
-}
+  @@index([userId, status])
+
 
 // =============================================================================
 // CORPORATE ENTITIES
@@ -538,14 +551,36 @@ model CorporateEntity {
 // INVOICES
 // =============================================================================
 
+// =============================================================================
+// INVOICES (ENHANCED - Replace existing Invoice model)
+// =============================================================================
+
 model Invoice {
   id            String @id @default(cuid())
   invoiceNumber String
-  status        String @default("draft") // draft, sent, paid, overdue, cancelled
+  status        String @default("draft") // draft, confirmed, sent, partially_paid, paid, overdue, cancelled, archived
 
-  // Parties (stored as JSON for flexibility)
-  sender    Json // InvoiceParty
-  recipient Json // InvoiceParty
+  // Versioning (Immutability Support)
+  version           Int     @default(1)
+  isLatest          Boolean @default(true)
+  previousVersionId String?
+
+  // Customer Info (denormalized for immutability)
+  customerId      String?
+  customerName    String?
+  customerEmail   String?
+  customerTaxId   String?
+  customerAddress Json?
+
+  // Parties (stored as JSON for flexibility) - Legacy Support
+  sender    Json? // InvoiceParty
+  recipient Json? // InvoiceParty
+
+  // Entity Info (our company)
+  entityId      String?
+  entityName    String?
+  entityTaxId   String?
+  entityAddress Json?
 
   // Dates
   invoiceDate        DateTime
@@ -555,34 +590,79 @@ model Invoice {
   servicePeriodEnd   DateTime?
 
   // Items & Totals
-  items     Json // InvoiceItem[]
-  currency  String  @default("EUR")
-  subtotal  Decimal @db.Decimal(15, 2)
-  taxAmount Decimal @db.Decimal(15, 2)
-  total     Decimal @db.Decimal(15, 2)
+  items           Json    // InvoiceLineItem[]
+  currency        String  @default("EUR")
+  subtotal        Decimal @db.Decimal(15, 2)
+  taxAmount       Decimal @db.Decimal(15, 2)
+  taxableAmount   Decimal @default(0) @db.Decimal(15, 2)
+  discountAmount  Decimal @default(0) @db.Decimal(15, 2)
+  discountPercent Decimal @default(0) @db.Decimal(5, 2)
+  total           Decimal @db.Decimal(15, 2)
+
+  // Payment Tracking
+  paidAmount        Decimal @default(0) @db.Decimal(15, 2)
+  outstandingAmount Decimal @default(0) @db.Decimal(15, 2)
 
   // Tax
-  applyTax        Boolean @default(true)
-  taxRate         Decimal @db.Decimal(5, 2)
-  taxExemptReason String? // small_business, reverse_charge, export, other
-  taxExemptNote   String?
+  applyTax          Boolean  @default(true)
+  taxRate           Decimal  @db.Decimal(5, 2)
+  taxClassification String? // standard, reduced, zero, exempt, reverse_charge
+  taxExemptReason   String? // small_business, reverse_charge, export, other
+  taxExemptNote     String?
+  taxJurisdiction   String?
 
-  // Payment
-  payment Json // InvoicePayment
+  // FX Tracking
+  fxRateToBase Decimal? @db.Decimal(15, 6)
+  fxRateDate   DateTime?
+  baseCurrency String?
+  totalInBase  Decimal? @db.Decimal(15, 2)
+
+  // Fiscal Period
+  fiscalYear   Int?
+  fiscalPeriod String? // M01-M12
+
+  // Payment Terms
+  payment      Json?   // Legacy InvoicePayment object
+  paymentTerms String? // due_on_receipt, net_7, net_14, net_30, net_45, net_60, net_90
+  bankDetails  Json?
+
+  // Lifecycle Timestamps
+  confirmedAt DateTime?
+  sentAt      DateTime?
+  paidAt      DateTime?
+  cancelledAt DateTime?
+  archivedAt  DateTime?
+
+  // Audit Trail
+  createdBy          String?
+  createdByName      String?
+  confirmedBy        String?
+  confirmedByName    String?
+  cancelledBy        String?
+  cancelledByName    String?
+  cancellationReason String?
 
   // Meta
-  notes         String? @db.Text
-  internalNotes String? @db.Text
-  language      String  @default("en")
-
-  // Timestamps
-  sentAt DateTime?
-  paidAt DateTime?
+  notes         String?  @db.Text
+  internalNotes String?  @db.Text
+  language      String   @default("en")
+  reference     String?
+  poNumber      String?
 
   // Recurring
   isRecurring       Boolean   @default(false)
   recurringInterval String? // weekly, monthly, quarterly, yearly
+  recurringEndDate  DateTime?
   nextRecurringDate DateTime?
+  parentInvoiceId   String?
+
+  // Source References (Inbound Flows)
+  orderNumber  String?
+  projectId    String?
+  costCenterId String?
+
+  // Outbound Links
+  receivableId String?
 
   // Relations
   organizationId String
@@ -592,14 +672,136 @@ model Invoice {
   orderId String?
   order   Order?  @relation(fields: [orderId], references: [id])
 
+  // Related Records (New)
+  versions         InvoiceVersion[]
+  accountingEvents InvoiceAccountingEvent[]
+  payments         InvoicePayment[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([organizationId, invoiceNumber])
   @@index([organizationId, status])
   @@index([organizationId, dueDate])
+  @@index([organizationId, customerId])
+  @@index([organizationId, isLatest])
+  @@index([organizationId, fiscalYear])
 }
 
+// =============================================================================
+// INVOICE VERSION (Audit Trail / Immutability)
+// =============================================================================
+
+model InvoiceVersion {
+  id        String  @id @default(cuid())
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  // Version Info
+  version       Int
+  snapshot      Json     // Full invoice state at this version
+  changeType    String   // created, updated, confirmed, sent, payment_applied, cancelled, archived
+  changeReason  String?
+  changedFields String[] // List of fields that changed
+
+  // Audit
+  createdBy     String?
+  createdByName String?
+  createdAt     DateTime @default(now())
+
+  @@index([invoiceId, version])
+  @@index([invoiceId, changeType])
+}
+
+// =============================================================================
+// INVOICE ACCOUNTING EVENT (Double-Entry Ledger Integration)
+// =============================================================================
+
+model InvoiceAccountingEvent {
+  id        String  @id @default(cuid())
+  eventId   String  @unique // Deterministic ID for idempotency
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  // Event Type
+  eventType String // revenue_recognition, receivable_created, tax_liability, payment_received, write_off, reversal, discount_applied
+
+  // Double-Entry Accounts
+  debitAccountId    String?
+  debitAccountCode  String
+  debitAccountName  String
+  creditAccountId   String?
+  creditAccountCode String
+  creditAccountName String
+
+  // Amount
+  amount   Decimal @db.Decimal(15, 2)
+  currency String  @default("EUR")
+
+  // Fiscal Period
+  fiscalYear    Int
+  fiscalPeriod  String // M01-M12
+  effectiveDate DateTime
+
+  // Status
+  status          String    @default("posted") // posted, reversed, pending
+  reversedAt      DateTime?
+  reversalEventId String?
+
+  // Meta
+  description String?
+  metadata    Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([invoiceId, eventType])
+  @@index([invoiceId, fiscalYear])
+  @@index([eventType, status])
+}
+
+// =============================================================================
+// INVOICE PAYMENT (Payment Application Records)
+// =============================================================================
+
+model InvoicePayment {
+  id        String  @id @default(cuid())
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  // Payment Amount
+  amount   Decimal @db.Decimal(15, 2)
+  currency String  @default("EUR")
+
+  // Payment Info
+  paymentDate   DateTime
+  paymentMethod String // bank_transfer, credit_card, direct_debit, cash, check, paypal, other
+
+  // Bank/Transaction Details
+  bankAccount    String?
+  transactionRef String?
+  transactionId  String?
+
+  // Reference
+  reference String?
+  notes     String?
+
+  // Status
+  status String @default("completed") // pending, completed, failed, reversed
+
+  // Links to other modules
+  creditNoteId       String?
+  offsetReceivableId String?
+  treasuryMovementId String?
+
+  // Audit
+  appliedBy     String?
+  appliedByName String?
+
+  createdAt DateTime @default(now())
+
+  @@index([invoiceId, paymentDate])
+  @@index([invoiceId, status])
+}
 // =============================================================================
 // ORDERS
 // =============================================================================

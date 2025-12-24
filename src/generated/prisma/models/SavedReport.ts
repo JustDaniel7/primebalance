@@ -28,9 +28,13 @@ export type SavedReportMinAggregateOutputType = {
   id: string | null
   name: string | null
   type: string | null
+  description: string | null
   isScheduled: boolean | null
   scheduleFreq: string | null
   lastGenerated: Date | null
+  status: string | null
+  archivedAt: Date | null
+  cacheExpiry: Date | null
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -40,9 +44,13 @@ export type SavedReportMaxAggregateOutputType = {
   id: string | null
   name: string | null
   type: string | null
+  description: string | null
   isScheduled: boolean | null
   scheduleFreq: string | null
   lastGenerated: Date | null
+  status: string | null
+  archivedAt: Date | null
+  cacheExpiry: Date | null
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,10 +60,15 @@ export type SavedReportCountAggregateOutputType = {
   id: number
   name: number
   type: number
+  description: number
   parameters: number
   isScheduled: number
   scheduleFreq: number
   lastGenerated: number
+  status: number
+  archivedAt: number
+  cachedData: number
+  cacheExpiry: number
   userId: number
   createdAt: number
   updatedAt: number
@@ -67,9 +80,13 @@ export type SavedReportMinAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  description?: true
   isScheduled?: true
   scheduleFreq?: true
   lastGenerated?: true
+  status?: true
+  archivedAt?: true
+  cacheExpiry?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -79,9 +96,13 @@ export type SavedReportMaxAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  description?: true
   isScheduled?: true
   scheduleFreq?: true
   lastGenerated?: true
+  status?: true
+  archivedAt?: true
+  cacheExpiry?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -91,10 +112,15 @@ export type SavedReportCountAggregateInputType = {
   id?: true
   name?: true
   type?: true
+  description?: true
   parameters?: true
   isScheduled?: true
   scheduleFreq?: true
   lastGenerated?: true
+  status?: true
+  archivedAt?: true
+  cachedData?: true
+  cacheExpiry?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -177,10 +203,15 @@ export type SavedReportGroupByOutputType = {
   id: string
   name: string
   type: string
+  description: string | null
   parameters: runtime.JsonValue | null
   isScheduled: boolean
   scheduleFreq: string | null
   lastGenerated: Date | null
+  status: string
+  archivedAt: Date | null
+  cachedData: runtime.JsonValue | null
+  cacheExpiry: Date | null
   userId: string
   createdAt: Date
   updatedAt: Date
@@ -211,10 +242,15 @@ export type SavedReportWhereInput = {
   id?: Prisma.StringFilter<"SavedReport"> | string
   name?: Prisma.StringFilter<"SavedReport"> | string
   type?: Prisma.StringFilter<"SavedReport"> | string
+  description?: Prisma.StringNullableFilter<"SavedReport"> | string | null
   parameters?: Prisma.JsonNullableFilter<"SavedReport">
   isScheduled?: Prisma.BoolFilter<"SavedReport"> | boolean
   scheduleFreq?: Prisma.StringNullableFilter<"SavedReport"> | string | null
   lastGenerated?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
+  status?: Prisma.StringFilter<"SavedReport"> | string
+  archivedAt?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
+  cachedData?: Prisma.JsonNullableFilter<"SavedReport">
+  cacheExpiry?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
   userId?: Prisma.StringFilter<"SavedReport"> | string
   createdAt?: Prisma.DateTimeFilter<"SavedReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedReport"> | Date | string
@@ -225,10 +261,15 @@ export type SavedReportOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   parameters?: Prisma.SortOrderInput | Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   scheduleFreq?: Prisma.SortOrderInput | Prisma.SortOrder
   lastGenerated?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cachedData?: Prisma.SortOrderInput | Prisma.SortOrder
+  cacheExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -242,10 +283,15 @@ export type SavedReportWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SavedReportWhereInput | Prisma.SavedReportWhereInput[]
   name?: Prisma.StringFilter<"SavedReport"> | string
   type?: Prisma.StringFilter<"SavedReport"> | string
+  description?: Prisma.StringNullableFilter<"SavedReport"> | string | null
   parameters?: Prisma.JsonNullableFilter<"SavedReport">
   isScheduled?: Prisma.BoolFilter<"SavedReport"> | boolean
   scheduleFreq?: Prisma.StringNullableFilter<"SavedReport"> | string | null
   lastGenerated?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
+  status?: Prisma.StringFilter<"SavedReport"> | string
+  archivedAt?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
+  cachedData?: Prisma.JsonNullableFilter<"SavedReport">
+  cacheExpiry?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
   userId?: Prisma.StringFilter<"SavedReport"> | string
   createdAt?: Prisma.DateTimeFilter<"SavedReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedReport"> | Date | string
@@ -256,10 +302,15 @@ export type SavedReportOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   parameters?: Prisma.SortOrderInput | Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   scheduleFreq?: Prisma.SortOrderInput | Prisma.SortOrder
   lastGenerated?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cachedData?: Prisma.SortOrderInput | Prisma.SortOrder
+  cacheExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -275,10 +326,15 @@ export type SavedReportScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"SavedReport"> | string
   name?: Prisma.StringWithAggregatesFilter<"SavedReport"> | string
   type?: Prisma.StringWithAggregatesFilter<"SavedReport"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"SavedReport"> | string | null
   parameters?: Prisma.JsonNullableWithAggregatesFilter<"SavedReport">
   isScheduled?: Prisma.BoolWithAggregatesFilter<"SavedReport"> | boolean
   scheduleFreq?: Prisma.StringNullableWithAggregatesFilter<"SavedReport"> | string | null
   lastGenerated?: Prisma.DateTimeNullableWithAggregatesFilter<"SavedReport"> | Date | string | null
+  status?: Prisma.StringWithAggregatesFilter<"SavedReport"> | string
+  archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SavedReport"> | Date | string | null
+  cachedData?: Prisma.JsonNullableWithAggregatesFilter<"SavedReport">
+  cacheExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"SavedReport"> | Date | string | null
   userId?: Prisma.StringWithAggregatesFilter<"SavedReport"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SavedReport"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SavedReport"> | Date | string
@@ -288,10 +344,15 @@ export type SavedReportCreateInput = {
   id?: string
   name: string
   type: string
+  description?: string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: boolean
   scheduleFreq?: string | null
   lastGenerated?: Date | string | null
+  status?: string
+  archivedAt?: Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSavedReportsInput
@@ -301,10 +362,15 @@ export type SavedReportUncheckedCreateInput = {
   id?: string
   name: string
   type: string
+  description?: string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: boolean
   scheduleFreq?: string | null
   lastGenerated?: Date | string | null
+  status?: string
+  archivedAt?: Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Date | string | null
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -314,10 +380,15 @@ export type SavedReportUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSavedReportsNestedInput
@@ -327,10 +398,15 @@ export type SavedReportUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,10 +416,15 @@ export type SavedReportCreateManyInput = {
   id?: string
   name: string
   type: string
+  description?: string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: boolean
   scheduleFreq?: string | null
   lastGenerated?: Date | string | null
+  status?: string
+  archivedAt?: Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Date | string | null
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -353,10 +434,15 @@ export type SavedReportUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -365,10 +451,15 @@ export type SavedReportUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,10 +479,15 @@ export type SavedReportCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   parameters?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   scheduleFreq?: Prisma.SortOrder
   lastGenerated?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  cachedData?: Prisma.SortOrder
+  cacheExpiry?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -401,9 +497,13 @@ export type SavedReportMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   scheduleFreq?: Prisma.SortOrder
   lastGenerated?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  cacheExpiry?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -413,9 +513,13 @@ export type SavedReportMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   isScheduled?: Prisma.SortOrder
   scheduleFreq?: Prisma.SortOrder
   lastGenerated?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  cacheExpiry?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -467,10 +571,15 @@ export type SavedReportCreateWithoutUserInput = {
   id?: string
   name: string
   type: string
+  description?: string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: boolean
   scheduleFreq?: string | null
   lastGenerated?: Date | string | null
+  status?: string
+  archivedAt?: Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -479,10 +588,15 @@ export type SavedReportUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
   type: string
+  description?: string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: boolean
   scheduleFreq?: string | null
   lastGenerated?: Date | string | null
+  status?: string
+  archivedAt?: Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -520,10 +634,15 @@ export type SavedReportScalarWhereInput = {
   id?: Prisma.StringFilter<"SavedReport"> | string
   name?: Prisma.StringFilter<"SavedReport"> | string
   type?: Prisma.StringFilter<"SavedReport"> | string
+  description?: Prisma.StringNullableFilter<"SavedReport"> | string | null
   parameters?: Prisma.JsonNullableFilter<"SavedReport">
   isScheduled?: Prisma.BoolFilter<"SavedReport"> | boolean
   scheduleFreq?: Prisma.StringNullableFilter<"SavedReport"> | string | null
   lastGenerated?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
+  status?: Prisma.StringFilter<"SavedReport"> | string
+  archivedAt?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
+  cachedData?: Prisma.JsonNullableFilter<"SavedReport">
+  cacheExpiry?: Prisma.DateTimeNullableFilter<"SavedReport"> | Date | string | null
   userId?: Prisma.StringFilter<"SavedReport"> | string
   createdAt?: Prisma.DateTimeFilter<"SavedReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedReport"> | Date | string
@@ -533,10 +652,15 @@ export type SavedReportCreateManyUserInput = {
   id?: string
   name: string
   type: string
+  description?: string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: boolean
   scheduleFreq?: string | null
   lastGenerated?: Date | string | null
+  status?: string
+  archivedAt?: Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -545,10 +669,15 @@ export type SavedReportUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -557,10 +686,15 @@ export type SavedReportUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -569,10 +703,15 @@ export type SavedReportUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parameters?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isScheduled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   scheduleFreq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastGenerated?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cachedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  cacheExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -583,10 +722,15 @@ export type SavedReportSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   name?: boolean
   type?: boolean
+  description?: boolean
   parameters?: boolean
   isScheduled?: boolean
   scheduleFreq?: boolean
   lastGenerated?: boolean
+  status?: boolean
+  archivedAt?: boolean
+  cachedData?: boolean
+  cacheExpiry?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -597,10 +741,15 @@ export type SavedReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   name?: boolean
   type?: boolean
+  description?: boolean
   parameters?: boolean
   isScheduled?: boolean
   scheduleFreq?: boolean
   lastGenerated?: boolean
+  status?: boolean
+  archivedAt?: boolean
+  cachedData?: boolean
+  cacheExpiry?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -611,10 +760,15 @@ export type SavedReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   name?: boolean
   type?: boolean
+  description?: boolean
   parameters?: boolean
   isScheduled?: boolean
   scheduleFreq?: boolean
   lastGenerated?: boolean
+  status?: boolean
+  archivedAt?: boolean
+  cachedData?: boolean
+  cacheExpiry?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -625,16 +779,21 @@ export type SavedReportSelectScalar = {
   id?: boolean
   name?: boolean
   type?: boolean
+  description?: boolean
   parameters?: boolean
   isScheduled?: boolean
   scheduleFreq?: boolean
   lastGenerated?: boolean
+  status?: boolean
+  archivedAt?: boolean
+  cachedData?: boolean
+  cacheExpiry?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SavedReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "parameters" | "isScheduled" | "scheduleFreq" | "lastGenerated" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["savedReport"]>
+export type SavedReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "description" | "parameters" | "isScheduled" | "scheduleFreq" | "lastGenerated" | "status" | "archivedAt" | "cachedData" | "cacheExpiry" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["savedReport"]>
 export type SavedReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -654,10 +813,15 @@ export type $SavedReportPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     name: string
     type: string
+    description: string | null
     parameters: runtime.JsonValue | null
     isScheduled: boolean
     scheduleFreq: string | null
     lastGenerated: Date | null
+    status: string
+    archivedAt: Date | null
+    cachedData: runtime.JsonValue | null
+    cacheExpiry: Date | null
     userId: string
     createdAt: Date
     updatedAt: Date
@@ -1088,10 +1252,15 @@ export interface SavedReportFieldRefs {
   readonly id: Prisma.FieldRef<"SavedReport", 'String'>
   readonly name: Prisma.FieldRef<"SavedReport", 'String'>
   readonly type: Prisma.FieldRef<"SavedReport", 'String'>
+  readonly description: Prisma.FieldRef<"SavedReport", 'String'>
   readonly parameters: Prisma.FieldRef<"SavedReport", 'Json'>
   readonly isScheduled: Prisma.FieldRef<"SavedReport", 'Boolean'>
   readonly scheduleFreq: Prisma.FieldRef<"SavedReport", 'String'>
   readonly lastGenerated: Prisma.FieldRef<"SavedReport", 'DateTime'>
+  readonly status: Prisma.FieldRef<"SavedReport", 'String'>
+  readonly archivedAt: Prisma.FieldRef<"SavedReport", 'DateTime'>
+  readonly cachedData: Prisma.FieldRef<"SavedReport", 'Json'>
+  readonly cacheExpiry: Prisma.FieldRef<"SavedReport", 'DateTime'>
   readonly userId: Prisma.FieldRef<"SavedReport", 'String'>
   readonly createdAt: Prisma.FieldRef<"SavedReport", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SavedReport", 'DateTime'>

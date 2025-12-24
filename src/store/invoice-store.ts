@@ -1,272 +1,643 @@
+// =============================================================================
+// INVOICE STORE - Zustand State Management
+// Implements read-only access for Reports/KPIs and full CRUD for operations
+// =============================================================================
+
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Invoice, InvoiceItem, InvoiceParty, InvoicePayment, InvoiceTemplate, InvoiceWizardState } from '@/types/invoice';
+import {
+  Invoice,
+  InvoiceStatus,
+  InvoicePayment,
+  InvoiceAccountingEvent,
+  InvoiceVersion,
+  InvoiceFilters,
+  InvoiceStatistics,
+  CreateInvoiceRequest,
+  UpdateInvoiceRequest,
+  ApplyPaymentRequest,
+  InvoiceLineItem,
+} from '@/types/invoice';
 
 // =============================================================================
-// INVOICE STORE - API CONNECTED
+// TYPES
 // =============================================================================
 
 interface InvoiceState {
+  // Data
   invoices: Invoice[];
-  templates: InvoiceTemplate[];
   currentInvoice: Invoice | null;
-  wizardState: InvoiceWizardState;
-  lastInvoiceNumber: number;
-  isLoading: boolean;
-  error: string | null;
-  isInitialized: boolean;
+  versions: InvoiceVersion[];
+  payments: InvoicePayment[];
+  accountingEvents: InvoiceAccountingEvent[];
+  statistics: InvoiceStatistics | null;
 
-  // API Actions
-  fetchInvoices: () => Promise<void>;
-
-  // Actions
-  createInvoice: (invoice: Omit<Invoice, 'id' | 'createdAt' | 'updatedAt'>) => Invoice;
-  updateInvoice: (id: string, updates: Partial<Invoice>) => void;
-  deleteInvoice: (id: string) => void;
-  duplicateInvoice: (id: string) => Invoice;
-  setCurrentInvoice: (invoice: Invoice | null) => void;
-
-  // Wizard
-  setWizardStep: (step: number) => void;
-  updateWizardState: (updates: Partial<InvoiceWizardState>) => void;
-  resetWizard: () => void;
-
-  // Templates
-  saveTemplate: (template: Omit<InvoiceTemplate, 'id'>) => void;
-  deleteTemplate: (id: string) => void;
-  applyTemplate: (templateId: string) => void;
-
-  // Status
-  markAsSent: (id: string, email?: string) => void;
-  markAsPaid: (id: string) => void;
-  markAsOverdue: (id: string) => void;
-
-  // Invoice number
-  generateInvoiceNumber: () => string;
-
-  // Calculations
-  calculateItemTotal: (item: Omit<InvoiceItem, 'total'>) => number;
-  calculateInvoiceTotals: (items: InvoiceItem[], taxRate: number, applyTax: boolean) => { subtotal: number; taxAmount: number; total: number };
-}
-
-const initialWizardState: InvoiceWizardState = {
-  step: 1,
-  recipient: {},
-  sender: {},
-  items: [],
-  invoiceDate: new Date().toISOString().split('T')[0],
-  invoiceNumber: '',
-  serviceDate: new Date().toISOString().split('T')[0],
-  applyTax: true,
-  taxRate: 19,
-  payment: {
-    method: 'bank_transfer',
-    dueInDays: 14,
-  },
-  currency: 'EUR',
-  notes: '',
-  language: 'de',
-};
-
-function mapApiToInvoice(api: any): Invoice {
-  return {
-    id: api.id,
-    invoiceNumber: api.invoiceNumber,
-    status: api.status,
-    sender: api.sender || {},
-    recipient: api.recipient || {},
-    invoiceDate: api.invoiceDate?.split('T')[0] || api.invoiceDate,
-    dueDate: api.dueDate?.split('T')[0] || api.dueDate,
-    serviceDate: api.serviceDate?.split('T')[0],
-    servicePeriodStart: api.servicePeriodStart?.split('T')[0],
-    servicePeriodEnd: api.servicePeriodEnd?.split('T')[0],
-    items: api.items || [],
-    currency: api.currency || 'EUR',
-    subtotal: Number(api.subtotal) || 0,
-    taxAmount: Number(api.taxAmount) || 0,
-    total: Number(api.total) || 0,
-    applyTax: api.applyTax ?? true,
-    taxRate: Number(api.taxRate) || 19,
-    taxExemptReason: api.taxExemptReason,
-    taxExemptNote: api.taxExemptNote,
-    payment: api.payment || { method: 'bank_transfer', dueInDays: 14 },
-    notes: api.notes,
-    internalNotes: api.internalNotes,
-    language: api.language || 'de',
-    createdAt: api.createdAt,
-    updatedAt: api.updatedAt,
-    sentAt: api.sentAt,
-    paidAt: api.paidAt,
-    isRecurring: api.isRecurring || false,
-    recurringInterval: api.recurringInterval,
-    nextRecurringDate: api.nextRecurringDate,
+  // Pagination
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
   };
+
+  // Filters
+  filters: InvoiceFilters;
+
+  // UI State
+  loading: boolean;
+  error: string | null;
+  selectedIds: string[];
+
+  // Actions - Fetch
+  fetchInvoices: (filters?: InvoiceFilters) => Promise<void>;
+  fetchInvoice: (id: string, options?: { includeVersions?: boolean; includeEvents?: boolean; includePayments?: boolean }) => Promise<void>;
+  fetchStatistics: () => Promise<void>;
+
+  // Actions - CRUD
+  createInvoice: (data: CreateInvoiceRequest) => Promise<Invoice | null>;
+  updateInvoice: (id: string, data: UpdateInvoiceRequest) => Promise<Invoice | null>;
+  deleteInvoice: (id: string) => Promise<boolean>;
+
+  // Actions - Workflow
+  confirmInvoice: (id: string, options?: { taxRate?: number; fxRate?: number }) => Promise<boolean>;
+  sendInvoice: (id: string) => Promise<boolean>;
+  cancelInvoice: (id: string, reason: string) => Promise<boolean>;
+  archiveInvoice: (id: string) => Promise<boolean>;
+
+  // Actions - Payment
+  applyPayment: (id: string, payment: ApplyPaymentRequest) => Promise<boolean>;
+
+  // Actions - Create from Order
+  createFromOrder: (orderId: string, options?: { taxRate?: number; paymentTerms?: string }) => Promise<Invoice | null>;
+
+  // Actions - Filters & Selection
+  setFilters: (filters: Partial<InvoiceFilters>) => void;
+  clearFilters: () => void;
+  setPage: (page: number) => void;
+  selectInvoice: (id: string) => void;
+  deselectInvoice: (id: string) => void;
+  selectAll: () => void;
+  clearSelection: () => void;
+
+  // Actions - UI
+  setCurrentInvoice: (invoice: Invoice | null) => void;
+  clearError: () => void;
+
+  // Helpers (Read-only for Reports/KPIs)
+  getInvoiceById: (id: string) => Invoice | undefined;
+  getInvoicesByStatus: (status: InvoiceStatus) => Invoice[];
+  getOverdueInvoices: () => Invoice[];
+  getInvoicesByCustomer: (customerId: string) => Invoice[];
+  getTotalRevenue: () => number;
+  getTotalOutstanding: () => number;
 }
 
-export const useInvoiceStore = create<InvoiceState>()(
-  persist(
-    (set, get) => ({
-      invoices: [],
-      templates: [],
-      currentInvoice: null,
-      wizardState: initialWizardState,
-      lastInvoiceNumber: 0,
-      isLoading: false,
-      error: null,
-      isInitialized: false,
+// =============================================================================
+// STORE IMPLEMENTATION
+// =============================================================================
 
-      fetchInvoices: async () => {
-        set({ isLoading: true, error: null });
-        try {
-          const response = await fetch('/api/invoices');
-          if (!response.ok) throw new Error('Failed to fetch invoices');
-          const data = await response.json();
-          const invoices = (data.invoices || data || []).map(mapApiToInvoice);
-          const maxNumber = invoices.reduce((max: number, inv: Invoice) => {
-            const num = parseInt(inv.invoiceNumber.replace(/\D/g, '')) || 0;
-            return num > max ? num : max;
-          }, 0);
-          set({ invoices, lastInvoiceNumber: maxNumber, isLoading: false, isInitialized: true });
-        } catch (error) {
-          console.error('Failed to fetch invoices:', error);
-          set({ error: (error as Error).message, isLoading: false, isInitialized: true });
-        }
-      },
+export const useInvoiceStore = create<InvoiceState>((set, get) => ({
+  // Initial State
+  invoices: [],
+  currentInvoice: null,
+  versions: [],
+  payments: [],
+  accountingEvents: [],
+  statistics: null,
 
-      createInvoice: (invoiceData) => {
-        const now = new Date().toISOString();
-        const newInvoice: Invoice = {
-          ...invoiceData,
-          id: `inv-${Date.now()}`,
-          createdAt: now,
-          updatedAt: now,
-        };
+  pagination: {
+    page: 1,
+    limit: 50,
+    total: 0,
+    totalPages: 0,
+  },
 
-        set((state) => ({
-          invoices: [...state.invoices, newInvoice],
-          lastInvoiceNumber: state.lastInvoiceNumber + 1,
-        }));
+  filters: {},
 
-        fetch('/api/invoices', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(invoiceData),
-        }).catch(console.error);
+  loading: false,
+  error: null,
+  selectedIds: [],
 
-        return newInvoice;
-      },
+  // ==========================================================================
+  // FETCH ACTIONS
+  // ==========================================================================
 
-      updateInvoice: (id, updates) => {
-        set((state) => ({
-          invoices: state.invoices.map((inv) =>
-            inv.id === id
-              ? { ...inv, ...updates, updatedAt: new Date().toISOString() }
-              : inv
-          ),
-        }));
+  fetchInvoices: async (filters?: InvoiceFilters) => {
+    set({ loading: true, error: null });
 
-        fetch(`/api/invoices/${id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updates),
-        }).catch(console.error);
-      },
+    try {
+      const state = get();
+      const activeFilters = filters || state.filters;
 
-      deleteInvoice: (id) => {
-        set((state) => ({
-          invoices: state.invoices.filter((inv) => inv.id !== id),
-        }));
+      const params = new URLSearchParams();
+      params.set('page', String(state.pagination.page));
+      params.set('limit', String(state.pagination.limit));
 
-        fetch(`/api/invoices/${id}`, { method: 'DELETE' }).catch(console.error);
-      },
+      if (activeFilters.status) {
+        params.set('status', String(activeFilters.status));
+      }
+      if (activeFilters.customerId) {
+        params.set('customerId', activeFilters.customerId);
+      }
+      if (activeFilters.dateFrom) {
+        params.set('dateFrom', activeFilters.dateFrom);
+      }
+      if (activeFilters.dateTo) {
+        params.set('dateTo', activeFilters.dateTo);
+      }
+      if (activeFilters.currency) {
+        params.set('currency', activeFilters.currency);
+      }
+      if (activeFilters.isOverdue) {
+        params.set('isOverdue', 'true');
+      }
+      if (activeFilters.search) {
+        params.set('search', activeFilters.search);
+      }
 
-      duplicateInvoice: (id) => {
-        const original = get().invoices.find((inv) => inv.id === id);
-        if (!original) throw new Error('Invoice not found');
+      const response = await fetch(`/api/invoices?${params.toString()}`);
 
-        const newNumber = get().generateInvoiceNumber();
-        const now = new Date().toISOString();
-        const today = new Date().toISOString().split('T')[0];
+      if (!response.ok) {
+        throw new Error('Failed to fetch invoices');
+      }
 
-        const duplicate: Invoice = {
-          ...original,
-          id: `inv-${Date.now()}`,
-          invoiceNumber: newNumber,
-          status: 'draft',
-          invoiceDate: today,
-          dueDate: new Date(Date.now() + original.payment.dueInDays * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          createdAt: now,
-          updatedAt: now,
-          sentAt: undefined,
-          paidAt: undefined,
-        };
+      const data = await response.json();
 
-        set((state) => ({
-          invoices: [...state.invoices, duplicate],
-          lastInvoiceNumber: state.lastInvoiceNumber + 1,
-        }));
-
-        return duplicate;
-      },
-
-      setCurrentInvoice: (invoice) => set({ currentInvoice: invoice }),
-
-      setWizardStep: (step) => set((state) => ({ wizardState: { ...state.wizardState, step } })),
-
-      updateWizardState: (updates) => set((state) => ({ wizardState: { ...state.wizardState, ...updates } })),
-
-      resetWizard: () => {
-        const newNumber = get().generateInvoiceNumber();
-        set({ wizardState: { ...initialWizardState, invoiceNumber: newNumber } });
-      },
-
-      saveTemplate: (templateData) => {
-        const template: InvoiceTemplate = { ...templateData, id: `tpl-${Date.now()}` };
-        set((state) => ({ templates: [...state.templates, template] }));
-      },
-
-      deleteTemplate: (id) => set((state) => ({ templates: state.templates.filter((t) => t.id !== id) })),
-
-      applyTemplate: (templateId) => {
-        const template = get().templates.find((t) => t.id === templateId);
-        if (!template) return;
-        set((state) => ({
-          wizardState: {
-            ...state.wizardState,
-            sender: template.sender,
-            payment: template.payment,
-            taxRate: template.defaultTaxRate,
-            currency: template.defaultCurrency,
-            language: template.defaultLanguage,
-          },
-        }));
-      },
-
-      markAsSent: (id, email) => get().updateInvoice(id, { status: 'sent', sentAt: new Date().toISOString() }),
-      markAsPaid: (id) => get().updateInvoice(id, { status: 'paid', paidAt: new Date().toISOString() }),
-      markAsOverdue: (id) => get().updateInvoice(id, { status: 'overdue' }),
-
-      generateInvoiceNumber: () => {
-        const year = new Date().getFullYear();
-        const nextNum = get().lastInvoiceNumber + 1;
-        return `INV-${year}-${nextNum.toString().padStart(3, '0')}`;
-      },
-
-      calculateItemTotal: (item) => item.quantity * item.unitPrice,
-
-      calculateInvoiceTotals: (items, taxRate, applyTax) => {
-        const subtotal = items.reduce((sum, item) => sum + item.total, 0);
-        const taxAmount = applyTax ? subtotal * (taxRate / 100) : 0;
-        return { subtotal, taxAmount, total: subtotal + taxAmount };
-      },
-    }),
-    {
-      name: 'primebalance-invoices',
-      partialize: (state) => ({
-        invoices: state.invoices,
-        templates: state.templates,
-        lastInvoiceNumber: state.lastInvoiceNumber,
-      }),
+      set({
+        invoices: data.invoices,
+        pagination: data.pagination,
+        statistics: data.statistics,
+        loading: false,
+      });
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch invoices',
+      });
     }
-  )
-);
+  },
+
+  fetchInvoice: async (id, options = {}) => {
+    set({ loading: true, error: null });
+
+    try {
+      const params = new URLSearchParams();
+      if (options.includeVersions) params.set('includeVersions', 'true');
+      if (options.includeEvents) params.set('includeEvents', 'true');
+      if (options.includePayments) params.set('includePayments', 'true');
+
+      const response = await fetch(`/api/invoices/${id}?${params.toString()}`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch invoice');
+      }
+
+      const data = await response.json();
+
+      set({
+        currentInvoice: data.invoice,
+        versions: data.invoice.versions || [],
+        payments: data.invoice.payments || [],
+        accountingEvents: data.invoice.accountingEvents || [],
+        loading: false,
+      });
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch invoice',
+      });
+    }
+  },
+
+  fetchStatistics: async () => {
+    try {
+      const response = await fetch('/api/invoices/statistics');
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch statistics');
+      }
+
+      const data = await response.json();
+      set({ statistics: data.statistics });
+    } catch (error) {
+      console.error('Failed to fetch invoice statistics:', error);
+    }
+  },
+
+  // ==========================================================================
+  // CRUD ACTIONS
+  // ==========================================================================
+
+  createInvoice: async (data) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch('/api/invoices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create invoice');
+      }
+
+      const result = await response.json();
+
+      set((state) => ({
+        invoices: [result.invoice, ...state.invoices],
+        currentInvoice: result.invoice,
+        loading: false,
+      }));
+
+      return result.invoice;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to create invoice',
+      });
+      return null;
+    }
+  },
+
+  updateInvoice: async (id, data) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to update invoice');
+      }
+
+      const result = await response.json();
+
+      set((state) => ({
+        invoices: state.invoices.map((inv) =>
+            inv.id === id ? result.invoice : inv
+        ),
+        currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
+        loading: false,
+      }));
+
+      return result.invoice;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to update invoice',
+      });
+      return null;
+    }
+  },
+
+  deleteInvoice: async (id) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to delete invoice');
+      }
+
+      set((state) => ({
+        invoices: state.invoices.filter((inv) => inv.id !== id),
+        currentInvoice: state.currentInvoice?.id === id ? null : state.currentInvoice,
+        loading: false,
+      }));
+
+      return true;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to delete invoice',
+      });
+      return false;
+    }
+  },
+
+  // ==========================================================================
+  // WORKFLOW ACTIONS
+  // ==========================================================================
+
+  confirmInvoice: async (id, options = {}) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}/confirm`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(options),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to confirm invoice');
+      }
+
+      const result = await response.json();
+
+      set((state) => ({
+        invoices: state.invoices.map((inv) =>
+            inv.id === id ? result.invoice : inv
+        ),
+        currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
+        loading: false,
+      }));
+
+      return true;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to confirm invoice',
+      });
+      return false;
+    }
+  },
+
+  sendInvoice: async (id) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}/send`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to send invoice');
+      }
+
+      const result = await response.json();
+
+      set((state) => ({
+        invoices: state.invoices.map((inv) =>
+            inv.id === id ? result.invoice : inv
+        ),
+        currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
+        loading: false,
+      }));
+
+      return true;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to send invoice',
+      });
+      return false;
+    }
+  },
+
+  cancelInvoice: async (id, reason) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}/cancel`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to cancel invoice');
+      }
+
+      const result = await response.json();
+
+      set((state) => ({
+        invoices: state.invoices.map((inv) =>
+            inv.id === id ? result.invoice : inv
+        ),
+        currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
+        loading: false,
+      }));
+
+      return true;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to cancel invoice',
+      });
+      return false;
+    }
+  },
+
+  archiveInvoice: async (id) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}/archive`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to archive invoice');
+      }
+
+      set((state) => ({
+        invoices: state.invoices.filter((inv) => inv.id !== id),
+        currentInvoice: state.currentInvoice?.id === id ? null : state.currentInvoice,
+        loading: false,
+      }));
+
+      return true;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to archive invoice',
+      });
+      return false;
+    }
+  },
+
+  // ==========================================================================
+  // PAYMENT ACTIONS
+  // ==========================================================================
+
+  applyPayment: async (id, payment) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch(`/api/invoices/${id}/payment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payment),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to apply payment');
+      }
+
+      const result = await response.json();
+
+      // Refresh invoice data
+      await get().fetchInvoice(id, { includePayments: true });
+
+      // Update invoices list
+      set((state) => ({
+        invoices: state.invoices.map((inv) =>
+            inv.id === id ? { ...inv, ...result.invoice } : inv
+        ),
+        loading: false,
+      }));
+
+      return true;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to apply payment',
+      });
+      return false;
+    }
+  },
+
+  // ==========================================================================
+  // CREATE FROM ORDER
+  // ==========================================================================
+
+  createFromOrder: async (orderId, options = {}) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await fetch('/api/invoices/from-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId, ...options }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create invoice from order');
+      }
+
+      const result = await response.json();
+
+      set((state) => ({
+        invoices: [result.invoice, ...state.invoices],
+        currentInvoice: result.invoice,
+        loading: false,
+      }));
+
+      return result.invoice;
+    } catch (error) {
+      set({
+        loading: false,
+        error: error instanceof Error ? error.message : 'Failed to create invoice from order',
+      });
+      return null;
+    }
+  },
+
+  // ==========================================================================
+  // FILTER & SELECTION ACTIONS
+  // ==========================================================================
+
+  setFilters: (filters) => {
+    set((state) => ({
+      filters: { ...state.filters, ...filters },
+      pagination: { ...state.pagination, page: 1 },
+    }));
+  },
+
+  clearFilters: () => {
+    set({
+      filters: {},
+      pagination: { page: 1, limit: 50, total: 0, totalPages: 0 },
+    });
+  },
+
+  setPage: (page) => {
+    set((state) => ({
+      pagination: { ...state.pagination, page },
+    }));
+  },
+
+  selectInvoice: (id) => {
+    set((state) => ({
+      selectedIds: [...state.selectedIds, id],
+    }));
+  },
+
+  deselectInvoice: (id) => {
+    set((state) => ({
+      selectedIds: state.selectedIds.filter((i) => i !== id),
+    }));
+  },
+
+  selectAll: () => {
+    set((state) => ({
+      selectedIds: state.invoices.map((inv) => inv.id),
+    }));
+  },
+
+  clearSelection: () => {
+    set({ selectedIds: [] });
+  },
+
+  // ==========================================================================
+  // UI ACTIONS
+  // ==========================================================================
+
+  setCurrentInvoice: (invoice) => {
+    set({ currentInvoice: invoice });
+  },
+
+  clearError: () => {
+    set({ error: null });
+  },
+
+  // ==========================================================================
+  // HELPER GETTERS (Read-only for Reports/KPIs - Section 5.4, 5.5)
+  // ==========================================================================
+
+  getInvoiceById: (id) => {
+    return get().invoices.find((inv) => inv.id === id);
+  },
+
+  getInvoicesByStatus: (status) => {
+    return get().invoices.filter((inv) => inv.status === status);
+  },
+
+  getOverdueInvoices: () => {
+    const today = new Date();
+    return get().invoices.filter((inv) => {
+      const dueDate = new Date(inv.dueDate);
+      return (
+          dueDate < today &&
+          inv.outstandingAmount > 0 &&
+          ![InvoiceStatus.PAID, InvoiceStatus.CANCELLED, InvoiceStatus.ARCHIVED].includes(inv.status as InvoiceStatus)
+      );
+    });
+  },
+
+  getInvoicesByCustomer: (customerId) => {
+    return get().invoices.filter((inv) => inv.customerId === customerId);
+  },
+
+  getTotalRevenue: () => {
+    return get().invoices
+        .filter((inv) => ![InvoiceStatus.DRAFT, InvoiceStatus.CANCELLED].includes(inv.status as InvoiceStatus))
+        .reduce((sum, inv) => sum + inv.total, 0);
+  },
+
+  getTotalOutstanding: () => {
+    return get().invoices
+        .filter((inv) => ![InvoiceStatus.PAID, InvoiceStatus.CANCELLED, InvoiceStatus.ARCHIVED].includes(inv.status as InvoiceStatus))
+        .reduce((sum, inv) => sum + inv.outstandingAmount, 0);
+  },
+}));

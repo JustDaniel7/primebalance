@@ -1,153 +1,649 @@
 // =============================================================================
-// INVOICE TYPES
+// INVOICE TYPES - Complete Type System
+// src/types/invoice.ts
+// =============================================================================
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+export enum InvoiceStatus {
+  DRAFT = 'draft',
+  CONFIRMED = 'confirmed',
+  SENT = 'sent',
+  PARTIALLY_PAID = 'partially_paid',
+  PAID = 'paid',
+  OVERDUE = 'overdue',
+  CANCELLED = 'cancelled',
+  ARCHIVED = 'archived',
+}
+
+export enum PaymentMethod {
+  BANK_TRANSFER = 'bank_transfer',
+  CREDIT_CARD = 'credit_card',
+  DIRECT_DEBIT = 'direct_debit',
+  CASH = 'cash',
+  CHECK = 'check',
+  PAYPAL = 'paypal',
+  OTHER = 'other',
+}
+
+export enum PaymentTerms {
+  DUE_ON_RECEIPT = 'due_on_receipt',
+  NET_7 = 'net_7',
+  NET_14 = 'net_14',
+  NET_30 = 'net_30',
+  NET_45 = 'net_45',
+  NET_60 = 'net_60',
+  NET_90 = 'net_90',
+}
+
+export enum TaxClassification {
+  STANDARD = 'standard',
+  REDUCED = 'reduced',
+  ZERO = 'zero',
+  EXEMPT = 'exempt',
+  REVERSE_CHARGE = 'reverse_charge',
+}
+
+export enum InvoiceEventType {
+  REVENUE_RECOGNITION = 'revenue_recognition',
+  RECEIVABLE_CREATED = 'receivable_created',
+  TAX_LIABILITY = 'tax_liability',
+  PAYMENT_RECEIVED = 'payment_received',
+  WRITE_OFF = 'write_off',
+  REVERSAL = 'reversal',
+  DISCOUNT_APPLIED = 'discount_applied',
+}
+
+export enum InvoiceChangeType {
+  CREATED = 'created',
+  UPDATED = 'updated',
+  CONFIRMED = 'confirmed',
+  SENT = 'sent',
+  PAYMENT_APPLIED = 'payment_applied',
+  CANCELLED = 'cancelled',
+  ARCHIVED = 'archived',
+}
+
+// =============================================================================
+// CORE TYPES
 // =============================================================================
 
 export interface InvoiceParty {
   name: string;
   company?: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  country: string;
+  address?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
   email?: string;
   phone?: string;
   taxId?: string;
   vatId?: string;
 }
 
-export interface InvoiceItem {
-  id: string;
-  description: string;
-  quantity: number;
-  unitPrice: number;
-  taxRate: number;
-  total: number;
+export interface InvoiceAddress {
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
 }
 
-export interface InvoicePayment {
-  method: 'bank_transfer' | 'cash' | 'paypal' | 'credit_card' | 'other';
-  dueInDays: number;
+export interface InvoiceLineItem {
+  id: string;
+  position: number;
+  description: string;
+  quantity: number;
+  unit: string;
+  unitPrice: number;
+  taxRate: number;
+  subtotal: number;
+  taxAmount: number;
+  total: number;
+  discountPercent?: number;
+  discountAmount?: number;
+  productId?: string;
+  productCode?: string;
+}
+
+// Alias for backward compatibility
+export type InvoiceItem = InvoiceLineItem;
+
+export interface InvoicePaymentInfo {
+  method: PaymentMethod | string;
+  dueInDays?: number;
   bankName?: string;
+  accountName?: string;
   iban?: string;
   bic?: string;
   paypalEmail?: string;
   notes?: string;
 }
 
+export interface BankDetails {
+  bankName?: string;
+  accountName?: string;
+  accountNumber?: string;
+  iban?: string;
+  bic?: string;
+  routingNumber?: string;
+}
+
+// =============================================================================
+// INVOICE MODEL
+// =============================================================================
+
 export interface Invoice {
   id: string;
   invoiceNumber: string;
-  status: 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled';
-  
-  // Parties
-  sender: InvoiceParty;
-  recipient: InvoiceParty;
-  
+  status: InvoiceStatus | string;
+
+  // Versioning
+  version: number;
+  isLatest: boolean;
+  previousVersionId?: string;
+
+  // Customer Info
+  customerId?: string;
+  customerName?: string;
+  customerEmail?: string;
+  customerTaxId?: string;
+  customerAddress?: InvoiceAddress;
+
+  // Legacy Parties (still supported)
+  sender?: InvoiceParty;
+  recipient?: InvoiceParty;
+
+  // Entity Info
+  entityId?: string;
+  entityName?: string;
+  entityTaxId?: string;
+  entityAddress?: InvoiceAddress;
+
   // Dates
   invoiceDate: string;
   dueDate: string;
   serviceDate?: string;
   servicePeriodStart?: string;
   servicePeriodEnd?: string;
-  
+
   // Items
-  items: InvoiceItem[];
+  items: InvoiceLineItem[];
   currency: string;
-  
+
   // Totals
   subtotal: number;
   taxAmount: number;
+  taxableAmount: number;
+  discountAmount: number;
+  discountPercent: number;
   total: number;
-  
+
+  // Payment Tracking
+  paidAmount: number;
+  outstandingAmount: number;
+
   // Tax
   applyTax: boolean;
   taxRate: number;
-  taxExemptReason?: 'small_business' | 'reverse_charge' | 'export' | 'other';
+  taxClassification?: TaxClassification | string;
+  taxExemptReason?: string;
   taxExemptNote?: string;
-  
-  // Payment
-  payment: InvoicePayment;
-  
+  taxJurisdiction?: string;
+
+  // FX Tracking
+  fxRateToBase?: number;
+  fxRateDate?: string;
+  baseCurrency?: string;
+  totalInBase?: number;
+
+  // Fiscal Period
+  fiscalYear?: number;
+  fiscalPeriod?: string;
+
+  // Payment Terms
+  payment?: InvoicePaymentInfo;
+  paymentTerms?: PaymentTerms | string;
+  bankDetails?: BankDetails;
+
+  // Lifecycle Timestamps
+  confirmedAt?: string;
+  sentAt?: string;
+  paidAt?: string;
+  cancelledAt?: string;
+  archivedAt?: string;
+
+  // Audit
+  createdBy?: string;
+  createdByName?: string;
+  confirmedBy?: string;
+  confirmedByName?: string;
+  cancelledBy?: string;
+  cancelledByName?: string;
+  cancellationReason?: string;
+
   // Meta
   notes?: string;
   internalNotes?: string;
-  language: 'en' | 'de' | 'es' | 'fr';
-  createdAt: string;
-  updatedAt: string;
-  sentAt?: string;
-  paidAt?: string;
-  
+  language: string;
+  reference?: string;
+  poNumber?: string;
+
   // Recurring
   isRecurring: boolean;
-  recurringInterval?: 'weekly' | 'monthly' | 'quarterly' | 'yearly';
+  recurringInterval?: string;
+  recurringEndDate?: string;
   nextRecurringDate?: string;
+  parentInvoiceId?: string;
+
+  // Source References
+  orderId?: string;
+  orderNumber?: string;
+  projectId?: string;
+  costCenterId?: string;
+
+  // Outbound Links
+  receivableId?: string;
+
+  // Related Records (populated on request)
+  versions?: InvoiceVersion[];
+  accountingEvents?: InvoiceAccountingEvent[];
+  payments?: InvoicePayment[];
+
+  // Timestamps
+  createdAt: string;
+  updatedAt: string;
+}
+
+// =============================================================================
+// RELATED MODELS
+// =============================================================================
+
+export interface InvoiceVersion {
+  id: string;
+  invoiceId: string;
+  version: number;
+  snapshot: Invoice;
+  changeType: InvoiceChangeType | string;
+  changeReason?: string;
+  changedFields: string[];
+  createdBy?: string;
+  createdByName?: string;
+  createdAt: string;
+}
+
+export interface InvoiceAccountingEvent {
+  id: string;
+  eventId: string;
+  invoiceId: string;
+  eventType: InvoiceEventType | string;
+
+  // Double-entry
+  debitAccountId?: string;
+  debitAccountCode: string;
+  debitAccountName: string;
+  creditAccountId?: string;
+  creditAccountCode: string;
+  creditAccountName: string;
+
+  amount: number;
+  currency: string;
+
+  // Fiscal
+  fiscalYear: number;
+  fiscalPeriod: string;
+  effectiveDate: string;
+
+  // Status
+  status: 'posted' | 'reversed' | 'pending';
+  reversedAt?: string;
+  reversalEventId?: string;
+
+  description?: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+}
+
+export interface InvoicePayment {
+  id: string;
+  invoiceId: string;
+  amount: number;
+  currency: string;
+  paymentDate: string;
+  paymentMethod: PaymentMethod | string;
+
+  // Bank details
+  bankAccount?: string;
+  transactionRef?: string;
+  transactionId?: string;
+
+  // Reference
+  reference?: string;
+  notes?: string;
+
+  // Status
+  status: 'pending' | 'completed' | 'failed' | 'reversed';
+
+  // Links
+  creditNoteId?: string;
+  offsetReceivableId?: string;
+  treasuryMovementId?: string;
+
+  // Audit
+  appliedBy?: string;
+  appliedByName?: string;
+
+  createdAt: string;
+}
+
+// =============================================================================
+// API REQUEST/RESPONSE TYPES
+// =============================================================================
+
+export interface CreateInvoiceRequest {
+  // Customer (new format preferred)
+  customerName?: string;
+  customerEmail?: string;
+  customerTaxId?: string;
+  customerAddress?: InvoiceAddress;
+  customerId?: string;
+
+  // Legacy format (still supported)
+  sender?: Partial<InvoiceParty>;
+  recipient?: Partial<InvoiceParty>;
+
+  // Dates
+  invoiceDate: string;
+  dueDate: string;
+  serviceDate?: string;
+  servicePeriodStart?: string;
+  servicePeriodEnd?: string;
+
+  // Items
+  items: Array<{
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    unit?: string;
+    taxRate?: number;
+    discountPercent?: number;
+    productId?: string;
+  }>;
+
+  currency?: string;
+
+  // Tax
+  applyTax?: boolean;
+  taxRate?: number;
+  taxClassification?: TaxClassification | string;
+  taxExemptReason?: string;
+
+  // FX
+  fxRateToBase?: number;
+  baseCurrency?: string;
+
+  // Payment
+  paymentTerms?: PaymentTerms | string;
+  payment?: Partial<InvoicePaymentInfo>;
+  bankDetails?: BankDetails;
+
+  // Meta
+  notes?: string;
+  internalNotes?: string;
+  language?: string;
+  reference?: string;
+  poNumber?: string;
+
+  // From Order
+  orderId?: string;
+
+  // Project/Cost Center
+  projectId?: string;
+  costCenterId?: string;
+}
+
+export interface UpdateInvoiceRequest {
+  // Customer
+  customerName?: string;
+  customerEmail?: string;
+  customerAddress?: InvoiceAddress;
+  recipient?: Partial<InvoiceParty>;
+
+  // Dates
+  invoiceDate?: string;
+  dueDate?: string;
+  serviceDate?: string;
+
+  // Items
+  items?: Array<{
+    id?: string;
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    unit?: string;
+    taxRate?: number;
+  }>;
+
+  // Tax
+  taxRate?: number;
+  applyTax?: boolean;
+
+  // Meta
+  notes?: string;
+  internalNotes?: string;
+  payment?: Partial<InvoicePaymentInfo>;
+  bankDetails?: BankDetails;
+
+  // Change tracking
+  changeReason?: string;
+}
+
+export interface ConfirmInvoiceRequest {
+  taxRate?: number;
+  fxRateToBase?: number;
+  fxRateDate?: string;
+}
+
+export interface ApplyPaymentRequest {
+  amount: number;
+  paymentDate: string;
+  paymentMethod: PaymentMethod | string;
+  reference?: string;
+  bankAccount?: string;
+  transactionRef?: string;
+  transactionId?: string;
+  notes?: string;
+}
+
+export interface CancelInvoiceRequest {
+  reason: string;
+}
+
+export interface CreateFromOrderRequest {
+  orderId: string;
+  includeAllItems?: boolean;
+  selectedItemIds?: string[];
+}
+
+// =============================================================================
+// STORE TYPES
+// =============================================================================
+
+export interface InvoiceFilters {
+  status?: InvoiceStatus | string;
+  customerId?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  currency?: string;
+  overdue?: boolean;
+  search?: string;
+}
+
+export interface InvoiceStatistics {
+  totalRevenue: number;
+  totalPaid: number;
+  totalOutstanding: number;
+  count: number;
+  byStatus?: Record<string, number>;
+  byCurrency?: Record<string, number>;
+}
+
+export interface InvoicePagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+// =============================================================================
+// WIZARD TYPES (Legacy support)
+// =============================================================================
+
+export interface InvoiceWizardState {
+  step: number;
+  recipient: Partial<InvoiceParty>;
+  sender: Partial<InvoiceParty>;
+  items: InvoiceLineItem[];
+  invoiceDate: string;
+  invoiceNumber: string;
+  serviceDate: string;
+  applyTax: boolean;
+  taxRate: number;
+  taxExemptReason?: string;
+  payment: Partial<InvoicePaymentInfo>;
+  currency: string;
+  notes: string;
+  language: string;
 }
 
 export interface InvoiceTemplate {
   id: string;
   name: string;
   sender: InvoiceParty;
-  payment: InvoicePayment;
-  defaultItems?: Partial<InvoiceItem>[];
+  payment: InvoicePaymentInfo;
+  defaultItems?: Partial<InvoiceLineItem>[];
   defaultTaxRate: number;
   defaultCurrency: string;
-  defaultLanguage: 'en' | 'de' | 'es' | 'fr';
+  defaultLanguage: string;
+  bankDetails?: BankDetails;
 }
 
-export interface InvoiceWizardState {
-  step: number;
-  recipient: Partial<InvoiceParty>;
-  sender: Partial<InvoiceParty>;
-  items: InvoiceItem[];
-  invoiceDate: string;
-  invoiceNumber: string;
-  serviceDate: string;
-  applyTax: boolean;
-  taxRate: number;
-  taxExemptReason?: 'small_business' | 'reverse_charge' | 'export' | 'other';
-  payment: Partial<InvoicePayment>;
-  currency: string;
-  notes: string;
-  language: 'en' | 'de' | 'es' | 'fr';
-}
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
 
-// Tax rates by country
-export const DEFAULT_TAX_RATES: Record<string, number> = {
-  DE: 19,
-  AT: 20,
-  CH: 7.7,
-  FR: 20,
-  ES: 21,
-  IT: 22,
-  NL: 21,
-  BE: 21,
-  GB: 20,
-  US: 0, // Varies by state
-  CA: 5, // GST, varies by province
+/**
+ * Status transition rules
+ */
+const STATUS_TRANSITIONS: Record<string, string[]> = {
+  [InvoiceStatus.DRAFT]: [InvoiceStatus.CONFIRMED, InvoiceStatus.CANCELLED],
+  [InvoiceStatus.CONFIRMED]: [InvoiceStatus.SENT, InvoiceStatus.CANCELLED, InvoiceStatus.PAID, InvoiceStatus.PARTIALLY_PAID],
+  [InvoiceStatus.SENT]: [InvoiceStatus.PAID, InvoiceStatus.PARTIALLY_PAID, InvoiceStatus.OVERDUE, InvoiceStatus.CANCELLED],
+  [InvoiceStatus.PARTIALLY_PAID]: [InvoiceStatus.PAID, InvoiceStatus.OVERDUE, InvoiceStatus.CANCELLED],
+  [InvoiceStatus.OVERDUE]: [InvoiceStatus.PAID, InvoiceStatus.PARTIALLY_PAID, InvoiceStatus.CANCELLED],
+  [InvoiceStatus.PAID]: [InvoiceStatus.ARCHIVED],
+  [InvoiceStatus.CANCELLED]: [InvoiceStatus.ARCHIVED],
+  [InvoiceStatus.ARCHIVED]: [],
 };
 
-export const CURRENCIES = [
-  { code: 'EUR', symbol: '€', name: 'Euro' },
-  { code: 'USD', symbol: '$', name: 'US Dollar' },
-  { code: 'GBP', symbol: '£', name: 'British Pound' },
-  { code: 'CHF', symbol: 'CHF', name: 'Swiss Franc' },
-  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
-  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
-  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
-];
+/**
+ * Check if invoice can transition to target status
+ */
+export function canTransitionTo(currentStatus: string, targetStatus: string): boolean {
+  return STATUS_TRANSITIONS[currentStatus]?.includes(targetStatus) ?? false;
+}
 
-export const COUNTRIES = [
-  { code: 'DE', name: { en: 'Germany', de: 'Deutschland', es: 'Alemania', fr: 'Allemagne' } },
-  { code: 'AT', name: { en: 'Austria', de: 'Österreich', es: 'Austria', fr: 'Autriche' } },
-  { code: 'CH', name: { en: 'Switzerland', de: 'Schweiz', es: 'Suiza', fr: 'Suisse' } },
-  { code: 'FR', name: { en: 'France', de: 'Frankreich', es: 'Francia', fr: 'France' } },
-  { code: 'ES', name: { en: 'Spain', de: 'Spanien', es: 'España', fr: 'Espagne' } },
-  { code: 'IT', name: { en: 'Italy', de: 'Italien', es: 'Italia', fr: 'Italie' } },
-  { code: 'NL', name: { en: 'Netherlands', de: 'Niederlande', es: 'Países Bajos', fr: 'Pays-Bas' } },
-  { code: 'BE', name: { en: 'Belgium', de: 'Belgien', es: 'Bélgica', fr: 'Belgique' } },
-  { code: 'GB', name: { en: 'United Kingdom', de: 'Vereinigtes Königreich', es: 'Reino Unido', fr: 'Royaume-Uni' } },
-  { code: 'US', name: { en: 'United States', de: 'Vereinigte Staaten', es: 'Estados Unidos', fr: 'États-Unis' } },
-  { code: 'CA', name: { en: 'Canada', de: 'Kanada', es: 'Canadá', fr: 'Canada' } },
-  { code: 'AU', name: { en: 'Australia', de: 'Australien', es: 'Australia', fr: 'Australie' } },
-  { code: 'JP', name: { en: 'Japan', de: 'Japan', es: 'Japón', fr: 'Japon' } },
-];
+/**
+ * Check if invoice can accept payment
+ */
+export function canAcceptPayment(status: string): boolean {
+  return [
+    InvoiceStatus.CONFIRMED,
+    InvoiceStatus.SENT,
+    InvoiceStatus.PARTIALLY_PAID,
+    InvoiceStatus.OVERDUE,
+  ].includes(status as InvoiceStatus);
+}
+
+/**
+ * Check if invoice is editable (only DRAFT)
+ */
+export function isEditable(status: string): boolean {
+  return status === InvoiceStatus.DRAFT;
+}
+
+/**
+ * Check if invoice is deletable (only DRAFT)
+ */
+export function isDeletable(status: string): boolean {
+  return status === InvoiceStatus.DRAFT;
+}
+
+/**
+ * Check if invoice is archivable
+ */
+export function isArchivable(status: string): boolean {
+  return [InvoiceStatus.PAID, InvoiceStatus.CANCELLED].includes(status as InvoiceStatus);
+}
+
+/**
+ * Generate deterministic event ID for idempotency
+ */
+export function generateEventId(
+    invoiceId: string,
+    eventType: string,
+    timestamp?: Date
+): string {
+  const ts = timestamp || new Date();
+  const dateStr = ts.toISOString().split('T')[0];
+  return `${invoiceId}_${eventType}_${dateStr}_${ts.getTime()}`;
+}
+
+/**
+ * Get fiscal period from date (M01-M12)
+ */
+export function getFiscalPeriod(date: Date): { fiscalYear: number; fiscalPeriod: string } {
+  return {
+    fiscalYear: date.getFullYear(),
+    fiscalPeriod: `M${String(date.getMonth() + 1).padStart(2, '0')}`,
+  };
+}
+
+/**
+ * Calculate line item totals
+ */
+export function calculateLineItem(
+    quantity: number,
+    unitPrice: number,
+    taxRate: number,
+    discountPercent: number = 0
+): { subtotal: number; taxAmount: number; total: number; discountAmount: number } {
+  const grossSubtotal = quantity * unitPrice;
+  const discountAmount = grossSubtotal * (discountPercent / 100);
+  const subtotal = grossSubtotal - discountAmount;
+  const taxAmount = subtotal * (taxRate / 100);
+  const total = subtotal + taxAmount;
+
+  return { subtotal, taxAmount, total, discountAmount };
+}
+
+/**
+ * Calculate invoice totals from line items
+ */
+export function calculateInvoiceTotals(
+    items: InvoiceLineItem[],
+    globalDiscountPercent: number = 0
+): { subtotal: number; taxAmount: number; discountAmount: number; total: number } {
+  const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0);
+  const taxAmount = items.reduce((sum, item) => sum + item.taxAmount, 0);
+  const lineDiscounts = items.reduce((sum, item) => sum + (item.discountAmount || 0), 0);
+
+  const globalDiscount = subtotal * (globalDiscountPercent / 100);
+  const discountAmount = lineDiscounts + globalDiscount;
+
+  const total = subtotal + taxAmount - globalDiscount;
+
+  return { subtotal, taxAmount, discountAmount, total };
+}
