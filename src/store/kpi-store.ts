@@ -80,6 +80,9 @@ interface KPIState {
   getKPIsByCategory: (category: KPICategory) => KPI[];
   getKPIByCode: (code: string) => KPI | undefined;
   getPinnedKPIs: () => KPI[];
+
+  // Private
+  computeAggregatedMetrics: (kpis: KPI[]) => void;
 }
 
 // =============================================================================

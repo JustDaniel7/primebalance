@@ -120,6 +120,7 @@ export interface Task {
     
     // Assignment
     ownerId?: string;
+    ownerName?: string;
     owner?: TaskOwner;
     assigneeIds: string[];
     assignees?: TaskOwner[];
@@ -193,6 +194,7 @@ export interface Risk {
     
     // Ownership
     ownerId?: string;
+    ownerName?: string;
     owner?: TaskOwner;
     escalatedTo?: string;
     

@@ -21,7 +21,6 @@ export async function GET(req: NextRequest) {
 
   const exposures = await prisma.fXExposure.findMany({
     where,
-    include: { hedges: true },
     orderBy: { grossExposure: 'desc' },
   });
 
@@ -54,7 +53,7 @@ export async function GET(req: NextRequest) {
       var95: e.var95 ? Number(e.var95) : undefined,
       lastUpdated: e.updatedAt.toISOString(),
       dataQuality: e.dataQuality,
-      hedges: e.hedges.length,
+      hedgePercentage: Number(e.hedgePercentage),
     })),
   });
 }

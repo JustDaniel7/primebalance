@@ -153,16 +153,14 @@ const getVisibilityIcon = (visibility: ScenarioVisibility) => {
 function OverviewTab() {
     const {
         scenarios,
-        getBaselineScenarios,
-        getCustomScenarios,
         getComparison,
         selectScenario,
         setActiveTab,
         addToComparison,
     } = useScenarioStore();
 
-    const baselineScenarios = getBaselineScenarios();
-    const customScenarios = getCustomScenarios();
+    const baselineScenarios = scenarios.filter((s: Scenario) => s.caseType === 'expected_case' || s.caseType === 'best_case' || s.caseType === 'worst_case');
+    const customScenarios = scenarios.filter((s: Scenario) => s.caseType === 'custom');
     const comparison = getComparison();
 
     const expectedCase = scenarios.find((s) => s.caseType === 'expected_case');
@@ -435,11 +433,11 @@ function OverviewTab() {
 // =============================================================================
 
 function BaselineTab() {
-    const { getBaselineScenarios, selectScenario, selectedScenarioId, getImpactExplanation } = useScenarioStore();
+    const { scenarios, selectScenario, selectedScenarioId, getImpactExplanation } = useScenarioStore();
     const [expandedId, setExpandedId] = useState<string | null>(null);
-    
-    const baselineScenarios = getBaselineScenarios();
-    const expectedCase = baselineScenarios.find((s) => s.caseType === 'expected_case');
+
+    const baselineScenarios = scenarios.filter((s: Scenario) => s.caseType === 'expected_case' || s.caseType === 'best_case' || s.caseType === 'worst_case');
+    const expectedCase = baselineScenarios.find((s: Scenario) => s.caseType === 'expected_case');
 
     return (
         <div className="space-y-6">
@@ -598,8 +596,8 @@ function BaselineTab() {
 
 function CustomTab() {
     const {
-        getCustomScenarios,
-        getBaselineScenarios,
+        scenarios,
+        comments: allComments,
         selectScenario,
         selectedScenarioId,
         createScenario,
@@ -609,7 +607,6 @@ function CustomTab() {
         lockScenario,
         approveScenario,
         updateAssumption,
-        getScenarioComments,
         addComment,
         filter,
         setFilter,
@@ -620,11 +617,11 @@ function CustomTab() {
     const [baseScenarioId, setBaseScenarioId] = useState('expected-case');
     const [commentText, setCommentText] = useState('');
 
-    const customScenarios = getCustomScenarios();
-    const baselineScenarios = getBaselineScenarios();
-    const selectedScenario = customScenarios.find((s) => s.id === selectedScenarioId) ||
-                             baselineScenarios.find((s) => s.id === selectedScenarioId);
-    const comments = selectedScenario ? getScenarioComments(selectedScenario.id) : [];
+    const customScenarios = scenarios.filter((s: Scenario) => s.caseType === 'custom');
+    const baselineScenarios = scenarios.filter((s: Scenario) => s.caseType === 'expected_case' || s.caseType === 'best_case' || s.caseType === 'worst_case');
+    const selectedScenario = customScenarios.find((s: Scenario) => s.id === selectedScenarioId) ||
+                             baselineScenarios.find((s: Scenario) => s.id === selectedScenarioId);
+    const comments = selectedScenario ? allComments.filter((c: ScenarioComment) => c.scenarioId === selectedScenario.id) : [];
 
     const handleCreate = () => {
         if (!newScenarioName.trim()) return;
@@ -966,7 +963,7 @@ function StressTab() {
 
     const handleRunTest = () => {
         if (!selectedTemplate) return;
-        runStressTest(selectedTemplate, intensity);
+        runStressTest(selectedTemplate, String(intensity));
         setSelectedTemplate(null);
     };
 

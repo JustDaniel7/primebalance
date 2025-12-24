@@ -6,16 +6,18 @@ import { prisma } from '@/lib/prisma';
 // GET /api/projects/[id] - Get a single project
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const user = await getSessionWithOrg();
         if (!user?.organizationId) return unauthorized();
 
+        const { id } = await params;
+
         // @ts-ignore
         const project = await prisma.project.findFirst({
             where: {
-                id: params.id,
+                id,
                 organizationId: user.organizationId,
             },
             include: {
@@ -29,8 +31,6 @@ export async function GET(
                 milestones: {
                     orderBy: { plannedDate: 'asc' },
                 },
-                budgetLines: true,
-                resourceAllocations: true,
             },
         });
 
@@ -66,18 +66,19 @@ export async function GET(
 // PATCH /api/projects/[id] - Update a project
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const user = await getSessionWithOrg();
         if (!user?.organizationId) return unauthorized();
 
+        const { id } = await params;
         const body = await req.json();
 
         // Verify project exists and belongs to organization
         const existing = await prisma.project.findFirst({
             where: {
-                id: params.id,
+                id,
                 organizationId: user.organizationId,
             },
         });
@@ -148,7 +149,7 @@ export async function PATCH(
         if (body.tags !== undefined) updateData.tags = body.tags;
 
         const project = await prisma.project.update({
-            where: { id: params.id },
+            where: { id },
             data: updateData,
             include: {
                 costCenter: {
@@ -166,17 +167,19 @@ export async function PATCH(
 
 // DELETE /api/projects/[id] - Delete a project
 export async function DELETE(
-    req: NextRequest,
-    { params }: { params: { id: string } }
+    _req: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const user = await getSessionWithOrg();
         if (!user?.organizationId) return unauthorized();
 
+        const { id } = await params;
+
         // Verify project exists and belongs to organization
         const existing = await prisma.project.findFirst({
             where: {
-                id: params.id,
+                id,
                 organizationId: user.organizationId,
             },
         });
@@ -185,7 +188,7 @@ export async function DELETE(
 
         // Delete project (cascades to related records)
         await prisma.project.delete({
-            where: { id: params.id },
+            where: { id },
         });
 
         return NextResponse.json({ success: true });

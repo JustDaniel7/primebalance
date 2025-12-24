@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma'
 import { getSessionWithOrg, unauthorized, badRequest, notFound } from '@/lib/api-utils'
 
 // GET /api/period-close/[id] - Get single period with all related data
-export async function GET_PERIOD(
+export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -31,7 +31,7 @@ export async function GET_PERIOD(
 }
 
 // PATCH /api/period-close/[id] - Update period (including status transitions)
-export async function PATCH_PERIOD(
+export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -119,7 +119,7 @@ export async function PATCH_PERIOD(
 }
 
 // DELETE /api/period-close/[id] - Delete period (only if open/draft)
-export async function DELETE_PERIOD(
+export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {

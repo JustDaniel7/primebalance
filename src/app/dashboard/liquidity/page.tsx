@@ -94,6 +94,10 @@ const getRiskBadge = (level: LiquidityRiskLevel): string => {
 function PositionOverview() {
     const { dashboard } = useLiquidityStore();
 
+    if (!dashboard) {
+        return <div className="p-4 text-gray-500">Loading dashboard...</div>;
+    }
+
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card variant="glass" padding="md">
@@ -129,10 +133,10 @@ function PositionOverview() {
                     <span className="text-xs text-gray-500 uppercase tracking-wider">Risk Level</span>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                    <div className={`w-3 h-3 rounded-full ${getRiskBadge(dashboard.riskSummary.overallRisk)}`} />
-                    <span className="text-xl font-bold capitalize">{dashboard.riskSummary.overallRisk}</span>
+                    <div className={`w-3 h-3 rounded-full ${getRiskBadge(dashboard.riskSummary?.overallRisk ?? 'low')}`} />
+                    <span className="text-xl font-bold capitalize">{dashboard.riskSummary?.overallRisk ?? 'Unknown'}</span>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Score: {dashboard.riskSummary.riskScore}/100</p>
+                <p className="text-xs text-gray-500 mt-1">Score: {dashboard.riskSummary?.riskScore ?? 0}/100</p>
             </Card>
         </div>
     );
@@ -143,7 +147,12 @@ function PositionOverview() {
 // =============================================================================
 
 function ScenarioSelector() {
-    const { selectedScenario, setSelectedScenario, dashboard } = useLiquidityStore();
+    const { selectedScenarioId, selectScenario, dashboard } = useLiquidityStore();
+    const [selectedType, setSelectedType] = useState<ScenarioType>('base');
+
+    if (!dashboard) {
+        return <div className="p-4 text-gray-500">Loading scenarios...</div>;
+    }
 
     const scenarios = [
         { type: 'base' as ScenarioType, scenario: dashboard.baseScenario },
@@ -156,15 +165,18 @@ function ScenarioSelector() {
             {scenarios.map(({ type, scenario }) => (
                 <button
                     key={type}
-                    onClick={() => setSelectedScenario(type)}
+                    onClick={() => {
+                        setSelectedType(type);
+                        if (scenario?.id) selectScenario(scenario.id);
+                    }}
                     className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        selectedScenario === type
+                        selectedType === type
                             ? 'bg-white dark:bg-surface-900 shadow-sm text-gray-900 dark:text-white'
                             : 'text-gray-600 dark:text-gray-400 hover:text-gray-900'
                     }`}
                 >
-                    <span>{scenario.name}</span>
-                    {scenario.varianceVsBase && selectedScenario !== 'base' && selectedScenario === type && (
+                    <span>{scenario?.name ?? type}</span>
+                    {scenario?.varianceVsBase && selectedType !== 'base' && selectedType === type && (
                         <span className={`ml-2 text-xs ${scenario.varianceVsBase.endingBalanceDiff >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                             ({scenario.varianceVsBase.endingBalanceDiff >= 0 ? '+' : ''}{formatCurrency(scenario.varianceVsBase.endingBalanceDiff)})
                         </span>
@@ -180,11 +192,16 @@ function ScenarioSelector() {
 // =============================================================================
 
 function TimelineChart() {
-    const { getActiveTimeline, dashboard } = useLiquidityStore();
-    const timeline = getActiveTimeline();
+    const { dashboard } = useLiquidityStore();
 
-    const maxBalance = Math.max(...timeline.periods.map((p) => p.closingBalance), timeline.currentCashBalance);
-    const minBalance = Math.min(...timeline.periods.map((p) => p.closingBalance), 0);
+    if (!dashboard?.baseScenario?.timeline) {
+        return <div className="p-4 text-gray-500">Loading timeline...</div>;
+    }
+
+    const timeline = dashboard.baseScenario.timeline;
+
+    const maxBalance = Math.max(...timeline.periods.map((p: { closingBalance: number }) => p.closingBalance), timeline.currentCashBalance);
+    const minBalance = Math.min(...timeline.periods.map((p: { closingBalance: number }) => p.closingBalance), 0);
     const range = maxBalance - minBalance;
 
     const getBarHeight = (value: number): number => {
@@ -302,9 +319,14 @@ function TimelineChart() {
 // =============================================================================
 
 function CashflowBreakdown() {
-    const { getActiveTimeline, cashflowItems } = useLiquidityStore();
-    const timeline = getActiveTimeline();
+    const { dashboard, cashflows } = useLiquidityStore();
     const [showDetails, setShowDetails] = useState(false);
+
+    if (!dashboard?.baseScenario?.timeline) {
+        return <div className="p-4 text-gray-500">Loading cashflow data...</div>;
+    }
+
+    const timeline = dashboard.baseScenario.timeline;
 
     // Aggregate by category
     const inflowCategories = CASHFLOW_CATEGORIES.filter((c) => c.type === 'inflow');
@@ -313,11 +335,11 @@ function CashflowBreakdown() {
     const aggregateByCategory = (type: 'inflow' | 'outflow') => {
         const categories = type === 'inflow' ? inflowCategories : outflowCategories;
         return categories.map((cat) => {
-            const items = cashflowItems.filter((i) => i.category === cat.value);
-            const total = items.reduce((sum, i) => sum + i.amount, 0);
-            const confirmed = items.filter((i) => i.confidence === 'confirmed').reduce((sum, i) => sum + i.amount, 0);
-            const expected = items.filter((i) => i.confidence === 'expected').reduce((sum, i) => sum + i.amount, 0);
-            const estimated = items.filter((i) => i.confidence === 'estimated').reduce((sum, i) => sum + i.amount, 0);
+            const items = cashflows.filter((i: CashflowItem) => i.category === cat.value);
+            const total = items.reduce((sum: number, i: CashflowItem) => sum + i.amount, 0);
+            const confirmed = items.filter((i: CashflowItem) => i.confidence === 'confirmed').reduce((sum: number, i: CashflowItem) => sum + i.amount, 0);
+            const expected = items.filter((i: CashflowItem) => i.confidence === 'expected').reduce((sum: number, i: CashflowItem) => sum + i.amount, 0);
+            const estimated = items.filter((i: CashflowItem) => i.confidence === 'estimated').reduce((sum: number, i: CashflowItem) => sum + i.amount, 0);
             return { ...cat, total, confirmed, expected, estimated, itemCount: items.length };
         }).filter((c) => c.total > 0);
     };
@@ -423,6 +445,10 @@ function CashflowBreakdown() {
 function ScenarioComparison() {
     const { dashboard } = useLiquidityStore();
 
+    if (!dashboard) {
+        return <div className="p-4 text-gray-500">Loading scenario comparison...</div>;
+    }
+
     const scenarios = [
         { name: 'Base Case', data: dashboard.baseScenario, color: 'blue' },
         { name: 'Conservative', data: dashboard.conservativeScenario, color: 'amber' },
@@ -513,6 +539,11 @@ function ScenarioComparison() {
 
 function RiskSignals() {
     const { dashboard } = useLiquidityStore();
+
+    if (!dashboard?.riskSummary) {
+        return <div className="p-4 text-gray-500">Loading risk signals...</div>;
+    }
+
     const { riskSummary } = dashboard;
 
     return (
@@ -564,6 +595,10 @@ function RiskSignals() {
 
 function ConfidenceBandsSection() {
     const { dashboard } = useLiquidityStore();
+
+    if (!dashboard) {
+        return <div className="p-4 text-gray-500">Loading confidence bands...</div>;
+    }
 
     return (
         <Card variant="glass" padding="md">
@@ -618,12 +653,20 @@ function ConfidenceBandsSection() {
 
 export default function LiquidityPage() {
     const { t } = useThemeStore();
-    const { dashboard, refreshData, isLoading, timeBucket, setTimeBucket, horizonDays, setHorizonDays, logAction } = useLiquidityStore();
+    const { dashboard, refreshDashboard, isLoading, timeBucket, setTimeBucket, horizonDays, setHorizonDays, fetchDashboard } = useLiquidityStore();
     const [activeTab, setActiveTab] = useState<'timeline' | 'scenarios' | 'risk'>('timeline');
 
     useEffect(() => {
-        logAction('view', 'Liquidity dashboard accessed');
-    }, []);
+        fetchDashboard();
+    }, [fetchDashboard]);
+
+    if (!dashboard) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <div className="text-gray-500">Loading liquidity dashboard...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6">
@@ -664,7 +707,7 @@ export default function LiquidityPage() {
                         variant="secondary"
                         size="sm"
                         leftIcon={<RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />}
-                        onClick={refreshData}
+                        onClick={refreshDashboard}
                         disabled={isLoading}
                     >
                         Refresh

@@ -885,7 +885,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
         rejected: 'bg-red-100 text-red-700',
     };
 
-    const handleApprove = () => { approveSession(session.id, 'Current User'); onClose(); };
+    const handleApprove = () => { approveSession(session.id); onClose(); };
     const handleReject = () => { if (rejectReason.trim()) { rejectSession(session.id, rejectReason); setShowRejectModal(false); onClose(); } };
     const handleSettle = () => { settleSession(session.id); onClose(); };
 
@@ -1132,7 +1132,7 @@ function OffsetsTab() {
                     <div className="flex items-center justify-between mt-3">
                         <p className="text-sm text-gray-500">{t('netting.offsetAmount') || 'Offset'}: <span className="font-bold text-gray-900 dark:text-white">${offset.offsetAmount.toLocaleString()}</span></p>
                         <div className="flex gap-2">
-                            {offset.status === 'pending' && <Button variant="secondary" size="sm" onClick={() => approveOffset(offset.id, 'User')}>{t('netting.approve') || 'Approve'}</Button>}
+                            {offset.status === 'pending' && <Button variant="secondary" size="sm" onClick={() => approveOffset(offset.id)}>{t('netting.approve') || 'Approve'}</Button>}
                             {offset.status === 'approved' && <Button variant="primary" size="sm" onClick={() => applyOffset(offset.id)}>{t('netting.apply') || 'Apply'}</Button>}
                         </div>
                     </div>

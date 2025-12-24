@@ -497,7 +497,7 @@ function SupplierDetailModal({ supplier, onClose }: { supplier: Supplier; onClos
                                             </div>
                                         </div>
                                         {risk.status !== 'resolved' && (
-                                            <Button variant="secondary" size="sm" onClick={() => resolveRisk(risk.id)}>
+                                            <Button variant="secondary" size="sm" onClick={() => resolveRisk(supplier.id, risk.id)}>
                                                 {t('suppliers.resolve') || 'Resolve'}
                                             </Button>
                                         )}

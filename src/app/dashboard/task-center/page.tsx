@@ -145,26 +145,27 @@ const getBadgeVariant = (color: string): 'success' | 'warning' | 'danger' | 'inf
 function TodayOverview() {
     const { t, language } = useThemeStore();
     const {
+        tasks,
+        risks,
         getTaskSummary,
         getRiskSummary,
-        getTodayTasks,
-        getOverdueTasks,
-        getDueSoonTasks,
-        getBlockedTasks,
-        getCriticalRisks,
         completeTask,
         setActiveTab,
         setTaskFilter,
-        setSelectedTask,
     } = useTaskStore();
+    const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
     const taskSummary = getTaskSummary();
     const riskSummary = getRiskSummary();
-    const todayTasks = getTodayTasks();
-    const overdueTasks = getOverdueTasks();
-    const dueSoonTasks = getDueSoonTasks();
-    const blockedTasks = getBlockedTasks();
-    const criticalRisks = getCriticalRisks();
+
+    // Filter tasks for today, overdue, due soon, and blocked
+    const today = new Date().toISOString().split('T')[0];
+    const todayTasks = tasks.filter((t: Task) => t.dueDate?.startsWith(today) && t.status !== 'completed');
+    const overdueTasks = tasks.filter((t: Task) => t.dueDate && t.dueDate < today && t.status !== 'completed');
+    const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const dueSoonTasks = tasks.filter((t: Task) => t.dueDate && t.dueDate > today && t.dueDate <= nextWeek && t.status !== 'completed');
+    const blockedTasks = tasks.filter((t: Task) => t.isBlocked && t.status !== 'completed');
+    const criticalRisks = risks.filter((r: Risk) => r.severity === 'critical' && r.status !== 'resolved');
 
     const formatDate = (dateStr: string) => {
         return new Date(dateStr).toLocaleDateString(
@@ -310,7 +311,7 @@ function TodayOverview() {
                                 return (
                                     <div
                                         key={task.id}
-                                        onClick={() => setSelectedTask(task.id)}
+                                        onClick={() => setSelectedTaskId(task.id)}
                                         className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors ${
                                             isOverdue
                                                 ? 'bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30'
@@ -498,17 +499,14 @@ function TasksTab() {
         completeTask,
         snoozeTask,
         openTaskWizard,
-        setSelectedTask,
-        selectedTaskId,
-        owners,
-        tags,
     } = useTaskStore();
 
     const [showFilters, setShowFilters] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
     const filteredTasks = getFilteredTasks();
-    const groupedTasks = getGroupedTasks(taskViewPreferences.groupBy);
+    const groupedTasks = getGroupedTasks();
 
     const formatDate = (dateStr: string) => {
         return new Date(dateStr).toLocaleDateString(
@@ -860,7 +858,7 @@ function TasksTab() {
                                                 } ${isOverdue ? 'border-l-4 border-red-500' : ''} ${
                                                     task.isBlocked ? 'border-l-4 border-orange-500' : ''
                                                 }`}
-                                                onClick={() => setSelectedTask(task.id)}
+                                                onClick={() => setSelectedTaskId(task.id)}
                                             >
                                                 <div className="flex items-center gap-4 p-4">
                                                     {/* Checkbox */}
@@ -1028,17 +1026,15 @@ function RisksTab() {
         resetRiskFilter,
         riskViewPreferences,
         setRiskViewPreferences,
-        acknowledgeRisk,
         openRiskWizard,
-        setSelectedRisk,
-        selectedRiskId,
     } = useTaskStore();
 
     const [showFilters, setShowFilters] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedRiskId, setSelectedRiskId] = useState<string | null>(null);
 
     const filteredRisks = getFilteredRisks();
-    const groupedRisks = getGroupedRisks(riskViewPreferences.groupBy);
+    const groupedRisks = getGroupedRisks();
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
@@ -1276,7 +1272,7 @@ function RisksTab() {
                                                     ? 'border-l-4 border-orange-500'
                                                     : ''
                                             }`}
-                                            onClick={() => setSelectedRisk(risk.id)}
+                                            onClick={() => setSelectedRiskId(risk.id)}
                                         >
                                             <div className="flex items-center gap-4 p-4">
                                                 {/* Severity Indicator */}
@@ -1408,15 +1404,15 @@ function RisksTab() {
 
 function ShortcutsTab() {
     const { t } = useThemeStore();
-    const { savedFilters, setActiveTab, setTaskFilter, deleteFilter } = useTaskStore();
+    const { setTaskFilter, setRiskFilter } = useTaskStore();
 
     const quickLinks = [
-        { icon: Calendar, label: 'Due Today', action: () => { setActiveTab('tasks'); setTaskFilter({ dueDateFrom: new Date().toISOString().split('T')[0], dueDateTo: new Date().toISOString().split('T')[0] }); }, color: 'blue' },
-        { icon: AlertTriangle, label: 'Overdue Tasks', action: () => { setActiveTab('tasks'); setTaskFilter({ isOverdue: true }); }, color: 'red' },
-        { icon: Pause, label: 'Blocked Tasks', action: () => { setActiveTab('tasks'); setTaskFilter({ isBlocked: true }); }, color: 'orange' },
-        { icon: Eye, label: 'Needs Review', action: () => { setActiveTab('tasks'); setTaskFilter({ status: ['awaiting_review'] }); }, color: 'purple' },
-        { icon: AlertOctagon, label: 'Critical Risks', action: () => { setActiveTab('risks'); }, color: 'red' },
-        { icon: Clock, label: 'Due This Week', action: () => { setActiveTab('tasks'); }, color: 'cyan' },
+        { icon: Calendar, label: 'Due Today', action: () => { setTaskFilter({ dueDateFrom: new Date().toISOString().split('T')[0], dueDateTo: new Date().toISOString().split('T')[0] }); }, color: 'blue' },
+        { icon: AlertTriangle, label: 'Overdue Tasks', action: () => { setTaskFilter({ isOverdue: true }); }, color: 'red' },
+        { icon: Pause, label: 'Blocked Tasks', action: () => { setTaskFilter({ isBlocked: true }); }, color: 'orange' },
+        { icon: Eye, label: 'Needs Review', action: () => { setTaskFilter({ status: ['awaiting_review'] }); }, color: 'purple' },
+        { icon: AlertOctagon, label: 'Critical Risks', action: () => { setRiskFilter({ severity: ['critical'] }); }, color: 'red' },
+        { icon: Clock, label: 'Due This Week', action: () => { setTaskFilter({}); }, color: 'cyan' },
     ];
 
     const recentViews = [
@@ -1479,48 +1475,14 @@ function ShortcutsTab() {
             {/* Saved Filters */}
             <div>
                 <h3 className="text-sm font-semibold text-gray-700 dark:text-surface-300 mb-4">Saved Filters</h3>
-                {savedFilters.length === 0 ? (
-                    <Card variant="glass" padding="lg">
-                        <div className="text-center py-6">
-                            <Bookmark size={32} className="mx-auto mb-2 text-gray-300 dark:text-surface-600" />
-                            <p className="text-gray-500 dark:text-surface-400 text-sm">
-                                Save your frequently used filters for quick access
-                            </p>
-                        </div>
-                    </Card>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {savedFilters.map((filter) => (
-                            <Card
-                                key={filter.id}
-                                variant="glass"
-                                padding="md"
-                                className="hover:border-[var(--accent-primary)] cursor-pointer transition-all"
-                            >
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <Filter size={16} className="text-gray-400" />
-                                        <span className="font-medium text-gray-900 dark:text-surface-100">{filter.name}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        {filter.isShared && (
-                                            <Users size={14} className="text-gray-400" />
-                                        )}
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                deleteFilter(filter.id);
-                                            }}
-                                            className="text-gray-400 hover:text-red-500"
-                                        >
-                                            <X size={14} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </Card>
-                        ))}
+                <Card variant="glass" padding="lg">
+                    <div className="text-center py-6">
+                        <Bookmark size={32} className="mx-auto mb-2 text-gray-300 dark:text-surface-600" />
+                        <p className="text-gray-500 dark:text-surface-400 text-sm">
+                            Save your frequently used filters for quick access
+                        </p>
                     </div>
-                )}
+                </Card>
             </div>
 
             {/* Recent Views */}
@@ -1584,7 +1546,8 @@ function ShortcutsTab() {
 
 export default function TaskCenterPage() {
     const { t } = useThemeStore();
-    const { activeTab, setActiveTab, isLoading, fetchTasks, fetchRisks, getTaskSummary, getRiskSummary } = useTaskStore();
+    const { isLoading, fetchTasks, fetchRisks, getTaskSummary, getRiskSummary } = useTaskStore();
+    const [activeTab, setActiveTab] = useState<'today' | 'tasks' | 'risks' | 'shortcuts'>('today');
 
     const taskSummary = getTaskSummary();
     const riskSummary = getRiskSummary();

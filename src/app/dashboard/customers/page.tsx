@@ -522,7 +522,7 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                         {indicator.status === 'active' && (
                                             <Button variant="secondary" size="sm" onClick={() => {
                                                 const action = prompt('Enter action taken to resolve:');
-                                                if (action) resolveRiskIndicator(indicator.id, action);
+                                                if (action) resolveRiskIndicator(customer.id, indicator.id, action);
                                             }}>
                                                 {t('customers.resolve') || 'Resolve'}
                                             </Button>

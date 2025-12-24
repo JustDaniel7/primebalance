@@ -449,7 +449,7 @@ async function main() {
 
   for (const w of wallets) {
     await prisma.wallet.upsert({
-      where: { userId_address: { userId: user.id, address: w.address } },
+      where: { userId_address_network: { userId: user.id, address: w.address, network: w.network } },
       update: {},
       create: { ...w, userId: user.id },
     })
@@ -2704,13 +2704,11 @@ async function main() {
         name: sup.name,
         category: sup.category,
         status: sup.status,
-        industry: sup.industry,
         email: sup.email,
         paymentTerms: sup.paymentTerms,
-        totalPurchases: sup.totalPurchases,
-        qualityRating: sup.qualityRating,
-        deliveryRating: sup.deliveryRating,
-        overallRating: (sup.qualityRating + sup.deliveryRating) / 2,
+        totalSpend: sup.totalPurchases,
+        qualityScore: Math.round(sup.qualityRating * 20),
+        reliabilityScore: Math.round((sup.qualityRating + sup.deliveryRating) / 2 * 20),
         onTimeDeliveryRate: sup.onTimeDeliveryRate,
         organizationId: org.id,
       },
@@ -2737,15 +2735,17 @@ async function main() {
         offerNumber: offer.offerNumber,
         status: offer.status,
         customerName: offer.customerName,
+        counterparty: { name: offer.customerName },
         offerDate: offer.offerDate,
-        validUntil: offer.validUntil,
+        expiryDate: offer.validUntil,
+        validityDays: 30,
         acceptedAt: offer.acceptedAt,
         rejectedAt: offer.rejectedAt,
-        items: [{ description: 'Professional Services', quantity: 1, unitPrice: offer.subtotal, total: offer.subtotal }],
+        lineItems: [{ description: 'Professional Services', quantity: 1, unitPrice: offer.subtotal, total: offer.subtotal }],
         currency: 'EUR',
         subtotal: offer.subtotal,
-        taxAmount: offer.taxAmount,
-        total: offer.total,
+        taxTotal: offer.taxAmount,
+        grandTotal: offer.total,
         taxRate: offer.taxRate,
         organizationId: org.id,
       },
@@ -2773,11 +2773,10 @@ async function main() {
         title: task.title,
         status: task.status,
         priority: task.priority,
-        taskType: task.taskType,
+        type: task.taskType,
         category: task.category,
         dueDate: task.dueDate,
         completedAt: task.completedAt,
-        progress: task.progress,
         createdById: user.id,
         organizationId: org.id,
         assignees: {
@@ -2797,49 +2796,44 @@ async function main() {
   console.log('\n📈 Creating Cash Forecasts...')
   const forecast = await prisma.cashForecast.create({
     data: {
-      name: '2025 Annual Cash Flow Forecast',
-      description: 'Primary cash flow projection for fiscal year 2025',
-      status: 'active',
-      periodType: 'monthly',
-      startDate: new Date('2025-01-01'),
-      endDate: new Date('2025-12-31'),
-      fiscalYear: 2025,
-      version: 1,
-      isBaseline: true,
-      totalRevenue: 1800000,
-      totalExpense: 1450000,
-      totalProfit: 350000,
-      totalCashFlow: 280000,
+      version: 'baseline',
+      timeHorizon: 'year',
+      granularity: 'monthly',
+      currency: 'EUR',
+      currentCashBalance: 250000,
+      minimumCashRunway: 90,
+      covenantThreshold: 100000,
+      projectedMinimumBalance: 180000,
+      avgCollectionDays: 30,
+      avgPaymentTerms: 30,
+      confidence: 'high',
       organizationId: org.id,
     },
   })
 
   const forecastPeriods = [
-    { label: '2025-01', revenue: 140000, expense: 115000, cashInflow: 135000, cashOutflow: 120000 },
-    { label: '2025-02', revenue: 145000, expense: 118000, cashInflow: 142000, cashOutflow: 115000 },
-    { label: '2025-03', revenue: 155000, expense: 120000, cashInflow: 150000, cashOutflow: 125000 },
-    { label: '2025-04', revenue: 150000, expense: 122000, cashInflow: 148000, cashOutflow: 118000 },
-    { label: '2025-05', revenue: 160000, expense: 125000, cashInflow: 155000, cashOutflow: 122000 },
-    { label: '2025-06', revenue: 165000, expense: 128000, cashInflow: 160000, cashOutflow: 130000 },
+    { label: '2025-01', openingBalance: 250000, closingBalance: 265000, netCashFlow: 15000 },
+    { label: '2025-02', openingBalance: 265000, closingBalance: 292000, netCashFlow: 27000 },
+    { label: '2025-03', openingBalance: 292000, closingBalance: 317000, netCashFlow: 25000 },
+    { label: '2025-04', openingBalance: 317000, closingBalance: 347000, netCashFlow: 30000 },
+    { label: '2025-05', openingBalance: 347000, closingBalance: 380000, netCashFlow: 33000 },
+    { label: '2025-06', openingBalance: 380000, closingBalance: 410000, netCashFlow: 30000 },
   ]
 
-  let closingCash = 250000
   for (const fp of forecastPeriods) {
-    const netCash = fp.cashInflow - fp.cashOutflow
-    closingCash += netCash
     await prisma.cashForecastPeriod.create({
       data: {
+        periodId: fp.label,
         periodLabel: fp.label,
-        periodStart: new Date(`${fp.label}-01`),
-        periodEnd: new Date(`${fp.label}-28`),
-        revenue: fp.revenue,
-        expense: fp.expense,
-        profit: fp.revenue - fp.expense,
-        cashInflow: fp.cashInflow,
-        cashOutflow: fp.cashOutflow,
-        netCashFlow: netCash,
-        closingCash: closingCash,
-        forecastId: forecast.id,
+        startDate: new Date(`${fp.label}-01`),
+        endDate: new Date(`${fp.label}-28`),
+        openingBalance: fp.openingBalance,
+        closingBalance: fp.closingBalance,
+        netCashFlow: fp.netCashFlow,
+        cashIn: { expected: fp.netCashFlow + 50000, bestCase: fp.netCashFlow + 60000, worstCase: fp.netCashFlow + 40000 },
+        cashOut: { expected: 50000, bestCase: 45000, worstCase: 55000 },
+        confidence: 'high',
+        cashForecastId: forecast.id,
       },
     })
   }
@@ -2849,59 +2843,54 @@ async function main() {
   // SCENARIOS
   // =============================================================================
   console.log('\n🎯 Creating Scenarios...')
-  const scenarios = [
+  const scenariosData = [
     {
       name: 'Optimistic Growth',
       description: 'Revenue growth 20% above baseline with moderate cost increases',
-      type: 'what_if',
-      status: 'active',
-      parameters: { revenueGrowth: { base: 10, adjusted: 20 }, costGrowth: { base: 5, adjusted: 8 } },
-      revenueImpact: 180000,
-      profitImpact: 126000,
-      probability: 25,
-      riskLevel: 'low',
+      caseType: 'best_case',
+      status: 'approved',
+      metrics: { revenue: 2160000, costs: 1740000, cash: 420000, netPosition: 420000, profitMargin: 19.4 },
+      confidenceLevel: 'medium',
+      confidenceScore: 65,
     },
     {
       name: 'Conservative Baseline',
       description: 'Baseline assumptions with 5% safety buffer',
-      type: 'what_if',
-      status: 'active',
-      parameters: { revenueGrowth: { base: 10, adjusted: 5 }, costGrowth: { base: 5, adjusted: 5 } },
-      revenueImpact: -90000,
-      profitImpact: -90000,
-      probability: 50,
-      riskLevel: 'low',
+      caseType: 'expected_case',
+      status: 'approved',
+      metrics: { revenue: 1800000, costs: 1450000, cash: 350000, netPosition: 350000, profitMargin: 19.4 },
+      confidenceLevel: 'high',
+      confidenceScore: 85,
     },
     {
       name: 'Economic Downturn',
       description: 'Stress test: 15% revenue decline, cost reduction measures',
-      type: 'stress_test',
-      status: 'active',
-      parameters: { revenueGrowth: { base: 10, adjusted: -15 }, costGrowth: { base: 5, adjusted: -10 } },
-      revenueImpact: -450000,
-      profitImpact: -305000,
-      probability: 15,
-      riskLevel: 'high',
+      caseType: 'worst_case',
+      status: 'reviewed',
+      metrics: { revenue: 1530000, costs: 1305000, cash: 225000, netPosition: 225000, profitMargin: 14.7 },
+      confidenceLevel: 'low',
+      confidenceScore: 40,
     },
   ]
 
-  for (const sc of scenarios) {
+  for (const sc of scenariosData) {
     await prisma.scenario.create({
       data: {
         name: sc.name,
         description: sc.description,
-        type: sc.type,
+        caseType: sc.caseType,
         status: sc.status,
-        parameters: sc.parameters,
-        revenueImpact: sc.revenueImpact,
-        profitImpact: sc.profitImpact,
-        probability: sc.probability,
-        riskLevel: sc.riskLevel,
+        metrics: sc.metrics,
+        confidenceLevel: sc.confidenceLevel,
+        confidenceScore: sc.confidenceScore,
+        ownerId: user.id,
+        ownerName: user.name || 'Demo User',
+        createdBy: user.id,
         organizationId: org.id,
       },
     })
   }
-  console.log('  ✓ Created', treasuryScenarios.length, 'scenarios')
+  console.log('  ✓ Created', scenariosData.length, 'scenarios')
 
   // =============================================================================
   // KPIs
@@ -2952,20 +2941,22 @@ async function main() {
   for (const fx of fxExposures) {
     const unhedgedAmount = fx.exposureAmount - fx.hedgedAmount
     const hedgePercentage = (fx.hedgedAmount / fx.exposureAmount) * 100
-    const unrealizedGL = (fx.currentRate - fx.bookingRate) * unhedgedAmount
     await prisma.fXExposure.create({
       data: {
         baseCurrency: fx.baseCurrency,
         quoteCurrency: fx.quoteCurrency,
-        type: fx.type,
+        type: 'transactional',
+        direction: fx.type === 'receivable' ? 'inflow' : 'outflow',
         status: fx.hedgedAmount >= fx.exposureAmount ? 'hedged' : fx.hedgedAmount > 0 ? 'partial_hedged' : 'open',
-        exposureAmount: fx.exposureAmount,
+        grossExposure: fx.exposureAmount,
+        netExposure: fx.exposureAmount,
         hedgedAmount: fx.hedgedAmount,
         unhedgedAmount: unhedgedAmount,
         hedgePercentage: hedgePercentage,
+        spotRate: fx.currentRate,
         bookingRate: fx.bookingRate,
         currentRate: fx.currentRate,
-        unrealizedGainLoss: unrealizedGL,
+        baseCurrencyValue: fx.exposureAmount * fx.currentRate,
         exposureDate: new Date(),
         maturityDate: fx.maturityDate,
         organizationId: org.id,
@@ -2973,36 +2964,6 @@ async function main() {
     })
   }
   console.log('  ✓ Created', fxExposures.length, 'FX exposures')
-
-  // =============================================================================
-  // INVESTORS
-  // =============================================================================
-  console.log('\n🏦 Creating Investors...')
-  const investors = [
-    { name: 'Alpine Ventures', type: 'vc', totalInvested: 500000, ownershipPercent: 15, boardSeat: true, votingRights: 15 },
-    { name: 'Tech Angels Syndicate', type: 'angel', totalInvested: 150000, ownershipPercent: 5, boardSeat: false, votingRights: 5 },
-    { name: 'Strategic Partner AG', type: 'strategic', totalInvested: 250000, ownershipPercent: 8, boardSeat: false, votingRights: 8 },
-    { name: 'Founder Family Trust', type: 'family_office', totalInvested: 100000, ownershipPercent: 3, boardSeat: false, votingRights: 3 },
-  ]
-
-  for (const inv of investors) {
-    await prisma.investor.create({
-      data: {
-        name: inv.name,
-        type: inv.type,
-        status: 'active',
-        totalInvested: inv.totalInvested,
-        currentValue: inv.totalInvested * 1.35,
-        ownershipPercent: inv.ownershipPercent / 100,
-        unrealizedGain: inv.totalInvested * 0.35,
-        boardSeat: inv.boardSeat,
-        votingRights: inv.votingRights / 100,
-        investmentDate: daysAgo(365),
-        organizationId: org.id,
-      },
-    })
-  }
-  console.log('  ✓ Created', investors.length, 'investors')
 
   // =============================================================================
   // LIQUIDITY POSITIONS

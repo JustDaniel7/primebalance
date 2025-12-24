@@ -69,7 +69,7 @@ function mapApiToScenario(api: Record<string, unknown>): Scenario {
     createdAt: api.createdAt as string,
     createdBy: api.createdBy as string,
     lastModifiedAt: api.updatedAt as string,
-    lastModifiedBy: api.lastModifiedBy as string | undefined,
+    lastModifiedBy: (api.lastModifiedBy as string | undefined) || '',
     lockedAt: api.lockedAt as string | undefined,
     lockedBy: api.lockedBy as string | undefined,
     approvedAt: api.approvedAt as string | undefined,
@@ -653,6 +653,7 @@ export const useScenarioStore = create<ScenarioState>()(
             resultMetrics: { ...scenario.metrics },
             comparisonBaselineId: baseScenarioId,
             isPinned: false,
+            createdAt: new Date().toISOString(),
           },
           isSimulating: true,
         });

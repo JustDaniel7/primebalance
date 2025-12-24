@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     GitMerge,
@@ -157,7 +157,7 @@ function SessionCard({ session, onClick }: { session: NettingSession; onClick: (
 
 function SessionDetailModal({ session, onClose }: { session: NettingSession; onClose: () => void }) {
     const { t } = useThemeStore();
-    const { approveSession, rejectSession, settleSession, getSessionPositions, getSessionSettlements } = useNettingStore();
+    const { approveSession, rejectSession, settleSession, getSessionPositions } = useNettingStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'positions' | 'settlements' | 'preview'>('overview');
     const [rejectReason, setRejectReason] = useState('');
     const [showRejectModal, setShowRejectModal] = useState(false);
@@ -174,7 +174,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
     };
 
     const handleApprove = () => {
-        approveSession(session.id, 'Current User');
+        approveSession(session.id);
         onClose();
     };
 
@@ -552,7 +552,7 @@ function OffsetsTab() {
                         <p className="text-sm text-gray-500">{t('netting.offsetAmount') || 'Offset Amount'}: <span className="font-bold text-gray-900 dark:text-white">${offset.offsetAmount.toLocaleString()}</span></p>
                         <div className="flex gap-2">
                             {offset.status === 'pending' && (
-                                <Button variant="secondary" size="sm" onClick={() => approveOffset(offset.id, 'Current User')}>
+                                <Button variant="secondary" size="sm" onClick={() => approveOffset(offset.id)}>
                                     {t('netting.approve') || 'Approve'}
                                 </Button>
                             )}
@@ -581,12 +581,19 @@ function OffsetsTab() {
 
 export default function NettingPage() {
     const { t } = useThemeStore();
-    const { sessions, agreements, selectSession, selectedSessionId, createAgreement } = useNettingStore();
+    const { sessions, agreements, selectSession, selectedSessionId, createAgreement, fetchSessions, fetchAgreements, fetchOffsets } = useNettingStore();
     const [activeTab, setActiveTab] = useState<'sessions' | 'agreements' | 'offsets'>('sessions');
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState<NettingStatus | 'all'>('all');
     const [filterType, setFilterType] = useState<NettingType | 'all'>('all');
     const [showWizard, setShowWizard] = useState(false);
+
+    // Fetch data on mount
+    useEffect(() => {
+        fetchSessions();
+        fetchAgreements();
+        fetchOffsets();
+    }, [fetchSessions, fetchAgreements, fetchOffsets]);
 
     const selectedSession = sessions.find((s) => s.id === selectedSessionId);
 

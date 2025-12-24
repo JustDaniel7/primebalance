@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     Shield,
@@ -152,7 +152,11 @@ function SectionHeader({ title, icon: Icon, badge }: { title: string; icon: any;
 
 function FinancialPerformanceSection() {
     const { dashboard, selectedPeriod } = useInvestorStore();
-    const { revenue, costs, margins } = dashboard;
+    const revenue = dashboard?.revenue;
+    const costs = dashboard?.costs;
+    const margins = dashboard?.margins;
+
+    if (!revenue || !costs || !margins) return null;
 
     return (
         <div className="space-y-4">
@@ -226,7 +230,11 @@ function FinancialPerformanceSection() {
 
 function FinancialPositionSection() {
     const { dashboard } = useInvestorStore();
-    const { cashPosition, liabilities, workingCapital } = dashboard;
+    const cashPosition = dashboard?.cashPosition;
+    const liabilities = dashboard?.liabilities;
+    const workingCapital = dashboard?.workingCapital;
+
+    if (!cashPosition || !liabilities || !workingCapital) return null;
 
     return (
         <div className="space-y-4">
@@ -293,7 +301,10 @@ function FinancialPositionSection() {
 
 function BurnRunwaySection() {
     const { dashboard } = useInvestorStore();
-    const { burn, runway } = dashboard;
+    const burn = dashboard?.burn;
+    const runway = dashboard?.runway;
+
+    if (!burn || !runway) return null;
 
     const primaryScenario = runway.scenarios.find((s) => s.type === runway.primaryScenario);
 
@@ -394,7 +405,9 @@ function BurnRunwaySection() {
 
 function RiskIndicatorsSection() {
     const { dashboard } = useInvestorStore();
-    const { risks } = dashboard;
+    const risks = dashboard?.risks;
+
+    if (!risks) return null;
 
     return (
         <div className="space-y-4">
@@ -468,9 +481,16 @@ function RiskIndicatorsSection() {
 
 function BoardSummarySection() {
     const { dashboard } = useInvestorStore();
-    const { boardSummary, revenue, burn, runway, risks, compliance } = dashboard;
+    const boardSummary = dashboard?.boardSummary;
+    const revenue = dashboard?.revenue;
+    const burn = dashboard?.burn;
+    const runway = dashboard?.runway;
+    const risks = dashboard?.risks;
+    const compliance = dashboard?.compliance;
     const [exportFormat, setExportFormat] = useState<'pdf' | 'docx' | 'csv' | 'xml'>('pdf');
     const [isExporting, setIsExporting] = useState(false);
+
+    if (!boardSummary || !revenue || !burn || !runway || !risks || !compliance) return null;
 
     const getImpactIcon = (impact: MaterialChange['impact']) => {
         if (impact === 'positive') return <ArrowUpRight size={14} className="text-emerald-500" />;
@@ -724,7 +744,9 @@ function BoardSummarySection() {
 
 function ComplianceSection() {
     const { dashboard } = useInvestorStore();
-    const { compliance } = dashboard;
+    const compliance = dashboard?.compliance;
+
+    if (!compliance) return null;
 
     return (
         <div className="space-y-4">
@@ -790,12 +812,8 @@ function ComplianceSection() {
 
 export default function InvestorPage() {
     const { t } = useThemeStore();
-    const { dashboard, selectedPeriod, setSelectedPeriod, refreshDashboard, isLoading, lastRefresh, logAccess } = useInvestorStore();
+    const { dashboard, selectedPeriod, setSelectedPeriod, refreshDashboard, isLoading, lastRefresh } = useInvestorStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'burn' | 'risk' | 'summary'>('overview');
-
-    useEffect(() => {
-        logAccess('page_view', 'Investor Dashboard');
-    }, []);
 
     return (
         <div className="space-y-6">
@@ -844,11 +862,11 @@ export default function InvestorPage() {
                 </div>
                 <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                        dashboard.dataQualityOverall === 'complete' ? 'bg-emerald-100 text-emerald-700' :
-                            dashboard.dataQualityOverall === 'partial' ? 'bg-amber-100 text-amber-700' :
+                        dashboard?.dataQualityOverall === 'complete' ? 'bg-emerald-100 text-emerald-700' :
+                            dashboard?.dataQualityOverall === 'partial' ? 'bg-amber-100 text-amber-700' :
                                 'bg-red-100 text-red-700'
                     }`}>
-                        Data: {dashboard.dataQualityOverall}
+                        Data: {dashboard?.dataQualityOverall}
                     </span>
                 </div>
             </div>
@@ -865,10 +883,7 @@ export default function InvestorPage() {
                     return (
                         <button
                             key={tab.id}
-                            onClick={() => {
-                                setActiveTab(tab.id as any);
-                                logAccess('tab_change', tab.label);
-                            }}
+                            onClick={() => setActiveTab(tab.id as any)}
                             className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all ${
                                 activeTab === tab.id
                                     ? 'bg-white dark:bg-surface-900 text-gray-900 dark:text-white shadow-sm'
@@ -910,7 +925,7 @@ export default function InvestorPage() {
                 <div className="flex items-start gap-2">
                     <Info size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
                     <p className="text-xs text-gray-500">
-                        {dashboard.disclaimers[0]} This dashboard provides read-only access and does not support data modification.
+                        {dashboard?.disclaimers[0]} This dashboard provides read-only access and does not support data modification.
                     </p>
                 </div>
             </Card>

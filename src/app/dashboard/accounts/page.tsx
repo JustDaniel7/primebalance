@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useStore } from '@/index'
 import { useThemeStore } from '@/store/theme-store'
@@ -15,9 +15,14 @@ import { RefreshCw, CreditCard, Building2, Landmark, Bitcoin, DollarSign, Wallet
 import type { AccountType } from '@/types'
 
 export default function AccountsPage() {
-  const { accounts } = useStore()
+  const { accounts, fetchAccounts } = useStore()
   const { t } = useThemeStore()
   const [selectedType, setSelectedType] = useState<AccountType | 'all'>('all')
+
+  // Fetch accounts on mount
+  useEffect(() => {
+    fetchAccounts()
+  }, [fetchAccounts])
 
   const accountTypes: Array<{ value: AccountType | 'all'; label: string; icon: React.ElementType }> = [
     { value: 'all', label: t('common.all'), icon: AccountsIcon },
