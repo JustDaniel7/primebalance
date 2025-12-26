@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useStore } from '@/index'
+import { useWalletStore } from '@/store/wallet-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Button, Badge } from '@/components/ui'
 import { WalletIcon, TrendUpIcon, TrendDownIcon } from '@/components/ui/Icons'
@@ -20,15 +20,29 @@ import {
 } from 'lucide-react'
 
 export default function WalletPage() {
-  const { cryptoTokens } = useStore()
+  const { wallets, fetchWallets, isLoading } = useWalletStore()
   const { t } = useThemeStore()
   const [activeTab, setActiveTab] = useState<'assets' | 'nfts' | 'defi' | 'history'>('assets')
 
-  const totalValue = cryptoTokens.reduce((sum, token) => sum + token.usdValue, 0)
-  const totalChange24h = cryptoTokens.reduce((sum, token) => 
-    sum + (token.usdValue * token.change24h / 100), 0
+  // Fetch wallets on mount
+  useEffect(() => {
+    fetchWallets()
+  }, [fetchWallets])
+
+  // Flatten all tokens from all wallets for display
+  const allTokens = wallets.flatMap(wallet =>
+    wallet.tokens.map(token => ({
+      ...token,
+      walletName: wallet.name,
+      network: wallet.network,
+    }))
   )
-  const changePercentage = (totalChange24h / (totalValue - totalChange24h)) * 100
+
+  const totalValue = wallets.reduce((sum, wallet) => sum + (wallet.totalValueUsd || 0), 0)
+  const totalChange24h = allTokens.reduce((sum, token) =>
+    sum + ((token.balanceUsd || 0) * (token.price24hChange || 0) / 100), 0
+  )
+  const changePercentage = totalValue > 0 ? (totalChange24h / (totalValue - totalChange24h)) * 100 : 0
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -121,42 +135,52 @@ export default function WalletPage() {
       {/* Assets Tab */}
       {activeTab === 'assets' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {cryptoTokens.map((token, index) => (
-            <motion.div
-              key={token.symbol}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Card variant="glass" padding="md" hover>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-surface-800/50 flex items-center justify-center text-2xl">
-                      {token.symbol === 'BTC' && '₿'}
-                      {token.symbol === 'ETH' && 'Ξ'}
-                      {token.symbol === 'SOL' && '◎'}
-                      {token.symbol === 'USDC' && '$'}
-                      {!['BTC', 'ETH', 'SOL', 'USDC'].includes(token.symbol) && token.symbol[0]}
+          {isLoading ? (
+            <div className="col-span-2 text-center py-8 text-gray-500 dark:text-surface-500">
+              {t('common.loading')}...
+            </div>
+          ) : allTokens.length === 0 ? (
+            <div className="col-span-2 text-center py-8 text-gray-500 dark:text-surface-500">
+              {t('wallet.noWallet')}
+            </div>
+          ) : (
+            allTokens.map((token, index) => (
+              <motion.div
+                key={`${token.contractAddress}-${token.symbol}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card variant="glass" padding="md" hover>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-surface-800/50 flex items-center justify-center text-2xl">
+                        {token.symbol === 'BTC' && '₿'}
+                        {token.symbol === 'ETH' && 'Ξ'}
+                        {token.symbol === 'SOL' && '◎'}
+                        {token.symbol === 'USDC' && '$'}
+                        {!['BTC', 'ETH', 'SOL', 'USDC'].includes(token.symbol) && token.symbol[0]}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 dark:text-surface-100">{token.name}</h3>
+                        <p className="text-sm text-gray-500 dark:text-surface-500">
+                          {token.balance.toFixed(4)} {token.symbol}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-surface-100">{token.name}</h3>
-                      <p className="text-sm text-gray-500 dark:text-surface-500">
-                        {token.price} {token.symbol}
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-surface-100">
+                        {formatCurrency(token.balanceUsd || 0)}
+                      </p>
+                      <p className={`text-sm ${(token.price24hChange || 0) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                        {(token.price24hChange || 0) >= 0 ? '+' : ''}{(token.price24hChange || 0).toFixed(2)}%
                       </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-900 dark:text-surface-100">
-                      {formatCurrency(token.usdValue)}
-                    </p>
-                    <p className={`text-sm ${token.change24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {token.change24h >= 0 ? '+' : ''}{token.change24h.toFixed(2)}%
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
+                </Card>
+              </motion.div>
+            ))
+          )}
         </div>
       )}
 

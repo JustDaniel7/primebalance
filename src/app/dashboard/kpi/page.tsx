@@ -1315,6 +1315,8 @@ export default function KPIsPage() {
         setActiveTab,
         isLoading,
         fetchKPIs,
+        fetchSummary,
+        fetchAlerts,
         viewPreferences,
         setViewPreferences,
         alerts,
@@ -1324,7 +1326,9 @@ export default function KPIsPage() {
 
     useEffect(() => {
         fetchKPIs();
-    }, [fetchKPIs]);
+        fetchSummary();
+        fetchAlerts();
+    }, [fetchKPIs, fetchSummary, fetchAlerts]);
 
     const tabs: { id: KPITab; label: string; icon: React.ElementType }[] = [
         { id: 'overview', label: 'Overview', icon: BarChart3 },

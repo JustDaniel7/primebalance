@@ -48,7 +48,8 @@ import { TIME_BUCKETS, HORIZON_OPTIONS, SCENARIO_TYPES, CONFIDENCE_STATUSES, CAS
 // UTILITIES
 // =============================================================================
 
-const formatCurrency = (value: number, currency: string = 'USD'): string => {
+const formatCurrency = (value: number | undefined | null, currency: string = 'USD'): string => {
+    if (value === undefined || value === null) return '—';
     const absValue = Math.abs(value);
     const sign = value < 0 ? '-' : '';
     if (absValue >= 1000000) return `${sign}$${(absValue / 1000000).toFixed(2)}M`;
@@ -453,7 +454,15 @@ function ScenarioComparison() {
         { name: 'Base Case', data: dashboard.baseScenario, color: 'blue' },
         { name: 'Conservative', data: dashboard.conservativeScenario, color: 'amber' },
         { name: 'Stress Test', data: dashboard.stressScenario, color: 'red' },
-    ];
+    ].filter(s => s.data?.timeline);
+
+    if (scenarios.length === 0) {
+        return (
+            <Card variant="glass" padding="md">
+                <div className="text-center py-8 text-gray-500">No scenario data available</div>
+            </Card>
+        );
+    }
 
     return (
         <Card variant="glass" padding="md">
@@ -478,38 +487,38 @@ function ScenarioComparison() {
                         <td className="py-3 px-2 text-gray-600">Ending Balance</td>
                         {scenarios.map((s) => (
                             <td key={s.name} className="py-3 px-2 text-right font-medium">
-                                {formatCurrency(s.data.timeline.endingBalance)}
+                                {formatCurrency(s.data?.timeline?.endingBalance)}
                             </td>
                         ))}
                     </tr>
                     <tr className="border-b border-gray-100 dark:border-surface-800">
                         <td className="py-3 px-2 text-gray-600">Lowest Balance</td>
                         {scenarios.map((s) => (
-                            <td key={s.name} className={`py-3 px-2 text-right font-medium ${s.data.timeline.lowestBalance < dashboard.minimumBuffer ? 'text-red-600' : ''}`}>
-                                {formatCurrency(s.data.timeline.lowestBalance)}
+                            <td key={s.name} className={`py-3 px-2 text-right font-medium ${(s.data?.timeline?.lowestBalance ?? 0) < dashboard.minimumBuffer ? 'text-red-600' : ''}`}>
+                                {formatCurrency(s.data?.timeline?.lowestBalance)}
                             </td>
                         ))}
                     </tr>
                     <tr className="border-b border-gray-100 dark:border-surface-800">
                         <td className="py-3 px-2 text-gray-600">Net Change</td>
                         {scenarios.map((s) => (
-                            <td key={s.name} className={`py-3 px-2 text-right font-medium ${s.data.timeline.netChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                                {formatCurrency(s.data.timeline.netChange)}
+                            <td key={s.name} className={`py-3 px-2 text-right font-medium ${(s.data?.timeline?.netChange ?? 0) >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                                {formatCurrency(s.data?.timeline?.netChange)}
                             </td>
                         ))}
                     </tr>
                     <tr className="border-b border-gray-100 dark:border-surface-800">
                         <td className="py-3 px-2 text-gray-600">Days Below Buffer</td>
                         {scenarios.map((s) => (
-                            <td key={s.name} className={`py-3 px-2 text-right font-medium ${s.data.timeline.daysWithGap > 0 ? 'text-red-600' : ''}`}>
-                                {s.data.timeline.daysWithGap}
+                            <td key={s.name} className={`py-3 px-2 text-right font-medium ${(s.data?.timeline?.daysWithGap ?? 0) > 0 ? 'text-red-600' : ''}`}>
+                                {s.data?.timeline?.daysWithGap ?? '—'}
                             </td>
                         ))}
                     </tr>
                     <tr>
                         <td className="py-3 px-2 text-gray-600">Variance vs Base</td>
                         <td className="py-3 px-2 text-right text-gray-400">—</td>
-                        {[dashboard.conservativeScenario, dashboard.stressScenario].map((s) => (
+                        {[dashboard.conservativeScenario, dashboard.stressScenario].filter(s => s?.id).map((s) => (
                             <td key={s.id} className={`py-3 px-2 text-right font-medium ${(s.varianceVsBase?.endingBalanceDiff || 0) >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                                 {s.varianceVsBase ? formatCurrency(s.varianceVsBase.endingBalanceDiff) : '—'}
                             </td>
@@ -567,10 +576,10 @@ function RiskSignals() {
                             <p className="text-xs text-gray-500 mt-1">{signal.description}</p>
                             <div className="flex items-center gap-4 mt-2 text-xs">
                                 <span className="text-gray-500">
-                                    Metric: <span className="font-medium text-gray-700 dark:text-gray-300">{signal.metric.toFixed(1)}%</span>
+                                    Metric: <span className="font-medium text-gray-700 dark:text-gray-300">{signal.metric?.toFixed(1) ?? '—'}%</span>
                                 </span>
                                 <span className="text-gray-500">
-                                    Threshold: <span className="font-medium text-gray-700 dark:text-gray-300">{signal.threshold}%</span>
+                                    Threshold: <span className="font-medium text-gray-700 dark:text-gray-300">{signal.threshold ?? '—'}%</span>
                                 </span>
                                 {signal.breached && <span className="text-red-600 font-medium">⚠ Breached</span>}
                             </div>

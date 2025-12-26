@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useStore } from '@/index'
+import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Button, Badge } from '@/components/ui'
 import {

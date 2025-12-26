@@ -35,7 +35,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { CorporateStructureEditor, TaxOptimizationPanel } from '@/components/tax';
-import { useTaxStore, initializeDemoTaxData } from '@/store/tax-store';
+import { useTaxStore } from '@/store/tax-store';
 import { useThemeStore } from '@/store/theme-store';
 import {
   ALL_JURISDICTIONS,
@@ -419,12 +419,12 @@ const JurisdictionsTab: React.FC = () => {
 export default function TaxCenterPage() {
   const { t } = useThemeStore();
   const [activeTab, setActiveTab] = useState<TabId>('overview');
-  const { isLoading, loadDemoData } = useTaxStore();
+  const { isLoading, loadDemoData, fetchEntities } = useTaxStore();
 
-  // Initialize demo data
+  // Fetch entities from API on mount
   useEffect(() => {
-    initializeDemoTaxData();
-  }, []);
+    fetchEntities();
+  }, [fetchEntities]);
 
   const tabs = [
     { id: 'overview' as TabId, label: t('nav.dashboard'), icon: BarChart3 },

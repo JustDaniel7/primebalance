@@ -81,7 +81,8 @@ import type {
 // HELPERS
 // =============================================================================
 
-const formatCurrency = (value: number, compact: boolean = false): string => {
+const formatCurrency = (value: number | undefined | null, compact: boolean = false): string => {
+    if (value === undefined || value === null) return '—';
     if (compact && Math.abs(value) >= 1000000) {
         return new Intl.NumberFormat('de-DE', {
             style: 'currency',
@@ -98,7 +99,10 @@ const formatCurrency = (value: number, compact: boolean = false): string => {
     }).format(value);
 };
 
-const formatPercent = (value: number): string => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
+const formatPercent = (value: number | undefined | null): string => {
+    if (value === undefined || value === null) return '—';
+    return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
+};
 
 const getCaseTypeColor = (type: ScenarioCaseType): string => {
     switch (type) {
@@ -253,8 +257,8 @@ function OverviewTab() {
                                 </div>
                                 
                                 <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-200 dark:border-surface-700">
-                                    <span>Confidence: {scenario.confidence.level}</span>
-                                    <span>{new Date(scenario.lastModifiedAt).toLocaleDateString()}</span>
+                                    <span>Confidence: {scenario.confidence?.level ?? '—'}</span>
+                                    <span suppressHydrationWarning>{new Date(scenario.lastModifiedAt).toLocaleDateString()}</span>
                                 </div>
                             </Card>
                         );
@@ -499,9 +503,9 @@ function BaselineTab() {
                                                 <td key={s.id} className={`p-4 text-right ${isExpected ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}`}>
                                                     <span className="font-medium text-gray-900 dark:text-surface-100">
                                                         {row.isPercent
-                                                            ? `${numVal.toFixed(1)}%`
+                                                            ? `${numVal?.toFixed(1) ?? '—'}%`
                                                             : row.suffix
-                                                            ? `${numVal}${row.suffix}`
+                                                            ? `${numVal ?? '—'}${row.suffix}`
                                                             : formatCurrency(numVal, true)}
                                                     </span>
                                                 </td>
@@ -509,9 +513,9 @@ function BaselineTab() {
                                         })}
                                         <td className="p-4 text-right text-gray-500">
                                             {row.isPercent
-                                                ? `${spread.toFixed(1)}%`
+                                                ? `${spread?.toFixed(1) ?? '—'}%`
                                                 : row.suffix
-                                                ? `${spread}${row.suffix}`
+                                                ? `${spread ?? '—'}${row.suffix}`
                                                 : formatCurrency(spread, true)}
                                         </td>
                                     </tr>
@@ -854,7 +858,7 @@ function CustomTab() {
                                                 <span className="text-sm font-medium text-gray-900 dark:text-surface-100">
                                                     {comment.authorName}
                                                 </span>
-                                                <span className="text-xs text-gray-500">
+                                                <span className="text-xs text-gray-500" suppressHydrationWarning>
                                                     {new Date(comment.createdAt).toLocaleDateString()}
                                                 </span>
                                             </div>
@@ -1083,10 +1087,10 @@ function StressTab() {
                                                 <div key={idx}>
                                                     <p className="text-sm text-gray-600 dark:text-surface-400">{t.metric}</p>
                                                     <p className={`font-medium ${t.breached ? 'text-red-600' : 'text-green-600'}`}>
-                                                        {t.currentValue.toFixed(1)} / {t.threshold}
+                                                        {t.currentValue?.toFixed(1) ?? '—'} / {t.threshold ?? '—'}
                                                     </p>
                                                     <p className="text-xs text-gray-500">
-                                                        {t.breached ? 'BREACHED' : `Margin: ${t.margin.toFixed(1)}`}
+                                                        {t.breached ? 'BREACHED' : `Margin: ${t.margin?.toFixed(1) ?? '—'}`}
                                                     </p>
                                                 </div>
                                             ))}
@@ -1102,19 +1106,19 @@ function StressTab() {
                                             {test.cashShortfallPoint && (
                                                 <div>
                                                     <p className="text-gray-500">Cash Shortfall</p>
-                                                    <p className="font-medium text-red-600">{new Date(test.cashShortfallPoint).toLocaleDateString()}</p>
+                                                    <p className="font-medium text-red-600" suppressHydrationWarning>{new Date(test.cashShortfallPoint).toLocaleDateString()}</p>
                                                 </div>
                                             )}
                                             {test.covenantBreachPoint && (
                                                 <div>
                                                     <p className="text-gray-500">Covenant Breach</p>
-                                                    <p className="font-medium text-red-600">{new Date(test.covenantBreachPoint).toLocaleDateString()}</p>
+                                                    <p className="font-medium text-red-600" suppressHydrationWarning>{new Date(test.covenantBreachPoint).toLocaleDateString()}</p>
                                                 </div>
                                             )}
                                             {test.marginCollapsePoint && (
                                                 <div>
                                                     <p className="text-gray-500">Margin Collapse</p>
-                                                    <p className="font-medium text-red-600">{new Date(test.marginCollapsePoint).toLocaleDateString()}</p>
+                                                    <p className="font-medium text-red-600" suppressHydrationWarning>{new Date(test.marginCollapsePoint).toLocaleDateString()}</p>
                                                 </div>
                                             )}
                                         </div>

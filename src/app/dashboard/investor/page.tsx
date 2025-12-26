@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
     Shield,
@@ -812,8 +812,12 @@ function ComplianceSection() {
 
 export default function InvestorPage() {
     const { t } = useThemeStore();
-    const { dashboard, selectedPeriod, setSelectedPeriod, refreshDashboard, isLoading, lastRefresh } = useInvestorStore();
+    const { dashboard, selectedPeriod, setSelectedPeriod, refreshDashboard, fetchDashboard, isLoading, lastRefresh } = useInvestorStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'burn' | 'risk' | 'summary'>('overview');
+
+    useEffect(() => {
+        fetchDashboard();
+    }, [fetchDashboard]);
 
     return (
         <div className="space-y-6">

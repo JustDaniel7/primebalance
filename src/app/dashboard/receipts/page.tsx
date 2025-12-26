@@ -1,42 +1,40 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useThemeStore } from '@/store/theme-store'
+import { useReceiptsStore, Receipt } from '@/store/receipts-store'
 import { Card, Button, Badge } from '@/components/ui'
 import { PlusIcon, SearchIcon, ReceiptIcon } from '@/components/ui/Icons'
 import { Upload, Camera, FileText, Check, X, Archive } from 'lucide-react'
 import { format } from 'date-fns'
 
-interface Receipt {
-  id: string
-  merchant: string
-  amount: number
-  date: string
-  status: 'matched' | 'unmatched' | 'archived'
-  category: string
-  imageUrl?: string
-}
+type ReceiptStatus = 'matched' | 'unmatched' | 'archived'
 
-const mockReceipts: Receipt[] = [
-  { id: '1', merchant: 'Amazon Web Services', amount: 4500.00, date: '2024-12-01', status: 'matched', category: 'Cloud Services' },
-  { id: '2', merchant: 'Office Depot', amount: 234.50, date: '2024-12-02', status: 'unmatched', category: 'Office Supplies' },
-  { id: '3', merchant: 'Uber for Business', amount: 89.00, date: '2024-12-03', status: 'matched', category: 'Transportation' },
-  { id: '4', merchant: 'Zoom Video', amount: 149.90, date: '2024-12-04', status: 'archived', category: 'Software' },
-  { id: '5', merchant: 'Staples', amount: 67.25, date: '2024-12-05', status: 'unmatched', category: 'Office Supplies' },
-]
+function getReceiptStatus(receipt: Receipt): ReceiptStatus {
+  if (receipt.transactionId) return 'matched'
+  return 'unmatched'
+}
 
 export default function ReceiptsPage() {
   const { t } = useThemeStore()
-  const [receipts] = useState<Receipt[]>(mockReceipts)
+  const { receipts, fetchReceipts, isLoading } = useReceiptsStore()
   const [filter, setFilter] = useState<'all' | 'matched' | 'unmatched' | 'archived'>('all')
   const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredReceipts = receipts.filter((receipt) => {
-    const matchesFilter = filter === 'all' || receipt.status === filter
-    const matchesSearch = receipt.merchant.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesFilter && matchesSearch
-  })
+  // Fetch receipts on mount
+  useEffect(() => {
+    fetchReceipts()
+  }, [fetchReceipts])
+
+  const filteredReceipts = useMemo(() => {
+    return receipts.filter((receipt) => {
+      const status = getReceiptStatus(receipt)
+      const matchesFilter = filter === 'all' || status === filter
+      const matchesSearch = (receipt.vendor || receipt.fileName || '').toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesFilter && matchesSearch
+    })
+  }, [receipts, filter, searchQuery])
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -123,54 +121,69 @@ export default function ReceiptsPage() {
 
       {/* Receipts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredReceipts.map((receipt, index) => (
-          <motion.div
-            key={receipt.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <Card variant="glass" padding="md" hover>
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-surface-800/50 flex items-center justify-center">
-                  <FileText size={24} className="text-[var(--accent-primary)]" />
-                </div>
-                <Badge
-                  variant={
-                    receipt.status === 'matched' ? 'success' :
-                    receipt.status === 'unmatched' ? 'warning' : 'neutral'
-                  }
-                  size="sm"
-                >
-                  {receipt.status === 'matched' ? t('receipts.matched') :
-                   receipt.status === 'unmatched' ? t('receipts.unmatched') :
-                   t('receipts.archived')}
-                </Badge>
-              </div>
-              
-              <h3 className="font-semibold text-gray-900 dark:text-surface-100">{receipt.merchant}</h3>
-              <p className="text-sm text-gray-500 dark:text-surface-500">{receipt.category}</p>
-              
-              <div className="flex items-end justify-between mt-4">
-                <div>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-surface-100">
-                    {formatCurrency(receipt.amount)}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-surface-500">
-                    {format(new Date(receipt.date), 'MMM d, yyyy')}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  {receipt.status === 'unmatched' && (
-                    <Button variant="secondary" size="sm">
-                      {t('receipts.matchTransaction')}
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
+        {isLoading ? (
+          <div className="col-span-3 text-center py-8 text-gray-500 dark:text-surface-500">
+            {t('common.loading')}...
+          </div>
+        ) : filteredReceipts.length === 0 ? (
+          <div className="col-span-3 text-center py-8 text-gray-500 dark:text-surface-500">
+            {t('receipts.noReceipts') || 'No receipts found'}
+          </div>
+        ) : (
+          filteredReceipts.map((receipt, index) => {
+            const status = getReceiptStatus(receipt)
+            return (
+              <motion.div
+                key={receipt.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card variant="glass" padding="md" hover>
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-surface-800/50 flex items-center justify-center">
+                      <FileText size={24} className="text-[var(--accent-primary)]" />
+                    </div>
+                    <Badge
+                      variant={
+                        status === 'matched' ? 'success' :
+                        status === 'unmatched' ? 'warning' : 'neutral'
+                      }
+                      size="sm"
+                    >
+                      {status === 'matched' ? t('receipts.matched') :
+                       status === 'unmatched' ? t('receipts.unmatched') :
+                       t('receipts.archived')}
+                    </Badge>
+                  </div>
+
+                  <h3 className="font-semibold text-gray-900 dark:text-surface-100">
+                    {receipt.vendor || receipt.fileName}
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-surface-500">{receipt.fileType}</p>
+
+                  <div className="flex items-end justify-between mt-4">
+                    <div>
+                      <p className="text-2xl font-bold text-gray-900 dark:text-surface-100">
+                        {receipt.amount ? formatCurrency(receipt.amount) : '-'}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-surface-500">
+                        {receipt.date ? format(new Date(receipt.date), 'MMM d, yyyy') : format(new Date(receipt.createdAt), 'MMM d, yyyy')}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      {status === 'unmatched' && (
+                        <Button variant="secondary" size="sm">
+                          {t('receipts.matchTransaction')}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            )
+          })
+        )}
       </div>
     </div>
   )

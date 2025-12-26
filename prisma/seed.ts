@@ -105,6 +105,9 @@ async function main() {
   
   // Treasury module
   await prisma.nettingOpportunity.deleteMany({})
+  await prisma.nettingSession.deleteMany({})
+  await prisma.nettingAgreement.deleteMany({})
+  await prisma.offsetEntry.deleteMany({})
   await prisma.treasuryScenario.deleteMany({})
   await prisma.treasuryDecision.deleteMany({})
   await prisma.treasuryCashMovement.deleteMany({})
@@ -1343,6 +1346,155 @@ async function main() {
     })
   }
   console.log('  ✓ Created', netting.length, 'netting opportunities')
+
+  // =============================================================================
+  // 22b. NETTING AGREEMENTS, SESSIONS & OFFSETS
+  // =============================================================================
+  console.log('\n📋 Creating Netting Agreements, Sessions & Offsets...')
+
+  // Netting Agreement
+  const nettingAgreement = await prisma.nettingAgreement.create({
+    data: {
+      agreementNumber: 'NET-AGR-001',
+      name: 'Demo Intercompany Netting',
+      type: 'intercompany',
+      status: 'active',
+      nettingFrequency: 'monthly',
+      settlementDays: 5,
+      baseCurrency: 'EUR',
+      minimumNettingAmount: 1000,
+      effectiveDate: daysAgo(180),
+      nextNettingDate: daysFromNow(7),
+      organizationId: org.id,
+    },
+  })
+
+  // Netting Sessions
+  const nettingSessions = [
+    {
+      sessionNumber: 'NET-2024-001',
+      type: 'intercompany',
+      status: 'settled',
+      periodStart: daysAgo(60),
+      periodEnd: daysAgo(30),
+      nettingDate: daysAgo(25),
+      settlementDate: daysAgo(20),
+      totalReceivables: 45000,
+      totalPayables: 32000,
+      grossAmount: 77000,
+      netAmount: 13000,
+      savingsAmount: 64000,
+      savingsPercentage: 83.12,
+    },
+    {
+      sessionNumber: 'NET-2024-002',
+      type: 'intercompany',
+      status: 'approved',
+      periodStart: daysAgo(30),
+      periodEnd: new Date(),
+      nettingDate: daysFromNow(5),
+      settlementDate: daysFromNow(10),
+      totalReceivables: 52000,
+      totalPayables: 38000,
+      grossAmount: 90000,
+      netAmount: 14000,
+      savingsAmount: 76000,
+      savingsPercentage: 84.44,
+    },
+    {
+      sessionNumber: 'NET-2024-003',
+      type: 'counterparty',
+      status: 'draft',
+      periodStart: new Date(),
+      periodEnd: daysFromNow(30),
+      nettingDate: daysFromNow(35),
+      settlementDate: daysFromNow(40),
+      totalReceivables: 28000,
+      totalPayables: 22000,
+      grossAmount: 50000,
+      netAmount: 6000,
+      savingsAmount: 44000,
+      savingsPercentage: 88.00,
+    },
+  ]
+
+  for (const session of nettingSessions) {
+    await prisma.nettingSession.create({
+      data: {
+        ...session,
+        baseCurrency: 'EUR',
+        agreementId: nettingAgreement.id,
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', nettingSessions.length, 'netting sessions')
+
+  // Offset Entries
+  const offsetsData = [
+    {
+      offsetNumber: 'OFF-2024-001',
+      type: 'ar_ap',
+      status: 'applied',
+      partyId: 'cust-demo-1',
+      partyName: 'Demo Tech AG',
+      partyType: 'customer',
+      sourceDocumentType: 'credit_note',
+      sourceDocumentNumber: 'CN-2024-045',
+      sourceAmount: 5000,
+      targetDocumentType: 'invoice',
+      targetDocumentNumber: 'INV-2024-312',
+      targetAmount: 8500,
+      offsetAmount: 5000,
+      offsetDate: daysAgo(15),
+      effectiveDate: daysAgo(14),
+    },
+    {
+      offsetNumber: 'OFF-2024-002',
+      type: 'intercompany',
+      status: 'approved',
+      partyId: 'subsidiary-1',
+      partyName: 'Demo Services LLC',
+      partyType: 'subsidiary',
+      sourceDocumentType: 'intercompany_receivable',
+      sourceDocumentNumber: 'IC-REC-2024-089',
+      sourceAmount: 12000,
+      targetDocumentType: 'intercompany_payable',
+      targetDocumentNumber: 'IC-PAY-2024-056',
+      targetAmount: 12000,
+      offsetAmount: 12000,
+      offsetDate: daysAgo(5),
+      effectiveDate: daysAgo(3),
+    },
+    {
+      offsetNumber: 'OFF-2024-003',
+      type: 'advance',
+      status: 'pending',
+      partyId: 'cust-demo-2',
+      partyName: 'Alpha Corp',
+      partyType: 'customer',
+      sourceDocumentType: 'advance_payment',
+      sourceDocumentNumber: 'ADV-2024-018',
+      sourceAmount: 25000,
+      targetDocumentType: 'invoice',
+      targetDocumentNumber: 'INV-2024-445',
+      targetAmount: 32000,
+      offsetAmount: 25000,
+      offsetDate: new Date(),
+      effectiveDate: daysFromNow(2),
+    },
+  ]
+
+  for (const offset of offsetsData) {
+    await prisma.offsetEntry.create({
+      data: {
+        ...offset,
+        currency: 'EUR',
+        organizationId: org.id,
+      },
+    })
+  }
+  console.log('  ✓ Created', offsetsData.length, 'offset entries')
 
   // =============================================================================
   // 23. ASSETS
