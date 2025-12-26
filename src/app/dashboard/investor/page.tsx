@@ -862,7 +862,7 @@ export default function InvestorPage() {
             <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-surface-800 rounded-lg">
                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <Clock size={14} />
-                    <span>Last data refresh: {new Date(lastRefresh).toLocaleString()}</span>
+                    <span suppressHydrationWarning>Last data refresh: {new Date(lastRefresh).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
@@ -929,7 +929,7 @@ export default function InvestorPage() {
                 <div className="flex items-start gap-2">
                     <Info size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
                     <p className="text-xs text-gray-500">
-                        {dashboard?.disclaimers[0]} This dashboard provides read-only access and does not support data modification.
+                        {dashboard?.disclaimers?.[0]} This dashboard provides read-only access and does not support data modification.
                     </p>
                 </div>
             </Card>

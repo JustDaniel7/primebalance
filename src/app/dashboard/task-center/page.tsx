@@ -306,7 +306,8 @@ function TodayOverview() {
                     ) : (
                         <div className="space-y-2">
                             {[...overdueTasks, ...todayTasks].slice(0, 5).map((task) => {
-                                const PriorityIcon = priorityConfig[task.priority].icon;
+                                const priorityConf = priorityConfig[task.priority] || priorityConfig.medium;
+                                const PriorityIcon = priorityConf.icon;
                                 const isOverdue = task.dueDate && task.dueDate < new Date().toISOString().split('T')[0];
                                 return (
                                     <div
@@ -332,7 +333,7 @@ function TodayOverview() {
                                                 {task.title}
                                             </p>
                                             <div className="flex items-center gap-2 mt-1">
-                                                <Badge variant={getBadgeVariant(priorityConfig[task.priority].color)} size="sm">
+                                                <Badge variant={getBadgeVariant(priorityConf.color)} size="sm">
                                                     {task.priority}
                                                 </Badge>
                                                 {task.dueDate && (
@@ -432,7 +433,7 @@ function TodayOverview() {
                                             {task.title}
                                         </p>
                                         <p className="text-xs text-gray-500 mt-0.5">
-                                            Blocked by {task.blockedByTaskIds.length} task(s)
+                                            Blocked by {task.blockedByTaskIds?.length || 0} task(s)
                                         </p>
                                     </div>
                                 </div>
@@ -834,8 +835,10 @@ function TasksTab() {
                             </div>
                             <div className="space-y-2">
                                 {groupTasks.map((task) => {
-                                    const PriorityIcon = priorityConfig[task.priority].icon;
-                                    const SourceIcon = sourceSystemIcons[task.sourceSystem];
+                                    const priorityConf = priorityConfig[task.priority] || priorityConfig.medium;
+                                    const statusConf = statusConfig[task.status] || statusConfig.open;
+                                    const PriorityIcon = priorityConf.icon;
+                                    const SourceIcon = sourceSystemIcons[task.sourceSystem] || sourceSystemIcons.manual;
                                     const isOverdue =
                                         task.dueDate &&
                                         task.dueDate < new Date().toISOString().split('T')[0] &&
@@ -928,10 +931,10 @@ function TasksTab() {
                                                         </div>
                                                         <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-surface-400">
                                                             <Badge
-                                                                variant={getBadgeVariant(statusConfig[task.status].color)}
+                                                                variant={getBadgeVariant(statusConf.color)}
                                                                 size="sm"
                                                             >
-                                                                {statusConfig[task.status].label}
+                                                                {statusConf.label}
                                                             </Badge>
                                                             {task.dueDate && (
                                                                 <span
@@ -957,7 +960,7 @@ function TasksTab() {
                                                     </div>
 
                                                     {/* Tags */}
-                                                    {task.tags.length > 0 && (
+                                                    {task.tags?.length > 0 && (
                                                         <div className="hidden md:flex items-center gap-1">
                                                             {task.tags.slice(0, 2).map((tag) => (
                                                                 <span
@@ -977,19 +980,19 @@ function TasksTab() {
 
                                                     {/* Indicators */}
                                                     <div className="flex items-center gap-2 text-gray-400">
-                                                        {task.comments.length > 0 && (
+                                                        {task.comments?.length > 0 && (
                                                             <span className="flex items-center gap-1 text-xs">
                                                                 <MessageSquare size={14} />
                                                                 {task.comments.length}
                                                             </span>
                                                         )}
-                                                        {task.attachments.length > 0 && (
+                                                        {task.attachments?.length > 0 && (
                                                             <span className="flex items-center gap-1 text-xs">
                                                                 <Paperclip size={14} />
                                                                 {task.attachments.length}
                                                             </span>
                                                         )}
-                                                        {task.linkedRiskIds.length > 0 && (
+                                                        {task.linkedRiskIds?.length > 0 && (
                                                             <span className="flex items-center gap-1 text-xs text-orange-400">
                                                                 <Link2 size={14} />
                                                                 {task.linkedRiskIds.length}

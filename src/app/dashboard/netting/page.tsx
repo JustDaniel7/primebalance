@@ -135,7 +135,7 @@ function SessionCard({ session, onClick }: { session: NettingSession; onClick: (
             <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-surface-700">
                 <div className="flex items-center gap-2">
                     <TrendingUp size={14} className="text-emerald-500" />
-                    <span className="text-xs text-emerald-600">{session.savingsPercentage.toFixed(1)}% {t('netting.savings') || 'savings'}</span>
+                    <span className="text-xs text-emerald-600">{Number(session.savingsPercentage || 0).toFixed(1)}% {t('netting.savings') || 'savings'}</span>
                 </div>
                 <span className={`px-2 py-0.5 rounded text-xs ${typeColors[session.type]}`}>
                     {t(`netting.type.${session.type}`) || session.type}
@@ -271,7 +271,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm text-emerald-700 dark:text-emerald-400">{t('netting.efficiencyRate') || 'Efficiency Rate'}</p>
-                                        <p className="text-3xl font-bold text-emerald-600">{session.savingsPercentage.toFixed(1)}%</p>
+                                        <p className="text-3xl font-bold text-emerald-600">{Number(session.savingsPercentage || 0).toFixed(1)}%</p>
                                     </div>
                                 </div>
                                 <p className="text-sm text-emerald-600 mt-3">{t('netting.savingsExplanation') || 'Amount saved by netting instead of gross settlements'}</p>
@@ -401,7 +401,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
                                             <ArrowRightLeft size={24} className="text-blue-500" />
                                             <div className="text-center">
                                                 <p className="text-xs text-emerald-600">{t('netting.netting') || 'Netting'}</p>
-                                                <p className="text-sm font-medium text-emerald-600">-{session.savingsPercentage.toFixed(1)}%</p>
+                                                <p className="text-sm font-medium text-emerald-600">-{Number(session.savingsPercentage || 0).toFixed(1)}%</p>
                                             </div>
                                             <ArrowRightLeft size={24} className="text-blue-500" />
                                         </div>
