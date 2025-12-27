@@ -5,33 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
-      <change afterPath="$PROJECT_DIR$/src/app/api/invoices/[id]/archive/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/invoices/[id]/cancel/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/invoices/[id]/confirm/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/invoices/[id]/payment/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/invoices/from-order/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/reports/[id]/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/reports/archive/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/reports/download/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/invoices/InvoiceDetail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/invoices/InvoiceForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/invoices/PaymentModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/invoices/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/invoices/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/invoices/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/invoices/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/reports/generate/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/reports/generate/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/reports/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/reports/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/invoices/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/invoices/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/reports/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/reports/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/reports/ReportsWizard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reports/ReportsWizard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SavedReport.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SavedReport.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/invoice-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/invoice-store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/invoice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/invoice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/report.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/report.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +134,7 @@
       <workItem from="1766315637196" duration="1302000" />
       <workItem from="1766317598562" duration="12586000" />
       <workItem from="1766486581555" duration="1853000" />
-      <workItem from="1766531311267" duration="20975000" />
+      <workItem from="1766531311267" duration="22989000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -242,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766533427199</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <option name="closed" value="true" />
+      <created>1766614937178</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1766614937178</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
