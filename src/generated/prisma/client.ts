@@ -130,6 +130,21 @@ export type CorporateEntity = Prisma.CorporateEntityModel
  */
 export type Invoice = Prisma.InvoiceModel
 /**
+ * Model InvoiceVersion
+ * 
+ */
+export type InvoiceVersion = Prisma.InvoiceVersionModel
+/**
+ * Model InvoiceAccountingEvent
+ * 
+ */
+export type InvoiceAccountingEvent = Prisma.InvoiceAccountingEventModel
+/**
+ * Model InvoicePayment
+ * 
+ */
+export type InvoicePayment = Prisma.InvoicePaymentModel
+/**
  * Model Order
  * 
  */

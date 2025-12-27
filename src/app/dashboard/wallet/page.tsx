@@ -701,55 +701,6 @@ function ReceiveModal({ wallets, onClose }: ReceiveModalProps) {
           <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
             <Button variant="secondary" onClick={onClose}>Close</Button>
           </div>
-      {/* Assets Tab */}
-      {activeTab === 'assets' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {isLoading ? (
-            <div className="col-span-2 text-center py-8 text-gray-500 dark:text-surface-500">
-              {t('common.loading')}...
-            </div>
-          ) : allTokens.length === 0 ? (
-            <div className="col-span-2 text-center py-8 text-gray-500 dark:text-surface-500">
-              {t('wallet.noWallet')}
-            </div>
-          ) : (
-            allTokens.map((token, index) => (
-              <motion.div
-                key={`${token.contractAddress}-${token.symbol}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card variant="glass" padding="md" hover>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-surface-800/50 flex items-center justify-center text-2xl">
-                        {token.symbol === 'BTC' && '₿'}
-                        {token.symbol === 'ETH' && 'Ξ'}
-                        {token.symbol === 'SOL' && '◎'}
-                        {token.symbol === 'USDC' && '$'}
-                        {!['BTC', 'ETH', 'SOL', 'USDC'].includes(token.symbol) && token.symbol[0]}
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-surface-100">{token.name}</h3>
-                        <p className="text-sm text-gray-500 dark:text-surface-500">
-                          {token.balance.toFixed(4)} {token.symbol}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900 dark:text-surface-100">
-                        {formatCurrency(token.balanceUsd || 0)}
-                      </p>
-                      <p className={`text-sm ${(token.price24hChange || 0) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                        {(token.price24hChange || 0) >= 0 ? '+' : ''}{(token.price24hChange || 0).toFixed(2)}%
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))
-          )}
         </div>
       </div>
   );

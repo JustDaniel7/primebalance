@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "mcp__ide__getDiagnostics",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

@@ -535,7 +535,7 @@ model SavedReport {
 
   @@index([userId])
   @@index([userId, status])
-
+}
 
 // =============================================================================
 // CORPORATE ENTITIES

@@ -34,11 +34,11 @@ export async function POST(req: NextRequest) {
         if (!address) return badRequest('Wallet address is required');
         if (!network) return badRequest('Network is required');
 
-        // Check for duplicate address
+        // Check for duplicate address on the same network
         const existing = await prisma.wallet.findUnique({
-            where: { userId_address: { userId: user.id, address } },
+            where: { userId_address_network: { userId: user.id, address, network } },
         });
-        if (existing) return badRequest('Wallet address already exists');
+        if (existing) return badRequest('Wallet address already exists on this network');
 
         const wallet = await prisma.wallet.create({
             data: {

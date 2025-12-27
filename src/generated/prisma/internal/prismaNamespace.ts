@@ -402,6 +402,9 @@ export const ModelName = {
   SavedReport: 'SavedReport',
   CorporateEntity: 'CorporateEntity',
   Invoice: 'Invoice',
+  InvoiceVersion: 'InvoiceVersion',
+  InvoiceAccountingEvent: 'InvoiceAccountingEvent',
+  InvoicePayment: 'InvoicePayment',
   Order: 'Order',
   ArchiveItem: 'ArchiveItem',
   Liability: 'Liability',
@@ -533,7 +536,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "walletToken" | "walletTransaction" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "order" | "archiveItem" | "liability" | "liabilityPayment" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry" | "customer" | "customerContact" | "customerPayment" | "customerCreditEvent" | "customerRevenue" | "customerRiskIndicator" | "supplier" | "supplierContact" | "supplierBalance" | "supplierPayment" | "supplierReliability" | "supplierSpend" | "supplierRisk" | "nettingAgreement" | "nettingParty" | "nettingSession" | "nettingPosition" | "nettingTransaction" | "settlementInstruction" | "offsetEntry" | "offer" | "offerVersion" | "offerAuditLog" | "offerTemplate" | "task" | "taskAssignee" | "taskWatcher" | "taskTag" | "taskTagLink" | "taskDependency" | "taskComment" | "taskActivity" | "taskAttachment" | "risk" | "riskMitigationStep" | "taskRiskLink" | "riskComment" | "riskActivity" | "taskNotification" | "savedTaskFilter" | "revenueForecast" | "revenueLineItem" | "costForecast" | "costLineItem" | "cashForecast" | "cashForecastPeriod" | "forecastScenario" | "forecastAssumption" | "forecastAlert" | "forecastAnnotation" | "forecastVariance" | "scenario" | "scenarioAssumption" | "stressTest" | "simulationState" | "scenarioComment" | "scenarioDecision" | "scenarioChangeEvent" | "kPI" | "kPIHistory" | "kPIAlert" | "kPITarget" | "kPIBenchmark" | "fXRate" | "fXExposure" | "fXConversion" | "fXScenario" | "fXForecast" | "fXCost" | "fXRiskIndicator" | "fXAuditLog" | "investorSnapshot" | "boardReport" | "runwayProjection" | "investorAccessLog" | "cashflowItem" | "liquidityScenario" | "liquidityGap" | "liquidityRiskSignal" | "liquidityAuditLog" | "liquidityPosition"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "walletToken" | "walletTransaction" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "invoiceVersion" | "invoiceAccountingEvent" | "invoicePayment" | "order" | "archiveItem" | "liability" | "liabilityPayment" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry" | "customer" | "customerContact" | "customerPayment" | "customerCreditEvent" | "customerRevenue" | "customerRiskIndicator" | "supplier" | "supplierContact" | "supplierBalance" | "supplierPayment" | "supplierReliability" | "supplierSpend" | "supplierRisk" | "nettingAgreement" | "nettingParty" | "nettingSession" | "nettingPosition" | "nettingTransaction" | "settlementInstruction" | "offsetEntry" | "offer" | "offerVersion" | "offerAuditLog" | "offerTemplate" | "task" | "taskAssignee" | "taskWatcher" | "taskTag" | "taskTagLink" | "taskDependency" | "taskComment" | "taskActivity" | "taskAttachment" | "risk" | "riskMitigationStep" | "taskRiskLink" | "riskComment" | "riskActivity" | "taskNotification" | "savedTaskFilter" | "revenueForecast" | "revenueLineItem" | "costForecast" | "costLineItem" | "cashForecast" | "cashForecastPeriod" | "forecastScenario" | "forecastAssumption" | "forecastAlert" | "forecastAnnotation" | "forecastVariance" | "scenario" | "scenarioAssumption" | "stressTest" | "simulationState" | "scenarioComment" | "scenarioDecision" | "scenarioChangeEvent" | "kPI" | "kPIHistory" | "kPIAlert" | "kPITarget" | "kPIBenchmark" | "fXRate" | "fXExposure" | "fXConversion" | "fXScenario" | "fXForecast" | "fXCost" | "fXRiskIndicator" | "fXAuditLog" | "investorSnapshot" | "boardReport" | "runwayProjection" | "investorAccessLog" | "cashflowItem" | "liquidityScenario" | "liquidityGap" | "liquidityRiskSignal" | "liquidityAuditLog" | "liquidityPosition"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1866,6 +1869,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.InvoiceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.InvoiceCountAggregateOutputType> | number
+        }
+      }
+    }
+    InvoiceVersion: {
+      payload: Prisma.$InvoiceVersionPayload<ExtArgs>
+      fields: Prisma.InvoiceVersionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvoiceVersionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvoiceVersionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>
+        }
+        findFirst: {
+          args: Prisma.InvoiceVersionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvoiceVersionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>
+        }
+        findMany: {
+          args: Prisma.InvoiceVersionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>[]
+        }
+        create: {
+          args: Prisma.InvoiceVersionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>
+        }
+        createMany: {
+          args: Prisma.InvoiceVersionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvoiceVersionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>[]
+        }
+        delete: {
+          args: Prisma.InvoiceVersionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>
+        }
+        update: {
+          args: Prisma.InvoiceVersionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>
+        }
+        deleteMany: {
+          args: Prisma.InvoiceVersionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvoiceVersionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvoiceVersionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>[]
+        }
+        upsert: {
+          args: Prisma.InvoiceVersionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceVersionPayload>
+        }
+        aggregate: {
+          args: Prisma.InvoiceVersionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvoiceVersion>
+        }
+        groupBy: {
+          args: Prisma.InvoiceVersionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceVersionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvoiceVersionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceVersionCountAggregateOutputType> | number
+        }
+      }
+    }
+    InvoiceAccountingEvent: {
+      payload: Prisma.$InvoiceAccountingEventPayload<ExtArgs>
+      fields: Prisma.InvoiceAccountingEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvoiceAccountingEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvoiceAccountingEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>
+        }
+        findFirst: {
+          args: Prisma.InvoiceAccountingEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvoiceAccountingEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>
+        }
+        findMany: {
+          args: Prisma.InvoiceAccountingEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>[]
+        }
+        create: {
+          args: Prisma.InvoiceAccountingEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>
+        }
+        createMany: {
+          args: Prisma.InvoiceAccountingEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvoiceAccountingEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>[]
+        }
+        delete: {
+          args: Prisma.InvoiceAccountingEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>
+        }
+        update: {
+          args: Prisma.InvoiceAccountingEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.InvoiceAccountingEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvoiceAccountingEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvoiceAccountingEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.InvoiceAccountingEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceAccountingEventPayload>
+        }
+        aggregate: {
+          args: Prisma.InvoiceAccountingEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvoiceAccountingEvent>
+        }
+        groupBy: {
+          args: Prisma.InvoiceAccountingEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceAccountingEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvoiceAccountingEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceAccountingEventCountAggregateOutputType> | number
+        }
+      }
+    }
+    InvoicePayment: {
+      payload: Prisma.$InvoicePaymentPayload<ExtArgs>
+      fields: Prisma.InvoicePaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvoicePaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvoicePaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.InvoicePaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvoicePaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>
+        }
+        findMany: {
+          args: Prisma.InvoicePaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>[]
+        }
+        create: {
+          args: Prisma.InvoicePaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>
+        }
+        createMany: {
+          args: Prisma.InvoicePaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvoicePaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.InvoicePaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>
+        }
+        update: {
+          args: Prisma.InvoicePaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.InvoicePaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvoicePaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvoicePaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.InvoicePaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.InvoicePaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvoicePayment>
+        }
+        groupBy: {
+          args: Prisma.InvoicePaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoicePaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvoicePaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoicePaymentCountAggregateOutputType> | number
         }
       }
     }
@@ -10814,8 +11039,20 @@ export const InvoiceScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
   status: 'status',
+  version: 'version',
+  isLatest: 'isLatest',
+  previousVersionId: 'previousVersionId',
+  customerId: 'customerId',
+  customerName: 'customerName',
+  customerEmail: 'customerEmail',
+  customerTaxId: 'customerTaxId',
+  customerAddress: 'customerAddress',
   sender: 'sender',
   recipient: 'recipient',
+  entityId: 'entityId',
+  entityName: 'entityName',
+  entityTaxId: 'entityTaxId',
+  entityAddress: 'entityAddress',
   invoiceDate: 'invoiceDate',
   dueDate: 'dueDate',
   serviceDate: 'serviceDate',
@@ -10825,20 +11062,53 @@ export const InvoiceScalarFieldEnum = {
   currency: 'currency',
   subtotal: 'subtotal',
   taxAmount: 'taxAmount',
+  taxableAmount: 'taxableAmount',
+  discountAmount: 'discountAmount',
+  discountPercent: 'discountPercent',
   total: 'total',
+  paidAmount: 'paidAmount',
+  outstandingAmount: 'outstandingAmount',
   applyTax: 'applyTax',
   taxRate: 'taxRate',
+  taxClassification: 'taxClassification',
   taxExemptReason: 'taxExemptReason',
   taxExemptNote: 'taxExemptNote',
+  taxJurisdiction: 'taxJurisdiction',
+  fxRateToBase: 'fxRateToBase',
+  fxRateDate: 'fxRateDate',
+  baseCurrency: 'baseCurrency',
+  totalInBase: 'totalInBase',
+  fiscalYear: 'fiscalYear',
+  fiscalPeriod: 'fiscalPeriod',
   payment: 'payment',
+  paymentTerms: 'paymentTerms',
+  bankDetails: 'bankDetails',
+  confirmedAt: 'confirmedAt',
+  sentAt: 'sentAt',
+  paidAt: 'paidAt',
+  cancelledAt: 'cancelledAt',
+  archivedAt: 'archivedAt',
+  createdBy: 'createdBy',
+  createdByName: 'createdByName',
+  confirmedBy: 'confirmedBy',
+  confirmedByName: 'confirmedByName',
+  cancelledBy: 'cancelledBy',
+  cancelledByName: 'cancelledByName',
+  cancellationReason: 'cancellationReason',
   notes: 'notes',
   internalNotes: 'internalNotes',
   language: 'language',
-  sentAt: 'sentAt',
-  paidAt: 'paidAt',
+  reference: 'reference',
+  poNumber: 'poNumber',
   isRecurring: 'isRecurring',
   recurringInterval: 'recurringInterval',
+  recurringEndDate: 'recurringEndDate',
   nextRecurringDate: 'nextRecurringDate',
+  parentInvoiceId: 'parentInvoiceId',
+  orderNumber: 'orderNumber',
+  projectId: 'projectId',
+  costCenterId: 'costCenterId',
+  receivableId: 'receivableId',
   organizationId: 'organizationId',
   orderId: 'orderId',
   createdAt: 'createdAt',
@@ -10846,6 +11116,73 @@ export const InvoiceScalarFieldEnum = {
 } as const
 
 export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+export const InvoiceVersionScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  version: 'version',
+  snapshot: 'snapshot',
+  changeType: 'changeType',
+  changeReason: 'changeReason',
+  changedFields: 'changedFields',
+  createdBy: 'createdBy',
+  createdByName: 'createdByName',
+  createdAt: 'createdAt'
+} as const
+
+export type InvoiceVersionScalarFieldEnum = (typeof InvoiceVersionScalarFieldEnum)[keyof typeof InvoiceVersionScalarFieldEnum]
+
+
+export const InvoiceAccountingEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  invoiceId: 'invoiceId',
+  eventType: 'eventType',
+  debitAccountId: 'debitAccountId',
+  debitAccountCode: 'debitAccountCode',
+  debitAccountName: 'debitAccountName',
+  creditAccountId: 'creditAccountId',
+  creditAccountCode: 'creditAccountCode',
+  creditAccountName: 'creditAccountName',
+  amount: 'amount',
+  currency: 'currency',
+  fiscalYear: 'fiscalYear',
+  fiscalPeriod: 'fiscalPeriod',
+  effectiveDate: 'effectiveDate',
+  status: 'status',
+  reversedAt: 'reversedAt',
+  reversalEventId: 'reversalEventId',
+  description: 'description',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type InvoiceAccountingEventScalarFieldEnum = (typeof InvoiceAccountingEventScalarFieldEnum)[keyof typeof InvoiceAccountingEventScalarFieldEnum]
+
+
+export const InvoicePaymentScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  amount: 'amount',
+  currency: 'currency',
+  paymentDate: 'paymentDate',
+  paymentMethod: 'paymentMethod',
+  bankAccount: 'bankAccount',
+  transactionRef: 'transactionRef',
+  transactionId: 'transactionId',
+  reference: 'reference',
+  notes: 'notes',
+  status: 'status',
+  creditNoteId: 'creditNoteId',
+  offsetReceivableId: 'offsetReceivableId',
+  treasuryMovementId: 'treasuryMovementId',
+  appliedBy: 'appliedBy',
+  appliedByName: 'appliedByName',
+  createdAt: 'createdAt'
+} as const
+
+export type InvoicePaymentScalarFieldEnum = (typeof InvoicePaymentScalarFieldEnum)[keyof typeof InvoicePaymentScalarFieldEnum]
 
 
 export const OrderScalarFieldEnum = {
@@ -14173,6 +14510,9 @@ export type GlobalOmitConfig = {
   savedReport?: Prisma.SavedReportOmit
   corporateEntity?: Prisma.CorporateEntityOmit
   invoice?: Prisma.InvoiceOmit
+  invoiceVersion?: Prisma.InvoiceVersionOmit
+  invoiceAccountingEvent?: Prisma.InvoiceAccountingEventOmit
+  invoicePayment?: Prisma.InvoicePaymentOmit
   order?: Prisma.OrderOmit
   archiveItem?: Prisma.ArchiveItemOmit
   liability?: Prisma.LiabilityOmit

@@ -552,7 +552,7 @@ function OrderCreationWizard({
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-800"
                                         >
                                             {COUNTRIES.map((c) => (
-                                                <option key={c.code} value={c.code}>{c.name.en}</option>
+                                                <option key={c.code} value={c.code}>{c.name}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -851,7 +851,7 @@ function FakturierungWizard({
 }) {
     const { t, language } = useThemeStore();
     const { wizardState, setWizardStep, linkInvoiceToOrder, markItemsAsInvoiced } = useOrderStore();
-    const { createInvoice, generateInvoiceNumber } = useInvoiceStore();
+    const { createInvoice } = useInvoiceStore();
 
     const [selectedItems, setSelectedItems] = useState<Record<string, number>>(() => {
         const initial: Record<string, number> = {};
@@ -875,7 +875,7 @@ function FakturierungWizard({
         return sum + (item ? qty * item.unitPrice : 0);
     }, 0);
 
-    const handleCreateInvoice = () => {
+    const handleCreateInvoice = async () => {
         const dueDate = new Date();
         dueDate.setDate(dueDate.getDate() + wizardState.paymentDays);
 
@@ -884,27 +884,38 @@ function FakturierungWizard({
 
         const invoiceItems: InvoiceItem[] = order.items
             .filter(item => selectedItems[item.id] > 0)
-            .map(item => ({
-                id: `inv-item-${Date.now()}-${item.id}`,
-                description: item.description,
-                quantity: selectedItems[item.id],
-                unitPrice: item.unitPrice,
-                taxRate: wizardState.applyTax ? wizardState.taxRate : 0,
-                total: selectedItems[item.id] * item.unitPrice,
-            }));
+            .map((item, index) => {
+                const quantity = selectedItems[item.id];
+                const subtotal = quantity * item.unitPrice;
+                const itemTaxRate = wizardState.applyTax ? wizardState.taxRate : 0;
+                const itemTaxAmount = subtotal * (itemTaxRate / 100);
+                return {
+                    id: `inv-item-${Date.now()}-${item.id}`,
+                    position: index + 1,
+                    description: item.description,
+                    quantity,
+                    unit: item.unit || 'pcs',
+                    unitPrice: item.unitPrice,
+                    taxRate: itemTaxRate,
+                    subtotal,
+                    taxAmount: itemTaxAmount,
+                    total: subtotal + itemTaxAmount,
+                };
+            });
 
-        const invoice = createInvoice({
-            invoiceNumber: generateInvoiceNumber(),
-            status: 'draft',
-            sender: order.seller as InvoiceParty,
-            recipient: order.customer as InvoiceParty,
+        const invoice = await createInvoice({
+            sender: order.seller as Partial<InvoiceParty>,
+            recipient: order.customer as Partial<InvoiceParty>,
             invoiceDate: wizardState.invoiceDate,
             dueDate: dueDate.toISOString().split('T')[0],
-            items: invoiceItems,
+            items: invoiceItems.map(item => ({
+                description: item.description,
+                quantity: item.quantity,
+                unitPrice: item.unitPrice,
+                unit: item.unit,
+                taxRate: item.taxRate,
+            })),
             currency: order.currency,
-            subtotal: currentInvoiceAmount,
-            taxAmount,
-            total: totalAmount,
             applyTax: wizardState.applyTax,
             taxRate: wizardState.taxRate,
             payment: {
@@ -913,8 +924,13 @@ function FakturierungWizard({
             },
             notes: wizardState.notes || `${order.orderNumber}`,
             language: language as 'en' | 'de' | 'es' | 'fr',
-            isRecurring: false,
+            orderId: order.id,
         });
+
+        if (!invoice) {
+            console.error('Failed to create invoice');
+            return;
+        }
 
         linkInvoiceToOrder(order.id, invoice.id, totalAmount);
 

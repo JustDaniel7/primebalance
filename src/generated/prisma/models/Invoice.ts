@@ -27,23 +27,51 @@ export type AggregateInvoice = {
 }
 
 export type InvoiceAvgAggregateOutputType = {
+  version: number | null
   subtotal: runtime.Decimal | null
   taxAmount: runtime.Decimal | null
+  taxableAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
+  discountPercent: runtime.Decimal | null
   total: runtime.Decimal | null
+  paidAmount: runtime.Decimal | null
+  outstandingAmount: runtime.Decimal | null
   taxRate: runtime.Decimal | null
+  fxRateToBase: runtime.Decimal | null
+  totalInBase: runtime.Decimal | null
+  fiscalYear: number | null
 }
 
 export type InvoiceSumAggregateOutputType = {
+  version: number | null
   subtotal: runtime.Decimal | null
   taxAmount: runtime.Decimal | null
+  taxableAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
+  discountPercent: runtime.Decimal | null
   total: runtime.Decimal | null
+  paidAmount: runtime.Decimal | null
+  outstandingAmount: runtime.Decimal | null
   taxRate: runtime.Decimal | null
+  fxRateToBase: runtime.Decimal | null
+  totalInBase: runtime.Decimal | null
+  fiscalYear: number | null
 }
 
 export type InvoiceMinAggregateOutputType = {
   id: string | null
   invoiceNumber: string | null
   status: string | null
+  version: number | null
+  isLatest: boolean | null
+  previousVersionId: string | null
+  customerId: string | null
+  customerName: string | null
+  customerEmail: string | null
+  customerTaxId: string | null
+  entityId: string | null
+  entityName: string | null
+  entityTaxId: string | null
   invoiceDate: Date | null
   dueDate: Date | null
   serviceDate: Date | null
@@ -52,19 +80,51 @@ export type InvoiceMinAggregateOutputType = {
   currency: string | null
   subtotal: runtime.Decimal | null
   taxAmount: runtime.Decimal | null
+  taxableAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
+  discountPercent: runtime.Decimal | null
   total: runtime.Decimal | null
+  paidAmount: runtime.Decimal | null
+  outstandingAmount: runtime.Decimal | null
   applyTax: boolean | null
   taxRate: runtime.Decimal | null
+  taxClassification: string | null
   taxExemptReason: string | null
   taxExemptNote: string | null
+  taxJurisdiction: string | null
+  fxRateToBase: runtime.Decimal | null
+  fxRateDate: Date | null
+  baseCurrency: string | null
+  totalInBase: runtime.Decimal | null
+  fiscalYear: number | null
+  fiscalPeriod: string | null
+  paymentTerms: string | null
+  confirmedAt: Date | null
+  sentAt: Date | null
+  paidAt: Date | null
+  cancelledAt: Date | null
+  archivedAt: Date | null
+  createdBy: string | null
+  createdByName: string | null
+  confirmedBy: string | null
+  confirmedByName: string | null
+  cancelledBy: string | null
+  cancelledByName: string | null
+  cancellationReason: string | null
   notes: string | null
   internalNotes: string | null
   language: string | null
-  sentAt: Date | null
-  paidAt: Date | null
+  reference: string | null
+  poNumber: string | null
   isRecurring: boolean | null
   recurringInterval: string | null
+  recurringEndDate: Date | null
   nextRecurringDate: Date | null
+  parentInvoiceId: string | null
+  orderNumber: string | null
+  projectId: string | null
+  costCenterId: string | null
+  receivableId: string | null
   organizationId: string | null
   orderId: string | null
   createdAt: Date | null
@@ -75,6 +135,16 @@ export type InvoiceMaxAggregateOutputType = {
   id: string | null
   invoiceNumber: string | null
   status: string | null
+  version: number | null
+  isLatest: boolean | null
+  previousVersionId: string | null
+  customerId: string | null
+  customerName: string | null
+  customerEmail: string | null
+  customerTaxId: string | null
+  entityId: string | null
+  entityName: string | null
+  entityTaxId: string | null
   invoiceDate: Date | null
   dueDate: Date | null
   serviceDate: Date | null
@@ -83,19 +153,51 @@ export type InvoiceMaxAggregateOutputType = {
   currency: string | null
   subtotal: runtime.Decimal | null
   taxAmount: runtime.Decimal | null
+  taxableAmount: runtime.Decimal | null
+  discountAmount: runtime.Decimal | null
+  discountPercent: runtime.Decimal | null
   total: runtime.Decimal | null
+  paidAmount: runtime.Decimal | null
+  outstandingAmount: runtime.Decimal | null
   applyTax: boolean | null
   taxRate: runtime.Decimal | null
+  taxClassification: string | null
   taxExemptReason: string | null
   taxExemptNote: string | null
+  taxJurisdiction: string | null
+  fxRateToBase: runtime.Decimal | null
+  fxRateDate: Date | null
+  baseCurrency: string | null
+  totalInBase: runtime.Decimal | null
+  fiscalYear: number | null
+  fiscalPeriod: string | null
+  paymentTerms: string | null
+  confirmedAt: Date | null
+  sentAt: Date | null
+  paidAt: Date | null
+  cancelledAt: Date | null
+  archivedAt: Date | null
+  createdBy: string | null
+  createdByName: string | null
+  confirmedBy: string | null
+  confirmedByName: string | null
+  cancelledBy: string | null
+  cancelledByName: string | null
+  cancellationReason: string | null
   notes: string | null
   internalNotes: string | null
   language: string | null
-  sentAt: Date | null
-  paidAt: Date | null
+  reference: string | null
+  poNumber: string | null
   isRecurring: boolean | null
   recurringInterval: string | null
+  recurringEndDate: Date | null
   nextRecurringDate: Date | null
+  parentInvoiceId: string | null
+  orderNumber: string | null
+  projectId: string | null
+  costCenterId: string | null
+  receivableId: string | null
   organizationId: string | null
   orderId: string | null
   createdAt: Date | null
@@ -106,8 +208,20 @@ export type InvoiceCountAggregateOutputType = {
   id: number
   invoiceNumber: number
   status: number
+  version: number
+  isLatest: number
+  previousVersionId: number
+  customerId: number
+  customerName: number
+  customerEmail: number
+  customerTaxId: number
+  customerAddress: number
   sender: number
   recipient: number
+  entityId: number
+  entityName: number
+  entityTaxId: number
+  entityAddress: number
   invoiceDate: number
   dueDate: number
   serviceDate: number
@@ -117,20 +231,53 @@ export type InvoiceCountAggregateOutputType = {
   currency: number
   subtotal: number
   taxAmount: number
+  taxableAmount: number
+  discountAmount: number
+  discountPercent: number
   total: number
+  paidAmount: number
+  outstandingAmount: number
   applyTax: number
   taxRate: number
+  taxClassification: number
   taxExemptReason: number
   taxExemptNote: number
+  taxJurisdiction: number
+  fxRateToBase: number
+  fxRateDate: number
+  baseCurrency: number
+  totalInBase: number
+  fiscalYear: number
+  fiscalPeriod: number
   payment: number
+  paymentTerms: number
+  bankDetails: number
+  confirmedAt: number
+  sentAt: number
+  paidAt: number
+  cancelledAt: number
+  archivedAt: number
+  createdBy: number
+  createdByName: number
+  confirmedBy: number
+  confirmedByName: number
+  cancelledBy: number
+  cancelledByName: number
+  cancellationReason: number
   notes: number
   internalNotes: number
   language: number
-  sentAt: number
-  paidAt: number
+  reference: number
+  poNumber: number
   isRecurring: number
   recurringInterval: number
+  recurringEndDate: number
   nextRecurringDate: number
+  parentInvoiceId: number
+  orderNumber: number
+  projectId: number
+  costCenterId: number
+  receivableId: number
   organizationId: number
   orderId: number
   createdAt: number
@@ -140,23 +287,51 @@ export type InvoiceCountAggregateOutputType = {
 
 
 export type InvoiceAvgAggregateInputType = {
+  version?: true
   subtotal?: true
   taxAmount?: true
+  taxableAmount?: true
+  discountAmount?: true
+  discountPercent?: true
   total?: true
+  paidAmount?: true
+  outstandingAmount?: true
   taxRate?: true
+  fxRateToBase?: true
+  totalInBase?: true
+  fiscalYear?: true
 }
 
 export type InvoiceSumAggregateInputType = {
+  version?: true
   subtotal?: true
   taxAmount?: true
+  taxableAmount?: true
+  discountAmount?: true
+  discountPercent?: true
   total?: true
+  paidAmount?: true
+  outstandingAmount?: true
   taxRate?: true
+  fxRateToBase?: true
+  totalInBase?: true
+  fiscalYear?: true
 }
 
 export type InvoiceMinAggregateInputType = {
   id?: true
   invoiceNumber?: true
   status?: true
+  version?: true
+  isLatest?: true
+  previousVersionId?: true
+  customerId?: true
+  customerName?: true
+  customerEmail?: true
+  customerTaxId?: true
+  entityId?: true
+  entityName?: true
+  entityTaxId?: true
   invoiceDate?: true
   dueDate?: true
   serviceDate?: true
@@ -165,19 +340,51 @@ export type InvoiceMinAggregateInputType = {
   currency?: true
   subtotal?: true
   taxAmount?: true
+  taxableAmount?: true
+  discountAmount?: true
+  discountPercent?: true
   total?: true
+  paidAmount?: true
+  outstandingAmount?: true
   applyTax?: true
   taxRate?: true
+  taxClassification?: true
   taxExemptReason?: true
   taxExemptNote?: true
+  taxJurisdiction?: true
+  fxRateToBase?: true
+  fxRateDate?: true
+  baseCurrency?: true
+  totalInBase?: true
+  fiscalYear?: true
+  fiscalPeriod?: true
+  paymentTerms?: true
+  confirmedAt?: true
+  sentAt?: true
+  paidAt?: true
+  cancelledAt?: true
+  archivedAt?: true
+  createdBy?: true
+  createdByName?: true
+  confirmedBy?: true
+  confirmedByName?: true
+  cancelledBy?: true
+  cancelledByName?: true
+  cancellationReason?: true
   notes?: true
   internalNotes?: true
   language?: true
-  sentAt?: true
-  paidAt?: true
+  reference?: true
+  poNumber?: true
   isRecurring?: true
   recurringInterval?: true
+  recurringEndDate?: true
   nextRecurringDate?: true
+  parentInvoiceId?: true
+  orderNumber?: true
+  projectId?: true
+  costCenterId?: true
+  receivableId?: true
   organizationId?: true
   orderId?: true
   createdAt?: true
@@ -188,6 +395,16 @@ export type InvoiceMaxAggregateInputType = {
   id?: true
   invoiceNumber?: true
   status?: true
+  version?: true
+  isLatest?: true
+  previousVersionId?: true
+  customerId?: true
+  customerName?: true
+  customerEmail?: true
+  customerTaxId?: true
+  entityId?: true
+  entityName?: true
+  entityTaxId?: true
   invoiceDate?: true
   dueDate?: true
   serviceDate?: true
@@ -196,19 +413,51 @@ export type InvoiceMaxAggregateInputType = {
   currency?: true
   subtotal?: true
   taxAmount?: true
+  taxableAmount?: true
+  discountAmount?: true
+  discountPercent?: true
   total?: true
+  paidAmount?: true
+  outstandingAmount?: true
   applyTax?: true
   taxRate?: true
+  taxClassification?: true
   taxExemptReason?: true
   taxExemptNote?: true
+  taxJurisdiction?: true
+  fxRateToBase?: true
+  fxRateDate?: true
+  baseCurrency?: true
+  totalInBase?: true
+  fiscalYear?: true
+  fiscalPeriod?: true
+  paymentTerms?: true
+  confirmedAt?: true
+  sentAt?: true
+  paidAt?: true
+  cancelledAt?: true
+  archivedAt?: true
+  createdBy?: true
+  createdByName?: true
+  confirmedBy?: true
+  confirmedByName?: true
+  cancelledBy?: true
+  cancelledByName?: true
+  cancellationReason?: true
   notes?: true
   internalNotes?: true
   language?: true
-  sentAt?: true
-  paidAt?: true
+  reference?: true
+  poNumber?: true
   isRecurring?: true
   recurringInterval?: true
+  recurringEndDate?: true
   nextRecurringDate?: true
+  parentInvoiceId?: true
+  orderNumber?: true
+  projectId?: true
+  costCenterId?: true
+  receivableId?: true
   organizationId?: true
   orderId?: true
   createdAt?: true
@@ -219,8 +468,20 @@ export type InvoiceCountAggregateInputType = {
   id?: true
   invoiceNumber?: true
   status?: true
+  version?: true
+  isLatest?: true
+  previousVersionId?: true
+  customerId?: true
+  customerName?: true
+  customerEmail?: true
+  customerTaxId?: true
+  customerAddress?: true
   sender?: true
   recipient?: true
+  entityId?: true
+  entityName?: true
+  entityTaxId?: true
+  entityAddress?: true
   invoiceDate?: true
   dueDate?: true
   serviceDate?: true
@@ -230,20 +491,53 @@ export type InvoiceCountAggregateInputType = {
   currency?: true
   subtotal?: true
   taxAmount?: true
+  taxableAmount?: true
+  discountAmount?: true
+  discountPercent?: true
   total?: true
+  paidAmount?: true
+  outstandingAmount?: true
   applyTax?: true
   taxRate?: true
+  taxClassification?: true
   taxExemptReason?: true
   taxExemptNote?: true
+  taxJurisdiction?: true
+  fxRateToBase?: true
+  fxRateDate?: true
+  baseCurrency?: true
+  totalInBase?: true
+  fiscalYear?: true
+  fiscalPeriod?: true
   payment?: true
+  paymentTerms?: true
+  bankDetails?: true
+  confirmedAt?: true
+  sentAt?: true
+  paidAt?: true
+  cancelledAt?: true
+  archivedAt?: true
+  createdBy?: true
+  createdByName?: true
+  confirmedBy?: true
+  confirmedByName?: true
+  cancelledBy?: true
+  cancelledByName?: true
+  cancellationReason?: true
   notes?: true
   internalNotes?: true
   language?: true
-  sentAt?: true
-  paidAt?: true
+  reference?: true
+  poNumber?: true
   isRecurring?: true
   recurringInterval?: true
+  recurringEndDate?: true
   nextRecurringDate?: true
+  parentInvoiceId?: true
+  orderNumber?: true
+  projectId?: true
+  costCenterId?: true
+  receivableId?: true
   organizationId?: true
   orderId?: true
   createdAt?: true
@@ -341,8 +635,20 @@ export type InvoiceGroupByOutputType = {
   id: string
   invoiceNumber: string
   status: string
-  sender: runtime.JsonValue
-  recipient: runtime.JsonValue
+  version: number
+  isLatest: boolean
+  previousVersionId: string | null
+  customerId: string | null
+  customerName: string | null
+  customerEmail: string | null
+  customerTaxId: string | null
+  customerAddress: runtime.JsonValue | null
+  sender: runtime.JsonValue | null
+  recipient: runtime.JsonValue | null
+  entityId: string | null
+  entityName: string | null
+  entityTaxId: string | null
+  entityAddress: runtime.JsonValue | null
   invoiceDate: Date
   dueDate: Date
   serviceDate: Date | null
@@ -352,20 +658,53 @@ export type InvoiceGroupByOutputType = {
   currency: string
   subtotal: runtime.Decimal
   taxAmount: runtime.Decimal
+  taxableAmount: runtime.Decimal
+  discountAmount: runtime.Decimal
+  discountPercent: runtime.Decimal
   total: runtime.Decimal
+  paidAmount: runtime.Decimal
+  outstandingAmount: runtime.Decimal
   applyTax: boolean
   taxRate: runtime.Decimal
+  taxClassification: string | null
   taxExemptReason: string | null
   taxExemptNote: string | null
-  payment: runtime.JsonValue
+  taxJurisdiction: string | null
+  fxRateToBase: runtime.Decimal | null
+  fxRateDate: Date | null
+  baseCurrency: string | null
+  totalInBase: runtime.Decimal | null
+  fiscalYear: number | null
+  fiscalPeriod: string | null
+  payment: runtime.JsonValue | null
+  paymentTerms: string | null
+  bankDetails: runtime.JsonValue | null
+  confirmedAt: Date | null
+  sentAt: Date | null
+  paidAt: Date | null
+  cancelledAt: Date | null
+  archivedAt: Date | null
+  createdBy: string | null
+  createdByName: string | null
+  confirmedBy: string | null
+  confirmedByName: string | null
+  cancelledBy: string | null
+  cancelledByName: string | null
+  cancellationReason: string | null
   notes: string | null
   internalNotes: string | null
   language: string
-  sentAt: Date | null
-  paidAt: Date | null
+  reference: string | null
+  poNumber: string | null
   isRecurring: boolean
   recurringInterval: string | null
+  recurringEndDate: Date | null
   nextRecurringDate: Date | null
+  parentInvoiceId: string | null
+  orderNumber: string | null
+  projectId: string | null
+  costCenterId: string | null
+  receivableId: string | null
   organizationId: string
   orderId: string | null
   createdAt: Date
@@ -399,8 +738,20 @@ export type InvoiceWhereInput = {
   id?: Prisma.StringFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.StringFilter<"Invoice"> | string
-  sender?: Prisma.JsonFilter<"Invoice">
-  recipient?: Prisma.JsonFilter<"Invoice">
+  version?: Prisma.IntFilter<"Invoice"> | number
+  isLatest?: Prisma.BoolFilter<"Invoice"> | boolean
+  previousVersionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerEmail?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerTaxId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerAddress?: Prisma.JsonNullableFilter<"Invoice">
+  sender?: Prisma.JsonNullableFilter<"Invoice">
+  recipient?: Prisma.JsonNullableFilter<"Invoice">
+  entityId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityTaxId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityAddress?: Prisma.JsonNullableFilter<"Invoice">
   invoiceDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   dueDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   serviceDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
@@ -410,34 +761,82 @@ export type InvoiceWhereInput = {
   currency?: Prisma.StringFilter<"Invoice"> | string
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFilter<"Invoice"> | boolean
   taxRate?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.StringNullableFilter<"Invoice"> | string | null
   taxExemptReason?: Prisma.StringNullableFilter<"Invoice"> | string | null
   taxExemptNote?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  payment?: Prisma.JsonFilter<"Invoice">
+  taxJurisdiction?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  fxRateToBase?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  baseCurrency?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  totalInBase?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.IntNullableFilter<"Invoice"> | number | null
+  fiscalPeriod?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  payment?: Prisma.JsonNullableFilter<"Invoice">
+  paymentTerms?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  bankDetails?: Prisma.JsonNullableFilter<"Invoice">
+  confirmedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  sentAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  createdByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  confirmedBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  confirmedByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancelledBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancelledByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Invoice"> | string | null
   notes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   internalNotes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   language?: Prisma.StringFilter<"Invoice"> | string
-  sentAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  reference?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  poNumber?: Prisma.StringNullableFilter<"Invoice"> | string | null
   isRecurring?: Prisma.BoolFilter<"Invoice"> | boolean
   recurringInterval?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  recurringEndDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   nextRecurringDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  parentInvoiceId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  orderNumber?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  projectId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  receivableId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   organizationId?: Prisma.StringFilter<"Invoice"> | string
   orderId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
+  versions?: Prisma.InvoiceVersionListRelationFilter
+  accountingEvents?: Prisma.InvoiceAccountingEventListRelationFilter
+  payments?: Prisma.InvoicePaymentListRelationFilter
 }
 
 export type InvoiceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sender?: Prisma.SortOrder
-  recipient?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  isLatest?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerTaxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  sender?: Prisma.SortOrderInput | Prisma.SortOrder
+  recipient?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityName?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityTaxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   serviceDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -447,26 +846,62 @@ export type InvoiceOrderByWithRelationInput = {
   currency?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   applyTax?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  taxClassification?: Prisma.SortOrderInput | Prisma.SortOrder
   taxExemptReason?: Prisma.SortOrderInput | Prisma.SortOrder
   taxExemptNote?: Prisma.SortOrderInput | Prisma.SortOrder
-  payment?: Prisma.SortOrder
+  taxJurisdiction?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  baseCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalInBase?: Prisma.SortOrderInput | Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  fiscalPeriod?: Prisma.SortOrderInput | Prisma.SortOrder
+  payment?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  bankDetails?: Prisma.SortOrderInput | Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  confirmedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  confirmedByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   language?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  poNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrderInput | Prisma.SortOrder
+  recurringEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
   nextRecurringDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentInvoiceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivableId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   orderId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
   order?: Prisma.OrderOrderByWithRelationInput
+  versions?: Prisma.InvoiceVersionOrderByRelationAggregateInput
+  accountingEvents?: Prisma.InvoiceAccountingEventOrderByRelationAggregateInput
+  payments?: Prisma.InvoicePaymentOrderByRelationAggregateInput
 }
 
 export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
@@ -477,8 +912,20 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.StringFilter<"Invoice"> | string
-  sender?: Prisma.JsonFilter<"Invoice">
-  recipient?: Prisma.JsonFilter<"Invoice">
+  version?: Prisma.IntFilter<"Invoice"> | number
+  isLatest?: Prisma.BoolFilter<"Invoice"> | boolean
+  previousVersionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerEmail?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerTaxId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerAddress?: Prisma.JsonNullableFilter<"Invoice">
+  sender?: Prisma.JsonNullableFilter<"Invoice">
+  recipient?: Prisma.JsonNullableFilter<"Invoice">
+  entityId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityTaxId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityAddress?: Prisma.JsonNullableFilter<"Invoice">
   invoiceDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   dueDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   serviceDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
@@ -488,34 +935,82 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   currency?: Prisma.StringFilter<"Invoice"> | string
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFilter<"Invoice"> | boolean
   taxRate?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.StringNullableFilter<"Invoice"> | string | null
   taxExemptReason?: Prisma.StringNullableFilter<"Invoice"> | string | null
   taxExemptNote?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  payment?: Prisma.JsonFilter<"Invoice">
+  taxJurisdiction?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  fxRateToBase?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  baseCurrency?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  totalInBase?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.IntNullableFilter<"Invoice"> | number | null
+  fiscalPeriod?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  payment?: Prisma.JsonNullableFilter<"Invoice">
+  paymentTerms?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  bankDetails?: Prisma.JsonNullableFilter<"Invoice">
+  confirmedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  sentAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  createdByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  confirmedBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  confirmedByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancelledBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancelledByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Invoice"> | string | null
   notes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   internalNotes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   language?: Prisma.StringFilter<"Invoice"> | string
-  sentAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  reference?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  poNumber?: Prisma.StringNullableFilter<"Invoice"> | string | null
   isRecurring?: Prisma.BoolFilter<"Invoice"> | boolean
   recurringInterval?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  recurringEndDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   nextRecurringDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  parentInvoiceId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  orderNumber?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  projectId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  receivableId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   organizationId?: Prisma.StringFilter<"Invoice"> | string
   orderId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
+  versions?: Prisma.InvoiceVersionListRelationFilter
+  accountingEvents?: Prisma.InvoiceAccountingEventListRelationFilter
+  payments?: Prisma.InvoicePaymentListRelationFilter
 }, "id" | "organizationId_invoiceNumber">
 
 export type InvoiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  sender?: Prisma.SortOrder
-  recipient?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  isLatest?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerTaxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  sender?: Prisma.SortOrderInput | Prisma.SortOrder
+  recipient?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityName?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityTaxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  entityAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   serviceDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -525,20 +1020,53 @@ export type InvoiceOrderByWithAggregationInput = {
   currency?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   applyTax?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  taxClassification?: Prisma.SortOrderInput | Prisma.SortOrder
   taxExemptReason?: Prisma.SortOrderInput | Prisma.SortOrder
   taxExemptNote?: Prisma.SortOrderInput | Prisma.SortOrder
-  payment?: Prisma.SortOrder
+  taxJurisdiction?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  baseCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalInBase?: Prisma.SortOrderInput | Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  fiscalPeriod?: Prisma.SortOrderInput | Prisma.SortOrder
+  payment?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  bankDetails?: Prisma.SortOrderInput | Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  confirmedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  confirmedByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledByName?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   language?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  poNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrderInput | Prisma.SortOrder
+  recurringEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
   nextRecurringDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentInvoiceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivableId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   orderId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -557,8 +1085,20 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   status?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
-  sender?: Prisma.JsonWithAggregatesFilter<"Invoice">
-  recipient?: Prisma.JsonWithAggregatesFilter<"Invoice">
+  version?: Prisma.IntWithAggregatesFilter<"Invoice"> | number
+  isLatest?: Prisma.BoolWithAggregatesFilter<"Invoice"> | boolean
+  previousVersionId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  customerId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  customerName?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  customerEmail?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  customerTaxId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  customerAddress?: Prisma.JsonNullableWithAggregatesFilter<"Invoice">
+  sender?: Prisma.JsonNullableWithAggregatesFilter<"Invoice">
+  recipient?: Prisma.JsonNullableWithAggregatesFilter<"Invoice">
+  entityId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  entityName?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  entityTaxId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  entityAddress?: Prisma.JsonNullableWithAggregatesFilter<"Invoice">
   invoiceDate?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   serviceDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
@@ -568,20 +1108,53 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   currency?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   subtotal?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolWithAggregatesFilter<"Invoice"> | boolean
   taxRate?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   taxExemptReason?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   taxExemptNote?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
-  payment?: Prisma.JsonWithAggregatesFilter<"Invoice">
+  taxJurisdiction?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  fxRateToBase?: Prisma.DecimalNullableWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  baseCurrency?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  totalInBase?: Prisma.DecimalNullableWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.IntNullableWithAggregatesFilter<"Invoice"> | number | null
+  fiscalPeriod?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  payment?: Prisma.JsonNullableWithAggregatesFilter<"Invoice">
+  paymentTerms?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  bankDetails?: Prisma.JsonNullableWithAggregatesFilter<"Invoice">
+  confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  createdByName?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  confirmedBy?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  confirmedByName?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  cancelledBy?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  cancelledByName?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  cancellationReason?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   internalNotes?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   language?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
-  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  reference?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  poNumber?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   isRecurring?: Prisma.BoolWithAggregatesFilter<"Invoice"> | boolean
   recurringInterval?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  recurringEndDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
   nextRecurringDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
+  parentInvoiceId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  orderNumber?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  projectId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  costCenterId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  receivableId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   orderId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
@@ -592,8 +1165,20 @@ export type InvoiceCreateInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -603,32 +1188,80 @@ export type InvoiceCreateInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutInvoiceInput
   order?: Prisma.OrderCreateNestedOneWithoutInvoicesInput
+  versions?: Prisma.InvoiceVersionCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUncheckedCreateInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -638,32 +1271,80 @@ export type InvoiceUncheckedCreateInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   organizationId: string
   orderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  versions?: Prisma.InvoiceVersionUncheckedCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -673,32 +1354,80 @@ export type InvoiceUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutInvoiceNestedInput
   order?: Prisma.OrderUpdateOneWithoutInvoicesNestedInput
+  versions?: Prisma.InvoiceVersionUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -708,32 +1437,80 @@ export type InvoiceUncheckedUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.InvoiceVersionUncheckedUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceCreateManyInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -743,20 +1520,53 @@ export type InvoiceCreateManyInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   organizationId: string
   orderId?: string | null
   createdAt?: Date | string
@@ -767,8 +1577,20 @@ export type InvoiceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -778,20 +1600,53 @@ export type InvoiceUpdateManyMutationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -800,8 +1655,20 @@ export type InvoiceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -811,20 +1678,53 @@ export type InvoiceUncheckedUpdateManyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -850,8 +1750,20 @@ export type InvoiceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  isLatest?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrder
+  customerName?: Prisma.SortOrder
+  customerEmail?: Prisma.SortOrder
+  customerTaxId?: Prisma.SortOrder
+  customerAddress?: Prisma.SortOrder
   sender?: Prisma.SortOrder
   recipient?: Prisma.SortOrder
+  entityId?: Prisma.SortOrder
+  entityName?: Prisma.SortOrder
+  entityTaxId?: Prisma.SortOrder
+  entityAddress?: Prisma.SortOrder
   invoiceDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   serviceDate?: Prisma.SortOrder
@@ -861,20 +1773,53 @@ export type InvoiceCountOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   applyTax?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  taxClassification?: Prisma.SortOrder
   taxExemptReason?: Prisma.SortOrder
   taxExemptNote?: Prisma.SortOrder
+  taxJurisdiction?: Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrder
+  fxRateDate?: Prisma.SortOrder
+  baseCurrency?: Prisma.SortOrder
+  totalInBase?: Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrder
+  fiscalPeriod?: Prisma.SortOrder
   payment?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  bankDetails?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  createdByName?: Prisma.SortOrder
+  confirmedBy?: Prisma.SortOrder
+  confirmedByName?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrder
+  cancelledByName?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
   language?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrder
-  paidAt?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  poNumber?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrder
+  recurringEndDate?: Prisma.SortOrder
   nextRecurringDate?: Prisma.SortOrder
+  parentInvoiceId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  receivableId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -882,16 +1827,35 @@ export type InvoiceCountOrderByAggregateInput = {
 }
 
 export type InvoiceAvgOrderByAggregateInput = {
+  version?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrder
+  totalInBase?: Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrder
 }
 
 export type InvoiceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  isLatest?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrder
+  customerName?: Prisma.SortOrder
+  customerEmail?: Prisma.SortOrder
+  customerTaxId?: Prisma.SortOrder
+  entityId?: Prisma.SortOrder
+  entityName?: Prisma.SortOrder
+  entityTaxId?: Prisma.SortOrder
   invoiceDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   serviceDate?: Prisma.SortOrder
@@ -900,19 +1864,51 @@ export type InvoiceMaxOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   applyTax?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  taxClassification?: Prisma.SortOrder
   taxExemptReason?: Prisma.SortOrder
   taxExemptNote?: Prisma.SortOrder
+  taxJurisdiction?: Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrder
+  fxRateDate?: Prisma.SortOrder
+  baseCurrency?: Prisma.SortOrder
+  totalInBase?: Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrder
+  fiscalPeriod?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  createdByName?: Prisma.SortOrder
+  confirmedBy?: Prisma.SortOrder
+  confirmedByName?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrder
+  cancelledByName?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
   language?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrder
-  paidAt?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  poNumber?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrder
+  recurringEndDate?: Prisma.SortOrder
   nextRecurringDate?: Prisma.SortOrder
+  parentInvoiceId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  receivableId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -923,6 +1919,16 @@ export type InvoiceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  isLatest?: Prisma.SortOrder
+  previousVersionId?: Prisma.SortOrder
+  customerId?: Prisma.SortOrder
+  customerName?: Prisma.SortOrder
+  customerEmail?: Prisma.SortOrder
+  customerTaxId?: Prisma.SortOrder
+  entityId?: Prisma.SortOrder
+  entityName?: Prisma.SortOrder
+  entityTaxId?: Prisma.SortOrder
   invoiceDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   serviceDate?: Prisma.SortOrder
@@ -931,19 +1937,51 @@ export type InvoiceMinOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   applyTax?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  taxClassification?: Prisma.SortOrder
   taxExemptReason?: Prisma.SortOrder
   taxExemptNote?: Prisma.SortOrder
+  taxJurisdiction?: Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrder
+  fxRateDate?: Prisma.SortOrder
+  baseCurrency?: Prisma.SortOrder
+  totalInBase?: Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrder
+  fiscalPeriod?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  confirmedAt?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  paidAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  createdByName?: Prisma.SortOrder
+  confirmedBy?: Prisma.SortOrder
+  confirmedByName?: Prisma.SortOrder
+  cancelledBy?: Prisma.SortOrder
+  cancelledByName?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
   language?: Prisma.SortOrder
-  sentAt?: Prisma.SortOrder
-  paidAt?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  poNumber?: Prisma.SortOrder
   isRecurring?: Prisma.SortOrder
   recurringInterval?: Prisma.SortOrder
+  recurringEndDate?: Prisma.SortOrder
   nextRecurringDate?: Prisma.SortOrder
+  parentInvoiceId?: Prisma.SortOrder
+  orderNumber?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  receivableId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -951,10 +1989,24 @@ export type InvoiceMinOrderByAggregateInput = {
 }
 
 export type InvoiceSumOrderByAggregateInput = {
+  version?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxAmount?: Prisma.SortOrder
+  taxableAmount?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
+  discountPercent?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  outstandingAmount?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
+  fxRateToBase?: Prisma.SortOrder
+  totalInBase?: Prisma.SortOrder
+  fiscalYear?: Prisma.SortOrder
+}
+
+export type InvoiceScalarRelationFilter = {
+  is?: Prisma.InvoiceWhereInput
+  isNot?: Prisma.InvoiceWhereInput
 }
 
 export type InvoiceCreateNestedManyWithoutOrganizationInput = {
@@ -997,6 +2049,48 @@ export type InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput = {
   update?: Prisma.InvoiceUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.InvoiceUpdateWithWhereUniqueWithoutOrganizationInput[]
   updateMany?: Prisma.InvoiceUpdateManyWithWhereWithoutOrganizationInput | Prisma.InvoiceUpdateManyWithWhereWithoutOrganizationInput[]
   deleteMany?: Prisma.InvoiceScalarWhereInput | Prisma.InvoiceScalarWhereInput[]
+}
+
+export type InvoiceCreateNestedOneWithoutVersionsInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutVersionsInput, Prisma.InvoiceUncheckedCreateWithoutVersionsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutVersionsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+}
+
+export type InvoiceUpdateOneRequiredWithoutVersionsNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutVersionsInput, Prisma.InvoiceUncheckedCreateWithoutVersionsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutVersionsInput
+  upsert?: Prisma.InvoiceUpsertWithoutVersionsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutVersionsInput, Prisma.InvoiceUpdateWithoutVersionsInput>, Prisma.InvoiceUncheckedUpdateWithoutVersionsInput>
+}
+
+export type InvoiceCreateNestedOneWithoutAccountingEventsInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutAccountingEventsInput, Prisma.InvoiceUncheckedCreateWithoutAccountingEventsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutAccountingEventsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+}
+
+export type InvoiceUpdateOneRequiredWithoutAccountingEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutAccountingEventsInput, Prisma.InvoiceUncheckedCreateWithoutAccountingEventsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutAccountingEventsInput
+  upsert?: Prisma.InvoiceUpsertWithoutAccountingEventsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutAccountingEventsInput, Prisma.InvoiceUpdateWithoutAccountingEventsInput>, Prisma.InvoiceUncheckedUpdateWithoutAccountingEventsInput>
+}
+
+export type InvoiceCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutPaymentsInput, Prisma.InvoiceUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+}
+
+export type InvoiceUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutPaymentsInput, Prisma.InvoiceUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.InvoiceUpsertWithoutPaymentsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutPaymentsInput, Prisma.InvoiceUpdateWithoutPaymentsInput>, Prisma.InvoiceUncheckedUpdateWithoutPaymentsInput>
 }
 
 export type InvoiceCreateNestedManyWithoutOrderInput = {
@@ -1045,8 +2139,20 @@ export type InvoiceCreateWithoutOrganizationInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -1056,31 +2162,79 @@ export type InvoiceCreateWithoutOrganizationInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order?: Prisma.OrderCreateNestedOneWithoutInvoicesInput
+  versions?: Prisma.InvoiceVersionCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUncheckedCreateWithoutOrganizationInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -1090,23 +2244,59 @@ export type InvoiceUncheckedCreateWithoutOrganizationInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   orderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  versions?: Prisma.InvoiceVersionUncheckedCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceCreateOrConnectWithoutOrganizationInput = {
@@ -1142,8 +2332,20 @@ export type InvoiceScalarWhereInput = {
   id?: Prisma.StringFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.StringFilter<"Invoice"> | string
-  sender?: Prisma.JsonFilter<"Invoice">
-  recipient?: Prisma.JsonFilter<"Invoice">
+  version?: Prisma.IntFilter<"Invoice"> | number
+  isLatest?: Prisma.BoolFilter<"Invoice"> | boolean
+  previousVersionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerEmail?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerTaxId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  customerAddress?: Prisma.JsonNullableFilter<"Invoice">
+  sender?: Prisma.JsonNullableFilter<"Invoice">
+  recipient?: Prisma.JsonNullableFilter<"Invoice">
+  entityId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityTaxId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  entityAddress?: Prisma.JsonNullableFilter<"Invoice">
   invoiceDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   dueDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   serviceDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
@@ -1153,32 +2355,77 @@ export type InvoiceScalarWhereInput = {
   currency?: Prisma.StringFilter<"Invoice"> | string
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFilter<"Invoice"> | boolean
   taxRate?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.StringNullableFilter<"Invoice"> | string | null
   taxExemptReason?: Prisma.StringNullableFilter<"Invoice"> | string | null
   taxExemptNote?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  payment?: Prisma.JsonFilter<"Invoice">
+  taxJurisdiction?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  fxRateToBase?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  baseCurrency?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  totalInBase?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.IntNullableFilter<"Invoice"> | number | null
+  fiscalPeriod?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  payment?: Prisma.JsonNullableFilter<"Invoice">
+  paymentTerms?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  bankDetails?: Prisma.JsonNullableFilter<"Invoice">
+  confirmedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  sentAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  createdBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  createdByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  confirmedBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  confirmedByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancelledBy?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancelledByName?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Invoice"> | string | null
   notes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   internalNotes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   language?: Prisma.StringFilter<"Invoice"> | string
-  sentAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
-  paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  reference?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  poNumber?: Prisma.StringNullableFilter<"Invoice"> | string | null
   isRecurring?: Prisma.BoolFilter<"Invoice"> | boolean
   recurringInterval?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  recurringEndDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   nextRecurringDate?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
+  parentInvoiceId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  orderNumber?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  projectId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  receivableId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   organizationId?: Prisma.StringFilter<"Invoice"> | string
   orderId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
 }
 
-export type InvoiceCreateWithoutOrderInput = {
+export type InvoiceCreateWithoutVersionsInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -1188,31 +2435,1111 @@ export type InvoiceCreateWithoutOrderInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutInvoiceInput
+  order?: Prisma.OrderCreateNestedOneWithoutInvoicesInput
+  accountingEvents?: Prisma.InvoiceAccountingEventCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceUncheckedCreateWithoutVersionsInput = {
+  id?: string
+  invoiceNumber: string
+  status?: string
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate: Date | string
+  dueDate: Date | string
+  serviceDate?: Date | string | null
+  servicePeriodStart?: Date | string | null
+  servicePeriodEnd?: Date | string | null
+  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: boolean
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
+  taxExemptReason?: string | null
+  taxExemptNote?: string | null
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
+  notes?: string | null
+  internalNotes?: string | null
+  language?: string
+  reference?: string | null
+  poNumber?: string | null
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
+  nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
+  organizationId: string
+  orderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceCreateOrConnectWithoutVersionsInput = {
+  where: Prisma.InvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutVersionsInput, Prisma.InvoiceUncheckedCreateWithoutVersionsInput>
+}
+
+export type InvoiceUpsertWithoutVersionsInput = {
+  update: Prisma.XOR<Prisma.InvoiceUpdateWithoutVersionsInput, Prisma.InvoiceUncheckedUpdateWithoutVersionsInput>
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutVersionsInput, Prisma.InvoiceUncheckedCreateWithoutVersionsInput>
+  where?: Prisma.InvoiceWhereInput
+}
+
+export type InvoiceUpdateToOneWithWhereWithoutVersionsInput = {
+  where?: Prisma.InvoiceWhereInput
+  data: Prisma.XOR<Prisma.InvoiceUpdateWithoutVersionsInput, Prisma.InvoiceUncheckedUpdateWithoutVersionsInput>
+}
+
+export type InvoiceUpdateWithoutVersionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutInvoiceNestedInput
+  order?: Prisma.OrderUpdateOneWithoutInvoicesNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceUncheckedUpdateWithoutVersionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceCreateWithoutAccountingEventsInput = {
+  id?: string
+  invoiceNumber: string
+  status?: string
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate: Date | string
+  dueDate: Date | string
+  serviceDate?: Date | string | null
+  servicePeriodStart?: Date | string | null
+  servicePeriodEnd?: Date | string | null
+  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: boolean
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
+  taxExemptReason?: string | null
+  taxExemptNote?: string | null
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
+  notes?: string | null
+  internalNotes?: string | null
+  language?: string
+  reference?: string | null
+  poNumber?: string | null
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
+  nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutInvoiceInput
+  order?: Prisma.OrderCreateNestedOneWithoutInvoicesInput
+  versions?: Prisma.InvoiceVersionCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceUncheckedCreateWithoutAccountingEventsInput = {
+  id?: string
+  invoiceNumber: string
+  status?: string
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate: Date | string
+  dueDate: Date | string
+  serviceDate?: Date | string | null
+  servicePeriodStart?: Date | string | null
+  servicePeriodEnd?: Date | string | null
+  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: boolean
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
+  taxExemptReason?: string | null
+  taxExemptNote?: string | null
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
+  notes?: string | null
+  internalNotes?: string | null
+  language?: string
+  reference?: string | null
+  poNumber?: string | null
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
+  nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
+  organizationId: string
+  orderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  versions?: Prisma.InvoiceVersionUncheckedCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceCreateOrConnectWithoutAccountingEventsInput = {
+  where: Prisma.InvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutAccountingEventsInput, Prisma.InvoiceUncheckedCreateWithoutAccountingEventsInput>
+}
+
+export type InvoiceUpsertWithoutAccountingEventsInput = {
+  update: Prisma.XOR<Prisma.InvoiceUpdateWithoutAccountingEventsInput, Prisma.InvoiceUncheckedUpdateWithoutAccountingEventsInput>
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutAccountingEventsInput, Prisma.InvoiceUncheckedCreateWithoutAccountingEventsInput>
+  where?: Prisma.InvoiceWhereInput
+}
+
+export type InvoiceUpdateToOneWithWhereWithoutAccountingEventsInput = {
+  where?: Prisma.InvoiceWhereInput
+  data: Prisma.XOR<Prisma.InvoiceUpdateWithoutAccountingEventsInput, Prisma.InvoiceUncheckedUpdateWithoutAccountingEventsInput>
+}
+
+export type InvoiceUpdateWithoutAccountingEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutInvoiceNestedInput
+  order?: Prisma.OrderUpdateOneWithoutInvoicesNestedInput
+  versions?: Prisma.InvoiceVersionUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceUncheckedUpdateWithoutAccountingEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.InvoiceVersionUncheckedUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceCreateWithoutPaymentsInput = {
+  id?: string
+  invoiceNumber: string
+  status?: string
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate: Date | string
+  dueDate: Date | string
+  serviceDate?: Date | string | null
+  servicePeriodStart?: Date | string | null
+  servicePeriodEnd?: Date | string | null
+  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: boolean
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
+  taxExemptReason?: string | null
+  taxExemptNote?: string | null
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
+  notes?: string | null
+  internalNotes?: string | null
+  language?: string
+  reference?: string | null
+  poNumber?: string | null
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
+  nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutInvoiceInput
+  order?: Prisma.OrderCreateNestedOneWithoutInvoicesInput
+  versions?: Prisma.InvoiceVersionCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  invoiceNumber: string
+  status?: string
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate: Date | string
+  dueDate: Date | string
+  serviceDate?: Date | string | null
+  servicePeriodStart?: Date | string | null
+  servicePeriodEnd?: Date | string | null
+  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: boolean
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
+  taxExemptReason?: string | null
+  taxExemptNote?: string | null
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
+  notes?: string | null
+  internalNotes?: string | null
+  language?: string
+  reference?: string | null
+  poNumber?: string | null
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
+  nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
+  organizationId: string
+  orderId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  versions?: Prisma.InvoiceVersionUncheckedCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.InvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutPaymentsInput, Prisma.InvoiceUncheckedCreateWithoutPaymentsInput>
+}
+
+export type InvoiceUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.InvoiceUpdateWithoutPaymentsInput, Prisma.InvoiceUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutPaymentsInput, Prisma.InvoiceUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.InvoiceWhereInput
+}
+
+export type InvoiceUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.InvoiceWhereInput
+  data: Prisma.XOR<Prisma.InvoiceUpdateWithoutPaymentsInput, Prisma.InvoiceUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type InvoiceUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutInvoiceNestedInput
+  order?: Prisma.OrderUpdateOneWithoutInvoicesNestedInput
+  versions?: Prisma.InvoiceVersionUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  servicePeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  items?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.InvoiceVersionUncheckedUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceCreateWithoutOrderInput = {
+  id?: string
+  invoiceNumber: string
+  status?: string
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  invoiceDate: Date | string
+  dueDate: Date | string
+  serviceDate?: Date | string | null
+  servicePeriodStart?: Date | string | null
+  servicePeriodEnd?: Date | string | null
+  items: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  currency?: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  applyTax?: boolean
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
+  taxExemptReason?: string | null
+  taxExemptNote?: string | null
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
+  notes?: string | null
+  internalNotes?: string | null
+  language?: string
+  reference?: string | null
+  poNumber?: string | null
+  isRecurring?: boolean
+  recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
+  nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutInvoiceInput
+  versions?: Prisma.InvoiceVersionCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUncheckedCreateWithoutOrderInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -1222,23 +3549,59 @@ export type InvoiceUncheckedCreateWithoutOrderInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  versions?: Prisma.InvoiceVersionUncheckedCreateNestedManyWithoutInvoiceInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.InvoicePaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceCreateOrConnectWithoutOrderInput = {
@@ -1271,8 +3634,20 @@ export type InvoiceCreateManyOrganizationInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -1282,20 +3657,53 @@ export type InvoiceCreateManyOrganizationInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   orderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1305,8 +3713,20 @@ export type InvoiceUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1316,31 +3736,79 @@ export type InvoiceUpdateWithoutOrganizationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.OrderUpdateOneWithoutInvoicesNestedInput
+  versions?: Prisma.InvoiceVersionUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1350,31 +3818,79 @@ export type InvoiceUncheckedUpdateWithoutOrganizationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.InvoiceVersionUncheckedUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1384,20 +3900,53 @@ export type InvoiceUncheckedUpdateManyWithoutOrganizationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1407,8 +3956,20 @@ export type InvoiceCreateManyOrderInput = {
   id?: string
   invoiceNumber: string
   status?: string
-  sender: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: number
+  isLatest?: boolean
+  previousVersionId?: string | null
+  customerId?: string | null
+  customerName?: string | null
+  customerEmail?: string | null
+  customerTaxId?: string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: string | null
+  entityName?: string | null
+  entityTaxId?: string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate: Date | string
   dueDate: Date | string
   serviceDate?: Date | string | null
@@ -1418,20 +3979,53 @@ export type InvoiceCreateManyOrderInput = {
   currency?: string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: boolean
   taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: string | null
   taxExemptReason?: string | null
   taxExemptNote?: string | null
-  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: string | null
+  fxRateToBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Date | string | null
+  baseCurrency?: string | null
+  totalInBase?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: number | null
+  fiscalPeriod?: string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Date | string | null
+  sentAt?: Date | string | null
+  paidAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  archivedAt?: Date | string | null
+  createdBy?: string | null
+  createdByName?: string | null
+  confirmedBy?: string | null
+  confirmedByName?: string | null
+  cancelledBy?: string | null
+  cancelledByName?: string | null
+  cancellationReason?: string | null
   notes?: string | null
   internalNotes?: string | null
   language?: string
-  sentAt?: Date | string | null
-  paidAt?: Date | string | null
+  reference?: string | null
+  poNumber?: string | null
   isRecurring?: boolean
   recurringInterval?: string | null
+  recurringEndDate?: Date | string | null
   nextRecurringDate?: Date | string | null
+  parentInvoiceId?: string | null
+  orderNumber?: string | null
+  projectId?: string | null
+  costCenterId?: string | null
+  receivableId?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1441,8 +4035,20 @@ export type InvoiceUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1452,31 +4058,79 @@ export type InvoiceUpdateWithoutOrderInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutInvoiceNestedInput
+  versions?: Prisma.InvoiceVersionUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1486,31 +4140,79 @@ export type InvoiceUncheckedUpdateWithoutOrderInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  versions?: Prisma.InvoiceVersionUncheckedUpdateManyWithoutInvoiceNestedInput
+  accountingEvents?: Prisma.InvoiceAccountingEventUncheckedUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.InvoicePaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateManyWithoutOrderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  sender?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  recipient?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  isLatest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  sender?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  recipient?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  entityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  entityAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   serviceDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1520,33 +4222,125 @@ export type InvoiceUncheckedUpdateManyWithoutOrderInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxableAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discountPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   applyTax?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxClassification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxExemptNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  taxJurisdiction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateToBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  baseCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalInBase?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fiscalYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fiscalPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confirmedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   language?: Prisma.StringFieldUpdateOperationsInput | string
-  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  poNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRecurring?: Prisma.BoolFieldUpdateOperationsInput | boolean
   recurringInterval?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recurringEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextRecurringDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentInvoiceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  receivableId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
+/**
+ * Count Type InvoiceCountOutputType
+ */
+
+export type InvoiceCountOutputType = {
+  versions: number
+  accountingEvents: number
+  payments: number
+}
+
+export type InvoiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  versions?: boolean | InvoiceCountOutputTypeCountVersionsArgs
+  accountingEvents?: boolean | InvoiceCountOutputTypeCountAccountingEventsArgs
+  payments?: boolean | InvoiceCountOutputTypeCountPaymentsArgs
+}
+
+/**
+ * InvoiceCountOutputType without action
+ */
+export type InvoiceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceCountOutputType
+   */
+  select?: Prisma.InvoiceCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * InvoiceCountOutputType without action
+ */
+export type InvoiceCountOutputTypeCountVersionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceVersionWhereInput
+}
+
+/**
+ * InvoiceCountOutputType without action
+ */
+export type InvoiceCountOutputTypeCountAccountingEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceAccountingEventWhereInput
+}
+
+/**
+ * InvoiceCountOutputType without action
+ */
+export type InvoiceCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoicePaymentWhereInput
+}
+
 
 export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   invoiceNumber?: boolean
   status?: boolean
+  version?: boolean
+  isLatest?: boolean
+  previousVersionId?: boolean
+  customerId?: boolean
+  customerName?: boolean
+  customerEmail?: boolean
+  customerTaxId?: boolean
+  customerAddress?: boolean
   sender?: boolean
   recipient?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  entityTaxId?: boolean
+  entityAddress?: boolean
   invoiceDate?: boolean
   dueDate?: boolean
   serviceDate?: boolean
@@ -1556,34 +4350,83 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   currency?: boolean
   subtotal?: boolean
   taxAmount?: boolean
+  taxableAmount?: boolean
+  discountAmount?: boolean
+  discountPercent?: boolean
   total?: boolean
+  paidAmount?: boolean
+  outstandingAmount?: boolean
   applyTax?: boolean
   taxRate?: boolean
+  taxClassification?: boolean
   taxExemptReason?: boolean
   taxExemptNote?: boolean
+  taxJurisdiction?: boolean
+  fxRateToBase?: boolean
+  fxRateDate?: boolean
+  baseCurrency?: boolean
+  totalInBase?: boolean
+  fiscalYear?: boolean
+  fiscalPeriod?: boolean
   payment?: boolean
+  paymentTerms?: boolean
+  bankDetails?: boolean
+  confirmedAt?: boolean
+  sentAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  archivedAt?: boolean
+  createdBy?: boolean
+  createdByName?: boolean
+  confirmedBy?: boolean
+  confirmedByName?: boolean
+  cancelledBy?: boolean
+  cancelledByName?: boolean
+  cancellationReason?: boolean
   notes?: boolean
   internalNotes?: boolean
   language?: boolean
-  sentAt?: boolean
-  paidAt?: boolean
+  reference?: boolean
+  poNumber?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  recurringEndDate?: boolean
   nextRecurringDate?: boolean
+  parentInvoiceId?: boolean
+  orderNumber?: boolean
+  projectId?: boolean
+  costCenterId?: boolean
+  receivableId?: boolean
   organizationId?: boolean
   orderId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   order?: boolean | Prisma.Invoice$orderArgs<ExtArgs>
+  versions?: boolean | Prisma.Invoice$versionsArgs<ExtArgs>
+  accountingEvents?: boolean | Prisma.Invoice$accountingEventsArgs<ExtArgs>
+  payments?: boolean | Prisma.Invoice$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.InvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["invoice"]>
 
 export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   invoiceNumber?: boolean
   status?: boolean
+  version?: boolean
+  isLatest?: boolean
+  previousVersionId?: boolean
+  customerId?: boolean
+  customerName?: boolean
+  customerEmail?: boolean
+  customerTaxId?: boolean
+  customerAddress?: boolean
   sender?: boolean
   recipient?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  entityTaxId?: boolean
+  entityAddress?: boolean
   invoiceDate?: boolean
   dueDate?: boolean
   serviceDate?: boolean
@@ -1593,20 +4436,53 @@ export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   currency?: boolean
   subtotal?: boolean
   taxAmount?: boolean
+  taxableAmount?: boolean
+  discountAmount?: boolean
+  discountPercent?: boolean
   total?: boolean
+  paidAmount?: boolean
+  outstandingAmount?: boolean
   applyTax?: boolean
   taxRate?: boolean
+  taxClassification?: boolean
   taxExemptReason?: boolean
   taxExemptNote?: boolean
+  taxJurisdiction?: boolean
+  fxRateToBase?: boolean
+  fxRateDate?: boolean
+  baseCurrency?: boolean
+  totalInBase?: boolean
+  fiscalYear?: boolean
+  fiscalPeriod?: boolean
   payment?: boolean
+  paymentTerms?: boolean
+  bankDetails?: boolean
+  confirmedAt?: boolean
+  sentAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  archivedAt?: boolean
+  createdBy?: boolean
+  createdByName?: boolean
+  confirmedBy?: boolean
+  confirmedByName?: boolean
+  cancelledBy?: boolean
+  cancelledByName?: boolean
+  cancellationReason?: boolean
   notes?: boolean
   internalNotes?: boolean
   language?: boolean
-  sentAt?: boolean
-  paidAt?: boolean
+  reference?: boolean
+  poNumber?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  recurringEndDate?: boolean
   nextRecurringDate?: boolean
+  parentInvoiceId?: boolean
+  orderNumber?: boolean
+  projectId?: boolean
+  costCenterId?: boolean
+  receivableId?: boolean
   organizationId?: boolean
   orderId?: boolean
   createdAt?: boolean
@@ -1619,8 +4495,20 @@ export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   invoiceNumber?: boolean
   status?: boolean
+  version?: boolean
+  isLatest?: boolean
+  previousVersionId?: boolean
+  customerId?: boolean
+  customerName?: boolean
+  customerEmail?: boolean
+  customerTaxId?: boolean
+  customerAddress?: boolean
   sender?: boolean
   recipient?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  entityTaxId?: boolean
+  entityAddress?: boolean
   invoiceDate?: boolean
   dueDate?: boolean
   serviceDate?: boolean
@@ -1630,20 +4518,53 @@ export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   currency?: boolean
   subtotal?: boolean
   taxAmount?: boolean
+  taxableAmount?: boolean
+  discountAmount?: boolean
+  discountPercent?: boolean
   total?: boolean
+  paidAmount?: boolean
+  outstandingAmount?: boolean
   applyTax?: boolean
   taxRate?: boolean
+  taxClassification?: boolean
   taxExemptReason?: boolean
   taxExemptNote?: boolean
+  taxJurisdiction?: boolean
+  fxRateToBase?: boolean
+  fxRateDate?: boolean
+  baseCurrency?: boolean
+  totalInBase?: boolean
+  fiscalYear?: boolean
+  fiscalPeriod?: boolean
   payment?: boolean
+  paymentTerms?: boolean
+  bankDetails?: boolean
+  confirmedAt?: boolean
+  sentAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  archivedAt?: boolean
+  createdBy?: boolean
+  createdByName?: boolean
+  confirmedBy?: boolean
+  confirmedByName?: boolean
+  cancelledBy?: boolean
+  cancelledByName?: boolean
+  cancellationReason?: boolean
   notes?: boolean
   internalNotes?: boolean
   language?: boolean
-  sentAt?: boolean
-  paidAt?: boolean
+  reference?: boolean
+  poNumber?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  recurringEndDate?: boolean
   nextRecurringDate?: boolean
+  parentInvoiceId?: boolean
+  orderNumber?: boolean
+  projectId?: boolean
+  costCenterId?: boolean
+  receivableId?: boolean
   organizationId?: boolean
   orderId?: boolean
   createdAt?: boolean
@@ -1656,8 +4577,20 @@ export type InvoiceSelectScalar = {
   id?: boolean
   invoiceNumber?: boolean
   status?: boolean
+  version?: boolean
+  isLatest?: boolean
+  previousVersionId?: boolean
+  customerId?: boolean
+  customerName?: boolean
+  customerEmail?: boolean
+  customerTaxId?: boolean
+  customerAddress?: boolean
   sender?: boolean
   recipient?: boolean
+  entityId?: boolean
+  entityName?: boolean
+  entityTaxId?: boolean
+  entityAddress?: boolean
   invoiceDate?: boolean
   dueDate?: boolean
   serviceDate?: boolean
@@ -1667,30 +4600,67 @@ export type InvoiceSelectScalar = {
   currency?: boolean
   subtotal?: boolean
   taxAmount?: boolean
+  taxableAmount?: boolean
+  discountAmount?: boolean
+  discountPercent?: boolean
   total?: boolean
+  paidAmount?: boolean
+  outstandingAmount?: boolean
   applyTax?: boolean
   taxRate?: boolean
+  taxClassification?: boolean
   taxExemptReason?: boolean
   taxExemptNote?: boolean
+  taxJurisdiction?: boolean
+  fxRateToBase?: boolean
+  fxRateDate?: boolean
+  baseCurrency?: boolean
+  totalInBase?: boolean
+  fiscalYear?: boolean
+  fiscalPeriod?: boolean
   payment?: boolean
+  paymentTerms?: boolean
+  bankDetails?: boolean
+  confirmedAt?: boolean
+  sentAt?: boolean
+  paidAt?: boolean
+  cancelledAt?: boolean
+  archivedAt?: boolean
+  createdBy?: boolean
+  createdByName?: boolean
+  confirmedBy?: boolean
+  confirmedByName?: boolean
+  cancelledBy?: boolean
+  cancelledByName?: boolean
+  cancellationReason?: boolean
   notes?: boolean
   internalNotes?: boolean
   language?: boolean
-  sentAt?: boolean
-  paidAt?: boolean
+  reference?: boolean
+  poNumber?: boolean
   isRecurring?: boolean
   recurringInterval?: boolean
+  recurringEndDate?: boolean
   nextRecurringDate?: boolean
+  parentInvoiceId?: boolean
+  orderNumber?: boolean
+  projectId?: boolean
+  costCenterId?: boolean
+  receivableId?: boolean
   organizationId?: boolean
   orderId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "status" | "sender" | "recipient" | "invoiceDate" | "dueDate" | "serviceDate" | "servicePeriodStart" | "servicePeriodEnd" | "items" | "currency" | "subtotal" | "taxAmount" | "total" | "applyTax" | "taxRate" | "taxExemptReason" | "taxExemptNote" | "payment" | "notes" | "internalNotes" | "language" | "sentAt" | "paidAt" | "isRecurring" | "recurringInterval" | "nextRecurringDate" | "organizationId" | "orderId" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "status" | "version" | "isLatest" | "previousVersionId" | "customerId" | "customerName" | "customerEmail" | "customerTaxId" | "customerAddress" | "sender" | "recipient" | "entityId" | "entityName" | "entityTaxId" | "entityAddress" | "invoiceDate" | "dueDate" | "serviceDate" | "servicePeriodStart" | "servicePeriodEnd" | "items" | "currency" | "subtotal" | "taxAmount" | "taxableAmount" | "discountAmount" | "discountPercent" | "total" | "paidAmount" | "outstandingAmount" | "applyTax" | "taxRate" | "taxClassification" | "taxExemptReason" | "taxExemptNote" | "taxJurisdiction" | "fxRateToBase" | "fxRateDate" | "baseCurrency" | "totalInBase" | "fiscalYear" | "fiscalPeriod" | "payment" | "paymentTerms" | "bankDetails" | "confirmedAt" | "sentAt" | "paidAt" | "cancelledAt" | "archivedAt" | "createdBy" | "createdByName" | "confirmedBy" | "confirmedByName" | "cancelledBy" | "cancelledByName" | "cancellationReason" | "notes" | "internalNotes" | "language" | "reference" | "poNumber" | "isRecurring" | "recurringInterval" | "recurringEndDate" | "nextRecurringDate" | "parentInvoiceId" | "orderNumber" | "projectId" | "costCenterId" | "receivableId" | "organizationId" | "orderId" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   order?: boolean | Prisma.Invoice$orderArgs<ExtArgs>
+  versions?: boolean | Prisma.Invoice$versionsArgs<ExtArgs>
+  accountingEvents?: boolean | Prisma.Invoice$accountingEventsArgs<ExtArgs>
+  payments?: boolean | Prisma.Invoice$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.InvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type InvoiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1706,13 +4676,28 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
     order: Prisma.$OrderPayload<ExtArgs> | null
+    versions: Prisma.$InvoiceVersionPayload<ExtArgs>[]
+    accountingEvents: Prisma.$InvoiceAccountingEventPayload<ExtArgs>[]
+    payments: Prisma.$InvoicePaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     invoiceNumber: string
     status: string
-    sender: runtime.JsonValue
-    recipient: runtime.JsonValue
+    version: number
+    isLatest: boolean
+    previousVersionId: string | null
+    customerId: string | null
+    customerName: string | null
+    customerEmail: string | null
+    customerTaxId: string | null
+    customerAddress: runtime.JsonValue | null
+    sender: runtime.JsonValue | null
+    recipient: runtime.JsonValue | null
+    entityId: string | null
+    entityName: string | null
+    entityTaxId: string | null
+    entityAddress: runtime.JsonValue | null
     invoiceDate: Date
     dueDate: Date
     serviceDate: Date | null
@@ -1722,20 +4707,53 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     currency: string
     subtotal: runtime.Decimal
     taxAmount: runtime.Decimal
+    taxableAmount: runtime.Decimal
+    discountAmount: runtime.Decimal
+    discountPercent: runtime.Decimal
     total: runtime.Decimal
+    paidAmount: runtime.Decimal
+    outstandingAmount: runtime.Decimal
     applyTax: boolean
     taxRate: runtime.Decimal
+    taxClassification: string | null
     taxExemptReason: string | null
     taxExemptNote: string | null
-    payment: runtime.JsonValue
+    taxJurisdiction: string | null
+    fxRateToBase: runtime.Decimal | null
+    fxRateDate: Date | null
+    baseCurrency: string | null
+    totalInBase: runtime.Decimal | null
+    fiscalYear: number | null
+    fiscalPeriod: string | null
+    payment: runtime.JsonValue | null
+    paymentTerms: string | null
+    bankDetails: runtime.JsonValue | null
+    confirmedAt: Date | null
+    sentAt: Date | null
+    paidAt: Date | null
+    cancelledAt: Date | null
+    archivedAt: Date | null
+    createdBy: string | null
+    createdByName: string | null
+    confirmedBy: string | null
+    confirmedByName: string | null
+    cancelledBy: string | null
+    cancelledByName: string | null
+    cancellationReason: string | null
     notes: string | null
     internalNotes: string | null
     language: string
-    sentAt: Date | null
-    paidAt: Date | null
+    reference: string | null
+    poNumber: string | null
     isRecurring: boolean
     recurringInterval: string | null
+    recurringEndDate: Date | null
     nextRecurringDate: Date | null
+    parentInvoiceId: string | null
+    orderNumber: string | null
+    projectId: string | null
+    costCenterId: string | null
+    receivableId: string | null
     organizationId: string
     orderId: string | null
     createdAt: Date
@@ -2136,6 +5154,9 @@ export interface Prisma__InvoiceClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   order<T extends Prisma.Invoice$orderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$orderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  versions<T extends Prisma.Invoice$versionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accountingEvents<T extends Prisma.Invoice$accountingEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$accountingEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceAccountingEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.Invoice$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2168,8 +5189,20 @@ export interface InvoiceFieldRefs {
   readonly id: Prisma.FieldRef<"Invoice", 'String'>
   readonly invoiceNumber: Prisma.FieldRef<"Invoice", 'String'>
   readonly status: Prisma.FieldRef<"Invoice", 'String'>
+  readonly version: Prisma.FieldRef<"Invoice", 'Int'>
+  readonly isLatest: Prisma.FieldRef<"Invoice", 'Boolean'>
+  readonly previousVersionId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly customerId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly customerName: Prisma.FieldRef<"Invoice", 'String'>
+  readonly customerEmail: Prisma.FieldRef<"Invoice", 'String'>
+  readonly customerTaxId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly customerAddress: Prisma.FieldRef<"Invoice", 'Json'>
   readonly sender: Prisma.FieldRef<"Invoice", 'Json'>
   readonly recipient: Prisma.FieldRef<"Invoice", 'Json'>
+  readonly entityId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly entityName: Prisma.FieldRef<"Invoice", 'String'>
+  readonly entityTaxId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly entityAddress: Prisma.FieldRef<"Invoice", 'Json'>
   readonly invoiceDate: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly dueDate: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly serviceDate: Prisma.FieldRef<"Invoice", 'DateTime'>
@@ -2179,20 +5212,53 @@ export interface InvoiceFieldRefs {
   readonly currency: Prisma.FieldRef<"Invoice", 'String'>
   readonly subtotal: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly taxAmount: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly taxableAmount: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly discountAmount: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly discountPercent: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly total: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly paidAmount: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly outstandingAmount: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly applyTax: Prisma.FieldRef<"Invoice", 'Boolean'>
   readonly taxRate: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly taxClassification: Prisma.FieldRef<"Invoice", 'String'>
   readonly taxExemptReason: Prisma.FieldRef<"Invoice", 'String'>
   readonly taxExemptNote: Prisma.FieldRef<"Invoice", 'String'>
+  readonly taxJurisdiction: Prisma.FieldRef<"Invoice", 'String'>
+  readonly fxRateToBase: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly fxRateDate: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly baseCurrency: Prisma.FieldRef<"Invoice", 'String'>
+  readonly totalInBase: Prisma.FieldRef<"Invoice", 'Decimal'>
+  readonly fiscalYear: Prisma.FieldRef<"Invoice", 'Int'>
+  readonly fiscalPeriod: Prisma.FieldRef<"Invoice", 'String'>
   readonly payment: Prisma.FieldRef<"Invoice", 'Json'>
+  readonly paymentTerms: Prisma.FieldRef<"Invoice", 'String'>
+  readonly bankDetails: Prisma.FieldRef<"Invoice", 'Json'>
+  readonly confirmedAt: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly sentAt: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly paidAt: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly cancelledAt: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly archivedAt: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"Invoice", 'String'>
+  readonly createdByName: Prisma.FieldRef<"Invoice", 'String'>
+  readonly confirmedBy: Prisma.FieldRef<"Invoice", 'String'>
+  readonly confirmedByName: Prisma.FieldRef<"Invoice", 'String'>
+  readonly cancelledBy: Prisma.FieldRef<"Invoice", 'String'>
+  readonly cancelledByName: Prisma.FieldRef<"Invoice", 'String'>
+  readonly cancellationReason: Prisma.FieldRef<"Invoice", 'String'>
   readonly notes: Prisma.FieldRef<"Invoice", 'String'>
   readonly internalNotes: Prisma.FieldRef<"Invoice", 'String'>
   readonly language: Prisma.FieldRef<"Invoice", 'String'>
-  readonly sentAt: Prisma.FieldRef<"Invoice", 'DateTime'>
-  readonly paidAt: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly reference: Prisma.FieldRef<"Invoice", 'String'>
+  readonly poNumber: Prisma.FieldRef<"Invoice", 'String'>
   readonly isRecurring: Prisma.FieldRef<"Invoice", 'Boolean'>
   readonly recurringInterval: Prisma.FieldRef<"Invoice", 'String'>
+  readonly recurringEndDate: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly nextRecurringDate: Prisma.FieldRef<"Invoice", 'DateTime'>
+  readonly parentInvoiceId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly orderNumber: Prisma.FieldRef<"Invoice", 'String'>
+  readonly projectId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly costCenterId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly receivableId: Prisma.FieldRef<"Invoice", 'String'>
   readonly organizationId: Prisma.FieldRef<"Invoice", 'String'>
   readonly orderId: Prisma.FieldRef<"Invoice", 'String'>
   readonly createdAt: Prisma.FieldRef<"Invoice", 'DateTime'>
@@ -2609,6 +5675,78 @@ export type Invoice$orderArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.OrderInclude<ExtArgs> | null
   where?: Prisma.OrderWhereInput
+}
+
+/**
+ * Invoice.versions
+ */
+export type Invoice$versionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceVersion
+   */
+  select?: Prisma.InvoiceVersionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoiceVersion
+   */
+  omit?: Prisma.InvoiceVersionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceVersionInclude<ExtArgs> | null
+  where?: Prisma.InvoiceVersionWhereInput
+  orderBy?: Prisma.InvoiceVersionOrderByWithRelationInput | Prisma.InvoiceVersionOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceVersionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceVersionScalarFieldEnum | Prisma.InvoiceVersionScalarFieldEnum[]
+}
+
+/**
+ * Invoice.accountingEvents
+ */
+export type Invoice$accountingEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceAccountingEvent
+   */
+  select?: Prisma.InvoiceAccountingEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoiceAccountingEvent
+   */
+  omit?: Prisma.InvoiceAccountingEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceAccountingEventInclude<ExtArgs> | null
+  where?: Prisma.InvoiceAccountingEventWhereInput
+  orderBy?: Prisma.InvoiceAccountingEventOrderByWithRelationInput | Prisma.InvoiceAccountingEventOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceAccountingEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceAccountingEventScalarFieldEnum | Prisma.InvoiceAccountingEventScalarFieldEnum[]
+}
+
+/**
+ * Invoice.payments
+ */
+export type Invoice$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoicePayment
+   */
+  select?: Prisma.InvoicePaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoicePayment
+   */
+  omit?: Prisma.InvoicePaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoicePaymentInclude<ExtArgs> | null
+  where?: Prisma.InvoicePaymentWhereInput
+  orderBy?: Prisma.InvoicePaymentOrderByWithRelationInput | Prisma.InvoicePaymentOrderByWithRelationInput[]
+  cursor?: Prisma.InvoicePaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoicePaymentScalarFieldEnum | Prisma.InvoicePaymentScalarFieldEnum[]
 }
 
 /**

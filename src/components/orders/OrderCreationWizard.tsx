@@ -528,7 +528,7 @@ export function OrderCreationWizard({ onClose, onComplete, editOrder }: OrderWiz
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent"
                                         >
                                             {COUNTRIES.map((c) => (
-                                                <option key={c.code} value={c.code}>{(c.name as Record<string, string>)[language] || (c.name as Record<string, string>).en}</option>
+                                                <option key={c.code} value={c.code}>{c.name}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -882,7 +882,7 @@ export function OrderCreationWizard({ onClose, onComplete, editOrder }: OrderWiz
                                     <p className="text-sm text-gray-600 dark:text-gray-400">
                                         {(() => {
                                             const country = COUNTRIES.find(c => c.code === customer.country);
-                                            return country ? (country.name as Record<string, string>)[language] || (country.name as Record<string, string>).en : customer.country;
+                                            return country ? country.name : customer.country;
                                         })()}
                                     </p>
                                     {customer.vatId && (

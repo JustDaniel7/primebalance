@@ -89,6 +89,7 @@ interface InvoiceState {
   getInvoicesByCustomer: (customerId: string) => Invoice[];
   getTotalRevenue: () => number;
   getTotalOutstanding: () => number;
+  generateInvoiceNumber: () => string;
 }
 
 // =============================================================================
@@ -147,8 +148,8 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       if (activeFilters.currency) {
         params.set('currency', activeFilters.currency);
       }
-      if (activeFilters.isOverdue) {
-        params.set('isOverdue', 'true');
+      if (activeFilters.overdue) {
+        params.set('overdue', 'true');
       }
       if (activeFilters.search) {
         params.set('search', activeFilters.search);
@@ -639,5 +640,15 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
     return get().invoices
         .filter((inv) => ![InvoiceStatus.PAID, InvoiceStatus.CANCELLED, InvoiceStatus.ARCHIVED].includes(inv.status as InvoiceStatus))
         .reduce((sum, inv) => sum + inv.outstandingAmount, 0);
+  },
+
+  generateInvoiceNumber: () => {
+    const year = new Date().getFullYear();
+    const invoices = get().invoices;
+    const currentYearInvoices = invoices.filter((inv) =>
+      inv.invoiceNumber?.startsWith(`INV-${year}`)
+    );
+    const nextNumber = currentYearInvoices.length + 1;
+    return `INV-${year}-${String(nextNumber).padStart(5, '0')}`;
   },
 }));

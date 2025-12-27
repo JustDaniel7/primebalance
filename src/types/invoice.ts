@@ -91,6 +91,9 @@ export interface InvoiceAddress {
   country?: string;
 }
 
+// Alias for backward compatibility
+export type Address = InvoiceAddress;
+
 export interface InvoiceLineItem {
   id: string;
   position: number;
@@ -647,3 +650,63 @@ export function calculateInvoiceTotals(
 
   return { subtotal, taxAmount, discountAmount, total };
 }
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+
+export const CURRENCIES = [
+  { code: 'USD', symbol: '$' },
+  { code: 'EUR', symbol: '€' },
+  { code: 'GBP', symbol: '£' },
+  { code: 'CHF', symbol: 'CHF' },
+  { code: 'JPY', symbol: '¥' },
+  { code: 'CAD', symbol: 'C$' },
+  { code: 'AUD', symbol: 'A$' },
+  { code: 'CNY', symbol: '¥' },
+  { code: 'INR', symbol: '₹' },
+  { code: 'BRL', symbol: 'R$' },
+  { code: 'MXN', symbol: '$' },
+  { code: 'KRW', symbol: '₩' },
+  { code: 'SGD', symbol: 'S$' },
+  { code: 'HKD', symbol: 'HK$' },
+  { code: 'NOK', symbol: 'kr' },
+  { code: 'SEK', symbol: 'kr' },
+  { code: 'DKK', symbol: 'kr' },
+  { code: 'NZD', symbol: 'NZ$' },
+  { code: 'ZAR', symbol: 'R' },
+  { code: 'AED', symbol: 'د.إ' },
+];
+
+export const COUNTRIES = [
+  { code: 'US', name: 'United States' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
+  { code: 'CH', name: 'Switzerland' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'CN', name: 'China' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'IN', name: 'India' },
+  { code: 'BR', name: 'Brazil' },
+  { code: 'MX', name: 'Mexico' },
+  { code: 'KR', name: 'South Korea' },
+  { code: 'SG', name: 'Singapore' },
+  { code: 'HK', name: 'Hong Kong' },
+  { code: 'NL', name: 'Netherlands' },
+  { code: 'IT', name: 'Italy' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'SE', name: 'Sweden' },
+  { code: 'NO', name: 'Norway' },
+  { code: 'DK', name: 'Denmark' },
+  { code: 'NZ', name: 'New Zealand' },
+  { code: 'ZA', name: 'South Africa' },
+  { code: 'AE', name: 'United Arab Emirates' },
+  { code: 'IE', name: 'Ireland' },
+  { code: 'AT', name: 'Austria' },
+  { code: 'BE', name: 'Belgium' },
+  { code: 'PT', name: 'Portugal' },
+  { code: 'PL', name: 'Poland' },
+  { code: 'IL', name: 'Israel' },
+];
