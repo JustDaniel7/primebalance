@@ -78,6 +78,7 @@ export interface KPI {
     seasonalityFactor?: number;
     lastUpdatedAt: string;
     dataFreshness: 'fresh' | 'stale' | 'outdated';
+    isPinned?: boolean;
 }
 
 // =============================================================================

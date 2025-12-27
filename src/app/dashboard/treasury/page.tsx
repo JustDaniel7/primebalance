@@ -91,6 +91,7 @@ const bucketIcons: Record<string, React.ElementType> = {
 // =============================================================================
 
 export default function TreasuryPage() {
+    const [mounted, setMounted] = useState(false);
     const { t, language } = useThemeStore();
     const {
         accounts,
@@ -109,50 +110,62 @@ export default function TreasuryPage() {
         executeDecision,
         runScenario,
         rebalanceBuckets,
+        fetchTreasury,
+        isInitialized,
+        isLoading,
     } = useTreasuryStore();
-
-    const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
-    const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
-    const [selectedScenario, setSelectedScenario] = useState<TreasuryScenario | null>(null);
+    
+    useEffect(() => {
+    setMounted(true);
+  }, []);
 
     useEffect(() => {
-        recalculateCashPosition();
-        recalculateRiskExposure();
-    }, []);
+        if (!isInitialized) {
+    fetchTreasury();
+  }
+}, [fetchTreasury, isInitialized]);
 
-    const summary = getSummary();
-    const pendingApprovals = getPendingApprovals();
+const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
+const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
 
-    const formatCurrency = (amount: number, currency: string = 'EUR') => {
-        return new Intl.NumberFormat(language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : language === 'es' ? 'es-ES' : 'en-US', {
-            style: 'currency',
-            currency,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount);
-    };
+useEffect(() => {
+    recalculateCashPosition();
+    recalculateRiskExposure();
+}, []);
 
-    const formatPercent = (value: number) => `${value.toFixed(1)}%`;
+const summary = getSummary();
+const pendingApprovals = getPendingApprovals();
 
-    const getRiskBadge = (risk: RiskLevel) => (
-        <Badge variant={risk === 'low' ? 'success' : risk === 'medium' ? 'warning' : 'danger'} size="sm">
+const formatCurrency = (amount: number, currency: string = 'EUR') => {
+    return new Intl.NumberFormat(language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : language === 'es' ? 'es-ES' : 'en-US', {
+        style: 'currency',
+        currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(amount);
+};
+
+const formatPercent = (value: number) => `${value.toFixed(1)}%`;
+
+const getRiskBadge = (risk: RiskLevel) => (
+    <Badge variant={risk === 'low' ? 'success' : risk === 'medium' ? 'warning' : 'danger'} size="sm">
             {t(`treasury.risk.${risk}`)}
         </Badge>
     );
-
+    
     const getStatusBadge = (status: TreasuryDecisionStatus) => (
         <Badge
-            variant={
-                status === 'settled' || status === 'approved' || status === 'executed' ? 'success' :
-                    status === 'rejected' || status === 'failed' ? 'danger' :
-                        status === 'awaiting_approval' ? 'warning' : 'neutral'
-            }
-            size="sm"
+        variant={
+            status === 'settled' || status === 'approved' || status === 'executed' ? 'success' :
+            status === 'rejected' || status === 'failed' ? 'danger' :
+            status === 'awaiting_approval' ? 'warning' : 'neutral'
+        }
+        size="sm"
         >
             {t(`treasury.status.${status}`)}
         </Badge>
     );
-
+    
     const tabs = [
         { id: 'overview', label: t('treasury.tabs.overview'), icon: BarChart3 },
         { id: 'buckets', label: t('treasury.tabs.buckets'), icon: Layers },
@@ -160,6 +173,18 @@ export default function TreasuryPage() {
         { id: 'decisions', label: t('treasury.tabs.decisions'), icon: Zap, badge: pendingApprovals.length },
         { id: 'scenarios', label: t('treasury.tabs.scenarios'), icon: Target },
     ];
+    
+    // EARLY RETURN before any data rendering
+      if (!mounted) {
+        return (
+          <div className="flex items-center justify-center h-screen">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+          </div>
+        );
+      }
+    function setSelectedScenario(scenario: TreasuryScenario): void {
+        throw new Error('Function not implemented.');
+    }
 
     return (
         <div className="space-y-6">
@@ -517,7 +542,7 @@ export default function TreasuryPage() {
                                     </div>
 
                                     {/* Covenants */}
-                                    {facility.covenants.length > 0 && (
+                                    {(facility.covenants || []).length > 0 && (
                                         <div className="border-t border-gray-200 dark:border-surface-700 pt-4">
                                             <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">{t('treasury.covenants')}</p>
                                             <div className="grid grid-cols-2 gap-2">

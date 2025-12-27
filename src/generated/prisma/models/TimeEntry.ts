@@ -29,54 +29,102 @@ export type AggregateTimeEntry = {
 export type TimeEntryAvgAggregateOutputType = {
   hours: runtime.Decimal | null
   hourlyRate: runtime.Decimal | null
+  billableAmount: runtime.Decimal | null
+  costRate: runtime.Decimal | null
+  costAmount: runtime.Decimal | null
 }
 
 export type TimeEntrySumAggregateOutputType = {
   hours: runtime.Decimal | null
   hourlyRate: runtime.Decimal | null
+  billableAmount: runtime.Decimal | null
+  costRate: runtime.Decimal | null
+  costAmount: runtime.Decimal | null
 }
 
 export type TimeEntryMinAggregateOutputType = {
   id: string | null
-  date: Date | null
-  hours: runtime.Decimal | null
-  description: string | null
-  billable: boolean | null
-  billed: boolean | null
-  hourlyRate: runtime.Decimal | null
   userId: string | null
   userName: string | null
   projectId: string | null
+  projectCode: string | null
+  taskId: string | null
+  taskName: string | null
+  costCenterId: string | null
+  date: Date | null
+  hours: runtime.Decimal | null
+  startTime: string | null
+  endTime: string | null
+  description: string | null
+  category: string | null
+  isBillable: boolean | null
+  hourlyRate: runtime.Decimal | null
+  billableAmount: runtime.Decimal | null
+  costRate: runtime.Decimal | null
+  costAmount: runtime.Decimal | null
+  status: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  rejectionReason: string | null
+  organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type TimeEntryMaxAggregateOutputType = {
   id: string | null
-  date: Date | null
-  hours: runtime.Decimal | null
-  description: string | null
-  billable: boolean | null
-  billed: boolean | null
-  hourlyRate: runtime.Decimal | null
   userId: string | null
   userName: string | null
   projectId: string | null
+  projectCode: string | null
+  taskId: string | null
+  taskName: string | null
+  costCenterId: string | null
+  date: Date | null
+  hours: runtime.Decimal | null
+  startTime: string | null
+  endTime: string | null
+  description: string | null
+  category: string | null
+  isBillable: boolean | null
+  hourlyRate: runtime.Decimal | null
+  billableAmount: runtime.Decimal | null
+  costRate: runtime.Decimal | null
+  costAmount: runtime.Decimal | null
+  status: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  rejectionReason: string | null
+  organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type TimeEntryCountAggregateOutputType = {
   id: number
-  date: number
-  hours: number
-  description: number
-  billable: number
-  billed: number
-  hourlyRate: number
   userId: number
   userName: number
   projectId: number
+  projectCode: number
+  taskId: number
+  taskName: number
+  costCenterId: number
+  date: number
+  hours: number
+  startTime: number
+  endTime: number
+  description: number
+  category: number
+  isBillable: number
+  hourlyRate: number
+  billableAmount: number
+  costRate: number
+  costAmount: number
+  status: number
+  approvedBy: number
+  approvedAt: number
+  rejectionReason: number
+  organizationId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -86,54 +134,102 @@ export type TimeEntryCountAggregateOutputType = {
 export type TimeEntryAvgAggregateInputType = {
   hours?: true
   hourlyRate?: true
+  billableAmount?: true
+  costRate?: true
+  costAmount?: true
 }
 
 export type TimeEntrySumAggregateInputType = {
   hours?: true
   hourlyRate?: true
+  billableAmount?: true
+  costRate?: true
+  costAmount?: true
 }
 
 export type TimeEntryMinAggregateInputType = {
   id?: true
-  date?: true
-  hours?: true
-  description?: true
-  billable?: true
-  billed?: true
-  hourlyRate?: true
   userId?: true
   userName?: true
   projectId?: true
+  projectCode?: true
+  taskId?: true
+  taskName?: true
+  costCenterId?: true
+  date?: true
+  hours?: true
+  startTime?: true
+  endTime?: true
+  description?: true
+  category?: true
+  isBillable?: true
+  hourlyRate?: true
+  billableAmount?: true
+  costRate?: true
+  costAmount?: true
+  status?: true
+  approvedBy?: true
+  approvedAt?: true
+  rejectionReason?: true
+  organizationId?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type TimeEntryMaxAggregateInputType = {
   id?: true
-  date?: true
-  hours?: true
-  description?: true
-  billable?: true
-  billed?: true
-  hourlyRate?: true
   userId?: true
   userName?: true
   projectId?: true
+  projectCode?: true
+  taskId?: true
+  taskName?: true
+  costCenterId?: true
+  date?: true
+  hours?: true
+  startTime?: true
+  endTime?: true
+  description?: true
+  category?: true
+  isBillable?: true
+  hourlyRate?: true
+  billableAmount?: true
+  costRate?: true
+  costAmount?: true
+  status?: true
+  approvedBy?: true
+  approvedAt?: true
+  rejectionReason?: true
+  organizationId?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type TimeEntryCountAggregateInputType = {
   id?: true
-  date?: true
-  hours?: true
-  description?: true
-  billable?: true
-  billed?: true
-  hourlyRate?: true
   userId?: true
   userName?: true
   projectId?: true
+  projectCode?: true
+  taskId?: true
+  taskName?: true
+  costCenterId?: true
+  date?: true
+  hours?: true
+  startTime?: true
+  endTime?: true
+  description?: true
+  category?: true
+  isBillable?: true
+  hourlyRate?: true
+  billableAmount?: true
+  costRate?: true
+  costAmount?: true
+  status?: true
+  approvedBy?: true
+  approvedAt?: true
+  rejectionReason?: true
+  organizationId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -227,15 +323,29 @@ export type TimeEntryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type TimeEntryGroupByOutputType = {
   id: string
-  date: Date
-  hours: runtime.Decimal
-  description: string | null
-  billable: boolean
-  billed: boolean
-  hourlyRate: runtime.Decimal | null
-  userId: string | null
+  userId: string
   userName: string | null
   projectId: string
+  projectCode: string | null
+  taskId: string | null
+  taskName: string | null
+  costCenterId: string | null
+  date: Date
+  hours: runtime.Decimal
+  startTime: string | null
+  endTime: string | null
+  description: string
+  category: string | null
+  isBillable: boolean
+  hourlyRate: runtime.Decimal | null
+  billableAmount: runtime.Decimal | null
+  costRate: runtime.Decimal | null
+  costAmount: runtime.Decimal | null
+  status: string
+  approvedBy: string | null
+  approvedAt: Date | null
+  rejectionReason: string | null
+  organizationId: string
   createdAt: Date
   updatedAt: Date
   _count: TimeEntryCountAggregateOutputType | null
@@ -265,34 +375,66 @@ export type TimeEntryWhereInput = {
   OR?: Prisma.TimeEntryWhereInput[]
   NOT?: Prisma.TimeEntryWhereInput | Prisma.TimeEntryWhereInput[]
   id?: Prisma.StringFilter<"TimeEntry"> | string
-  date?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
-  hours?: Prisma.DecimalFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
-  billable?: Prisma.BoolFilter<"TimeEntry"> | boolean
-  billed?: Prisma.BoolFilter<"TimeEntry"> | boolean
-  hourlyRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  userId?: Prisma.StringFilter<"TimeEntry"> | string
   userName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
   projectId?: Prisma.StringFilter<"TimeEntry"> | string
+  projectCode?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  taskId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  taskName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  date?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
+  hours?: Prisma.DecimalFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  endTime?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  description?: Prisma.StringFilter<"TimeEntry"> | string
+  category?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  isBillable?: Prisma.BoolFilter<"TimeEntry"> | boolean
+  hourlyRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFilter<"TimeEntry"> | string
+  approvedBy?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"TimeEntry"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  organizationId?: Prisma.StringFilter<"TimeEntry"> | string
   createdAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  costCenter?: Prisma.XOR<Prisma.CostCenterNullableScalarRelationFilter, Prisma.CostCenterWhereInput> | null
+  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
 }
 
 export type TimeEntryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  hours?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
-  billable?: Prisma.SortOrder
-  billed?: Prisma.SortOrder
-  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   userName?: Prisma.SortOrderInput | Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  projectCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  taskId?: Prisma.SortOrderInput | Prisma.SortOrder
+  taskName?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  startTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  endTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  billableAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  costRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  costAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
+  costCenter?: Prisma.CostCenterOrderByWithRelationInput
+  organization?: Prisma.OrganizationOrderByWithRelationInput
 }
 
 export type TimeEntryWhereUniqueInput = Prisma.AtLeast<{
@@ -300,31 +442,61 @@ export type TimeEntryWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TimeEntryWhereInput | Prisma.TimeEntryWhereInput[]
   OR?: Prisma.TimeEntryWhereInput[]
   NOT?: Prisma.TimeEntryWhereInput | Prisma.TimeEntryWhereInput[]
-  date?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
-  hours?: Prisma.DecimalFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
-  billable?: Prisma.BoolFilter<"TimeEntry"> | boolean
-  billed?: Prisma.BoolFilter<"TimeEntry"> | boolean
-  hourlyRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  userId?: Prisma.StringFilter<"TimeEntry"> | string
   userName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
   projectId?: Prisma.StringFilter<"TimeEntry"> | string
+  projectCode?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  taskId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  taskName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  date?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
+  hours?: Prisma.DecimalFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  endTime?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  description?: Prisma.StringFilter<"TimeEntry"> | string
+  category?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  isBillable?: Prisma.BoolFilter<"TimeEntry"> | boolean
+  hourlyRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFilter<"TimeEntry"> | string
+  approvedBy?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"TimeEntry"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  organizationId?: Prisma.StringFilter<"TimeEntry"> | string
   createdAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  costCenter?: Prisma.XOR<Prisma.CostCenterNullableScalarRelationFilter, Prisma.CostCenterWhereInput> | null
+  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
 }, "id">
 
 export type TimeEntryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  hours?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
-  billable?: Prisma.SortOrder
-  billed?: Prisma.SortOrder
-  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrder
   userName?: Prisma.SortOrderInput | Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  projectCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  taskId?: Prisma.SortOrderInput | Prisma.SortOrder
+  taskName?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  date?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  startTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  endTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  billableAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  costRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  costAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TimeEntryCountOrderByAggregateInput
@@ -339,119 +511,229 @@ export type TimeEntryScalarWhereWithAggregatesInput = {
   OR?: Prisma.TimeEntryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TimeEntryScalarWhereWithAggregatesInput | Prisma.TimeEntryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"TimeEntry"> | string
-  date?: Prisma.DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
-  hours?: Prisma.DecimalWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
-  billable?: Prisma.BoolWithAggregatesFilter<"TimeEntry"> | boolean
-  billed?: Prisma.BoolWithAggregatesFilter<"TimeEntry"> | boolean
-  hourlyRate?: Prisma.DecimalNullableWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  userId?: Prisma.StringWithAggregatesFilter<"TimeEntry"> | string
   userName?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
   projectId?: Prisma.StringWithAggregatesFilter<"TimeEntry"> | string
+  projectCode?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  taskId?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  taskName?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  costCenterId?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  date?: Prisma.DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
+  hours?: Prisma.DecimalWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  endTime?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  description?: Prisma.StringWithAggregatesFilter<"TimeEntry"> | string
+  category?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  isBillable?: Prisma.BoolWithAggregatesFilter<"TimeEntry"> | boolean
+  hourlyRate?: Prisma.DecimalNullableWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.DecimalNullableWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.DecimalNullableWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.DecimalNullableWithAggregatesFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringWithAggregatesFilter<"TimeEntry"> | string
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TimeEntry"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"TimeEntry"> | string | null
+  organizationId?: Prisma.StringWithAggregatesFilter<"TimeEntry"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TimeEntry"> | Date | string
 }
 
 export type TimeEntryCreateInput = {
   id?: string
+  userId: string
+  userName?: string | null
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
   date: Date | string
   hours: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  billable?: boolean
-  billed?: boolean
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: string | null
-  userName?: string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutTimeEntriesInput
+  costCenter?: Prisma.CostCenterCreateNestedOneWithoutTimeEntriesInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutTimeEntriesInput
 }
 
 export type TimeEntryUncheckedCreateInput = {
   id?: string
-  date: Date | string
-  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  billable?: boolean
-  billed?: boolean
-  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: string | null
+  userId: string
   userName?: string | null
   projectId: string
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  costCenterId?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type TimeEntryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutTimeEntriesNestedInput
+  costCenter?: Prisma.CostCenterUpdateOneWithoutTimeEntriesNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTimeEntriesNestedInput
 }
 
 export type TimeEntryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TimeEntryCreateManyInput = {
   id?: string
-  date: Date | string
-  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  billable?: boolean
-  billed?: boolean
-  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: string | null
+  userId: string
   userName?: string | null
   projectId: string
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  costCenterId?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type TimeEntryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TimeEntryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -468,15 +750,29 @@ export type TimeEntryOrderByRelationAggregateInput = {
 
 export type TimeEntryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  hours?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  billable?: Prisma.SortOrder
-  billed?: Prisma.SortOrder
-  hourlyRate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  projectCode?: Prisma.SortOrder
+  taskId?: Prisma.SortOrder
+  taskName?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  date?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  billableAmount?: Prisma.SortOrder
+  costRate?: Prisma.SortOrder
+  costAmount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -484,34 +780,65 @@ export type TimeEntryCountOrderByAggregateInput = {
 export type TimeEntryAvgOrderByAggregateInput = {
   hours?: Prisma.SortOrder
   hourlyRate?: Prisma.SortOrder
+  billableAmount?: Prisma.SortOrder
+  costRate?: Prisma.SortOrder
+  costAmount?: Prisma.SortOrder
 }
 
 export type TimeEntryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  hours?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  billable?: Prisma.SortOrder
-  billed?: Prisma.SortOrder
-  hourlyRate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  projectCode?: Prisma.SortOrder
+  taskId?: Prisma.SortOrder
+  taskName?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  date?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  billableAmount?: Prisma.SortOrder
+  costRate?: Prisma.SortOrder
+  costAmount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TimeEntryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  hours?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  billable?: Prisma.SortOrder
-  billed?: Prisma.SortOrder
-  hourlyRate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  projectCode?: Prisma.SortOrder
+  taskId?: Prisma.SortOrder
+  taskName?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  date?: Prisma.SortOrder
+  hours?: Prisma.SortOrder
+  startTime?: Prisma.SortOrder
+  endTime?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  billableAmount?: Prisma.SortOrder
+  costRate?: Prisma.SortOrder
+  costAmount?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -519,6 +846,93 @@ export type TimeEntryMinOrderByAggregateInput = {
 export type TimeEntrySumOrderByAggregateInput = {
   hours?: Prisma.SortOrder
   hourlyRate?: Prisma.SortOrder
+  billableAmount?: Prisma.SortOrder
+  costRate?: Prisma.SortOrder
+  costAmount?: Prisma.SortOrder
+}
+
+export type TimeEntryCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutOrganizationInput, Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput> | Prisma.TimeEntryCreateWithoutOrganizationInput[] | Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput | Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.TimeEntryCreateManyOrganizationInputEnvelope
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+}
+
+export type TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutOrganizationInput, Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput> | Prisma.TimeEntryCreateWithoutOrganizationInput[] | Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput | Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.TimeEntryCreateManyOrganizationInputEnvelope
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+}
+
+export type TimeEntryUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutOrganizationInput, Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput> | Prisma.TimeEntryCreateWithoutOrganizationInput[] | Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput | Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.TimeEntryUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.TimeEntryUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.TimeEntryCreateManyOrganizationInputEnvelope
+  set?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  disconnect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  delete?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  update?: Prisma.TimeEntryUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.TimeEntryUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.TimeEntryUpdateManyWithWhereWithoutOrganizationInput | Prisma.TimeEntryUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
+}
+
+export type TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutOrganizationInput, Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput> | Prisma.TimeEntryCreateWithoutOrganizationInput[] | Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput | Prisma.TimeEntryCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.TimeEntryUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.TimeEntryUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.TimeEntryCreateManyOrganizationInputEnvelope
+  set?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  disconnect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  delete?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  update?: Prisma.TimeEntryUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.TimeEntryUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.TimeEntryUpdateManyWithWhereWithoutOrganizationInput | Prisma.TimeEntryUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
+}
+
+export type TimeEntryCreateNestedManyWithoutCostCenterInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutCostCenterInput, Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput> | Prisma.TimeEntryCreateWithoutCostCenterInput[] | Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput | Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput[]
+  createMany?: Prisma.TimeEntryCreateManyCostCenterInputEnvelope
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+}
+
+export type TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutCostCenterInput, Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput> | Prisma.TimeEntryCreateWithoutCostCenterInput[] | Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput | Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput[]
+  createMany?: Prisma.TimeEntryCreateManyCostCenterInputEnvelope
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+}
+
+export type TimeEntryUpdateManyWithoutCostCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutCostCenterInput, Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput> | Prisma.TimeEntryCreateWithoutCostCenterInput[] | Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput | Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput[]
+  upsert?: Prisma.TimeEntryUpsertWithWhereUniqueWithoutCostCenterInput | Prisma.TimeEntryUpsertWithWhereUniqueWithoutCostCenterInput[]
+  createMany?: Prisma.TimeEntryCreateManyCostCenterInputEnvelope
+  set?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  disconnect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  delete?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  update?: Prisma.TimeEntryUpdateWithWhereUniqueWithoutCostCenterInput | Prisma.TimeEntryUpdateWithWhereUniqueWithoutCostCenterInput[]
+  updateMany?: Prisma.TimeEntryUpdateManyWithWhereWithoutCostCenterInput | Prisma.TimeEntryUpdateManyWithWhereWithoutCostCenterInput[]
+  deleteMany?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
+}
+
+export type TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeEntryCreateWithoutCostCenterInput, Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput> | Prisma.TimeEntryCreateWithoutCostCenterInput[] | Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput | Prisma.TimeEntryCreateOrConnectWithoutCostCenterInput[]
+  upsert?: Prisma.TimeEntryUpsertWithWhereUniqueWithoutCostCenterInput | Prisma.TimeEntryUpsertWithWhereUniqueWithoutCostCenterInput[]
+  createMany?: Prisma.TimeEntryCreateManyCostCenterInputEnvelope
+  set?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  disconnect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  delete?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  connect?: Prisma.TimeEntryWhereUniqueInput | Prisma.TimeEntryWhereUniqueInput[]
+  update?: Prisma.TimeEntryUpdateWithWhereUniqueWithoutCostCenterInput | Prisma.TimeEntryUpdateWithWhereUniqueWithoutCostCenterInput[]
+  updateMany?: Prisma.TimeEntryUpdateManyWithWhereWithoutCostCenterInput | Prisma.TimeEntryUpdateManyWithWhereWithoutCostCenterInput[]
+  deleteMany?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
 }
 
 export type TimeEntryCreateNestedManyWithoutProjectInput = {
@@ -563,42 +977,254 @@ export type TimeEntryUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type TimeEntryCreateWithoutProjectInput = {
+export type TimeEntryCreateWithoutOrganizationInput = {
   id?: string
+  userId: string
+  userName?: string | null
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
   date: Date | string
   hours: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  billable?: boolean
-  billed?: boolean
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutTimeEntriesInput
+  costCenter?: Prisma.CostCenterCreateNestedOneWithoutTimeEntriesInput
+}
+
+export type TimeEntryUncheckedCreateWithoutOrganizationInput = {
+  id?: string
+  userId: string
   userName?: string | null
+  projectId: string
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  costCenterId?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type TimeEntryUncheckedCreateWithoutProjectInput = {
+export type TimeEntryCreateOrConnectWithoutOrganizationInput = {
+  where: Prisma.TimeEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.TimeEntryCreateWithoutOrganizationInput, Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput>
+}
+
+export type TimeEntryCreateManyOrganizationInputEnvelope = {
+  data: Prisma.TimeEntryCreateManyOrganizationInput | Prisma.TimeEntryCreateManyOrganizationInput[]
+  skipDuplicates?: boolean
+}
+
+export type TimeEntryUpsertWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.TimeEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.TimeEntryUpdateWithoutOrganizationInput, Prisma.TimeEntryUncheckedUpdateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.TimeEntryCreateWithoutOrganizationInput, Prisma.TimeEntryUncheckedCreateWithoutOrganizationInput>
+}
+
+export type TimeEntryUpdateWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.TimeEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.TimeEntryUpdateWithoutOrganizationInput, Prisma.TimeEntryUncheckedUpdateWithoutOrganizationInput>
+}
+
+export type TimeEntryUpdateManyWithWhereWithoutOrganizationInput = {
+  where: Prisma.TimeEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.TimeEntryUpdateManyMutationInput, Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationInput>
+}
+
+export type TimeEntryScalarWhereInput = {
+  AND?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
+  OR?: Prisma.TimeEntryScalarWhereInput[]
+  NOT?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
+  id?: Prisma.StringFilter<"TimeEntry"> | string
+  userId?: Prisma.StringFilter<"TimeEntry"> | string
+  userName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  projectId?: Prisma.StringFilter<"TimeEntry"> | string
+  projectCode?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  taskId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  taskName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  date?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
+  hours?: Prisma.DecimalFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  endTime?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  description?: Prisma.StringFilter<"TimeEntry"> | string
+  category?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  isBillable?: Prisma.BoolFilter<"TimeEntry"> | boolean
+  hourlyRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFilter<"TimeEntry"> | string
+  approvedBy?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"TimeEntry"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
+  organizationId?: Prisma.StringFilter<"TimeEntry"> | string
+  createdAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
+}
+
+export type TimeEntryCreateWithoutCostCenterInput = {
   id?: string
+  userId: string
+  userName?: string | null
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
   date: Date | string
   hours: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  billable?: boolean
-  billed?: boolean
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutTimeEntriesInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutTimeEntriesInput
+}
+
+export type TimeEntryUncheckedCreateWithoutCostCenterInput = {
+  id?: string
+  userId: string
   userName?: string | null
+  projectId: string
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TimeEntryCreateOrConnectWithoutCostCenterInput = {
+  where: Prisma.TimeEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.TimeEntryCreateWithoutCostCenterInput, Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput>
+}
+
+export type TimeEntryCreateManyCostCenterInputEnvelope = {
+  data: Prisma.TimeEntryCreateManyCostCenterInput | Prisma.TimeEntryCreateManyCostCenterInput[]
+  skipDuplicates?: boolean
+}
+
+export type TimeEntryUpsertWithWhereUniqueWithoutCostCenterInput = {
+  where: Prisma.TimeEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.TimeEntryUpdateWithoutCostCenterInput, Prisma.TimeEntryUncheckedUpdateWithoutCostCenterInput>
+  create: Prisma.XOR<Prisma.TimeEntryCreateWithoutCostCenterInput, Prisma.TimeEntryUncheckedCreateWithoutCostCenterInput>
+}
+
+export type TimeEntryUpdateWithWhereUniqueWithoutCostCenterInput = {
+  where: Prisma.TimeEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.TimeEntryUpdateWithoutCostCenterInput, Prisma.TimeEntryUncheckedUpdateWithoutCostCenterInput>
+}
+
+export type TimeEntryUpdateManyWithWhereWithoutCostCenterInput = {
+  where: Prisma.TimeEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.TimeEntryUpdateManyMutationInput, Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterInput>
+}
+
+export type TimeEntryCreateWithoutProjectInput = {
+  id?: string
+  userId: string
+  userName?: string | null
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  costCenter?: Prisma.CostCenterCreateNestedOneWithoutTimeEntriesInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutTimeEntriesInput
+}
+
+export type TimeEntryUncheckedCreateWithoutProjectInput = {
+  id?: string
+  userId: string
+  userName?: string | null
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  costCenterId?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -629,76 +1255,338 @@ export type TimeEntryUpdateManyWithWhereWithoutProjectInput = {
   data: Prisma.XOR<Prisma.TimeEntryUpdateManyMutationInput, Prisma.TimeEntryUncheckedUpdateManyWithoutProjectInput>
 }
 
-export type TimeEntryScalarWhereInput = {
-  AND?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
-  OR?: Prisma.TimeEntryScalarWhereInput[]
-  NOT?: Prisma.TimeEntryScalarWhereInput | Prisma.TimeEntryScalarWhereInput[]
-  id?: Prisma.StringFilter<"TimeEntry"> | string
-  date?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
-  hours?: Prisma.DecimalFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
-  billable?: Prisma.BoolFilter<"TimeEntry"> | boolean
-  billed?: Prisma.BoolFilter<"TimeEntry"> | boolean
-  hourlyRate?: Prisma.DecimalNullableFilter<"TimeEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
-  userName?: Prisma.StringNullableFilter<"TimeEntry"> | string | null
-  projectId?: Prisma.StringFilter<"TimeEntry"> | string
-  createdAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"TimeEntry"> | Date | string
+export type TimeEntryCreateManyOrganizationInput = {
+  id?: string
+  userId: string
+  userName?: string | null
+  projectId: string
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  costCenterId?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TimeEntryUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutTimeEntriesNestedInput
+  costCenter?: Prisma.CostCenterUpdateOneWithoutTimeEntriesNestedInput
+}
+
+export type TimeEntryUncheckedUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TimeEntryUncheckedUpdateManyWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TimeEntryCreateManyCostCenterInput = {
+  id?: string
+  userId: string
+  userName?: string | null
+  projectId: string
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  date: Date | string
+  hours: runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TimeEntryUpdateWithoutCostCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutTimeEntriesNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTimeEntriesNestedInput
+}
+
+export type TimeEntryUncheckedUpdateWithoutCostCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TimeEntryUncheckedUpdateManyWithoutCostCenterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TimeEntryCreateManyProjectInput = {
   id?: string
+  userId: string
+  userName?: string | null
+  projectCode?: string | null
+  taskId?: string | null
+  taskName?: string | null
+  costCenterId?: string | null
   date: Date | string
   hours: runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: string | null
-  billable?: boolean
-  billed?: boolean
+  startTime?: string | null
+  endTime?: string | null
+  description: string
+  category?: string | null
+  isBillable?: boolean
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: string | null
-  userName?: string | null
+  billableAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: string
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectionReason?: string | null
+  organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type TimeEntryUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  costCenter?: Prisma.CostCenterUpdateOneWithoutTimeEntriesNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTimeEntriesNestedInput
 }
 
 export type TimeEntryUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TimeEntryUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  billable?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  billed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billableAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -707,94 +1595,178 @@ export type TimeEntryUncheckedUpdateManyWithoutProjectInput = {
 
 export type TimeEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  date?: boolean
-  hours?: boolean
-  description?: boolean
-  billable?: boolean
-  billed?: boolean
-  hourlyRate?: boolean
   userId?: boolean
   userName?: boolean
   projectId?: boolean
+  projectCode?: boolean
+  taskId?: boolean
+  taskName?: boolean
+  costCenterId?: boolean
+  date?: boolean
+  hours?: boolean
+  startTime?: boolean
+  endTime?: boolean
+  description?: boolean
+  category?: boolean
+  isBillable?: boolean
+  hourlyRate?: boolean
+  billableAmount?: boolean
+  costRate?: boolean
+  costAmount?: boolean
+  status?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  rejectionReason?: boolean
+  organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  costCenter?: boolean | Prisma.TimeEntry$costCenterArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timeEntry"]>
 
 export type TimeEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  date?: boolean
-  hours?: boolean
-  description?: boolean
-  billable?: boolean
-  billed?: boolean
-  hourlyRate?: boolean
   userId?: boolean
   userName?: boolean
   projectId?: boolean
+  projectCode?: boolean
+  taskId?: boolean
+  taskName?: boolean
+  costCenterId?: boolean
+  date?: boolean
+  hours?: boolean
+  startTime?: boolean
+  endTime?: boolean
+  description?: boolean
+  category?: boolean
+  isBillable?: boolean
+  hourlyRate?: boolean
+  billableAmount?: boolean
+  costRate?: boolean
+  costAmount?: boolean
+  status?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  rejectionReason?: boolean
+  organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  costCenter?: boolean | Prisma.TimeEntry$costCenterArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timeEntry"]>
 
 export type TimeEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  date?: boolean
-  hours?: boolean
-  description?: boolean
-  billable?: boolean
-  billed?: boolean
-  hourlyRate?: boolean
   userId?: boolean
   userName?: boolean
   projectId?: boolean
+  projectCode?: boolean
+  taskId?: boolean
+  taskName?: boolean
+  costCenterId?: boolean
+  date?: boolean
+  hours?: boolean
+  startTime?: boolean
+  endTime?: boolean
+  description?: boolean
+  category?: boolean
+  isBillable?: boolean
+  hourlyRate?: boolean
+  billableAmount?: boolean
+  costRate?: boolean
+  costAmount?: boolean
+  status?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  rejectionReason?: boolean
+  organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  costCenter?: boolean | Prisma.TimeEntry$costCenterArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timeEntry"]>
 
 export type TimeEntrySelectScalar = {
   id?: boolean
-  date?: boolean
-  hours?: boolean
-  description?: boolean
-  billable?: boolean
-  billed?: boolean
-  hourlyRate?: boolean
   userId?: boolean
   userName?: boolean
   projectId?: boolean
+  projectCode?: boolean
+  taskId?: boolean
+  taskName?: boolean
+  costCenterId?: boolean
+  date?: boolean
+  hours?: boolean
+  startTime?: boolean
+  endTime?: boolean
+  description?: boolean
+  category?: boolean
+  isBillable?: boolean
+  hourlyRate?: boolean
+  billableAmount?: boolean
+  costRate?: boolean
+  costAmount?: boolean
+  status?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  rejectionReason?: boolean
+  organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TimeEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "hours" | "description" | "billable" | "billed" | "hourlyRate" | "userId" | "userName" | "projectId" | "createdAt" | "updatedAt", ExtArgs["result"]["timeEntry"]>
+export type TimeEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "userName" | "projectId" | "projectCode" | "taskId" | "taskName" | "costCenterId" | "date" | "hours" | "startTime" | "endTime" | "description" | "category" | "isBillable" | "hourlyRate" | "billableAmount" | "costRate" | "costAmount" | "status" | "approvedBy" | "approvedAt" | "rejectionReason" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["timeEntry"]>
 export type TimeEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  costCenter?: boolean | Prisma.TimeEntry$costCenterArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
 export type TimeEntryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  costCenter?: boolean | Prisma.TimeEntry$costCenterArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
 export type TimeEntryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  costCenter?: boolean | Prisma.TimeEntry$costCenterArgs<ExtArgs>
+  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
 }
 
 export type $TimeEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TimeEntry"
   objects: {
     project: Prisma.$ProjectPayload<ExtArgs>
+    costCenter: Prisma.$CostCenterPayload<ExtArgs> | null
+    organization: Prisma.$OrganizationPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    date: Date
-    hours: runtime.Decimal
-    description: string | null
-    billable: boolean
-    billed: boolean
-    hourlyRate: runtime.Decimal | null
-    userId: string | null
+    userId: string
     userName: string | null
     projectId: string
+    projectCode: string | null
+    taskId: string | null
+    taskName: string | null
+    costCenterId: string | null
+    date: Date
+    hours: runtime.Decimal
+    startTime: string | null
+    endTime: string | null
+    description: string
+    category: string | null
+    isBillable: boolean
+    hourlyRate: runtime.Decimal | null
+    billableAmount: runtime.Decimal | null
+    costRate: runtime.Decimal | null
+    costAmount: runtime.Decimal | null
+    status: string
+    approvedBy: string | null
+    approvedAt: Date | null
+    rejectionReason: string | null
+    organizationId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["timeEntry"]>
@@ -1192,6 +2164,8 @@ readonly fields: TimeEntryFieldRefs;
 export interface Prisma__TimeEntryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  costCenter<T extends Prisma.TimeEntry$costCenterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeEntry$costCenterArgs<ExtArgs>>): Prisma.Prisma__CostCenterClient<runtime.Types.Result.GetResult<Prisma.$CostCenterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1222,15 +2196,29 @@ export interface Prisma__TimeEntryClient<T, Null = never, ExtArgs extends runtim
  */
 export interface TimeEntryFieldRefs {
   readonly id: Prisma.FieldRef<"TimeEntry", 'String'>
-  readonly date: Prisma.FieldRef<"TimeEntry", 'DateTime'>
-  readonly hours: Prisma.FieldRef<"TimeEntry", 'Decimal'>
-  readonly description: Prisma.FieldRef<"TimeEntry", 'String'>
-  readonly billable: Prisma.FieldRef<"TimeEntry", 'Boolean'>
-  readonly billed: Prisma.FieldRef<"TimeEntry", 'Boolean'>
-  readonly hourlyRate: Prisma.FieldRef<"TimeEntry", 'Decimal'>
   readonly userId: Prisma.FieldRef<"TimeEntry", 'String'>
   readonly userName: Prisma.FieldRef<"TimeEntry", 'String'>
   readonly projectId: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly projectCode: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly taskId: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly taskName: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly costCenterId: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly date: Prisma.FieldRef<"TimeEntry", 'DateTime'>
+  readonly hours: Prisma.FieldRef<"TimeEntry", 'Decimal'>
+  readonly startTime: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly endTime: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly description: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly category: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly isBillable: Prisma.FieldRef<"TimeEntry", 'Boolean'>
+  readonly hourlyRate: Prisma.FieldRef<"TimeEntry", 'Decimal'>
+  readonly billableAmount: Prisma.FieldRef<"TimeEntry", 'Decimal'>
+  readonly costRate: Prisma.FieldRef<"TimeEntry", 'Decimal'>
+  readonly costAmount: Prisma.FieldRef<"TimeEntry", 'Decimal'>
+  readonly status: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly approvedBy: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly approvedAt: Prisma.FieldRef<"TimeEntry", 'DateTime'>
+  readonly rejectionReason: Prisma.FieldRef<"TimeEntry", 'String'>
+  readonly organizationId: Prisma.FieldRef<"TimeEntry", 'String'>
   readonly createdAt: Prisma.FieldRef<"TimeEntry", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TimeEntry", 'DateTime'>
 }
@@ -1626,6 +2614,25 @@ export type TimeEntryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many TimeEntries to delete.
    */
   limit?: number
+}
+
+/**
+ * TimeEntry.costCenter
+ */
+export type TimeEntry$costCenterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CostCenter
+   */
+  select?: Prisma.CostCenterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CostCenter
+   */
+  omit?: Prisma.CostCenterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CostCenterInclude<ExtArgs> | null
+  where?: Prisma.CostCenterWhereInput
 }
 
 /**

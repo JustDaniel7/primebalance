@@ -29,63 +29,101 @@ export type AggregateProject = {
 export type ProjectAvgAggregateOutputType = {
   budgetAmount: runtime.Decimal | null
   budgetSpent: runtime.Decimal | null
-  actualCost: runtime.Decimal | null
-  committedCost: runtime.Decimal | null
-  totalCosts: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetVariance: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
   contractValue: runtime.Decimal | null
-  totalRevenue: runtime.Decimal | null
   billedAmount: runtime.Decimal | null
+  collectedAmount: runtime.Decimal | null
+  unbilledAmount: runtime.Decimal | null
+  totalRevenue: runtime.Decimal | null
+  totalCosts: runtime.Decimal | null
+  grossProfit: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  netProfit: runtime.Decimal | null
+  netMargin: runtime.Decimal | null
   allocatedHours: runtime.Decimal | null
   actualHours: runtime.Decimal | null
-  progressPercent: runtime.Decimal | null
+  remainingHours: runtime.Decimal | null
+  hourlyRate: runtime.Decimal | null
+  percentComplete: runtime.Decimal | null
+  milestoneCount: number | null
+  milestonesCompleted: number | null
+  billingRate: runtime.Decimal | null
 }
 
 export type ProjectSumAggregateOutputType = {
   budgetAmount: runtime.Decimal | null
   budgetSpent: runtime.Decimal | null
-  actualCost: runtime.Decimal | null
-  committedCost: runtime.Decimal | null
-  totalCosts: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetVariance: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
   contractValue: runtime.Decimal | null
-  totalRevenue: runtime.Decimal | null
   billedAmount: runtime.Decimal | null
+  collectedAmount: runtime.Decimal | null
+  unbilledAmount: runtime.Decimal | null
+  totalRevenue: runtime.Decimal | null
+  totalCosts: runtime.Decimal | null
+  grossProfit: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  netProfit: runtime.Decimal | null
+  netMargin: runtime.Decimal | null
   allocatedHours: runtime.Decimal | null
   actualHours: runtime.Decimal | null
-  progressPercent: runtime.Decimal | null
+  remainingHours: runtime.Decimal | null
+  hourlyRate: runtime.Decimal | null
+  percentComplete: runtime.Decimal | null
+  milestoneCount: number | null
+  milestonesCompleted: number | null
+  billingRate: runtime.Decimal | null
 }
 
 export type ProjectMinAggregateOutputType = {
   id: string | null
-  projectNumber: string | null
+  code: string | null
   name: string | null
   description: string | null
   type: string | null
   status: string | null
   priority: string | null
-  startDate: Date | null
-  endDate: Date | null
-  actualStartDate: Date | null
-  actualEndDate: Date | null
-  currency: string | null
-  budgetAmount: runtime.Decimal | null
-  budgetSpent: runtime.Decimal | null
-  actualCost: runtime.Decimal | null
-  committedCost: runtime.Decimal | null
-  totalCosts: runtime.Decimal | null
-  contractValue: runtime.Decimal | null
-  totalRevenue: runtime.Decimal | null
-  billedAmount: runtime.Decimal | null
-  allocatedHours: runtime.Decimal | null
-  actualHours: runtime.Decimal | null
-  progressPercent: runtime.Decimal | null
-  managerId: string | null
-  managerName: string | null
+  ownerId: string | null
+  ownerName: string | null
+  costCenterId: string | null
+  costCenterCode: string | null
   departmentId: string | null
-  departmentName: string | null
   clientId: string | null
   clientName: string | null
-  costCenterId: string | null
-  notes: string | null
+  plannedStartDate: Date | null
+  plannedEndDate: Date | null
+  actualStartDate: Date | null
+  actualEndDate: Date | null
+  budgetType: string | null
+  budgetAmount: runtime.Decimal | null
+  budgetSpent: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetVariance: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
+  currency: string | null
+  contractValue: runtime.Decimal | null
+  billedAmount: runtime.Decimal | null
+  collectedAmount: runtime.Decimal | null
+  unbilledAmount: runtime.Decimal | null
+  totalRevenue: runtime.Decimal | null
+  totalCosts: runtime.Decimal | null
+  grossProfit: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  netProfit: runtime.Decimal | null
+  netMargin: runtime.Decimal | null
+  allocatedHours: runtime.Decimal | null
+  actualHours: runtime.Decimal | null
+  remainingHours: runtime.Decimal | null
+  hourlyRate: runtime.Decimal | null
+  percentComplete: runtime.Decimal | null
+  milestoneCount: number | null
+  milestonesCompleted: number | null
+  isBillable: boolean | null
+  billingRate: runtime.Decimal | null
+  billingMethod: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -93,36 +131,50 @@ export type ProjectMinAggregateOutputType = {
 
 export type ProjectMaxAggregateOutputType = {
   id: string | null
-  projectNumber: string | null
+  code: string | null
   name: string | null
   description: string | null
   type: string | null
   status: string | null
   priority: string | null
-  startDate: Date | null
-  endDate: Date | null
-  actualStartDate: Date | null
-  actualEndDate: Date | null
-  currency: string | null
-  budgetAmount: runtime.Decimal | null
-  budgetSpent: runtime.Decimal | null
-  actualCost: runtime.Decimal | null
-  committedCost: runtime.Decimal | null
-  totalCosts: runtime.Decimal | null
-  contractValue: runtime.Decimal | null
-  totalRevenue: runtime.Decimal | null
-  billedAmount: runtime.Decimal | null
-  allocatedHours: runtime.Decimal | null
-  actualHours: runtime.Decimal | null
-  progressPercent: runtime.Decimal | null
-  managerId: string | null
-  managerName: string | null
+  ownerId: string | null
+  ownerName: string | null
+  costCenterId: string | null
+  costCenterCode: string | null
   departmentId: string | null
-  departmentName: string | null
   clientId: string | null
   clientName: string | null
-  costCenterId: string | null
-  notes: string | null
+  plannedStartDate: Date | null
+  plannedEndDate: Date | null
+  actualStartDate: Date | null
+  actualEndDate: Date | null
+  budgetType: string | null
+  budgetAmount: runtime.Decimal | null
+  budgetSpent: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetVariance: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
+  currency: string | null
+  contractValue: runtime.Decimal | null
+  billedAmount: runtime.Decimal | null
+  collectedAmount: runtime.Decimal | null
+  unbilledAmount: runtime.Decimal | null
+  totalRevenue: runtime.Decimal | null
+  totalCosts: runtime.Decimal | null
+  grossProfit: runtime.Decimal | null
+  grossMargin: runtime.Decimal | null
+  netProfit: runtime.Decimal | null
+  netMargin: runtime.Decimal | null
+  allocatedHours: runtime.Decimal | null
+  actualHours: runtime.Decimal | null
+  remainingHours: runtime.Decimal | null
+  hourlyRate: runtime.Decimal | null
+  percentComplete: runtime.Decimal | null
+  milestoneCount: number | null
+  milestonesCompleted: number | null
+  isBillable: boolean | null
+  billingRate: runtime.Decimal | null
+  billingMethod: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -130,36 +182,50 @@ export type ProjectMaxAggregateOutputType = {
 
 export type ProjectCountAggregateOutputType = {
   id: number
-  projectNumber: number
+  code: number
   name: number
   description: number
   type: number
   status: number
   priority: number
-  startDate: number
-  endDate: number
-  actualStartDate: number
-  actualEndDate: number
-  currency: number
-  budgetAmount: number
-  budgetSpent: number
-  actualCost: number
-  committedCost: number
-  totalCosts: number
-  contractValue: number
-  totalRevenue: number
-  billedAmount: number
-  allocatedHours: number
-  actualHours: number
-  progressPercent: number
-  managerId: number
-  managerName: number
+  ownerId: number
+  ownerName: number
+  costCenterId: number
+  costCenterCode: number
   departmentId: number
-  departmentName: number
   clientId: number
   clientName: number
-  costCenterId: number
-  notes: number
+  plannedStartDate: number
+  plannedEndDate: number
+  actualStartDate: number
+  actualEndDate: number
+  budgetType: number
+  budgetAmount: number
+  budgetSpent: number
+  budgetRemaining: number
+  budgetVariance: number
+  budgetUtilization: number
+  currency: number
+  contractValue: number
+  billedAmount: number
+  collectedAmount: number
+  unbilledAmount: number
+  totalRevenue: number
+  totalCosts: number
+  grossProfit: number
+  grossMargin: number
+  netProfit: number
+  netMargin: number
+  allocatedHours: number
+  actualHours: number
+  remainingHours: number
+  hourlyRate: number
+  percentComplete: number
+  milestoneCount: number
+  milestonesCompleted: number
+  isBillable: number
+  billingRate: number
+  billingMethod: number
   tags: number
   organizationId: number
   createdAt: number
@@ -171,63 +237,101 @@ export type ProjectCountAggregateOutputType = {
 export type ProjectAvgAggregateInputType = {
   budgetAmount?: true
   budgetSpent?: true
-  actualCost?: true
-  committedCost?: true
-  totalCosts?: true
+  budgetRemaining?: true
+  budgetVariance?: true
+  budgetUtilization?: true
   contractValue?: true
-  totalRevenue?: true
   billedAmount?: true
+  collectedAmount?: true
+  unbilledAmount?: true
+  totalRevenue?: true
+  totalCosts?: true
+  grossProfit?: true
+  grossMargin?: true
+  netProfit?: true
+  netMargin?: true
   allocatedHours?: true
   actualHours?: true
-  progressPercent?: true
+  remainingHours?: true
+  hourlyRate?: true
+  percentComplete?: true
+  milestoneCount?: true
+  milestonesCompleted?: true
+  billingRate?: true
 }
 
 export type ProjectSumAggregateInputType = {
   budgetAmount?: true
   budgetSpent?: true
-  actualCost?: true
-  committedCost?: true
-  totalCosts?: true
+  budgetRemaining?: true
+  budgetVariance?: true
+  budgetUtilization?: true
   contractValue?: true
-  totalRevenue?: true
   billedAmount?: true
+  collectedAmount?: true
+  unbilledAmount?: true
+  totalRevenue?: true
+  totalCosts?: true
+  grossProfit?: true
+  grossMargin?: true
+  netProfit?: true
+  netMargin?: true
   allocatedHours?: true
   actualHours?: true
-  progressPercent?: true
+  remainingHours?: true
+  hourlyRate?: true
+  percentComplete?: true
+  milestoneCount?: true
+  milestonesCompleted?: true
+  billingRate?: true
 }
 
 export type ProjectMinAggregateInputType = {
   id?: true
-  projectNumber?: true
+  code?: true
   name?: true
   description?: true
   type?: true
   status?: true
   priority?: true
-  startDate?: true
-  endDate?: true
-  actualStartDate?: true
-  actualEndDate?: true
-  currency?: true
-  budgetAmount?: true
-  budgetSpent?: true
-  actualCost?: true
-  committedCost?: true
-  totalCosts?: true
-  contractValue?: true
-  totalRevenue?: true
-  billedAmount?: true
-  allocatedHours?: true
-  actualHours?: true
-  progressPercent?: true
-  managerId?: true
-  managerName?: true
+  ownerId?: true
+  ownerName?: true
+  costCenterId?: true
+  costCenterCode?: true
   departmentId?: true
-  departmentName?: true
   clientId?: true
   clientName?: true
-  costCenterId?: true
-  notes?: true
+  plannedStartDate?: true
+  plannedEndDate?: true
+  actualStartDate?: true
+  actualEndDate?: true
+  budgetType?: true
+  budgetAmount?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetVariance?: true
+  budgetUtilization?: true
+  currency?: true
+  contractValue?: true
+  billedAmount?: true
+  collectedAmount?: true
+  unbilledAmount?: true
+  totalRevenue?: true
+  totalCosts?: true
+  grossProfit?: true
+  grossMargin?: true
+  netProfit?: true
+  netMargin?: true
+  allocatedHours?: true
+  actualHours?: true
+  remainingHours?: true
+  hourlyRate?: true
+  percentComplete?: true
+  milestoneCount?: true
+  milestonesCompleted?: true
+  isBillable?: true
+  billingRate?: true
+  billingMethod?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -235,36 +339,50 @@ export type ProjectMinAggregateInputType = {
 
 export type ProjectMaxAggregateInputType = {
   id?: true
-  projectNumber?: true
+  code?: true
   name?: true
   description?: true
   type?: true
   status?: true
   priority?: true
-  startDate?: true
-  endDate?: true
-  actualStartDate?: true
-  actualEndDate?: true
-  currency?: true
-  budgetAmount?: true
-  budgetSpent?: true
-  actualCost?: true
-  committedCost?: true
-  totalCosts?: true
-  contractValue?: true
-  totalRevenue?: true
-  billedAmount?: true
-  allocatedHours?: true
-  actualHours?: true
-  progressPercent?: true
-  managerId?: true
-  managerName?: true
+  ownerId?: true
+  ownerName?: true
+  costCenterId?: true
+  costCenterCode?: true
   departmentId?: true
-  departmentName?: true
   clientId?: true
   clientName?: true
-  costCenterId?: true
-  notes?: true
+  plannedStartDate?: true
+  plannedEndDate?: true
+  actualStartDate?: true
+  actualEndDate?: true
+  budgetType?: true
+  budgetAmount?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetVariance?: true
+  budgetUtilization?: true
+  currency?: true
+  contractValue?: true
+  billedAmount?: true
+  collectedAmount?: true
+  unbilledAmount?: true
+  totalRevenue?: true
+  totalCosts?: true
+  grossProfit?: true
+  grossMargin?: true
+  netProfit?: true
+  netMargin?: true
+  allocatedHours?: true
+  actualHours?: true
+  remainingHours?: true
+  hourlyRate?: true
+  percentComplete?: true
+  milestoneCount?: true
+  milestonesCompleted?: true
+  isBillable?: true
+  billingRate?: true
+  billingMethod?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -272,36 +390,50 @@ export type ProjectMaxAggregateInputType = {
 
 export type ProjectCountAggregateInputType = {
   id?: true
-  projectNumber?: true
+  code?: true
   name?: true
   description?: true
   type?: true
   status?: true
   priority?: true
-  startDate?: true
-  endDate?: true
-  actualStartDate?: true
-  actualEndDate?: true
-  currency?: true
-  budgetAmount?: true
-  budgetSpent?: true
-  actualCost?: true
-  committedCost?: true
-  totalCosts?: true
-  contractValue?: true
-  totalRevenue?: true
-  billedAmount?: true
-  allocatedHours?: true
-  actualHours?: true
-  progressPercent?: true
-  managerId?: true
-  managerName?: true
+  ownerId?: true
+  ownerName?: true
+  costCenterId?: true
+  costCenterCode?: true
   departmentId?: true
-  departmentName?: true
   clientId?: true
   clientName?: true
-  costCenterId?: true
-  notes?: true
+  plannedStartDate?: true
+  plannedEndDate?: true
+  actualStartDate?: true
+  actualEndDate?: true
+  budgetType?: true
+  budgetAmount?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetVariance?: true
+  budgetUtilization?: true
+  currency?: true
+  contractValue?: true
+  billedAmount?: true
+  collectedAmount?: true
+  unbilledAmount?: true
+  totalRevenue?: true
+  totalCosts?: true
+  grossProfit?: true
+  grossMargin?: true
+  netProfit?: true
+  netMargin?: true
+  allocatedHours?: true
+  actualHours?: true
+  remainingHours?: true
+  hourlyRate?: true
+  percentComplete?: true
+  milestoneCount?: true
+  milestonesCompleted?: true
+  isBillable?: true
+  billingRate?: true
+  billingMethod?: true
   tags?: true
   organizationId?: true
   createdAt?: true
@@ -397,36 +529,50 @@ export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ProjectGroupByOutputType = {
   id: string
-  projectNumber: string
+  code: string
   name: string
   description: string | null
   type: string
   status: string
   priority: string
-  startDate: Date | null
-  endDate: Date | null
-  actualStartDate: Date | null
-  actualEndDate: Date | null
-  currency: string
-  budgetAmount: runtime.Decimal
-  budgetSpent: runtime.Decimal
-  actualCost: runtime.Decimal
-  committedCost: runtime.Decimal
-  totalCosts: runtime.Decimal
-  contractValue: runtime.Decimal
-  totalRevenue: runtime.Decimal
-  billedAmount: runtime.Decimal
-  allocatedHours: runtime.Decimal
-  actualHours: runtime.Decimal
-  progressPercent: runtime.Decimal
-  managerId: string | null
-  managerName: string | null
+  ownerId: string | null
+  ownerName: string | null
+  costCenterId: string | null
+  costCenterCode: string | null
   departmentId: string | null
-  departmentName: string | null
   clientId: string | null
   clientName: string | null
-  costCenterId: string | null
-  notes: string | null
+  plannedStartDate: Date
+  plannedEndDate: Date
+  actualStartDate: Date | null
+  actualEndDate: Date | null
+  budgetType: string
+  budgetAmount: runtime.Decimal
+  budgetSpent: runtime.Decimal
+  budgetRemaining: runtime.Decimal
+  budgetVariance: runtime.Decimal
+  budgetUtilization: runtime.Decimal
+  currency: string
+  contractValue: runtime.Decimal | null
+  billedAmount: runtime.Decimal
+  collectedAmount: runtime.Decimal
+  unbilledAmount: runtime.Decimal
+  totalRevenue: runtime.Decimal
+  totalCosts: runtime.Decimal
+  grossProfit: runtime.Decimal
+  grossMargin: runtime.Decimal
+  netProfit: runtime.Decimal
+  netMargin: runtime.Decimal
+  allocatedHours: runtime.Decimal
+  actualHours: runtime.Decimal
+  remainingHours: runtime.Decimal
+  hourlyRate: runtime.Decimal | null
+  percentComplete: runtime.Decimal
+  milestoneCount: number
+  milestonesCompleted: number
+  isBillable: boolean
+  billingRate: runtime.Decimal | null
+  billingMethod: string | null
   tags: string[]
   organizationId: string
   createdAt: Date
@@ -458,163 +604,225 @@ export type ProjectWhereInput = {
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   id?: Prisma.StringFilter<"Project"> | string
-  projectNumber?: Prisma.StringFilter<"Project"> | string
+  code?: Prisma.StringFilter<"Project"> | string
   name?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
   type?: Prisma.StringFilter<"Project"> | string
   status?: Prisma.StringFilter<"Project"> | string
   priority?: Prisma.StringFilter<"Project"> | string
-  startDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  endDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  actualStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  actualEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  currency?: Prisma.StringFilter<"Project"> | string
-  budgetAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.StringNullableFilter<"Project"> | string | null
-  managerName?: Prisma.StringNullableFilter<"Project"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"Project"> | string | null
+  ownerName?: Prisma.StringNullableFilter<"Project"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"Project"> | string | null
+  costCenterCode?: Prisma.StringNullableFilter<"Project"> | string | null
   departmentId?: Prisma.StringNullableFilter<"Project"> | string | null
-  departmentName?: Prisma.StringNullableFilter<"Project"> | string | null
   clientId?: Prisma.StringNullableFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableFilter<"Project"> | string | null
-  costCenterId?: Prisma.StringNullableFilter<"Project"> | string | null
-  notes?: Prisma.StringNullableFilter<"Project"> | string | null
+  plannedStartDate?: Prisma.DateTimeFilter<"Project"> | Date | string
+  plannedEndDate?: Prisma.DateTimeFilter<"Project"> | Date | string
+  actualStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  actualEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  budgetType?: Prisma.StringFilter<"Project"> | string
+  budgetAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Project"> | string
+  contractValue?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFilter<"Project"> | number
+  milestonesCompleted?: Prisma.IntFilter<"Project"> | number
+  isBillable?: Prisma.BoolFilter<"Project"> | boolean
+  billingRate?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.StringNullableFilter<"Project"> | string | null
   tags?: Prisma.StringNullableListFilter<"Project">
   organizationId?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   costCenter?: Prisma.XOR<Prisma.CostCenterNullableScalarRelationFilter, Prisma.CostCenterWhereInput> | null
-  timeEntries?: Prisma.TimeEntryListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  milestones?: Prisma.ProjectMilestoneListRelationFilter
+  timeEntries?: Prisma.TimeEntryListRelationFilter
+  chargebacks?: Prisma.InternalChargebackListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  projectNumber?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   priority?: Prisma.SortOrder
-  startDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  endDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  actualStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  actualEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-  managerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  managerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterCode?: Prisma.SortOrderInput | Prisma.SortOrder
   departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   clientName?: Prisma.SortOrderInput | Prisma.SortOrder
-  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  plannedStartDate?: Prisma.SortOrder
+  plannedEndDate?: Prisma.SortOrder
+  actualStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  actualEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  budgetType?: Prisma.SortOrder
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   costCenter?: Prisma.CostCenterOrderByWithRelationInput
-  timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  milestones?: Prisma.ProjectMilestoneOrderByRelationAggregateInput
+  timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
+  chargebacks?: Prisma.InternalChargebackOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_projectNumber?: Prisma.ProjectOrganizationIdProjectNumberCompoundUniqueInput
+  organizationId_code?: Prisma.ProjectOrganizationIdCodeCompoundUniqueInput
   AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
-  projectNumber?: Prisma.StringFilter<"Project"> | string
+  code?: Prisma.StringFilter<"Project"> | string
   name?: Prisma.StringFilter<"Project"> | string
   description?: Prisma.StringNullableFilter<"Project"> | string | null
   type?: Prisma.StringFilter<"Project"> | string
   status?: Prisma.StringFilter<"Project"> | string
   priority?: Prisma.StringFilter<"Project"> | string
-  startDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  endDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  actualStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  actualEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  currency?: Prisma.StringFilter<"Project"> | string
-  budgetAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.StringNullableFilter<"Project"> | string | null
-  managerName?: Prisma.StringNullableFilter<"Project"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"Project"> | string | null
+  ownerName?: Prisma.StringNullableFilter<"Project"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"Project"> | string | null
+  costCenterCode?: Prisma.StringNullableFilter<"Project"> | string | null
   departmentId?: Prisma.StringNullableFilter<"Project"> | string | null
-  departmentName?: Prisma.StringNullableFilter<"Project"> | string | null
   clientId?: Prisma.StringNullableFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableFilter<"Project"> | string | null
-  costCenterId?: Prisma.StringNullableFilter<"Project"> | string | null
-  notes?: Prisma.StringNullableFilter<"Project"> | string | null
+  plannedStartDate?: Prisma.DateTimeFilter<"Project"> | Date | string
+  plannedEndDate?: Prisma.DateTimeFilter<"Project"> | Date | string
+  actualStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  actualEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  budgetType?: Prisma.StringFilter<"Project"> | string
+  budgetAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Project"> | string
+  contractValue?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFilter<"Project"> | number
+  milestonesCompleted?: Prisma.IntFilter<"Project"> | number
+  isBillable?: Prisma.BoolFilter<"Project"> | boolean
+  billingRate?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.StringNullableFilter<"Project"> | string | null
   tags?: Prisma.StringNullableListFilter<"Project">
   organizationId?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   costCenter?: Prisma.XOR<Prisma.CostCenterNullableScalarRelationFilter, Prisma.CostCenterWhereInput> | null
-  timeEntries?: Prisma.TimeEntryListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
-}, "id" | "organizationId_projectNumber">
+  milestones?: Prisma.ProjectMilestoneListRelationFilter
+  timeEntries?: Prisma.TimeEntryListRelationFilter
+  chargebacks?: Prisma.InternalChargebackListRelationFilter
+}, "id" | "organizationId_code">
 
 export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  projectNumber?: Prisma.SortOrder
+  code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   priority?: Prisma.SortOrder
-  startDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  endDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  actualStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  actualEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-  managerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  managerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
+  costCenterCode?: Prisma.SortOrderInput | Prisma.SortOrder
   departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   clientName?: Prisma.SortOrderInput | Prisma.SortOrder
-  costCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  plannedStartDate?: Prisma.SortOrder
+  plannedEndDate?: Prisma.SortOrder
+  actualStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  actualEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  budgetType?: Prisma.SortOrder
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -631,36 +839,50 @@ export type ProjectScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProjectScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Project"> | string
-  projectNumber?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  code?: Prisma.StringWithAggregatesFilter<"Project"> | string
   name?: Prisma.StringWithAggregatesFilter<"Project"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   type?: Prisma.StringWithAggregatesFilter<"Project"> | string
   status?: Prisma.StringWithAggregatesFilter<"Project"> | string
   priority?: Prisma.StringWithAggregatesFilter<"Project"> | string
-  startDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
-  endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
-  actualStartDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
-  actualEndDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
-  currency?: Prisma.StringWithAggregatesFilter<"Project"> | string
-  budgetAmount?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
-  managerName?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  ownerId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  ownerName?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  costCenterId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  costCenterCode?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   departmentId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
-  departmentName?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   clientId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   clientName?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
-  costCenterId?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
-  notes?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  plannedStartDate?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
+  plannedEndDate?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
+  actualStartDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  actualEndDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  budgetType?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  budgetAmount?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  contractValue?: Prisma.DecimalNullableWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.DecimalNullableWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntWithAggregatesFilter<"Project"> | number
+  milestonesCompleted?: Prisma.IntWithAggregatesFilter<"Project"> | number
+  isBillable?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
+  billingRate?: Prisma.DecimalNullableWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   tags?: Prisma.StringNullableListFilter<"Project">
   organizationId?: Prisma.StringWithAggregatesFilter<"Project"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -669,192 +891,270 @@ export type ProjectScalarWhereWithAggregatesInput = {
 
 export type ProjectCreateInput = {
   id?: string
-  projectNumber: string
+  code: string
   name: string
   description?: string | null
   type?: string
   status?: string
   priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
   departmentId?: string | null
-  departmentName?: string | null
   clientId?: string | null
   clientName?: string | null
-  notes?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
   tags?: Prisma.ProjectCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   costCenter?: Prisma.CostCenterCreateNestedOneWithoutProjectsInput
-  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
   organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
   id?: string
-  projectNumber: string
+  code: string
   name: string
   description?: string | null
   type?: string
   status?: string
   priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
   departmentId?: string | null
-  departmentName?: string | null
   clientId?: string | null
   clientName?: string | null
-  costCenterId?: string | null
-  notes?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
   tags?: Prisma.ProjectCreatetagsInput | string[]
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
-  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
   id?: string
-  projectNumber: string
+  code: string
   name: string
   description?: string | null
   type?: string
   status?: string
   priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
   departmentId?: string | null
-  departmentName?: string | null
   clientId?: string | null
   clientName?: string | null
-  costCenterId?: string | null
-  notes?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
   tags?: Prisma.ProjectCreatetagsInput | string[]
   organizationId: string
   createdAt?: Date | string
@@ -863,35 +1163,49 @@ export type ProjectCreateManyInput = {
 
 export type ProjectUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -899,198 +1213,54 @@ export type ProjectUpdateManyMutationInput = {
 
 export type ProjectUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
-export type ProjectOrganizationIdProjectNumberCompoundUniqueInput = {
-  organizationId: string
-  projectNumber: string
-}
-
-export type ProjectCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  projectNumber?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  actualStartDate?: Prisma.SortOrder
-  actualEndDate?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-  managerId?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
-  departmentId?: Prisma.SortOrder
-  departmentName?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
-  clientName?: Prisma.SortOrder
-  costCenterId?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  tags?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type ProjectAvgOrderByAggregateInput = {
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-}
-
-export type ProjectMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  projectNumber?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  actualStartDate?: Prisma.SortOrder
-  actualEndDate?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-  managerId?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
-  departmentId?: Prisma.SortOrder
-  departmentName?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
-  clientName?: Prisma.SortOrder
-  costCenterId?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type ProjectMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  projectNumber?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
-  endDate?: Prisma.SortOrder
-  actualStartDate?: Prisma.SortOrder
-  actualEndDate?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-  managerId?: Prisma.SortOrder
-  managerName?: Prisma.SortOrder
-  departmentId?: Prisma.SortOrder
-  departmentName?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
-  clientName?: Prisma.SortOrder
-  costCenterId?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type ProjectSumOrderByAggregateInput = {
-  budgetAmount?: Prisma.SortOrder
-  budgetSpent?: Prisma.SortOrder
-  actualCost?: Prisma.SortOrder
-  committedCost?: Prisma.SortOrder
-  totalCosts?: Prisma.SortOrder
-  contractValue?: Prisma.SortOrder
-  totalRevenue?: Prisma.SortOrder
-  billedAmount?: Prisma.SortOrder
-  allocatedHours?: Prisma.SortOrder
-  actualHours?: Prisma.SortOrder
-  progressPercent?: Prisma.SortOrder
-}
-
-export type ProjectScalarRelationFilter = {
-  is?: Prisma.ProjectWhereInput
-  isNot?: Prisma.ProjectWhereInput
 }
 
 export type ProjectListRelationFilter = {
@@ -1103,93 +1273,225 @@ export type ProjectOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ProjectCreatetagsInput = {
-  set: string[]
+export type ProjectOrganizationIdCodeCompoundUniqueInput = {
+  organizationId: string
+  code: string
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type ProjectCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  costCenterCode?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
+  clientName?: Prisma.SortOrder
+  plannedStartDate?: Prisma.SortOrder
+  plannedEndDate?: Prisma.SortOrder
+  actualStartDate?: Prisma.SortOrder
+  actualEndDate?: Prisma.SortOrder
+  budgetType?: Prisma.SortOrder
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrder
+  billingMethod?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type ProjectAvgOrderByAggregateInput = {
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrder
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
+export type ProjectMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  costCenterCode?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
+  clientName?: Prisma.SortOrder
+  plannedStartDate?: Prisma.SortOrder
+  plannedEndDate?: Prisma.SortOrder
+  actualStartDate?: Prisma.SortOrder
+  actualEndDate?: Prisma.SortOrder
+  budgetType?: Prisma.SortOrder
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrder
+  billingMethod?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+export type ProjectMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  code?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
+  ownerName?: Prisma.SortOrder
+  costCenterId?: Prisma.SortOrder
+  costCenterCode?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
+  clientName?: Prisma.SortOrder
+  plannedStartDate?: Prisma.SortOrder
+  plannedEndDate?: Prisma.SortOrder
+  actualStartDate?: Prisma.SortOrder
+  actualEndDate?: Prisma.SortOrder
+  budgetType?: Prisma.SortOrder
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  isBillable?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrder
+  billingMethod?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
-export type ProjectUpdatetagsInput = {
-  set?: string[]
-  push?: string | string[]
+export type ProjectSumOrderByAggregateInput = {
+  budgetAmount?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetVariance?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  contractValue?: Prisma.SortOrder
+  billedAmount?: Prisma.SortOrder
+  collectedAmount?: Prisma.SortOrder
+  unbilledAmount?: Prisma.SortOrder
+  totalRevenue?: Prisma.SortOrder
+  totalCosts?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  grossMargin?: Prisma.SortOrder
+  netProfit?: Prisma.SortOrder
+  netMargin?: Prisma.SortOrder
+  allocatedHours?: Prisma.SortOrder
+  actualHours?: Prisma.SortOrder
+  remainingHours?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
+  percentComplete?: Prisma.SortOrder
+  milestoneCount?: Prisma.SortOrder
+  milestonesCompleted?: Prisma.SortOrder
+  billingRate?: Prisma.SortOrder
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type ProjectScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput
+  isNot?: Prisma.ProjectWhereInput
 }
 
-export type ProjectCreateNestedOneWithoutTimeEntriesInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTimeEntriesInput
-  connect?: Prisma.ProjectWhereUniqueInput
-}
-
-export type ProjectUpdateOneRequiredWithoutTimeEntriesNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTimeEntriesInput
-  upsert?: Prisma.ProjectUpsertWithoutTimeEntriesInput
-  connect?: Prisma.ProjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutTimeEntriesInput, Prisma.ProjectUpdateWithoutTimeEntriesInput>, Prisma.ProjectUncheckedUpdateWithoutTimeEntriesInput>
-}
-
-export type ProjectCreateNestedManyWithoutCostCenterInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
-  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
-  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-}
-
-export type ProjectUncheckedCreateNestedManyWithoutCostCenterInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
-  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
-  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-}
-
-export type ProjectUpdateManyWithoutCostCenterNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
-  upsert?: Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput[]
-  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
-  set?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  disconnect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  delete?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  update?: Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput[]
-  updateMany?: Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput | Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput[]
-  deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
-}
-
-export type ProjectUncheckedUpdateManyWithoutCostCenterNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
-  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
-  upsert?: Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput[]
-  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
-  set?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  disconnect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  delete?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
-  update?: Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput[]
-  updateMany?: Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput | Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput[]
-  deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
+export type ProjectNullableScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput | null
+  isNot?: Prisma.ProjectWhereInput | null
 }
 
 export type ProjectCreateNestedManyWithoutOrganizationInput = {
@@ -1234,391 +1536,207 @@ export type ProjectUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type ProjectCreateWithoutTimeEntriesInput = {
-  id?: string
-  projectNumber: string
-  name: string
-  description?: string | null
-  type?: string
-  status?: string
-  priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
-  departmentId?: string | null
-  departmentName?: string | null
-  clientId?: string | null
-  clientName?: string | null
-  notes?: string | null
-  tags?: Prisma.ProjectCreatetagsInput | string[]
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  costCenter?: Prisma.CostCenterCreateNestedOneWithoutProjectsInput
-  organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+export type ProjectCreateNestedManyWithoutCostCenterInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
+  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
+  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
 }
 
-export type ProjectUncheckedCreateWithoutTimeEntriesInput = {
-  id?: string
-  projectNumber: string
-  name: string
-  description?: string | null
-  type?: string
-  status?: string
-  priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
-  departmentId?: string | null
-  departmentName?: string | null
-  clientId?: string | null
-  clientName?: string | null
-  costCenterId?: string | null
-  notes?: string | null
-  tags?: Prisma.ProjectCreatetagsInput | string[]
-  organizationId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+export type ProjectUncheckedCreateNestedManyWithoutCostCenterInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
+  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
+  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
 }
 
-export type ProjectCreateOrConnectWithoutTimeEntriesInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
+export type ProjectUpdateManyWithoutCostCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
+  upsert?: Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput[]
+  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
+  set?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  disconnect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  delete?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  update?: Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput[]
+  updateMany?: Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput | Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput[]
+  deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type ProjectUpsertWithoutTimeEntriesInput = {
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutTimeEntriesInput, Prisma.ProjectUncheckedUpdateWithoutTimeEntriesInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
-  where?: Prisma.ProjectWhereInput
+export type ProjectUncheckedUpdateManyWithoutCostCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput> | Prisma.ProjectCreateWithoutCostCenterInput[] | Prisma.ProjectUncheckedCreateWithoutCostCenterInput[]
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCostCenterInput | Prisma.ProjectCreateOrConnectWithoutCostCenterInput[]
+  upsert?: Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpsertWithWhereUniqueWithoutCostCenterInput[]
+  createMany?: Prisma.ProjectCreateManyCostCenterInputEnvelope
+  set?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  disconnect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  delete?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[]
+  update?: Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput | Prisma.ProjectUpdateWithWhereUniqueWithoutCostCenterInput[]
+  updateMany?: Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput | Prisma.ProjectUpdateManyWithWhereWithoutCostCenterInput[]
+  deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
-export type ProjectUpdateToOneWithWhereWithoutTimeEntriesInput = {
-  where?: Prisma.ProjectWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutTimeEntriesInput, Prisma.ProjectUncheckedUpdateWithoutTimeEntriesInput>
+export type ProjectCreatetagsInput = {
+  set: string[]
 }
 
-export type ProjectUpdateWithoutTimeEntriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.ProjectUpdatetagsInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutProjectNestedInput
+export type ProjectUpdatetagsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
-export type ProjectUncheckedUpdateWithoutTimeEntriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.ProjectUpdatetagsInput | string[]
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type ProjectCreateNestedOneWithoutMilestonesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMilestonesInput
+  connect?: Prisma.ProjectWhereUniqueInput
 }
 
-export type ProjectCreateWithoutCostCenterInput = {
-  id?: string
-  projectNumber: string
-  name: string
-  description?: string | null
-  type?: string
-  status?: string
-  priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
-  departmentId?: string | null
-  departmentName?: string | null
-  clientId?: string | null
-  clientName?: string | null
-  notes?: string | null
-  tags?: Prisma.ProjectCreatetagsInput | string[]
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
-  organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+export type ProjectUpdateOneRequiredWithoutMilestonesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMilestonesInput
+  upsert?: Prisma.ProjectUpsertWithoutMilestonesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutMilestonesInput, Prisma.ProjectUpdateWithoutMilestonesInput>, Prisma.ProjectUncheckedUpdateWithoutMilestonesInput>
 }
 
-export type ProjectUncheckedCreateWithoutCostCenterInput = {
-  id?: string
-  projectNumber: string
-  name: string
-  description?: string | null
-  type?: string
-  status?: string
-  priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
-  departmentId?: string | null
-  departmentName?: string | null
-  clientId?: string | null
-  clientName?: string | null
-  notes?: string | null
-  tags?: Prisma.ProjectCreatetagsInput | string[]
-  organizationId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutProjectInput
+export type ProjectCreateNestedOneWithoutTimeEntriesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTimeEntriesInput
+  connect?: Prisma.ProjectWhereUniqueInput
 }
 
-export type ProjectCreateOrConnectWithoutCostCenterInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput>
+export type ProjectUpdateOneRequiredWithoutTimeEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTimeEntriesInput
+  upsert?: Prisma.ProjectUpsertWithoutTimeEntriesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutTimeEntriesInput, Prisma.ProjectUpdateWithoutTimeEntriesInput>, Prisma.ProjectUncheckedUpdateWithoutTimeEntriesInput>
 }
 
-export type ProjectCreateManyCostCenterInputEnvelope = {
-  data: Prisma.ProjectCreateManyCostCenterInput | Prisma.ProjectCreateManyCostCenterInput[]
-  skipDuplicates?: boolean
+export type ProjectCreateNestedOneWithoutChargebacksInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutChargebacksInput, Prisma.ProjectUncheckedCreateWithoutChargebacksInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutChargebacksInput
+  connect?: Prisma.ProjectWhereUniqueInput
 }
 
-export type ProjectUpsertWithWhereUniqueWithoutCostCenterInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  update: Prisma.XOR<Prisma.ProjectUpdateWithoutCostCenterInput, Prisma.ProjectUncheckedUpdateWithoutCostCenterInput>
-  create: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput>
-}
-
-export type ProjectUpdateWithWhereUniqueWithoutCostCenterInput = {
-  where: Prisma.ProjectWhereUniqueInput
-  data: Prisma.XOR<Prisma.ProjectUpdateWithoutCostCenterInput, Prisma.ProjectUncheckedUpdateWithoutCostCenterInput>
-}
-
-export type ProjectUpdateManyWithWhereWithoutCostCenterInput = {
-  where: Prisma.ProjectScalarWhereInput
-  data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyWithoutCostCenterInput>
-}
-
-export type ProjectScalarWhereInput = {
-  AND?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
-  OR?: Prisma.ProjectScalarWhereInput[]
-  NOT?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
-  id?: Prisma.StringFilter<"Project"> | string
-  projectNumber?: Prisma.StringFilter<"Project"> | string
-  name?: Prisma.StringFilter<"Project"> | string
-  description?: Prisma.StringNullableFilter<"Project"> | string | null
-  type?: Prisma.StringFilter<"Project"> | string
-  status?: Prisma.StringFilter<"Project"> | string
-  priority?: Prisma.StringFilter<"Project"> | string
-  startDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  endDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  actualStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  actualEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  currency?: Prisma.StringFilter<"Project"> | string
-  budgetAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.StringNullableFilter<"Project"> | string | null
-  managerName?: Prisma.StringNullableFilter<"Project"> | string | null
-  departmentId?: Prisma.StringNullableFilter<"Project"> | string | null
-  departmentName?: Prisma.StringNullableFilter<"Project"> | string | null
-  clientId?: Prisma.StringNullableFilter<"Project"> | string | null
-  clientName?: Prisma.StringNullableFilter<"Project"> | string | null
-  costCenterId?: Prisma.StringNullableFilter<"Project"> | string | null
-  notes?: Prisma.StringNullableFilter<"Project"> | string | null
-  tags?: Prisma.StringNullableListFilter<"Project">
-  organizationId?: Prisma.StringFilter<"Project"> | string
-  createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+export type ProjectUpdateOneWithoutChargebacksNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutChargebacksInput, Prisma.ProjectUncheckedCreateWithoutChargebacksInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutChargebacksInput
+  upsert?: Prisma.ProjectUpsertWithoutChargebacksInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutChargebacksInput, Prisma.ProjectUpdateWithoutChargebacksInput>, Prisma.ProjectUncheckedUpdateWithoutChargebacksInput>
 }
 
 export type ProjectCreateWithoutOrganizationInput = {
   id?: string
-  projectNumber: string
+  code: string
   name: string
   description?: string | null
   type?: string
   status?: string
   priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
   departmentId?: string | null
-  departmentName?: string | null
   clientId?: string | null
   clientName?: string | null
-  notes?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
   tags?: Prisma.ProjectCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   costCenter?: Prisma.CostCenterCreateNestedOneWithoutProjectsInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutOrganizationInput = {
   id?: string
-  projectNumber: string
+  code: string
   name: string
   description?: string | null
   type?: string
   status?: string
   priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
   departmentId?: string | null
-  departmentName?: string | null
   clientId?: string | null
   clientName?: string | null
-  costCenterId?: string | null
-  notes?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
   tags?: Prisma.ProjectCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutOrganizationInput = {
@@ -1647,37 +1765,1146 @@ export type ProjectUpdateManyWithWhereWithoutOrganizationInput = {
   data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyWithoutOrganizationInput>
 }
 
-export type ProjectCreateManyCostCenterInput = {
+export type ProjectScalarWhereInput = {
+  AND?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
+  OR?: Prisma.ProjectScalarWhereInput[]
+  NOT?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
+  id?: Prisma.StringFilter<"Project"> | string
+  code?: Prisma.StringFilter<"Project"> | string
+  name?: Prisma.StringFilter<"Project"> | string
+  description?: Prisma.StringNullableFilter<"Project"> | string | null
+  type?: Prisma.StringFilter<"Project"> | string
+  status?: Prisma.StringFilter<"Project"> | string
+  priority?: Prisma.StringFilter<"Project"> | string
+  ownerId?: Prisma.StringNullableFilter<"Project"> | string | null
+  ownerName?: Prisma.StringNullableFilter<"Project"> | string | null
+  costCenterId?: Prisma.StringNullableFilter<"Project"> | string | null
+  costCenterCode?: Prisma.StringNullableFilter<"Project"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Project"> | string | null
+  clientId?: Prisma.StringNullableFilter<"Project"> | string | null
+  clientName?: Prisma.StringNullableFilter<"Project"> | string | null
+  plannedStartDate?: Prisma.DateTimeFilter<"Project"> | Date | string
+  plannedEndDate?: Prisma.DateTimeFilter<"Project"> | Date | string
+  actualStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  actualEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  budgetType?: Prisma.StringFilter<"Project"> | string
+  budgetAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"Project"> | string
+  contractValue?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFilter<"Project"> | number
+  milestonesCompleted?: Prisma.IntFilter<"Project"> | number
+  isBillable?: Prisma.BoolFilter<"Project"> | boolean
+  billingRate?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.StringNullableFilter<"Project"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Project">
+  organizationId?: Prisma.StringFilter<"Project"> | string
+  createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+}
+
+export type ProjectCreateWithoutCostCenterInput = {
   id?: string
-  projectNumber: string
+  code: string
   name: string
   description?: string | null
   type?: string
   status?: string
   priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
   departmentId?: string | null
-  departmentName?: string | null
   clientId?: string | null
   clientName?: string | null
-  notes?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutCostCenterInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutCostCenterInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput>
+}
+
+export type ProjectCreateManyCostCenterInputEnvelope = {
+  data: Prisma.ProjectCreateManyCostCenterInput | Prisma.ProjectCreateManyCostCenterInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProjectUpsertWithWhereUniqueWithoutCostCenterInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutCostCenterInput, Prisma.ProjectUncheckedUpdateWithoutCostCenterInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutCostCenterInput, Prisma.ProjectUncheckedCreateWithoutCostCenterInput>
+}
+
+export type ProjectUpdateWithWhereUniqueWithoutCostCenterInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutCostCenterInput, Prisma.ProjectUncheckedUpdateWithoutCostCenterInput>
+}
+
+export type ProjectUpdateManyWithWhereWithoutCostCenterInput = {
+  where: Prisma.ProjectScalarWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyWithoutCostCenterInput>
+}
+
+export type ProjectCreateWithoutMilestonesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  costCenter?: Prisma.CostCenterCreateNestedOneWithoutProjectsInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutMilestonesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutMilestonesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+}
+
+export type ProjectUpsertWithoutMilestonesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutMilestonesInput, Prisma.ProjectUncheckedUpdateWithoutMilestonesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutMilestonesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutMilestonesInput, Prisma.ProjectUncheckedUpdateWithoutMilestonesInput>
+}
+
+export type ProjectUpdateWithoutMilestonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutMilestonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutTimeEntriesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  costCenter?: Prisma.CostCenterCreateNestedOneWithoutProjectsInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutTimeEntriesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
+  chargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutTimeEntriesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
+}
+
+export type ProjectUpsertWithoutTimeEntriesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutTimeEntriesInput, Prisma.ProjectUncheckedUpdateWithoutTimeEntriesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutTimeEntriesInput, Prisma.ProjectUncheckedCreateWithoutTimeEntriesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutTimeEntriesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutTimeEntriesInput, Prisma.ProjectUncheckedUpdateWithoutTimeEntriesInput>
+}
+
+export type ProjectUpdateWithoutTimeEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutTimeEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutChargebacksInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  costCenter?: Prisma.CostCenterCreateNestedOneWithoutProjectsInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutChargebacksInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutChargebacksInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutChargebacksInput, Prisma.ProjectUncheckedCreateWithoutChargebacksInput>
+}
+
+export type ProjectUpsertWithoutChargebacksInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutChargebacksInput, Prisma.ProjectUncheckedUpdateWithoutChargebacksInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutChargebacksInput, Prisma.ProjectUncheckedCreateWithoutChargebacksInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutChargebacksInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutChargebacksInput, Prisma.ProjectUncheckedUpdateWithoutChargebacksInput>
+}
+
+export type ProjectUpdateWithoutChargebacksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutChargebacksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateManyOrganizationInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterId?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
+  tags?: Prisma.ProjectCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ProjectUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateManyWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  priority?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.ProjectUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ProjectCreateManyCostCenterInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  type?: string
+  status?: string
+  priority?: string
+  ownerId?: string | null
+  ownerName?: string | null
+  costCenterCode?: string | null
+  departmentId?: string | null
+  clientId?: string | null
+  clientName?: string | null
+  plannedStartDate: Date | string
+  plannedEndDate: Date | string
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  budgetType?: string
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: number
+  milestonesCompleted?: number
+  isBillable?: boolean
+  billingRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: string | null
   tags?: Prisma.ProjectCreatetagsInput | string[]
   organizationId: string
   createdAt?: Date | string
@@ -1686,263 +2913,159 @@ export type ProjectCreateManyCostCenterInput = {
 
 export type ProjectUpdateWithoutCostCenterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutCostCenterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutProjectNestedInput
+  chargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutCostCenterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  costCenterCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plannedEndDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  budgetType?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetVariance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  contractValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collectedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unbilledAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netProfit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  netMargin?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  remainingHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentComplete?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  milestoneCount?: Prisma.IntFieldUpdateOperationsInput | number
+  milestonesCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  isBillable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  billingRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  billingMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.ProjectUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProjectCreateManyOrganizationInput = {
-  id?: string
-  projectNumber: string
-  name: string
-  description?: string | null
-  type?: string
-  status?: string
-  priority?: string
-  startDate?: Date | string | null
-  endDate?: Date | string | null
-  actualStartDate?: Date | string | null
-  actualEndDate?: Date | string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: string | null
-  managerName?: string | null
-  departmentId?: string | null
-  departmentName?: string | null
-  clientId?: string | null
-  clientName?: string | null
-  costCenterId?: string | null
-  notes?: string | null
-  tags?: Prisma.ProjectCreatetagsInput | string[]
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type ProjectUpdateWithoutOrganizationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.ProjectUpdatetagsInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  costCenter?: Prisma.CostCenterUpdateOneWithoutProjectsNestedInput
-  timeEntries?: Prisma.TimeEntryUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateWithoutOrganizationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.ProjectUpdatetagsInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutProjectNestedInput
-}
-
-export type ProjectUncheckedUpdateManyWithoutOrganizationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectNumber?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  priority?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  committedCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalCosts?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  contractValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalRevenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  billedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  allocatedHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualHours?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  progressPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  costCenterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.ProjectUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1953,11 +3076,15 @@ export type ProjectUncheckedUpdateManyWithoutOrganizationInput = {
  */
 
 export type ProjectCountOutputType = {
+  milestones: number
   timeEntries: number
+  chargebacks: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  milestones?: boolean | ProjectCountOutputTypeCountMilestonesArgs
   timeEntries?: boolean | ProjectCountOutputTypeCountTimeEntriesArgs
+  chargebacks?: boolean | ProjectCountOutputTypeCountChargebacksArgs
 }
 
 /**
@@ -1973,85 +3100,129 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * ProjectCountOutputType without action
  */
+export type ProjectCountOutputTypeCountMilestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectMilestoneWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
 export type ProjectCountOutputTypeCountTimeEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TimeEntryWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountChargebacksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InternalChargebackWhereInput
 }
 
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  projectNumber?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
   type?: boolean
   status?: boolean
   priority?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  actualStartDate?: boolean
-  actualEndDate?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  budgetSpent?: boolean
-  actualCost?: boolean
-  committedCost?: boolean
-  totalCosts?: boolean
-  contractValue?: boolean
-  totalRevenue?: boolean
-  billedAmount?: boolean
-  allocatedHours?: boolean
-  actualHours?: boolean
-  progressPercent?: boolean
-  managerId?: boolean
-  managerName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  costCenterId?: boolean
+  costCenterCode?: boolean
   departmentId?: boolean
-  departmentName?: boolean
   clientId?: boolean
   clientName?: boolean
-  costCenterId?: boolean
-  notes?: boolean
+  plannedStartDate?: boolean
+  plannedEndDate?: boolean
+  actualStartDate?: boolean
+  actualEndDate?: boolean
+  budgetType?: boolean
+  budgetAmount?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetVariance?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  contractValue?: boolean
+  billedAmount?: boolean
+  collectedAmount?: boolean
+  unbilledAmount?: boolean
+  totalRevenue?: boolean
+  totalCosts?: boolean
+  grossProfit?: boolean
+  grossMargin?: boolean
+  netProfit?: boolean
+  netMargin?: boolean
+  allocatedHours?: boolean
+  actualHours?: boolean
+  remainingHours?: boolean
+  hourlyRate?: boolean
+  percentComplete?: boolean
+  milestoneCount?: boolean
+  milestonesCompleted?: boolean
+  isBillable?: boolean
+  billingRate?: boolean
+  billingMethod?: boolean
   tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   costCenter?: boolean | Prisma.Project$costCenterArgs<ExtArgs>
-  timeEntries?: boolean | Prisma.Project$timeEntriesArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
+  timeEntries?: boolean | Prisma.Project$timeEntriesArgs<ExtArgs>
+  chargebacks?: boolean | Prisma.Project$chargebacksArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  projectNumber?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
   type?: boolean
   status?: boolean
   priority?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  actualStartDate?: boolean
-  actualEndDate?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  budgetSpent?: boolean
-  actualCost?: boolean
-  committedCost?: boolean
-  totalCosts?: boolean
-  contractValue?: boolean
-  totalRevenue?: boolean
-  billedAmount?: boolean
-  allocatedHours?: boolean
-  actualHours?: boolean
-  progressPercent?: boolean
-  managerId?: boolean
-  managerName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  costCenterId?: boolean
+  costCenterCode?: boolean
   departmentId?: boolean
-  departmentName?: boolean
   clientId?: boolean
   clientName?: boolean
-  costCenterId?: boolean
-  notes?: boolean
+  plannedStartDate?: boolean
+  plannedEndDate?: boolean
+  actualStartDate?: boolean
+  actualEndDate?: boolean
+  budgetType?: boolean
+  budgetAmount?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetVariance?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  contractValue?: boolean
+  billedAmount?: boolean
+  collectedAmount?: boolean
+  unbilledAmount?: boolean
+  totalRevenue?: boolean
+  totalCosts?: boolean
+  grossProfit?: boolean
+  grossMargin?: boolean
+  netProfit?: boolean
+  netMargin?: boolean
+  allocatedHours?: boolean
+  actualHours?: boolean
+  remainingHours?: boolean
+  hourlyRate?: boolean
+  percentComplete?: boolean
+  milestoneCount?: boolean
+  milestonesCompleted?: boolean
+  isBillable?: boolean
+  billingRate?: boolean
+  billingMethod?: boolean
   tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -2062,36 +3233,50 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  projectNumber?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
   type?: boolean
   status?: boolean
   priority?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  actualStartDate?: boolean
-  actualEndDate?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  budgetSpent?: boolean
-  actualCost?: boolean
-  committedCost?: boolean
-  totalCosts?: boolean
-  contractValue?: boolean
-  totalRevenue?: boolean
-  billedAmount?: boolean
-  allocatedHours?: boolean
-  actualHours?: boolean
-  progressPercent?: boolean
-  managerId?: boolean
-  managerName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  costCenterId?: boolean
+  costCenterCode?: boolean
   departmentId?: boolean
-  departmentName?: boolean
   clientId?: boolean
   clientName?: boolean
-  costCenterId?: boolean
-  notes?: boolean
+  plannedStartDate?: boolean
+  plannedEndDate?: boolean
+  actualStartDate?: boolean
+  actualEndDate?: boolean
+  budgetType?: boolean
+  budgetAmount?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetVariance?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  contractValue?: boolean
+  billedAmount?: boolean
+  collectedAmount?: boolean
+  unbilledAmount?: boolean
+  totalRevenue?: boolean
+  totalCosts?: boolean
+  grossProfit?: boolean
+  grossMargin?: boolean
+  netProfit?: boolean
+  netMargin?: boolean
+  allocatedHours?: boolean
+  actualHours?: boolean
+  remainingHours?: boolean
+  hourlyRate?: boolean
+  percentComplete?: boolean
+  milestoneCount?: boolean
+  milestonesCompleted?: boolean
+  isBillable?: boolean
+  billingRate?: boolean
+  billingMethod?: boolean
   tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -2102,47 +3287,63 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type ProjectSelectScalar = {
   id?: boolean
-  projectNumber?: boolean
+  code?: boolean
   name?: boolean
   description?: boolean
   type?: boolean
   status?: boolean
   priority?: boolean
-  startDate?: boolean
-  endDate?: boolean
-  actualStartDate?: boolean
-  actualEndDate?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  budgetSpent?: boolean
-  actualCost?: boolean
-  committedCost?: boolean
-  totalCosts?: boolean
-  contractValue?: boolean
-  totalRevenue?: boolean
-  billedAmount?: boolean
-  allocatedHours?: boolean
-  actualHours?: boolean
-  progressPercent?: boolean
-  managerId?: boolean
-  managerName?: boolean
+  ownerId?: boolean
+  ownerName?: boolean
+  costCenterId?: boolean
+  costCenterCode?: boolean
   departmentId?: boolean
-  departmentName?: boolean
   clientId?: boolean
   clientName?: boolean
-  costCenterId?: boolean
-  notes?: boolean
+  plannedStartDate?: boolean
+  plannedEndDate?: boolean
+  actualStartDate?: boolean
+  actualEndDate?: boolean
+  budgetType?: boolean
+  budgetAmount?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetVariance?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  contractValue?: boolean
+  billedAmount?: boolean
+  collectedAmount?: boolean
+  unbilledAmount?: boolean
+  totalRevenue?: boolean
+  totalCosts?: boolean
+  grossProfit?: boolean
+  grossMargin?: boolean
+  netProfit?: boolean
+  netMargin?: boolean
+  allocatedHours?: boolean
+  actualHours?: boolean
+  remainingHours?: boolean
+  hourlyRate?: boolean
+  percentComplete?: boolean
+  milestoneCount?: boolean
+  milestonesCompleted?: boolean
+  isBillable?: boolean
+  billingRate?: boolean
+  billingMethod?: boolean
   tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectNumber" | "name" | "description" | "type" | "status" | "priority" | "startDate" | "endDate" | "actualStartDate" | "actualEndDate" | "currency" | "budgetAmount" | "budgetSpent" | "actualCost" | "committedCost" | "totalCosts" | "contractValue" | "totalRevenue" | "billedAmount" | "allocatedHours" | "actualHours" | "progressPercent" | "managerId" | "managerName" | "departmentId" | "departmentName" | "clientId" | "clientName" | "costCenterId" | "notes" | "tags" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "type" | "status" | "priority" | "ownerId" | "ownerName" | "costCenterId" | "costCenterCode" | "departmentId" | "clientId" | "clientName" | "plannedStartDate" | "plannedEndDate" | "actualStartDate" | "actualEndDate" | "budgetType" | "budgetAmount" | "budgetSpent" | "budgetRemaining" | "budgetVariance" | "budgetUtilization" | "currency" | "contractValue" | "billedAmount" | "collectedAmount" | "unbilledAmount" | "totalRevenue" | "totalCosts" | "grossProfit" | "grossMargin" | "netProfit" | "netMargin" | "allocatedHours" | "actualHours" | "remainingHours" | "hourlyRate" | "percentComplete" | "milestoneCount" | "milestonesCompleted" | "isBillable" | "billingRate" | "billingMethod" | "tags" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   costCenter?: boolean | Prisma.Project$costCenterArgs<ExtArgs>
-  timeEntries?: boolean | Prisma.Project$timeEntriesArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
+  timeEntries?: boolean | Prisma.Project$timeEntriesArgs<ExtArgs>
+  chargebacks?: boolean | Prisma.Project$chargebacksArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2158,41 +3359,57 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Project"
   objects: {
     costCenter: Prisma.$CostCenterPayload<ExtArgs> | null
-    timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
     organization: Prisma.$OrganizationPayload<ExtArgs>
+    milestones: Prisma.$ProjectMilestonePayload<ExtArgs>[]
+    timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
+    chargebacks: Prisma.$InternalChargebackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    projectNumber: string
+    code: string
     name: string
     description: string | null
     type: string
     status: string
     priority: string
-    startDate: Date | null
-    endDate: Date | null
-    actualStartDate: Date | null
-    actualEndDate: Date | null
-    currency: string
-    budgetAmount: runtime.Decimal
-    budgetSpent: runtime.Decimal
-    actualCost: runtime.Decimal
-    committedCost: runtime.Decimal
-    totalCosts: runtime.Decimal
-    contractValue: runtime.Decimal
-    totalRevenue: runtime.Decimal
-    billedAmount: runtime.Decimal
-    allocatedHours: runtime.Decimal
-    actualHours: runtime.Decimal
-    progressPercent: runtime.Decimal
-    managerId: string | null
-    managerName: string | null
+    ownerId: string | null
+    ownerName: string | null
+    costCenterId: string | null
+    costCenterCode: string | null
     departmentId: string | null
-    departmentName: string | null
     clientId: string | null
     clientName: string | null
-    costCenterId: string | null
-    notes: string | null
+    plannedStartDate: Date
+    plannedEndDate: Date
+    actualStartDate: Date | null
+    actualEndDate: Date | null
+    budgetType: string
+    budgetAmount: runtime.Decimal
+    budgetSpent: runtime.Decimal
+    budgetRemaining: runtime.Decimal
+    budgetVariance: runtime.Decimal
+    budgetUtilization: runtime.Decimal
+    currency: string
+    contractValue: runtime.Decimal | null
+    billedAmount: runtime.Decimal
+    collectedAmount: runtime.Decimal
+    unbilledAmount: runtime.Decimal
+    totalRevenue: runtime.Decimal
+    totalCosts: runtime.Decimal
+    grossProfit: runtime.Decimal
+    grossMargin: runtime.Decimal
+    netProfit: runtime.Decimal
+    netMargin: runtime.Decimal
+    allocatedHours: runtime.Decimal
+    actualHours: runtime.Decimal
+    remainingHours: runtime.Decimal
+    hourlyRate: runtime.Decimal | null
+    percentComplete: runtime.Decimal
+    milestoneCount: number
+    milestonesCompleted: number
+    isBillable: boolean
+    billingRate: runtime.Decimal | null
+    billingMethod: string | null
     tags: string[]
     organizationId: string
     createdAt: Date
@@ -2592,8 +3809,10 @@ readonly fields: ProjectFieldRefs;
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   costCenter<T extends Prisma.Project$costCenterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$costCenterArgs<ExtArgs>>): Prisma.Prisma__CostCenterClient<runtime.Types.Result.GetResult<Prisma.$CostCenterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  timeEntries<T extends Prisma.Project$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  milestones<T extends Prisma.Project$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  timeEntries<T extends Prisma.Project$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chargebacks<T extends Prisma.Project$chargebacksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$chargebacksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InternalChargebackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2624,36 +3843,50 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ProjectFieldRefs {
   readonly id: Prisma.FieldRef<"Project", 'String'>
-  readonly projectNumber: Prisma.FieldRef<"Project", 'String'>
+  readonly code: Prisma.FieldRef<"Project", 'String'>
   readonly name: Prisma.FieldRef<"Project", 'String'>
   readonly description: Prisma.FieldRef<"Project", 'String'>
   readonly type: Prisma.FieldRef<"Project", 'String'>
   readonly status: Prisma.FieldRef<"Project", 'String'>
   readonly priority: Prisma.FieldRef<"Project", 'String'>
-  readonly startDate: Prisma.FieldRef<"Project", 'DateTime'>
-  readonly endDate: Prisma.FieldRef<"Project", 'DateTime'>
-  readonly actualStartDate: Prisma.FieldRef<"Project", 'DateTime'>
-  readonly actualEndDate: Prisma.FieldRef<"Project", 'DateTime'>
-  readonly currency: Prisma.FieldRef<"Project", 'String'>
-  readonly budgetAmount: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly budgetSpent: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly actualCost: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly committedCost: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly totalCosts: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly contractValue: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly totalRevenue: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly billedAmount: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly allocatedHours: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly actualHours: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly progressPercent: Prisma.FieldRef<"Project", 'Decimal'>
-  readonly managerId: Prisma.FieldRef<"Project", 'String'>
-  readonly managerName: Prisma.FieldRef<"Project", 'String'>
+  readonly ownerId: Prisma.FieldRef<"Project", 'String'>
+  readonly ownerName: Prisma.FieldRef<"Project", 'String'>
+  readonly costCenterId: Prisma.FieldRef<"Project", 'String'>
+  readonly costCenterCode: Prisma.FieldRef<"Project", 'String'>
   readonly departmentId: Prisma.FieldRef<"Project", 'String'>
-  readonly departmentName: Prisma.FieldRef<"Project", 'String'>
   readonly clientId: Prisma.FieldRef<"Project", 'String'>
   readonly clientName: Prisma.FieldRef<"Project", 'String'>
-  readonly costCenterId: Prisma.FieldRef<"Project", 'String'>
-  readonly notes: Prisma.FieldRef<"Project", 'String'>
+  readonly plannedStartDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly plannedEndDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly actualStartDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly actualEndDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly budgetType: Prisma.FieldRef<"Project", 'String'>
+  readonly budgetAmount: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly budgetSpent: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly budgetRemaining: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly budgetVariance: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly budgetUtilization: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly currency: Prisma.FieldRef<"Project", 'String'>
+  readonly contractValue: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly billedAmount: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly collectedAmount: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly unbilledAmount: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly totalRevenue: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly totalCosts: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly grossProfit: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly grossMargin: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly netProfit: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly netMargin: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly allocatedHours: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly actualHours: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly remainingHours: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly hourlyRate: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly percentComplete: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly milestoneCount: Prisma.FieldRef<"Project", 'Int'>
+  readonly milestonesCompleted: Prisma.FieldRef<"Project", 'Int'>
+  readonly isBillable: Prisma.FieldRef<"Project", 'Boolean'>
+  readonly billingRate: Prisma.FieldRef<"Project", 'Decimal'>
+  readonly billingMethod: Prisma.FieldRef<"Project", 'String'>
   readonly tags: Prisma.FieldRef<"Project", 'String[]'>
   readonly organizationId: Prisma.FieldRef<"Project", 'String'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
@@ -3073,6 +4306,30 @@ export type Project$costCenterArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Project.milestones
+ */
+export type Project$milestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectMilestone
+   */
+  select?: Prisma.ProjectMilestoneSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectMilestone
+   */
+  omit?: Prisma.ProjectMilestoneOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectMilestoneInclude<ExtArgs> | null
+  where?: Prisma.ProjectMilestoneWhereInput
+  orderBy?: Prisma.ProjectMilestoneOrderByWithRelationInput | Prisma.ProjectMilestoneOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectMilestoneWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectMilestoneScalarFieldEnum | Prisma.ProjectMilestoneScalarFieldEnum[]
+}
+
+/**
  * Project.timeEntries
  */
 export type Project$timeEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3094,6 +4351,30 @@ export type Project$timeEntriesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.TimeEntryScalarFieldEnum | Prisma.TimeEntryScalarFieldEnum[]
+}
+
+/**
+ * Project.chargebacks
+ */
+export type Project$chargebacksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InternalChargeback
+   */
+  select?: Prisma.InternalChargebackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InternalChargeback
+   */
+  omit?: Prisma.InternalChargebackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InternalChargebackInclude<ExtArgs> | null
+  where?: Prisma.InternalChargebackWhereInput
+  orderBy?: Prisma.InternalChargebackOrderByWithRelationInput | Prisma.InternalChargebackOrderByWithRelationInput[]
+  cursor?: Prisma.InternalChargebackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InternalChargebackScalarFieldEnum | Prisma.InternalChargebackScalarFieldEnum[]
 }
 
 /**

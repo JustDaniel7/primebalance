@@ -49,6 +49,24 @@ const STATUS_CONFIG: Record<InvoiceStatus, { label: string; color: string; icon:
   [InvoiceStatus.CANCELLED]: { label: 'Cancelled', color: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500', icon: XCircle },
   [InvoiceStatus.ARCHIVED]: { label: 'Archived', color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400', icon: Archive },
 };
+function InvoiceList({
+  onCreateNew,
+  onSelectInvoice,
+}: {
+  onCreateNew: () => void;
+  onSelectInvoice: (invoice: Invoice) => void;
+}) {
+  const { t, language } = useThemeStore();
+const { invoices, fetchInvoices, isInitialized, isLoading, markAsPaid, deleteInvoice, duplicateInvoice } = useInvoiceStore();
+// Fetch on mount
+useEffect(() => {
+  if (!isInitialized) {
+    fetchInvoices();
+  }
+}, [fetchInvoices, isInitialized]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<Invoice['status'] | 'all'>('all');
+  const [selectedInvoice, setSelectedInvoice] = useState<string | null>(null);
 
 // =============================================================================
 // COMPONENT

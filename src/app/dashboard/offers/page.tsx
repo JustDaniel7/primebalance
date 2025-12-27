@@ -283,9 +283,11 @@ function OfferDetail({ offerId, onClose }: { offerId: string; onClose: () => voi
             alert('Cannot send offer without counterparty email');
             return;
         }
-        if (sendOffer(offerId)) {
-            // Success
-        }
+        sendOffer(offerId).then((success) => {
+            if (!success) {
+                alert('Failed to send offer');
+            }
+        });
     };
 
     const handleAccept = () => {
@@ -720,8 +722,14 @@ function OfferDetail({ offerId, onClose }: { offerId: string; onClose: () => voi
 
 export default function OffersPage() {
     const { t } = useThemeStore();
+    const { fetchOffers } = useOffersStore();
     const [selectedOfferId, setSelectedOfferId] = useState<string | null>(null);
     const [showNewOffer, setShowNewOffer] = useState(false);
+
+    // Fetch offers on mount
+    useEffect(() => {
+        fetchOffers();
+    }, [fetchOffers]);
 
     return (
         <div className="space-y-6">

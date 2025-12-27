@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Plus,
@@ -74,7 +74,12 @@ function LiabilitiesList({
     onSelectLiability: (liability: Liability) => void;
 }) {
     const { t, language } = useThemeStore();
-    const { liabilities, getSummary, getActiveAlerts, getUpcomingPayments } = useLiabilitiesStore();
+    const { liabilities, fetchLiabilities, isInitialized, isLoading, getSummary, getActiveAlerts, getUpcomingPayments } = useLiabilitiesStore();
+    useEffect(() => {
+  if (!isInitialized) {
+    fetchLiabilities();
+  }
+}, [fetchLiabilities, isInitialized]);
     const [searchQuery, setSearchQuery] = useState('');
     const [typeFilter, setTypeFilter] = useState<LiabilityType | 'all'>('all');
 

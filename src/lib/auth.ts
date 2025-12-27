@@ -27,7 +27,7 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         if (credentials?.email) {
           return {
-            id: "demo-user-1",
+            id: "1",
             email: credentials.email,
             name: "Demo User",
           }
@@ -40,7 +40,7 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/login",
   },
   callbacks: {
-    /*async jwt({ token, user, account }) {
+    async jwt({ token, user, account }) {
       if (user?.email) {
         // Try to find existing user
         let dbUser = await prisma.user.findUnique({
@@ -86,16 +86,6 @@ export const authOptions: AuthOptions = {
         }
       }
       return token
-    },*/
-    async jwt({ token, user, account }) {
-      if (user) {
-        token.id = user.id
-        token.email = user.email
-
-        // Skip database for now
-        token.organizationId = "demo-org"
-      }
-      return token
     },
     async session({ session, token }) {
       if (session?.user) {
@@ -106,4 +96,3 @@ export const authOptions: AuthOptions = {
     },
   },
 }
-

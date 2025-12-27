@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Plus,
@@ -30,6 +30,7 @@ import {
     Eye,
     Filter,
     Download,
+    Loader2,
 } from 'lucide-react';
 import { Card, Button, Badge, Input } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
@@ -80,8 +81,16 @@ function ReceivablesList({
         filter,
         setFilter,
         resetFilter,
+        fetchReceivables,
+        receivables,
+        isInitialized,
+        isLoading
     } = useReceivablesStore();
-
+    useEffect(() => {
+  if (!isInitialized) {
+    fetchReceivables();
+  }
+}, [fetchReceivables, isInitialized]);
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState<ReceivableStatus | 'all'>('all');
     const [showAgingReport, setShowAgingReport] = useState(false);
@@ -89,6 +98,8 @@ function ReceivablesList({
     const summary = getSummary();
     const agingReport = getAgingReport();
     const debtorExposure = getDebtorExposure();
+
+    
 
     const filteredReceivables = useMemo(() => {
         let receivables = getFilteredReceivables();
@@ -158,6 +169,15 @@ function ReceivablesList({
         { value: 'disputed', label: t('receivables.status.disputed') },
     ];
 
+    // Add this:
+    if (isLoading || !isInitialized) {
+    return (
+        <div className="flex items-center justify-center h-64">
+        <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+        </div>
+    );
+    }
+
     return (
         <div className="space-y-6">
             {/* Header */}
@@ -188,7 +208,7 @@ function ReceivablesList({
                                 {formatCurrency(summary.totalOverdue)} {t('receivables.overdueAlert')}
                             </p>
                             <p className="text-sm text-red-600 dark:text-red-400 mt-1">
-                                {summary.byStatus.overdue.count + summary.byStatus.in_collection.count} {t('receivables.invoicesOverdue')}
+                                {(summary.byStatus?.overdue?.count || 0) + (summary.byStatus?.in_collection?.count || 0)} {t('receivables.invoicesOverdue')}
                             </p>
                         </div>
                     </div>

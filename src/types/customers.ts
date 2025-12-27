@@ -23,7 +23,7 @@ export interface Customer {
     status: CustomerStatus;
 
     // Contact
-    email: string;
+    email?: string;
     phone?: string;
     website?: string;
 
@@ -39,7 +39,9 @@ export interface Customer {
     // Business Info
     industry?: string;
     taxId?: string;
+    vatNumber?: string;
     registrationNumber?: string;
+    classification?: string;
     employeeCount?: number;
     annualRevenue?: number;
 
@@ -53,26 +55,37 @@ export interface Customer {
     customerSince: string;
     lastActivityDate?: string;
     lastPurchaseDate?: string;
+    lastOrderDate?: string;
+    lastPaymentDate?: string;
+    lastContactDate?: string;
 
     // Financial Summary
     totalRevenue: number;
     totalOrders: number;
     averageOrderValue: number;
     outstandingBalance: number;
+    overdueAmount: number;
+    currency: string;
 
     // Credit
     creditLimit: number;
     creditUsed: number;
     creditAvailable: number;
-    creditStatus: CreditStatus;
-    paymentTerms: string; // e.g., "Net 30", "Net 60"
+    creditStatus: CreditStatus | 'good' | 'warning' | 'hold' | 'blocked';
+    paymentTerms: string;
 
     // Risk & Behavior
     riskLevel: RiskLevel;
-    riskScore: number; // 0-100
+    riskScore: number;
     paymentBehavior: PaymentBehavior;
-    averageDaysToPayment: number;
-    latePaymentCount: number;
+    averageDaysToPayment?: number;
+    onTimePaymentRate?: number;
+    latePaymentCount?: number;
+
+    // Preferences
+    preferredPaymentMethod?: string;
+    preferredLanguage: string;
+    invoiceDelivery: 'email' | 'mail' | 'portal';
 
     // Notes
     notes?: string;
@@ -80,6 +93,7 @@ export interface Customer {
     createdAt: string;
     updatedAt: string;
 }
+
 
 // =============================================================================
 // PAYMENT HISTORY

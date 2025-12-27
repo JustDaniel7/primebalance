@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
     Package,
@@ -8,6 +8,7 @@ import {
     DollarSign,
     AlertTriangle,
     CheckCircle2,
+    Loader2,
 } from 'lucide-react';
 import { Card } from '@/components/ui';
 import { useAssetStore } from '@/store/asset-store';
@@ -17,6 +18,13 @@ import { AssetStatus, BookType } from '@/types/asset';
 export const AssetMetricsCards: React.FC = () => {
     const { assets, assetBooks, calculateTotalNetBookValue } = useAssetStore();
     const { t } = useThemeStore();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+
 
     const metrics = useMemo(() => {
         const activeAssets = assets.filter(a => a.isActive);
@@ -90,6 +98,28 @@ export const AssetMetricsCards: React.FC = () => {
         amber: { bg: 'bg-amber-50 dark:bg-amber-900/20', icon: 'text-amber-500', text: 'text-amber-600 dark:text-amber-400' },
         slate: { bg: 'bg-slate-50 dark:bg-slate-800/50', icon: 'text-slate-500', text: 'text-slate-600 dark:text-slate-400' },
     };
+
+    // Show skeleton during SSR and initial mount to prevent hydration mismatch
+    if (!mounted) {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[0, 1, 2, 3].map((index) => (
+                    <div key={index}>
+                        <Card variant="glass" padding="md">
+                            <div className="flex items-start justify-between animate-pulse">
+                                <div className="space-y-2">
+                                    <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+                                    <div className="h-8 w-32 bg-gray-200 dark:bg-gray-700 rounded" />
+                                    <div className="h-3 w-20 bg-gray-200 dark:bg-gray-700 rounded" />
+                                </div>
+                                <div className="h-12 w-12 bg-gray-200 dark:bg-gray-700 rounded-xl" />
+                            </div>
+                        </Card>
+                    </div>
+                ))}
+            </div>
+        );
+    }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

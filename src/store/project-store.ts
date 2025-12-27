@@ -1,3 +1,9 @@
+// =============================================================================
+// PROJECT STORE - PrimeBalance Finance OS
+// CHANGE TYPE: UPDATE - Full API Integration (replaces demo data)
+// FILE PATH: src/store/project-store.ts
+// =============================================================================
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
@@ -39,7 +45,7 @@ const initialWizardState: ProjectWizardState = {
     plannedEndDate: '',
     budgetType: null,
     budgetAmount: 0,
-    currency: 'USD',
+    currency: 'EUR',
     isBillable: false,
     billingMethod: null,
     billingRate: 0,
@@ -47,279 +53,6 @@ const initialWizardState: ProjectWizardState = {
     allocatedHours: 0,
     hourlyRate: 0,
 };
-
-// =============================================================================
-// DEMO DATA
-// =============================================================================
-
-const generateDemoCostCenters = (): CostCenter[] => [
-    {
-        id: 'cc-001',
-        code: 'CC-ENG',
-        name: 'Engineering',
-        description: 'Software engineering department',
-        level: 1,
-        path: 'CC-ENG',
-        managerId: 'user-1',
-        managerName: 'John Smith',
-        annualBudget: 500000,
-        budgetSpent: 320000,
-        budgetRemaining: 180000,
-        budgetUtilization: 64,
-        currency: 'USD',
-        allocationMethod: 'direct',
-        isActive: true,
-        effectiveFrom: '2024-01-01',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'cc-002',
-        code: 'CC-SALES',
-        name: 'Sales & Marketing',
-        description: 'Sales and marketing department',
-        level: 1,
-        path: 'CC-SALES',
-        managerId: 'user-2',
-        managerName: 'Jane Doe',
-        annualBudget: 300000,
-        budgetSpent: 180000,
-        budgetRemaining: 120000,
-        budgetUtilization: 60,
-        currency: 'USD',
-        allocationMethod: 'revenue',
-        isActive: true,
-        effectiveFrom: '2024-01-01',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'cc-003',
-        code: 'CC-OPS',
-        name: 'Operations',
-        description: 'Operations and support',
-        level: 1,
-        path: 'CC-OPS',
-        annualBudget: 200000,
-        budgetSpent: 95000,
-        budgetRemaining: 105000,
-        budgetUtilization: 47.5,
-        currency: 'USD',
-        allocationMethod: 'headcount',
-        isActive: true,
-        effectiveFrom: '2024-01-01',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-];
-
-const generateDemoProjects = (): Project[] => [
-    {
-        id: 'proj-001',
-        code: 'PRJ-2024-001',
-        name: 'Website Redesign',
-        description: 'Complete redesign of company website',
-        type: 'client',
-        status: 'active',
-        priority: 'high',
-        ownerId: 'user-1',
-        ownerName: 'John Smith',
-        costCenterId: 'cc-001',
-        costCenterCode: 'CC-ENG',
-        clientId: 'client-1',
-        clientName: 'Acme Corp',
-        plannedStartDate: '2024-01-15',
-        plannedEndDate: '2024-06-30',
-        actualStartDate: '2024-01-20',
-        budgetType: 'fixed',
-        budgetAmount: 75000,
-        budgetSpent: 48000,
-        budgetRemaining: 27000,
-        budgetVariance: 27000,
-        budgetUtilization: 64,
-        currency: 'USD',
-        contractValue: 95000,
-        billedAmount: 47500,
-        collectedAmount: 38000,
-        unbilledAmount: 47500,
-        totalRevenue: 47500,
-        totalCosts: 48000,
-        grossProfit: -500,
-        grossMargin: -1.05,
-        netProfit: -500,
-        netMargin: -1.05,
-        allocatedHours: 750,
-        actualHours: 520,
-        remainingHours: 230,
-        hourlyRate: 125,
-        percentComplete: 65,
-        milestoneCount: 5,
-        milestonesCompleted: 3,
-        isBillable: true,
-        billingRate: 150,
-        billingMethod: 'milestone',
-        tags: ['web', 'design', 'frontend'],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'proj-002',
-        code: 'PRJ-2024-002',
-        name: 'CRM Integration',
-        description: 'Integrate CRM with existing systems',
-        type: 'internal',
-        status: 'active',
-        priority: 'medium',
-        ownerId: 'user-1',
-        ownerName: 'John Smith',
-        costCenterId: 'cc-001',
-        costCenterCode: 'CC-ENG',
-        plannedStartDate: '2024-02-01',
-        plannedEndDate: '2024-04-30',
-        actualStartDate: '2024-02-05',
-        budgetType: 'time_materials',
-        budgetAmount: 45000,
-        budgetSpent: 32000,
-        budgetRemaining: 13000,
-        budgetVariance: 13000,
-        budgetUtilization: 71.1,
-        currency: 'USD',
-        totalRevenue: 0,
-        totalCosts: 32000,
-        grossProfit: -32000,
-        grossMargin: 0,
-        netProfit: -32000,
-        netMargin: 0,
-        allocatedHours: 400,
-        actualHours: 280,
-        remainingHours: 120,
-        hourlyRate: 100,
-        percentComplete: 70,
-        milestoneCount: 3,
-        milestonesCompleted: 2,
-        isBillable: false,
-        tags: ['integration', 'crm', 'backend'],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'proj-003',
-        code: 'PRJ-2024-003',
-        name: 'Mobile App Development',
-        description: 'Develop iOS and Android mobile app',
-        type: 'client',
-        status: 'planning',
-        priority: 'high',
-        ownerId: 'user-2',
-        ownerName: 'Jane Doe',
-        costCenterId: 'cc-001',
-        costCenterCode: 'CC-ENG',
-        clientId: 'client-2',
-        clientName: 'TechStart Inc',
-        plannedStartDate: '2024-04-01',
-        plannedEndDate: '2024-09-30',
-        budgetType: 'milestone',
-        budgetAmount: 120000,
-        budgetSpent: 0,
-        budgetRemaining: 120000,
-        budgetVariance: 120000,
-        budgetUtilization: 0,
-        currency: 'USD',
-        contractValue: 180000,
-        billedAmount: 0,
-        collectedAmount: 0,
-        unbilledAmount: 0,
-        totalRevenue: 0,
-        totalCosts: 0,
-        grossProfit: 0,
-        grossMargin: 0,
-        netProfit: 0,
-        netMargin: 0,
-        allocatedHours: 1200,
-        actualHours: 0,
-        remainingHours: 1200,
-        hourlyRate: 125,
-        percentComplete: 0,
-        milestoneCount: 6,
-        milestonesCompleted: 0,
-        isBillable: true,
-        billingRate: 175,
-        billingMethod: 'milestone',
-        tags: ['mobile', 'ios', 'android'],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-];
-
-const generateDemoTimeEntries = (): TimeEntry[] => [
-    {
-        id: 'time-001',
-        userId: 'user-1',
-        userName: 'John Smith',
-        projectId: 'proj-001',
-        projectCode: 'PRJ-2024-001',
-        date: new Date().toISOString().split('T')[0],
-        hours: 8,
-        description: 'Frontend development - homepage redesign',
-        category: 'development',
-        isBillable: true,
-        hourlyRate: 150,
-        billableAmount: 1200,
-        costRate: 100,
-        costAmount: 800,
-        status: 'approved',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-    {
-        id: 'time-002',
-        userId: 'user-2',
-        userName: 'Jane Doe',
-        projectId: 'proj-001',
-        projectCode: 'PRJ-2024-001',
-        date: new Date().toISOString().split('T')[0],
-        hours: 4,
-        description: 'Design review and feedback',
-        category: 'design',
-        isBillable: true,
-        hourlyRate: 150,
-        billableAmount: 600,
-        costRate: 90,
-        costAmount: 360,
-        status: 'submitted',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-];
-
-const generateDemoChargebacks = (): InternalChargeback[] => [
-    {
-        id: 'cb-001',
-        chargebackNumber: 'CB-2024-001',
-        fromCostCenterId: 'cc-001',
-        fromCostCenterCode: 'CC-ENG',
-        toCostCenterId: 'cc-002',
-        toCostCenterCode: 'CC-SALES',
-        projectId: 'proj-001',
-        projectCode: 'PRJ-2024-001',
-        date: new Date().toISOString().split('T')[0],
-        description: 'Engineering support for sales demo',
-        category: 'labor',
-        amount: 2400,
-        currency: 'USD',
-        allocationMethod: 'hours',
-        quantity: 16,
-        unitRate: 150,
-        periodStart: '2024-03-01',
-        periodEnd: '2024-03-31',
-        status: 'approved',
-        approvedBy: 'user-3',
-        approvedAt: new Date().toISOString(),
-        createdBy: 'user-1',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    },
-];
 
 // =============================================================================
 // STORE INTERFACE
@@ -339,49 +72,58 @@ interface ProjectState {
     // Wizard
     wizardState: ProjectWizardState;
     wizardOpen: boolean;
+    editingProjectId: string | null;
 
     // Selected
     selectedProjectId: string | null;
     selectedCostCenterId: string | null;
 
+    // Loading & Error States
+    isLoading: boolean;
+    isSaving: boolean;
+    error: string | null;
+
+    // Delete Confirmation
+    deleteConfirmId: string | null;
+    deleteConfirmType: 'project' | 'costCenter' | 'timeEntry' | 'chargeback' | null;
+
+    // API Actions
+    fetchProjects: () => Promise<void>;
+    fetchCostCenters: () => Promise<void>;
+    fetchTimeEntries: (projectId?: string) => Promise<void>;
+    fetchChargebacks: () => Promise<void>;
+
     // Projects CRUD
-    createProject: (project: Omit<Project, 'id' | 'createdAt' | 'updatedAt' | 'budgetRemaining' | 'budgetVariance' | 'budgetUtilization' | 'grossProfit' | 'grossMargin' | 'netProfit' | 'netMargin' | 'remainingHours'>) => Project;
-    updateProject: (id: string, updates: Partial<Project>) => void;
-    deleteProject: (id: string) => void;
-    updateProjectStatus: (id: string, status: ProjectStatus) => void;
+    createProject: (projectData: Partial<Project>) => Promise<Project | null>;
+    updateProject: (id: string, updates: Partial<Project>) => Promise<Project | null>;
+    deleteProject: (id: string) => Promise<boolean>;
+    updateProjectStatus: (id: string, status: ProjectStatus) => Promise<boolean>;
 
     // Cost Centers CRUD
-    createCostCenter: (costCenter: Omit<CostCenter, 'id' | 'createdAt' | 'updatedAt' | 'budgetRemaining' | 'budgetUtilization'>) => CostCenter;
-    updateCostCenter: (id: string, updates: Partial<CostCenter>) => void;
-    deleteCostCenter: (id: string) => void;
+    createCostCenter: (data: Partial<CostCenter>) => Promise<CostCenter | null>;
+    updateCostCenter: (id: string, updates: Partial<CostCenter>) => Promise<CostCenter | null>;
+    deleteCostCenter: (id: string) => Promise<boolean>;
 
     // Time Entries
-    createTimeEntry: (entry: Omit<TimeEntry, 'id' | 'createdAt' | 'updatedAt' | 'billableAmount' | 'costAmount'>) => TimeEntry;
-    updateTimeEntry: (id: string, updates: Partial<TimeEntry>) => void;
-    deleteTimeEntry: (id: string) => void;
-    approveTimeEntry: (id: string, approvedBy: string) => void;
-    rejectTimeEntry: (id: string, reason: string) => void;
-    submitTimeEntry: (id: string) => void;
-
-    // Cost Attribution
-    createCostAttribution: (attribution: Omit<CostAttribution, 'id' | 'createdAt' | 'updatedAt'>) => CostAttribution;
-    approveCostAttribution: (id: string, approvedBy: string) => void;
-    rejectCostAttribution: (id: string) => void;
+    createTimeEntry: (data: Partial<TimeEntry>) => Promise<TimeEntry | null>;
+    updateTimeEntry: (id: string, updates: Partial<TimeEntry>) => Promise<TimeEntry | null>;
+    deleteTimeEntry: (id: string) => Promise<boolean>;
+    approveTimeEntry: (id: string, approvedBy: string) => Promise<boolean>;
+    rejectTimeEntry: (id: string, reason: string) => Promise<boolean>;
+    submitTimeEntry: (id: string) => Promise<boolean>;
 
     // Chargebacks
-    createChargeback: (chargeback: Omit<InternalChargeback, 'id' | 'chargebackNumber' | 'createdAt' | 'updatedAt'>) => InternalChargeback;
-    approveChargeback: (id: string, approvedBy: string) => void;
-    rejectChargeback: (id: string, reason: string) => void;
+    createChargeback: (data: Partial<InternalChargeback>) => Promise<InternalChargeback | null>;
+    updateChargeback: (id: string, updates: Partial<InternalChargeback>) => Promise<InternalChargeback | null>;
+    deleteChargeback: (id: string) => Promise<boolean>;
+    approveChargeback: (id: string, approvedBy: string) => Promise<boolean>;
+    rejectChargeback: (id: string, reason: string) => Promise<boolean>;
 
     // Milestones
-    createMilestone: (milestone: Omit<ProjectMilestone, 'id' | 'createdAt' | 'updatedAt'>) => ProjectMilestone;
-    updateMilestone: (id: string, updates: Partial<ProjectMilestone>) => void;
-    completeMilestone: (id: string) => void;
-
-    // Resource Allocation
-    allocateResource: (allocation: Omit<ResourceAllocation, 'id' | 'createdAt' | 'updatedAt' | 'actualHours'>) => ResourceAllocation;
-    updateAllocation: (id: string, updates: Partial<ResourceAllocation>) => void;
-    removeAllocation: (id: string) => void;
+    createMilestone: (data: Partial<ProjectMilestone>) => Promise<ProjectMilestone | null>;
+    updateMilestone: (id: string, updates: Partial<ProjectMilestone>) => Promise<ProjectMilestone | null>;
+    deleteMilestone: (id: string) => Promise<boolean>;
+    completeMilestone: (id: string) => Promise<boolean>;
 
     // Wizard
     openWizard: (editProject?: Project) => void;
@@ -389,7 +131,12 @@ interface ProjectState {
     setWizardStep: (step: number) => void;
     updateWizardState: (updates: Partial<ProjectWizardState>) => void;
     resetWizard: () => void;
-    saveFromWizard: () => Project | null;
+    saveFromWizard: () => Promise<Project | null>;
+
+    // Delete Confirmation
+    openDeleteConfirm: (id: string, type: 'project' | 'costCenter' | 'timeEntry' | 'chargeback') => void;
+    closeDeleteConfirm: () => void;
+    confirmDelete: () => Promise<boolean>;
 
     // Analytics
     getProjectSummary: () => ProjectSummary;
@@ -408,6 +155,9 @@ interface ProjectState {
     // Selection
     selectProject: (id: string | null) => void;
     selectCostCenter: (id: string | null) => void;
+
+    // Error handling
+    clearError: () => void;
 }
 
 // =============================================================================
@@ -417,385 +167,532 @@ interface ProjectState {
 export const useProjectStore = create<ProjectState>()(
     persist(
         (set, get) => ({
-            // Initial Data
-            projects: generateDemoProjects(),
-            costCenters: generateDemoCostCenters(),
+            // Initial Data (empty - fetched from API)
+            projects: [],
+            costCenters: [],
             budgetLines: [],
             costAttributions: [],
-            timeEntries: generateDemoTimeEntries(),
+            timeEntries: [],
             resourceAllocations: [],
-            chargebacks: generateDemoChargebacks(),
+            chargebacks: [],
             milestones: [],
 
             wizardState: initialWizardState,
             wizardOpen: false,
+            editingProjectId: null,
             selectedProjectId: null,
             selectedCostCenterId: null,
 
-            // =========================================================================
+            // Loading & Error States
+            isLoading: false,
+            isSaving: false,
+            error: null,
+
+            // Delete Confirmation
+            deleteConfirmId: null,
+            deleteConfirmType: null,
+
+            // =================================================================
+            // API FETCH ACTIONS
+            // =================================================================
+
+            fetchProjects: async () => {
+                set({ isLoading: true, error: null });
+                try {
+                    const res = await fetch('/api/projects');
+                    if (!res.ok) throw new Error('Failed to fetch projects');
+                    const data = await res.json();
+                    set({ projects: data.projects || [], isLoading: false });
+                } catch (error) {
+                    console.error('fetchProjects error:', error);
+                    set({ error: (error as Error).message, isLoading: false });
+                }
+            },
+
+            fetchCostCenters: async () => {
+                try {
+                    const res = await fetch('/api/cost-centers');
+                    if (!res.ok) throw new Error('Failed to fetch cost centers');
+                    const data = await res.json();
+                    set({ costCenters: data.costCenters || [] });
+                } catch (error) {
+                    console.error('fetchCostCenters error:', error);
+                    // Don't set error for secondary fetch
+                }
+            },
+
+            fetchTimeEntries: async (projectId?: string) => {
+                try {
+                    const url = projectId 
+                        ? `/api/time-entries?projectId=${projectId}` 
+                        : '/api/time-entries';
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error('Failed to fetch time entries');
+                    const data = await res.json();
+                    set({ timeEntries: data.timeEntries || [] });
+                } catch (error) {
+                    console.error('fetchTimeEntries error:', error);
+                }
+            },
+
+            fetchChargebacks: async () => {
+                try {
+                    const res = await fetch('/api/chargebacks');
+                    if (!res.ok) throw new Error('Failed to fetch chargebacks');
+                    const data = await res.json();
+                    set({ chargebacks: data.chargebacks || [] });
+                } catch (error) {
+                    console.error('fetchChargebacks error:', error);
+                }
+            },
+
+            // =================================================================
             // PROJECTS CRUD
-            // =========================================================================
+            // =================================================================
 
-            createProject: (projectData) => {
-                const now = new Date().toISOString();
-                const project: Project = {
-                    ...projectData,
-                    id: `proj-${Date.now()}`,
-                    budgetRemaining: projectData.budgetAmount - projectData.budgetSpent,
-                    budgetVariance: projectData.budgetAmount - projectData.budgetSpent,
-                    budgetUtilization: projectData.budgetAmount > 0
-                        ? (projectData.budgetSpent / projectData.budgetAmount) * 100
-                        : 0,
-                    remainingHours: projectData.allocatedHours - projectData.actualHours,
-                    grossProfit: projectData.totalRevenue - projectData.totalCosts,
-                    grossMargin: projectData.totalRevenue > 0
-                        ? ((projectData.totalRevenue - projectData.totalCosts) / projectData.totalRevenue) * 100
-                        : 0,
-                    netProfit: projectData.totalRevenue - projectData.totalCosts,
-                    netMargin: projectData.totalRevenue > 0
-                        ? ((projectData.totalRevenue - projectData.totalCosts) / projectData.totalRevenue) * 100
-                        : 0,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ projects: [...state.projects, project] }));
-                return project;
+            createProject: async (projectData) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch('/api/projects', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(projectData),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to create project');
+                    }
+                    const project = await res.json();
+                    set((state) => ({
+                        projects: [...state.projects, project],
+                        isSaving: false,
+                    }));
+                    return project;
+                } catch (error) {
+                    console.error('createProject error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
             },
 
-            updateProject: (id, updates) => {
-                set((state) => ({
-                    projects: state.projects.map((p) => {
-                        if (p.id !== id) return p;
-                        const updated = { ...p, ...updates, updatedAt: new Date().toISOString() };
-                        // Recalculate derived fields
-                        updated.budgetRemaining = updated.budgetAmount - updated.budgetSpent;
-                        updated.budgetVariance = updated.budgetAmount - updated.budgetSpent;
-                        updated.budgetUtilization = updated.budgetAmount > 0
-                            ? (updated.budgetSpent / updated.budgetAmount) * 100
-                            : 0;
-                        updated.remainingHours = updated.allocatedHours - updated.actualHours;
-                        updated.grossProfit = updated.totalRevenue - updated.totalCosts;
-                        updated.grossMargin = updated.totalRevenue > 0
-                            ? ((updated.totalRevenue - updated.totalCosts) / updated.totalRevenue) * 100
-                            : 0;
-                        return updated;
-                    }),
-                }));
+            updateProject: async (id, updates) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/projects/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updates),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to update project');
+                    }
+                    const project = await res.json();
+                    set((state) => ({
+                        projects: state.projects.map((p) => p.id === id ? { ...p, ...project } : p),
+                        isSaving: false,
+                    }));
+                    return project;
+                } catch (error) {
+                    console.error('updateProject error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
             },
 
-            deleteProject: (id) => {
-                set((state) => ({
-                    projects: state.projects.filter((p) => p.id !== id),
-                    timeEntries: state.timeEntries.filter((t) => t.projectId !== id),
-                    milestones: state.milestones.filter((m) => m.projectId !== id),
-                    costAttributions: state.costAttributions.filter((c) => c.projectId !== id),
-                }));
+            deleteProject: async (id) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/projects/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to delete project');
+                    }
+                    set((state) => ({
+                        projects: state.projects.filter((p) => p.id !== id),
+                        timeEntries: state.timeEntries.filter((t) => t.projectId !== id),
+                        milestones: state.milestones.filter((m) => m.projectId !== id),
+                        isSaving: false,
+                        deleteConfirmId: null,
+                        deleteConfirmType: null,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('deleteProject error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
             },
 
-            updateProjectStatus: (id, status) => {
-                const now = new Date().toISOString();
-                set((state) => ({
-                    projects: state.projects.map((p) => {
-                        if (p.id !== id) return p;
-                        const updates: Partial<Project> = { status, updatedAt: now };
-                        if (status === 'active' && !p.actualStartDate) {
-                            updates.actualStartDate = now.split('T')[0];
-                        }
-                        if (status === 'completed' && !p.actualEndDate) {
-                            updates.actualEndDate = now.split('T')[0];
-                            updates.percentComplete = 100;
-                        }
-                        return { ...p, ...updates };
-                    }),
-                }));
+            updateProjectStatus: async (id, status) => {
+                return !!(await get().updateProject(id, { status }));
             },
 
-            // =========================================================================
+            // =================================================================
             // COST CENTERS CRUD
-            // =========================================================================
+            // =================================================================
 
-            createCostCenter: (data) => {
-                const now = new Date().toISOString();
-                const costCenter: CostCenter = {
-                    ...data,
-                    id: `cc-${Date.now()}`,
-                    budgetRemaining: data.annualBudget - data.budgetSpent,
-                    budgetUtilization: data.annualBudget > 0
-                        ? (data.budgetSpent / data.annualBudget) * 100
-                        : 0,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ costCenters: [...state.costCenters, costCenter] }));
-                return costCenter;
-            },
-
-            updateCostCenter: (id, updates) => {
-                set((state) => ({
-                    costCenters: state.costCenters.map((cc) => {
-                        if (cc.id !== id) return cc;
-                        const updated = { ...cc, ...updates, updatedAt: new Date().toISOString() };
-                        updated.budgetRemaining = updated.annualBudget - updated.budgetSpent;
-                        updated.budgetUtilization = updated.annualBudget > 0
-                            ? (updated.budgetSpent / updated.annualBudget) * 100
-                            : 0;
-                        return updated;
-                    }),
-                }));
-            },
-
-            deleteCostCenter: (id) => {
-                set((state) => ({
-                    costCenters: state.costCenters.filter((cc) => cc.id !== id),
-                }));
-            },
-
-            // =========================================================================
-            // TIME ENTRIES
-            // =========================================================================
-
-            createTimeEntry: (data) => {
-                const now = new Date().toISOString();
-                const entry: TimeEntry = {
-                    ...data,
-                    id: `time-${Date.now()}`,
-                    billableAmount: data.isBillable && data.hourlyRate
-                        ? data.hours * data.hourlyRate
-                        : 0,
-                    costAmount: data.costRate ? data.hours * data.costRate : 0,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ timeEntries: [...state.timeEntries, entry] }));
-
-                // Update project actual hours
-                get().updateProject(data.projectId, {
-                    actualHours: get().projects.find((p) => p.id === data.projectId)?.actualHours || 0 + data.hours,
-                });
-
-                return entry;
-            },
-
-            updateTimeEntry: (id, updates) => {
-                set((state) => ({
-                    timeEntries: state.timeEntries.map((t) => {
-                        if (t.id !== id) return t;
-                        const updated = { ...t, ...updates, updatedAt: new Date().toISOString() };
-                        updated.billableAmount = updated.isBillable && updated.hourlyRate
-                            ? updated.hours * updated.hourlyRate
-                            : 0;
-                        updated.costAmount = updated.costRate ? updated.hours * updated.costRate : 0;
-                        return updated;
-                    }),
-                }));
-            },
-
-            deleteTimeEntry: (id) => {
-                set((state) => ({
-                    timeEntries: state.timeEntries.filter((t) => t.id !== id),
-                }));
-            },
-
-            approveTimeEntry: (id, approvedBy) => {
-                set((state) => ({
-                    timeEntries: state.timeEntries.map((t) =>
-                        t.id === id
-                            ? { ...t, status: 'approved' as TimeEntryStatus, approvedBy, approvedAt: new Date().toISOString() }
-                            : t
-                    ),
-                }));
-            },
-
-            rejectTimeEntry: (id, reason) => {
-                set((state) => ({
-                    timeEntries: state.timeEntries.map((t) =>
-                        t.id === id
-                            ? { ...t, status: 'rejected' as TimeEntryStatus, rejectionReason: reason }
-                            : t
-                    ),
-                }));
-            },
-
-            submitTimeEntry: (id) => {
-                set((state) => ({
-                    timeEntries: state.timeEntries.map((t) =>
-                        t.id === id ? { ...t, status: 'submitted' as TimeEntryStatus } : t
-                    ),
-                }));
-            },
-
-            // =========================================================================
-            // COST ATTRIBUTION
-            // =========================================================================
-
-            createCostAttribution: (data) => {
-                const now = new Date().toISOString();
-                const attribution: CostAttribution = {
-                    ...data,
-                    id: `cost-${Date.now()}`,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ costAttributions: [...state.costAttributions, attribution] }));
-                return attribution;
-            },
-
-            approveCostAttribution: (id, approvedBy) => {
-                set((state) => ({
-                    costAttributions: state.costAttributions.map((c) =>
-                        c.id === id
-                            ? { ...c, status: 'approved', approvedBy, approvedAt: new Date().toISOString() }
-                            : c
-                    ),
-                }));
-            },
-
-            rejectCostAttribution: (id) => {
-                set((state) => ({
-                    costAttributions: state.costAttributions.map((c) =>
-                        c.id === id ? { ...c, status: 'rejected' } : c
-                    ),
-                }));
-            },
-
-            // =========================================================================
-            // CHARGEBACKS
-            // =========================================================================
-
-            createChargeback: (data) => {
-                const now = new Date().toISOString();
-                const count = get().chargebacks.length + 1;
-                const chargeback: InternalChargeback = {
-                    ...data,
-                    id: `cb-${Date.now()}`,
-                    chargebackNumber: `CB-${new Date().getFullYear()}-${String(count).padStart(3, '0')}`,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ chargebacks: [...state.chargebacks, chargeback] }));
-                return chargeback;
-            },
-
-            approveChargeback: (id, approvedBy) => {
-                set((state) => ({
-                    chargebacks: state.chargebacks.map((c) =>
-                        c.id === id
-                            ? { ...c, status: 'approved' as ChargebackStatus, approvedBy, approvedAt: new Date().toISOString() }
-                            : c
-                    ),
-                }));
-            },
-
-            rejectChargeback: (id, reason) => {
-                set((state) => ({
-                    chargebacks: state.chargebacks.map((c) =>
-                        c.id === id
-                            ? { ...c, status: 'rejected' as ChargebackStatus, rejectionReason: reason }
-                            : c
-                    ),
-                }));
-            },
-
-            // =========================================================================
-            // MILESTONES
-            // =========================================================================
-
-            createMilestone: (data) => {
-                const now = new Date().toISOString();
-                const milestone: ProjectMilestone = {
-                    ...data,
-                    id: `ms-${Date.now()}`,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ milestones: [...state.milestones, milestone] }));
-
-                // Update project milestone count
-                const project = get().projects.find((p) => p.id === data.projectId);
-                if (project) {
-                    get().updateProject(data.projectId, {
-                        milestoneCount: project.milestoneCount + 1,
+            createCostCenter: async (data) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch('/api/cost-centers', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
                     });
-                }
-
-                return milestone;
-            },
-
-            updateMilestone: (id, updates) => {
-                set((state) => ({
-                    milestones: state.milestones.map((m) =>
-                        m.id === id ? { ...m, ...updates, updatedAt: new Date().toISOString() } : m
-                    ),
-                }));
-            },
-
-            completeMilestone: (id) => {
-                const milestone = get().milestones.find((m) => m.id === id);
-                if (!milestone) return;
-
-                set((state) => ({
-                    milestones: state.milestones.map((m) =>
-                        m.id === id
-                            ? { ...m, status: 'completed', percentComplete: 100, actualDate: new Date().toISOString().split('T')[0] }
-                            : m
-                    ),
-                }));
-
-                // Update project milestones completed
-                const project = get().projects.find((p) => p.id === milestone.projectId);
-                if (project) {
-                    get().updateProject(milestone.projectId, {
-                        milestonesCompleted: project.milestonesCompleted + 1,
-                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to create cost center');
+                    }
+                    const costCenter = await res.json();
+                    set((state) => ({
+                        costCenters: [...state.costCenters, costCenter],
+                        isSaving: false,
+                    }));
+                    return costCenter;
+                } catch (error) {
+                    console.error('createCostCenter error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
                 }
             },
 
-            // =========================================================================
-            // RESOURCE ALLOCATION
-            // =========================================================================
-
-            allocateResource: (data) => {
-                const now = new Date().toISOString();
-                const allocation: ResourceAllocation = {
-                    ...data,
-                    id: `alloc-${Date.now()}`,
-                    actualHours: 0,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-
-                set((state) => ({ resourceAllocations: [...state.resourceAllocations, allocation] }));
-                return allocation;
+            updateCostCenter: async (id, updates) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/cost-centers/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updates),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to update cost center');
+                    }
+                    const costCenter = await res.json();
+                    set((state) => ({
+                        costCenters: state.costCenters.map((c) => c.id === id ? { ...c, ...costCenter } : c),
+                        isSaving: false,
+                    }));
+                    return costCenter;
+                } catch (error) {
+                    console.error('updateCostCenter error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
             },
 
-            updateAllocation: (id, updates) => {
-                set((state) => ({
-                    resourceAllocations: state.resourceAllocations.map((a) =>
-                        a.id === id ? { ...a, ...updates, updatedAt: new Date().toISOString() } : a
-                    ),
+            deleteCostCenter: async (id) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/cost-centers/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to delete cost center');
+                    }
+                    set((state) => ({
+                        costCenters: state.costCenters.filter((c) => c.id !== id),
+                        isSaving: false,
+                        deleteConfirmId: null,
+                        deleteConfirmType: null,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('deleteCostCenter error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
+            },
+
+            // =================================================================
+            // TIME ENTRIES CRUD
+            // =================================================================
+
+            createTimeEntry: async (data) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch('/api/time-entries', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to create time entry');
+                    }
+                    const entry = await res.json();
+                    set((state) => ({
+                        timeEntries: [...state.timeEntries, entry],
+                        isSaving: false,
+                    }));
+                    return entry;
+                } catch (error) {
+                    console.error('createTimeEntry error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
+            },
+
+            updateTimeEntry: async (id, updates) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/time-entries/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updates),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to update time entry');
+                    }
+                    const entry = await res.json();
+                    set((state) => ({
+                        timeEntries: state.timeEntries.map((t) => t.id === id ? { ...t, ...entry } : t),
+                        isSaving: false,
+                    }));
+                    return entry;
+                } catch (error) {
+                    console.error('updateTimeEntry error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
+            },
+
+            deleteTimeEntry: async (id) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/time-entries/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to delete time entry');
+                    }
+                    set((state) => ({
+                        timeEntries: state.timeEntries.filter((t) => t.id !== id),
+                        isSaving: false,
+                        deleteConfirmId: null,
+                        deleteConfirmType: null,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('deleteTimeEntry error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
+            },
+
+            approveTimeEntry: async (id, approvedBy) => {
+                return !!(await get().updateTimeEntry(id, { 
+                    status: 'approved' as TimeEntryStatus, 
+                    approvedBy, 
+                    approvedAt: new Date().toISOString() 
                 }));
             },
 
-            removeAllocation: (id) => {
-                set((state) => ({
-                    resourceAllocations: state.resourceAllocations.filter((a) => a.id !== id),
+            rejectTimeEntry: async (id, reason) => {
+                return !!(await get().updateTimeEntry(id, { 
+                    status: 'rejected' as TimeEntryStatus, 
+                    rejectionReason: reason 
                 }));
             },
 
-            // =========================================================================
-            // WIZARD
-            // =========================================================================
+            submitTimeEntry: async (id) => {
+                return !!(await get().updateTimeEntry(id, { 
+                    status: 'submitted' as TimeEntryStatus 
+                }));
+            },
+
+            // =================================================================
+            // CHARGEBACKS CRUD
+            // =================================================================
+
+            createChargeback: async (data) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch('/api/chargebacks', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to create chargeback');
+                    }
+                    const chargeback = await res.json();
+                    set((state) => ({
+                        chargebacks: [...state.chargebacks, chargeback],
+                        isSaving: false,
+                    }));
+                    return chargeback;
+                } catch (error) {
+                    console.error('createChargeback error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
+            },
+
+            updateChargeback: async (id, updates) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/chargebacks/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updates),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to update chargeback');
+                    }
+                    const chargeback = await res.json();
+                    set((state) => ({
+                        chargebacks: state.chargebacks.map((c) => c.id === id ? { ...c, ...chargeback } : c),
+                        isSaving: false,
+                    }));
+                    return chargeback;
+                } catch (error) {
+                    console.error('updateChargeback error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
+            },
+
+            deleteChargeback: async (id) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/chargebacks/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to delete chargeback');
+                    }
+                    set((state) => ({
+                        chargebacks: state.chargebacks.filter((c) => c.id !== id),
+                        isSaving: false,
+                        deleteConfirmId: null,
+                        deleteConfirmType: null,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('deleteChargeback error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
+            },
+
+            approveChargeback: async (id, approvedBy) => {
+                return !!(await get().updateChargeback(id, { 
+                    status: 'approved' as ChargebackStatus, 
+                    approvedBy, 
+                    approvedAt: new Date().toISOString() 
+                }));
+            },
+
+            rejectChargeback: async (id, reason) => {
+                return !!(await get().updateChargeback(id, { 
+                    status: 'rejected' as ChargebackStatus, 
+                    rejectionReason: reason 
+                }));
+            },
+
+            // =================================================================
+            // MILESTONES CRUD
+            // =================================================================
+
+            createMilestone: async (data) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch('/api/milestones', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to create milestone');
+                    }
+                    const milestone = await res.json();
+                    set((state) => ({
+                        milestones: [...state.milestones, milestone],
+                        isSaving: false,
+                    }));
+                    return milestone;
+                } catch (error) {
+                    console.error('createMilestone error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
+            },
+
+            updateMilestone: async (id, updates) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/milestones/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updates),
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to update milestone');
+                    }
+                    const milestone = await res.json();
+                    set((state) => ({
+                        milestones: state.milestones.map((m) => m.id === id ? { ...m, ...milestone } : m),
+                        isSaving: false,
+                    }));
+                    return milestone;
+                } catch (error) {
+                    console.error('updateMilestone error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return null;
+                }
+            },
+
+            deleteMilestone: async (id) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/milestones/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || 'Failed to delete milestone');
+                    }
+                    set((state) => ({
+                        milestones: state.milestones.filter((m) => m.id !== id),
+                        isSaving: false,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('deleteMilestone error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
+            },
+
+            completeMilestone: async (id) => {
+                return !!(await get().updateMilestone(id, { 
+                    status: 'completed', 
+                    percentComplete: 100,
+                    actualDate: new Date().toISOString().split('T')[0]
+                }));
+            },
+
+            // =================================================================
+            // WIZARD ACTIONS
+            // =================================================================
 
             openWizard: (editProject) => {
                 if (editProject) {
                     set({
                         wizardOpen: true,
+                        editingProjectId: editProject.id,
                         wizardState: {
                             step: 1,
                             code: editProject.code,
@@ -821,12 +718,12 @@ export const useProjectStore = create<ProjectState>()(
                         },
                     });
                 } else {
-                    set({ wizardOpen: true, wizardState: initialWizardState });
+                    set({ wizardOpen: true, editingProjectId: null, wizardState: initialWizardState });
                 }
             },
 
             closeWizard: () => {
-                set({ wizardOpen: false });
+                set({ wizardOpen: false, editingProjectId: null });
             },
 
             setWizardStep: (step) => {
@@ -838,58 +735,86 @@ export const useProjectStore = create<ProjectState>()(
             },
 
             resetWizard: () => {
-                set({ wizardState: initialWizardState });
+                set({ wizardState: initialWizardState, editingProjectId: null });
             },
 
-            saveFromWizard: () => {
-                const { wizardState } = get();
+            saveFromWizard: async () => {
+                const { wizardState, editingProjectId } = get();
 
                 if (!wizardState.name || !wizardState.type || !wizardState.budgetType) {
+                    set({ error: 'Please fill in all required fields' });
                     return null;
                 }
 
-                const project = get().createProject({
-                    code: wizardState.code || `PRJ-${Date.now()}`,
+                const projectData = {
+                    code: wizardState.code || undefined,
                     name: wizardState.name,
                     description: wizardState.description,
                     type: wizardState.type,
-                    status: 'planning',
                     priority: wizardState.priority,
-                    ownerId: wizardState.ownerId,
-                    costCenterId: wizardState.costCenterId,
-                    departmentId: wizardState.departmentId,
-                    clientId: wizardState.clientId,
+                    costCenterId: wizardState.costCenterId || undefined,
+                    departmentId: wizardState.departmentId || undefined,
+                    clientId: wizardState.clientId || undefined,
+                    ownerId: wizardState.ownerId || undefined,
                     plannedStartDate: wizardState.plannedStartDate,
                     plannedEndDate: wizardState.plannedEndDate,
                     budgetType: wizardState.budgetType,
                     budgetAmount: wizardState.budgetAmount,
-                    budgetSpent: 0,
                     currency: wizardState.currency,
-                    contractValue: wizardState.contractValue,
-                    billedAmount: 0,
-                    collectedAmount: 0,
-                    unbilledAmount: 0,
-                    totalRevenue: 0,
-                    totalCosts: 0,
-                    allocatedHours: wizardState.allocatedHours,
-                    actualHours: 0,
-                    hourlyRate: wizardState.hourlyRate,
-                    percentComplete: 0,
-                    milestoneCount: 0,
-                    milestonesCompleted: 0,
                     isBillable: wizardState.isBillable,
-                    billingRate: wizardState.billingRate,
                     billingMethod: wizardState.billingMethod || undefined,
-                    tags: [],
-                });
+                    billingRate: wizardState.billingRate,
+                    contractValue: wizardState.contractValue,
+                    allocatedHours: wizardState.allocatedHours,
+                    hourlyRate: wizardState.hourlyRate,
+                };
 
-                set({ wizardOpen: false, wizardState: initialWizardState });
+                let project: Project | null;
+                if (editingProjectId) {
+                    project = await get().updateProject(editingProjectId, projectData);
+                } else {
+                    project = await get().createProject(projectData);
+                }
+
+                if (project) {
+                    set({ wizardOpen: false, wizardState: initialWizardState, editingProjectId: null });
+                }
                 return project;
             },
 
-            // =========================================================================
+            // =================================================================
+            // DELETE CONFIRMATION
+            // =================================================================
+
+            openDeleteConfirm: (id, type) => {
+                set({ deleteConfirmId: id, deleteConfirmType: type });
+            },
+
+            closeDeleteConfirm: () => {
+                set({ deleteConfirmId: null, deleteConfirmType: null });
+            },
+
+            confirmDelete: async () => {
+                const { deleteConfirmId, deleteConfirmType } = get();
+                if (!deleteConfirmId || !deleteConfirmType) return false;
+
+                switch (deleteConfirmType) {
+                    case 'project':
+                        return await get().deleteProject(deleteConfirmId);
+                    case 'costCenter':
+                        return await get().deleteCostCenter(deleteConfirmId);
+                    case 'timeEntry':
+                        return await get().deleteTimeEntry(deleteConfirmId);
+                    case 'chargeback':
+                        return await get().deleteChargeback(deleteConfirmId);
+                    default:
+                        return false;
+                }
+            },
+
+            // =================================================================
             // ANALYTICS
-            // =========================================================================
+            // =================================================================
 
             getProjectSummary: () => {
                 const { projects } = get();
@@ -899,14 +824,14 @@ export const useProjectStore = create<ProjectState>()(
                     activeProjects: projects.filter((p) => p.status === 'active').length,
                     completedProjects: projects.filter((p) => p.status === 'completed').length,
                     onHoldProjects: projects.filter((p) => p.status === 'on_hold').length,
-                    totalBudget: projects.reduce((sum, p) => sum + p.budgetAmount, 0),
-                    totalSpent: projects.reduce((sum, p) => sum + p.budgetSpent, 0),
-                    totalRemaining: projects.reduce((sum, p) => sum + p.budgetRemaining, 0),
-                    totalRevenue: projects.reduce((sum, p) => sum + p.totalRevenue, 0),
-                    totalCosts: projects.reduce((sum, p) => sum + p.totalCosts, 0),
-                    totalProfit: projects.reduce((sum, p) => sum + p.grossProfit, 0),
+                    totalBudget: projects.reduce((sum, p) => sum + (p.budgetAmount || 0), 0),
+                    totalSpent: projects.reduce((sum, p) => sum + (p.budgetSpent || 0), 0),
+                    totalRemaining: projects.reduce((sum, p) => sum + (p.budgetRemaining || 0), 0),
+                    totalRevenue: projects.reduce((sum, p) => sum + (p.totalRevenue || 0), 0),
+                    totalCosts: projects.reduce((sum, p) => sum + (p.totalCosts || 0), 0),
+                    totalProfit: projects.reduce((sum, p) => sum + (p.grossProfit || 0), 0),
                     averageMargin: projects.length > 0
-                        ? projects.reduce((sum, p) => sum + p.grossMargin, 0) / projects.length
+                        ? projects.reduce((sum, p) => sum + (p.grossMargin || 0), 0) / projects.length
                         : 0,
                     overdueProjects: get().getOverdueProjects().length,
                     overBudgetProjects: get().getOverBudgetProjects().length,
@@ -927,40 +852,44 @@ export const useProjectStore = create<ProjectState>()(
                         archived: projects.filter((p) => p.status === 'archived').length,
                     },
                 };
-
                 return summary;
             },
 
             getCostCenterSummary: (costCenterId) => {
-                const costCenter = get().costCenters.find((cc) => cc.id === costCenterId);
-                if (!costCenter) return null;
+                const { costCenters, projects, chargebacks } = get();
+                const cc = costCenters.find((c) => c.id === costCenterId);
+                if (!cc) return null;
 
-                const projects = get().getProjectsByCostCenter(costCenterId);
-                const chargebacksIn = get().chargebacks
-                    .filter((c) => c.toCostCenterId === costCenterId && c.status === 'approved')
-                    .reduce((sum, c) => sum + c.amount, 0);
-                const chargebacksOut = get().chargebacks
-                    .filter((c) => c.fromCostCenterId === costCenterId && c.status === 'approved')
-                    .reduce((sum, c) => sum + c.amount, 0);
+                const ccProjects = projects.filter((p) => p.costCenterId === costCenterId);
+                const activeProjects = ccProjects.filter((p) => p.status === 'active').length;
+                const totalProjectCost = ccProjects.reduce((sum, p) => sum + (p.budgetSpent || 0), 0);
+
+                // Calculate chargebacks
+                const chargebacksIn = chargebacks
+                    .filter((cb) => cb.toCostCenterId === costCenterId && cb.status === 'approved')
+                    .reduce((sum, cb) => sum + cb.amount, 0);
+                const chargebacksOut = chargebacks
+                    .filter((cb) => cb.fromCostCenterId === costCenterId && cb.status === 'approved')
+                    .reduce((sum, cb) => sum + cb.amount, 0);
 
                 return {
-                    costCenterId,
-                    costCenterCode: costCenter.code,
-                    costCenterName: costCenter.name,
-                    annualBudget: costCenter.annualBudget,
-                    ytdBudget: costCenter.annualBudget * (new Date().getMonth() + 1) / 12,
-                    ytdActual: costCenter.budgetSpent,
-                    ytdVariance: (costCenter.annualBudget * (new Date().getMonth() + 1) / 12) - costCenter.budgetSpent,
-                    utilizationPercent: costCenter.budgetUtilization,
-                    laborCost: projects.reduce((sum, p) => sum + p.totalCosts * 0.7, 0), // estimate
-                    materialCost: projects.reduce((sum, p) => sum + p.totalCosts * 0.2, 0),
-                    overheadCost: projects.reduce((sum, p) => sum + p.totalCosts * 0.1, 0),
-                    otherCost: 0,
+                    costCenterId: cc.id,
+                    costCenterCode: cc.code,
+                    costCenterName: cc.name,
+                    annualBudget: cc.annualBudget || 0,
+                    ytdBudget: cc.annualBudget || 0, // Simplified - would need period calculation
+                    ytdActual: cc.budgetSpent || 0,
+                    ytdVariance: (cc.annualBudget || 0) - (cc.budgetSpent || 0),
+                    utilizationPercent: cc.budgetUtilization || 0,
+                    laborCost: totalProjectCost * 0.6, // Simplified breakdown
+                    materialCost: totalProjectCost * 0.2,
+                    overheadCost: totalProjectCost * 0.15,
+                    otherCost: totalProjectCost * 0.05,
                     chargebacksIn,
                     chargebacksOut,
                     netChargebacks: chargebacksIn - chargebacksOut,
-                    activeProjects: projects.filter((p) => p.status === 'active').length,
-                    totalProjectCost: projects.reduce((sum, p) => sum + p.totalCosts, 0),
+                    activeProjects,
+                    totalProjectCost,
                 };
             },
 
@@ -968,31 +897,37 @@ export const useProjectStore = create<ProjectState>()(
                 const project = get().projects.find((p) => p.id === projectId);
                 if (!project) return null;
 
+                const totalCost = project.totalCosts || 0;
+                const budgetVariance = (project.budgetAmount || 0) - (project.budgetSpent || 0);
+                const percentComplete = project.percentComplete || 0;
+                const plannedValue = (project.budgetAmount || 0) * (percentComplete / 100);
+                const earnedValue = plannedValue; // Simplified
+                const costPerformanceIndex = totalCost > 0 ? earnedValue / totalCost : 1;
+                const schedulePerformanceIndex = plannedValue > 0 ? earnedValue / plannedValue : 1;
+
                 return {
-                    projectId,
+                    projectId: project.id,
                     projectCode: project.code,
                     projectName: project.name,
                     contractValue: project.contractValue || 0,
                     billedRevenue: project.billedAmount || 0,
-                    recognizedRevenue: project.totalRevenue,
+                    recognizedRevenue: project.totalRevenue || 0,
                     unbilledRevenue: project.unbilledAmount || 0,
-                    laborCost: project.totalCosts * 0.7,
-                    materialCost: project.totalCosts * 0.2,
-                    overheadCost: project.totalCosts * 0.1,
-                    otherCost: 0,
-                    totalCost: project.totalCosts,
-                    grossProfit: project.grossProfit,
-                    grossMargin: project.grossMargin,
-                    netProfit: project.netProfit,
-                    netMargin: project.netMargin,
-                    budgetVariance: project.budgetVariance,
-                    scheduleVariance: 0, // would need more data
-                    earnedValue: project.budgetAmount * (project.percentComplete / 100),
-                    plannedValue: project.budgetAmount,
-                    costPerformanceIndex: project.budgetSpent > 0
-                        ? (project.budgetAmount * (project.percentComplete / 100)) / project.budgetSpent
-                        : 1,
-                    schedulePerformanceIndex: 1,
+                    laborCost: totalCost * 0.6, // Simplified breakdown
+                    materialCost: totalCost * 0.2,
+                    overheadCost: totalCost * 0.15,
+                    otherCost: totalCost * 0.05,
+                    totalCost,
+                    grossProfit: project.grossProfit || 0,
+                    grossMargin: project.grossMargin || 0,
+                    netProfit: project.netProfit || 0,
+                    netMargin: project.netMargin || 0,
+                    budgetVariance,
+                    scheduleVariance: 0, // Would need timeline calculation
+                    earnedValue,
+                    plannedValue,
+                    costPerformanceIndex,
+                    schedulePerformanceIndex,
                 };
             },
 
@@ -1012,12 +947,10 @@ export const useProjectStore = create<ProjectState>()(
             },
 
             getOverBudgetProjects: () => {
-                return get().projects.filter((p) => p.budgetVariance < 0);
+                return get().projects.filter(
+                    (p) => (p.budgetUtilization || 0) > 100
+                );
             },
-
-            // =========================================================================
-            // TIME TRACKING
-            // =========================================================================
 
             getTimeEntriesByProject: (projectId) => {
                 return get().timeEntries.filter((t) => t.projectId === projectId);
@@ -1031,22 +964,16 @@ export const useProjectStore = create<ProjectState>()(
                 return get().timeEntries.filter((t) => t.status === 'submitted');
             },
 
-            // =========================================================================
-            // SELECTION
-            // =========================================================================
-
             selectProject: (id) => set({ selectedProjectId: id }),
             selectCostCenter: (id) => set({ selectedCostCenterId: id }),
+
+            clearError: () => set({ error: null }),
         }),
         {
             name: 'primebalance-projects',
             partialize: (state) => ({
-                projects: state.projects,
-                costCenters: state.costCenters,
-                timeEntries: state.timeEntries,
-                chargebacks: state.chargebacks,
-                milestones: state.milestones,
-                resourceAllocations: state.resourceAllocations,
+                selectedProjectId: state.selectedProjectId,
+                selectedCostCenterId: state.selectedCostCenterId,
             }),
         }
     )

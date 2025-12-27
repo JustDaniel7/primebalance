@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeStore } from '@/store/theme-store';
 import { Card, Button, Badge } from '@/components/ui';
+import { useStore } from '@/store'
 import {
   PlusIcon,
   AccountsIcon,

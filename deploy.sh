@@ -12,9 +12,11 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-# Load environment variables from .env
+# Load environment variables from .env (handles special characters properly)
 if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+    set -a
+    source .env
+    set +a
     echo -e "${GREEN}✅ Loaded .env${NC}"
 else
     echo -e "${RED}❌ .env not found${NC}"
@@ -29,6 +31,9 @@ for var in "${REQUIRED_VARS[@]}"; do
         exit 1
     fi
 done
+
+# Debug: Show secret is loaded (first 8 chars only)
+echo "   NEXTAUTH_SECRET loaded: ${NEXTAUTH_SECRET:0:8}..."
 
 # Defaults
 INIT_DB=false
@@ -84,11 +89,7 @@ echo ""
 SQL_CONNECTION="${PROJECT_ID}:${REGION}:${DB_INSTANCE}"
 
 # Database URL for Cloud Run (Unix socket connection)
-# Prisma 7 uses this via the adapter
 DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost/${DB_NAME}?host=/cloudsql/${SQL_CONNECTION}"
-
-# Service URL (will be determined after first deploy)
-SERVICE_URL="https://primebalance-${PROJECT_ID}.${REGION}.run.app"
 
 # Initialize database if requested
 if [ "$INIT_DB" = true ]; then
@@ -118,7 +119,6 @@ if [ "$INIT_DB" = true ]; then
         --password="${DB_PASSWORD}"
     
     echo "Configuring IAM for Cloud Run..."
-    # Get the compute service account
     PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
     COMPUTE_SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
     
@@ -155,7 +155,7 @@ if [ "$RUN_MIGRATE" = true ]; then
     export DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@127.0.0.1:5433/${DB_NAME}"
     
     echo "Running migrations..."
-    npx prisma migrate deploy
+    npx prisma db push
     
     echo "Seeding database..."
     npm run db:seed
@@ -183,10 +183,20 @@ if [ ! -d "src/generated/prisma" ]; then
 fi
 echo "   ✓ Prisma client generated"
 
+# Get actual service URL (may exist from previous deploy)
+ACTUAL_URL=$(gcloud run services describe primebalance --region=$REGION --format="value(status.url)" 2>/dev/null || echo "")
+if [ -z "$ACTUAL_URL" ]; then
+    # First deploy - use placeholder, will update after
+    SERVICE_URL="https://primebalance-placeholder.${REGION}.run.app"
+else
+    SERVICE_URL="$ACTUAL_URL"
+fi
+
 # Deploy to Cloud Run
 echo ""
 echo -e "${YELLOW}🚀 Deploying to Cloud Run ($REGION)...${NC}"
 
+# Use --set-env-vars with proper quoting for special characters
 gcloud run deploy primebalance \
     --source . \
     --region "$REGION" \
@@ -198,17 +208,7 @@ gcloud run deploy primebalance \
     --max-instances 10 \
     --port 8080 \
     --add-cloudsql-instances="$SQL_CONNECTION" \
-    --set-env-vars="NODE_ENV=production" \
-    --set-env-vars="NEXTAUTH_SECRET=${NEXTAUTH_SECRET}" \
-    --set-env-vars="NEXTAUTH_URL=${SERVICE_URL}" \
-    --set-env-vars="GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}" \
-    --set-env-vars="GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}" \
-    --set-env-vars="GITHUB_ID=${GITHUB_ID:-}" \
-    --set-env-vars="GITHUB_SECRET=${GITHUB_SECRET:-}" \
-    --set-env-vars="DATABASE_URL=${DATABASE_URL}" \
-    --set-env-vars="CLOUD_SQL_CONNECTION_NAME=${SQL_CONNECTION}" \
-    --set-env-vars="DB_NAME=${DB_NAME}" \
-    --set-env-vars="DB_USER=${DB_USER}"
+    --set-env-vars="^##^NODE_ENV=production##NEXTAUTH_SECRET=${NEXTAUTH_SECRET}##NEXTAUTH_URL=${SERVICE_URL}##GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}##GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}##GITHUB_ID=${GITHUB_ID:-}##GITHUB_SECRET=${GITHUB_SECRET:-}##DATABASE_URL=${DATABASE_URL}##CLOUD_SQL_CONNECTION_NAME=${SQL_CONNECTION}##DB_NAME=${DB_NAME}##DB_USER=${DB_USER}##DB_PASSWORD=${DB_PASSWORD}"
 
 # Get actual service URL
 ACTUAL_URL=$(gcloud run services describe primebalance --region=$REGION --format="value(status.url)" 2>/dev/null)
@@ -221,12 +221,12 @@ echo "   Region:      ${REGION}"
 echo "   Database:    ${SQL_CONNECTION}"
 echo ""
 
-# Update NEXTAUTH_URL if different
+# Update NEXTAUTH_URL if different from what we deployed with
 if [ "$ACTUAL_URL" != "$SERVICE_URL" ]; then
     echo -e "${YELLOW}⚠️  Updating NEXTAUTH_URL to match actual service URL...${NC}"
     gcloud run services update primebalance \
         --region="$REGION" \
-        --set-env-vars="NEXTAUTH_URL=${ACTUAL_URL}" \
+        --update-env-vars="NEXTAUTH_URL=${ACTUAL_URL}" \
         --quiet
     echo -e "${GREEN}✅ NEXTAUTH_URL updated${NC}"
 fi

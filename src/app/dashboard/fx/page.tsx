@@ -37,7 +37,6 @@ import {
     Building2,
 } from 'lucide-react';
 import { Card, Button } from '@/components/ui';
-import { useThemeStore } from '@/store/theme-store';
 import { useFXStore } from '@/store/fx-store';
 import type { FXRiskLevel, ExposureType, TimeHorizon, CurrencyExposure, FXConversion, FXScenario } from '@/types/fx';
 import { EXPOSURE_TYPES, TIME_HORIZONS, MAJOR_CURRENCIES } from '@/types/fx';
@@ -46,7 +45,8 @@ import { EXPOSURE_TYPES, TIME_HORIZONS, MAJOR_CURRENCIES } from '@/types/fx';
 // UTILITIES
 // =============================================================================
 
-const formatCurrency = (value: number, currency: string = 'USD'): string => {
+const formatCurrency = (value: number | undefined | null, currency: string = 'USD'): string => {
+    if (value === undefined || value === null) return `${currency} —`;
     const absValue = Math.abs(value);
     const sign = value < 0 ? '-' : '';
     if (absValue >= 1000000) return `${sign}${currency} ${(absValue / 1000000).toFixed(2)}M`;
@@ -54,11 +54,15 @@ const formatCurrency = (value: number, currency: string = 'USD'): string => {
     return `${sign}${currency} ${absValue.toLocaleString()}`;
 };
 
-const formatRate = (rate: number, decimals: number = 4): string => {
+const formatRate = (rate: number | undefined | null, decimals: number = 4): string => {
+    if (rate === undefined || rate === null) return '—';
     return rate.toFixed(decimals);
 };
 
-const formatPercent = (value: number): string => `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
+const formatPercent = (value: number | undefined | null): string => {
+    if (value === undefined || value === null) return '—';
+    return `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
+};
 
 const getRiskColor = (level: FXRiskLevel): string => {
     const colors: Record<FXRiskLevel, string> = {
@@ -108,7 +112,7 @@ function SectionHeader({ title, icon: Icon, badge }: { title: string; icon: any;
 
 function CurrentRatesSection() {
     const { dashboard } = useFXStore();
-    const { currentRates } = dashboard;
+    const currentRates = dashboard?.currentRates ?? [];
 
     return (
         <div className="space-y-4">
@@ -119,9 +123,9 @@ function CurrentRatesSection() {
                     <Card key={rate.id} variant="glass" padding="sm" className="text-center">
                         <p className="text-xs text-gray-500 font-medium">{rate.baseCurrency}/{rate.quoteCurrency}</p>
                         <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                            {rate.rate >= 1 ? rate.rate.toFixed(4) : rate.rate.toFixed(6)}
+                            {rate.rate != null ? (rate.rate >= 1 ? rate.rate.toFixed(4) : rate.rate.toFixed(6)) : '—'}
                         </p>
-                        {rate.spread && (
+                        {rate.spread != null && (
                             <p className="text-xs text-gray-400 mt-0.5">
                                 Spread: {(rate.spread * 100).toFixed(2)}%
                             </p>
@@ -130,10 +134,12 @@ function CurrentRatesSection() {
                 ))}
             </div>
 
-            <p className="text-xs text-gray-500 flex items-center gap-1">
-                <Clock size={12} />
-                Rates as of {new Date(currentRates[0]?.timestamp).toLocaleString()} • Source: {currentRates[0]?.source.toUpperCase()}
-            </p>
+            {currentRates[0]?.timestamp && (
+                <p className="text-xs text-gray-500 flex items-center gap-1">
+                    <Clock size={12} />
+                    Rates as of {new Date(currentRates[0].timestamp).toLocaleString()} • Source: {currentRates[0]?.source?.toUpperCase() ?? 'N/A'}
+                </p>
+            )}
         </div>
     );
 }
@@ -144,8 +150,10 @@ function CurrentRatesSection() {
 
 function ExposureOverviewSection() {
     const { dashboard, selectedCurrency, selectedTimeHorizon, selectedExposureType, setSelectedCurrency, setSelectedTimeHorizon, setSelectedExposureType, getFilteredExposures } = useFXStore();
-    const { exposureSummary } = dashboard;
+    const exposureSummary = dashboard?.exposureSummary;
     const filteredExposures = getFilteredExposures();
+
+    if (!exposureSummary) return null;
 
     return (
         <div className="space-y-4">
@@ -166,7 +174,7 @@ function ExposureOverviewSection() {
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Hedged</p>
                     <p className="text-2xl font-bold text-emerald-600 mt-1">{formatCurrency(exposureSummary.totalHedged)}</p>
-                    <p className="text-xs text-gray-500 mt-1">{exposureSummary.hedgeRatio.toFixed(1)}% hedge ratio</p>
+                    <p className="text-xs text-gray-500 mt-1">{exposureSummary.hedgeRatio?.toFixed(1) ?? '—'}% hedge ratio</p>
                 </Card>
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Unhedged</p>
@@ -232,7 +240,7 @@ function ExposureOverviewSection() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="w-16 text-right text-sm text-gray-500">{item.percentOfTotal.toFixed(1)}%</div>
+                            <div className="w-16 text-right text-sm text-gray-500">{item.percentOfTotal?.toFixed(1) ?? '—'}%</div>
                         </div>
                     ))}
                 </div>
@@ -289,7 +297,10 @@ function ExposureOverviewSection() {
 
 function ConversionsSection() {
     const { dashboard } = useFXStore();
-    const { conversionSummary, recentConversions } = dashboard;
+    const conversionSummary = dashboard?.conversionSummary;
+    const recentConversions = dashboard?.recentConversions ?? [];
+
+    if (!conversionSummary) return null;
 
     const getStatusColor = (status: string): string => {
         const colors: Record<string, string> = {
@@ -324,7 +335,7 @@ function ConversionsSection() {
                 </Card>
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Avg Spread</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{conversionSummary.averageSpread.toFixed(2)}%</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{conversionSummary.averageSpread?.toFixed(2) ?? '—'}%</p>
                     <p className="text-xs text-gray-500 mt-1">Across all conversions</p>
                 </Card>
             </div>
@@ -342,7 +353,7 @@ function ConversionsSection() {
                                 </div>
                                 <div className="text-right">
                                     <p className="font-medium">{formatCurrency(channel.volume)}</p>
-                                    <p className="text-xs text-gray-500">Avg cost: {channel.avgCost.toFixed(2)}%</p>
+                                    <p className="text-xs text-gray-500">Avg cost: {channel.avgCost?.toFixed(2) ?? '—'}%</p>
                                 </div>
                             </div>
                         ))}
@@ -360,7 +371,7 @@ function ConversionsSection() {
                                 </div>
                                 <div className="text-right">
                                     <p className="font-medium">{formatCurrency(pair.volume)}</p>
-                                    <p className="text-xs text-gray-500">Avg rate: {pair.avgRate.toFixed(4)}</p>
+                                    <p className="text-xs text-gray-500">Avg rate: {pair.avgRate?.toFixed(4) ?? '—'}</p>
                                 </div>
                             </div>
                         ))}
@@ -403,8 +414,8 @@ function ConversionsSection() {
                                 </td>
                                 <td className="py-2 px-2 text-right">
                                     <div>
-                                        <span>{conv.appliedRate.toFixed(4)}</span>
-                                        {conv.rateDeviation && (
+                                        <span>{conv.appliedRate?.toFixed(4) ?? '—'}</span>
+                                        {conv.rateDeviation != null && (
                                             <span className={`text-xs ml-1 ${conv.rateDeviation < 0 ? 'text-red-500' : 'text-emerald-500'}`}>
                                                     ({conv.rateDeviation > 0 ? '+' : ''}{conv.rateDeviation.toFixed(2)}%)
                                                 </span>
@@ -433,7 +444,10 @@ function ConversionsSection() {
 
 function CostsImpactSection() {
     const { dashboard } = useFXStore();
-    const { currentPeriodCosts, impactAnalysis } = dashboard;
+    const currentPeriodCosts = dashboard?.currentPeriodCosts;
+    const impactAnalysis = dashboard?.impactAnalysis;
+
+    if (!currentPeriodCosts || !impactAnalysis) return null;
 
     return (
         <div className="space-y-4">
@@ -444,7 +458,7 @@ function CostsImpactSection() {
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Total FX Costs</p>
                     <p className="text-2xl font-bold text-red-600 mt-1">{formatCurrency(currentPeriodCosts.totalFXCosts)}</p>
-                    <p className="text-xs text-gray-500 mt-1">{currentPeriodCosts.costAsPercentOfVolume.toFixed(2)}% of volume</p>
+                    <p className="text-xs text-gray-500 mt-1">{currentPeriodCosts.costAsPercentOfVolume?.toFixed(2) ?? '—'}% of volume</p>
                 </Card>
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Explicit Costs</p>
@@ -543,8 +557,8 @@ function CostsImpactSection() {
                         {impactAnalysis.impactByCurrency.map((item) => (
                             <tr key={item.currency} className="border-b border-gray-100 dark:border-surface-800">
                                 <td className="py-2 px-2 font-medium">{item.currency}</td>
-                                <td className="py-2 px-2 text-right">{item.budgetRate.toFixed(4)}</td>
-                                <td className="py-2 px-2 text-right">{item.actualRate.toFixed(4)}</td>
+                                <td className="py-2 px-2 text-right">{item.budgetRate?.toFixed(4) ?? '—'}</td>
+                                <td className="py-2 px-2 text-right">{item.actualRate?.toFixed(4) ?? '—'}</td>
                                 <td className={`py-2 px-2 text-right ${item.rateVariance >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                                     {formatPercent(item.rateVariance)}
                                 </td>
@@ -577,7 +591,10 @@ function CostsImpactSection() {
 
 function RiskScenariosSection() {
     const { dashboard } = useFXStore();
-    const { riskSummary, activeScenarios } = dashboard;
+    const riskSummary = dashboard?.riskSummary;
+    const activeScenarios = dashboard?.activeScenarios ?? [];
+
+    if (!riskSummary) return null;
 
     return (
         <div className="space-y-4">
@@ -595,12 +612,12 @@ function RiskScenariosSection() {
                 </Card>
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Unhedged</p>
-                    <p className="text-2xl font-bold text-amber-600 mt-1">{riskSummary.unhedgedExposurePercent.toFixed(1)}%</p>
+                    <p className="text-2xl font-bold text-amber-600 mt-1">{riskSummary.unhedgedExposurePercent?.toFixed(1) ?? '—'}%</p>
                     <p className="text-xs text-gray-500 mt-1">Of total exposure</p>
                 </Card>
                 <Card variant="glass" padding="md">
                     <p className="text-xs text-gray-500 uppercase tracking-wider">Avg Volatility</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{riskSummary.averageVolatility.toFixed(1)}%</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{riskSummary.averageVolatility?.toFixed(1) ?? '—'}%</p>
                     <p className="text-xs text-gray-500 mt-1">30-day weighted</p>
                 </Card>
                 <Card variant="glass" padding="md">
@@ -626,8 +643,8 @@ function RiskScenariosSection() {
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1">{indicator.description}</p>
                                 <div className="flex items-center gap-4 mt-2 text-xs">
-                                    <span className="text-gray-500">Metric: <span className="font-medium text-gray-700 dark:text-gray-300">{indicator.metric.toFixed(1)}%</span></span>
-                                    <span className="text-gray-500">Threshold: <span className="font-medium text-gray-700 dark:text-gray-300">{indicator.threshold}%</span></span>
+                                    <span className="text-gray-500">Metric: <span className="font-medium text-gray-700 dark:text-gray-300">{indicator.metric?.toFixed(1) ?? '—'}%</span></span>
+                                    <span className="text-gray-500">Threshold: <span className="font-medium text-gray-700 dark:text-gray-300">{indicator.threshold ?? '—'}%</span></span>
                                     {indicator.breached && <span className="text-red-600 font-medium">⚠ Breached</span>}
                                 </div>
                             </div>
@@ -693,13 +710,13 @@ function RiskScenariosSection() {
 // =============================================================================
 
 export default function FXPage() {
-    const { t } = useThemeStore();
-    const { dashboard, refreshDashboard, isLoading, logAccess } = useFXStore();
+    const { dashboard, refreshDashboard, isLoading, fetchDashboard } = useFXStore();
     const [activeTab, setActiveTab] = useState<'rates' | 'exposure' | 'conversions' | 'costs' | 'risk'>('exposure');
 
+    // Fetch dashboard on mount
     useEffect(() => {
-        logAccess('page_view', 'exposure', 'FX Dashboard accessed');
-    }, []);
+        fetchDashboard();
+    }, [fetchDashboard]);
 
     return (
         <div className="space-y-6">
@@ -721,7 +738,7 @@ export default function FXPage() {
                         <span className="text-xs font-medium text-blue-700 dark:text-blue-400">Read-Only</span>
                     </div>
                     <div className="px-3 py-1.5 bg-gray-100 dark:bg-surface-800 rounded-lg">
-                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Base: {dashboard.baseCurrency}</span>
+                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Base: {dashboard?.baseCurrency || 'EUR'}</span>
                     </div>
                     <Button variant="secondary" size="sm" leftIcon={<RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />} onClick={refreshDashboard} disabled={isLoading}>
                         Refresh
@@ -730,19 +747,21 @@ export default function FXPage() {
             </div>
 
             {/* Last Updated */}
-            <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-surface-800 rounded-lg">
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                    <Clock size={14} />
-                    <span>Last data refresh: {new Date(dashboard.lastDataRefresh).toLocaleString()}</span>
+            {dashboard && (
+                <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-surface-800 rounded-lg">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <Clock size={14} />
+                        <span>Last data refresh: {new Date(dashboard.lastDataRefresh).toLocaleString()}</span>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                        dashboard.dataQuality === 'complete' ? 'bg-emerald-100 text-emerald-700' :
+                            dashboard.dataQuality === 'partial' ? 'bg-amber-100 text-amber-700' :
+                                'bg-red-100 text-red-700'
+                    }`}>
+                        Data: {dashboard.dataQuality}
+                    </span>
                 </div>
-                <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                    dashboard.dataQuality === 'complete' ? 'bg-emerald-100 text-emerald-700' :
-                        dashboard.dataQuality === 'partial' ? 'bg-amber-100 text-amber-700' :
-                            'bg-red-100 text-red-700'
-                }`}>
-                    Data: {dashboard.dataQuality}
-                </span>
-            </div>
+            )}
 
             {/* Navigation Tabs */}
             <div className="flex gap-1 p-1 bg-gray-100 dark:bg-surface-800 rounded-xl overflow-x-auto">
@@ -757,10 +776,7 @@ export default function FXPage() {
                     return (
                         <button
                             key={tab.id}
-                            onClick={() => {
-                                setActiveTab(tab.id as any);
-                                logAccess('tab_change', 'access', tab.label);
-                            }}
+                            onClick={() => setActiveTab(tab.id as any)}
                             className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all whitespace-nowrap ${
                                 activeTab === tab.id
                                     ? 'bg-white dark:bg-surface-900 text-gray-900 dark:text-white shadow-sm'
@@ -793,7 +809,7 @@ export default function FXPage() {
                 <div className="flex items-start gap-2">
                     <Info size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
                     <p className="text-xs text-gray-500">
-                        {dashboard.disclaimers[0]} This module provides decision-support only. No trading or hedging execution.
+                        {dashboard?.disclaimers?.[0] || ''} This module provides decision-support only. No trading or hedging execution.
                     </p>
                 </div>
             </Card>

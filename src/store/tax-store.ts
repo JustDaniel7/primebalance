@@ -26,26 +26,65 @@ import {
 // TYPES
 // =============================================================================
 
+// API entity type from /api/tax/entities
+export interface ApiEntityHierarchy {
+  id: string;
+  name: string;
+  type: string;
+  jurisdiction: string;
+  taxId: string | null;
+  incorporationDate: string | undefined;
+  ownershipPercent: number | null;
+  revenue: number | null;
+  expenses: number | null;
+  taxLiability: number | null;
+  effectiveTaxRate: number | null;
+  isActive: boolean;
+  parentId: string | null;
+  children: ApiEntityHierarchy[];
+}
+
+export interface CreateEntityData {
+  name: string;
+  type: string;
+  jurisdiction: string;
+  taxId?: string;
+  incorporationDate?: string;
+  parentId?: string;
+  ownershipPercent?: number;
+  revenue?: number;
+  expenses?: number;
+}
+
 interface TaxStore {
   // Corporate Structures
   structures: CorporateStructure[];
   activeStructureId: string | null;
-  
+
   // Transactions
   taxTransactions: TaxTransaction[];
-  
+
   // Optimization
   optimizationResult: OptimizationResult | null;
   isAnalyzing: boolean;
-  
+
   // Loading State
   isLoading: boolean;
-  
+  isInitialized: boolean;
+
+  // API Data
+  apiEntities: ApiEntityHierarchy[];
+  apiTotals: { revenue: number; expenses: number; taxLiability: number } | null;
+
   // Notifications
   notifications: TaxNotification[];
-  
+
   // UI State
   dashboardState: TaxDashboardState;
+
+  // API Fetch
+  fetchEntities: () => Promise<void>;
+  createEntity: (data: CreateEntityData) => Promise<ApiEntityHierarchy | null>;
   
   // Structure Actions
   createStructure: (name: string, parentEntity: Omit<CorporateEntity, 'id' | 'createdAt' | 'updatedAt'>) => string;
@@ -112,6 +151,9 @@ export const useTaxStore = create<TaxStore>()(
       optimizationResult: null,
       isAnalyzing: false,
       isLoading: false,
+      isInitialized: false,
+      apiEntities: [],
+      apiTotals: null,
       notifications: [],
       dashboardState: {
         selectedStructureId: null,
@@ -126,6 +168,46 @@ export const useTaxStore = create<TaxStore>()(
           showIntercompanyOnly: false,
           showOptimizationsOnly: false,
         },
+      },
+
+      // API Fetch Actions
+      fetchEntities: async () => {
+        set({ isLoading: true });
+        try {
+          const res = await fetch('/api/tax/entities');
+          if (!res.ok) throw new Error('Failed to fetch entities');
+          const data = await res.json();
+          set({
+            apiEntities: data.entities || [],
+            apiTotals: data.totals || null,
+            isLoading: false,
+            isInitialized: true,
+          });
+        } catch (error) {
+          console.error('fetchEntities error:', error);
+          set({ isLoading: false, isInitialized: true });
+        }
+      },
+
+      createEntity: async (data) => {
+        try {
+          const res = await fetch('/api/tax/entities', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || 'Failed to create entity');
+          }
+          const entity = await res.json();
+          // Refetch to get updated hierarchy
+          get().fetchEntities();
+          return entity;
+        } catch (error) {
+          console.error('createEntity error:', error);
+          return null;
+        }
       },
 
       // Structure Actions

@@ -20,8 +20,7 @@ import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useOrderStore } from '@/store/order-store';
 import { COUNTRIES, CURRENCIES } from '@/types/invoice';
-import type { Order, OrderItem, OrderParty, CustomerType } from '@/store/order-store';
-
+import type { SimpleOrder as Order, SimpleOrderItem as OrderItem, SimpleOrderParty as OrderParty, SimpleCustomerType as CustomerType } from '@/store/order-store';
 // =============================================================================
 // TYPES
 // =============================================================================

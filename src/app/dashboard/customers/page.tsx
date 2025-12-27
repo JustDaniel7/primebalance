@@ -1,12 +1,15 @@
+// src/app/dashboard/customers/page.tsx
+
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Users,
     Plus,
     Search,
     Building2,
+    Loader2,
     User,
     Mail,
     Phone,
@@ -170,11 +173,24 @@ function CustomerCard({ customer, onClick }: { customer: Customer; onClick: () =
 
 function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClose: () => void }) {
     const { t } = useThemeStore();
-    const { getCustomerPayments, getCustomerRiskIndicators, getCustomerContacts, getCustomerRevenue, updateCreditLimit, resolveRiskIndicator } = useCustomersStore();
+    const { 
+        getCustomerPayments, 
+        getCustomerRiskIndicators, 
+        getCustomerContacts, 
+        getCustomerRevenue, 
+        updateCreditLimit, 
+        resolveRiskIndicator,
+        fetchCustomer
+    } = useCustomersStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'credit' | 'revenue' | 'risk' | 'contacts'>('overview');
     const [showCreditModal, setShowCreditModal] = useState(false);
     const [newCreditLimit, setNewCreditLimit] = useState(customer.creditLimit);
     const [creditReason, setCreditReason] = useState('');
+
+    // Fetch full customer data on mount
+    useEffect(() => {
+        fetchCustomer(customer.id);
+    }, [customer.id, fetchCustomer]);
 
     const payments = getCustomerPayments(customer.id);
     const riskIndicators = getCustomerRiskIndicators(customer.id);
@@ -252,7 +268,7 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                         {tabs.map((tab) => {
                             const Icon = tab.icon;
                             return (
-                                <button key={tab.id} onClick={() => setActiveTab(tab.id as any)}
+                                <button key={tab.id} onClick={() => setActiveTab(tab.id as typeof activeTab)}
                                         className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-colors ${activeTab === tab.id ? 'bg-[var(--accent-primary)] text-white' : 'text-gray-600 hover:bg-gray-100 dark:hover:bg-surface-800'}`}>
                                     <Icon size={16} />{tab.label}
                                     {tab.count !== undefined && tab.count > 0 && <span className={`px-1.5 py-0.5 rounded-full text-xs ${activeTab === tab.id ? 'bg-white/20' : 'bg-gray-200 dark:bg-surface-700'}`}>{tab.count}</span>}
@@ -291,10 +307,12 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                 <div>
                                     <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{t('customers.contactInfo') || 'Contact Information'}</h3>
                                     <div className="space-y-2">
-                                        <div className="flex items-center gap-3 text-sm">
-                                            <Mail size={16} className="text-gray-400" />
-                                            <span className="text-gray-700 dark:text-gray-300">{customer.email}</span>
-                                        </div>
+                                        {customer.email && (
+                                            <div className="flex items-center gap-3 text-sm">
+                                                <Mail size={16} className="text-gray-400" />
+                                                <span className="text-gray-700 dark:text-gray-300">{customer.email}</span>
+                                            </div>
+                                        )}
                                         {customer.phone && (
                                             <div className="flex items-center gap-3 text-sm">
                                                 <Phone size={16} className="text-gray-400" />
@@ -320,7 +338,6 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                     <div className="space-y-2 text-sm">
                                         <div className="flex justify-between"><span className="text-gray-500">{t('customers.customerSince') || 'Customer Since'}</span><span className="text-gray-900 dark:text-white">{new Date(customer.customerSince).toLocaleDateString()}</span></div>
                                         <div className="flex justify-between"><span className="text-gray-500">{t('customers.accountManager') || 'Account Manager'}</span><span className="text-gray-900 dark:text-white">{customer.accountManagerName || '—'}</span></div>
-                                        <div className="flex justify-between"><span className="text-gray-500">{t('customers.segment') || 'Segment'}</span><span className="text-gray-900 dark:text-white">{customer.segment || '—'}</span></div>
                                         <div className="flex justify-between"><span className="text-gray-500">{t('customers.paymentTerms') || 'Payment Terms'}</span><span className="text-gray-900 dark:text-white">{customer.paymentTerms}</span></div>
                                     </div>
                                 </div>
@@ -333,11 +350,11 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                     <div className="grid grid-cols-3 gap-4">
                                         <div>
                                             <p className="text-xs text-gray-500">{t('customers.avgDaysToPayment') || 'Avg Days to Payment'}</p>
-                                            <p className={`text-2xl font-bold ${customer.averageDaysToPayment > 45 ? 'text-red-600' : customer.averageDaysToPayment > 30 ? 'text-amber-600' : 'text-emerald-600'}`}>{customer.averageDaysToPayment}</p>
+                                            <p className={`text-2xl font-bold ${(customer.averageDaysToPayment || 0) > 45 ? 'text-red-600' : (customer.averageDaysToPayment || 0) > 30 ? 'text-amber-600' : 'text-emerald-600'}`}>{customer.averageDaysToPayment || 0}</p>
                                         </div>
                                         <div>
                                             <p className="text-xs text-gray-500">{t('customers.latePayments') || 'Late Payments'}</p>
-                                            <p className={`text-2xl font-bold ${customer.latePaymentCount > 5 ? 'text-red-600' : customer.latePaymentCount > 2 ? 'text-amber-600' : 'text-emerald-600'}`}>{customer.latePaymentCount}</p>
+                                            <p className={`text-2xl font-bold ${(customer.latePaymentCount || 0) > 5 ? 'text-red-600' : (customer.latePaymentCount || 0) > 2 ? 'text-amber-600' : 'text-emerald-600'}`}>{customer.latePaymentCount || 0}</p>
                                         </div>
                                         <div>
                                             <p className="text-xs text-gray-500">{t('customers.riskScore') || 'Risk Score'}</p>
@@ -505,7 +522,7 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                         {indicator.status === 'active' && (
                                             <Button variant="secondary" size="sm" onClick={() => {
                                                 const action = prompt('Enter action taken to resolve:');
-                                                if (action) resolveRiskIndicator(indicator.id, action);
+                                                if (action) resolveRiskIndicator(customer.id, indicator.id, action);
                                             }}>
                                                 {t('customers.resolve') || 'Resolve'}
                                             </Button>
@@ -573,11 +590,11 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
         paymentTerms: 'Net 30',
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.name || !formData.email) return;
-        createCustomer({
+        await createCustomer({
             ...formData,
-            customerSince: new Date().toISOString().split('T')[0],
+            customerSince: new Date().toISOString(),
             totalRevenue: 0,
             totalOrders: 0,
             averageOrderValue: 0,
@@ -590,6 +607,10 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
             paymentBehavior: 'good',
             averageDaysToPayment: 0,
             latePaymentCount: 0,
+            overdueAmount: 0,
+            currency: 'EUR',
+            preferredLanguage: 'en',
+            invoiceDelivery: 'email',
         });
         onClose();
     };
@@ -624,7 +645,7 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
                                     <label className="block text-sm font-medium mb-1">{t('customers.type') || 'Type'}</label>
                                     <select value={formData.type} onChange={(e) => setFormData({ ...formData, type: e.target.value as CustomerAccountType })}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
-                                        {CUSTOMER_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+                                        {CUSTOMER_TYPES.map((ct) => <option key={ct.value} value={ct.value}>{ct.label}</option>)}
                                     </select>
                                 </div>
                                 <div>
@@ -699,7 +720,7 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
                                     <label className="block text-sm font-medium mb-1">{t('customers.paymentTerms') || 'Payment Terms'}</label>
                                     <select value={formData.paymentTerms} onChange={(e) => setFormData({ ...formData, paymentTerms: e.target.value })}
                                             className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
-                                        {PAYMENT_TERMS.map((t) => <option key={t} value={t}>{t}</option>)}
+                                        {PAYMENT_TERMS.map((pt) => <option key={pt} value={pt}>{pt}</option>)}
                                     </select>
                                 </div>
                             </div>
@@ -741,22 +762,55 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
 
 export default function CustomersPage() {
     const { t } = useThemeStore();
-    const { customers, selectCustomer, selectedCustomerId } = useCustomersStore();
+    const { 
+        customers, 
+        selectCustomer, 
+        selectedCustomerId,
+        fetchCustomers,
+        fetchCustomer,
+        isLoading,
+        isInitialized 
+    } = useCustomersStore();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState<CustomerStatus | 'all'>('all');
     const [filterRisk, setFilterRisk] = useState<RiskLevel | 'all'>('all');
     const [showNewModal, setShowNewModal] = useState(false);
 
+    // Fetch customers on mount
+    useEffect(() => {
+        if (!isInitialized) {
+            fetchCustomers();
+        }
+    }, [fetchCustomers, isInitialized]);
+
+    // Fetch full customer data when selected
+    useEffect(() => {
+        if (selectedCustomerId) {
+            fetchCustomer(selectedCustomerId);
+        }
+    }, [selectedCustomerId, fetchCustomer]);
+
     const selectedCustomer = customers.find((c) => c.id === selectedCustomerId);
 
     const filteredCustomers = useMemo(() => {
         return customers.filter((c) => {
-            const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.customerNumber.toLowerCase().includes(searchQuery.toLowerCase()) || c.email.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  c.customerNumber.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                  (c.email || '').toLowerCase().includes(searchQuery.toLowerCase());
             const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
             const matchesRisk = filterRisk === 'all' || c.riskLevel === filterRisk;
             return matchesSearch && matchesStatus && matchesRisk;
         });
     }, [customers, searchQuery, filterStatus, filterRisk]);
+
+    // Loading state
+    if (isLoading && !isInitialized) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6">
@@ -788,12 +842,12 @@ export default function CustomersPage() {
                                placeholder={t('customers.searchPlaceholder') || 'Search customers...'}
                                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800" />
                     </div>
-                    <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as any)}
+                    <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as CustomerStatus | 'all')}
                             className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
                         <option value="all">{t('customers.allStatuses') || 'All Statuses'}</option>
                         {CUSTOMER_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                     </select>
-                    <select value={filterRisk} onChange={(e) => setFilterRisk(e.target.value as any)}
+                    <select value={filterRisk} onChange={(e) => setFilterRisk(e.target.value as RiskLevel | 'all')}
                             className="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800">
                         <option value="all">{t('customers.allRiskLevels') || 'All Risk Levels'}</option>
                         {RISK_LEVELS.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}

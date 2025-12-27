@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     GitMerge,
@@ -135,7 +135,7 @@ function SessionCard({ session, onClick }: { session: NettingSession; onClick: (
             <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-surface-700">
                 <div className="flex items-center gap-2">
                     <TrendingUp size={14} className="text-emerald-500" />
-                    <span className="text-xs text-emerald-600">{session.savingsPercentage.toFixed(1)}% {t('netting.savings') || 'savings'}</span>
+                    <span className="text-xs text-emerald-600">{Number(session.savingsPercentage || 0).toFixed(1)}% {t('netting.savings') || 'savings'}</span>
                 </div>
                 <span className={`px-2 py-0.5 rounded text-xs ${typeColors[session.type]}`}>
                     {t(`netting.type.${session.type}`) || session.type}
@@ -157,7 +157,7 @@ function SessionCard({ session, onClick }: { session: NettingSession; onClick: (
 
 function SessionDetailModal({ session, onClose }: { session: NettingSession; onClose: () => void }) {
     const { t } = useThemeStore();
-    const { approveSession, rejectSession, settleSession, getSessionPositions, getSessionSettlements } = useNettingStore();
+    const { approveSession, rejectSession, settleSession, getSessionPositions } = useNettingStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'positions' | 'settlements' | 'preview'>('overview');
     const [rejectReason, setRejectReason] = useState('');
     const [showRejectModal, setShowRejectModal] = useState(false);
@@ -174,7 +174,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
     };
 
     const handleApprove = () => {
-        approveSession(session.id, 'Current User');
+        approveSession(session.id);
         onClose();
     };
 
@@ -271,7 +271,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm text-emerald-700 dark:text-emerald-400">{t('netting.efficiencyRate') || 'Efficiency Rate'}</p>
-                                        <p className="text-3xl font-bold text-emerald-600">{session.savingsPercentage.toFixed(1)}%</p>
+                                        <p className="text-3xl font-bold text-emerald-600">{Number(session.savingsPercentage || 0).toFixed(1)}%</p>
                                     </div>
                                 </div>
                                 <p className="text-sm text-emerald-600 mt-3">{t('netting.savingsExplanation') || 'Amount saved by netting instead of gross settlements'}</p>
@@ -401,7 +401,7 @@ function SessionDetailModal({ session, onClose }: { session: NettingSession; onC
                                             <ArrowRightLeft size={24} className="text-blue-500" />
                                             <div className="text-center">
                                                 <p className="text-xs text-emerald-600">{t('netting.netting') || 'Netting'}</p>
-                                                <p className="text-sm font-medium text-emerald-600">-{session.savingsPercentage.toFixed(1)}%</p>
+                                                <p className="text-sm font-medium text-emerald-600">-{Number(session.savingsPercentage || 0).toFixed(1)}%</p>
                                             </div>
                                             <ArrowRightLeft size={24} className="text-blue-500" />
                                         </div>
@@ -552,7 +552,7 @@ function OffsetsTab() {
                         <p className="text-sm text-gray-500">{t('netting.offsetAmount') || 'Offset Amount'}: <span className="font-bold text-gray-900 dark:text-white">${offset.offsetAmount.toLocaleString()}</span></p>
                         <div className="flex gap-2">
                             {offset.status === 'pending' && (
-                                <Button variant="secondary" size="sm" onClick={() => approveOffset(offset.id, 'Current User')}>
+                                <Button variant="secondary" size="sm" onClick={() => approveOffset(offset.id)}>
                                     {t('netting.approve') || 'Approve'}
                                 </Button>
                             )}
@@ -581,12 +581,19 @@ function OffsetsTab() {
 
 export default function NettingPage() {
     const { t } = useThemeStore();
-    const { sessions, agreements, selectSession, selectedSessionId, createAgreement } = useNettingStore();
+    const { sessions, agreements, selectSession, selectedSessionId, createAgreement, fetchSessions, fetchAgreements, fetchOffsets } = useNettingStore();
     const [activeTab, setActiveTab] = useState<'sessions' | 'agreements' | 'offsets'>('sessions');
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState<NettingStatus | 'all'>('all');
     const [filterType, setFilterType] = useState<NettingType | 'all'>('all');
     const [showWizard, setShowWizard] = useState(false);
+
+    // Fetch data on mount
+    useEffect(() => {
+        fetchSessions();
+        fetchAgreements();
+        fetchOffsets();
+    }, [fetchSessions, fetchAgreements, fetchOffsets]);
 
     const selectedSession = sessions.find((s) => s.id === selectedSessionId);
 

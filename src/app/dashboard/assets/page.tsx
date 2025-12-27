@@ -33,7 +33,12 @@ type TabId = 'register' | 'depreciation' | 'capex' | 'reports';
 // =============================================================================
 
 const DepreciationTab: React.FC = () => {
-    const { assets, assetBooks, schedules, postAllDueDepreciation } = useAssetStore();
+    const { assets, assetBooks, schedules, postAllDueDepreciation, fetchAssets, isInitialized, isLoading } = useAssetStore();
+    useEffect(() => {
+  if (!isInitialized) {
+    fetchAssets();
+  }
+}, [fetchAssets, isInitialized]);
     const { t } = useThemeStore();
     const [isRunning, setIsRunning] = useState(false);
     const [lastRunResult, setLastRunResult] = useState<number | null>(null);

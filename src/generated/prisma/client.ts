@@ -29,8 +29,8 @@ export * from "./enums"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Projects
- * const projects = await prisma.project.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -39,21 +39,6 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
-/**
- * Model Project
- * 
- */
-export type Project = Prisma.ProjectModel
-/**
- * Model TimeEntry
- * 
- */
-export type TimeEntry = Prisma.TimeEntryModel
-/**
- * Model CostCenter
- * 
- */
-export type CostCenter = Prisma.CostCenterModel
 /**
  * Model User
  * 
@@ -114,6 +99,16 @@ export type UserSettings = Prisma.UserSettingsModel
  * 
  */
 export type Wallet = Prisma.WalletModel
+/**
+ * Model WalletToken
+ * 
+ */
+export type WalletToken = Prisma.WalletTokenModel
+/**
+ * Model WalletTransaction
+ * 
+ */
+export type WalletTransaction = Prisma.WalletTransactionModel
 /**
  * Model AISuggestion
  * 
@@ -259,3 +254,458 @@ export type CapExBudget = Prisma.CapExBudgetModel
  * 
  */
 export type CapExItem = Prisma.CapExItemModel
+/**
+ * Model CostCenter
+ * 
+ */
+export type CostCenter = Prisma.CostCenterModel
+/**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model ProjectMilestone
+ * 
+ */
+export type ProjectMilestone = Prisma.ProjectMilestoneModel
+/**
+ * Model TimeEntry
+ * 
+ */
+export type TimeEntry = Prisma.TimeEntryModel
+/**
+ * Model InternalChargeback
+ * 
+ */
+export type InternalChargeback = Prisma.InternalChargebackModel
+/**
+ * Model AccountingPeriod
+ * 
+ */
+export type AccountingPeriod = Prisma.AccountingPeriodModel
+/**
+ * Model CloseChecklistItem
+ * 
+ */
+export type CloseChecklistItem = Prisma.CloseChecklistItemModel
+/**
+ * Model PeriodMissingItem
+ * 
+ */
+export type PeriodMissingItem = Prisma.PeriodMissingItemModel
+/**
+ * Model PeriodAdjustment
+ * 
+ */
+export type PeriodAdjustment = Prisma.PeriodAdjustmentModel
+/**
+ * Model PeriodAuditEntry
+ * 
+ */
+export type PeriodAuditEntry = Prisma.PeriodAuditEntryModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model CustomerContact
+ * 
+ */
+export type CustomerContact = Prisma.CustomerContactModel
+/**
+ * Model CustomerPayment
+ * 
+ */
+export type CustomerPayment = Prisma.CustomerPaymentModel
+/**
+ * Model CustomerCreditEvent
+ * 
+ */
+export type CustomerCreditEvent = Prisma.CustomerCreditEventModel
+/**
+ * Model CustomerRevenue
+ * 
+ */
+export type CustomerRevenue = Prisma.CustomerRevenueModel
+/**
+ * Model CustomerRiskIndicator
+ * 
+ */
+export type CustomerRiskIndicator = Prisma.CustomerRiskIndicatorModel
+/**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
+ * Model SupplierContact
+ * 
+ */
+export type SupplierContact = Prisma.SupplierContactModel
+/**
+ * Model SupplierBalance
+ * 
+ */
+export type SupplierBalance = Prisma.SupplierBalanceModel
+/**
+ * Model SupplierPayment
+ * 
+ */
+export type SupplierPayment = Prisma.SupplierPaymentModel
+/**
+ * Model SupplierReliability
+ * 
+ */
+export type SupplierReliability = Prisma.SupplierReliabilityModel
+/**
+ * Model SupplierSpend
+ * 
+ */
+export type SupplierSpend = Prisma.SupplierSpendModel
+/**
+ * Model SupplierRisk
+ * 
+ */
+export type SupplierRisk = Prisma.SupplierRiskModel
+/**
+ * Model NettingAgreement
+ * 
+ */
+export type NettingAgreement = Prisma.NettingAgreementModel
+/**
+ * Model NettingParty
+ * 
+ */
+export type NettingParty = Prisma.NettingPartyModel
+/**
+ * Model NettingSession
+ * 
+ */
+export type NettingSession = Prisma.NettingSessionModel
+/**
+ * Model NettingPosition
+ * 
+ */
+export type NettingPosition = Prisma.NettingPositionModel
+/**
+ * Model NettingTransaction
+ * 
+ */
+export type NettingTransaction = Prisma.NettingTransactionModel
+/**
+ * Model SettlementInstruction
+ * 
+ */
+export type SettlementInstruction = Prisma.SettlementInstructionModel
+/**
+ * Model OffsetEntry
+ * 
+ */
+export type OffsetEntry = Prisma.OffsetEntryModel
+/**
+ * Model Offer
+ * 
+ */
+export type Offer = Prisma.OfferModel
+/**
+ * Model OfferVersion
+ * 
+ */
+export type OfferVersion = Prisma.OfferVersionModel
+/**
+ * Model OfferAuditLog
+ * 
+ */
+export type OfferAuditLog = Prisma.OfferAuditLogModel
+/**
+ * Model OfferTemplate
+ * 
+ */
+export type OfferTemplate = Prisma.OfferTemplateModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
+ * Model TaskAssignee
+ * 
+ */
+export type TaskAssignee = Prisma.TaskAssigneeModel
+/**
+ * Model TaskWatcher
+ * 
+ */
+export type TaskWatcher = Prisma.TaskWatcherModel
+/**
+ * Model TaskTag
+ * 
+ */
+export type TaskTag = Prisma.TaskTagModel
+/**
+ * Model TaskTagLink
+ * 
+ */
+export type TaskTagLink = Prisma.TaskTagLinkModel
+/**
+ * Model TaskDependency
+ * 
+ */
+export type TaskDependency = Prisma.TaskDependencyModel
+/**
+ * Model TaskComment
+ * 
+ */
+export type TaskComment = Prisma.TaskCommentModel
+/**
+ * Model TaskActivity
+ * 
+ */
+export type TaskActivity = Prisma.TaskActivityModel
+/**
+ * Model TaskAttachment
+ * 
+ */
+export type TaskAttachment = Prisma.TaskAttachmentModel
+/**
+ * Model Risk
+ * 
+ */
+export type Risk = Prisma.RiskModel
+/**
+ * Model RiskMitigationStep
+ * 
+ */
+export type RiskMitigationStep = Prisma.RiskMitigationStepModel
+/**
+ * Model TaskRiskLink
+ * 
+ */
+export type TaskRiskLink = Prisma.TaskRiskLinkModel
+/**
+ * Model RiskComment
+ * 
+ */
+export type RiskComment = Prisma.RiskCommentModel
+/**
+ * Model RiskActivity
+ * 
+ */
+export type RiskActivity = Prisma.RiskActivityModel
+/**
+ * Model TaskNotification
+ * 
+ */
+export type TaskNotification = Prisma.TaskNotificationModel
+/**
+ * Model SavedTaskFilter
+ * 
+ */
+export type SavedTaskFilter = Prisma.SavedTaskFilterModel
+/**
+ * Model RevenueForecast
+ * 
+ */
+export type RevenueForecast = Prisma.RevenueForecastModel
+/**
+ * Model RevenueLineItem
+ * 
+ */
+export type RevenueLineItem = Prisma.RevenueLineItemModel
+/**
+ * Model CostForecast
+ * 
+ */
+export type CostForecast = Prisma.CostForecastModel
+/**
+ * Model CostLineItem
+ * 
+ */
+export type CostLineItem = Prisma.CostLineItemModel
+/**
+ * Model CashForecast
+ * 
+ */
+export type CashForecast = Prisma.CashForecastModel
+/**
+ * Model CashForecastPeriod
+ * 
+ */
+export type CashForecastPeriod = Prisma.CashForecastPeriodModel
+/**
+ * Model ForecastScenario
+ * 
+ */
+export type ForecastScenario = Prisma.ForecastScenarioModel
+/**
+ * Model ForecastAssumption
+ * 
+ */
+export type ForecastAssumption = Prisma.ForecastAssumptionModel
+/**
+ * Model ForecastAlert
+ * 
+ */
+export type ForecastAlert = Prisma.ForecastAlertModel
+/**
+ * Model ForecastAnnotation
+ * 
+ */
+export type ForecastAnnotation = Prisma.ForecastAnnotationModel
+/**
+ * Model ForecastVariance
+ * 
+ */
+export type ForecastVariance = Prisma.ForecastVarianceModel
+/**
+ * Model Scenario
+ * 
+ */
+export type Scenario = Prisma.ScenarioModel
+/**
+ * Model ScenarioAssumption
+ * 
+ */
+export type ScenarioAssumption = Prisma.ScenarioAssumptionModel
+/**
+ * Model StressTest
+ * 
+ */
+export type StressTest = Prisma.StressTestModel
+/**
+ * Model SimulationState
+ * 
+ */
+export type SimulationState = Prisma.SimulationStateModel
+/**
+ * Model ScenarioComment
+ * 
+ */
+export type ScenarioComment = Prisma.ScenarioCommentModel
+/**
+ * Model ScenarioDecision
+ * 
+ */
+export type ScenarioDecision = Prisma.ScenarioDecisionModel
+/**
+ * Model ScenarioChangeEvent
+ * 
+ */
+export type ScenarioChangeEvent = Prisma.ScenarioChangeEventModel
+/**
+ * Model KPI
+ * 
+ */
+export type KPI = Prisma.KPIModel
+/**
+ * Model KPIHistory
+ * 
+ */
+export type KPIHistory = Prisma.KPIHistoryModel
+/**
+ * Model KPIAlert
+ * 
+ */
+export type KPIAlert = Prisma.KPIAlertModel
+/**
+ * Model KPITarget
+ * 
+ */
+export type KPITarget = Prisma.KPITargetModel
+/**
+ * Model KPIBenchmark
+ * 
+ */
+export type KPIBenchmark = Prisma.KPIBenchmarkModel
+/**
+ * Model FXRate
+ * 
+ */
+export type FXRate = Prisma.FXRateModel
+/**
+ * Model FXExposure
+ * 
+ */
+export type FXExposure = Prisma.FXExposureModel
+/**
+ * Model FXConversion
+ * 
+ */
+export type FXConversion = Prisma.FXConversionModel
+/**
+ * Model FXScenario
+ * 
+ */
+export type FXScenario = Prisma.FXScenarioModel
+/**
+ * Model FXForecast
+ * 
+ */
+export type FXForecast = Prisma.FXForecastModel
+/**
+ * Model FXCost
+ * 
+ */
+export type FXCost = Prisma.FXCostModel
+/**
+ * Model FXRiskIndicator
+ * 
+ */
+export type FXRiskIndicator = Prisma.FXRiskIndicatorModel
+/**
+ * Model FXAuditLog
+ * 
+ */
+export type FXAuditLog = Prisma.FXAuditLogModel
+/**
+ * Model InvestorSnapshot
+ * 
+ */
+export type InvestorSnapshot = Prisma.InvestorSnapshotModel
+/**
+ * Model BoardReport
+ * 
+ */
+export type BoardReport = Prisma.BoardReportModel
+/**
+ * Model RunwayProjection
+ * 
+ */
+export type RunwayProjection = Prisma.RunwayProjectionModel
+/**
+ * Model InvestorAccessLog
+ * 
+ */
+export type InvestorAccessLog = Prisma.InvestorAccessLogModel
+/**
+ * Model CashflowItem
+ * 
+ */
+export type CashflowItem = Prisma.CashflowItemModel
+/**
+ * Model LiquidityScenario
+ * 
+ */
+export type LiquidityScenario = Prisma.LiquidityScenarioModel
+/**
+ * Model LiquidityGap
+ * 
+ */
+export type LiquidityGap = Prisma.LiquidityGapModel
+/**
+ * Model LiquidityRiskSignal
+ * 
+ */
+export type LiquidityRiskSignal = Prisma.LiquidityRiskSignalModel
+/**
+ * Model LiquidityAuditLog
+ * 
+ */
+export type LiquidityAuditLog = Prisma.LiquidityAuditLogModel
+/**
+ * Model LiquidityPosition
+ * 
+ */
+export type LiquidityPosition = Prisma.LiquidityPositionModel

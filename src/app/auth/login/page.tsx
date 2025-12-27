@@ -1,22 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useThemeStore } from '@/store/theme-store'
-import { Button, Input, Card } from '@/components/ui'
+import { Button, Card } from '@/components/ui'
 import { LogoIcon } from '@/components/ui/Icons'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { t } = useThemeStore()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,7 +36,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError('Invalid credentials')
       } else {
-        router.push('/dashboard')
+        router.push(callbackUrl)
+        router.refresh()
       }
     } catch (err) {
       setError('An error occurred')
@@ -176,5 +180,32 @@ export default function LoginPage() {
         </Card>
       </motion.div>
     </div>
+  )
+}
+
+function LoginFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-surface-950 dark:to-surface-900 p-4">
+      <div className="w-full max-w-md animate-pulse">
+        <div className="h-12 bg-gray-200 dark:bg-surface-800 rounded-xl mb-8 mx-auto w-48" />
+        <div className="bg-white dark:bg-surface-900 rounded-2xl p-8 space-y-4">
+          <div className="h-8 bg-gray-200 dark:bg-surface-800 rounded w-3/4 mx-auto" />
+          <div className="h-4 bg-gray-200 dark:bg-surface-800 rounded w-1/2 mx-auto" />
+          <div className="space-y-3 mt-6">
+            <div className="h-12 bg-gray-200 dark:bg-surface-800 rounded-xl" />
+            <div className="h-12 bg-gray-200 dark:bg-surface-800 rounded-xl" />
+            <div className="h-12 bg-gray-200 dark:bg-surface-800 rounded-xl" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginFallback />}>
+      <LoginForm />
+    </Suspense>
   )
 }

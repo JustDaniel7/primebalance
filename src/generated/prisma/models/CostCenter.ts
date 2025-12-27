@@ -27,13 +27,19 @@ export type AggregateCostCenter = {
 }
 
 export type CostCenterAvgAggregateOutputType = {
-  budgetAmount: runtime.Decimal | null
-  actualAmount: runtime.Decimal | null
+  level: number | null
+  annualBudget: runtime.Decimal | null
+  budgetSpent: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
 }
 
 export type CostCenterSumAggregateOutputType = {
-  budgetAmount: runtime.Decimal | null
-  actualAmount: runtime.Decimal | null
+  level: number | null
+  annualBudget: runtime.Decimal | null
+  budgetSpent: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
 }
 
 export type CostCenterMinAggregateOutputType = {
@@ -42,12 +48,20 @@ export type CostCenterMinAggregateOutputType = {
   name: string | null
   description: string | null
   parentId: string | null
-  currency: string | null
-  budgetAmount: runtime.Decimal | null
-  actualAmount: runtime.Decimal | null
-  isActive: boolean | null
+  level: number | null
+  path: string | null
   managerId: string | null
   managerName: string | null
+  annualBudget: runtime.Decimal | null
+  budgetSpent: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
+  currency: string | null
+  allocationMethod: string | null
+  allocationBasis: string | null
+  isActive: boolean | null
+  effectiveFrom: Date | null
+  effectiveTo: Date | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,12 +73,20 @@ export type CostCenterMaxAggregateOutputType = {
   name: string | null
   description: string | null
   parentId: string | null
-  currency: string | null
-  budgetAmount: runtime.Decimal | null
-  actualAmount: runtime.Decimal | null
-  isActive: boolean | null
+  level: number | null
+  path: string | null
   managerId: string | null
   managerName: string | null
+  annualBudget: runtime.Decimal | null
+  budgetSpent: runtime.Decimal | null
+  budgetRemaining: runtime.Decimal | null
+  budgetUtilization: runtime.Decimal | null
+  currency: string | null
+  allocationMethod: string | null
+  allocationBasis: string | null
+  isActive: boolean | null
+  effectiveFrom: Date | null
+  effectiveTo: Date | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -76,12 +98,21 @@ export type CostCenterCountAggregateOutputType = {
   name: number
   description: number
   parentId: number
-  currency: number
-  budgetAmount: number
-  actualAmount: number
-  isActive: number
+  level: number
+  path: number
   managerId: number
   managerName: number
+  annualBudget: number
+  budgetSpent: number
+  budgetRemaining: number
+  budgetUtilization: number
+  currency: number
+  allocationMethod: number
+  allocationBasis: number
+  isActive: number
+  effectiveFrom: number
+  effectiveTo: number
+  tags: number
   organizationId: number
   createdAt: number
   updatedAt: number
@@ -90,13 +121,19 @@ export type CostCenterCountAggregateOutputType = {
 
 
 export type CostCenterAvgAggregateInputType = {
-  budgetAmount?: true
-  actualAmount?: true
+  level?: true
+  annualBudget?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetUtilization?: true
 }
 
 export type CostCenterSumAggregateInputType = {
-  budgetAmount?: true
-  actualAmount?: true
+  level?: true
+  annualBudget?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetUtilization?: true
 }
 
 export type CostCenterMinAggregateInputType = {
@@ -105,12 +142,20 @@ export type CostCenterMinAggregateInputType = {
   name?: true
   description?: true
   parentId?: true
-  currency?: true
-  budgetAmount?: true
-  actualAmount?: true
-  isActive?: true
+  level?: true
+  path?: true
   managerId?: true
   managerName?: true
+  annualBudget?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetUtilization?: true
+  currency?: true
+  allocationMethod?: true
+  allocationBasis?: true
+  isActive?: true
+  effectiveFrom?: true
+  effectiveTo?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -122,12 +167,20 @@ export type CostCenterMaxAggregateInputType = {
   name?: true
   description?: true
   parentId?: true
-  currency?: true
-  budgetAmount?: true
-  actualAmount?: true
-  isActive?: true
+  level?: true
+  path?: true
   managerId?: true
   managerName?: true
+  annualBudget?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetUtilization?: true
+  currency?: true
+  allocationMethod?: true
+  allocationBasis?: true
+  isActive?: true
+  effectiveFrom?: true
+  effectiveTo?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -139,12 +192,21 @@ export type CostCenterCountAggregateInputType = {
   name?: true
   description?: true
   parentId?: true
-  currency?: true
-  budgetAmount?: true
-  actualAmount?: true
-  isActive?: true
+  level?: true
+  path?: true
   managerId?: true
   managerName?: true
+  annualBudget?: true
+  budgetSpent?: true
+  budgetRemaining?: true
+  budgetUtilization?: true
+  currency?: true
+  allocationMethod?: true
+  allocationBasis?: true
+  isActive?: true
+  effectiveFrom?: true
+  effectiveTo?: true
+  tags?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -243,12 +305,21 @@ export type CostCenterGroupByOutputType = {
   name: string
   description: string | null
   parentId: string | null
-  currency: string
-  budgetAmount: runtime.Decimal
-  actualAmount: runtime.Decimal
-  isActive: boolean
+  level: number
+  path: string | null
   managerId: string | null
   managerName: string | null
+  annualBudget: runtime.Decimal
+  budgetSpent: runtime.Decimal
+  budgetRemaining: runtime.Decimal
+  budgetUtilization: runtime.Decimal
+  currency: string
+  allocationMethod: string
+  allocationBasis: string | null
+  isActive: boolean
+  effectiveFrom: Date
+  effectiveTo: Date | null
+  tags: string[]
   organizationId: string
   createdAt: Date
   updatedAt: Date
@@ -283,19 +354,31 @@ export type CostCenterWhereInput = {
   name?: Prisma.StringFilter<"CostCenter"> | string
   description?: Prisma.StringNullableFilter<"CostCenter"> | string | null
   parentId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
-  currency?: Prisma.StringFilter<"CostCenter"> | string
-  budgetAmount?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFilter<"CostCenter"> | boolean
+  level?: Prisma.IntFilter<"CostCenter"> | number
+  path?: Prisma.StringNullableFilter<"CostCenter"> | string | null
   managerId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
   managerName?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  annualBudget?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"CostCenter"> | string
+  allocationMethod?: Prisma.StringFilter<"CostCenter"> | string
+  allocationBasis?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  isActive?: Prisma.BoolFilter<"CostCenter"> | boolean
+  effectiveFrom?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
+  effectiveTo?: Prisma.DateTimeNullableFilter<"CostCenter"> | Date | string | null
+  tags?: Prisma.StringNullableListFilter<"CostCenter">
   organizationId?: Prisma.StringFilter<"CostCenter"> | string
   createdAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
   parent?: Prisma.XOR<Prisma.CostCenterNullableScalarRelationFilter, Prisma.CostCenterWhereInput> | null
   children?: Prisma.CostCenterListRelationFilter
-  projects?: Prisma.ProjectListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  projects?: Prisma.ProjectListRelationFilter
+  timeEntries?: Prisma.TimeEntryListRelationFilter
+  chargebacksFrom?: Prisma.InternalChargebackListRelationFilter
+  chargebacksTo?: Prisma.InternalChargebackListRelationFilter
 }
 
 export type CostCenterOrderByWithRelationInput = {
@@ -304,19 +387,31 @@ export type CostCenterOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  path?: Prisma.SortOrderInput | Prisma.SortOrder
   managerId?: Prisma.SortOrderInput | Prisma.SortOrder
   managerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  allocationMethod?: Prisma.SortOrder
+  allocationBasis?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  effectiveFrom?: Prisma.SortOrder
+  effectiveTo?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   parent?: Prisma.CostCenterOrderByWithRelationInput
   children?: Prisma.CostCenterOrderByRelationAggregateInput
-  projects?: Prisma.ProjectOrderByRelationAggregateInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  projects?: Prisma.ProjectOrderByRelationAggregateInput
+  timeEntries?: Prisma.TimeEntryOrderByRelationAggregateInput
+  chargebacksFrom?: Prisma.InternalChargebackOrderByRelationAggregateInput
+  chargebacksTo?: Prisma.InternalChargebackOrderByRelationAggregateInput
 }
 
 export type CostCenterWhereUniqueInput = Prisma.AtLeast<{
@@ -329,19 +424,31 @@ export type CostCenterWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"CostCenter"> | string
   description?: Prisma.StringNullableFilter<"CostCenter"> | string | null
   parentId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
-  currency?: Prisma.StringFilter<"CostCenter"> | string
-  budgetAmount?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFilter<"CostCenter"> | boolean
+  level?: Prisma.IntFilter<"CostCenter"> | number
+  path?: Prisma.StringNullableFilter<"CostCenter"> | string | null
   managerId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
   managerName?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  annualBudget?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"CostCenter"> | string
+  allocationMethod?: Prisma.StringFilter<"CostCenter"> | string
+  allocationBasis?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  isActive?: Prisma.BoolFilter<"CostCenter"> | boolean
+  effectiveFrom?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
+  effectiveTo?: Prisma.DateTimeNullableFilter<"CostCenter"> | Date | string | null
+  tags?: Prisma.StringNullableListFilter<"CostCenter">
   organizationId?: Prisma.StringFilter<"CostCenter"> | string
   createdAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
   parent?: Prisma.XOR<Prisma.CostCenterNullableScalarRelationFilter, Prisma.CostCenterWhereInput> | null
   children?: Prisma.CostCenterListRelationFilter
-  projects?: Prisma.ProjectListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  projects?: Prisma.ProjectListRelationFilter
+  timeEntries?: Prisma.TimeEntryListRelationFilter
+  chargebacksFrom?: Prisma.InternalChargebackListRelationFilter
+  chargebacksTo?: Prisma.InternalChargebackListRelationFilter
 }, "id" | "organizationId_code">
 
 export type CostCenterOrderByWithAggregationInput = {
@@ -350,12 +457,21 @@ export type CostCenterOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  path?: Prisma.SortOrderInput | Prisma.SortOrder
   managerId?: Prisma.SortOrderInput | Prisma.SortOrder
   managerName?: Prisma.SortOrderInput | Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  allocationMethod?: Prisma.SortOrder
+  allocationBasis?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  effectiveFrom?: Prisma.SortOrder
+  effectiveTo?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -375,12 +491,21 @@ export type CostCenterScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"CostCenter"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"CostCenter"> | string | null
   parentId?: Prisma.StringNullableWithAggregatesFilter<"CostCenter"> | string | null
-  currency?: Prisma.StringWithAggregatesFilter<"CostCenter"> | string
-  budgetAmount?: Prisma.DecimalWithAggregatesFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalWithAggregatesFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolWithAggregatesFilter<"CostCenter"> | boolean
+  level?: Prisma.IntWithAggregatesFilter<"CostCenter"> | number
+  path?: Prisma.StringNullableWithAggregatesFilter<"CostCenter"> | string | null
   managerId?: Prisma.StringNullableWithAggregatesFilter<"CostCenter"> | string | null
   managerName?: Prisma.StringNullableWithAggregatesFilter<"CostCenter"> | string | null
+  annualBudget?: Prisma.DecimalWithAggregatesFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalWithAggregatesFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalWithAggregatesFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalWithAggregatesFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringWithAggregatesFilter<"CostCenter"> | string
+  allocationMethod?: Prisma.StringWithAggregatesFilter<"CostCenter"> | string
+  allocationBasis?: Prisma.StringNullableWithAggregatesFilter<"CostCenter"> | string | null
+  isActive?: Prisma.BoolWithAggregatesFilter<"CostCenter"> | boolean
+  effectiveFrom?: Prisma.DateTimeWithAggregatesFilter<"CostCenter"> | Date | string
+  effectiveTo?: Prisma.DateTimeNullableWithAggregatesFilter<"CostCenter"> | Date | string | null
+  tags?: Prisma.StringNullableListFilter<"CostCenter">
   organizationId?: Prisma.StringWithAggregatesFilter<"CostCenter"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CostCenter"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CostCenter"> | Date | string
@@ -391,18 +516,30 @@ export type CostCenterCreateInput = {
   code: string
   name: string
   description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
+  level?: number
+  path?: string | null
   managerId?: string | null
   managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
   children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
   organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
 }
 
 export type CostCenterUncheckedCreateInput = {
@@ -411,17 +548,29 @@ export type CostCenterUncheckedCreateInput = {
   name: string
   description?: string | null
   parentId?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
+  level?: number
+  path?: string | null
   managerId?: string | null
   managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
 }
 
 export type CostCenterUpdateInput = {
@@ -429,18 +578,30 @@ export type CostCenterUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
   children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
 }
 
 export type CostCenterUncheckedUpdateInput = {
@@ -449,17 +610,29 @@ export type CostCenterUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
 }
 
 export type CostCenterCreateManyInput = {
@@ -468,12 +641,21 @@ export type CostCenterCreateManyInput = {
   name: string
   description?: string | null
   parentId?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
+  level?: number
+  path?: string | null
   managerId?: string | null
   managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -484,12 +666,21 @@ export type CostCenterUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -500,20 +691,24 @@ export type CostCenterUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CostCenterNullableScalarRelationFilter = {
-  is?: Prisma.CostCenterWhereInput | null
-  isNot?: Prisma.CostCenterWhereInput | null
 }
 
 export type CostCenterListRelationFilter = {
@@ -524,6 +719,11 @@ export type CostCenterListRelationFilter = {
 
 export type CostCenterOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CostCenterNullableScalarRelationFilter = {
+  is?: Prisma.CostCenterWhereInput | null
+  isNot?: Prisma.CostCenterWhereInput | null
 }
 
 export type CostCenterOrganizationIdCodeCompoundUniqueInput = {
@@ -537,20 +737,32 @@ export type CostCenterCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  path?: Prisma.SortOrder
   managerId?: Prisma.SortOrder
   managerName?: Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  allocationMethod?: Prisma.SortOrder
+  allocationBasis?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  effectiveFrom?: Prisma.SortOrder
+  effectiveTo?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CostCenterAvgOrderByAggregateInput = {
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
 }
 
 export type CostCenterMaxOrderByAggregateInput = {
@@ -559,12 +771,20 @@ export type CostCenterMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  path?: Prisma.SortOrder
   managerId?: Prisma.SortOrder
   managerName?: Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  allocationMethod?: Prisma.SortOrder
+  allocationBasis?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  effectiveFrom?: Prisma.SortOrder
+  effectiveTo?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -576,94 +796,36 @@ export type CostCenterMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  path?: Prisma.SortOrder
   managerId?: Prisma.SortOrder
   managerName?: Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  allocationMethod?: Prisma.SortOrder
+  allocationBasis?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  effectiveFrom?: Prisma.SortOrder
+  effectiveTo?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CostCenterSumOrderByAggregateInput = {
-  budgetAmount?: Prisma.SortOrder
-  actualAmount?: Prisma.SortOrder
+  level?: Prisma.SortOrder
+  annualBudget?: Prisma.SortOrder
+  budgetSpent?: Prisma.SortOrder
+  budgetRemaining?: Prisma.SortOrder
+  budgetUtilization?: Prisma.SortOrder
 }
 
-export type CostCenterCreateNestedOneWithoutProjectsInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutProjectsInput
-  connect?: Prisma.CostCenterWhereUniqueInput
-}
-
-export type CostCenterUpdateOneWithoutProjectsNestedInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutProjectsInput
-  upsert?: Prisma.CostCenterUpsertWithoutProjectsInput
-  disconnect?: Prisma.CostCenterWhereInput | boolean
-  delete?: Prisma.CostCenterWhereInput | boolean
-  connect?: Prisma.CostCenterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutProjectsInput, Prisma.CostCenterUpdateWithoutProjectsInput>, Prisma.CostCenterUncheckedUpdateWithoutProjectsInput>
-}
-
-export type CostCenterCreateNestedOneWithoutChildrenInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChildrenInput
-  connect?: Prisma.CostCenterWhereUniqueInput
-}
-
-export type CostCenterCreateNestedManyWithoutParentInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
-  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
-  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-}
-
-export type CostCenterUncheckedCreateNestedManyWithoutParentInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
-  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
-  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-}
-
-export type CostCenterUpdateOneWithoutChildrenNestedInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChildrenInput
-  upsert?: Prisma.CostCenterUpsertWithoutChildrenInput
-  disconnect?: Prisma.CostCenterWhereInput | boolean
-  delete?: Prisma.CostCenterWhereInput | boolean
-  connect?: Prisma.CostCenterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutChildrenInput, Prisma.CostCenterUpdateWithoutChildrenInput>, Prisma.CostCenterUncheckedUpdateWithoutChildrenInput>
-}
-
-export type CostCenterUpdateManyWithoutParentNestedInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
-  upsert?: Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput[]
-  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
-  set?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  disconnect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  delete?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  update?: Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput[]
-  updateMany?: Prisma.CostCenterUpdateManyWithWhereWithoutParentInput | Prisma.CostCenterUpdateManyWithWhereWithoutParentInput[]
-  deleteMany?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
-}
-
-export type CostCenterUncheckedUpdateManyWithoutParentNestedInput = {
-  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
-  upsert?: Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput[]
-  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
-  set?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  disconnect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  delete?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
-  update?: Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput[]
-  updateMany?: Prisma.CostCenterUpdateManyWithWhereWithoutParentInput | Prisma.CostCenterUpdateManyWithWhereWithoutParentInput[]
-  deleteMany?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
+export type CostCenterScalarRelationFilter = {
+  is?: Prisma.CostCenterWhereInput
+  isNot?: Prisma.CostCenterWhereInput
 }
 
 export type CostCenterCreateNestedManyWithoutOrganizationInput = {
@@ -708,262 +870,131 @@ export type CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
 }
 
-export type CostCenterCreateWithoutProjectsInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
-  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
-  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+export type CostCenterCreatetagsInput = {
+  set: string[]
 }
 
-export type CostCenterUncheckedCreateWithoutProjectsInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  parentId?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  organizationId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
+export type CostCenterCreateNestedOneWithoutChildrenInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChildrenInput
+  connect?: Prisma.CostCenterWhereUniqueInput
 }
 
-export type CostCenterCreateOrConnectWithoutProjectsInput = {
-  where: Prisma.CostCenterWhereUniqueInput
-  create: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
+export type CostCenterCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
+  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
 }
 
-export type CostCenterUpsertWithoutProjectsInput = {
-  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutProjectsInput, Prisma.CostCenterUncheckedUpdateWithoutProjectsInput>
-  create: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
-  where?: Prisma.CostCenterWhereInput
+export type CostCenterUncheckedCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
+  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
 }
 
-export type CostCenterUpdateToOneWithWhereWithoutProjectsInput = {
-  where?: Prisma.CostCenterWhereInput
-  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutProjectsInput, Prisma.CostCenterUncheckedUpdateWithoutProjectsInput>
+export type CostCenterUpdatetagsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
-export type CostCenterUpdateWithoutProjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
-  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+export type CostCenterUpdateOneWithoutChildrenNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChildrenInput
+  upsert?: Prisma.CostCenterUpsertWithoutChildrenInput
+  disconnect?: Prisma.CostCenterWhereInput | boolean
+  delete?: Prisma.CostCenterWhereInput | boolean
+  connect?: Prisma.CostCenterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutChildrenInput, Prisma.CostCenterUpdateWithoutChildrenInput>, Prisma.CostCenterUncheckedUpdateWithoutChildrenInput>
 }
 
-export type CostCenterUncheckedUpdateWithoutProjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
+export type CostCenterUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
+  set?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  disconnect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  delete?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  update?: Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.CostCenterUpdateManyWithWhereWithoutParentInput | Prisma.CostCenterUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
 }
 
-export type CostCenterCreateWithoutChildrenInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
-  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+export type CostCenterUncheckedUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput> | Prisma.CostCenterCreateWithoutParentInput[] | Prisma.CostCenterUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutParentInput | Prisma.CostCenterCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.CostCenterCreateManyParentInputEnvelope
+  set?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  disconnect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  delete?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  connect?: Prisma.CostCenterWhereUniqueInput | Prisma.CostCenterWhereUniqueInput[]
+  update?: Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput | Prisma.CostCenterUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.CostCenterUpdateManyWithWhereWithoutParentInput | Prisma.CostCenterUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
 }
 
-export type CostCenterUncheckedCreateWithoutChildrenInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  parentId?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  organizationId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+export type CostCenterCreateNestedOneWithoutProjectsInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutProjectsInput
+  connect?: Prisma.CostCenterWhereUniqueInput
 }
 
-export type CostCenterCreateOrConnectWithoutChildrenInput = {
-  where: Prisma.CostCenterWhereUniqueInput
-  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
+export type CostCenterUpdateOneWithoutProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutProjectsInput
+  upsert?: Prisma.CostCenterUpsertWithoutProjectsInput
+  disconnect?: Prisma.CostCenterWhereInput | boolean
+  delete?: Prisma.CostCenterWhereInput | boolean
+  connect?: Prisma.CostCenterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutProjectsInput, Prisma.CostCenterUpdateWithoutProjectsInput>, Prisma.CostCenterUncheckedUpdateWithoutProjectsInput>
 }
 
-export type CostCenterCreateWithoutParentInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
-  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+export type CostCenterCreateNestedOneWithoutTimeEntriesInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutTimeEntriesInput, Prisma.CostCenterUncheckedCreateWithoutTimeEntriesInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutTimeEntriesInput
+  connect?: Prisma.CostCenterWhereUniqueInput
 }
 
-export type CostCenterUncheckedCreateWithoutParentInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  organizationId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+export type CostCenterUpdateOneWithoutTimeEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutTimeEntriesInput, Prisma.CostCenterUncheckedCreateWithoutTimeEntriesInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutTimeEntriesInput
+  upsert?: Prisma.CostCenterUpsertWithoutTimeEntriesInput
+  disconnect?: Prisma.CostCenterWhereInput | boolean
+  delete?: Prisma.CostCenterWhereInput | boolean
+  connect?: Prisma.CostCenterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutTimeEntriesInput, Prisma.CostCenterUpdateWithoutTimeEntriesInput>, Prisma.CostCenterUncheckedUpdateWithoutTimeEntriesInput>
 }
 
-export type CostCenterCreateOrConnectWithoutParentInput = {
-  where: Prisma.CostCenterWhereUniqueInput
-  create: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput>
+export type CostCenterCreateNestedOneWithoutChargebacksFromInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksFromInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksFromInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChargebacksFromInput
+  connect?: Prisma.CostCenterWhereUniqueInput
 }
 
-export type CostCenterCreateManyParentInputEnvelope = {
-  data: Prisma.CostCenterCreateManyParentInput | Prisma.CostCenterCreateManyParentInput[]
-  skipDuplicates?: boolean
+export type CostCenterCreateNestedOneWithoutChargebacksToInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksToInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksToInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChargebacksToInput
+  connect?: Prisma.CostCenterWhereUniqueInput
 }
 
-export type CostCenterUpsertWithoutChildrenInput = {
-  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutChildrenInput, Prisma.CostCenterUncheckedUpdateWithoutChildrenInput>
-  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
-  where?: Prisma.CostCenterWhereInput
+export type CostCenterUpdateOneRequiredWithoutChargebacksFromNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksFromInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksFromInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChargebacksFromInput
+  upsert?: Prisma.CostCenterUpsertWithoutChargebacksFromInput
+  connect?: Prisma.CostCenterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutChargebacksFromInput, Prisma.CostCenterUpdateWithoutChargebacksFromInput>, Prisma.CostCenterUncheckedUpdateWithoutChargebacksFromInput>
 }
 
-export type CostCenterUpdateToOneWithWhereWithoutChildrenInput = {
-  where?: Prisma.CostCenterWhereInput
-  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutChildrenInput, Prisma.CostCenterUncheckedUpdateWithoutChildrenInput>
-}
-
-export type CostCenterUpdateWithoutChildrenInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
-}
-
-export type CostCenterUncheckedUpdateWithoutChildrenInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
-}
-
-export type CostCenterUpsertWithWhereUniqueWithoutParentInput = {
-  where: Prisma.CostCenterWhereUniqueInput
-  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutParentInput, Prisma.CostCenterUncheckedUpdateWithoutParentInput>
-  create: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput>
-}
-
-export type CostCenterUpdateWithWhereUniqueWithoutParentInput = {
-  where: Prisma.CostCenterWhereUniqueInput
-  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutParentInput, Prisma.CostCenterUncheckedUpdateWithoutParentInput>
-}
-
-export type CostCenterUpdateManyWithWhereWithoutParentInput = {
-  where: Prisma.CostCenterScalarWhereInput
-  data: Prisma.XOR<Prisma.CostCenterUpdateManyMutationInput, Prisma.CostCenterUncheckedUpdateManyWithoutParentInput>
-}
-
-export type CostCenterScalarWhereInput = {
-  AND?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
-  OR?: Prisma.CostCenterScalarWhereInput[]
-  NOT?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
-  id?: Prisma.StringFilter<"CostCenter"> | string
-  code?: Prisma.StringFilter<"CostCenter"> | string
-  name?: Prisma.StringFilter<"CostCenter"> | string
-  description?: Prisma.StringNullableFilter<"CostCenter"> | string | null
-  parentId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
-  currency?: Prisma.StringFilter<"CostCenter"> | string
-  budgetAmount?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFilter<"CostCenter"> | boolean
-  managerId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
-  managerName?: Prisma.StringNullableFilter<"CostCenter"> | string | null
-  organizationId?: Prisma.StringFilter<"CostCenter"> | string
-  createdAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
+export type CostCenterUpdateOneRequiredWithoutChargebacksToNestedInput = {
+  create?: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksToInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksToInput>
+  connectOrCreate?: Prisma.CostCenterCreateOrConnectWithoutChargebacksToInput
+  upsert?: Prisma.CostCenterUpsertWithoutChargebacksToInput
+  connect?: Prisma.CostCenterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CostCenterUpdateToOneWithWhereWithoutChargebacksToInput, Prisma.CostCenterUpdateWithoutChargebacksToInput>, Prisma.CostCenterUncheckedUpdateWithoutChargebacksToInput>
 }
 
 export type CostCenterCreateWithoutOrganizationInput = {
@@ -971,17 +1002,29 @@ export type CostCenterCreateWithoutOrganizationInput = {
   code: string
   name: string
   description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
+  level?: number
+  path?: string | null
   managerId?: string | null
   managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
   children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
   projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
 }
 
 export type CostCenterUncheckedCreateWithoutOrganizationInput = {
@@ -990,16 +1033,28 @@ export type CostCenterUncheckedCreateWithoutOrganizationInput = {
   name: string
   description?: string | null
   parentId?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
+  level?: number
+  path?: string | null
   managerId?: string | null
   managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
 }
 
 export type CostCenterCreateOrConnectWithoutOrganizationInput = {
@@ -1028,17 +1083,931 @@ export type CostCenterUpdateManyWithWhereWithoutOrganizationInput = {
   data: Prisma.XOR<Prisma.CostCenterUpdateManyMutationInput, Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationInput>
 }
 
+export type CostCenterScalarWhereInput = {
+  AND?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
+  OR?: Prisma.CostCenterScalarWhereInput[]
+  NOT?: Prisma.CostCenterScalarWhereInput | Prisma.CostCenterScalarWhereInput[]
+  id?: Prisma.StringFilter<"CostCenter"> | string
+  code?: Prisma.StringFilter<"CostCenter"> | string
+  name?: Prisma.StringFilter<"CostCenter"> | string
+  description?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  parentId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  level?: Prisma.IntFilter<"CostCenter"> | number
+  path?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  managerId?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  managerName?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  annualBudget?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFilter<"CostCenter"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFilter<"CostCenter"> | string
+  allocationMethod?: Prisma.StringFilter<"CostCenter"> | string
+  allocationBasis?: Prisma.StringNullableFilter<"CostCenter"> | string | null
+  isActive?: Prisma.BoolFilter<"CostCenter"> | boolean
+  effectiveFrom?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
+  effectiveTo?: Prisma.DateTimeNullableFilter<"CostCenter"> | Date | string | null
+  tags?: Prisma.StringNullableListFilter<"CostCenter">
+  organizationId?: Prisma.StringFilter<"CostCenter"> | string
+  createdAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"CostCenter"> | Date | string
+}
+
+export type CostCenterCreateWithoutChildrenInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterUncheckedCreateWithoutChildrenInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  parentId?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterCreateOrConnectWithoutChildrenInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
+}
+
+export type CostCenterCreateWithoutParentInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterUncheckedCreateWithoutParentInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterCreateOrConnectWithoutParentInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput>
+}
+
+export type CostCenterCreateManyParentInputEnvelope = {
+  data: Prisma.CostCenterCreateManyParentInput | Prisma.CostCenterCreateManyParentInput[]
+  skipDuplicates?: boolean
+}
+
+export type CostCenterUpsertWithoutChildrenInput = {
+  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutChildrenInput, Prisma.CostCenterUncheckedUpdateWithoutChildrenInput>
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChildrenInput, Prisma.CostCenterUncheckedCreateWithoutChildrenInput>
+  where?: Prisma.CostCenterWhereInput
+}
+
+export type CostCenterUpdateToOneWithWhereWithoutChildrenInput = {
+  where?: Prisma.CostCenterWhereInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutChildrenInput, Prisma.CostCenterUncheckedUpdateWithoutChildrenInput>
+}
+
+export type CostCenterUpdateWithoutChildrenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateWithoutChildrenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUpsertWithWhereUniqueWithoutParentInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutParentInput, Prisma.CostCenterUncheckedUpdateWithoutParentInput>
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutParentInput, Prisma.CostCenterUncheckedCreateWithoutParentInput>
+}
+
+export type CostCenterUpdateWithWhereUniqueWithoutParentInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutParentInput, Prisma.CostCenterUncheckedUpdateWithoutParentInput>
+}
+
+export type CostCenterUpdateManyWithWhereWithoutParentInput = {
+  where: Prisma.CostCenterScalarWhereInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateManyMutationInput, Prisma.CostCenterUncheckedUpdateManyWithoutParentInput>
+}
+
+export type CostCenterCreateWithoutProjectsInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterUncheckedCreateWithoutProjectsInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  parentId?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterCreateOrConnectWithoutProjectsInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
+}
+
+export type CostCenterUpsertWithoutProjectsInput = {
+  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutProjectsInput, Prisma.CostCenterUncheckedUpdateWithoutProjectsInput>
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutProjectsInput, Prisma.CostCenterUncheckedCreateWithoutProjectsInput>
+  where?: Prisma.CostCenterWhereInput
+}
+
+export type CostCenterUpdateToOneWithWhereWithoutProjectsInput = {
+  where?: Prisma.CostCenterWhereInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutProjectsInput, Prisma.CostCenterUncheckedUpdateWithoutProjectsInput>
+}
+
+export type CostCenterUpdateWithoutProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateWithoutProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterCreateWithoutTimeEntriesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterUncheckedCreateWithoutTimeEntriesInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  parentId?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterCreateOrConnectWithoutTimeEntriesInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutTimeEntriesInput, Prisma.CostCenterUncheckedCreateWithoutTimeEntriesInput>
+}
+
+export type CostCenterUpsertWithoutTimeEntriesInput = {
+  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutTimeEntriesInput, Prisma.CostCenterUncheckedUpdateWithoutTimeEntriesInput>
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutTimeEntriesInput, Prisma.CostCenterUncheckedCreateWithoutTimeEntriesInput>
+  where?: Prisma.CostCenterWhereInput
+}
+
+export type CostCenterUpdateToOneWithWhereWithoutTimeEntriesInput = {
+  where?: Prisma.CostCenterWhereInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutTimeEntriesInput, Prisma.CostCenterUncheckedUpdateWithoutTimeEntriesInput>
+}
+
+export type CostCenterUpdateWithoutTimeEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateWithoutTimeEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterCreateWithoutChargebacksFromInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterUncheckedCreateWithoutChargebacksFromInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  parentId?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutToCostCenterInput
+}
+
+export type CostCenterCreateOrConnectWithoutChargebacksFromInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksFromInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksFromInput>
+}
+
+export type CostCenterCreateWithoutChargebacksToInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parent?: Prisma.CostCenterCreateNestedOneWithoutChildrenInput
+  children?: Prisma.CostCenterCreateNestedManyWithoutParentInput
+  organization: Prisma.OrganizationCreateNestedOneWithoutCostCenterInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackCreateNestedManyWithoutFromCostCenterInput
+}
+
+export type CostCenterUncheckedCreateWithoutChargebacksToInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  parentId?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  children?: Prisma.CostCenterUncheckedCreateNestedManyWithoutParentInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCostCenterInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutCostCenterInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutFromCostCenterInput
+}
+
+export type CostCenterCreateOrConnectWithoutChargebacksToInput = {
+  where: Prisma.CostCenterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksToInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksToInput>
+}
+
+export type CostCenterUpsertWithoutChargebacksFromInput = {
+  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutChargebacksFromInput, Prisma.CostCenterUncheckedUpdateWithoutChargebacksFromInput>
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksFromInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksFromInput>
+  where?: Prisma.CostCenterWhereInput
+}
+
+export type CostCenterUpdateToOneWithWhereWithoutChargebacksFromInput = {
+  where?: Prisma.CostCenterWhereInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutChargebacksFromInput, Prisma.CostCenterUncheckedUpdateWithoutChargebacksFromInput>
+}
+
+export type CostCenterUpdateWithoutChargebacksFromInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateWithoutChargebacksFromInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUpsertWithoutChargebacksToInput = {
+  update: Prisma.XOR<Prisma.CostCenterUpdateWithoutChargebacksToInput, Prisma.CostCenterUncheckedUpdateWithoutChargebacksToInput>
+  create: Prisma.XOR<Prisma.CostCenterCreateWithoutChargebacksToInput, Prisma.CostCenterUncheckedCreateWithoutChargebacksToInput>
+  where?: Prisma.CostCenterWhereInput
+}
+
+export type CostCenterUpdateToOneWithWhereWithoutChargebacksToInput = {
+  where?: Prisma.CostCenterWhereInput
+  data: Prisma.XOR<Prisma.CostCenterUpdateWithoutChargebacksToInput, Prisma.CostCenterUncheckedUpdateWithoutChargebacksToInput>
+}
+
+export type CostCenterUpdateWithoutChargebacksToInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateWithoutChargebacksToInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+}
+
+export type CostCenterCreateManyOrganizationInput = {
+  id?: string
+  code: string
+  name: string
+  description?: string | null
+  parentId?: string | null
+  level?: number
+  path?: string | null
+  managerId?: string | null
+  managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CostCenterUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
+}
+
+export type CostCenterUncheckedUpdateManyWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type CostCenterCreateManyParentInput = {
   id?: string
   code: string
   name: string
   description?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
+  level?: number
+  path?: string | null
   managerId?: string | null
   managerName?: string | null
+  annualBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  allocationMethod?: string
+  allocationBasis?: string | null
+  isActive?: boolean
+  effectiveFrom?: Date | string
+  effectiveTo?: Date | string | null
+  tags?: Prisma.CostCenterCreatetagsInput | string[]
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1049,17 +2018,29 @@ export type CostCenterUpdateWithoutParentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutCostCenterNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUpdateManyWithoutToCostCenterNestedInput
 }
 
 export type CostCenterUncheckedUpdateWithoutParentInput = {
@@ -1067,17 +2048,29 @@ export type CostCenterUncheckedUpdateWithoutParentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutCostCenterNestedInput
+  chargebacksFrom?: Prisma.InternalChargebackUncheckedUpdateManyWithoutFromCostCenterNestedInput
+  chargebacksTo?: Prisma.InternalChargebackUncheckedUpdateManyWithoutToCostCenterNestedInput
 }
 
 export type CostCenterUncheckedUpdateManyWithoutParentInput = {
@@ -1085,81 +2078,22 @@ export type CostCenterUncheckedUpdateManyWithoutParentInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  annualBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetSpent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetRemaining?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  budgetUtilization?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  allocationBasis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  effectiveFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  effectiveTo?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tags?: Prisma.CostCenterUpdatetagsInput | string[]
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CostCenterCreateManyOrganizationInput = {
-  id?: string
-  code: string
-  name: string
-  description?: string | null
-  parentId?: string | null
-  currency?: string
-  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: boolean
-  managerId?: string | null
-  managerName?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CostCenterUpdateWithoutOrganizationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  parent?: Prisma.CostCenterUpdateOneWithoutChildrenNestedInput
-  children?: Prisma.CostCenterUpdateManyWithoutParentNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutCostCenterNestedInput
-}
-
-export type CostCenterUncheckedUpdateWithoutOrganizationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  children?: Prisma.CostCenterUncheckedUpdateManyWithoutParentNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutCostCenterNestedInput
-}
-
-export type CostCenterUncheckedUpdateManyWithoutOrganizationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
-  budgetAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  actualAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  managerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1172,11 +2106,17 @@ export type CostCenterUncheckedUpdateManyWithoutOrganizationInput = {
 export type CostCenterCountOutputType = {
   children: number
   projects: number
+  timeEntries: number
+  chargebacksFrom: number
+  chargebacksTo: number
 }
 
 export type CostCenterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | CostCenterCountOutputTypeCountChildrenArgs
   projects?: boolean | CostCenterCountOutputTypeCountProjectsArgs
+  timeEntries?: boolean | CostCenterCountOutputTypeCountTimeEntriesArgs
+  chargebacksFrom?: boolean | CostCenterCountOutputTypeCountChargebacksFromArgs
+  chargebacksTo?: boolean | CostCenterCountOutputTypeCountChargebacksToArgs
 }
 
 /**
@@ -1203,6 +2143,27 @@ export type CostCenterCountOutputTypeCountProjectsArgs<ExtArgs extends runtime.T
   where?: Prisma.ProjectWhereInput
 }
 
+/**
+ * CostCenterCountOutputType without action
+ */
+export type CostCenterCountOutputTypeCountTimeEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TimeEntryWhereInput
+}
+
+/**
+ * CostCenterCountOutputType without action
+ */
+export type CostCenterCountOutputTypeCountChargebacksFromArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InternalChargebackWhereInput
+}
+
+/**
+ * CostCenterCountOutputType without action
+ */
+export type CostCenterCountOutputTypeCountChargebacksToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InternalChargebackWhereInput
+}
+
 
 export type CostCenterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1210,19 +2171,31 @@ export type CostCenterSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   name?: boolean
   description?: boolean
   parentId?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  actualAmount?: boolean
-  isActive?: boolean
+  level?: boolean
+  path?: boolean
   managerId?: boolean
   managerName?: boolean
+  annualBudget?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  allocationMethod?: boolean
+  allocationBasis?: boolean
+  isActive?: boolean
+  effectiveFrom?: boolean
+  effectiveTo?: boolean
+  tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   parent?: boolean | Prisma.CostCenter$parentArgs<ExtArgs>
   children?: boolean | Prisma.CostCenter$childrenArgs<ExtArgs>
-  projects?: boolean | Prisma.CostCenter$projectsArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  projects?: boolean | Prisma.CostCenter$projectsArgs<ExtArgs>
+  timeEntries?: boolean | Prisma.CostCenter$timeEntriesArgs<ExtArgs>
+  chargebacksFrom?: boolean | Prisma.CostCenter$chargebacksFromArgs<ExtArgs>
+  chargebacksTo?: boolean | Prisma.CostCenter$chargebacksToArgs<ExtArgs>
   _count?: boolean | Prisma.CostCenterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["costCenter"]>
 
@@ -1232,12 +2205,21 @@ export type CostCenterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   description?: boolean
   parentId?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  actualAmount?: boolean
-  isActive?: boolean
+  level?: boolean
+  path?: boolean
   managerId?: boolean
   managerName?: boolean
+  annualBudget?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  allocationMethod?: boolean
+  allocationBasis?: boolean
+  isActive?: boolean
+  effectiveFrom?: boolean
+  effectiveTo?: boolean
+  tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1251,12 +2233,21 @@ export type CostCenterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   description?: boolean
   parentId?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  actualAmount?: boolean
-  isActive?: boolean
+  level?: boolean
+  path?: boolean
   managerId?: boolean
   managerName?: boolean
+  annualBudget?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  allocationMethod?: boolean
+  allocationBasis?: boolean
+  isActive?: boolean
+  effectiveFrom?: boolean
+  effectiveTo?: boolean
+  tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1270,23 +2261,35 @@ export type CostCenterSelectScalar = {
   name?: boolean
   description?: boolean
   parentId?: boolean
-  currency?: boolean
-  budgetAmount?: boolean
-  actualAmount?: boolean
-  isActive?: boolean
+  level?: boolean
+  path?: boolean
   managerId?: boolean
   managerName?: boolean
+  annualBudget?: boolean
+  budgetSpent?: boolean
+  budgetRemaining?: boolean
+  budgetUtilization?: boolean
+  currency?: boolean
+  allocationMethod?: boolean
+  allocationBasis?: boolean
+  isActive?: boolean
+  effectiveFrom?: boolean
+  effectiveTo?: boolean
+  tags?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CostCenterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "parentId" | "currency" | "budgetAmount" | "actualAmount" | "isActive" | "managerId" | "managerName" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["costCenter"]>
+export type CostCenterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "description" | "parentId" | "level" | "path" | "managerId" | "managerName" | "annualBudget" | "budgetSpent" | "budgetRemaining" | "budgetUtilization" | "currency" | "allocationMethod" | "allocationBasis" | "isActive" | "effectiveFrom" | "effectiveTo" | "tags" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["costCenter"]>
 export type CostCenterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parent?: boolean | Prisma.CostCenter$parentArgs<ExtArgs>
   children?: boolean | Prisma.CostCenter$childrenArgs<ExtArgs>
-  projects?: boolean | Prisma.CostCenter$projectsArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  projects?: boolean | Prisma.CostCenter$projectsArgs<ExtArgs>
+  timeEntries?: boolean | Prisma.CostCenter$timeEntriesArgs<ExtArgs>
+  chargebacksFrom?: boolean | Prisma.CostCenter$chargebacksFromArgs<ExtArgs>
+  chargebacksTo?: boolean | Prisma.CostCenter$chargebacksToArgs<ExtArgs>
   _count?: boolean | Prisma.CostCenterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CostCenterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1303,8 +2306,11 @@ export type $CostCenterPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     parent: Prisma.$CostCenterPayload<ExtArgs> | null
     children: Prisma.$CostCenterPayload<ExtArgs>[]
-    projects: Prisma.$ProjectPayload<ExtArgs>[]
     organization: Prisma.$OrganizationPayload<ExtArgs>
+    projects: Prisma.$ProjectPayload<ExtArgs>[]
+    timeEntries: Prisma.$TimeEntryPayload<ExtArgs>[]
+    chargebacksFrom: Prisma.$InternalChargebackPayload<ExtArgs>[]
+    chargebacksTo: Prisma.$InternalChargebackPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1312,12 +2318,21 @@ export type $CostCenterPayload<ExtArgs extends runtime.Types.Extensions.Internal
     name: string
     description: string | null
     parentId: string | null
-    currency: string
-    budgetAmount: runtime.Decimal
-    actualAmount: runtime.Decimal
-    isActive: boolean
+    level: number
+    path: string | null
     managerId: string | null
     managerName: string | null
+    annualBudget: runtime.Decimal
+    budgetSpent: runtime.Decimal
+    budgetRemaining: runtime.Decimal
+    budgetUtilization: runtime.Decimal
+    currency: string
+    allocationMethod: string
+    allocationBasis: string | null
+    isActive: boolean
+    effectiveFrom: Date
+    effectiveTo: Date | null
+    tags: string[]
     organizationId: string
     createdAt: Date
     updatedAt: Date
@@ -1717,8 +2732,11 @@ export interface Prisma__CostCenterClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   parent<T extends Prisma.CostCenter$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$parentArgs<ExtArgs>>): Prisma.Prisma__CostCenterClient<runtime.Types.Result.GetResult<Prisma.$CostCenterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   children<T extends Prisma.CostCenter$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CostCenterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  projects<T extends Prisma.CostCenter$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  projects<T extends Prisma.CostCenter$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  timeEntries<T extends Prisma.CostCenter$timeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$timeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chargebacksFrom<T extends Prisma.CostCenter$chargebacksFromArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$chargebacksFromArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InternalChargebackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chargebacksTo<T extends Prisma.CostCenter$chargebacksToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CostCenter$chargebacksToArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InternalChargebackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1753,12 +2771,21 @@ export interface CostCenterFieldRefs {
   readonly name: Prisma.FieldRef<"CostCenter", 'String'>
   readonly description: Prisma.FieldRef<"CostCenter", 'String'>
   readonly parentId: Prisma.FieldRef<"CostCenter", 'String'>
-  readonly currency: Prisma.FieldRef<"CostCenter", 'String'>
-  readonly budgetAmount: Prisma.FieldRef<"CostCenter", 'Decimal'>
-  readonly actualAmount: Prisma.FieldRef<"CostCenter", 'Decimal'>
-  readonly isActive: Prisma.FieldRef<"CostCenter", 'Boolean'>
+  readonly level: Prisma.FieldRef<"CostCenter", 'Int'>
+  readonly path: Prisma.FieldRef<"CostCenter", 'String'>
   readonly managerId: Prisma.FieldRef<"CostCenter", 'String'>
   readonly managerName: Prisma.FieldRef<"CostCenter", 'String'>
+  readonly annualBudget: Prisma.FieldRef<"CostCenter", 'Decimal'>
+  readonly budgetSpent: Prisma.FieldRef<"CostCenter", 'Decimal'>
+  readonly budgetRemaining: Prisma.FieldRef<"CostCenter", 'Decimal'>
+  readonly budgetUtilization: Prisma.FieldRef<"CostCenter", 'Decimal'>
+  readonly currency: Prisma.FieldRef<"CostCenter", 'String'>
+  readonly allocationMethod: Prisma.FieldRef<"CostCenter", 'String'>
+  readonly allocationBasis: Prisma.FieldRef<"CostCenter", 'String'>
+  readonly isActive: Prisma.FieldRef<"CostCenter", 'Boolean'>
+  readonly effectiveFrom: Prisma.FieldRef<"CostCenter", 'DateTime'>
+  readonly effectiveTo: Prisma.FieldRef<"CostCenter", 'DateTime'>
+  readonly tags: Prisma.FieldRef<"CostCenter", 'String[]'>
   readonly organizationId: Prisma.FieldRef<"CostCenter", 'String'>
   readonly createdAt: Prisma.FieldRef<"CostCenter", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CostCenter", 'DateTime'>
@@ -2222,6 +3249,78 @@ export type CostCenter$projectsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
+}
+
+/**
+ * CostCenter.timeEntries
+ */
+export type CostCenter$timeEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TimeEntry
+   */
+  select?: Prisma.TimeEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TimeEntry
+   */
+  omit?: Prisma.TimeEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TimeEntryInclude<ExtArgs> | null
+  where?: Prisma.TimeEntryWhereInput
+  orderBy?: Prisma.TimeEntryOrderByWithRelationInput | Prisma.TimeEntryOrderByWithRelationInput[]
+  cursor?: Prisma.TimeEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TimeEntryScalarFieldEnum | Prisma.TimeEntryScalarFieldEnum[]
+}
+
+/**
+ * CostCenter.chargebacksFrom
+ */
+export type CostCenter$chargebacksFromArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InternalChargeback
+   */
+  select?: Prisma.InternalChargebackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InternalChargeback
+   */
+  omit?: Prisma.InternalChargebackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InternalChargebackInclude<ExtArgs> | null
+  where?: Prisma.InternalChargebackWhereInput
+  orderBy?: Prisma.InternalChargebackOrderByWithRelationInput | Prisma.InternalChargebackOrderByWithRelationInput[]
+  cursor?: Prisma.InternalChargebackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InternalChargebackScalarFieldEnum | Prisma.InternalChargebackScalarFieldEnum[]
+}
+
+/**
+ * CostCenter.chargebacksTo
+ */
+export type CostCenter$chargebacksToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InternalChargeback
+   */
+  select?: Prisma.InternalChargebackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InternalChargeback
+   */
+  omit?: Prisma.InternalChargebackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InternalChargebackInclude<ExtArgs> | null
+  where?: Prisma.InternalChargebackWhereInput
+  orderBy?: Prisma.InternalChargebackOrderByWithRelationInput | Prisma.InternalChargebackOrderByWithRelationInput[]
+  cursor?: Prisma.InternalChargebackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InternalChargebackScalarFieldEnum | Prisma.InternalChargebackScalarFieldEnum[]
 }
 
 /**

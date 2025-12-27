@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search,
@@ -55,8 +55,12 @@ const categoryColors: Record<ArchiveCategory, string> = {
 
 export default function ArchivePage() {
     const { t, language } = useThemeStore();
-    const { items, filter, setFilter, resetFilter, getFilteredItems, getStats, restoreFromArchive, permanentlyDelete } = useArchiveStore();
-
+    const { items, filter, setFilter, resetFilter, getFilteredItems, getStats, restoreFromArchive, permanentlyDelete, fetchItems, isInitialized, isLoading } = useArchiveStore();
+    useEffect(() => {
+  if (!isInitialized) {
+    fetchItems();
+  }
+}, [fetchItems, isInitialized]);
     const [selectedCategory, setSelectedCategory] = useState<ArchiveCategory | null>(null);
     const [selectedItem, setSelectedItem] = useState<ArchiveItem | null>(null);
     const [showYearFilter, setShowYearFilter] = useState(false);

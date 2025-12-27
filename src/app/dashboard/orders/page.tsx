@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Plus,
@@ -48,7 +48,12 @@ function OrderList({
     onInvoiceOrder: (order: Order) => void;
 }) {
     const { t, language } = useThemeStore();
-    const { orders, getInvoicingStatus } = useOrderStore();
+    const { orders, fetchOrders, isInitialized, isLoading, getInvoicingStatus } = useOrderStore();
+    useEffect(() => {
+  if (!isInitialized) {
+    fetchOrders();
+  }
+}, [fetchOrders, isInitialized]);
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState<Order['status'] | 'all'>('all');
 

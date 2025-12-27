@@ -220,11 +220,16 @@ export interface LiquidityScenario {
 // LIQUIDITY GAPS
 // =============================================================================
 
+export type LiquidityGapStatus = 'projected' | 'confirmed' | 'mitigated' | 'resolved';
+
 export interface LiquidityGap {
     id: string;
     startDate: string;
     endDate: string;
     durationDays: number;
+
+    // Status
+    status: LiquidityGapStatus;
 
     // Gap details
     peakDeficit: number;
@@ -243,11 +248,17 @@ export interface LiquidityGap {
 
     // Severity
     severity: LiquidityRiskLevel;
+
+    // Mitigation
+    mitigationPlan?: string;
+    mitigatedAt?: string;
 }
 
 // =============================================================================
 // RISK SIGNALS
 // =============================================================================
+
+export type LiquidityRiskSignalStatus = 'active' | 'acknowledged' | 'resolved' | 'dismissed';
 
 export interface LiquidityRiskSignal {
     id: string;
@@ -255,6 +266,7 @@ export interface LiquidityRiskSignal {
     title: string;
     description: string;
     riskLevel: LiquidityRiskLevel;
+    status: LiquidityRiskSignalStatus;
 
     // Metrics
     metric: number;
@@ -267,6 +279,8 @@ export interface LiquidityRiskSignal {
 
     // Timestamp
     detectedAt: string;
+    resolvedAt?: string;
+    dismissedAt?: string;
 }
 
 export interface LiquidityRiskSummary {

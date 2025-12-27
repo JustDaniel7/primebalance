@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useThemeStore } from '@/store/theme-store'
-import { useReceiptStore } from '@/store/receipt-store'
+import { useReceiptsStore, Receipt } from '@/store/receipts-store'
 import { Card, Button, Badge } from '@/components/ui'
-import { SearchIcon } from '@/components/ui/Icons'
+import { PlusIcon, SearchIcon, ReceiptIcon } from '@/components/ui/Icons'
 import {
   Upload, Camera, FileText, Check, X, Archive,
   Trash2, RotateCcw, Eye, Loader2, AlertCircle,
@@ -13,6 +13,13 @@ import {
 } from 'lucide-react'
 import { format, formatDistanceToNow } from 'date-fns'
 import type { Receipt, ReceiptStatus } from '@/types/receipt'
+
+type ReceiptStatus = 'matched' | 'unmatched' | 'archived'
+
+function getReceiptStatus(receipt: Receipt): ReceiptStatus {
+  if (receipt.transactionId) return 'matched'
+  return 'unmatched'
+}
 
 export default function ReceiptsPage() {
   const { t } = useThemeStore()
@@ -38,16 +45,26 @@ export default function ReceiptsPage() {
     selectReceipt,
     setInspectorOpen,
   } = useReceiptStore()
-
+  const [filter, setFilter] = useState<'all' | 'matched' | 'unmatched' | 'archived'>('all')
+  const [searchQuery, setSearchQuery] = useState('')
   const [dragActive, setDragActive] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [showDeleted, setShowDeleted] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
-
+  // Fetch receipts on mount
   useEffect(() => {
     fetchReceipts()
   }, [fetchReceipts])
+
+  const filteredReceipts = useMemo(() => {
+    return receipts.filter((receipt) => {
+      const status = getReceiptStatus(receipt)
+      const matchesFilter = filter === 'all' || status === filter
+      const matchesSearch = (receipt.vendor || receipt.fileName || '').toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesFilter && matchesSearch
+    })
+  }, [receipts, filter, searchQuery])
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
