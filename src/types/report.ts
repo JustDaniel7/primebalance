@@ -623,6 +623,39 @@ export const REPORT_TEMPLATES: Record<ReportType, {
 };
 
 // Report Category Metadata
+// ADD to src/types/report.ts
+
+// Generated Report Data
+export interface GeneratedReportData {
+    reportId: string
+    reportType: ReportType
+    generatedAt: string
+    period: {
+        start: string
+        end: string
+        label: string
+    }
+    currency: string
+    headers: string[]
+    rows: GeneratedReportRow[]
+    totals: Record<string, number>
+    summary: {
+        totalRecords: number
+        totalAmount: number
+        [key: string]: number
+    }
+    metadata: Record<string, unknown>
+}
+
+export interface GeneratedReportRow {
+    id: string
+    [key: string]: string | number | null
+}
+
+// Download format
+export type DownloadFormat = 'pdf' | 'xlsx' | 'csv' | 'json'
+
+
 export const REPORT_CATEGORIES: Record<ReportCategory, {
     name: string;
     description: string;
@@ -677,4 +710,5 @@ export const REPORT_CATEGORIES: Record<ReportCategory, {
         icon: 'Wrench',
         reportTypes: ['custom_table', 'custom_pivot', 'custom_time_series', 'custom_cohort'],
     },
+    // ADD to src/types/report.ts
 };

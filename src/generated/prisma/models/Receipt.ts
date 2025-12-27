@@ -49,6 +49,9 @@ export type ReceiptMinAggregateOutputType = {
   date: Date | null
   extractedText: string | null
   confidence: number | null
+  category: string | null
+  status: string | null
+  deletedAt: Date | null
   transactionId: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -66,6 +69,9 @@ export type ReceiptMaxAggregateOutputType = {
   date: Date | null
   extractedText: string | null
   confidence: number | null
+  category: string | null
+  status: string | null
+  deletedAt: Date | null
   transactionId: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -83,6 +89,9 @@ export type ReceiptCountAggregateOutputType = {
   date: number
   extractedText: number
   confidence: number
+  category: number
+  status: number
+  deletedAt: number
   transactionId: number
   organizationId: number
   createdAt: number
@@ -114,6 +123,9 @@ export type ReceiptMinAggregateInputType = {
   date?: true
   extractedText?: true
   confidence?: true
+  category?: true
+  status?: true
+  deletedAt?: true
   transactionId?: true
   organizationId?: true
   createdAt?: true
@@ -131,6 +143,9 @@ export type ReceiptMaxAggregateInputType = {
   date?: true
   extractedText?: true
   confidence?: true
+  category?: true
+  status?: true
+  deletedAt?: true
   transactionId?: true
   organizationId?: true
   createdAt?: true
@@ -148,6 +163,9 @@ export type ReceiptCountAggregateInputType = {
   date?: true
   extractedText?: true
   confidence?: true
+  category?: true
+  status?: true
+  deletedAt?: true
   transactionId?: true
   organizationId?: true
   createdAt?: true
@@ -252,6 +270,9 @@ export type ReceiptGroupByOutputType = {
   date: Date | null
   extractedText: string | null
   confidence: number | null
+  category: string | null
+  status: string
+  deletedAt: Date | null
   transactionId: string | null
   organizationId: string
   createdAt: Date
@@ -292,6 +313,9 @@ export type ReceiptWhereInput = {
   date?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableFilter<"Receipt"> | number | null
+  category?: Prisma.StringNullableFilter<"Receipt"> | string | null
+  status?: Prisma.StringFilter<"Receipt"> | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   transactionId?: Prisma.StringNullableFilter<"Receipt"> | string | null
   organizationId?: Prisma.StringFilter<"Receipt"> | string
   createdAt?: Prisma.DateTimeFilter<"Receipt"> | Date | string
@@ -311,6 +335,9 @@ export type ReceiptOrderByWithRelationInput = {
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   extractedText?: Prisma.SortOrderInput | Prisma.SortOrder
   confidence?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -333,6 +360,9 @@ export type ReceiptWhereUniqueInput = Prisma.AtLeast<{
   date?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableFilter<"Receipt"> | number | null
+  category?: Prisma.StringNullableFilter<"Receipt"> | string | null
+  status?: Prisma.StringFilter<"Receipt"> | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   transactionId?: Prisma.StringNullableFilter<"Receipt"> | string | null
   organizationId?: Prisma.StringFilter<"Receipt"> | string
   createdAt?: Prisma.DateTimeFilter<"Receipt"> | Date | string
@@ -352,6 +382,9 @@ export type ReceiptOrderByWithAggregationInput = {
   date?: Prisma.SortOrderInput | Prisma.SortOrder
   extractedText?: Prisma.SortOrderInput | Prisma.SortOrder
   confidence?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -377,6 +410,9 @@ export type ReceiptScalarWhereWithAggregatesInput = {
   date?: Prisma.DateTimeNullableWithAggregatesFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableWithAggregatesFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableWithAggregatesFilter<"Receipt"> | number | null
+  category?: Prisma.StringNullableWithAggregatesFilter<"Receipt"> | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Receipt"> | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Receipt"> | Date | string | null
   transactionId?: Prisma.StringNullableWithAggregatesFilter<"Receipt"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Receipt"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Receipt"> | Date | string
@@ -394,6 +430,9 @@ export type ReceiptCreateInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   transaction?: Prisma.TransactionCreateNestedOneWithoutReceiptsInput
@@ -411,6 +450,9 @@ export type ReceiptUncheckedCreateInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   transactionId?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -428,6 +470,9 @@ export type ReceiptUpdateInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transaction?: Prisma.TransactionUpdateOneWithoutReceiptsNestedInput
@@ -445,6 +490,9 @@ export type ReceiptUncheckedUpdateInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,6 +510,9 @@ export type ReceiptCreateManyInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   transactionId?: string | null
   organizationId: string
   createdAt?: Date | string
@@ -479,6 +530,9 @@ export type ReceiptUpdateManyMutationInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -494,6 +548,9 @@ export type ReceiptUncheckedUpdateManyInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -521,6 +578,9 @@ export type ReceiptCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   extractedText?: Prisma.SortOrder
   confidence?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -544,6 +604,9 @@ export type ReceiptMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   extractedText?: Prisma.SortOrder
   confidence?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -561,6 +624,9 @@ export type ReceiptMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   extractedText?: Prisma.SortOrder
   confidence?: Prisma.SortOrder
+  category?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -684,6 +750,9 @@ export type ReceiptCreateWithoutOrganizationInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   transaction?: Prisma.TransactionCreateNestedOneWithoutReceiptsInput
@@ -700,6 +769,9 @@ export type ReceiptUncheckedCreateWithoutOrganizationInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   transactionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -745,6 +817,9 @@ export type ReceiptScalarWhereInput = {
   date?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableFilter<"Receipt"> | number | null
+  category?: Prisma.StringNullableFilter<"Receipt"> | string | null
+  status?: Prisma.StringFilter<"Receipt"> | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   transactionId?: Prisma.StringNullableFilter<"Receipt"> | string | null
   organizationId?: Prisma.StringFilter<"Receipt"> | string
   createdAt?: Prisma.DateTimeFilter<"Receipt"> | Date | string
@@ -762,6 +837,9 @@ export type ReceiptCreateWithoutTransactionInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutReceiptsInput
@@ -778,6 +856,9 @@ export type ReceiptUncheckedCreateWithoutTransactionInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -820,6 +901,9 @@ export type ReceiptCreateManyOrganizationInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   transactionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -836,6 +920,9 @@ export type ReceiptUpdateWithoutOrganizationInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transaction?: Prisma.TransactionUpdateOneWithoutReceiptsNestedInput
@@ -852,6 +939,9 @@ export type ReceiptUncheckedUpdateWithoutOrganizationInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -868,6 +958,9 @@ export type ReceiptUncheckedUpdateManyWithoutOrganizationInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -884,6 +977,9 @@ export type ReceiptCreateManyTransactionInput = {
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
+  category?: string | null
+  status?: string
+  deletedAt?: Date | string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -900,6 +996,9 @@ export type ReceiptUpdateWithoutTransactionInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutReceiptsNestedInput
@@ -916,6 +1015,9 @@ export type ReceiptUncheckedUpdateWithoutTransactionInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -932,6 +1034,9 @@ export type ReceiptUncheckedUpdateManyWithoutTransactionInput = {
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -950,6 +1055,9 @@ export type ReceiptSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   date?: boolean
   extractedText?: boolean
   confidence?: boolean
+  category?: boolean
+  status?: boolean
+  deletedAt?: boolean
   transactionId?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -969,6 +1077,9 @@ export type ReceiptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   date?: boolean
   extractedText?: boolean
   confidence?: boolean
+  category?: boolean
+  status?: boolean
+  deletedAt?: boolean
   transactionId?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -988,6 +1099,9 @@ export type ReceiptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   date?: boolean
   extractedText?: boolean
   confidence?: boolean
+  category?: boolean
+  status?: boolean
+  deletedAt?: boolean
   transactionId?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1007,13 +1121,16 @@ export type ReceiptSelectScalar = {
   date?: boolean
   extractedText?: boolean
   confidence?: boolean
+  category?: boolean
+  status?: boolean
+  deletedAt?: boolean
   transactionId?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReceiptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileName" | "fileUrl" | "fileType" | "fileSize" | "vendor" | "amount" | "date" | "extractedText" | "confidence" | "transactionId" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["receipt"]>
+export type ReceiptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileName" | "fileUrl" | "fileType" | "fileSize" | "vendor" | "amount" | "date" | "extractedText" | "confidence" | "category" | "status" | "deletedAt" | "transactionId" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["receipt"]>
 export type ReceiptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transaction?: boolean | Prisma.Receipt$transactionArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1044,6 +1161,9 @@ export type $ReceiptPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     date: Date | null
     extractedText: string | null
     confidence: number | null
+    category: string | null
+    status: string
+    deletedAt: Date | null
     transactionId: string | null
     organizationId: string
     createdAt: Date
@@ -1483,6 +1603,9 @@ export interface ReceiptFieldRefs {
   readonly date: Prisma.FieldRef<"Receipt", 'DateTime'>
   readonly extractedText: Prisma.FieldRef<"Receipt", 'String'>
   readonly confidence: Prisma.FieldRef<"Receipt", 'Float'>
+  readonly category: Prisma.FieldRef<"Receipt", 'String'>
+  readonly status: Prisma.FieldRef<"Receipt", 'String'>
+  readonly deletedAt: Prisma.FieldRef<"Receipt", 'DateTime'>
   readonly transactionId: Prisma.FieldRef<"Receipt", 'String'>
   readonly organizationId: Prisma.FieldRef<"Receipt", 'String'>
   readonly createdAt: Prisma.FieldRef<"Receipt", 'DateTime'>

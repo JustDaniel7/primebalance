@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/liquidity/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/liquidity-store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/liquidity.ts" afterDir="false" />
+    <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +134,7 @@
       <workItem from="1766315637196" duration="1302000" />
       <workItem from="1766317598562" duration="12586000" />
       <workItem from="1766486581555" duration="1853000" />
+      <workItem from="1766531311267" duration="22989000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -197,7 +192,39 @@
       <option name="project" value="LOCAL" />
       <updated>1766496805080</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="liquidity">
+      <option name="closed" value="true" />
+      <created>1766497716118</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1766497716118</updated>
+    </task>
+    <task id="LOCAL-00009" summary="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <option name="closed" value="true" />
+      <created>1766528930889</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766528930890</updated>
+    </task>
+    <task id="LOCAL-00010" summary="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <option name="closed" value="true" />
+      <created>1766533427198</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1766533427199</updated>
+    </task>
+    <task id="LOCAL-00011" summary="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <option name="closed" value="true" />
+      <created>1766614937178</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1766614937178</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,7 +237,9 @@
     <MESSAGE value="assets rdy" />
     <MESSAGE value="well lots of stuff I guess" />
     <MESSAGE value="offers" />
-    <option name="LAST_COMMIT_MESSAGE" value="offers" />
+    <MESSAGE value="liquidity" />
+    <MESSAGE value="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates" />
+    <option name="LAST_COMMIT_MESSAGE" value="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -224,6 +253,10 @@
           <url>file://$PROJECT_DIR$/src/store/asset-store.ts</url>
           <line>1055</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/app/dashboard/accounts/page.tsx</url>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
