@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useStore } from '@/index';
+import { useStore } from '@/store';
 import { useWalletStore } from '@/store/wallet-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Button, Badge } from '@/components/ui'
@@ -538,17 +538,43 @@ function SendModal({ tokens, onClose }: SendModalProps) {
   const [recipient, setRecipient] = useState('');
   const [amount, setAmount] = useState('');
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const token = tokens.find(t => t.symbol === selectedToken);
   const maxAmount = token?.balance || 0;
 
   const handleSend = async () => {
     if (!recipient || !amount) return;
+
+    // Validate address format (basic check)
+    if (!recipient.startsWith('0x') || recipient.length !== 42) {
+      setError('Invalid wallet address format. Address should start with 0x and be 42 characters.');
+      return;
+    }
+
+    // Validate amount
+    const amountNum = parseFloat(amount);
+    if (isNaN(amountNum) || amountNum <= 0) {
+      setError('Please enter a valid amount greater than 0.');
+      return;
+    }
+    if (amountNum > maxAmount) {
+      setError(`Insufficient balance. Maximum: ${maxAmount} ${selectedToken}`);
+      return;
+    }
+
     setSending(true);
-    // TODO: Integrate with wallet SDK (ethers.js, web3.js)
+    setError(null);
+
+    // Simulate transaction (wallet SDK integration required for real transactions)
     await new Promise(resolve => setTimeout(resolve, 1500));
-    setSending(false);
-    onClose();
+
+    setSuccess(true);
+    setTimeout(() => {
+      setSending(false);
+      onClose();
+    }, 1500);
   };
 
   return (
@@ -561,6 +587,26 @@ function SendModal({ tokens, onClose }: SendModalProps) {
             </button>
           </div>
           <div className="p-6 space-y-4">
+            {success ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-green-500" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Transaction Submitted</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                  Your transaction has been simulated successfully.
+                </p>
+                <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
+                  Note: This is a demo. Real transactions require wallet SDK integration.
+                </p>
+              </div>
+            ) : (
+            <React.Fragment>
+            {error && (
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              </div>
+            )}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Token</label>
               <select
@@ -578,7 +624,7 @@ function SendModal({ tokens, onClose }: SendModalProps) {
               <input
                   type="text"
                   value={recipient}
-                  onChange={(e) => setRecipient(e.target.value)}
+                  onChange={(e) => { setRecipient(e.target.value); setError(null); }}
                   placeholder="0x..."
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white font-mono text-sm"
               />
@@ -608,6 +654,8 @@ function SendModal({ tokens, onClose }: SendModalProps) {
                     <span className="text-gray-900 dark:text-white">≈ $2.50</span>
                   </div>
                 </div>
+            )}
+            </React.Fragment>
             )}
           </div>
           <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
@@ -671,12 +719,29 @@ function ReceiveModal({ wallets, onClose }: ReceiveModalProps) {
                     </select>
                   </div>
                   <div className="flex flex-col items-center py-6">
-                    <div className="w-48 h-48 bg-white p-4 rounded-xl border border-gray-200 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center text-4xl">📱</div>
-                        <p className="text-xs text-gray-500 mt-2">QR Code</p>
+                    <div className="w-48 h-48 bg-white p-2 rounded-xl border border-gray-200 flex items-center justify-center">
+                      <div className="w-full h-full bg-gray-50 rounded-lg p-3">
+                        {/* Simple QR code pattern placeholder */}
+                        <div className="w-full h-full grid grid-cols-7 grid-rows-7 gap-0.5">
+                          {Array.from({ length: 49 }).map((_, i) => {
+                            const row = Math.floor(i / 7);
+                            const col = i % 7;
+                            const isCorner = (row < 2 && col < 2) || (row < 2 && col > 4) || (row > 4 && col < 2);
+                            const isRandom = Math.random() > 0.5;
+                            return (
+                              <div
+                                key={i}
+                                className={`rounded-sm ${isCorner || isRandom ? 'bg-gray-800' : 'bg-white'}`}
+                              />
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
+                    <p className="text-xs text-gray-500 mt-2">Scan to receive</p>
+                    <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                      (Demo QR - install qrcode.react for real QR codes)
+                    </p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Wallet Address</label>
@@ -720,6 +785,8 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
   const [toToken, setToToken] = useState(tokens[1]?.symbol || 'USDC');
   const [fromAmount, setFromAmount] = useState('');
   const [swapping, setSwapping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const fromTokenData = tokens.find(t => t.symbol === fromToken);
   const toTokenData = tokens.find(t => t.symbol === toToken);
@@ -729,11 +796,32 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
 
   const handleSwap = async () => {
     if (!fromAmount) return;
+
+    const amountNum = parseFloat(fromAmount);
+    if (isNaN(amountNum) || amountNum <= 0) {
+      setError('Please enter a valid amount greater than 0.');
+      return;
+    }
+    if (fromTokenData && amountNum > fromTokenData.balance) {
+      setError(`Insufficient balance. Maximum: ${fromTokenData.balance} ${fromToken}`);
+      return;
+    }
+    if (fromToken === toToken) {
+      setError('Cannot swap the same token.');
+      return;
+    }
+
     setSwapping(true);
-    // TODO: Integrate with DEX (Uniswap, 1inch, etc.)
+    setError(null);
+
+    // Simulate swap (DEX integration required for real swaps)
     await new Promise(resolve => setTimeout(resolve, 2000));
-    setSwapping(false);
-    onClose();
+
+    setSuccess(true);
+    setTimeout(() => {
+      setSwapping(false);
+      onClose();
+    }, 1500);
   };
 
   const handleFlip = () => {
@@ -752,6 +840,26 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
             </button>
           </div>
           <div className="p-6 space-y-4">
+            {success ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-green-500" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Swap Complete</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                  Swapped {fromAmount} {fromToken} for {toAmount} {toToken}
+                </p>
+                <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
+                  Note: This is a demo. Real swaps require DEX integration.
+                </p>
+              </div>
+            ) : (
+            <React.Fragment>
+            {error && (
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              </div>
+            )}
             <div className="p-4 bg-gray-50 dark:bg-surface-900/50 rounded-xl">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-gray-500">From</span>
@@ -761,7 +869,7 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
                 <input
                     type="number"
                     value={fromAmount}
-                    onChange={(e) => setFromAmount(e.target.value)}
+                    onChange={(e) => { setFromAmount(e.target.value); setError(null); }}
                     placeholder="0.00"
                     className="flex-1 bg-transparent text-2xl font-semibold text-gray-900 dark:text-white outline-none"
                 />
@@ -815,6 +923,8 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
                 <span className="text-gray-900 dark:text-white">0.5%</span>
               </div>
             </div>
+            </React.Fragment>
+            )}
           </div>
           <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
             <Button variant="secondary" onClick={onClose}>Cancel</Button>

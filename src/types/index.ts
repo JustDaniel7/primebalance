@@ -1,7 +1,17 @@
 export interface Merchant {
-  id: string;
-  name?: string;
-  // ...other fields
+  id: string
+  name: string
+  category?: string
+  taxId?: string
+  address?: string
+  city?: string
+  country?: string
+  phone?: string
+  email?: string
+  website?: string
+  isActive?: boolean
+  createdAt?: string
+  updatedAt?: string
 }
 
 // Transaction types
@@ -363,3 +373,6 @@ export * from './taskcenter';
 export * from './forecast';
 export * from './scenarios';
 export * from './kpis';
+
+// Receipt module types - use ReceiptModule namespace to avoid conflict with inline Receipt
+export * as ReceiptModule from './receipt';

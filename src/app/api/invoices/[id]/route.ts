@@ -55,8 +55,11 @@ export async function GET(
           where: { invoiceId: id },
           orderBy: { version: 'desc' },
         });
-      } catch {
-        // Model doesn't exist
+      } catch (error) {
+        // Model may not exist in schema - log in development only
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('InvoiceVersion model not found:', error);
+        }
       }
     }
 
@@ -66,8 +69,11 @@ export async function GET(
           where: { invoiceId: id },
           orderBy: { createdAt: 'desc' },
         });
-      } catch {
-        // Model doesn't exist
+      } catch (error) {
+        // Model may not exist in schema - log in development only
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('InvoiceAccountingEvent model not found:', error);
+        }
       }
     }
 
@@ -77,8 +83,11 @@ export async function GET(
           where: { invoiceId: id },
           orderBy: { paymentDate: 'desc' },
         });
-      } catch {
-        // Model doesn't exist
+      } catch (error) {
+        // Model may not exist in schema - log in development only
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('InvoicePayment model not found:', error);
+        }
       }
     }
 

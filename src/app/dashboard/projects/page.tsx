@@ -1050,6 +1050,169 @@ function TimeTrackingTab() {
 }
 
 // =============================================================================
+// COST CENTER EDIT MODAL
+// =============================================================================
+
+function CostCenterEditModal({
+    costCenter,
+    onClose,
+    onSave,
+    isSaving,
+}: {
+    costCenter: CostCenter;
+    onClose: () => void;
+    onSave: (id: string, updates: Partial<CostCenter>) => Promise<CostCenter | null>;
+    isSaving: boolean;
+}) {
+    const [formData, setFormData] = useState({
+        name: costCenter.name,
+        code: costCenter.code,
+        description: costCenter.description || '',
+        annualBudget: costCenter.annualBudget,
+        managerName: costCenter.managerName || '',
+    });
+    const [error, setError] = useState<string | null>(null);
+
+    const handleSubmit = async () => {
+        setError(null);
+
+        if (!formData.name.trim()) {
+            setError('Name is required');
+            return;
+        }
+
+        if (!formData.code.trim()) {
+            setError('Code is required');
+            return;
+        }
+
+        if (formData.annualBudget < 0) {
+            setError('Annual budget cannot be negative');
+            return;
+        }
+
+        const result = await onSave(costCenter.id, {
+            name: formData.name.trim(),
+            code: formData.code.trim(),
+            description: formData.description.trim() || undefined,
+            annualBudget: formData.annualBudget,
+            managerName: formData.managerName.trim() || undefined,
+        });
+
+        if (result) {
+            onClose();
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-md"
+            >
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Edit Cost Center</h3>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">
+                        <X className="w-5 h-5 text-gray-500" />
+                    </button>
+                </div>
+
+                <div className="p-6 space-y-4">
+                    {error && (
+                        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+                            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+                        </div>
+                    )}
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Name *
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            placeholder="Cost center name"
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Code *
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.code}
+                            onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+                            placeholder="CC-001"
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Description
+                        </label>
+                        <textarea
+                            value={formData.description}
+                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                            placeholder="Optional description"
+                            rows={2}
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Annual Budget
+                        </label>
+                        <input
+                            type="number"
+                            value={formData.annualBudget}
+                            onChange={(e) => setFormData({ ...formData, annualBudget: parseFloat(e.target.value) || 0 })}
+                            placeholder="0"
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Manager Name
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.managerName}
+                            onChange={(e) => setFormData({ ...formData, managerName: e.target.value })}
+                            placeholder="Manager name"
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                        />
+                    </div>
+                </div>
+
+                <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700">
+                    <Button variant="secondary" onClick={onClose} disabled={isSaving}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit} disabled={isSaving}>
+                        {isSaving ? (
+                            <>
+                                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                                Saving...
+                            </>
+                        ) : (
+                            'Save Changes'
+                        )}
+                    </Button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
 // CHARGEBACKS TAB
 // =============================================================================
 
@@ -1288,12 +1451,14 @@ export default function ProjectsPage() {
         openDeleteConfirm,
         closeDeleteConfirm,
         confirmDelete,
+        updateCostCenter,
     } = useProjectStore();
 
     const [activeTab, setActiveTab] = useState<'projects' | 'cost-centers' | 'time' | 'chargebacks'>('projects');
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'all'>('all');
     const [typeFilter, setTypeFilter] = useState<ProjectType | 'all'>('all');
+    const [editingCostCenter, setEditingCostCenter] = useState<CostCenter | null>(null);
 
     // Fetch data on mount
     useEffect(() => {
@@ -1517,7 +1682,7 @@ export default function ProjectsPage() {
                         <CostCenterCard
                             key={cc.id}
                             costCenter={cc}
-                            onEdit={() => {/* TODO: Cost center edit wizard */}}
+                            onEdit={() => setEditingCostCenter(cc)}
                             onDelete={() => openDeleteConfirm(cc.id, 'costCenter')}
                         />
                     ))}
@@ -1542,6 +1707,18 @@ export default function ProjectsPage() {
             {/* Wizard Modal */}
             <AnimatePresence>
                 {wizardOpen && <ProjectWizard onClose={closeWizard} />}
+            </AnimatePresence>
+
+            {/* Cost Center Edit Modal */}
+            <AnimatePresence>
+                {editingCostCenter && (
+                    <CostCenterEditModal
+                        costCenter={editingCostCenter}
+                        onClose={() => setEditingCostCenter(null)}
+                        onSave={updateCostCenter}
+                        isSaving={isSaving}
+                    />
+                )}
             </AnimatePresence>
 
             {/* Delete Confirmation Dialog */}

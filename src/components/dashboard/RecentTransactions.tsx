@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useStore } from '@/index'
+import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Badge } from '@/components/ui'
 import { ChevronRightIcon } from '@/components/ui/Icons'

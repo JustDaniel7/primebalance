@@ -88,13 +88,15 @@ export default function Header() {
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-surface-500"
             />
             <input
-              type="text"
+              type="search"
               placeholder={t('header.search')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setSearchOpen(true)}
               onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
               className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-900/60 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 placeholder:text-gray-400 dark:placeholder:text-surface-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30 focus:border-[var(--accent-primary)]/30"
+              aria-label="Search transactions, accounts, reports"
+              role="searchbox"
             />
             <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden lg:block">
               <kbd className="px-2 py-1 text-xs text-gray-500 dark:text-surface-500 bg-gray-200 dark:bg-surface-800 rounded-md border border-gray-300 dark:border-surface-700">
@@ -145,6 +147,7 @@ export default function Header() {
             onClick={toggleTheme}
             className="p-2 lg:p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors"
             title={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-label={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {resolvedTheme === 'dark' ? (
               <Sun size={20} className="text-gray-400 dark:text-surface-400" />
@@ -182,6 +185,8 @@ export default function Header() {
                 setProfileOpen(false)
               }}
               className="relative p-2 lg:p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors"
+              aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
+              aria-expanded={notificationsOpen}
             >
               <BellIcon size={20} className="text-gray-500 dark:text-surface-400" />
               {unreadCount > 0 && (
@@ -244,12 +249,14 @@ export default function Header() {
 
           {/* User dropdown */}
           <div className="relative" ref={profileRef}>
-            <button 
+            <button
               onClick={() => {
                 setProfileOpen(!profileOpen)
                 setNotificationsOpen(false)
               }}
               className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors"
+              aria-label="User menu"
+              aria-expanded={profileOpen}
             >
               <div 
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-medium text-sm"

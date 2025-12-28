@@ -5,7 +5,25 @@
       "Bash(npx tsc:*)",
       "Bash(npx prisma generate:*)",
       "Bash(ls:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(tree:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(xargs:*)",
+      "Bash(comm -23:*)",
+      "Bash(while read dir)",
+      "Bash(do)",
+      "Bash(if [ ! -f \"$dir/index.ts\" ])",
+      "Bash(then)",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(basename:*)",
+      "Bash(for dir in assets invoices netting orders reports tax transactions)",
+      "Bash(test -f:*)",
+      "Bash(echo:*)",
+      "Bash(node scripts/extract-translations.js:*)",
+      "Bash(wc:*)",
+      "Bash(node scripts/sync-locales.js:*)"
     ]
   }
 }

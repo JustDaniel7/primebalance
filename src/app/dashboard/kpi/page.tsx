@@ -104,11 +104,11 @@ const getStatusBg = (status: KPIStatus): string => {
     }
 };
 
-const getStatusLabel = (status: KPIStatus): string => {
+const getStatusLabel = (status: KPIStatus, t: (key: string) => string): string => {
     switch (status) {
-        case 'on_track': return 'On Track';
-        case 'watch': return 'Watch';
-        case 'off_track': return 'Off Track';
+        case 'on_track': return t('kpi.status.onTrack');
+        case 'watch': return t('kpi.status.watch');
+        case 'off_track': return t('kpi.status.offTrack');
     }
 };
 
@@ -120,11 +120,11 @@ const getTrendIcon = (trend: KPITrendDirection, size: number = 16) => {
     }
 };
 
-const getTrendLabel = (trend: KPITrendDirection): string => {
+const getTrendLabel = (trend: KPITrendDirection, t: (key: string) => string): string => {
     switch (trend) {
-        case 'improving': return 'Improving';
-        case 'deteriorating': return 'Deteriorating';
-        case 'stable': return 'Stable';
+        case 'improving': return t('kpi.trend.improving');
+        case 'deteriorating': return t('kpi.trend.deteriorating');
+        case 'stable': return t('kpi.trend.stable');
     }
 };
 
@@ -133,6 +133,7 @@ const getTrendLabel = (trend: KPITrendDirection): string => {
 // =============================================================================
 
 function StatusIndicator({ status, showLabel = true }: { status: KPIStatus; showLabel?: boolean }) {
+    const { t } = useThemeStore();
     return (
         <div className={`flex items-center gap-1.5 px-2 py-1 rounded-lg ${getStatusBg(status)}`}>
             {status === 'on_track' ? (
@@ -144,7 +145,7 @@ function StatusIndicator({ status, showLabel = true }: { status: KPIStatus; show
             )}
             {showLabel && (
                 <span className={`text-xs font-medium ${getStatusColor(status)}`}>
-                    {getStatusLabel(status)}
+                    {getStatusLabel(status, t)}
                 </span>
             )}
         </div>
@@ -174,10 +175,11 @@ function KPICard({
     onClick?: () => void;
     showTarget?: boolean;
 }) {
+    const { t } = useThemeStore();
     const formattedValue = format === 'percent' ? `${value.toFixed(1)}%`
         : format === 'currency' ? formatCurrency(value, true)
-        : format === 'days' ? `${value} days`
-        : format === 'months' ? `${value} months`
+        : format === 'days' ? `${value} ${t('kpi.common.days')}`
+        : format === 'months' ? `${value} ${t('kpi.common.months')}`
         : `${value.toFixed(1)}x`;
 
     const deltaColor = kpiValue.deltaVsPrior >= 0 ? 'text-green-500' : 'text-red-500';
@@ -207,25 +209,25 @@ function KPICard({
                 </div>
                 <StatusIndicator status={kpiValue.status} showLabel={false} />
             </div>
-            
+
             <p className="text-sm text-gray-500 dark:text-surface-400 mb-1">{title}</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-surface-100 mb-2">
                 {formattedValue}
             </p>
-            
+
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     {getTrendIcon(kpiValue.trend, 14)}
                     <span className={`text-sm ${deltaColor}`}>
-                        {formatPercent(kpiValue.deltaVsPriorPercent)} vs prior
+                        {formatPercent(kpiValue.deltaVsPriorPercent)} {t('kpi.common.vsPrior')}
                     </span>
                 </div>
                 {showTarget && kpiValue.target !== undefined && (
                     <span className="text-xs text-gray-500">
-                        Target: {format === 'percent' ? `${kpiValue.target}%` : 
+                        {t('kpi.common.target')}: {format === 'percent' ? `${kpiValue.target}%` :
                                  format === 'currency' ? formatCurrency(kpiValue.target, true) :
                                  format === 'days' ? `${kpiValue.target}d` :
-                                 format === 'months' ? `${kpiValue.target}mo` :
+                                 format === 'months' ? `${kpiValue.target}${t('kpi.common.mo')}` :
                                  `${kpiValue.target}x`}
                     </span>
                 )}
@@ -239,6 +241,7 @@ function KPICard({
 // =============================================================================
 
 function OverviewTab() {
+    const { t } = useThemeStore();
     const {
         marginMetrics,
         burnRunwayMetrics,
@@ -263,28 +266,28 @@ function OverviewTab() {
                         <CheckCircle2 size={20} className="text-green-500" />
                         <span className="text-2xl font-bold text-green-500">{summary.onTrackCount}</span>
                     </div>
-                    <p className="text-sm text-gray-500">On Track</p>
+                    <p className="text-sm text-gray-500">{t('kpi.status.onTrack')}</p>
                 </Card>
                 <Card variant="glass" padding="md" className="text-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
                         <AlertCircle size={20} className="text-amber-500" />
                         <span className="text-2xl font-bold text-amber-500">{summary.watchCount}</span>
                     </div>
-                    <p className="text-sm text-gray-500">Watch</p>
+                    <p className="text-sm text-gray-500">{t('kpi.status.watch')}</p>
                 </Card>
                 <Card variant="glass" padding="md" className="text-center">
                     <div className="flex items-center justify-center gap-2 mb-2">
                         <XCircle size={20} className="text-red-500" />
                         <span className="text-2xl font-bold text-red-500">{summary.offTrackCount}</span>
                     </div>
-                    <p className="text-sm text-gray-500">Off Track</p>
+                    <p className="text-sm text-gray-500">{t('kpi.status.offTrack')}</p>
                 </Card>
             </div>
 
             {/* Key Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <KPICard
-                    title="Gross Margin"
+                    title={t('kpi.metrics.grossMargin')}
                     value={marginMetrics.grossMargin.current}
                     format="percent"
                     kpiValue={marginMetrics.grossMargin}
@@ -293,7 +296,7 @@ function OverviewTab() {
                     onClick={() => setActiveTab('margins')}
                 />
                 <KPICard
-                    title="Net Burn Rate"
+                    title={t('kpi.metrics.netBurnRate')}
                     value={burnRunwayMetrics.netBurnMonthly.current}
                     format="currency"
                     kpiValue={burnRunwayMetrics.netBurnMonthly}
@@ -302,7 +305,7 @@ function OverviewTab() {
                     onClick={() => setActiveTab('burn')}
                 />
                 <KPICard
-                    title="Cash Runway"
+                    title={t('kpi.metrics.cashRunway')}
                     value={burnRunwayMetrics.currentRunwayMonths}
                     format="months"
                     kpiValue={{ ...burnRunwayMetrics.netBurnMonthly, current: burnRunwayMetrics.currentRunwayMonths, target: 18 }}
@@ -311,7 +314,7 @@ function OverviewTab() {
                     onClick={() => setActiveTab('burn')}
                 />
                 <KPICard
-                    title="LTV/CAC Ratio"
+                    title={t('kpi.metrics.ltvCacRatio')}
                     value={unitEconomicsMetrics.ltvCacRatio.current}
                     format="ratio"
                     kpiValue={unitEconomicsMetrics.ltvCacRatio}
@@ -324,63 +327,63 @@ function OverviewTab() {
             {/* Secondary Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 <Card variant="glass" padding="md">
-                    <p className="text-xs text-gray-500 dark:text-surface-400">Operating Margin</p>
+                    <p className="text-xs text-gray-500 dark:text-surface-400">{t('kpi.metrics.operatingMargin')}</p>
                     <p className="text-lg font-semibold text-gray-900 dark:text-surface-100">
                         {marginMetrics.operatingMargin.current.toFixed(1)}%
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                         {getTrendIcon(marginMetrics.operatingMargin.trend, 12)}
-                        <span className="text-xs text-gray-500">{getTrendLabel(marginMetrics.operatingMargin.trend)}</span>
+                        <span className="text-xs text-gray-500">{getTrendLabel(marginMetrics.operatingMargin.trend, t)}</span>
                     </div>
                 </Card>
                 <Card variant="glass" padding="md">
-                    <p className="text-xs text-gray-500 dark:text-surface-400">Cash Conversion</p>
+                    <p className="text-xs text-gray-500 dark:text-surface-400">{t('kpi.metrics.cashConversion')}</p>
                     <p className="text-lg font-semibold text-gray-900 dark:text-surface-100">
-                        {cccMetrics.netCCC.current} days
+                        {cccMetrics.netCCC.current} {t('kpi.common.days')}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                         {getTrendIcon(cccMetrics.netCCC.trend, 12)}
-                        <span className="text-xs text-gray-500">{getTrendLabel(cccMetrics.netCCC.trend)}</span>
+                        <span className="text-xs text-gray-500">{getTrendLabel(cccMetrics.netCCC.trend, t)}</span>
                     </div>
                 </Card>
                 <Card variant="glass" padding="md">
-                    <p className="text-xs text-gray-500 dark:text-surface-400">DSO</p>
+                    <p className="text-xs text-gray-500 dark:text-surface-400">{t('kpi.metrics.dso')}</p>
                     <p className="text-lg font-semibold text-gray-900 dark:text-surface-100">
-                        {cccMetrics.dso.current} days
+                        {cccMetrics.dso.current} {t('kpi.common.days')}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                         {getTrendIcon(cccMetrics.dso.trend, 12)}
-                        <span className="text-xs text-gray-500">Target: {cccMetrics.dso.target}d</span>
+                        <span className="text-xs text-gray-500">{t('kpi.common.target')}: {cccMetrics.dso.target}d</span>
                     </div>
                 </Card>
                 <Card variant="glass" padding="md">
-                    <p className="text-xs text-gray-500 dark:text-surface-400">CAC</p>
+                    <p className="text-xs text-gray-500 dark:text-surface-400">{t('kpi.metrics.cac')}</p>
                     <p className="text-lg font-semibold text-gray-900 dark:text-surface-100">
                         {formatCurrency(unitEconomicsMetrics.cac.current, true)}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                         {getTrendIcon(unitEconomicsMetrics.cac.trend, 12)}
-                        <span className="text-xs text-gray-500">{getTrendLabel(unitEconomicsMetrics.cac.trend)}</span>
+                        <span className="text-xs text-gray-500">{getTrendLabel(unitEconomicsMetrics.cac.trend, t)}</span>
                     </div>
                 </Card>
                 <Card variant="glass" padding="md">
-                    <p className="text-xs text-gray-500 dark:text-surface-400">LTV</p>
+                    <p className="text-xs text-gray-500 dark:text-surface-400">{t('kpi.metrics.ltv')}</p>
                     <p className="text-lg font-semibold text-gray-900 dark:text-surface-100">
                         {formatCurrency(unitEconomicsMetrics.ltv.current, true)}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                         {getTrendIcon(unitEconomicsMetrics.ltv.trend, 12)}
-                        <span className="text-xs text-gray-500">{getTrendLabel(unitEconomicsMetrics.ltv.trend)}</span>
+                        <span className="text-xs text-gray-500">{getTrendLabel(unitEconomicsMetrics.ltv.trend, t)}</span>
                     </div>
                 </Card>
                 <Card variant="glass" padding="md">
-                    <p className="text-xs text-gray-500 dark:text-surface-400">Payback Period</p>
+                    <p className="text-xs text-gray-500 dark:text-surface-400">{t('kpi.metrics.paybackPeriod')}</p>
                     <p className="text-lg font-semibold text-gray-900 dark:text-surface-100">
-                        {unitEconomicsMetrics.paybackPeriod.current} mo
+                        {unitEconomicsMetrics.paybackPeriod.current} {t('kpi.common.mo')}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
                         {getTrendIcon(unitEconomicsMetrics.paybackPeriod.trend, 12)}
-                        <span className="text-xs text-gray-500">Target: {unitEconomicsMetrics.paybackPeriod.target}mo</span>
+                        <span className="text-xs text-gray-500">{t('kpi.common.target')}: {unitEconomicsMetrics.paybackPeriod.target}{t('kpi.common.mo')}</span>
                     </div>
                 </Card>
             </div>
@@ -391,9 +394,9 @@ function OverviewTab() {
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="font-semibold text-gray-900 dark:text-surface-100 flex items-center gap-2">
                             <Bell size={18} className="text-amber-500" />
-                            Active Alerts
+                            {t('kpi.overview.activeAlerts')}
                         </h3>
-                        <span className="text-xs text-gray-500">{activeAlerts.length} alerts</span>
+                        <span className="text-xs text-gray-500">{activeAlerts.length} {t('kpi.overview.alerts')}</span>
                     </div>
                     <div className="space-y-2">
                         {activeAlerts.map((alert) => (
@@ -439,28 +442,28 @@ function OverviewTab() {
 
             {/* Trend Summary */}
             <Card variant="glass" padding="lg">
-                <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">Trend Summary</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">{t('kpi.overview.trendSummary')}</h3>
                 <div className="grid grid-cols-3 gap-6">
                     <div className="text-center">
                         <div className="flex items-center justify-center gap-2 mb-2">
                             <TrendingUp size={24} className="text-green-500" />
                             <span className="text-3xl font-bold text-green-500">{summary.improvingCount}</span>
                         </div>
-                        <p className="text-sm text-gray-500">Improving</p>
+                        <p className="text-sm text-gray-500">{t('kpi.trend.improving')}</p>
                     </div>
                     <div className="text-center">
                         <div className="flex items-center justify-center gap-2 mb-2">
                             <Minus size={24} className="text-gray-400" />
                             <span className="text-3xl font-bold text-gray-500">{summary.stableCount}</span>
                         </div>
-                        <p className="text-sm text-gray-500">Stable</p>
+                        <p className="text-sm text-gray-500">{t('kpi.trend.stable')}</p>
                     </div>
                     <div className="text-center">
                         <div className="flex items-center justify-center gap-2 mb-2">
                             <TrendingDown size={24} className="text-red-500" />
                             <span className="text-3xl font-bold text-red-500">{summary.deterioratingCount}</span>
                         </div>
-                        <p className="text-sm text-gray-500">Deteriorating</p>
+                        <p className="text-sm text-gray-500">{t('kpi.trend.deteriorating')}</p>
                     </div>
                 </div>
             </Card>
@@ -473,6 +476,7 @@ function OverviewTab() {
 // =============================================================================
 
 function MarginsTab() {
+    const { t } = useThemeStore();
     const { marginMetrics, viewPreferences } = useKPIStore();
     const [selectedMargin, setSelectedMargin] = useState<'gross' | 'contribution' | 'operating'>('gross');
     const [showExplanation, setShowExplanation] = useState(false);
@@ -482,13 +486,13 @@ function MarginsTab() {
     const explanation = 'Margin analysis based on current financial data';
 
     if (!marginMetrics) {
-        return <div className="p-4 text-gray-500">Loading margin metrics...</div>;
+        return <div className="p-4 text-gray-500">{t('kpi.margins.loadingMarginMetrics')}</div>;
     }
 
     const marginTypes = [
-        { key: 'gross' as const, label: 'Gross Margin', value: marginMetrics.grossMargin },
-        { key: 'contribution' as const, label: 'Contribution Margin', value: marginMetrics.contributionMargin },
-        { key: 'operating' as const, label: 'Operating Margin', value: marginMetrics.operatingMargin },
+        { key: 'gross' as const, label: t('kpi.metrics.grossMargin'), value: marginMetrics.grossMargin },
+        { key: 'contribution' as const, label: t('kpi.metrics.contributionMargin'), value: marginMetrics.contributionMargin },
+        { key: 'operating' as const, label: t('kpi.metrics.operatingMargin'), value: marginMetrics.operatingMargin },
     ];
 
     return (
@@ -519,7 +523,7 @@ function MarginsTab() {
                                     {formatPercent(m.value.deltaVsPriorPercent)}
                                 </span>
                             </div>
-                            <span className="text-gray-500">Target: {m.value.target}%</span>
+                            <span className="text-gray-500">{t('kpi.common.target')}: {m.value.target}%</span>
                         </div>
                     </Card>
                 ))}
@@ -530,7 +534,7 @@ function MarginsTab() {
                 <Card variant="glass" padding="md">
                     <div className="flex justify-between items-start">
                         <div>
-                            <p className="text-xs text-gray-500">EBITDA Margin</p>
+                            <p className="text-xs text-gray-500">{t('kpi.metrics.ebitdaMargin')}</p>
                             <p className="text-xl font-semibold text-gray-900 dark:text-surface-100">
                                 {marginMetrics.ebitdaMargin.current.toFixed(1)}%
                             </p>
@@ -546,7 +550,7 @@ function MarginsTab() {
                 <Card variant="glass" padding="md">
                     <div className="flex justify-between items-start">
                         <div>
-                            <p className="text-xs text-gray-500">Net Margin</p>
+                            <p className="text-xs text-gray-500">{t('kpi.metrics.netMargin')}</p>
                             <p className="text-xl font-semibold text-gray-900 dark:text-surface-100">
                                 {marginMetrics.netMargin.current.toFixed(1)}%
                             </p>
@@ -564,13 +568,13 @@ function MarginsTab() {
             {/* Margin Drivers */}
             <Card variant="glass" padding="lg">
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold text-gray-900 dark:text-surface-100">Margin Drivers</h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-surface-100">{t('kpi.margins.marginDrivers')}</h3>
                     <button
                         onClick={() => setShowExplanation(!showExplanation)}
                         className="text-sm text-[var(--accent-primary)] flex items-center gap-1"
                     >
                         <HelpCircle size={14} />
-                        Explain
+                        {t('kpi.margins.explain')}
                     </button>
                 </div>
                 <div className="space-y-4">
@@ -604,17 +608,17 @@ function MarginsTab() {
 
             {/* Breakdown by Segment */}
             <Card variant="glass" padding="lg">
-                <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">Margin by Product</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">{t('kpi.margins.marginByProduct')}</h3>
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-gray-200 dark:border-surface-700">
-                                <th className="text-left p-3 text-xs font-medium text-gray-500 uppercase">Product</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">Revenue</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">Gross</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">Contribution</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">Operating</th>
-                                <th className="text-center p-3 text-xs font-medium text-gray-500 uppercase">Trend</th>
+                                <th className="text-left p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.margins.product')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.margins.revenue')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.margins.gross')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.margins.contribution')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.margins.operating')}</th>
+                                <th className="text-center p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.common.trend')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -968,10 +972,11 @@ function CCCTab() {
 // =============================================================================
 
 function UnitEconomicsTab() {
+    const { t } = useThemeStore();
     const { unitEconomicsMetrics } = useKPIStore();
 
     if (!unitEconomicsMetrics) {
-        return <div className="p-4 text-gray-500">Loading unit economics...</div>;
+        return <div className="p-4 text-gray-500">{t('kpi.unitEcon.loadingUnitEconomics')}</div>;
     }
 
     return (
@@ -979,7 +984,7 @@ function UnitEconomicsTab() {
             {/* Core Unit Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <KPICard
-                    title="Revenue / Unit"
+                    title={t('kpi.metrics.revenuePerUnit')}
                     value={unitEconomicsMetrics.revenuePerUnit.current}
                     format="currency"
                     kpiValue={unitEconomicsMetrics.revenuePerUnit}
@@ -987,7 +992,7 @@ function UnitEconomicsTab() {
                     color="green"
                 />
                 <KPICard
-                    title="Variable Cost / Unit"
+                    title={t('kpi.metrics.variableCostPerUnit')}
                     value={unitEconomicsMetrics.variableCostPerUnit.current}
                     format="currency"
                     kpiValue={unitEconomicsMetrics.variableCostPerUnit}
@@ -995,7 +1000,7 @@ function UnitEconomicsTab() {
                     color="orange"
                 />
                 <KPICard
-                    title="Contribution / Unit"
+                    title={t('kpi.metrics.contributionPerUnit')}
                     value={unitEconomicsMetrics.contributionPerUnit.current}
                     format="currency"
                     kpiValue={unitEconomicsMetrics.contributionPerUnit}
@@ -1003,7 +1008,7 @@ function UnitEconomicsTab() {
                     color="blue"
                 />
                 <KPICard
-                    title="Margin / Unit"
+                    title={t('kpi.metrics.marginPerUnit')}
                     value={unitEconomicsMetrics.marginPerUnit.current}
                     format="percent"
                     kpiValue={unitEconomicsMetrics.marginPerUnit}
@@ -1015,7 +1020,7 @@ function UnitEconomicsTab() {
             {/* Customer Economics */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <KPICard
-                    title="CAC"
+                    title={t('kpi.metrics.cac')}
                     value={unitEconomicsMetrics.cac.current}
                     format="currency"
                     kpiValue={unitEconomicsMetrics.cac}
@@ -1023,7 +1028,7 @@ function UnitEconomicsTab() {
                     color="orange"
                 />
                 <KPICard
-                    title="LTV"
+                    title={t('kpi.metrics.ltv')}
                     value={unitEconomicsMetrics.ltv.current}
                     format="currency"
                     kpiValue={unitEconomicsMetrics.ltv}
@@ -1031,7 +1036,7 @@ function UnitEconomicsTab() {
                     color="green"
                 />
                 <KPICard
-                    title="LTV/CAC Ratio"
+                    title={t('kpi.metrics.ltvCacRatio')}
                     value={unitEconomicsMetrics.ltvCacRatio.current}
                     format="ratio"
                     kpiValue={unitEconomicsMetrics.ltvCacRatio}
@@ -1039,7 +1044,7 @@ function UnitEconomicsTab() {
                     color="blue"
                 />
                 <KPICard
-                    title="Payback Period"
+                    title={t('kpi.metrics.paybackPeriod')}
                     value={unitEconomicsMetrics.paybackPeriod.current}
                     format="months"
                     kpiValue={unitEconomicsMetrics.paybackPeriod}
@@ -1050,18 +1055,18 @@ function UnitEconomicsTab() {
 
             {/* Cohort Analysis */}
             <Card variant="glass" padding="lg">
-                <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">Cohort Analysis</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">{t('kpi.unitEcon.cohortAnalysis')}</h3>
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-gray-200 dark:border-surface-700">
-                                <th className="text-left p-3 text-xs font-medium text-gray-500 uppercase">Cohort</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">CAC</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">LTV</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">LTV/CAC</th>
-                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">Payback</th>
-                                <th className="text-center p-3 text-xs font-medium text-gray-500 uppercase">Status</th>
-                                <th className="text-center p-3 text-xs font-medium text-gray-500 uppercase">Trend</th>
+                                <th className="text-left p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.unitEcon.cohort')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.metrics.cac')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.metrics.ltv')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.metrics.ltvCacRatio')}</th>
+                                <th className="text-right p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.unitEcon.payback')}</th>
+                                <th className="text-center p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.common.status')}</th>
+                                <th className="text-center p-3 text-xs font-medium text-gray-500 uppercase">{t('kpi.common.trend')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1087,9 +1092,9 @@ function UnitEconomicsTab() {
                                     </td>
                                     <td className="p-3 text-center">
                                         {cohort.isUnprofitable ? (
-                                            <Badge variant="danger" size="sm">Unprofitable</Badge>
+                                            <Badge variant="danger" size="sm">{t('kpi.unitEcon.unprofitable')}</Badge>
                                         ) : (
-                                            <Badge variant="success" size="sm">Profitable</Badge>
+                                            <Badge variant="success" size="sm">{t('kpi.unitEcon.profitable')}</Badge>
                                         )}
                                     </td>
                                     <td className="p-3 text-center">{getTrendIcon(cohort.trend, 16)}</td>
@@ -1103,7 +1108,7 @@ function UnitEconomicsTab() {
             {/* Distribution & Unprofitable Units */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card variant="glass" padding="lg">
-                    <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">Contribution Distribution</h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">{t('kpi.unitEcon.contributionDistribution')}</h3>
                     {unitEconomicsMetrics.distributions.map((dist) => (
                         <div key={dist.metric} className="mb-4">
                             <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">{dist.metric}</p>
@@ -1145,21 +1150,21 @@ function UnitEconomicsTab() {
                 </Card>
 
                 <Card variant="glass" padding="lg">
-                    <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">Unprofitable Analysis</h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">{t('kpi.unitEcon.unprofitableAnalysis')}</h3>
                     <div className="space-y-4">
                         <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
                             <div>
-                                <p className="text-sm text-gray-600 dark:text-surface-400">Unprofitable Units</p>
+                                <p className="text-sm text-gray-600 dark:text-surface-400">{t('kpi.unitEcon.unprofitableUnits')}</p>
                                 <p className="text-2xl font-bold text-red-600">{unitEconomicsMetrics.unprofitableUnits}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-sm text-gray-500">of total</p>
+                                <p className="text-sm text-gray-500">{t('kpi.unitEcon.ofTotal')}</p>
                                 <p className="text-lg font-semibold text-red-600">{unitEconomicsMetrics.unprofitablePercent}%</p>
                             </div>
                         </div>
-                        
+
                         <div>
-                            <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">Affected Segments</p>
+                            <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">{t('kpi.unitEcon.affectedSegments')}</p>
                             <div className="flex flex-wrap gap-2">
                                 {unitEconomicsMetrics.unprofitableSegments.map((seg, i) => (
                                     <Badge key={i} variant="danger" size="sm">{seg}</Badge>
@@ -1168,18 +1173,18 @@ function UnitEconomicsTab() {
                         </div>
 
                         <div className="pt-4 border-t border-gray-200 dark:border-surface-700">
-                            <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">Break-Even Analysis</p>
+                            <p className="text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">{t('kpi.unitEcon.breakEvenAnalysis')}</p>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="p-3 bg-gray-50 dark:bg-surface-800/50 rounded-lg">
-                                    <p className="text-xs text-gray-500">Break-Even Price</p>
+                                    <p className="text-xs text-gray-500">{t('kpi.unitEcon.breakEvenPrice')}</p>
                                     <p className="font-semibold text-gray-900 dark:text-surface-100">
                                         {formatCurrency(unitEconomicsMetrics.breakEvenPrice)}
                                     </p>
                                 </div>
                                 <div className="p-3 bg-gray-50 dark:bg-surface-800/50 rounded-lg">
-                                    <p className="text-xs text-gray-500">Break-Even Volume</p>
+                                    <p className="text-xs text-gray-500">{t('kpi.unitEcon.breakEvenVolume')}</p>
                                     <p className="font-semibold text-gray-900 dark:text-surface-100">
-                                        {unitEconomicsMetrics.breakEvenVolume} units
+                                        {unitEconomicsMetrics.breakEvenVolume} {t('kpi.unitEcon.units')}
                                     </p>
                                 </div>
                             </div>
@@ -1331,12 +1336,12 @@ export default function KPIsPage() {
     }, [fetchKPIs, fetchSummary, fetchAlerts]);
 
     const tabs: { id: KPITab; label: string; icon: React.ElementType }[] = [
-        { id: 'overview', label: 'Overview', icon: BarChart3 },
-        { id: 'margins', label: 'Margins', icon: Percent },
-        { id: 'burn', label: 'Burn & Runway', icon: Activity },
-        { id: 'ccc', label: 'Cash Conversion', icon: Clock },
-        { id: 'unit_economics', label: 'Unit Economics', icon: Target },
-        { id: 'trends', label: 'Trends', icon: LineChart },
+        { id: 'overview', label: t('kpi.tabs.overview'), icon: BarChart3 },
+        { id: 'margins', label: t('kpi.tabs.margins'), icon: Percent },
+        { id: 'burn', label: t('kpi.tabs.burn'), icon: Activity },
+        { id: 'ccc', label: t('kpi.tabs.ccc'), icon: Clock },
+        { id: 'unit_economics', label: t('kpi.tabs.unitEconomics'), icon: Target },
+        { id: 'trends', label: t('kpi.tabs.trends'), icon: LineChart },
     ];
 
     const renderTab = () => {
@@ -1357,13 +1362,13 @@ export default function KPIsPage() {
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-surface-100 font-display">
-                        KPIs & Performance
+                        {t('kpi.title')}
                     </h1>
                     <p className="text-gray-500 dark:text-surface-500 mt-1">
-                        Track key performance indicators and business health metrics
+                        {t('kpi.subtitle')}
                     </p>
                 </div>
-                
+
                 <div className="flex flex-wrap items-center gap-3">
                     {/* Time Horizon */}
                     <select
@@ -1371,12 +1376,12 @@ export default function KPIsPage() {
                         onChange={(e) => setViewPreferences({ timeHorizon: e.target.value as KPITimeHorizon })}
                         className="px-3 py-2 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl text-sm"
                     >
-                        <option value="month">This Month</option>
-                        <option value="quarter">This Quarter</option>
-                        <option value="year">This Year</option>
-                        <option value="trailing_3m">Trailing 3M</option>
-                        <option value="trailing_6m">Trailing 6M</option>
-                        <option value="trailing_12m">Trailing 12M</option>
+                        <option value="month">{t('kpi.period.month')}</option>
+                        <option value="quarter">{t('kpi.period.quarter')}</option>
+                        <option value="year">{t('kpi.period.year')}</option>
+                        <option value="trailing_3m">{t('kpi.period.trailing3m')}</option>
+                        <option value="trailing_6m">{t('kpi.period.trailing6m')}</option>
+                        <option value="trailing_12m">{t('kpi.period.trailing12m')}</option>
                     </select>
                     
                     {/* View Options */}
@@ -1416,7 +1421,7 @@ export default function KPIsPage() {
                     </button>
                     
                     <Button variant="secondary" leftIcon={<Download size={16} />}>
-                        Export
+                        {t('common.export')}
                     </Button>
                 </div>
             </div>

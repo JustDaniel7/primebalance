@@ -51,6 +51,15 @@ import { NETTING_TYPES, NETTING_STATUSES, PARTY_TYPES, SETTLEMENT_METHODS, NETTI
 // METRIC CARDS
 // =============================================================================
 
+// Color mappings for Tailwind JIT - classes must be static strings
+const colorStyles: Record<string, { bg: string; text: string }> = {
+    blue: { bg: 'bg-blue-500/10', text: 'text-blue-500' },
+    emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-500' },
+    purple: { bg: 'bg-purple-500/10', text: 'text-purple-500' },
+    amber: { bg: 'bg-amber-500/10', text: 'text-amber-500' },
+    gray: { bg: 'bg-gray-500/10', text: 'text-gray-500' },
+};
+
 function MetricCards() {
     const { getAnalytics } = useNettingStore();
     const analytics = getAnalytics();
@@ -67,6 +76,7 @@ function MetricCards() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {metrics.map((metric, idx) => {
                 const Icon = metric.icon;
+                const colors = colorStyles[metric.color] || colorStyles.gray;
                 return (
                     <motion.div key={metric.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}>
                         <Card variant="glass" padding="md">
@@ -76,8 +86,8 @@ function MetricCards() {
                                     <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{metric.value}</p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{metric.subtext}</p>
                                 </div>
-                                <div className={`p-3 rounded-xl bg-${metric.color}-500/10`}>
-                                    <Icon className={`w-6 h-6 text-${metric.color}-500`} />
+                                <div className={`p-3 rounded-xl ${colors.bg}`}>
+                                    <Icon className={`w-6 h-6 ${colors.text}`} />
                                 </div>
                             </div>
                         </Card>

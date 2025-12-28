@@ -96,6 +96,8 @@ export default function Sidebar() {
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-xl bg-white dark:bg-surface-900/90 border border-gray-200 dark:border-surface-700 shadow-lg"
+        aria-label={sidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={sidebarOpen}
       >
         {sidebarOpen ? <CloseIcon size={20} /> : <MenuIcon size={20} />}
       </button>
@@ -110,6 +112,8 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
+        role="navigation"
+        aria-label="Main navigation"
         className={`
           fixed top-0 left-0 z-40 h-screen
           transition-all duration-300 ease-out

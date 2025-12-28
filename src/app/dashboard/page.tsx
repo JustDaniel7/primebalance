@@ -1,6 +1,6 @@
 'use client'
 
-import { useStore } from '@/index'
+import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
 import {
   MetricCard,
@@ -16,9 +16,29 @@ import {
   AccountsIcon,
 } from '@/components/ui/Icons'
 
+// Default metrics for when data is loading
+const defaultMetrics = {
+  totalRevenue: 0,
+  totalExpenses: 0,
+  netIncome: 0,
+  grossMargin: 0,
+  operatingMargin: 0,
+  cashFlow: 0,
+  accountsReceivable: 0,
+  accountsPayable: 0,
+  currentRatio: 0,
+  quickRatio: 0,
+  debtToEquity: 0,
+  returnOnAssets: 0,
+  returnOnEquity: 0,
+}
+
 export default function DashboardPage() {
-  const { metrics, cryptoTokens } = useStore()
+  const { metrics: storeMetrics, cryptoTokens } = useStore()
   const { t } = useThemeStore()
+
+  // Use default metrics if store metrics is null
+  const metrics = storeMetrics ?? defaultMetrics
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
