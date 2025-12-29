@@ -24,7 +24,10 @@
       "Bash(node scripts/extract-translations.js:*)",
       "Bash(wc:*)",
       "Bash(node scripts/sync-locales.js:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(npx prisma db seed:*)",
+      "Bash(npx tsx:*)"
     ]
   }
 }

@@ -14,7 +14,7 @@ import {
     Target, Briefcase, Building2, Edit, Trash2, Eye, Receipt, X,
     ChevronRight, ChevronLeft, Layers, Download, RefreshCw, Loader2, AlertCircle,
 } from 'lucide-react';
-import { Card, Button, Badge } from '@/components/ui';
+import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useProjectStore } from '@/store/project-store';
 import type { Project, CostCenter, ProjectStatus, ProjectType } from '@/types/project';
@@ -1459,6 +1459,7 @@ export default function ProjectsPage() {
     const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'all'>('all');
     const [typeFilter, setTypeFilter] = useState<ProjectType | 'all'>('all');
     const [editingCostCenter, setEditingCostCenter] = useState<CostCenter | null>(null);
+    const [showExportModal, setShowExportModal] = useState(false);
 
     // Fetch data on mount
     useEffect(() => {
@@ -1513,27 +1514,30 @@ export default function ProjectsPage() {
 
     const deleteDetails = getDeleteDetails();
 
-    // Export projects to CSV
-    const handleExport = () => {
-        const headers = ['Code', 'Name', 'Type', 'Status', 'Budget', 'Spent', 'Progress'];
-        const rows = filteredProjects.map(p => [
-            p.code,
-            p.name,
-            p.type,
-            p.status,
-            p.budgetAmount?.toString() || '0',
-            p.budgetSpent?.toString() || '0',
-            `${p.percentComplete || 0}%`,
-        ]);
+    // Export projects
+    const getExportData = () => ({
+        exportedAt: new Date().toISOString(),
+        projects: filteredProjects.map(p => ({
+            code: p.code,
+            name: p.name,
+            type: p.type,
+            status: p.status,
+            budget: p.budgetAmount || 0,
+            spent: p.budgetSpent || 0,
+            remaining: p.budgetRemaining || 0,
+            progress: p.percentComplete || 0,
+            plannedStartDate: p.plannedStartDate,
+            plannedEndDate: p.plannedEndDate,
+            owner: p.ownerName,
+            client: p.clientName,
+        })),
+    });
 
-        const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `projects-export-${new Date().toISOString().split('T')[0]}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
+    const handleExport = (format: ExportFormat) => {
+        const exportData = getExportData();
+        const fileName = `projects-export-${new Date().toISOString().split('T')[0]}`;
+        const { content, mimeType, extension } = convertToFormat(exportData, format, 'projects');
+        downloadFile(content, `${fileName}.${extension}`, mimeType);
     };
 
     return (
@@ -1554,7 +1558,7 @@ export default function ProjectsPage() {
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button variant="secondary" onClick={handleExport}>
+                    <Button variant="secondary" onClick={() => setShowExportModal(true)}>
                         <Download className="w-4 h-4 mr-2" />
                         Export
                     </Button>
@@ -1568,6 +1572,15 @@ export default function ProjectsPage() {
                     </Button>
                 </div>
             </div>
+
+            {/* Export Modal */}
+            <ExportModal
+                isOpen={showExportModal}
+                onClose={() => setShowExportModal(false)}
+                onExport={handleExport}
+                title={t('projects.exportTitle') || 'Export Projects'}
+                fileName="projects"
+            />
 
             {/* Metric Cards */}
             <MetricCards />

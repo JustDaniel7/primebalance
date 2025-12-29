@@ -56,7 +56,7 @@ import {
     ExternalLink,
     RotateCcw,
 } from 'lucide-react';
-import { Card, Button, Badge } from '@/components/ui';
+import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useForecastStore } from '@/store/forecast-store';
 import type {
@@ -1799,13 +1799,53 @@ export default function ForecastsPage() {
         setTimeHorizon,
         setGranularity,
         setViewPreferences,
+        revenueForecast,
+        costForecast,
+        cashForecast,
     } = useForecastStore();
 
     const unreadAlerts = getUnreadAlertCount();
+    const [showExportModal, setShowExportModal] = useState(false);
 
     useEffect(() => {
         fetchForecasts();
     }, [fetchForecasts]);
+
+    const getExportData = () => ({
+        exportedAt: new Date().toISOString(),
+        timeHorizon: viewPreferences.timeHorizon,
+        granularity: viewPreferences.granularity,
+        revenueForecast: revenueForecast ? {
+            totalExpected: revenueForecast.totalExpected,
+            totalBestCase: revenueForecast.totalBestCase,
+            totalWorstCase: revenueForecast.totalWorstCase,
+            committedRevenue: revenueForecast.committedRevenue,
+            projectedRevenue: revenueForecast.projectedRevenue,
+            atRiskRevenue: revenueForecast.atRiskRevenue,
+            lineItemCount: revenueForecast.lineItems?.length || 0,
+        } : null,
+        costForecast: costForecast ? {
+            totalExpected: costForecast.totalExpected,
+            totalBestCase: costForecast.totalBestCase,
+            totalWorstCase: costForecast.totalWorstCase,
+            committedCosts: costForecast.committedCosts,
+            estimatedCosts: costForecast.estimatedCosts,
+            lineItemCount: costForecast.lineItems?.length || 0,
+        } : null,
+        cashForecast: cashForecast ? {
+            currentCashBalance: cashForecast.currentCashBalance,
+            minimumCashRunway: cashForecast.minimumCashRunway,
+            projectedMinimumBalance: cashForecast.projectedMinimumBalance,
+            projectedMinimumDate: cashForecast.projectedMinimumDate,
+        } : null,
+    });
+
+    const handleExport = (format: ExportFormat) => {
+        const exportData = getExportData();
+        const fileName = `forecasts-export-${new Date().toISOString().split('T')[0]}`;
+        const { content, mimeType, extension } = convertToFormat(exportData, format, 'forecasts');
+        downloadFile(content, `${fileName}.${extension}`, mimeType);
+    };
 
     const tabs: { id: ForecastTab; label: string; icon: React.ElementType; badge?: number }[] = [
         { id: 'overview', label: 'Overview', icon: BarChart3 },
@@ -1900,11 +1940,20 @@ export default function ForecastsPage() {
                         )}
                     </button>
                     
-                    <Button variant="secondary" leftIcon={<Download size={16} />}>
+                    <Button variant="secondary" leftIcon={<Download size={16} />} onClick={() => setShowExportModal(true)}>
                         Export
                     </Button>
                 </div>
             </div>
+
+            {/* Export Modal */}
+            <ExportModal
+                isOpen={showExportModal}
+                onClose={() => setShowExportModal(false)}
+                onExport={handleExport}
+                title={t('forecast.exportTitle') || 'Export Forecasts'}
+                fileName="forecasts"
+            />
 
             {/* Tab Navigation */}
             <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-surface-800/50 rounded-xl overflow-x-auto">

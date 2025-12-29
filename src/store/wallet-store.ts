@@ -335,7 +335,7 @@ export const useWalletStore = create<WalletState>()(
       },
 
       getTotalValueUsd: () => {
-        return get().wallets.reduce((sum, w) => sum + (w.totalValueUsd || 0), 0);
+        return get().wallets.reduce((sum, w) => sum + Number(w.totalValueUsd || 0), 0);
       },
     }),
     {

@@ -1544,12 +1544,128 @@ function ShortcutsTab() {
 }
 
 // =============================================================================
+// TASK WIZARD MODAL
+// =============================================================================
+
+function TaskWizardModal() {
+    const { taskWizard, closeTaskWizard, updateTaskWizard, createTask } = useTaskStore();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    if (!taskWizard.isOpen) return null;
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!taskWizard.title.trim()) return;
+
+        setIsSubmitting(true);
+        await createTask({
+            title: taskWizard.title,
+            description: taskWizard.description,
+            priority: taskWizard.priority,
+            dueDate: taskWizard.dueDate,
+            sourceSystem: 'manual',
+            status: 'open',
+        });
+        setIsSubmitting(false);
+        closeTaskWizard();
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/50" onClick={closeTaskWizard} />
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="relative bg-white dark:bg-surface-900 rounded-2xl shadow-xl w-full max-w-lg mx-4"
+            >
+                <div className="p-6 border-b border-gray-200 dark:border-surface-700">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Create New Task</h2>
+                        <button onClick={closeTaskWizard} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg">
+                            <X size={20} className="text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+
+                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1">
+                            Task Title *
+                        </label>
+                        <input
+                            type="text"
+                            value={taskWizard.title}
+                            onChange={(e) => updateTaskWizard({ title: e.target.value })}
+                            placeholder="Enter task title..."
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/20"
+                            autoFocus
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1">
+                            Description
+                        </label>
+                        <textarea
+                            value={taskWizard.description}
+                            onChange={(e) => updateTaskWizard({ description: e.target.value })}
+                            placeholder="Enter task description..."
+                            rows={3}
+                            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/20"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1">
+                                Priority
+                            </label>
+                            <select
+                                value={taskWizard.priority}
+                                onChange={(e) => updateTaskWizard({ priority: e.target.value as TaskPriority })}
+                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                            >
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1">
+                                Due Date
+                            </label>
+                            <input
+                                type="date"
+                                value={taskWizard.dueDate || ''}
+                                onChange={(e) => updateTaskWizard({ dueDate: e.target.value })}
+                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end gap-3 pt-4">
+                        <Button variant="secondary" onClick={closeTaskWizard} type="button">
+                            Cancel
+                        </Button>
+                        <Button variant="primary" type="submit" disabled={!taskWizard.title.trim() || isSubmitting}>
+                            {isSubmitting ? 'Creating...' : 'Create Task'}
+                        </Button>
+                    </div>
+                </form>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
 // MAIN PAGE COMPONENT
 // =============================================================================
 
 export default function TaskCenterPage() {
     const { t } = useThemeStore();
-    const { isLoading, fetchTasks, fetchRisks, getTaskSummary, getRiskSummary } = useTaskStore();
+    const { isLoading, fetchTasks, fetchRisks, getTaskSummary, getRiskSummary, taskWizard } = useTaskStore();
     const [activeTab, setActiveTab] = useState<'today' | 'tasks' | 'risks' | 'shortcuts'>('today');
 
     const taskSummary = getTaskSummary();
@@ -1637,6 +1753,11 @@ export default function TaskCenterPage() {
                     {activeTab === 'risks' && <RisksTab />}
                     {activeTab === 'shortcuts' && <ShortcutsTab />}
                 </motion.div>
+            </AnimatePresence>
+
+            {/* Task Wizard Modal */}
+            <AnimatePresence>
+                {taskWizard.isOpen && <TaskWizardModal />}
             </AnimatePresence>
         </div>
     );

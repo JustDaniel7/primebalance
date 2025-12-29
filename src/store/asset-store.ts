@@ -1078,10 +1078,10 @@ export const useAssetStore = create<AssetStore>()(
                 const { assets, assetBooks } = get();
                 const activeAssets = assets.filter((a) => a.isActive);
 
-                const totalValue = activeAssets.reduce((sum, a) => sum + a.acquisitionCost, 0);
+                const totalValue = activeAssets.reduce((sum, a) => sum + Number(a.acquisitionCost || 0), 0);
                 const totalDepreciation = assetBooks
                     .filter((b) => b.bookType === BookType.STATUTORY && b.isActive)
-                    .reduce((sum, b) => sum + b.accumulatedDepreciation, 0);
+                    .reduce((sum, b) => sum + Number(b.accumulatedDepreciation || 0), 0);
 
                 const byStatus = {} as Record<AssetStatus, number>;
                 const byCategory = {} as Record<AssetCategory, number>;
@@ -1143,7 +1143,7 @@ export const useAssetStore = create<AssetStore>()(
                 const { assetBooks } = get();
                 return assetBooks
                     .filter((b) => b.bookType === bookType && b.isActive)
-                    .reduce((sum, b) => sum + calculateBookValue(b), 0);
+                    .reduce((sum, b) => sum + Number(calculateBookValue(b) || 0), 0);
             },
         }),
         {

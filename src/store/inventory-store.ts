@@ -400,14 +400,14 @@ export const useInventoryStore = create<InventoryState>()(
 
                 const byLocation = activeItems.reduce((acc, item) => {
                     Object.entries(item.stockByLocation).forEach(([locId, qty]) => {
-                        acc[locId] = (acc[locId] || 0) + qty;
+                        acc[locId] = (acc[locId] || 0) + Number(qty || 0);
                     });
                     return acc;
                 }, {} as Record<string, number>);
 
                 return {
                     totalItems: activeItems.length,
-                    totalValue: activeItems.reduce((sum, i) => sum + (i.totalValue || 0), 0),
+                    totalValue: activeItems.reduce((sum, i) => sum + Number(i.totalValue || 0), 0),
                     lowStockItems: lowStockItems.length,
                     expiringItems: 0,
                     overstockItems: activeItems.filter((i) => i.maxStockLevel && i.totalStock > i.maxStockLevel).length,

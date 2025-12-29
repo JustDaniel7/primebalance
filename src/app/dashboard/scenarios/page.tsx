@@ -61,7 +61,7 @@ import {
     HelpCircle,
     ExternalLink,
 } from 'lucide-react';
-import { Card, Button, Badge } from '@/components/ui';
+import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useScenarioStore } from '@/store/scenario-store';
 import type {
@@ -1571,11 +1571,36 @@ function CompareTab() {
 
 export default function ScenariosPage() {
     const { t } = useThemeStore();
-    const { activeTab, setActiveTab, isLoading, fetchScenarios } = useScenarioStore();
+    const { activeTab, setActiveTab, isLoading, fetchScenarios, scenarios } = useScenarioStore();
+    const [showExportModal, setShowExportModal] = useState(false);
 
     useEffect(() => {
         fetchScenarios();
     }, [fetchScenarios]);
+
+    const getExportData = () => ({
+        exportedAt: new Date().toISOString(),
+        scenarios: scenarios.map((s) => ({
+            name: s.name,
+            description: s.description,
+            caseType: s.caseType,
+            status: s.status,
+            revenue: s.metrics?.revenue,
+            costs: s.metrics?.costs,
+            cash: s.metrics?.cash,
+            netPosition: s.metrics?.netPosition,
+            profitMargin: s.metrics?.profitMargin,
+            confidence: s.confidence?.level,
+            createdAt: s.createdAt,
+        })),
+    });
+
+    const handleExport = (format: ExportFormat) => {
+        const exportData = getExportData();
+        const fileName = `scenarios-export-${new Date().toISOString().split('T')[0]}`;
+        const { content, mimeType, extension } = convertToFormat(exportData, format, 'scenarios');
+        downloadFile(content, `${fileName}.${extension}`, mimeType);
+    };
 
     const tabs: { id: ScenarioTab; label: string; icon: React.ElementType }[] = [
         { id: 'overview', label: 'Overview', icon: BarChart3 },
@@ -1611,11 +1636,20 @@ export default function ScenariosPage() {
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button variant="secondary" leftIcon={<Download size={16} />}>
+                    <Button variant="secondary" leftIcon={<Download size={16} />} onClick={() => setShowExportModal(true)}>
                         Export
                     </Button>
                 </div>
             </div>
+
+            {/* Export Modal */}
+            <ExportModal
+                isOpen={showExportModal}
+                onClose={() => setShowExportModal(false)}
+                onExport={handleExport}
+                title={t('scenarios.exportTitle') || 'Export Scenarios'}
+                fileName="scenarios"
+            />
 
             {/* Tab Navigation */}
             <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-surface-800/50 rounded-xl overflow-x-auto">

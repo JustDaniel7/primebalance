@@ -507,8 +507,8 @@ export const useSuppliersStore = create<SuppliersState>()(
         const active = suppliers.filter((s) => s.status === 'active');
         const preferred = suppliers.filter((s) => s.status === 'preferred');
 
-        const totalSpendYTD = suppliers.reduce((sum, s) => sum + s.totalSpend, 0);
-        const totalOutstanding = suppliers.reduce((sum, s) => sum + s.outstandingBalance, 0);
+        const totalSpendYTD = suppliers.reduce((sum, s) => sum + Number(s.totalSpend || 0), 0);
+        const totalOutstanding = suppliers.reduce((sum, s) => sum + Number(s.outstandingBalance || 0), 0);
 
         const reliabilityBreakdown = {
           excellent: suppliers.filter((s) => s.reliabilityRating === 'excellent').length,

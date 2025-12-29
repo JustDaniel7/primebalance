@@ -39,6 +39,7 @@ interface SavedReport {
   scheduleFreq?: string
   lastGenerated?: string
   createdAt: string
+  parameters?: { period?: string }
 }
 
 interface GeneratedReport {
@@ -195,6 +196,11 @@ export default function ReportsPage() {
     }).format(amount)
   }
 
+  // Normalize saved report type to API format (e.g., "BALANCE SHEET" -> "balance_sheet")
+  const normalizeReportType = (type: string) => {
+    return type.toLowerCase().replace(/\s+/g, '_')
+  }
+
   return (
       <div className="space-y-6">
         {/* Header */}
@@ -279,7 +285,7 @@ export default function ReportsPage() {
 
                     <div className="flex items-center gap-2 mt-4 pt-4 border-t border-gray-200 dark:border-surface-800/50">
                       <button
-                          onClick={() => generateReport(report.type)}
+                          onClick={() => generateReport(normalizeReportType(report.type))}
                           disabled={isLoading}
                           className="flex-1 py-2 text-sm font-medium text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 rounded-lg transition-colors flex items-center justify-center gap-1"
                       >
@@ -366,13 +372,31 @@ export default function ReportsPage() {
                           <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => generateReport(report.type)}
+                              onClick={() => generateReport(normalizeReportType(report.type))}
                           >
                             <Eye size={14} />
                           </Button>
-                          <Button variant="ghost" size="sm" leftIcon={<Download size={14} />}>
-                            {t('common.download') || 'Download'}
-                          </Button>
+                          <Button
+                              variant="ghost"
+                              size="sm"
+                              leftIcon={<Download size={14} />}
+                              onClick={async () => {
+                                const res = await fetch('/api/reports/generate', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({
+                                    reportType: normalizeReportType(report.type),
+                                    period: report.parameters?.period || selectedPeriod,
+                                  }),
+                                })
+                                if (res.ok) {
+                                  const data = await res.json()
+                                  downloadReport(data, 'csv')
+                                }
+                              }}
+                            >
+                              {t('common.download') || 'Download'}
+                            </Button>
                           <Button
                               variant="ghost"
                               size="sm"

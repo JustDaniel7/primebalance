@@ -36,7 +36,7 @@ import {
     Landmark,
     CircleDollarSign,
 } from 'lucide-react';
-import { Card, Button } from '@/components/ui';
+import { Card, Button, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useInvestorStore } from '@/store/investor-store';
 import type { InvestorRiskLevel, TrendDirection, DataQuality, MaterialChange } from '@/types/investor';
@@ -487,8 +487,7 @@ function BoardSummarySection() {
     const runway = dashboard?.runway;
     const risks = dashboard?.risks;
     const compliance = dashboard?.compliance;
-    const [exportFormat, setExportFormat] = useState<'pdf' | 'docx' | 'csv' | 'xml'>('pdf');
-    const [isExporting, setIsExporting] = useState(false);
+    const [showExportModal, setShowExportModal] = useState(false);
 
     if (!boardSummary || !revenue || !burn || !runway || !risks || !compliance) return null;
 
@@ -498,138 +497,177 @@ function BoardSummarySection() {
         return <Minus size={14} className="text-gray-400" />;
     };
 
-    const handleExport = async () => {
-        setIsExporting(true);
+    const getExportData = () => ({
+        title: 'Board Executive Summary',
+        subtitle: `${dashboard.organizationName} - Financial Overview`,
+        generatedAt: new Date().toLocaleString(),
+        metadata: {
+            organization: dashboard.organizationName,
+            currency: dashboard.reportingCurrency,
+            fiscalYearEnd: dashboard.fiscalYearEnd,
+            healthStatus: boardSummary.financialHealthStatus,
+        },
+        financialHealth: {
+            status: boardSummary.financialHealthStatus,
+            asOfDate: boardSummary.asOfDate,
+            periodCovered: boardSummary.periodCovered,
+        },
+        keyHighlights: boardSummary.keyHighlights,
+        financialMetrics: {
+            revenueYTD: revenue.ytd.value,
+            revenueChange: revenue.ytd.changePercent || 0,
+            ebitda: dashboard.margins.ebitda?.value || 0,
+            ebitdaMargin: dashboard.margins.ebitdaMarginPercent,
+            monthlyBurn: burn.currentMonthlyBurn.value,
+            burnTrend: burn.burnTrendPercent,
+            runwayMonths: runway.scenarios.find(s => s.type === runway.primaryScenario)?.runwayMonths,
+            runwayScenario: runway.primaryScenario,
+        },
+        materialChanges: boardSummary.materialChanges,
+        liquidityStatus: boardSummary.liquidityStatus,
+        sustainabilityOutlook: boardSummary.sustainabilityOutlook,
+        riskFactors: boardSummary.riskFactors,
+        riskSummary: {
+            overallRiskLevel: risks.overallRiskLevel,
+            liquidityRisk: risks.liquidityRisk,
+            concentrationRisks: risks.concentrationRisks,
+        },
+        dataQuality: {
+            completenessPercent: compliance.dataCompletenessPercent,
+            reconciliationCoverage: compliance.reconciliationCoverage,
+            auditTrailAvailable: compliance.auditTrailAvailable,
+            lastReconciliation: compliance.lastReconciliationDate,
+        },
+        dataLimitations: boardSummary.dataLimitations,
+    });
 
-        // Dynamically import to avoid SSR issues
-        const { exportDocument } = await import('@/lib/export-utils');
+    const handleExport = async (format: ExportFormat) => {
+        const exportData = getExportData();
 
-        const exportData = {
-            title: 'Board Executive Summary',
-            subtitle: `${dashboard.organizationName} - Financial Overview`,
-            generatedAt: new Date().toLocaleString(),
-            metadata: {
-                organization: dashboard.organizationName,
-                currency: dashboard.reportingCurrency,
-                fiscalYearEnd: dashboard.fiscalYearEnd,
-                healthStatus: boardSummary.financialHealthStatus,
-            },
-            sections: [
-                {
-                    title: 'Financial Health',
-                    type: 'keyValue' as const,
-                    content: [
-                        { key: 'Status', value: boardSummary.financialHealthStatus.toUpperCase() },
-                        { key: 'As Of Date', value: boardSummary.asOfDate },
-                        { key: 'Period', value: boardSummary.periodCovered },
-                    ],
-                },
-                {
-                    title: 'Key Highlights',
-                    type: 'list' as const,
-                    content: boardSummary.keyHighlights,
-                },
-                {
-                    title: 'Financial Metrics',
-                    type: 'table' as const,
-                    content: {
-                        headers: ['Metric', 'Value', 'Change'],
-                        rows: [
-                            ['Revenue YTD', formatCurrency(revenue.ytd.value), formatPercent(revenue.ytd.changePercent || 0)],
-                            ['EBITDA', formatCurrency(dashboard.margins.ebitda?.value || 0), `${dashboard.margins.ebitdaMarginPercent?.toFixed(1)}% margin`],
-                            ['Monthly Burn', formatCurrency(burn.currentMonthlyBurn.value), formatPercent(burn.burnTrendPercent)],
-                            ['Cash Runway', `${runway.scenarios.find(s => s.type === runway.primaryScenario)?.runwayMonths.toFixed(1)} months`, runway.primaryScenario],
+        // Use specialized export for PDF/DOCX
+        if (format === 'pdf' || format === 'docx') {
+            const { exportDocument } = await import('@/lib/export-utils');
+            const documentData = {
+                title: 'Board Executive Summary',
+                subtitle: `${dashboard.organizationName} - Financial Overview`,
+                generatedAt: new Date().toLocaleString(),
+                metadata: exportData.metadata,
+                sections: [
+                    {
+                        title: 'Financial Health',
+                        type: 'keyValue' as const,
+                        content: [
+                            { key: 'Status', value: boardSummary.financialHealthStatus.toUpperCase() },
+                            { key: 'As Of Date', value: boardSummary.asOfDate },
+                            { key: 'Period', value: boardSummary.periodCovered },
                         ],
                     },
-                },
-                {
-                    title: 'Material Changes',
-                    type: 'table' as const,
-                    content: {
-                        headers: ['Category', 'Description', 'Impact', 'Change %'],
-                        rows: boardSummary.materialChanges.map((change) => [
-                            change.category,
-                            change.description,
-                            change.impact,
-                            change.changePercent ? `${change.changePercent.toFixed(1)}%` : 'N/A',
-                        ]),
+                    {
+                        title: 'Key Highlights',
+                        type: 'list' as const,
+                        content: boardSummary.keyHighlights,
                     },
-                },
-                {
-                    title: 'Liquidity Status',
-                    type: 'text' as const,
-                    content: boardSummary.liquidityStatus,
-                },
-                {
-                    title: 'Sustainability Outlook',
-                    type: 'text' as const,
-                    content: boardSummary.sustainabilityOutlook,
-                },
-                {
-                    title: 'Risk Factors',
-                    type: 'list' as const,
-                    content: boardSummary.riskFactors,
-                },
-                {
-                    title: 'Risk Summary',
-                    type: 'keyValue' as const,
-                    content: [
-                        { key: 'Overall Risk Level', value: risks.overallRiskLevel },
-                        { key: 'Liquidity Risk', value: risks.liquidityRisk },
-                        ...risks.concentrationRisks.map((r) => ({
-                            key: `${r.type.charAt(0).toUpperCase() + r.type.slice(1)} Concentration`,
-                            value: `${r.concentrationPercent}% (${r.riskLevel})`,
-                        })),
-                    ],
-                },
-                {
-                    title: 'Data Quality & Compliance',
-                    type: 'keyValue' as const,
-                    content: [
-                        { key: 'Data Completeness', value: `${compliance.dataCompletenessPercent}%` },
-                        { key: 'Reconciliation Coverage', value: `${compliance.reconciliationCoverage}%` },
-                        { key: 'Audit Trail', value: compliance.auditTrailAvailable ? 'Available' : 'Unavailable' },
-                        { key: 'Last Reconciliation', value: compliance.lastReconciliationDate || 'N/A' },
-                    ],
-                },
-                {
-                    title: 'Data Limitations',
-                    type: 'list' as const,
-                    content: boardSummary.dataLimitations,
-                },
-            ],
-        };
-
-        await exportDocument(exportData, exportFormat, 'board-summary');
-        setIsExporting(false);
+                    {
+                        title: 'Financial Metrics',
+                        type: 'table' as const,
+                        content: {
+                            headers: ['Metric', 'Value', 'Change'],
+                            rows: [
+                                ['Revenue YTD', formatCurrency(revenue.ytd.value), formatPercent(revenue.ytd.changePercent || 0)],
+                                ['EBITDA', formatCurrency(dashboard.margins.ebitda?.value || 0), `${dashboard.margins.ebitdaMarginPercent?.toFixed(1)}% margin`],
+                                ['Monthly Burn', formatCurrency(burn.currentMonthlyBurn.value), formatPercent(burn.burnTrendPercent)],
+                                ['Cash Runway', `${runway.scenarios.find(s => s.type === runway.primaryScenario)?.runwayMonths.toFixed(1)} months`, runway.primaryScenario],
+                            ],
+                        },
+                    },
+                    {
+                        title: 'Material Changes',
+                        type: 'table' as const,
+                        content: {
+                            headers: ['Category', 'Description', 'Impact', 'Change %'],
+                            rows: boardSummary.materialChanges.map((change) => [
+                                change.category,
+                                change.description,
+                                change.impact,
+                                change.changePercent ? `${change.changePercent.toFixed(1)}%` : 'N/A',
+                            ]),
+                        },
+                    },
+                    {
+                        title: 'Liquidity Status',
+                        type: 'text' as const,
+                        content: boardSummary.liquidityStatus,
+                    },
+                    {
+                        title: 'Sustainability Outlook',
+                        type: 'text' as const,
+                        content: boardSummary.sustainabilityOutlook,
+                    },
+                    {
+                        title: 'Risk Factors',
+                        type: 'list' as const,
+                        content: boardSummary.riskFactors,
+                    },
+                    {
+                        title: 'Risk Summary',
+                        type: 'keyValue' as const,
+                        content: [
+                            { key: 'Overall Risk Level', value: risks.overallRiskLevel },
+                            { key: 'Liquidity Risk', value: risks.liquidityRisk },
+                            ...risks.concentrationRisks.map((r) => ({
+                                key: `${r.type.charAt(0).toUpperCase() + r.type.slice(1)} Concentration`,
+                                value: `${r.concentrationPercent}% (${r.riskLevel})`,
+                            })),
+                        ],
+                    },
+                    {
+                        title: 'Data Quality & Compliance',
+                        type: 'keyValue' as const,
+                        content: [
+                            { key: 'Data Completeness', value: `${compliance.dataCompletenessPercent}%` },
+                            { key: 'Reconciliation Coverage', value: `${compliance.reconciliationCoverage}%` },
+                            { key: 'Audit Trail', value: compliance.auditTrailAvailable ? 'Available' : 'Unavailable' },
+                            { key: 'Last Reconciliation', value: compliance.lastReconciliationDate || 'N/A' },
+                        ],
+                    },
+                    {
+                        title: 'Data Limitations',
+                        type: 'list' as const,
+                        content: boardSummary.dataLimitations,
+                    },
+                ],
+            };
+            await exportDocument(documentData, format, 'board-summary');
+        } else {
+            // Use generic export for other formats
+            const fileName = `board-summary-${new Date().toISOString().split('T')[0]}`;
+            const { content, mimeType, extension } = convertToFormat(exportData, format, 'board-summary');
+            downloadFile(content, `${fileName}.${extension}`, mimeType);
+        }
     };
 
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <SectionHeader title="Board Summary" icon={FileText} />
-                <div className="flex items-center gap-2">
-                    <select
-                        value={exportFormat}
-                        onChange={(e) => setExportFormat(e.target.value as any)}
-                        className="px-3 py-1.5 text-sm rounded-lg border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
-                    >
-                        <option value="pdf">PDF</option>
-                        <option value="docx">Word (.docx)</option>
-                        <option value="csv">CSV</option>
-                        <option value="xml">XML</option>
-                    </select>
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        leftIcon={<Download size={16} className={isExporting ? 'animate-pulse' : ''} />}
-                        onClick={handleExport}
-                        disabled={isExporting}
-                    >
-                        {isExporting ? 'Exporting...' : 'Export'}
-                    </Button>
-                </div>
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    leftIcon={<Download size={16} />}
+                    onClick={() => setShowExportModal(true)}
+                >
+                    Export
+                </Button>
             </div>
+
+            {/* Export Modal */}
+            <ExportModal
+                isOpen={showExportModal}
+                onClose={() => setShowExportModal(false)}
+                onExport={handleExport}
+                title="Export Board Summary"
+                fileName="board-summary"
+            />
 
             {/* Rest of the BoardSummarySection content remains the same... */}
             {/* Health Status */}

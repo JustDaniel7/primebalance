@@ -401,7 +401,56 @@ export const useNettingStore = create<NettingState>()(
       // =====================================================================
 
       getAnalytics: () => {
-        return get().analytics || defaultAnalytics;
+        const { sessions } = get();
+
+        // Compute analytics from actual sessions
+        if (sessions.length === 0) {
+          return defaultAnalytics;
+        }
+
+        const totalSessions = sessions.length;
+        const settledSessions = sessions.filter(s => s.status === 'settled').length;
+        const pendingSessions = sessions.filter(s => s.status === 'pending_approval' || s.status === 'approved').length;
+        const totalGrossAmount = sessions.reduce((sum, s) => sum + Number(s.grossAmount || 0), 0);
+        const totalNetAmount = sessions.reduce((sum, s) => sum + Number(s.netAmount || 0), 0);
+        const totalSavings = sessions.reduce((sum, s) => sum + Number(s.savingsAmount || 0), 0);
+        const avgSavingsPercentage = sessions.length > 0
+          ? Math.round((sessions.reduce((sum, s) => sum + Number(s.savingsPercentage || 0), 0) / sessions.length) * 10) / 10
+          : 0;
+
+        const byType = {
+          counterparty: {
+            sessions: sessions.filter(s => s.type === 'counterparty').length,
+            savings: sessions.filter(s => s.type === 'counterparty').reduce((sum, s) => sum + Number(s.savingsAmount || 0), 0),
+          },
+          intercompany: {
+            sessions: sessions.filter(s => s.type === 'intercompany').length,
+            savings: sessions.filter(s => s.type === 'intercompany').reduce((sum, s) => sum + Number(s.savingsAmount || 0), 0),
+          },
+          multilateral: {
+            sessions: sessions.filter(s => s.type === 'multilateral').length,
+            savings: sessions.filter(s => s.type === 'multilateral').reduce((sum, s) => sum + Number(s.savingsAmount || 0), 0),
+          },
+        };
+
+        return {
+          totalSessions,
+          settledSessions,
+          pendingSessions,
+          totalGrossAmount,
+          totalNetAmount,
+          totalSavings,
+          avgSavingsPercentage,
+          byType,
+          recentSessions: sessions.slice(0, 5).map(s => ({
+            id: s.id,
+            sessionNumber: s.sessionNumber,
+            netAmount: s.netAmount,
+            savings: s.savingsAmount || 0,
+            status: s.status,
+          })),
+          topCounterparties: [],
+        };
       },
 
       getSessionPositions: (sessionId) => {

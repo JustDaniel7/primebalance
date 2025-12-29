@@ -826,14 +826,14 @@ export const useProjectStore = create<ProjectState>()(
                     activeProjects: projects.filter((p) => p.status === 'active').length,
                     completedProjects: projects.filter((p) => p.status === 'completed').length,
                     onHoldProjects: projects.filter((p) => p.status === 'on_hold').length,
-                    totalBudget: projects.reduce((sum, p) => sum + (p.budgetAmount || 0), 0),
-                    totalSpent: projects.reduce((sum, p) => sum + (p.budgetSpent || 0), 0),
-                    totalRemaining: projects.reduce((sum, p) => sum + (p.budgetRemaining || 0), 0),
-                    totalRevenue: projects.reduce((sum, p) => sum + (p.totalRevenue || 0), 0),
-                    totalCosts: projects.reduce((sum, p) => sum + (p.totalCosts || 0), 0),
-                    totalProfit: projects.reduce((sum, p) => sum + (p.grossProfit || 0), 0),
+                    totalBudget: projects.reduce((sum, p) => sum + Number(p.budgetAmount || 0), 0),
+                    totalSpent: projects.reduce((sum, p) => sum + Number(p.budgetSpent || 0), 0),
+                    totalRemaining: projects.reduce((sum, p) => sum + Number(p.budgetRemaining || 0), 0),
+                    totalRevenue: projects.reduce((sum, p) => sum + Number(p.totalRevenue || 0), 0),
+                    totalCosts: projects.reduce((sum, p) => sum + Number(p.totalCosts || 0), 0),
+                    totalProfit: projects.reduce((sum, p) => sum + Number(p.grossProfit || 0), 0),
                     averageMargin: projects.length > 0
-                        ? projects.reduce((sum, p) => sum + (p.grossMargin || 0), 0) / projects.length
+                        ? projects.reduce((sum, p) => sum + Number(p.grossMargin || 0), 0) / projects.length
                         : 0,
                     overdueProjects: get().getOverdueProjects().length,
                     overBudgetProjects: get().getOverBudgetProjects().length,
@@ -864,15 +864,15 @@ export const useProjectStore = create<ProjectState>()(
 
                 const ccProjects = projects.filter((p) => p.costCenterId === costCenterId);
                 const activeProjects = ccProjects.filter((p) => p.status === 'active').length;
-                const totalProjectCost = ccProjects.reduce((sum, p) => sum + (p.budgetSpent || 0), 0);
+                const totalProjectCost = ccProjects.reduce((sum, p) => sum + Number(p.budgetSpent || 0), 0);
 
                 // Calculate chargebacks
                 const chargebacksIn = chargebacks
                     .filter((cb) => cb.toCostCenterId === costCenterId && cb.status === 'approved')
-                    .reduce((sum, cb) => sum + cb.amount, 0);
+                    .reduce((sum, cb) => sum + Number(cb.amount || 0), 0);
                 const chargebacksOut = chargebacks
                     .filter((cb) => cb.fromCostCenterId === costCenterId && cb.status === 'approved')
-                    .reduce((sum, cb) => sum + cb.amount, 0);
+                    .reduce((sum, cb) => sum + Number(cb.amount || 0), 0);
 
                 return {
                     costCenterId: cc.id,

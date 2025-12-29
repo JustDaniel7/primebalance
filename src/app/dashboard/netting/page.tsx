@@ -576,6 +576,211 @@ function OffsetsTab() {
 }
 
 // =============================================================================
+// NEW SESSION FORM
+// =============================================================================
+
+function NewSessionForm({
+    onClose,
+    onCreated,
+    agreementsList
+}: {
+    onClose: () => void;
+    onCreated: (session: NettingSession) => void;
+    agreementsList: NettingAgreement[];
+}) {
+    const { createSession } = useNettingStore();
+    const { t } = useThemeStore();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const [form, setForm] = useState({
+        agreementId: '',
+        type: 'counterparty' as NettingType,
+        periodStart: new Date().toISOString().split('T')[0],
+        periodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        settlementDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        baseCurrency: 'USD',
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!form.agreementId) {
+            alert('Please select an agreement');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const selectedAgreement = agreementsList.find(a => a.id === form.agreementId);
+            const session = await createSession({
+                agreementId: form.agreementId,
+                agreementName: selectedAgreement?.name || 'Netting Session',
+                type: form.type,
+                status: 'draft',
+                periodStart: form.periodStart,
+                periodEnd: form.periodEnd,
+                nettingDate: form.periodEnd,
+                settlementDate: form.settlementDate,
+                baseCurrency: form.baseCurrency,
+                positions: [],
+                settlements: [],
+                totalReceivables: 0,
+                totalPayables: 0,
+                grossAmount: 0,
+                netAmount: 0,
+                savingsAmount: 0,
+                savingsPercentage: 0,
+            });
+
+            if (session) {
+                onCreated(session);
+            }
+        } catch (error) {
+            console.error('Failed to create session:', error);
+            alert('Failed to create netting session');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white dark:bg-surface-900 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col"
+            >
+                {/* Header */}
+                <div className="px-6 py-4 border-b border-gray-200 dark:border-surface-700 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
+                            <GitMerge size={20} className="text-indigo-600" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold">{t('netting.newSession') || 'New Netting Session'}</h2>
+                            <p className="text-sm text-gray-500">{t('netting.createSessionDesc') || 'Create a new netting session'}</p>
+                        </div>
+                    </div>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg">
+                        <X size={20} />
+                    </button>
+                </div>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-5">
+                    {/* Agreement Selection */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            {t('netting.agreement') || 'Agreement'} *
+                        </label>
+                        <select
+                            value={form.agreementId}
+                            onChange={(e) => setForm({ ...form, agreementId: e.target.value })}
+                            required
+                            className="w-full px-3 py-2.5 border border-gray-200 dark:border-surface-600 rounded-xl bg-white dark:bg-surface-800"
+                        >
+                            <option value="">{t('netting.selectAgreement') || 'Select an agreement...'}</option>
+                            {agreementsList.filter(a => a.status === 'active').map((a) => (
+                                <option key={a.id} value={a.id}>{a.name} ({a.type})</option>
+                            ))}
+                        </select>
+                        {agreementsList.filter(a => a.status === 'active').length === 0 && (
+                            <p className="text-xs text-amber-600 mt-1">{t('netting.noActiveAgreements') || 'No active agreements. Please create one first.'}</p>
+                        )}
+                    </div>
+
+                    {/* Type */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            {t('netting.sessionType') || 'Session Type'}
+                        </label>
+                        <select
+                            value={form.type}
+                            onChange={(e) => setForm({ ...form, type: e.target.value as NettingType })}
+                            className="w-full px-3 py-2.5 border border-gray-200 dark:border-surface-600 rounded-xl bg-white dark:bg-surface-800"
+                        >
+                            {NETTING_TYPES.map((type) => (
+                                <option key={type.value} value={type.value}>{type.label}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Period */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                {t('netting.periodStart') || 'Period Start'}
+                            </label>
+                            <input
+                                type="date"
+                                value={form.periodStart}
+                                onChange={(e) => setForm({ ...form, periodStart: e.target.value })}
+                                className="w-full px-3 py-2.5 border border-gray-200 dark:border-surface-600 rounded-xl bg-white dark:bg-surface-800"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                                {t('netting.periodEnd') || 'Period End'}
+                            </label>
+                            <input
+                                type="date"
+                                value={form.periodEnd}
+                                onChange={(e) => setForm({ ...form, periodEnd: e.target.value })}
+                                className="w-full px-3 py-2.5 border border-gray-200 dark:border-surface-600 rounded-xl bg-white dark:bg-surface-800"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Settlement Date */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            {t('netting.settlementDate') || 'Settlement Date'}
+                        </label>
+                        <input
+                            type="date"
+                            value={form.settlementDate}
+                            onChange={(e) => setForm({ ...form, settlementDate: e.target.value })}
+                            className="w-full px-3 py-2.5 border border-gray-200 dark:border-surface-600 rounded-xl bg-white dark:bg-surface-800"
+                        />
+                    </div>
+
+                    {/* Currency */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                            {t('netting.baseCurrency') || 'Base Currency'}
+                        </label>
+                        <select
+                            value={form.baseCurrency}
+                            onChange={(e) => setForm({ ...form, baseCurrency: e.target.value })}
+                            className="w-full px-3 py-2.5 border border-gray-200 dark:border-surface-600 rounded-xl bg-white dark:bg-surface-800"
+                        >
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="CHF">CHF</option>
+                        </select>
+                    </div>
+                </form>
+
+                {/* Footer */}
+                <div className="px-6 py-4 border-t border-gray-200 dark:border-surface-700 flex justify-end gap-3">
+                    <Button variant="ghost" onClick={onClose}>
+                        {t('common.cancel') || 'Cancel'}
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={handleSubmit}
+                        disabled={isSubmitting || !form.agreementId}
+                    >
+                        {isSubmitting ? 'Creating...' : (t('netting.createSession') || 'Create Session')}
+                    </Button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
 // MAIN PAGE
 // =============================================================================
 
@@ -587,6 +792,7 @@ export default function NettingPage() {
     const [filterStatus, setFilterStatus] = useState<NettingStatus | 'all'>('all');
     const [filterType, setFilterType] = useState<NettingType | 'all'>('all');
     const [showWizard, setShowWizard] = useState(false);
+    const [showNewSession, setShowNewSession] = useState(false);
 
     // Fetch data on mount
     useEffect(() => {
@@ -594,6 +800,11 @@ export default function NettingPage() {
         fetchAgreements();
         fetchOffsets();
     }, [fetchSessions, fetchAgreements, fetchOffsets]);
+
+    const handleSessionCreated = (session: NettingSession) => {
+        setShowNewSession(false);
+        selectSession(session.id);
+    };
 
     const selectedSession = sessions.find((s) => s.id === selectedSessionId);
 
@@ -623,7 +834,7 @@ export default function NettingPage() {
                     <Button variant="secondary" leftIcon={<Settings size={18} />} onClick={() => setShowWizard(true)}>
                         {t('netting.configureAgreement') || 'Configure Agreement'}
                     </Button>
-                    <Button variant="primary" leftIcon={<Plus size={18} />}>
+                    <Button variant="primary" leftIcon={<Plus size={18} />} onClick={() => setShowNewSession(true)}>
                         {t('netting.newSession') || 'New Netting Session'}
                     </Button>
                 </div>
@@ -740,6 +951,17 @@ export default function NettingPage() {
                     <NettingAgreementWizard
                         onCloseAction={() => setShowWizard(false)}
                         onCompleteAction={createAgreement}
+                    />
+                )}
+            </AnimatePresence>
+
+            {/* New Session Modal */}
+            <AnimatePresence>
+                {showNewSession && (
+                    <NewSessionForm
+                        onClose={() => setShowNewSession(false)}
+                        onCreated={handleSessionCreated}
+                        agreementsList={agreements}
                     />
                 )}
             </AnimatePresence>

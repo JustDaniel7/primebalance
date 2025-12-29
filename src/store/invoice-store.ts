@@ -773,13 +773,13 @@ export const useInvoiceStore = create<InvoiceState>()(
   getTotalRevenue: () => {
     return get().invoices
         .filter((inv) => ![InvoiceStatus.DRAFT, InvoiceStatus.CANCELLED].includes(inv.status as InvoiceStatus))
-        .reduce((sum, inv) => sum + inv.total, 0);
+        .reduce((sum, inv) => sum + Number(inv.total || 0), 0);
   },
 
   getTotalOutstanding: () => {
     return get().invoices
         .filter((inv) => ![InvoiceStatus.PAID, InvoiceStatus.CANCELLED, InvoiceStatus.ARCHIVED].includes(inv.status as InvoiceStatus))
-        .reduce((sum, inv) => sum + inv.outstandingAmount, 0);
+        .reduce((sum, inv) => sum + Number(inv.outstandingAmount || 0), 0);
   },
 
   generateInvoiceNumber: () => {

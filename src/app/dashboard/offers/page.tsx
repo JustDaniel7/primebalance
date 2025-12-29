@@ -717,6 +717,317 @@ function OfferDetail({ offerId, onClose }: { offerId: string; onClose: () => voi
 }
 
 // =============================================================================
+// NEW OFFER FORM
+// =============================================================================
+
+function NewOfferForm({ onClose, onCreated }: { onClose: () => void; onCreated: (id: string) => void }) {
+    const { createOffer, templates, fetchTemplates } = useOffersStore();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [selectedTemplate, setSelectedTemplate] = useState<string>('');
+
+    const [form, setForm] = useState({
+        counterpartyName: '',
+        counterpartyCompany: '',
+        counterpartyEmail: '',
+        counterpartyPhone: '',
+        counterpartyAddress: '',
+        currency: 'EUR',
+        validityDays: 30,
+        paymentTerms: 'net_30',
+        deliveryTerms: '',
+        customerNotes: '',
+    });
+
+    useEffect(() => {
+        fetchTemplates();
+    }, [fetchTemplates]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!form.counterpartyName.trim()) {
+            alert('Counterparty name is required');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            // Find template if selected
+            const template = templates.find(t => t.id === selectedTemplate);
+
+            const offer = await createOffer({
+                counterparty: {
+                    id: `temp-${Date.now()}`,
+                    name: form.counterpartyName,
+                    company: form.counterpartyCompany || undefined,
+                    email: form.counterpartyEmail,
+                    phone: form.counterpartyPhone || undefined,
+                    address: form.counterpartyAddress || undefined,
+                },
+                currency: template?.defaultCurrency || form.currency,
+                validityDays: template?.defaultValidityDays || form.validityDays,
+                paymentTerms: template?.defaultPaymentTerms || form.paymentTerms,
+                deliveryTerms: template?.defaultDeliveryTerms || form.deliveryTerms || undefined,
+                customerNotes: form.customerNotes || undefined,
+                termsAndConditions: template?.defaultTermsAndConditions,
+                disclaimer: template?.defaultDisclaimer || 'This offer is non-binding and subject to final confirmation.',
+                templateId: template?.id,
+                templateName: template?.name,
+                lineItems: template?.defaultLineItems?.map((item, idx) => ({
+                    ...item,
+                    id: item.id || `line-${Date.now()}-${idx}`,
+                    lineNumber: item.lineNumber ?? idx + 1,
+                    type: item.type || 'product',
+                    description: item.description || '',
+                    quantity: 1,
+                    unit: item.unit || 'pcs',
+                    unitPrice: item.unitPrice || 0,
+                    currency: template.defaultCurrency,
+                })) as any || [],
+            });
+
+            if (offer) {
+                onCreated(offer.id);
+            }
+        } catch (error) {
+            console.error('Failed to create offer:', error);
+            alert('Failed to create offer');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white dark:bg-surface-900 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+            >
+                {/* Header */}
+                <div className="px-6 py-4 border-b border-gray-200 dark:border-surface-700 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
+                            <Plus size={20} className="text-indigo-600" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold">New Offer</h2>
+                            <p className="text-sm text-gray-500">Create a non-binding commercial offer</p>
+                        </div>
+                    </div>
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg">
+                        <X size={20} />
+                    </button>
+                </div>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+                    {/* Template Selection */}
+                    {templates.length > 0 && (
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <LayoutTemplate size={14} className="inline mr-1" />
+                                Start from Template (optional)
+                            </label>
+                            <select
+                                value={selectedTemplate}
+                                onChange={(e) => setSelectedTemplate(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                            >
+                                <option value="">Blank Offer</option>
+                                {templates.map((t) => (
+                                    <option key={t.id} value={t.id}>{t.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+
+                    {/* Counterparty Section */}
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <Building2 size={16} />
+                            Counterparty Details
+                        </h3>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Contact Name *
+                                </label>
+                                <input
+                                    type="text"
+                                    value={form.counterpartyName}
+                                    onChange={(e) => setForm({ ...form, counterpartyName: e.target.value })}
+                                    placeholder="John Doe"
+                                    required
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Company
+                                </label>
+                                <input
+                                    type="text"
+                                    value={form.counterpartyCompany}
+                                    onChange={(e) => setForm({ ...form, counterpartyCompany: e.target.value })}
+                                    placeholder="Acme Corporation"
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Email *
+                                </label>
+                                <input
+                                    type="email"
+                                    value={form.counterpartyEmail}
+                                    onChange={(e) => setForm({ ...form, counterpartyEmail: e.target.value })}
+                                    placeholder="john@acme.com"
+                                    required
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Phone
+                                </label>
+                                <input
+                                    type="tel"
+                                    value={form.counterpartyPhone}
+                                    onChange={(e) => setForm({ ...form, counterpartyPhone: e.target.value })}
+                                    placeholder="+1 555 123 4567"
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Address
+                            </label>
+                            <input
+                                type="text"
+                                value={form.counterpartyAddress}
+                                onChange={(e) => setForm({ ...form, counterpartyAddress: e.target.value })}
+                                placeholder="123 Main St, City, Country"
+                                className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Offer Terms Section */}
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <Calendar size={16} />
+                            Offer Terms
+                        </h3>
+
+                        <div className="grid grid-cols-3 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Currency
+                                </label>
+                                <select
+                                    value={form.currency}
+                                    onChange={(e) => setForm({ ...form, currency: e.target.value })}
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                >
+                                    <option value="EUR">EUR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="CHF">CHF</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Valid For (Days)
+                                </label>
+                                <select
+                                    value={form.validityDays}
+                                    onChange={(e) => setForm({ ...form, validityDays: Number(e.target.value) })}
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                >
+                                    {VALIDITY_PERIODS.map((p) => (
+                                        <option key={p.value} value={p.value}>{p.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Payment Terms
+                                </label>
+                                <select
+                                    value={form.paymentTerms}
+                                    onChange={(e) => setForm({ ...form, paymentTerms: e.target.value })}
+                                    className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                                >
+                                    {OFFERS_PAYMENT_TERMS.map((p) => (
+                                        <option key={p.value} value={p.value}>{p.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Delivery Terms
+                            </label>
+                            <input
+                                type="text"
+                                value={form.deliveryTerms}
+                                onChange={(e) => setForm({ ...form, deliveryTerms: e.target.value })}
+                                placeholder="e.g., FOB Origin, CIF Destination"
+                                className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                Notes for Customer
+                            </label>
+                            <textarea
+                                value={form.customerNotes}
+                                onChange={(e) => setForm({ ...form, customerNotes: e.target.value })}
+                                placeholder="Any notes to include in the offer..."
+                                rows={3}
+                                className="w-full px-3 py-2 border border-gray-200 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 resize-none"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Info Note */}
+                    <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                        <p className="text-sm text-blue-700 dark:text-blue-400 flex items-start gap-2">
+                            <Info size={16} className="shrink-0 mt-0.5" />
+                            You can add line items after creating the offer. The offer will be saved as a draft.
+                        </p>
+                    </div>
+                </form>
+
+                {/* Footer */}
+                <div className="px-6 py-4 border-t border-gray-200 dark:border-surface-700 flex justify-end gap-3">
+                    <Button variant="ghost" onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="primary"
+                        leftIcon={<Save size={16} />}
+                        onClick={handleSubmit}
+                        disabled={isSubmitting || !form.counterpartyName.trim() || !form.counterpartyEmail.trim()}
+                    >
+                        {isSubmitting ? 'Creating...' : 'Create Offer'}
+                    </Button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
 // MAIN PAGE
 // =============================================================================
 
@@ -730,6 +1041,11 @@ export default function OffersPage() {
     useEffect(() => {
         fetchOffers();
     }, [fetchOffers]);
+
+    const handleOfferCreated = (id: string) => {
+        setShowNewOffer(false);
+        setSelectedOfferId(id); // Open the new offer for editing
+    };
 
     return (
         <div className="space-y-6">
@@ -760,6 +1076,16 @@ export default function OffersPage() {
                 onSelect={(id) => setSelectedOfferId(id)}
                 onNew={() => setShowNewOffer(true)}
             />
+
+            {/* New Offer Modal */}
+            <AnimatePresence>
+                {showNewOffer && (
+                    <NewOfferForm
+                        onClose={() => setShowNewOffer(false)}
+                        onCreated={handleOfferCreated}
+                    />
+                )}
+            </AnimatePresence>
 
             {/* Offer Detail Modal */}
             <AnimatePresence>

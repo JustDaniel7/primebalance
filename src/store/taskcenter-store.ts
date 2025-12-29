@@ -735,11 +735,185 @@ export const useTaskStore = create<TaskCenterState>()(
       },
 
       getTaskSummary: () => {
-        return get().taskSummary || defaultTaskSummary;
+        const { tasks } = get();
+
+        if (tasks.length === 0) {
+          return defaultTaskSummary;
+        }
+
+        // Get today's date at start of day for comparison
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const todayStr = today.toISOString().split('T')[0];
+
+        // Calculate end of this week (Sunday)
+        const endOfWeek = new Date(today);
+        endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
+        const endOfWeekStr = endOfWeek.toISOString().split('T')[0];
+
+        // Initialize counters
+        const byStatus: Record<string, number> = { open: 0, in_progress: 0, blocked: 0, awaiting_review: 0, completed: 0, cancelled: 0, snoozed: 0 };
+        const byPriority: Record<string, number> = { low: 0, medium: 0, high: 0, critical: 0 };
+        let dueToday = 0;
+        let overdue = 0;
+        let dueSoon = 0; // Due within 3 days
+        let blocked = 0;
+        let needsReview = 0;
+        let slaBreach = 0;
+        let completedToday = 0;
+        let completedThisWeek = 0;
+
+        tasks.forEach(task => {
+          // Count by status
+          if (byStatus[task.status] !== undefined) {
+            byStatus[task.status]++;
+          }
+
+          // Count by priority
+          if (byPriority[task.priority] !== undefined) {
+            byPriority[task.priority]++;
+          }
+
+          // Count blocked tasks
+          if (task.status === 'blocked') {
+            blocked++;
+          }
+
+          // Count tasks needing review
+          if (task.status === 'awaiting_review') {
+            needsReview++;
+          }
+
+          // Date-based calculations (only for non-completed/cancelled tasks)
+          if (task.dueDate && task.status !== 'completed' && task.status !== 'cancelled') {
+            const dueDateStr = task.dueDate.split('T')[0]; // Normalize to date only
+
+            if (dueDateStr === todayStr) {
+              dueToday++;
+            } else if (dueDateStr < todayStr) {
+              overdue++;
+            } else {
+              // Check if due within 3 days
+              const dueDate = new Date(dueDateStr);
+              const threeDaysFromNow = new Date(today);
+              threeDaysFromNow.setDate(today.getDate() + 3);
+              if (dueDate <= threeDaysFromNow) {
+                dueSoon++;
+              }
+            }
+          }
+
+          // Count SLA breaches
+          if (task.slaBreach) {
+            slaBreach++;
+          }
+
+          // Count completions
+          if (task.status === 'completed' && task.completedAt) {
+            const completedDateStr = task.completedAt.split('T')[0];
+            if (completedDateStr === todayStr) {
+              completedToday++;
+            }
+            if (completedDateStr >= todayStr && completedDateStr <= endOfWeekStr) {
+              completedThisWeek++;
+            }
+          }
+        });
+
+        return {
+          total: tasks.length,
+          byStatus: byStatus as any,
+          byPriority: byPriority as any,
+          dueToday,
+          overdue,
+          dueSoon,
+          blocked,
+          needsReview,
+          slaBreach,
+          completedToday,
+          completedThisWeek,
+        };
       },
 
       getRiskSummary: () => {
-        return get().riskSummary || defaultRiskSummary;
+        const { risks } = get();
+
+        if (risks.length === 0) {
+          return defaultRiskSummary;
+        }
+
+        const byStatus: Record<string, number> = { identified: 0, assessing: 0, mitigating: 0, monitoring: 0, resolved: 0, accepted: 0, escalated: 0 };
+        const bySeverity: Record<string, number> = { low: 0, medium: 0, high: 0, critical: 0 };
+        let criticalCount = 0;
+        let highCount = 0;
+
+        risks.forEach(risk => {
+          if (byStatus[risk.status] !== undefined) {
+            byStatus[risk.status]++;
+          }
+          if (bySeverity[risk.severity] !== undefined) {
+            bySeverity[risk.severity]++;
+          }
+          if (risk.severity === 'critical') {
+            criticalCount++;
+          }
+          if (risk.severity === 'high') {
+            highCount++;
+          }
+        });
+
+        // Count additional metrics
+        let newlyEscalated = 0;
+        let staleCount = 0;
+        let mitigationOverdue = 0;
+        let totalImpactScore = 0;
+
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        const today = new Date().toISOString().split('T')[0];
+
+        risks.forEach(risk => {
+          // Check if newly escalated (escalated within last 7 days)
+          if (risk.status === 'escalated' && risk.lastUpdatedAt) {
+            const updatedDate = new Date(risk.lastUpdatedAt);
+            if (updatedDate >= oneWeekAgo) {
+              newlyEscalated++;
+            }
+          }
+
+          // Check for stale risks (no updates in 30 days and not resolved)
+          if (risk.lastUpdatedAt && risk.status !== 'resolved' && risk.status !== 'accepted') {
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            if (new Date(risk.lastUpdatedAt) < thirtyDaysAgo) {
+              staleCount++;
+            }
+          }
+
+          // Check for mitigation overdue
+          if (risk.targetMitigationDate && risk.status !== 'resolved' && risk.status !== 'accepted') {
+            if (risk.targetMitigationDate.split('T')[0] < today) {
+              mitigationOverdue++;
+            }
+          }
+
+          // Sum impact scores
+          if (risk.impactScore) {
+            totalImpactScore += risk.impactScore;
+          }
+        });
+
+        return {
+          total: risks.length,
+          byStatus: byStatus as any,
+          bySeverity: bySeverity as any,
+          criticalCount,
+          highCount,
+          newlyEscalated,
+          staleCount,
+          mitigationOverdue,
+          averageImpactScore: risks.length > 0 ? totalImpactScore / risks.length : 0,
+        };
       },
     }),
     {

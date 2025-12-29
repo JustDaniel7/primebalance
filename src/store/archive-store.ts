@@ -120,7 +120,8 @@ export const useArchiveStore = create<ArchiveState>()(
                 return newItem;
             },
 
-            restoreFromArchive: (id) => {
+            restoreFromArchive: async (id) => {
+                // First update local state optimistically
                 set((state) => ({
                     items: state.items.map((item) =>
                         item.id === id
@@ -129,11 +130,28 @@ export const useArchiveStore = create<ArchiveState>()(
                     ),
                 }));
 
-                fetch(`/api/archive/${id}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: 'restored', restoredAt: new Date().toISOString() }),
-                }).catch(console.error);
+                try {
+                    // Send restore action to API
+                    const response = await fetch(`/api/archive/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'restore' }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to restore item');
+                    }
+                } catch (error) {
+                    console.error('Failed to restore archive item:', error);
+                    // Revert local state on error
+                    set((state) => ({
+                        items: state.items.map((item) =>
+                            item.id === id
+                                ? { ...item, status: 'archived' as ArchiveItemStatus, restoredAt: undefined }
+                                : item
+                        ),
+                    }));
+                }
             },
 
             permanentlyDelete: (id) => {

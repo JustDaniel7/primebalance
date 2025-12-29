@@ -65,6 +65,62 @@ function mapApiToAccount(api: any): BankAccount {
     };
 }
 
+function mapApiToBucket(api: any): CapitalBucket {
+    const currentAmount = Number(api.currentAmount) || 0;
+    const targetAmount = Number(api.targetAmount) || 1; // Prevent division by zero
+    const fundingRatio = targetAmount > 0 ? currentAmount / targetAmount : 0;
+
+    return {
+        id: api.id,
+        name: api.name,
+        type: api.type || 'operating',
+        description: api.description,
+        currency: api.currency || 'EUR',
+        targetAmount,
+        currentAmount,
+        minimumAmount: Number(api.minimumAmount) || 0,
+        status: api.fundingStatus || (fundingRatio >= 1 ? 'funded' : fundingRatio >= 0.5 ? 'underfunded' : 'critical'),
+        fundingRatio,
+        priority: api.priority || 5,
+        timeHorizon: api.timeHorizon || '30d',
+        allowedSources: api.allowedSources || [],
+        autoFundEnabled: api.autoFund ?? api.autoFundEnabled ?? false,
+        regulatoryRequirement: api.regulatoryRequirement,
+        jurisdiction: api.jurisdiction,
+        updatedAt: api.updatedAt || new Date().toISOString(),
+    };
+}
+
+function mapApiToFacility(api: any): CreditFacility {
+    const totalLimit = Number(api.facilityLimit || api.totalLimit) || 0;
+    const drawnAmount = Number(api.drawnAmount) || 0;
+    const availableAmount = Number(api.availableAmount) || (totalLimit - drawnAmount);
+
+    return {
+        id: api.id,
+        name: api.name,
+        type: api.type || 'revolving',
+        bankId: api.bankId || api.id,
+        bankName: api.bankName || api.lenderName || 'Unknown Bank',
+        currency: api.currency || 'EUR',
+        totalLimit,
+        drawnAmount,
+        availableAmount,
+        interestRate: Number(api.interestRate) || 0,
+        interestType: api.interestType || 'fixed',
+        baseRate: api.baseRate,
+        spread: api.spread,
+        startDate: api.startDate || api.createdAt || new Date().toISOString(),
+        maturityDate: api.maturityDate || api.expiryDate || new Date().toISOString(),
+        nextReviewDate: api.nextReviewDate,
+        covenantStatus: api.covenantStatus || 'compliant',
+        covenants: api.covenants || [],
+        jurisdiction: api.jurisdiction || 'EU',
+        isActive: api.isActive ?? (api.status === 'active'),
+        updatedAt: api.updatedAt || new Date().toISOString(),
+    };
+}
+
 // =============================================================================
 // STORE INTERFACE
 // =============================================================================
@@ -171,8 +227,8 @@ export const useTreasuryStore = create<TreasuryState>()(
 
                     set({
                         accounts: (data.accounts || []).map(mapApiToAccount),
-                        buckets: data.buckets || get().buckets,
-                        facilities: data.facilities || get().facilities,
+                        buckets: (data.buckets || []).map(mapApiToBucket),
+                        facilities: (data.facilities || []).map(mapApiToFacility),
                         decisions: data.decisions || get().decisions,
                         isLoading: false,
                         isInitialized: true,
@@ -260,25 +316,25 @@ export const useTreasuryStore = create<TreasuryState>()(
                 const { accounts } = get();
                 const activeAccounts = accounts.filter((a) => a.isActive);
 
-                const totalCash = activeAccounts.reduce((sum, a) => sum + a.currentBalance, 0);
+                const totalCash = activeAccounts.reduce((sum, a) => sum + Number(a.currentBalance || 0), 0);
                 const unrestricted = activeAccounts
                     .filter((a) => a.cashClassification === 'unrestricted')
-                    .reduce((sum, a) => sum + a.currentBalance, 0);
+                    .reduce((sum, a) => sum + Number(a.currentBalance || 0), 0);
                 const restricted = activeAccounts
                     .filter((a) => a.cashClassification === 'restricted')
-                    .reduce((sum, a) => sum + a.currentBalance, 0);
+                    .reduce((sum, a) => sum + Number(a.currentBalance || 0), 0);
                 const pledged = activeAccounts
                     .filter((a) => a.cashClassification === 'pledged')
-                    .reduce((sum, a) => sum + a.currentBalance, 0);
+                    .reduce((sum, a) => sum + Number(a.currentBalance || 0), 0);
 
                 const byCurrency: Record<string, number> = {};
                 const byEntity: Record<string, number> = {};
                 const byBank: Record<string, number> = {};
 
                 activeAccounts.forEach((a) => {
-                    byCurrency[a.currency] = (byCurrency[a.currency] || 0) + a.currentBalance;
-                    byEntity[a.entityId] = (byEntity[a.entityId] || 0) + a.currentBalance;
-                    byBank[a.bankName] = (byBank[a.bankName] || 0) + a.currentBalance;
+                    byCurrency[a.currency] = (byCurrency[a.currency] || 0) + Number(a.currentBalance || 0);
+                    byEntity[a.entityId] = (byEntity[a.entityId] || 0) + Number(a.currentBalance || 0);
+                    byBank[a.bankName] = (byBank[a.bankName] || 0) + Number(a.currentBalance || 0);
                 });
 
                 const cashPosition: CashPosition = {
@@ -739,9 +795,9 @@ export const useTreasuryStore = create<TreasuryState>()(
                     (b) => b.status === 'underfunded' || b.status === 'critical'
                 );
 
-                const totalCreditAvailable = facilities.reduce((sum, f) => sum + f.availableAmount, 0);
-                const totalCreditUsed = facilities.reduce((sum, f) => sum + f.drawnAmount, 0);
-                const totalCreditLimit = facilities.reduce((sum, f) => sum + f.totalLimit, 0);
+                const totalCreditAvailable = facilities.reduce((sum, f) => sum + Number(f.availableAmount || 0), 0);
+                const totalCreditUsed = facilities.reduce((sum, f) => sum + Number(f.drawnAmount || 0), 0);
+                const totalCreditLimit = facilities.reduce((sum, f) => sum + Number(f.totalLimit || 0), 0);
 
                 const pendingDecisions = decisions.filter((d) => !TERMINAL_STATES.includes(d.status));
                 const pendingApprovals = decisions.filter((d) => d.status === 'awaiting_approval');
@@ -755,7 +811,7 @@ export const useTreasuryStore = create<TreasuryState>()(
                     bucketsFunded: buckets.filter((b) => b.status === 'funded' || b.status === 'overfunded').length,
                     bucketsUnderfunded: underfundedBuckets.length,
                     totalBucketDeficit: underfundedBuckets.reduce(
-                        (sum, b) => sum + (b.targetAmount - b.currentAmount),
+                        (sum, b) => sum + (Number(b.targetAmount || 0) - Number(b.currentAmount || 0)),
                         0
                     ),
                     totalCreditAvailable,
@@ -769,7 +825,7 @@ export const useTreasuryStore = create<TreasuryState>()(
                     nettingOpportunities: nettingOpportunities.filter((o) => o.status === 'identified').length,
                     potentialSavings: nettingOpportunities
                         .filter((o) => o.status === 'identified')
-                        .reduce((sum, o) => sum + o.cashSaved, 0),
+                        .reduce((sum, o) => sum + Number(o.cashSaved || 0), 0),
                     expectedCashIn7d: 0,
                     expectedCashOut7d: 0,
                     netCashFlow7d: 0,

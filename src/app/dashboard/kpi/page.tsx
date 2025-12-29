@@ -44,7 +44,7 @@ import {
     Layers,
     GitBranch,
 } from 'lucide-react';
-import { Card, Button, Badge } from '@/components/ui';
+import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useKPIStore } from '@/store/kpi-store';
 import type {
@@ -1325,15 +1325,48 @@ export default function KPIsPage() {
         viewPreferences,
         setViewPreferences,
         alerts,
+        kpis,
+        summary,
     } = useKPIStore();
 
     const activeAlerts = alerts.filter(a => !a.isDismissed);
+    const [showExportModal, setShowExportModal] = useState(false);
 
     useEffect(() => {
         fetchKPIs();
         fetchSummary();
         fetchAlerts();
     }, [fetchKPIs, fetchSummary, fetchAlerts]);
+
+    const getExportData = () => ({
+        exportedAt: new Date().toISOString(),
+        timeHorizon: viewPreferences.timeHorizon,
+        summary: summary,
+        kpis: kpis.map(kpi => ({
+            name: kpi.definition?.name,
+            category: kpi.definition?.category,
+            value: kpi.value?.current,
+            unit: kpi.definition?.unit,
+            target: kpi.value?.target,
+            status: kpi.value?.status,
+            trend: kpi.value?.trend,
+            changePercent: kpi.value?.deltaVsPriorPercent,
+        })),
+        alerts: alerts.filter(a => !a.isDismissed).map(a => ({
+            title: a.title,
+            type: a.type,
+            severity: a.severity,
+            kpiName: a.kpiName,
+            message: a.message,
+        })),
+    });
+
+    const handleExport = (format: ExportFormat) => {
+        const exportData = getExportData();
+        const fileName = `kpi-report-${new Date().toISOString().split('T')[0]}`;
+        const { content, mimeType, extension } = convertToFormat(exportData, format, 'kpi-report');
+        downloadFile(content, `${fileName}.${extension}`, mimeType);
+    };
 
     const tabs: { id: KPITab; label: string; icon: React.ElementType }[] = [
         { id: 'overview', label: t('kpi.tabs.overview'), icon: BarChart3 },
@@ -1420,11 +1453,20 @@ export default function KPIsPage() {
                         )}
                     </button>
                     
-                    <Button variant="secondary" leftIcon={<Download size={16} />}>
+                    <Button variant="secondary" leftIcon={<Download size={16} />} onClick={() => setShowExportModal(true)}>
                         {t('common.export')}
                     </Button>
                 </div>
             </div>
+
+            {/* Export Modal */}
+            <ExportModal
+                isOpen={showExportModal}
+                onClose={() => setShowExportModal(false)}
+                onExport={handleExport}
+                title={t('kpi.exportTitle') || 'Export KPI Report'}
+                fileName="kpi-report"
+            />
 
             {/* Tab Navigation */}
             <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-surface-800/50 rounded-xl overflow-x-auto">

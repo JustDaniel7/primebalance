@@ -691,14 +691,14 @@ export const useReceivablesStore = create<ReceivablesState>()(
                 const terminalStatuses = ['paid', 'written_off', 'settled_via_offset'];
                 const active = receivables.filter((r) => !terminalStatuses.includes(r.status));
 
-                const totalOutstanding = active.reduce((sum, r) => sum + r.outstandingAmount, 0);
+                const totalOutstanding = active.reduce((sum, r) => sum + Number(r.outstandingAmount || 0), 0);
                 const overdueStatuses = ['overdue', 'in_collection'];
                 const totalOverdue = active
                     .filter((r) => overdueStatuses.includes(r.status))
-                    .reduce((sum, r) => sum + r.outstandingAmount, 0);
+                    .reduce((sum, r) => sum + Number(r.outstandingAmount || 0), 0);
                 const totalDisputed = active
                     .filter((r) => r.isDisputed)
-                    .reduce((sum, r) => sum + (r.disputedAmount || 0), 0);
+                    .reduce((sum, r) => sum + Number(r.disputedAmount || 0), 0);
 
                 // By status
                 const byStatus = {} as Record<ReceivableStatus, { count: number; amount: number }>;
@@ -707,7 +707,7 @@ export const useReceivablesStore = create<ReceivablesState>()(
                         byStatus[r.status] = { count: 0, amount: 0 };
                     }
                     byStatus[r.status].count += 1;
-                    byStatus[r.status].amount += r.outstandingAmount;
+                    byStatus[r.status].amount += Number(r.outstandingAmount || 0);
                 });
 
                 // Aging
@@ -717,7 +717,7 @@ export const useReceivablesStore = create<ReceivablesState>()(
                     const items = active.filter((r) => r.agingBucket === bucket);
                     aging[bucket] = {
                         count: items.length,
-                        amount: items.reduce((sum, r) => sum + r.outstandingAmount, 0),
+                        amount: items.reduce((sum, r) => sum + Number(r.outstandingAmount || 0), 0),
                     };
                 });
 
@@ -728,20 +728,20 @@ export const useReceivablesStore = create<ReceivablesState>()(
                     const items = active.filter((r) => r.riskLevel === level);
                     byRisk[level] = {
                         count: items.length,
-                        amount: items.reduce((sum, r) => sum + r.outstandingAmount, 0),
+                        amount: items.reduce((sum, r) => sum + Number(r.outstandingAmount || 0), 0),
                     };
                 });
 
                 // By currency
                 const byCurrency = {} as Record<string, number>;
                 active.forEach((r) => {
-                    byCurrency[r.currency] = (byCurrency[r.currency] || 0) + r.outstandingAmount;
+                    byCurrency[r.currency] = (byCurrency[r.currency] || 0) + Number(r.outstandingAmount || 0);
                 });
 
                 // DSO
                 const avgDays =
                     active.length > 0
-                        ? active.reduce((sum, r) => sum + r.daysOutstanding, 0) / active.length
+                        ? active.reduce((sum, r) => sum + Number(r.daysOutstanding || 0), 0) / active.length
                         : 0;
 
                 return {
@@ -753,9 +753,9 @@ export const useReceivablesStore = create<ReceivablesState>()(
                     aging,
                     byRisk,
                     byCurrency,
-                    dso: avgDays,
+                    dso: Math.round(avgDays * 10) / 10,
                     collectionRate: 0,
-                    overdueRate: totalOutstanding > 0 ? (totalOverdue / totalOutstanding) * 100 : 0,
+                    overdueRate: totalOutstanding > 0 ? Math.round((totalOverdue / totalOutstanding) * 1000) / 10 : 0,
                     expectedCashIn7Days: 0,
                     expectedCashIn30Days: 0,
                 };
@@ -789,7 +789,7 @@ export const useReceivablesStore = create<ReceivablesState>()(
                             (r) =>
                                 r.dueDate === dateStr && !['paid', 'written_off'].includes(r.status)
                         )
-                        .reduce((sum, r) => sum + r.outstandingAmount, 0);
+                        .reduce((sum, r) => sum + Number(r.outstandingAmount || 0), 0);
                     forecast.push({ date: dateStr, expected });
                 }
 
@@ -807,12 +807,12 @@ export const useReceivablesStore = create<ReceivablesState>()(
                                 !['paid', 'written_off'].includes(r.status)
                         );
                         const totalOutstanding = debtorReceivables.reduce(
-                            (sum, r) => sum + r.outstandingAmount,
+                            (sum, r) => sum + Number(r.outstandingAmount || 0),
                             0
                         );
                         const overdueAmount = debtorReceivables
                             .filter((r) => ['overdue', 'in_collection'].includes(r.status))
-                            .reduce((sum, r) => sum + r.outstandingAmount, 0);
+                            .reduce((sum, r) => sum + Number(r.outstandingAmount || 0), 0);
 
                         return {
                             debtor,

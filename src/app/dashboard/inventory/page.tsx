@@ -899,21 +899,567 @@ function InventoryWizard({
 }
 
 // =============================================================================
+// INVENTORY DETAIL
+// =============================================================================
+
+interface InventoryDetailData {
+    id: string;
+    name: string;
+    sku?: string;
+    description?: string;
+    type: string;
+    category?: string;
+    status: string;
+    quantityOnHand: number;
+    quantityReserved: number;
+    quantityAvailable: number;
+    reorderPoint?: number;
+    reorderQuantity?: number;
+    unitCost: number;
+    totalValue: number;
+    currency: string;
+    location?: string;
+    supplier?: string;
+    lastRestockDate?: string;
+    createdAt: string;
+    updatedAt: string;
+    batches?: Array<{
+        id: string;
+        batchNumber: string;
+        quantity: number;
+        expiryDate?: string;
+    }>;
+    movements?: Array<{
+        id: string;
+        type: string;
+        quantity: number;
+        movementDate: string;
+        referenceNumber?: string;
+        notes?: string;
+    }>;
+}
+
+function InventoryDetail({
+    item,
+    onClose,
+    onUpdate,
+    onDelete,
+}: {
+    item: InventoryItem;
+    onClose: () => void;
+    onUpdate: () => void;
+    onDelete: () => void;
+}) {
+    const { t, language } = useThemeStore();
+    const [detailData, setDetailData] = useState<InventoryDetailData | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editForm, setEditForm] = useState({
+        name: '',
+        sku: '',
+        description: '',
+        reorderPoint: 0,
+        unitCost: 0,
+    });
+    const [isSaving, setIsSaving] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+    useEffect(() => {
+        fetchItemDetails();
+    }, [item.id]);
+
+    const fetchItemDetails = async () => {
+        setIsLoading(true);
+        try {
+            const res = await fetch(`/api/inventory/${item.id}`);
+            if (res.ok) {
+                const data = await res.json();
+                setDetailData(data);
+                setEditForm({
+                    name: data.name || '',
+                    sku: data.sku || '',
+                    description: data.description || '',
+                    reorderPoint: data.reorderPoint || 0,
+                    unitCost: Number(data.unitCost) || 0,
+                });
+            }
+        } catch (err) {
+            console.error('Failed to fetch item details:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSave = async () => {
+        setIsSaving(true);
+        try {
+            const res = await fetch(`/api/inventory/${item.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(editForm),
+            });
+            if (res.ok) {
+                await fetchItemDetails();
+                setIsEditing(false);
+                onUpdate();
+            }
+        } catch (err) {
+            console.error('Failed to update item:', err);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        try {
+            const res = await fetch(`/api/inventory/${item.id}`, {
+                method: 'DELETE',
+            });
+            if (res.ok) {
+                onDelete();
+                onClose();
+            }
+        } catch (err) {
+            console.error('Failed to delete item:', err);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const formatCurrency = (amount: number, currency: string) => {
+        return new Intl.NumberFormat(language === 'de' ? 'de-DE' : 'en-US', {
+            style: 'currency',
+            currency,
+        }).format(amount);
+    };
+
+    const formatDate = (dateStr: string) => {
+        return new Date(dateStr).toLocaleDateString(language === 'de' ? 'de-DE' : 'en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+        });
+    };
+
+    const getMovementIcon = (type: string) => {
+        switch (type) {
+            case 'purchase':
+            case 'received':
+                return <TrendingUp size={16} className="text-green-500" />;
+            case 'sale':
+            case 'shipped':
+                return <TrendingDown size={16} className="text-red-500" />;
+            case 'adjustment':
+                return <ArrowRightLeft size={16} className="text-blue-500" />;
+            default:
+                return <Package size={16} className="text-gray-400" />;
+        }
+    };
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-gray-50 dark:bg-surface-900 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent-primary)]" />
+            </div>
+        );
+    }
+
+    if (!detailData) {
+        return (
+            <div className="min-h-screen bg-gray-50 dark:bg-surface-900 flex items-center justify-center">
+                <p className="text-gray-500">{t('common.error')}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={onClose}
+                        className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800"
+                    >
+                        <ChevronLeft size={20} className="text-gray-500" />
+                    </button>
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-surface-100 font-display">
+                            {detailData.name}
+                        </h1>
+                        {detailData.sku && (
+                            <p className="text-gray-500 dark:text-surface-500 font-mono text-sm">
+                                {detailData.sku}
+                            </p>
+                        )}
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                    {!isEditing ? (
+                        <>
+                            <Button
+                                variant="secondary"
+                                onClick={() => setIsEditing(true)}
+                            >
+                                {t('common.edit')}
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                className="text-red-500 hover:text-red-600"
+                                onClick={() => setShowDeleteConfirm(true)}
+                            >
+                                {t('common.delete')}
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                variant="secondary"
+                                onClick={() => setIsEditing(false)}
+                            >
+                                {t('common.cancel')}
+                            </Button>
+                            <Button
+                                variant="primary"
+                                onClick={handleSave}
+                                disabled={isSaving}
+                            >
+                                {isSaving ? t('common.saving') : t('common.save')}
+                            </Button>
+                        </>
+                    )}
+                </div>
+            </div>
+
+            {/* Delete Confirmation */}
+            {showDeleteConfirm && (
+                <Card variant="glass" padding="md" className="border-red-200 bg-red-50 dark:bg-red-900/20">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <p className="font-medium text-red-700 dark:text-red-300">
+                                {t('inventory.confirmDelete')}
+                            </p>
+                            <p className="text-sm text-red-600 dark:text-red-400">
+                                {t('inventory.confirmDeleteDesc')}
+                            </p>
+                        </div>
+                        <div className="flex gap-2">
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onClick={() => setShowDeleteConfirm(false)}
+                            >
+                                {t('common.cancel')}
+                            </Button>
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                className="bg-red-500 hover:bg-red-600"
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? t('common.deleting') : t('common.delete')}
+                            </Button>
+                        </div>
+                    </div>
+                </Card>
+            )}
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Main Info */}
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Basic Details */}
+                    <Card variant="glass" padding="lg">
+                        <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">
+                            {t('inventory.details')}
+                        </h3>
+                        {isEditing ? (
+                            <div className="space-y-4">
+                                <Input
+                                    label={t('inventory.itemName')}
+                                    value={editForm.name}
+                                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                                />
+                                <Input
+                                    label={t('inventory.sku')}
+                                    value={editForm.sku}
+                                    onChange={(e) => setEditForm({ ...editForm, sku: e.target.value })}
+                                />
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
+                                        {t('inventory.description')}
+                                    </label>
+                                    <textarea
+                                        value={editForm.description}
+                                        onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                                        rows={3}
+                                        className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl resize-none"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Input
+                                        label={t('inventory.reorderPoint')}
+                                        type="number"
+                                        value={editForm.reorderPoint || ''}
+                                        onChange={(e) => setEditForm({ ...editForm, reorderPoint: Number(e.target.value) })}
+                                    />
+                                    <Input
+                                        label={t('inventory.unitCost')}
+                                        type="number"
+                                        step="0.01"
+                                        value={editForm.unitCost || ''}
+                                        onChange={(e) => setEditForm({ ...editForm, unitCost: Number(e.target.value) })}
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p className="text-sm text-gray-500 dark:text-surface-400">{t('inventory.type.label')}</p>
+                                        <Badge variant="info" className="mt-1">{t(`inventory.type.${detailData.type}`)}</Badge>
+                                    </div>
+                                    {detailData.category && (
+                                        <div>
+                                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('inventory.category')}</p>
+                                            <p className="font-medium text-gray-900 dark:text-surface-100">{t(`inventory.category.${detailData.category}`)}</p>
+                                        </div>
+                                    )}
+                                </div>
+                                {detailData.description && (
+                                    <div>
+                                        <p className="text-sm text-gray-500 dark:text-surface-400">{t('inventory.description')}</p>
+                                        <p className="text-gray-900 dark:text-surface-100 mt-1">{detailData.description}</p>
+                                    </div>
+                                )}
+                                {detailData.location && (
+                                    <div>
+                                        <p className="text-sm text-gray-500 dark:text-surface-400">{t('inventory.location')}</p>
+                                        <div className="flex items-center gap-2 mt-1">
+                                            <MapPin size={16} className="text-gray-400" />
+                                            <p className="text-gray-900 dark:text-surface-100">{detailData.location}</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {detailData.supplier && (
+                                    <div>
+                                        <p className="text-sm text-gray-500 dark:text-surface-400">{t('inventory.supplier')}</p>
+                                        <p className="text-gray-900 dark:text-surface-100">{detailData.supplier}</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </Card>
+
+                    {/* Recent Movements */}
+                    <Card variant="glass" padding="lg">
+                        <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">
+                            {t('inventory.recentMovements')}
+                        </h3>
+                        {detailData.movements && detailData.movements.length > 0 ? (
+                            <div className="space-y-3">
+                                {detailData.movements.map((movement) => (
+                                    <div
+                                        key={movement.id}
+                                        className="flex items-center justify-between p-3 bg-gray-50 dark:bg-surface-800/30 rounded-xl"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            {getMovementIcon(movement.type || 'unknown')}
+                                            <div>
+                                                <p className="font-medium text-gray-900 dark:text-surface-100 capitalize">
+                                                    {(movement.type || 'unknown').replace(/_/g, ' ')}
+                                                </p>
+                                                {movement.referenceNumber && (
+                                                    <p className="text-xs text-gray-500 dark:text-surface-400">
+                                                        {movement.referenceNumber}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className={`font-semibold ${
+                                                movement.quantity > 0 ? 'text-green-600' : 'text-red-600'
+                                            }`}>
+                                                {movement.quantity > 0 ? '+' : ''}{movement.quantity}
+                                            </p>
+                                            <p className="text-xs text-gray-500 dark:text-surface-400">
+                                                {formatDate(movement.movementDate)}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 dark:text-surface-400 text-center py-4">
+                                {t('inventory.noMovements')}
+                            </p>
+                        )}
+                    </Card>
+
+                    {/* Batches */}
+                    {detailData.batches && detailData.batches.length > 0 && (
+                        <Card variant="glass" padding="lg">
+                            <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">
+                                {t('inventory.batches')}
+                            </h3>
+                            <div className="space-y-3">
+                                {detailData.batches.map((batch) => (
+                                    <div
+                                        key={batch.id}
+                                        className="flex items-center justify-between p-3 bg-gray-50 dark:bg-surface-800/30 rounded-xl"
+                                    >
+                                        <div>
+                                            <p className="font-medium text-gray-900 dark:text-surface-100 font-mono">
+                                                {batch.batchNumber}
+                                            </p>
+                                            {batch.expiryDate && (
+                                                <p className="text-xs text-gray-500 dark:text-surface-400">
+                                                    {t('inventory.expires')}: {formatDate(batch.expiryDate)}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <p className="font-semibold text-gray-900 dark:text-surface-100">
+                                            {batch.quantity} {t('inventory.units')}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
+                    )}
+                </div>
+
+                {/* Sidebar */}
+                <div className="space-y-6">
+                    {/* Stock Levels */}
+                    <Card variant="glass" padding="lg">
+                        <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">
+                            {t('inventory.stockLevels')}
+                        </h3>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-500 dark:text-surface-400">{t('inventory.total')}</span>
+                                <span className="text-2xl font-bold text-gray-900 dark:text-surface-100">
+                                    {detailData.quantityOnHand}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-500 dark:text-surface-400">{t('inventory.reserved')}</span>
+                                <span className="text-lg font-semibold text-amber-600">
+                                    {detailData.quantityReserved}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-surface-700">
+                                <span className="text-gray-500 dark:text-surface-400">{t('inventory.available')}</span>
+                                <span className={`text-2xl font-bold ${
+                                    detailData.quantityAvailable <= 0 ? 'text-red-500' : 'text-green-600'
+                                }`}>
+                                    {detailData.quantityAvailable}
+                                </span>
+                            </div>
+                            {detailData.reorderPoint && (
+                                <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-surface-700">
+                                    <span className="text-gray-500 dark:text-surface-400">{t('inventory.reorderPoint')}</span>
+                                    <span className="font-medium text-gray-900 dark:text-surface-100">
+                                        {detailData.reorderPoint}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </Card>
+
+                    {/* Value */}
+                    <Card variant="glass" padding="lg">
+                        <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">
+                            {t('inventory.valuation')}
+                        </h3>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-500 dark:text-surface-400">{t('inventory.unitCost')}</span>
+                                <span className="font-medium text-gray-900 dark:text-surface-100">
+                                    {formatCurrency(Number(detailData.unitCost), detailData.currency)}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-surface-700">
+                                <span className="text-gray-500 dark:text-surface-400">{t('inventory.totalValue')}</span>
+                                <span className="text-xl font-bold text-green-600">
+                                    {formatCurrency(Number(detailData.totalValue), detailData.currency)}
+                                </span>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Metadata */}
+                    <Card variant="glass" padding="lg">
+                        <h3 className="font-semibold text-gray-900 dark:text-surface-100 mb-4">
+                            {t('common.metadata')}
+                        </h3>
+                        <div className="space-y-3 text-sm">
+                            <div className="flex justify-between">
+                                <span className="text-gray-500 dark:text-surface-400">{t('common.created')}</span>
+                                <span className="text-gray-900 dark:text-surface-100">
+                                    {formatDate(detailData.createdAt)}
+                                </span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-gray-500 dark:text-surface-400">{t('common.updated')}</span>
+                                <span className="text-gray-900 dark:text-surface-100">
+                                    {formatDate(detailData.updatedAt)}
+                                </span>
+                            </div>
+                            {detailData.lastRestockDate && (
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500 dark:text-surface-400">{t('inventory.lastRestock')}</span>
+                                    <span className="text-gray-900 dark:text-surface-100">
+                                        {formatDate(detailData.lastRestockDate)}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </Card>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// =============================================================================
 // MAIN PAGE
 // =============================================================================
 
 export default function InventoryPage() {
     const [showWizard, setShowWizard] = useState(false);
     const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
-    const { resetWizard } = useInventoryStore();
+    const { resetWizard, fetchItems } = useInventoryStore();
 
     const handleCreateNew = () => {
         resetWizard();
         setShowWizard(true);
     };
 
+    const handleItemUpdate = () => {
+        fetchItems();
+    };
+
+    const handleItemDelete = () => {
+        fetchItems();
+        setSelectedItem(null);
+    };
+
     if (showWizard) {
         return <InventoryWizard onClose={() => setShowWizard(false)} onComplete={() => setShowWizard(false)} />;
+    }
+
+    if (selectedItem) {
+        return (
+            <InventoryDetail
+                item={selectedItem}
+                onClose={() => setSelectedItem(null)}
+                onUpdate={handleItemUpdate}
+                onDelete={handleItemDelete}
+            />
+        );
     }
 
     return (

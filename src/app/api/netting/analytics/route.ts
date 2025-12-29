@@ -64,15 +64,15 @@ export async function GET(req: NextRequest) {
     totalSessions: sessions.length,
     settledSessions: settledSessions.length,
     pendingSessions: pendingSessions.length,
-    totalGrossAmount,
-    totalNetAmount,
-    totalSavings,
-    avgSavingsPercentage,
+    totalGrossAmount: Math.round(totalGrossAmount * 100) / 100,
+    totalNetAmount: Math.round(totalNetAmount * 100) / 100,
+    totalSavings: Math.round(totalSavings * 100) / 100,
+    avgSavingsPercentage: Math.round(avgSavingsPercentage * 10) / 10,
     byType,
     recentSessions,
     topCounterparties: [], // Would need positions aggregation
     opportunitiesCount: opportunities.length,
-    opportunitiesSavings: opportunities.reduce((sum, o) => sum + Number(o.savingsAmount), 0),
+    opportunitiesSavings: Math.round(opportunities.reduce((sum, o) => sum + Number(o.savingsAmount), 0) * 100) / 100,
   };
 
   return NextResponse.json(analytics);

@@ -50,7 +50,11 @@ async function main() {
   // Scenario module
   await prisma.scenario.deleteMany({})
   
-  // Cash Forecast module
+  // Forecast modules
+  await prisma.revenueLineItem.deleteMany({})
+  await prisma.revenueForecast.deleteMany({})
+  await prisma.costLineItem.deleteMany({})
+  await prisma.costForecast.deleteMany({})
   await prisma.cashForecastPeriod.deleteMany({})
   await prisma.cashForecast.deleteMany({})
   
@@ -2943,12 +2947,137 @@ async function main() {
   console.log('  ✓ Created', tasks.length, 'tasks')
 
   // =============================================================================
+  // REVENUE FORECASTS
+  // =============================================================================
+  console.log('\n📈 Creating Revenue Forecasts...')
+  const revenueForecast = await prisma.revenueForecast.create({
+    data: {
+      version: 'latest',
+      timeHorizon: 'quarter',
+      granularity: 'monthly',
+      currency: 'EUR',
+      totalExpected: 1800000,
+      totalBestCase: 2100000,
+      totalWorstCase: 1500000,
+      committedRevenue: 1200000,
+      projectedRevenue: 600000,
+      atRiskRevenue: 150000,
+      byProduct: { software: 900000, services: 600000, maintenance: 300000 },
+      bySegment: { enterprise: 1080000, smb: 540000, startup: 180000 },
+      byRegion: { europe: 1080000, americas: 540000, apac: 180000 },
+      byType: { recurring: 1080000, contract: 450000, one_time: 270000 },
+      dataSource: 'system',
+      confidence: 'high',
+      lastUpdatedBy: 'System',
+      organizationId: org.id,
+    },
+  })
+
+  // Create revenue line items
+  const revenueLineItems = [
+    { name: 'Enterprise SaaS Subscriptions', category: 'subscription', revenueType: 'recurring', segment: 'enterprise', region: 'europe', isCommitted: true, confidence: 'high', confidenceScore: 85 },
+    { name: 'SMB Monthly Plans', category: 'subscription', revenueType: 'recurring', segment: 'smb', region: 'europe', isCommitted: true, confidence: 'high', confidenceScore: 80 },
+    { name: 'Professional Services', category: 'service', revenueType: 'contract', segment: 'enterprise', region: 'americas', isCommitted: false, confidence: 'medium', confidenceScore: 65 },
+    { name: 'Implementation Fees', category: 'service', revenueType: 'one_time', segment: 'enterprise', region: 'europe', isCommitted: false, confidence: 'medium', confidenceScore: 60 },
+    { name: 'Maintenance Contracts', category: 'product', revenueType: 'recurring', segment: 'enterprise', region: 'apac', isCommitted: true, confidence: 'high', confidenceScore: 90 },
+    { name: 'API Usage Fees', category: 'product', revenueType: 'recurring', segment: 'startup', region: 'americas', isCommitted: false, isAtRisk: true, confidence: 'low', confidenceScore: 45 },
+  ]
+
+  for (const item of revenueLineItems) {
+    await prisma.revenueLineItem.create({
+      data: {
+        name: item.name,
+        category: item.category,
+        revenueType: item.revenueType,
+        segment: item.segment,
+        region: item.region,
+        isCommitted: item.isCommitted,
+        isAtRisk: item.isAtRisk || false,
+        confidence: item.confidence,
+        confidenceScore: item.confidenceScore,
+        periods: {
+          'period-0': { expected: 150000, bestCase: 175000, worstCase: 125000, confidence: item.confidence, confidenceScore: item.confidenceScore },
+          'period-1': { expected: 160000, bestCase: 185000, worstCase: 135000, confidence: item.confidence, confidenceScore: item.confidenceScore },
+          'period-2': { expected: 170000, bestCase: 195000, worstCase: 145000, confidence: item.confidence, confidenceScore: item.confidenceScore },
+        },
+        drivers: ['Customer renewals', 'New sales pipeline'],
+        revenueForecastId: revenueForecast.id,
+      },
+    })
+  }
+  console.log('  ✓ Created 1 revenue forecast with', revenueLineItems.length, 'line items')
+
+  // =============================================================================
+  // COST FORECASTS
+  // =============================================================================
+  console.log('\n💰 Creating Cost Forecasts...')
+  const costForecast = await prisma.costForecast.create({
+    data: {
+      version: 'latest',
+      timeHorizon: 'quarter',
+      granularity: 'monthly',
+      currency: 'EUR',
+      totalExpected: 1450000,
+      totalBestCase: 1350000,
+      totalWorstCase: 1600000,
+      committedCosts: 950000,
+      estimatedCosts: 500000,
+      byCategory: { fixed: 600000, variable: 500000, discretionary: 250000, one_time: 100000 },
+      byDepartment: { engineering: 500000, sales: 350000, operations: 300000, admin: 200000, marketing: 100000 },
+      byVendor: { aws: 150000, salesforce: 50000, others: 100000 },
+      byProject: { platform: 300000, mobile: 150000, integrations: 100000 },
+      overrunCount: 2,
+      unplannedSpendTotal: 45000,
+      dataSource: 'system',
+      confidence: 'high',
+      lastUpdatedBy: 'System',
+      organizationId: org.id,
+    },
+  })
+
+  // Create cost line items
+  const costLineItems = [
+    { name: 'Engineering Salaries', category: 'fixed', department: 'Engineering', isCommitted: true, isContractual: true, confidence: 'high', confidenceScore: 95 },
+    { name: 'Cloud Infrastructure (AWS)', category: 'variable', department: 'Engineering', vendorName: 'AWS', isCommitted: false, confidence: 'medium', confidenceScore: 70 },
+    { name: 'Sales Commissions', category: 'variable', department: 'Sales', isCommitted: false, confidence: 'medium', confidenceScore: 65 },
+    { name: 'Office Rent', category: 'fixed', department: 'Admin', isCommitted: true, isContractual: true, confidence: 'high', confidenceScore: 100 },
+    { name: 'Marketing Campaigns', category: 'discretionary', department: 'Marketing', isCommitted: false, confidence: 'low', confidenceScore: 50, isOverrun: true },
+    { name: 'Software Licenses', category: 'fixed', department: 'Engineering', vendorName: 'Salesforce', isCommitted: true, confidence: 'high', confidenceScore: 90 },
+    { name: 'Travel & Entertainment', category: 'discretionary', department: 'Sales', isCommitted: false, isUnplanned: true, confidence: 'low', confidenceScore: 40 },
+  ]
+
+  for (const item of costLineItems) {
+    await prisma.costLineItem.create({
+      data: {
+        name: item.name,
+        category: item.category,
+        department: item.department,
+        vendorName: item.vendorName,
+        isCommitted: item.isCommitted,
+        isContractual: item.isContractual || false,
+        isOverrun: item.isOverrun || false,
+        isUnplanned: item.isUnplanned || false,
+        confidence: item.confidence,
+        confidenceScore: item.confidenceScore,
+        periods: {
+          'period-0': { expected: 70000, bestCase: 65000, worstCase: 80000, confidence: item.confidence, confidenceScore: item.confidenceScore },
+          'period-1': { expected: 72000, bestCase: 67000, worstCase: 82000, confidence: item.confidence, confidenceScore: item.confidenceScore },
+          'period-2': { expected: 75000, bestCase: 70000, worstCase: 85000, confidence: item.confidence, confidenceScore: item.confidenceScore },
+        },
+        drivers: ['Headcount growth', 'Usage scaling'],
+        costForecastId: costForecast.id,
+      },
+    })
+  }
+  console.log('  ✓ Created 1 cost forecast with', costLineItems.length, 'line items')
+
+  // =============================================================================
   // CASH FORECASTS
   // =============================================================================
-  console.log('\n📈 Creating Cash Forecasts...')
-  const forecast = await prisma.cashForecast.create({
+  console.log('\n💵 Creating Cash Forecasts...')
+  const cashForecast = await prisma.cashForecast.create({
     data: {
-      version: 'baseline',
+      version: 'latest',
       timeHorizon: 'year',
       granularity: 'monthly',
       currency: 'EUR',
@@ -2985,7 +3114,7 @@ async function main() {
         cashIn: { expected: fp.netCashFlow + 50000, bestCase: fp.netCashFlow + 60000, worstCase: fp.netCashFlow + 40000 },
         cashOut: { expected: 50000, bestCase: 45000, worstCase: 55000 },
         confidence: 'high',
-        cashForecastId: forecast.id,
+        cashForecastId: cashForecast.id,
       },
     })
   }
