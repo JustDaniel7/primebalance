@@ -76,8 +76,9 @@ export default function AIInsights() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.5 }}
+      className="h-full"
     >
-      <Card variant="glass">
+      <Card variant="glass" className="h-full flex flex-col">
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/10 border border-violet-500/20">
             <SparklesIcon size={20} className="text-violet-400" />
@@ -112,7 +113,7 @@ export default function AIInsights() {
         </form>
 
         {/* Insights List */}
-        <div className="space-y-3">
+        <div className="space-y-3 flex-1">
           {insights.map((insight, index) => (
             <motion.div
               key={insight.id}

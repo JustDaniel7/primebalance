@@ -59,8 +59,9 @@ export function RevenueChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
+      className="h-full"
     >
-      <Card variant="glass">
+      <Card variant="glass" className="h-full flex flex-col">
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
             {t('dashboard.cashFlow')}
@@ -69,7 +70,7 @@ export function RevenueChart() {
             {t('common.income')} vs {t('common.expense')}
           </p>
         </div>
-        <div className="h-64">
+        <div className="flex-1 min-h-[256px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={revenueData}>
               <defs>
@@ -126,8 +127,9 @@ export function ExpenseBreakdownChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
+      className="h-full"
     >
-      <Card variant="glass">
+      <Card variant="glass" className="h-full flex flex-col">
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
             {t('dashboard.expenseBreakdown')}
@@ -136,7 +138,7 @@ export function ExpenseBreakdownChart() {
             {t('dashboard.last30Days')}
           </p>
         </div>
-        <div className="h-48">
+        <div className="flex-1 min-h-[192px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

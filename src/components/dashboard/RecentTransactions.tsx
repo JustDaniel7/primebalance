@@ -39,8 +39,9 @@ export default function RecentTransactions() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
+      className="h-full"
     >
-      <Card variant="glass">
+      <Card variant="glass" className="h-full flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">
@@ -59,7 +60,7 @@ export default function RecentTransactions() {
           </Link>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3 flex-1">
           {recentTransactions.map((transaction, index) => (
             <motion.div
               key={transaction.id}
