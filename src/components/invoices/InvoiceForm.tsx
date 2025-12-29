@@ -90,7 +90,7 @@ const WIZARD_STEPS = [
 
 export function InvoiceForm({ invoice, orderId, onClose, onSuccess }: InvoiceFormProps) {
     const { t } = useThemeStore();
-    const { createInvoice, updateInvoice, createFromOrder, loading, error } = useInvoiceStore();
+    const { createInvoice, updateInvoice, createFromOrder, isLoading, error } = useInvoiceStore();
 
     const isEditing = !!invoice;
     const isReadOnly = isEditing && invoice.status !== InvoiceStatus.DRAFT;
@@ -998,10 +998,10 @@ export function InvoiceForm({ invoice, orderId, onClose, onSuccess }: InvoiceFor
                                 <Button
                                     variant="primary"
                                     onClick={handleSubmit}
-                                    disabled={loading || !canProceed}
+                                    disabled={isLoading || !canProceed}
                                     leftIcon={<Save size={18} />}
                                 >
-                                    {loading ? 'Saving...' : isEditing ? 'Update Invoice' : 'Create Invoice'}
+                                    {isLoading ? 'Saving...' : isEditing ? 'Update Invoice' : 'Create Invoice'}
                                 </Button>
                             )
                         )}

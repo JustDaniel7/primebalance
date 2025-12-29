@@ -1,16 +1,13 @@
 import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { getSessionWithOrg, unauthorized } from '@/lib/api-utils'
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.organizationId) return unauthorized()
 
-    const organizationId = session.user.organizationId
+    const organizationId = user.organizationId
 
     // Get invoice counts by status
     const [total, draft, sent, paid, overdue, cancelled] = await Promise.all([

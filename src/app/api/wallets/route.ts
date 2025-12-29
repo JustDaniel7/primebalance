@@ -1,27 +1,18 @@
 // src/app/api/wallets/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-
-function unauthorized() {
-  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-}
-
-function badRequest(message: string) {
-  return NextResponse.json({ error: message }, { status: 400 });
-}
+import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils';
 
 // GET /api/wallets - List all wallets for user
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return unauthorized();
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { searchParams } = new URL(req.url);
   const network = searchParams.get('network');
   const isActive = searchParams.get('isActive');
 
-  const where: Record<string, unknown> = { userId: session.user.id };
+  const where: Record<string, unknown> = { userId: user.id };
   if (network) where.network = network;
   if (isActive !== null) where.isActive = isActive === 'true';
 
@@ -61,8 +52,8 @@ export async function GET(req: NextRequest) {
 
 // POST /api/wallets - Add a new wallet
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return unauthorized();
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const body = await req.json();
 
@@ -76,7 +67,7 @@ export async function POST(req: NextRequest) {
   const existing = await prisma.wallet.findUnique({
     where: {
       userId_address_network: {
-        userId: session.user.id,
+        userId: user.id,
         address,
         network: body.network,
       },
@@ -89,7 +80,7 @@ export async function POST(req: NextRequest) {
 
   // If this is the first wallet, make it default
   const walletCount = await prisma.wallet.count({
-    where: { userId: session.user.id },
+    where: { userId: user.id },
   });
 
   const wallet = await prisma.wallet.create({
@@ -106,8 +97,8 @@ export async function POST(req: NextRequest) {
       tags: body.tags || [],
       isDefault: walletCount === 0,
       nativeSymbol: getNetworkNativeSymbol(body.network),
-      userId: session.user.id,
-      organizationId: session.user.organizationId,
+      userId: user.id,
+      organizationId: user.organizationId,
     },
   });
 

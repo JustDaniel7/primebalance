@@ -2,21 +2,17 @@
 // Dashboard API - GET metrics and summary data
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { getSessionWithOrg, unauthorized } from '@/lib/api-utils'
 import { Transaction } from '@/generated/prisma/client'
 
 // GET /api/dashboard - Get dashboard metrics
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
+    const user = await getSessionWithOrg()
+    if (!user?.id || !user?.organizationId) return unauthorized()
 
-    if (!session?.user?.id || !session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    const organizationId = session.user.organizationId
+    const organizationId = user.organizationId
 
     // Date ranges
     const now = new Date()

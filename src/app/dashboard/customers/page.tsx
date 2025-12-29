@@ -40,8 +40,21 @@ import {
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useCustomersStore } from '@/store/customers-store';
-import type { Customer, RiskIndicator, PaymentRecord, CustomerContact, RiskLevel, CustomerStatus, CustomerAccountType, PaymentBehavior } from '@/types/customers';
-import { CUSTOMER_STATUSES, CUSTOMER_TYPES, RISK_LEVELS, PAYMENT_BEHAVIORS, PAYMENT_TERMS, INDUSTRIES } from '@/types/customers';
+import type { Customer, RiskIndicator, PaymentRecord, CustomerContact } from '@/types/customers';
+import {
+    CustomerStatus,
+    CustomerAccountType,
+    RiskLevel,
+    PaymentBehavior,
+    CreditStatus,
+    InvoiceDelivery,
+    CUSTOMER_STATUSES,
+    CUSTOMER_TYPES,
+    RISK_LEVELS,
+    PAYMENT_BEHAVIORS,
+    PAYMENT_TERMS,
+    INDUSTRIES,
+} from '@/types/customers';
 
 // =============================================================================
 // METRIC CARDS
@@ -601,16 +614,16 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
             outstandingBalance: 0,
             creditUsed: 0,
             creditAvailable: formData.creditLimit,
-            creditStatus: 'approved',
-            riskLevel: 'low',
+            creditStatus: CreditStatus.APPROVED,
+            riskLevel: RiskLevel.LOW,
             riskScore: 0,
-            paymentBehavior: 'good',
+            paymentBehavior: PaymentBehavior.GOOD,
             averageDaysToPayment: 0,
             latePaymentCount: 0,
             overdueAmount: 0,
             currency: 'EUR',
             preferredLanguage: 'en',
-            invoiceDelivery: 'email',
+            invoiceDelivery: InvoiceDelivery.EMAIL,
         });
         onClose();
     };

@@ -2,11 +2,102 @@
 // CUSTOMER TYPES
 // =============================================================================
 
-export type CustomerStatus = 'active' | 'inactive' | 'prospect' | 'churned' | 'suspended';
-export type CustomerAccountType = 'individual' | 'business' | 'enterprise' | 'government';
-export type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
-export type PaymentBehavior = 'excellent' | 'good' | 'fair' | 'poor' | 'delinquent';
-export type CreditStatus = 'approved' | 'pending' | 'under_review' | 'rejected' | 'suspended';
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+export enum CustomerStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  PROSPECT = 'prospect',
+  CHURNED = 'churned',
+  SUSPENDED = 'suspended',
+}
+
+export enum CustomerAccountType {
+  INDIVIDUAL = 'individual',
+  BUSINESS = 'business',
+  ENTERPRISE = 'enterprise',
+  GOVERNMENT = 'government',
+}
+
+export enum RiskLevel {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical',
+}
+
+export enum PaymentBehavior {
+  EXCELLENT = 'excellent',
+  GOOD = 'good',
+  FAIR = 'fair',
+  POOR = 'poor',
+  DELINQUENT = 'delinquent',
+}
+
+export enum CreditStatus {
+  APPROVED = 'approved',
+  PENDING = 'pending',
+  UNDER_REVIEW = 'under_review',
+  REJECTED = 'rejected',
+  SUSPENDED = 'suspended',
+  // Legacy values for backward compatibility
+  GOOD = 'good',
+  WARNING = 'warning',
+  HOLD = 'hold',
+  BLOCKED = 'blocked',
+}
+
+export enum PaymentRecordStatus {
+  PENDING = 'pending',
+  PAID = 'paid',
+  PARTIAL = 'partial',
+  OVERDUE = 'overdue',
+  WRITTEN_OFF = 'written_off',
+}
+
+export enum CreditEventType {
+  LIMIT_INCREASE = 'limit_increase',
+  LIMIT_DECREASE = 'limit_decrease',
+  STATUS_CHANGE = 'status_change',
+  REVIEW = 'review',
+  TERMS_CHANGE = 'terms_change',
+}
+
+export enum RevenuePeriodType {
+  MONTHLY = 'monthly',
+  QUARTERLY = 'quarterly',
+  YEARLY = 'yearly',
+}
+
+export enum RiskIndicatorCategory {
+  PAYMENT = 'payment',
+  CREDIT = 'credit',
+  ACTIVITY = 'activity',
+  FINANCIAL = 'financial',
+  EXTERNAL = 'external',
+}
+
+export enum RiskIndicatorStatus {
+  ACTIVE = 'active',
+  RESOLVED = 'resolved',
+  MONITORING = 'monitoring',
+}
+
+export enum ContactRole {
+  BILLING = 'billing',
+  TECHNICAL = 'technical',
+  EXECUTIVE = 'executive',
+  PURCHASING = 'purchasing',
+  GENERAL = 'general',
+}
+
+export enum InvoiceDelivery {
+  EMAIL = 'email',
+  MAIL = 'mail',
+  PORTAL = 'portal',
+}
 
 // =============================================================================
 // CUSTOMER PROFILE
@@ -71,7 +162,7 @@ export interface Customer {
     creditLimit: number;
     creditUsed: number;
     creditAvailable: number;
-    creditStatus: CreditStatus | 'good' | 'warning' | 'hold' | 'blocked';
+    creditStatus: CreditStatus;
     paymentTerms: string;
 
     // Risk & Behavior
@@ -85,7 +176,7 @@ export interface Customer {
     // Preferences
     preferredPaymentMethod?: string;
     preferredLanguage: string;
-    invoiceDelivery: 'email' | 'mail' | 'portal';
+    invoiceDelivery: InvoiceDelivery;
 
     // Notes
     notes?: string;
@@ -115,7 +206,7 @@ export interface PaymentRecord {
     paymentDate?: string;
 
     // Status
-    status: 'pending' | 'paid' | 'partial' | 'overdue' | 'written_off';
+    status: PaymentRecordStatus;
     daysToPayment?: number;
     daysOverdue?: number;
 
@@ -135,7 +226,7 @@ export interface CreditEvent {
     customerId: string;
 
     // Event Type
-    type: 'limit_increase' | 'limit_decrease' | 'status_change' | 'review' | 'terms_change';
+    type: CreditEventType;
 
     // Details
     previousValue?: string;
@@ -159,7 +250,7 @@ export interface RevenueRecord {
 
     // Period
     period: string; // e.g., "2024-01", "2024-Q1"
-    periodType: 'monthly' | 'quarterly' | 'yearly';
+    periodType: RevenuePeriodType;
 
     // Amounts
     revenue: number;
@@ -188,7 +279,7 @@ export interface RiskIndicator {
     customerId: string;
 
     // Indicator
-    category: 'payment' | 'credit' | 'activity' | 'financial' | 'external';
+    category: RiskIndicatorCategory;
     indicator: string;
     description: string;
 
@@ -197,7 +288,7 @@ export interface RiskIndicator {
     score: number; // contribution to overall risk score
 
     // Status
-    status: 'active' | 'resolved' | 'monitoring';
+    status: RiskIndicatorStatus;
     detectedAt: string;
     resolvedAt?: string;
 
@@ -225,7 +316,7 @@ export interface CustomerContact {
 
     // Role
     isPrimary: boolean;
-    role: 'billing' | 'technical' | 'executive' | 'purchasing' | 'general';
+    role: ContactRole;
 
     // Notes
     notes?: string;
@@ -272,33 +363,33 @@ export interface CustomerAnalytics {
 // =============================================================================
 
 export const CUSTOMER_STATUSES: { value: CustomerStatus; label: string; color: string }[] = [
-    { value: 'active', label: 'Active', color: 'emerald' },
-    { value: 'inactive', label: 'Inactive', color: 'gray' },
-    { value: 'prospect', label: 'Prospect', color: 'blue' },
-    { value: 'churned', label: 'Churned', color: 'red' },
-    { value: 'suspended', label: 'Suspended', color: 'amber' },
+    { value: CustomerStatus.ACTIVE, label: 'Active', color: 'emerald' },
+    { value: CustomerStatus.INACTIVE, label: 'Inactive', color: 'gray' },
+    { value: CustomerStatus.PROSPECT, label: 'Prospect', color: 'blue' },
+    { value: CustomerStatus.CHURNED, label: 'Churned', color: 'red' },
+    { value: CustomerStatus.SUSPENDED, label: 'Suspended', color: 'amber' },
 ];
 
 export const CUSTOMER_TYPES: { value: CustomerAccountType; label: string }[] = [
-    { value: 'individual', label: 'Individual' },
-    { value: 'business', label: 'Business' },
-    { value: 'enterprise', label: 'Enterprise' },
-    { value: 'government', label: 'Government' },
+    { value: CustomerAccountType.INDIVIDUAL, label: 'Individual' },
+    { value: CustomerAccountType.BUSINESS, label: 'Business' },
+    { value: CustomerAccountType.ENTERPRISE, label: 'Enterprise' },
+    { value: CustomerAccountType.GOVERNMENT, label: 'Government' },
 ];
 
 export const RISK_LEVELS: { value: RiskLevel; label: string; color: string }[] = [
-    { value: 'low', label: 'Low', color: 'emerald' },
-    { value: 'medium', label: 'Medium', color: 'amber' },
-    { value: 'high', label: 'High', color: 'orange' },
-    { value: 'critical', label: 'Critical', color: 'red' },
+    { value: RiskLevel.LOW, label: 'Low', color: 'emerald' },
+    { value: RiskLevel.MEDIUM, label: 'Medium', color: 'amber' },
+    { value: RiskLevel.HIGH, label: 'High', color: 'orange' },
+    { value: RiskLevel.CRITICAL, label: 'Critical', color: 'red' },
 ];
 
 export const PAYMENT_BEHAVIORS: { value: PaymentBehavior; label: string; color: string }[] = [
-    { value: 'excellent', label: 'Excellent', color: 'emerald' },
-    { value: 'good', label: 'Good', color: 'blue' },
-    { value: 'fair', label: 'Fair', color: 'amber' },
-    { value: 'poor', label: 'Poor', color: 'orange' },
-    { value: 'delinquent', label: 'Delinquent', color: 'red' },
+    { value: PaymentBehavior.EXCELLENT, label: 'Excellent', color: 'emerald' },
+    { value: PaymentBehavior.GOOD, label: 'Good', color: 'blue' },
+    { value: PaymentBehavior.FAIR, label: 'Fair', color: 'amber' },
+    { value: PaymentBehavior.POOR, label: 'Poor', color: 'orange' },
+    { value: PaymentBehavior.DELINQUENT, label: 'Delinquent', color: 'red' },
 ];
 
 export const PAYMENT_TERMS = [

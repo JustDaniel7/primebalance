@@ -69,7 +69,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bgColor: str
 
 export function InvoiceDetail({ invoice, onClose, onEdit, onPayment, onRefresh }: InvoiceDetailProps) {
     const { t } = useThemeStore();
-    const { fetchInvoice, confirmInvoice, sendInvoice, loading } = useInvoiceStore();
+    const { fetchInvoice, confirmInvoice, sendInvoice, isLoading } = useInvoiceStore();
 
     const [activeTab, setActiveTab] = useState<'details' | 'payments' | 'history' | 'events'>('details');
     const [versions, setVersions] = useState<InvoiceVersion[]>([]);

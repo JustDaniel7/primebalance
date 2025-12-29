@@ -1,28 +1,19 @@
 // src/app/api/wallets/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils';
 
 type Params = { params: Promise<{ id: string }> };
 
-function unauthorized() {
-  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-}
-
-function notFound(entity: string) {
-  return NextResponse.json({ error: `${entity} not found` }, { status: 404 });
-}
-
 // GET /api/wallets/[id]
 export async function GET(req: NextRequest, { params }: Params) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return unauthorized();
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { id } = await params;
 
   const wallet = await prisma.wallet.findFirst({
-    where: { id, userId: session.user.id },
+    where: { id, userId: user.id },
     include: {
       tokens: {
         orderBy: { balanceUsd: 'desc' },
@@ -41,14 +32,14 @@ export async function GET(req: NextRequest, { params }: Params) {
 
 // PATCH /api/wallets/[id]
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return unauthorized();
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { id } = await params;
   const body = await req.json();
 
   const existing = await prisma.wallet.findFirst({
-    where: { id, userId: session.user.id },
+    where: { id, userId: user.id },
   });
 
   if (!existing) return notFound('Wallet');
@@ -56,7 +47,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   // If setting as default, unset other defaults
   if (body.isDefault === true) {
     await prisma.wallet.updateMany({
-      where: { userId: session.user.id, isDefault: true },
+      where: { userId: user.id, isDefault: true },
       data: { isDefault: false },
     });
   }
@@ -81,13 +72,13 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 // DELETE /api/wallets/[id]
 export async function DELETE(req: NextRequest, { params }: Params) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return unauthorized();
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { id } = await params;
 
   const existing = await prisma.wallet.findFirst({
-    where: { id, userId: session.user.id },
+    where: { id, userId: user.id },
   });
 
   if (!existing) return notFound('Wallet');

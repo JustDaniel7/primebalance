@@ -1,18 +1,15 @@
 // src/app/api/wallets/summary/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { getSessionWithOrg, unauthorized } from '@/lib/api-utils';
 
 // GET /api/wallets/summary - Portfolio summary
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const wallets = await prisma.wallet.findMany({
-    where: { userId: session.user.id, isActive: true },
+    where: { userId: user.id, isActive: true },
     include: {
       tokens: { where: { isHidden: false, isSpam: false } },
     },
@@ -52,7 +49,7 @@ export async function GET(req: NextRequest) {
   // Recent transactions
   const recentTransactions = await prisma.walletTransaction.findMany({
     where: {
-      wallet: { userId: session.user.id },
+      wallet: { userId: user.id },
     },
     orderBy: { timestamp: 'desc' },
     take: 10,

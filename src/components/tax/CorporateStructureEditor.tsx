@@ -808,5 +808,3 @@ export const CorporateStructureEditor: React.FC = () => {
     </div>
   );
 };
-
-export default CorporateStructureEditor;

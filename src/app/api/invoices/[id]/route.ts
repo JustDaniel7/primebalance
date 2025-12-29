@@ -4,9 +4,8 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils';
 
 // =============================================================================
 // GET - Get Single Invoice
@@ -17,10 +16,8 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const user = await getSessionWithOrg();
+    if (!user?.organizationId) return unauthorized();
 
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -31,7 +28,7 @@ export async function GET(
     const invoice = await prisma.invoice.findFirst({
       where: {
         id,
-        organizationId: session.user.organizationId,
+        organizationId: user.organizationId,
       },
       include: {
         order: {
@@ -40,9 +37,7 @@ export async function GET(
       },
     });
 
-    if (!invoice) {
-      return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-    }
+    if (!invoice) return notFound('Invoice');
 
     // Fetch related data if requested and models exist
     let versions: any[] = [];
@@ -130,10 +125,8 @@ export async function PATCH(
     { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const user = await getSessionWithOrg();
+    if (!user?.organizationId) return unauthorized();
 
     const { id } = await params;
     const body = await request.json();
@@ -142,13 +135,11 @@ export async function PATCH(
     const invoice = await prisma.invoice.findFirst({
       where: {
         id,
-        organizationId: session.user.organizationId,
+        organizationId: user.organizationId,
       },
     });
 
-    if (!invoice) {
-      return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-    }
+    if (!invoice) return notFound('Invoice');
 
     // Check if editable (only DRAFT)
     if (invoice.status !== 'draft') {
@@ -266,10 +257,8 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const user = await getSessionWithOrg();
+    if (!user?.organizationId) return unauthorized();
 
     const { id } = await params;
 
@@ -277,13 +266,11 @@ export async function DELETE(
     const invoice = await prisma.invoice.findFirst({
       where: {
         id,
-        organizationId: session.user.organizationId,
+        organizationId: user.organizationId,
       },
     });
 
-    if (!invoice) {
-      return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-    }
+    if (!invoice) return notFound('Invoice');
 
     // Check if deletable (only DRAFT)
     if (invoice.status !== 'draft') {

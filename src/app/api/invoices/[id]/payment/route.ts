@@ -4,9 +4,8 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
 
 // Status constants
 const PAYABLE_STATUSES = ['confirmed', 'sent', 'partially_paid', 'overdue'];
@@ -20,10 +19,8 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.organizationId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
 
         const { id } = await params;
 
@@ -31,13 +28,11 @@ export async function GET(
         const invoice = await prisma.invoice.findFirst({
             where: {
                 id,
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
             },
         });
 
-        if (!invoice) {
-            return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-        }
+        if (!invoice) return notFound('Invoice');
 
         // Try to get payments if model exists
         let payments: any[] = [];
@@ -69,10 +64,8 @@ export async function POST(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.organizationId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
 
         const { id } = await params;
         const body = await request.json();
@@ -80,31 +73,18 @@ export async function POST(
         const { amount, paymentDate, paymentMethod, reference, notes } = body;
 
         // Validate required fields
-        if (!amount || amount <= 0) {
-            return NextResponse.json(
-                { error: 'Payment amount must be positive' },
-                { status: 400 }
-            );
-        }
-
-        if (!paymentDate) {
-            return NextResponse.json(
-                { error: 'Payment date is required' },
-                { status: 400 }
-            );
-        }
+        if (!amount || amount <= 0) return badRequest('Payment amount must be positive');
+        if (!paymentDate) return badRequest('Payment date is required');
 
         // Fetch existing invoice
         const invoice = await prisma.invoice.findFirst({
             where: {
                 id,
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
             },
         });
 
-        if (!invoice) {
-            return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-        }
+        if (!invoice) return notFound('Invoice');
 
         // Check if can accept payment
         if (!PAYABLE_STATUSES.includes(invoice.status)) {
@@ -184,7 +164,7 @@ export async function POST(
             await prisma.receivable.updateMany({
                 where: {
                     originReferenceId: invoice.invoiceNumber,
-                    organizationId: session.user.organizationId,
+                    organizationId: user.organizationId,
                 },
                 data: {
                     paidAmount: newPaidAmount,

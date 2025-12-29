@@ -1,17 +1,14 @@
 // src/app/api/wallets/[id]/transactions/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
 
 type Params = { params: Promise<{ id: string }> };
 
 // GET /api/wallets/[id]/transactions
 export async function GET(req: NextRequest, { params }: Params) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { id } = await params;
   const { searchParams } = new URL(req.url);
@@ -20,12 +17,10 @@ export async function GET(req: NextRequest, { params }: Params) {
   const offset = parseInt(searchParams.get('offset') || '0');
 
   const wallet = await prisma.wallet.findFirst({
-    where: { id, userId: session.user.id },
+    where: { id, userId: user.id },
   });
 
-  if (!wallet) {
-    return NextResponse.json({ error: 'Wallet not found' }, { status: 404 });
-  }
+  if (!wallet) return notFound('Wallet');
 
   const where: Record<string, unknown> = { walletId: id };
   if (type) where.type = type;
@@ -45,27 +40,20 @@ export async function GET(req: NextRequest, { params }: Params) {
 
 // POST /api/wallets/[id]/transactions - Manually add transaction
 export async function POST(req: NextRequest, { params }: Params) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { id } = await params;
   const body = await req.json();
 
   const wallet = await prisma.wallet.findFirst({
-    where: { id, userId: session.user.id },
+    where: { id, userId: user.id },
   });
 
-  if (!wallet) {
-    return NextResponse.json({ error: 'Wallet not found' }, { status: 404 });
-  }
+  if (!wallet) return notFound('Wallet');
 
   if (!body.hash || !body.type || body.value === undefined) {
-    return NextResponse.json(
-      { error: 'hash, type, and value are required' },
-      { status: 400 }
-    );
+    return badRequest('hash, type, and value are required');
   }
 
   const transaction = await prisma.walletTransaction.create({

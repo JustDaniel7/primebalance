@@ -80,6 +80,7 @@ interface ProjectState {
 
     // Loading & Error States
     isLoading: boolean;
+    isInitialized: boolean;
     isSaving: boolean;
     error: string | null;
 
@@ -185,6 +186,7 @@ export const useProjectStore = create<ProjectState>()(
 
             // Loading & Error States
             isLoading: false,
+            isInitialized: false,
             isSaving: false,
             error: null,
 
@@ -202,10 +204,10 @@ export const useProjectStore = create<ProjectState>()(
                     const res = await fetch('/api/projects');
                     if (!res.ok) throw new Error('Failed to fetch projects');
                     const data = await res.json();
-                    set({ projects: data.projects || [], isLoading: false });
+                    set({ projects: data.projects || [], isLoading: false, isInitialized: true });
                 } catch (error) {
                     console.error('fetchProjects error:', error);
-                    set({ error: (error as Error).message, isLoading: false });
+                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
                 }
             },
 

@@ -28,6 +28,7 @@ export interface Receipt {
 interface ReceiptsState {
   receipts: Receipt[];
   isLoading: boolean;
+  isInitialized: boolean;
   error: string | null;
 
   // Fetch
@@ -53,6 +54,7 @@ interface ReceiptsState {
 export const useReceiptsStore = create<ReceiptsState>()((set, get) => ({
   receipts: [],
   isLoading: false,
+  isInitialized: false,
   error: null,
 
   // =====================================================================
@@ -66,10 +68,10 @@ export const useReceiptsStore = create<ReceiptsState>()((set, get) => ({
       const res = await fetch(url);
       if (!res.ok) throw new Error('Failed to fetch receipts');
       const data = await res.json();
-      set({ receipts: data, isLoading: false });
+      set({ receipts: data, isLoading: false, isInitialized: true });
     } catch (error) {
       console.error('fetchReceipts error:', error);
-      set({ error: (error as Error).message, isLoading: false });
+      set({ error: (error as Error).message, isLoading: false, isInitialized: true });
     }
   },
 

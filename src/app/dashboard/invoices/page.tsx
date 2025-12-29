@@ -60,7 +60,7 @@ export default function InvoicesPage() {
     invoices,
     pagination,
     statistics,
-    loading,
+    isLoading,
     error,
     filters,
     fetchInvoices,
@@ -231,7 +231,7 @@ export default function InvoicesPage() {
             <Button
                 variant="secondary"
                 onClick={() => fetchInvoices()}
-                leftIcon={<RefreshCw size={18} className={loading ? 'animate-spin' : ''} />}
+                leftIcon={<RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} />}
             >
               Refresh
             </Button>
@@ -380,7 +380,7 @@ export default function InvoicesPage() {
 
         {/* Invoice List */}
         <Card className="overflow-hidden">
-          {loading && invoices.length === 0 ? (
+          {isLoading && invoices.length === 0 ? (
               <div className="flex items-center justify-center py-12">
                 <div className="w-8 h-8 border-4 border-[var(--accent-primary)] border-t-transparent rounded-full animate-spin" />
               </div>

@@ -1,33 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils'
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.organizationId) return unauthorized()
 
     const body = await request.json()
     const { invoiceId, recipientEmail, message } = body
 
-    if (!invoiceId) {
-      return NextResponse.json({ error: 'Invoice ID is required' }, { status: 400 })
-    }
+    if (!invoiceId) return badRequest('Invoice ID is required')
 
     // Verify invoice belongs to organization
     const invoice = await prisma.invoice.findFirst({
       where: {
         id: invoiceId,
-        organizationId: session.user.organizationId,
+        organizationId: user.organizationId,
       },
     })
 
-    if (!invoice) {
-      return NextResponse.json({ error: 'Invoice not found' }, { status: 404 })
-    }
+    if (!invoice) return notFound('Invoice')
 
     // TODO: Integrate with email service (SendGrid, Resend, etc.)
     // For now, just update the invoice status to 'sent'

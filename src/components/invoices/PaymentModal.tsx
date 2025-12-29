@@ -45,7 +45,7 @@ const PAYMENT_METHODS = [
 
 export function PaymentModal({ invoice, onClose, onSuccess }: PaymentModalProps) {
     const { t } = useThemeStore();
-    const { applyPayment, loading, error } = useInvoiceStore();
+    const { applyPayment, isLoading, error } = useInvoiceStore();
 
     const [amount, setAmount] = useState(invoice.outstandingAmount);
     const [paymentDate, setPaymentDate] = useState(new Date().toISOString().split('T')[0]);
@@ -301,10 +301,10 @@ export function PaymentModal({ invoice, onClose, onSuccess }: PaymentModalProps)
                         <Button
                             variant="primary"
                             onClick={handleSubmit}
-                            disabled={loading || amount <= 0 || amount > invoice.outstandingAmount || !paymentDate}
+                            disabled={isLoading || amount <= 0 || amount > invoice.outstandingAmount || !paymentDate}
                             leftIcon={<CreditCard size={18} />}
                         >
-                            {loading ? 'Processing...' : 'Record Payment'}
+                            {isLoading ? 'Processing...' : 'Record Payment'}
                         </Button>
                     </div>
                 </div>

@@ -3,9 +3,8 @@
 // CHANGE: Removed Prisma.Decimal - Prisma auto-converts numbers to Decimal
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils'
 import type { CorporateEntity } from '@/generated/prisma/client'
 
 // Type for entity with relations
@@ -35,14 +34,11 @@ interface EntityHierarchyNode {
 // GET /api/tax/entities - List all corporate entities
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.id) return unauthorized()
 
     const entities = await prisma.corporateEntity.findMany({
-      where: { userId: session.user.id },
+      where: { userId: user.id },
       include: {
         children: true,
         parent: true,
@@ -104,11 +100,8 @@ export async function GET(request: NextRequest) {
 // POST /api/tax/entities - Create new corporate entity
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.id) return unauthorized()
 
     const body = await request.json()
     
@@ -125,29 +118,21 @@ export async function POST(request: NextRequest) {
     } = body
 
     if (!name || !type || !jurisdiction) {
-      return NextResponse.json(
-        { error: 'Name, type, and jurisdiction are required' },
-        { status: 400 }
-      )
+      return badRequest('Name, type, and jurisdiction are required')
     }
 
     // Verify parent belongs to user if provided
     if (parentId) {
       const parent = await prisma.corporateEntity.findFirst({
-        where: { id: parentId, userId: session.user.id },
+        where: { id: parentId, userId: user.id },
       })
-      if (!parent) {
-        return NextResponse.json(
-          { error: 'Parent entity not found' },
-          { status: 400 }
-        )
-      }
+      if (!parent) return badRequest('Parent entity not found')
     }
 
     // CHANGE: Just pass numbers directly - Prisma handles Decimal conversion
     const entity = await prisma.corporateEntity.create({
       data: {
-        userId: session.user.id,
+        userId: user.id,
         name,
         type,
         jurisdiction,

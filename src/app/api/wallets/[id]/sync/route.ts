@@ -1,27 +1,22 @@
 // src/app/api/wallets/[id]/sync/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils';
 
 type Params = { params: Promise<{ id: string }> };
 
 // POST /api/wallets/[id]/sync - Sync wallet balances
 export async function POST(req: NextRequest, { params }: Params) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const user = await getSessionWithOrg();
+  if (!user?.id) return unauthorized();
 
   const { id } = await params;
 
   const wallet = await prisma.wallet.findFirst({
-    where: { id, userId: session.user.id },
+    where: { id, userId: user.id },
   });
 
-  if (!wallet) {
-    return NextResponse.json({ error: 'Wallet not found' }, { status: 404 });
-  }
+  if (!wallet) return notFound('Wallet');
 
   // Update sync status
   await prisma.wallet.update({

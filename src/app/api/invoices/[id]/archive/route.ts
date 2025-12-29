@@ -4,9 +4,8 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils';
 
 // Status constants
 const ARCHIVABLE_STATUSES = ['paid', 'cancelled'];
@@ -20,10 +19,8 @@ export async function POST(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.organizationId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
 
         const { id } = await params;
 
@@ -31,13 +28,11 @@ export async function POST(
         const invoice = await prisma.invoice.findFirst({
             where: {
                 id,
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
             },
         });
 
-        if (!invoice) {
-            return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-        }
+        if (!invoice) return notFound('Invoice');
 
         // Check if can archive
         if (!ARCHIVABLE_STATUSES.includes(invoice.status)) {
@@ -78,9 +73,9 @@ export async function POST(
                         status: invoice.status,
                         total: Number(invoice.total),
                     },
-                    archivedBy: session.user.id,
+                    archivedBy: user.id,
                     archiveReason: 'Invoice archived',
-                    organizationId: session.user.organizationId,
+                    organizationId: user.organizationId,
                 },
             });
         } catch (e) {

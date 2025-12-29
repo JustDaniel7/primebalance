@@ -4,9 +4,8 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
 
 // Status constants
 const CANCELLABLE_STATUSES = ['draft', 'confirmed', 'sent', 'overdue'];
@@ -20,33 +19,24 @@ export async function POST(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.organizationId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
 
         const { id } = await params;
         const body = await request.json();
         const { reason } = body;
 
-        if (!reason?.trim()) {
-            return NextResponse.json(
-                { error: 'Cancellation reason is required' },
-                { status: 400 }
-            );
-        }
+        if (!reason?.trim()) return badRequest('Cancellation reason is required');
 
         // Fetch existing invoice
         const invoice = await prisma.invoice.findFirst({
             where: {
                 id,
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
             },
         });
 
-        if (!invoice) {
-            return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
-        }
+        if (!invoice) return notFound('Invoice');
 
         // Check if can cancel
         if (!CANCELLABLE_STATUSES.includes(invoice.status)) {

@@ -23,7 +23,8 @@
       "Bash(echo:*)",
       "Bash(node scripts/extract-translations.js:*)",
       "Bash(wc:*)",
-      "Bash(node scripts/sync-locales.js:*)"
+      "Bash(node scripts/sync-locales.js:*)",
+      "Bash(cat:*)"
     ]
   }
 }

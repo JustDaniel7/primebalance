@@ -1,13 +1,10 @@
 import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+import { getSessionWithOrg, unauthorized } from '@/lib/api-utils'
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.organizationId) return unauthorized()
 
     // Placeholder board reports data
     const reports = [

@@ -3,9 +3,8 @@
 // CHANGE: Removed Prisma.Decimal - Prisma auto-converts numbers to Decimal
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils'
 import type { CorporateEntity } from '@/generated/prisma/client'
 
 type RouteParams = {
@@ -21,16 +20,13 @@ type EntityWithRelations = CorporateEntity & {
 // GET /api/tax/entities/[id]
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.id) return unauthorized()
     const { id } = await params;
     const entity = await prisma.corporateEntity.findFirst({
       where: {
         id: id,
-        userId: session.user.id,
+        userId: user.id,
       },
       include: {
         children: true,
@@ -38,9 +34,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       },
     }) as EntityWithRelations | null
 
-    if (!entity) {
-      return NextResponse.json({ error: 'Entity not found' }, { status: 404 })
-    }
+    if (!entity) return notFound('Entity')
 
     return NextResponse.json({
       id: entity.id,
@@ -79,22 +73,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // PUT /api/tax/entities/[id]
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.id) return unauthorized()
     const { id } = await params;
     const existing = await prisma.corporateEntity.findFirst({
       where: {
         id: id,
-        userId: session.user.id,
+        userId: user.id,
       },
     })
 
-    if (!existing) {
-      return NextResponse.json({ error: 'Entity not found' }, { status: 404 })
-    }
+    if (!existing) return notFound('Entity')
 
     const body = await request.json()
     
@@ -131,10 +120,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     if (body.parentId !== undefined) {
       // Prevent circular reference
       if (body.parentId === id) {
-        return NextResponse.json(
-          { error: 'Entity cannot be its own parent' },
-          { status: 400 }
-        )
+        return badRequest('Entity cannot be its own parent')
       }
       if (body.parentId === null) {
         updateData.parent = { disconnect: true }
@@ -168,32 +154,24 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 // DELETE /api/tax/entities/[id]
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
-    const session = await getServerSession(authOptions)
-    
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    const user = await getSessionWithOrg()
+    if (!user?.id) return unauthorized()
     const { id } = await params;
     const existing = await prisma.corporateEntity.findFirst({
       where: {
         id: id,
-        userId: session.user.id,
+        userId: user.id,
       },
       include: {
         children: true,
       },
     })
 
-    if (!existing) {
-      return NextResponse.json({ error: 'Entity not found' }, { status: 404 })
-    }
+    if (!existing) return notFound('Entity')
 
     // Check for children
     if (existing.children.length > 0) {
-      return NextResponse.json(
-        { error: 'Cannot delete entity with subsidiaries. Delete or reassign them first.' },
-        { status: 400 }
-      )
+      return badRequest('Cannot delete entity with subsidiaries. Delete or reassign them first.')
     }
 
     await prisma.corporateEntity.delete({

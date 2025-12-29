@@ -11,11 +11,19 @@ import type {
   RevenueRecord,
   RiskIndicator,
   CustomerAnalytics,
+} from '@/types/customers';
+import {
   CustomerStatus,
   CustomerAccountType,
   CreditStatus,
   RiskLevel,
   PaymentBehavior,
+  RiskIndicatorStatus,
+  RiskIndicatorCategory,
+  InvoiceDelivery,
+  ContactRole,
+  PaymentRecordStatus,
+  RevenuePeriodType,
 } from '@/types/customers';
 
 // =============================================================================
@@ -28,8 +36,8 @@ function mapApiToCustomer(api: Record<string, unknown>): Customer {
     customerNumber: api.customerNumber as string,
     name: api.name as string,
     legalName: api.legalName as string | undefined,
-    type: (api.type as CustomerAccountType) || 'business',
-    status: (api.status as CustomerStatus) || 'active',
+    type: (api.type as CustomerAccountType) || CustomerAccountType.BUSINESS,
+    status: (api.status as CustomerStatus) || CustomerStatus.ACTIVE,
     email: api.email as string | undefined,
     phone: api.phone as string | undefined,
     website: api.website as string | undefined,
@@ -60,17 +68,17 @@ function mapApiToCustomer(api: Record<string, unknown>): Customer {
     creditLimit: Number(api.creditLimit) || 0,
     creditUsed: Number(api.creditUsed) || 0,
     creditAvailable: Number(api.creditAvailable) || 0,
-    creditStatus: (api.creditStatus as CreditStatus) || 'approved',
+    creditStatus: (api.creditStatus as CreditStatus) || CreditStatus.APPROVED,
     paymentTerms: (api.paymentTerms as string) || 'Net 30',
-    riskLevel: (api.riskLevel as RiskLevel) || 'low',
+    riskLevel: (api.riskLevel as RiskLevel) || RiskLevel.LOW,
     riskScore: (api.riskScore as number) || 0,
-    paymentBehavior: (api.paymentBehavior as PaymentBehavior) || 'good',
+    paymentBehavior: (api.paymentBehavior as PaymentBehavior) || PaymentBehavior.GOOD,
     averageDaysToPayment: api.averageDaysToPayment as number | undefined,
     onTimePaymentRate: api.onTimePaymentRate ? Number(api.onTimePaymentRate) : undefined,
     latePaymentCount: api.latePaymentCount as number | undefined,
     preferredPaymentMethod: api.preferredPaymentMethod as string | undefined,
     preferredLanguage: (api.preferredLanguage as string) || 'en',
-    invoiceDelivery: (api.invoiceDelivery as Customer['invoiceDelivery']) || 'email',
+    invoiceDelivery: (api.invoiceDelivery as InvoiceDelivery) || InvoiceDelivery.EMAIL,
     notes: api.notes as string | undefined,
     createdAt: api.createdAt as string,
     updatedAt: api.updatedAt as string,
@@ -86,7 +94,7 @@ function mapApiToContact(api: Record<string, unknown>): CustomerContact {
     email: api.email as string,
     phone: api.phone as string | undefined,
     isPrimary: (api.isPrimary as boolean) || false,
-    role: (api.role as CustomerContact['role']) || 'general',
+    role: (api.role as ContactRole) || ContactRole.GENERAL,
     notes: api.notes as string | undefined,
     createdAt: api.createdAt as string,
     updatedAt: api.updatedAt as string,
@@ -104,7 +112,7 @@ function mapApiToPayment(api: Record<string, unknown>): PaymentRecord {
     invoiceDate: new Date(api.invoiceDate as string).toISOString(),
     dueDate: new Date(api.dueDate as string).toISOString(),
     paymentDate: api.paymentDate ? new Date(api.paymentDate as string).toISOString() : undefined,
-    status: (api.status as PaymentRecord['status']) || 'pending',
+    status: (api.status as PaymentRecordStatus) || PaymentRecordStatus.PENDING,
     daysToPayment: api.daysToPayment as number | undefined,
     daysOverdue: api.daysOverdue as number | undefined,
     paymentMethod: api.paymentMethod as string | undefined,
@@ -132,7 +140,7 @@ function mapApiToRevenue(api: Record<string, unknown>): RevenueRecord {
     id: api.id as string,
     customerId: api.customerId as string,
     period: api.period as string,
-    periodType: (api.periodType as RevenueRecord['periodType']) || 'monthly',
+    periodType: (api.periodType as RevenuePeriodType) || RevenuePeriodType.MONTHLY,
     revenue: Number(api.revenue) || 0,
     cost: api.cost ? Number(api.cost) : undefined,
     profit: api.profit ? Number(api.profit) : undefined,
@@ -150,12 +158,12 @@ function mapApiToRiskIndicator(api: Record<string, unknown>): RiskIndicator {
   return {
     id: api.id as string,
     customerId: api.customerId as string,
-    category: api.category as RiskIndicator['category'],
+    category: (api.category as RiskIndicatorCategory) || RiskIndicatorCategory.FINANCIAL,
     indicator: api.indicator as string,
     description: api.description as string,
-    severity: (api.severity as RiskLevel) || 'medium',
+    severity: (api.severity as RiskLevel) || RiskLevel.MEDIUM,
     score: (api.score as number) || 0,
-    status: (api.status as RiskIndicator['status']) || 'active',
+    status: (api.status as RiskIndicatorStatus) || RiskIndicatorStatus.ACTIVE,
     detectedAt: api.detectedAt ? new Date(api.detectedAt as string).toISOString() : new Date().toISOString(),
     resolvedAt: api.resolvedAt ? new Date(api.resolvedAt as string).toISOString() : undefined,
     recommendedAction: api.recommendedAction as string | undefined,
@@ -437,7 +445,7 @@ export const useCustomersStore = create<CustomersState>()(
         set((state) => ({
           riskIndicators: state.riskIndicators.map((r) =>
             r.id === riskId
-              ? { ...r, status: 'resolved' as const, actionTaken, resolvedAt: new Date().toISOString() }
+              ? { ...r, status: RiskIndicatorStatus.RESOLVED, actionTaken, resolvedAt: new Date().toISOString() }
               : r
           ),
         }));

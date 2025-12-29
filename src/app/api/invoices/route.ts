@@ -1,24 +1,21 @@
 // =============================================================================
-// INVOICES API - Main Route (FIXED)
+// INVOICES API - Main Route
 // src/app/api/invoices/route.ts
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils';
 
 // =============================================================================
 // GET - List Invoices
 // =============================================================================
 
 export async function GET(request: NextRequest) {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
+  try {
     const { searchParams } = new URL(request.url);
 
     // Pagination
@@ -34,8 +31,9 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
 
     // Build where clause
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {
-      organizationId: session.user.organizationId,
+      organizationId: user.organizationId,
     };
 
     if (status) {
@@ -43,9 +41,10 @@ export async function GET(request: NextRequest) {
     }
 
     if (dateFrom || dateTo) {
-      where.invoiceDate = {};
-      if (dateFrom) where.invoiceDate.gte = new Date(dateFrom);
-      if (dateTo) where.invoiceDate.lte = new Date(dateTo);
+      const dateFilter: { gte?: Date; lte?: Date } = {};
+      if (dateFrom) dateFilter.gte = new Date(dateFrom);
+      if (dateTo) dateFilter.lte = new Date(dateTo);
+      where.invoiceDate = dateFilter;
     }
 
     if (currency) {
@@ -76,7 +75,7 @@ export async function GET(request: NextRequest) {
 
     // Calculate statistics
     const allInvoices = await prisma.invoice.findMany({
-      where: { organizationId: session.user.organizationId },
+      where: { organizationId: user.organizationId },
       select: { total: true, status: true },
     });
 
@@ -132,12 +131,10 @@ export async function GET(request: NextRequest) {
 // =============================================================================
 
 export async function POST(request: NextRequest) {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.organizationId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+  const user = await getSessionWithOrg();
+  if (!user?.organizationId) return unauthorized();
 
+  try {
     const body = await request.json();
 
     // Support both new format (customerName) and old format (recipient.name)
@@ -146,31 +143,22 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (!customerName) {
-      return NextResponse.json(
-          { error: 'Customer name is required (customerName or recipient.name)' },
-          { status: 400 }
-      );
+      return badRequest('Customer name is required (customerName or recipient.name)');
     }
 
     if (!body.invoiceDate || !body.dueDate) {
-      return NextResponse.json(
-          { error: 'Invoice date and due date are required' },
-          { status: 400 }
-      );
+      return badRequest('Invoice date and due date are required');
     }
 
     if (!body.items?.length) {
-      return NextResponse.json(
-          { error: 'At least one line item is required' },
-          { status: 400 }
-      );
+      return badRequest('At least one line item is required');
     }
 
     // Generate invoice number
     const year = new Date().getFullYear();
     const lastInvoice = await prisma.invoice.findFirst({
       where: {
-        organizationId: session.user.organizationId,
+        organizationId: user.organizationId,
         invoiceNumber: { startsWith: `INV-${year}` },
       },
       orderBy: { invoiceNumber: 'desc' },
@@ -267,7 +255,7 @@ export async function POST(request: NextRequest) {
         orderId: body.orderId,
 
         // Organization
-        organizationId: session.user.organizationId,
+        organizationId: user.organizationId,
       },
     });
 

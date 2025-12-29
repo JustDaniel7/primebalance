@@ -4,6 +4,7 @@
 // =============================================================================
 
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import {
   Invoice,
   InvoiceStatus,
@@ -19,11 +20,139 @@ import {
 } from '@/types/invoice';
 
 // =============================================================================
-// TYPES
+// API MAPPERS
+// =============================================================================
+
+function mapApiToInvoice(api: Record<string, unknown>): Invoice {
+  return {
+    id: api.id as string,
+    invoiceNumber: api.invoiceNumber as string,
+    status: api.status as InvoiceStatus | string,
+    version: (api.version as number) || 1,
+    isLatest: (api.isLatest as boolean) ?? true,
+    previousVersionId: api.previousVersionId as string | undefined,
+    customerId: api.customerId as string | undefined,
+    customerName: api.customerName as string | undefined,
+    customerEmail: api.customerEmail as string | undefined,
+    customerTaxId: api.customerTaxId as string | undefined,
+    customerAddress: api.customerAddress as Invoice['customerAddress'],
+    sender: api.sender as Invoice['sender'],
+    recipient: api.recipient as Invoice['recipient'],
+    entityId: api.entityId as string | undefined,
+    entityName: api.entityName as string | undefined,
+    entityTaxId: api.entityTaxId as string | undefined,
+    entityAddress: api.entityAddress as Invoice['entityAddress'],
+    invoiceDate: api.invoiceDate as string,
+    dueDate: api.dueDate as string,
+    serviceDate: api.serviceDate as string | undefined,
+    servicePeriodStart: api.servicePeriodStart as string | undefined,
+    servicePeriodEnd: api.servicePeriodEnd as string | undefined,
+    items: (api.items as InvoiceLineItem[]) || [],
+    currency: (api.currency as string) || 'EUR',
+    subtotal: Number(api.subtotal) || 0,
+    taxAmount: Number(api.taxAmount) || 0,
+    taxableAmount: Number(api.taxableAmount) || 0,
+    discountAmount: Number(api.discountAmount) || 0,
+    discountPercent: Number(api.discountPercent) || 0,
+    total: Number(api.total) || 0,
+    paidAmount: Number(api.paidAmount) || 0,
+    outstandingAmount: Number(api.outstandingAmount) || Number(api.total) || 0,
+    applyTax: (api.applyTax as boolean) ?? true,
+    taxRate: Number(api.taxRate) || 0,
+    taxClassification: api.taxClassification as Invoice['taxClassification'],
+    taxExemptReason: api.taxExemptReason as string | undefined,
+    taxExemptNote: api.taxExemptNote as string | undefined,
+    taxJurisdiction: api.taxJurisdiction as string | undefined,
+    fxRateToBase: api.fxRateToBase ? Number(api.fxRateToBase) : undefined,
+    fxRateDate: api.fxRateDate as string | undefined,
+    baseCurrency: api.baseCurrency as string | undefined,
+    totalInBase: api.totalInBase ? Number(api.totalInBase) : undefined,
+    fiscalYear: api.fiscalYear as number | undefined,
+    fiscalPeriod: api.fiscalPeriod as string | undefined,
+    payment: api.payment as Invoice['payment'],
+    paymentTerms: api.paymentTerms as Invoice['paymentTerms'],
+    bankDetails: api.bankDetails as Invoice['bankDetails'],
+    confirmedAt: api.confirmedAt as string | undefined,
+    sentAt: api.sentAt as string | undefined,
+    paidAt: api.paidAt as string | undefined,
+    cancelledAt: api.cancelledAt as string | undefined,
+    archivedAt: api.archivedAt as string | undefined,
+    createdBy: api.createdBy as string | undefined,
+    createdByName: api.createdByName as string | undefined,
+    confirmedBy: api.confirmedBy as string | undefined,
+    confirmedByName: api.confirmedByName as string | undefined,
+    cancelledBy: api.cancelledBy as string | undefined,
+    cancelledByName: api.cancelledByName as string | undefined,
+    cancellationReason: api.cancellationReason as string | undefined,
+    notes: api.notes as string | undefined,
+    internalNotes: api.internalNotes as string | undefined,
+    language: (api.language as string) || 'en',
+    reference: api.reference as string | undefined,
+    poNumber: api.poNumber as string | undefined,
+    isRecurring: (api.isRecurring as boolean) || false,
+    recurringInterval: api.recurringInterval as string | undefined,
+    recurringEndDate: api.recurringEndDate as string | undefined,
+    nextRecurringDate: api.nextRecurringDate as string | undefined,
+    parentInvoiceId: api.parentInvoiceId as string | undefined,
+    orderId: api.orderId as string | undefined,
+    orderNumber: api.orderNumber as string | undefined,
+    projectId: api.projectId as string | undefined,
+    costCenterId: api.costCenterId as string | undefined,
+    receivableId: api.receivableId as string | undefined,
+    versions: api.versions as InvoiceVersion[] | undefined,
+    accountingEvents: api.accountingEvents as InvoiceAccountingEvent[] | undefined,
+    payments: api.payments as InvoicePayment[] | undefined,
+    createdAt: api.createdAt as string,
+    updatedAt: api.updatedAt as string,
+  };
+}
+
+function mapApiToPayment(api: Record<string, unknown>): InvoicePayment {
+  return {
+    id: api.id as string,
+    invoiceId: api.invoiceId as string,
+    amount: Number(api.amount) || 0,
+    currency: (api.currency as string) || 'EUR',
+    paymentDate: api.paymentDate as string,
+    paymentMethod: api.paymentMethod as string,
+    bankAccount: api.bankAccount as string | undefined,
+    transactionRef: api.transactionRef as string | undefined,
+    transactionId: api.transactionId as string | undefined,
+    reference: api.reference as string | undefined,
+    notes: api.notes as string | undefined,
+    status: (api.status as InvoicePayment['status']) || 'pending',
+    creditNoteId: api.creditNoteId as string | undefined,
+    offsetReceivableId: api.offsetReceivableId as string | undefined,
+    treasuryMovementId: api.treasuryMovementId as string | undefined,
+    appliedBy: api.appliedBy as string | undefined,
+    appliedByName: api.appliedByName as string | undefined,
+    createdAt: api.createdAt as string,
+  };
+}
+
+function mapApiToVersion(api: Record<string, unknown>): InvoiceVersion {
+  return {
+    id: api.id as string,
+    invoiceId: api.invoiceId as string,
+    version: (api.version as number) || 1,
+    snapshot: api.snapshot as Invoice,
+    changeType: api.changeType as string,
+    changeReason: api.changeReason as string | undefined,
+    changedFields: (api.changedFields as string[]) || [],
+    createdBy: api.createdBy as string | undefined,
+    createdByName: api.createdByName as string | undefined,
+    createdAt: api.createdAt as string,
+  };
+}
+
+// =============================================================================
+// STORE INTERFACE
 // =============================================================================
 
 interface InvoiceState {
+  // ---------------------------------------------------------------------------
   // Data
+  // ---------------------------------------------------------------------------
   invoices: Invoice[];
   currentInvoice: Invoice | null;
   versions: InvoiceVersion[];
@@ -31,7 +160,9 @@ interface InvoiceState {
   accountingEvents: InvoiceAccountingEvent[];
   statistics: InvoiceStatistics | null;
 
+  // ---------------------------------------------------------------------------
   // Pagination
+  // ---------------------------------------------------------------------------
   pagination: {
     page: number;
     limit: number;
@@ -39,12 +170,17 @@ interface InvoiceState {
     totalPages: number;
   };
 
+  // ---------------------------------------------------------------------------
   // Filters
+  // ---------------------------------------------------------------------------
   filters: InvoiceFilters;
 
+  // ---------------------------------------------------------------------------
   // UI State
-  loading: boolean;
+  // ---------------------------------------------------------------------------
+  isLoading: boolean;
   error: string | null;
+  isInitialized: boolean;
   selectedIds: string[];
 
   // Actions - Fetch
@@ -96,34 +232,37 @@ interface InvoiceState {
 // STORE IMPLEMENTATION
 // =============================================================================
 
-export const useInvoiceStore = create<InvoiceState>((set, get) => ({
-  // Initial State
-  invoices: [],
-  currentInvoice: null,
-  versions: [],
-  payments: [],
-  accountingEvents: [],
-  statistics: null,
+export const useInvoiceStore = create<InvoiceState>()(
+  persist(
+    (set, get) => ({
+      // Initial State
+      invoices: [],
+      currentInvoice: null,
+      versions: [],
+      payments: [],
+      accountingEvents: [],
+      statistics: null,
 
-  pagination: {
-    page: 1,
-    limit: 50,
-    total: 0,
-    totalPages: 0,
-  },
+      pagination: {
+        page: 1,
+        limit: 50,
+        total: 0,
+        totalPages: 0,
+      },
 
-  filters: {},
+      filters: {},
 
-  loading: false,
-  error: null,
-  selectedIds: [],
+      isLoading: false,
+      error: null,
+      isInitialized: false,
+      selectedIds: [],
 
   // ==========================================================================
   // FETCH ACTIONS
   // ==========================================================================
 
   fetchInvoices: async (filters?: InvoiceFilters) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const state = get();
@@ -164,21 +303,22 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       const data = await response.json();
 
       set({
-        invoices: data.invoices,
+        invoices: data.invoices.map(mapApiToInvoice),
         pagination: data.pagination,
         statistics: data.statistics,
-        loading: false,
+        isLoading: false,
+        isInitialized: true,
       });
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to fetch invoices',
       });
     }
   },
 
   fetchInvoice: async (id, options = {}) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const params = new URLSearchParams();
@@ -199,11 +339,11 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
         versions: data.invoice.versions || [],
         payments: data.invoice.payments || [],
         accountingEvents: data.invoice.accountingEvents || [],
-        loading: false,
+        isLoading: false,
       });
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to fetch invoice',
       });
     }
@@ -229,7 +369,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   // ==========================================================================
 
   createInvoice: async (data) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch('/api/invoices', {
@@ -248,13 +388,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       set((state) => ({
         invoices: [result.invoice, ...state.invoices],
         currentInvoice: result.invoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return result.invoice;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to create invoice',
       });
       return null;
@@ -262,7 +402,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   },
 
   updateInvoice: async (id, data) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}`, {
@@ -283,13 +423,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
             inv.id === id ? result.invoice : inv
         ),
         currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return result.invoice;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to update invoice',
       });
       return null;
@@ -297,7 +437,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   },
 
   deleteInvoice: async (id) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}`, {
@@ -312,13 +452,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       set((state) => ({
         invoices: state.invoices.filter((inv) => inv.id !== id),
         currentInvoice: state.currentInvoice?.id === id ? null : state.currentInvoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return true;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to delete invoice',
       });
       return false;
@@ -330,7 +470,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   // ==========================================================================
 
   confirmInvoice: async (id, options = {}) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}/confirm`, {
@@ -351,13 +491,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
             inv.id === id ? result.invoice : inv
         ),
         currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return true;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to confirm invoice',
       });
       return false;
@@ -365,7 +505,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   },
 
   sendInvoice: async (id) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}/send`, {
@@ -386,13 +526,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
             inv.id === id ? result.invoice : inv
         ),
         currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return true;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to send invoice',
       });
       return false;
@@ -400,7 +540,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   },
 
   cancelInvoice: async (id, reason) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}/cancel`, {
@@ -421,13 +561,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
             inv.id === id ? result.invoice : inv
         ),
         currentInvoice: state.currentInvoice?.id === id ? result.invoice : state.currentInvoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return true;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to cancel invoice',
       });
       return false;
@@ -435,7 +575,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   },
 
   archiveInvoice: async (id) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}/archive`, {
@@ -452,13 +592,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       set((state) => ({
         invoices: state.invoices.filter((inv) => inv.id !== id),
         currentInvoice: state.currentInvoice?.id === id ? null : state.currentInvoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return true;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to archive invoice',
       });
       return false;
@@ -470,7 +610,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   // ==========================================================================
 
   applyPayment: async (id, payment) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch(`/api/invoices/${id}/payment`, {
@@ -494,13 +634,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
         invoices: state.invoices.map((inv) =>
             inv.id === id ? { ...inv, ...result.invoice } : inv
         ),
-        loading: false,
+        isLoading: false,
       }));
 
       return true;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to apply payment',
       });
       return false;
@@ -512,7 +652,7 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
   // ==========================================================================
 
   createFromOrder: async (orderId, options = {}) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
 
     try {
       const response = await fetch('/api/invoices/from-order', {
@@ -531,13 +671,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
       set((state) => ({
         invoices: [result.invoice, ...state.invoices],
         currentInvoice: result.invoice,
-        loading: false,
+        isLoading: false,
       }));
 
       return result.invoice;
     } catch (error) {
       set({
-        loading: false,
+        isLoading: false,
         error: error instanceof Error ? error.message : 'Failed to create invoice from order',
       });
       return null;
@@ -651,4 +791,13 @@ export const useInvoiceStore = create<InvoiceState>((set, get) => ({
     const nextNumber = currentYearInvoices.length + 1;
     return `INV-${year}-${String(nextNumber).padStart(5, '0')}`;
   },
-}));
+    }),
+    {
+      name: 'primebalance-invoices',
+      partialize: (state) => ({
+        selectedIds: state.selectedIds,
+        filters: state.filters,
+      }),
+    }
+  )
+);

@@ -4,9 +4,8 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
 
 // =============================================================================
 // POST - Create Invoice from Order
@@ -14,32 +13,23 @@ import { prisma } from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.organizationId) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
 
         const body = await request.json();
         const { orderId, includeAllItems = true, selectedItemIds } = body;
 
-        if (!orderId) {
-            return NextResponse.json(
-                { error: 'Order ID is required' },
-                { status: 400 }
-            );
-        }
+        if (!orderId) return badRequest('Order ID is required');
 
         // Fetch order
         const order = await prisma.order.findFirst({
             where: {
                 id: orderId,
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
             },
         });
 
-        if (!order) {
-            return NextResponse.json({ error: 'Order not found' }, { status: 404 });
-        }
+        if (!order) return notFound('Order');
 
         // Check order status
         if (!['confirmed', 'in_progress', 'partially_completed', 'completed'].includes(order.status)) {
@@ -56,7 +46,7 @@ export async function POST(request: NextRequest) {
         const year = new Date().getFullYear();
         const lastInvoice = await prisma.invoice.findFirst({
             where: {
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
                 invoiceNumber: { startsWith: `INV-${year}` },
             },
             orderBy: { invoiceNumber: 'desc' },
@@ -79,12 +69,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        if (orderItems.length === 0) {
-            return NextResponse.json(
-                { error: 'No items to invoice' },
-                { status: 400 }
-            );
-        }
+        if (orderItems.length === 0) return badRequest('No items to invoice');
 
         // Map order items to invoice items
         const invoiceItems = orderItems.map((item: any, idx: number) => ({
@@ -149,7 +134,7 @@ export async function POST(request: NextRequest) {
                 orderId: order.id,
 
                 // Organization
-                organizationId: session.user.organizationId,
+                organizationId: user.organizationId,
             },
         });
 
