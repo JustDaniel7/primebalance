@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Button } from '@/components/ui'
-import { AIIcon, SparklesIcon } from '@/components/ui/Icons'
 import { Send, Sparkles, MessageSquare, Lightbulb, TrendingUp, PieChart, Clock } from 'lucide-react'
 
 interface Message {
@@ -20,22 +20,28 @@ export default function AssistantPage() {
     {
       id: '1',
       role: 'assistant',
-      content: t('ai.askAnything'),
+      content: t('ai.greeting') || "Hello! I'm your PrimeBalance AI assistant. I can help you analyze transactions, review invoices, track expenses, and provide financial insights. What would you like to know?",
       timestamp: new Date(),
     },
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const suggestions = [
-    { icon: TrendingUp, text: t('ai.suggestion1') },
-    { icon: PieChart, text: t('ai.suggestion2') },
-    { icon: Clock, text: t('ai.suggestion3') },
-    { icon: Lightbulb, text: t('ai.suggestion4') },
+    { icon: TrendingUp, text: t('ai.suggestion1') || 'Show me my transaction summary for this month' },
+    { icon: PieChart, text: t('ai.suggestion2') || 'What are my top expense categories?' },
+    { icon: Clock, text: t('ai.suggestion3') || 'Show me overdue invoices' },
+    { icon: Lightbulb, text: t('ai.suggestion4') || 'How can I optimize my cash flow?' },
   ]
 
-  const handleSend = () => {
-    if (!input.trim()) return
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  const handleSend = async () => {
+    if (!input.trim() || isTyping) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -44,25 +50,64 @@ export default function AssistantPage() {
       timestamp: new Date(),
     }
 
-    setMessages([...messages, userMessage])
+    // Add user message and clear input
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
     setInput('')
     setIsTyping(true)
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Prepare conversation history for API (exclude initial greeting for cleaner context)
+      const conversationHistory = updatedMessages
+        .filter(m => m.id !== '1') // Exclude initial greeting
+        .map(m => ({ role: m.role, content: m.content }))
+
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: conversationHistory })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to get AI response')
+      }
+
+      const data = await response.json()
+
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Based on your financial data, I can see several opportunities for optimization. Your current spending patterns show that infrastructure costs have increased by 15% this quarter. I recommend reviewing your cloud service agreements and considering reserved instances for predictable workloads.',
+        content: data.content,
         timestamp: new Date(),
       }
-      setMessages((prev) => [...prev, aiMessage])
+      setMessages(prev => [...prev, aiMessage])
+    } catch (error) {
+      console.error('AI chat error:', error)
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: 'I apologize, but I encountered an error processing your request. Please try again.',
+        timestamp: new Date(),
+      }
+      setMessages(prev => [...prev, errorMessage])
+    } finally {
       setIsTyping(false)
-    }, 2000)
+    }
   }
 
   const handleSuggestion = (text: string) => {
     setInput(text)
+  }
+
+  const handleNewChat = () => {
+    setMessages([
+      {
+        id: Date.now().toString(),
+        role: 'assistant',
+        content: t('ai.greeting') || "Hello! I'm your PrimeBalance AI assistant. I can help you analyze transactions, review invoices, track expenses, and provide financial insights. What would you like to know?",
+        timestamp: new Date(),
+      },
+    ])
   }
 
   return (
@@ -80,8 +125,8 @@ export default function AssistantPage() {
             {t('ai.subtitle')}
           </p>
         </div>
-        <Button variant="secondary" leftIcon={<MessageSquare size={18} />}>
-          {t('ai.newChat')}
+        <Button variant="secondary" leftIcon={<MessageSquare size={18} />} onClick={handleNewChat}>
+          {t('ai.newChat') || 'New Chat'}
         </Button>
       </div>
 
@@ -112,7 +157,13 @@ export default function AssistantPage() {
                         <span className="text-sm font-medium text-violet-500">AI Assistant</span>
                       </div>
                     )}
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                    {message.role === 'assistant' ? (
+                      <div className="text-sm leading-relaxed prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0.5 prose-headings:my-2 prose-strong:text-inherit">
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="text-sm leading-relaxed">{message.content}</p>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -126,11 +177,12 @@ export default function AssistantPage() {
                   <div className="bg-gray-100 dark:bg-surface-800/50 p-4 rounded-2xl">
                     <div className="flex items-center gap-2">
                       <Sparkles size={16} className="text-violet-500 animate-pulse" />
-                      <span className="text-sm text-gray-500 dark:text-surface-400">{t('ai.thinking')}</span>
+                      <span className="text-sm text-gray-500 dark:text-surface-400">{t('ai.thinking') || 'Thinking...'}</span>
                     </div>
                   </div>
                 </motion.div>
               )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input */}

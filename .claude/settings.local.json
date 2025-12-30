@@ -27,7 +27,8 @@
       "Bash(cat:*)",
       "Bash(curl:*)",
       "Bash(npx prisma db seed:*)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
