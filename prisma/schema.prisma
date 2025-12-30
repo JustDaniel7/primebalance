@@ -96,7 +96,7 @@ model Organization {
   receipts          Receipt[]
   chatChannels      ChatChannel[]
   orders            Order[]
-  archiveItems      ArchiveItem[]
+  archiveItems      ArchiveRecord[]
   liabilities       Liability[]
   inventoryItems    InventoryItem[]
   receivables       Receivable[]
@@ -899,170 +899,1443 @@ model Order {
 // ARCHIVE
 // =============================================================================
 
-model ArchiveItem {
+model ArchiveRecord {
   id String @id @default(cuid())
 
-  // Category & Type
-  category String // bookings, invoices, bank, services, documents, contracts
-  status   String @default("archived") // archived, restored, deleted
+  // ==========================================================================
+  // IDENTITY (TS Section 4.1)
+  // ==========================================================================
+  archiveRecordId  String  @unique // Globally unique, deterministic
+  originalObjectId String
+  objectType       String // invoice, order, offer, payment, journal_entry, report, etc.
+  objectVersion    Int     @default(1)
+  parentRecordId   String? // Predecessor archive record (version chain)
+  legalEntityId    String?
+  partyId          String? // Party-based accounting link
 
-  // Original reference
-  originalId   String
-  originalType String // transaction, invoice, order, contract, document, receipt
+  // ==========================================================================
+  // TEMPORAL METADATA (TS Section 4.2)
+  // ==========================================================================
+  createdAt        DateTime // Original object creation
+  archivedAt       DateTime  @default(now())
+  effectiveDate    DateTime? // Business effective date
+  accountingPeriod String? // e.g., "2025-01", "2025-Q1"
+  fiscalYear       Int?
+  fiscalPeriod     String? // Q1, Q2, Q3, Q4, M01-M12
+  timezone         String    @default("UTC")
 
-  // Content
+  // ==========================================================================
+  // INTEGRITY (TS Section 4.3) - Cryptographic Chain
+  // ==========================================================================
+  contentHash       String // SHA-256 of archived content
+  predecessorHash   String? // Chain link to previous version
+  signature         String? // System or user signature
+  tamperChecksum    String? // Additional integrity check
+  signatureCount    Int       @default(1) // For multi-signature records
+  integrityVerified Boolean   @default(true)
+  lastVerifiedAt    DateTime?
+
+  // ==========================================================================
+  // CONTEXT (TS Section 4.4)
+  // ==========================================================================
+  triggerType         String // status_finalization, supersession, period_close, submission, legal_trigger, user_action, policy, auto_archive, batch
+  triggerReason       String?
+  triggerExplanation  String?  @db.Text // Explain-Why
+  initiatingActor     String? // user_id or 'system'
+  initiatingActorName String?
+  actorType           String   @default("user") // user, system, api, automation
+  sourceModule        String? // invoices, orders, treasury, etc.
+  linkedEntityIds     String[] // Array of related entity IDs
+
+  // ==========================================================================
+  // CONTENT - The Archived Object
+  // ==========================================================================
   title       String
-  description String?  @db.Text
-  amount      Decimal? @db.Decimal(15, 2)
-  currency    String   @default("EUR")
+  description String? @db.Text
+  content     Json // Full snapshot of the archived object
+  contentType String  @default("json") // json, pdf, xml
+  contentSize Int? // Bytes
 
-  // Counterparty
-  counterparty String?
+  // ==========================================================================
+  // FINANCIAL DATA (Denormalized for queries)
+  // ==========================================================================
+  amount            Decimal? @db.Decimal(15, 2)
+  currency          String   @default("EUR")
+  reportingCurrency String? // If converted
+  fxRateAtArchive   Decimal? @db.Decimal(15, 6)
+  amountInReporting Decimal? @db.Decimal(15, 2)
 
-  // Dates
-  itemDate   DateTime // Original item date
-  archivedAt DateTime  @default(now())
-  restoredAt DateTime?
+  // ==========================================================================
+  // CLASSIFICATION (TS Section 4.5)
+  // ==========================================================================
+  category        String // financial, accounting, compliance, governance, system
+  subcategory     String?
+  jurisdictionIds String[] // Array of jurisdiction codes
+  tags            String[] // User-defined tags
+  systemTags      String[] // Auto-assigned tags
+  confidenceScore Decimal  @default(1) @db.Decimal(3, 2) // 0.00-1.00
+  validationMode  String   @default("hard") // soft, hard
 
-  // Period tracking
-  fiscalYear   Int?
-  fiscalPeriod String? // Q1, Q2, Q3, Q4, or month
+  // ==========================================================================
+  // LOCALIZATION (TS Section 4.6)
+  // ==========================================================================
+  locale         String?
+  language       String  @default("en")
+  displayFormats Json? // { date, number, currency patterns }
 
-  // Meta
-  tags        String[]
-  attachments Json? // Array of attachment references
-  metadata    Json? // Additional flexible data from original
+  // ==========================================================================
+  // COUNTERPARTY
+  // ==========================================================================
+  counterpartyId   String?
+  counterpartyName String?
+  counterpartyType String? // customer, vendor, bank, internal
 
-  // Audit
-  archivedBy    String?
-  restoredBy    String?
-  archiveReason String?
+  // ==========================================================================
+  // VERSIONING (TS Section 6)
+  // ==========================================================================
+  versionNumber    Int     @default(1)
+  isCurrentVersion Boolean @default(true)
+  supersededBy     String? // Next version archive_record_id
+  supersedes       String? // Previous version archive_record_id
+  versionReason    String? // Why new version was created
 
-  // Relations
+  // ==========================================================================
+  // RETENTION (TS Section 7)
+  // ==========================================================================
+  retentionPolicyId  String?
+  retentionStartDate DateTime?
+  retentionEndDate   DateTime?
+  retentionStatus    String    @default("active") // active, warning, expired, extended, legal_hold
+  legalHold          Boolean   @default(false)
+  legalHoldReason    String?
+  legalHoldBy        String?
+  legalHoldAt        DateTime?
+
+  // ==========================================================================
+  // STATUS
+  // ==========================================================================
+  status         String    @default("archived") // archived, accessed, exported, retention_warning, retention_expired, legal_hold
+  accessCount    Int       @default(0)
+  lastAccessedAt DateTime?
+  lastAccessedBy String?
+  exportCount    Int       @default(0)
+  lastExportedAt DateTime?
+
+  // ==========================================================================
+  // ATTACHMENTS & DOCUMENTS
+  // ==========================================================================
+  attachments   Json? // Array of attachment references
+  documentCount Int   @default(0)
+
+  // ==========================================================================
+  // AUTOMATION (TS Section 9)
+  // ==========================================================================
+  ruleId      String? // Automation rule that triggered archive
+  ruleVersion String?
+  explanation String?   @db.Text // Explain-Why for automation
+  proposedBy  String? // For human-in-the-loop
+  proposedAt  DateTime?
+  approvedBy  String?
+  approvedAt  DateTime?
+
+  // ==========================================================================
+  // IMPORT (TS Section 10)
+  // ==========================================================================
+  importBatchId String?
+  importSource  String?
+  importedAt    DateTime?
+
+  // ==========================================================================
+  // RELATIONS
+  // ==========================================================================
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Related records
+  links      ArchiveLink[]      @relation("SourceArchive")
+  linkedBy   ArchiveLink[]      @relation("TargetArchive")
+  accessLogs ArchiveAccessLog[]
+  versions   ArchiveVersion[]
+
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, archiveRecordId])
+  @@index([organizationId, objectType])
+  @@index([organizationId, category])
+  @@index([organizationId, status])
+  @@index([organizationId, archivedAt])
+  @@index([organizationId, fiscalYear])
+  @@index([organizationId, accountingPeriod])
+  @@index([organizationId, originalObjectId])
+  @@index([organizationId, partyId])
+  @@index([organizationId, legalEntityId])
+  @@index([organizationId, retentionStatus])
+  @@index([contentHash])
+}
+
+// =============================================================================
+// ARCHIVE LINK (Netting & Linkage Graph - TS Section 5)
+// =============================================================================
+
+model ArchiveLink {
+  id String @id @default(cuid())
+
+  // Source (FROM)
+  sourceArchiveId String
+  sourceArchive   ArchiveRecord @relation("SourceArchive", fields: [sourceArchiveId], references: [id], onDelete: Cascade)
+
+  // Target (TO)
+  targetArchiveId String
+  targetArchive   ArchiveRecord @relation("TargetArchive", fields: [targetArchiveId], references: [id], onDelete: Cascade)
+
+  // Link metadata
+  linkType        String // derives_from, generates, affects, references, supersedes, reverses
+  linkDirection   String // inbound, outbound, bidirectional
+  linkDescription String?
+
+  // Timestamps (immutable)
+  linkedAt DateTime @default(now())
+  linkedBy String?
+
+  // Chain integrity
+  isImmutable Boolean @default(true)
+
+  @@unique([sourceArchiveId, targetArchiveId, linkType])
+  @@index([sourceArchiveId])
+  @@index([targetArchiveId])
+  @@index([linkType])
+}
+
+// =============================================================================
+// ARCHIVE VERSION (Version Chain - TS Section 6)
+// =============================================================================
+
+model ArchiveVersion {
+  id String @id @default(cuid())
+
+  // Parent archive
+  archiveRecordId String
+  archiveRecord   ArchiveRecord @relation(fields: [archiveRecordId], references: [id], onDelete: Cascade)
+
+  // Version info
+  versionNumber     Int
+  versionHash       String // Content hash for this version
+  previousVersionId String? // Previous ArchiveVersion ID
+
+  // Content snapshot
+  contentSnapshot   Json // Full content at this version
+  changeDescription String?
+  changedFields     String[]
+
+  // Actor
+  createdBy     String?
+  createdByName String?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+
+  @@unique([archiveRecordId, versionNumber])
+  @@index([archiveRecordId, versionNumber])
+}
+
+// =============================================================================
+// ARCHIVE ACCESS LOG (Audit Trail - TS Section 11.2)
+// =============================================================================
+
+model ArchiveAccessLog {
+  id String @id @default(cuid())
+
+  // Archive reference
+  archiveRecordId String
+  archiveRecord   ArchiveRecord @relation(fields: [archiveRecordId], references: [id], onDelete: Cascade)
+
+  // Access info
+  accessType   String // view, search, export, download, api_access
+  accessReason String?
+  accessScope  String? // full, partial, metadata_only
+
+  // Actor
+  actorId   String
+  actorName String?
+  actorRole String? // admin, auditor, user, api_consumer
+  actorType String  @default("user") // user, system, api
+
+  // Request details
+  ipAddress String?
+  userAgent String?
+  requestId String?
+
+  // Multi-signature access (TS Section 11.3)
+  requiredApprovals Int   @default(0)
+  receivedApprovals Int   @default(0)
+  approvers         Json? // Array of { approverId, approverName, approvedAt }
+
+  // Time-limited access
+  accessGrantedAt DateTime  @default(now())
+  accessExpiresAt DateTime?
+
+  // Result
+  accessGranted Boolean @default(true)
+  denialReason  String?
+
+  // Immutable timestamp
+  timestamp DateTime @default(now())
+
+  @@index([archiveRecordId, timestamp])
+  @@index([actorId, timestamp])
+  @@index([accessType, timestamp])
+}
+
+// =============================================================================
+// ARCHIVE RETENTION POLICY (TS Section 7)
+// =============================================================================
+
+model ArchiveRetentionPolicy {
+  id String @id @default(cuid())
+
+  // Identity
+  name        String
+  code        String
+  description String? @db.Text
+
+  // Scope
+  objectTypes   String[] // Which object types this applies to
+  jurisdictions String[] // Which jurisdictions
+  categories    String[] // Which categories
+
+  // Retention rules
+  retentionYears        Int // Minimum retention period
+  retentionMonths       Int    @default(0)
+  retentionStartTrigger String @default("fiscal_year_end") // fiscal_year_end, archive_date, legal_trigger
+
+  // Legal basis
+  legalBasis     String? // Law/regulation reference
+  legalReference String?
+
+  // Actions
+  warningDaysBefore  Int     @default(90) // Days before expiry to warn
+  autoExtendOnAccess Boolean @default(false)
+  autoExtendDays     Int     @default(0)
+
+  // Priority (for conflict resolution)
+  priority Int @default(0) // Higher = takes precedence
+
+  // Status
+  isActive      Boolean   @default(true)
+  effectiveFrom DateTime  @default(now())
+  effectiveTo   DateTime?
+
+  // Organization
+  organizationId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([organizationId, category])
-  @@index([organizationId, fiscalYear])
-  @@index([organizationId, status])
-  @@index([organizationId, archivedAt])
+  @@unique([organizationId, code])
+  @@index([organizationId, isActive])
 }
+
+// =============================================================================
+// ARCHIVE EXPORT (TS Section 15)
+// =============================================================================
+
+model ArchiveExport {
+  id String @id @default(cuid())
+
+  // Export info
+  exportNumber String @unique
+  exportType   String // full, filtered, single, bundle
+  exportFormat String // pdf, xml, csv, json, legal_bundle
+
+  // Scope
+  archiveRecordIds String[] // IDs included in export
+  recordCount      Int      @default(0)
+
+  // Query used (for filtered exports)
+  filterCriteria Json?
+
+  // Content
+  fileUrl  String?
+  fileSize Int?
+  fileHash String? // SHA-256 of export file
+
+  // Chain of custody (TS Section 15)
+  chainOfCustody Json? // { generatedAt, generatedBy, purpose, recipients }
+  integrityProof String? // Hash + signatures
+
+  // Status
+  status           String    @default("pending") // pending, generating, completed, failed, expired
+  generatedAt      DateTime?
+  expiresAt        DateTime?
+  downloadCount    Int       @default(0)
+  lastDownloadedAt DateTime?
+
+  // Actor
+  requestedBy     String
+  requestedByName String?
+  requestPurpose  String?
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId, status])
+  @@index([organizationId, createdAt])
+}
+
+// =============================================================================
+// ARCHIVE IMPORT BATCH (TS Section 10)
+// =============================================================================
+
+model ArchiveImportBatch {
+  id String @id @default(cuid())
+
+  // Batch info
+  batchNumber      String  @unique
+  source           String // legacy_system, csv, xml, json, api
+  sourceIdentifier String? // e.g., filename, system name
+  sourceHash       String? // Hash of source for deduplication
+
+  // Counts
+  totalRecords Int @default(0)
+  successCount Int @default(0)
+  errorCount   Int @default(0)
+  warningCount Int @default(0)
+  skippedCount Int @default(0)
+
+  // Status
+  status String @default("pending") // pending, processing, completed, failed, rolled_back
+
+  // Mode
+  importMode String @default("live") // dry_run, live, partial
+
+  // Filters
+  dateFrom         DateTime?
+  dateTo           DateTime?
+  objectTypeFilter String?
+
+  // Mapping
+  fieldMapping Json?
+
+  // Results
+  errors           Json? // Array of error records
+  warnings         Json? // Array of warning records
+  createdRecordIds String[] // Archive records created
+
+  // Rollback
+  canRollback  Boolean   @default(true)
+  rolledBackAt DateTime?
+  rolledBackBy String?
+
+  // Actor
+  importedBy     String
+  importedByName String?
+
+  // Organization
+  organizationId String
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  @@index([organizationId, status])
+  @@index([organizationId, startedAt])
+}
+
+// =============================================================================
+// ARCHIVE AUTOMATION RULE (TS Section 9)
+// =============================================================================
+
+model ArchiveAutomationRule {
+  id String @id @default(cuid())
+
+  // Identity
+  name        String
+  code        String
+  description String? @db.Text
+
+  // Trigger
+  triggerType       String // status_change, schedule, threshold, event, manual
+  triggerConditions Json // Conditions to evaluate
+
+  // Scope
+  objectTypes String[]
+  categories  String[]
+
+  // Action
+  action       String // auto_archive, propose_archive, route_to_queue
+  actionConfig Json?
+
+  // Thresholds (TS Section 9.3)
+  confidenceThreshold Decimal @default(0.95) @db.Decimal(3, 2)
+  proposalThreshold   Decimal @default(0.70) @db.Decimal(3, 2)
+
+  // Human-in-the-loop
+  requiresApproval Boolean  @default(false)
+  approverRoles    String[]
+
+  // Execution
+  isActive       Boolean   @default(true)
+  priority       Int       @default(0)
+  lastExecutedAt DateTime?
+  executionCount Int       @default(0)
+
+  // Explain-Why
+  explanationTemplate String? @db.Text
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, code])
+  @@index([organizationId, isActive])
+  @@index([organizationId, triggerType])
+}
+
+// =============================================================================
+// ARCHIVE EXCEPTION QUEUE (TS Section 9.4)
+// =============================================================================
+
+model ArchiveException {
+  id String @id @default(cuid())
+
+  // Source
+  sourceObjectId   String
+  sourceObjectType String
+  sourceModule     String?
+
+  // Exception info
+  exceptionType    String // validation_failed, confidence_low, rule_conflict, integrity_error
+  exceptionCode    String?
+  exceptionMessage String
+  exceptionDetails Json?
+
+  // Validation context
+  validationMode   String? // soft, hard
+  validationErrors Json?
+  confidenceScore  Decimal? @db.Decimal(3, 2)
+
+  // Assignment
+  assignedTo     String?
+  assignedToName String?
+  assignedAt     DateTime?
+
+  // SLA
+  slaDeadline DateTime?
+  isOverdue   Boolean   @default(false)
+
+  // Escalation
+  escalationLevel Int       @default(0)
+  escalatedTo     String?
+  escalatedAt     DateTime?
+
+  // Resolution
+  status           String    @default("open") // open, in_progress, resolved, escalated, auto_resolved
+  resolvedAt       DateTime?
+  resolvedBy       String?
+  resolution       String?   @db.Text
+  resolutionAction String? // archived, skipped, corrected, manual_override
+
+  // Retry
+  retryCount  Int       @default(0)
+  maxRetries  Int       @default(3)
+  lastRetryAt DateTime?
+  nextRetryAt DateTime?
+
+  // Related archive (if eventually created)
+  archiveRecordId String?
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, exceptionType])
+  @@index([organizationId, assignedTo])
+  @@index([organizationId, slaDeadline])
+}
+
+// =============================================================================
+// ARCHIVE SAVED VIEW (TS Section 13.2)
+// =============================================================================
+
+model ArchiveSavedView {
+  id String @id @default(cuid())
+
+  // Identity
+  name        String
+  description String?
+
+  // Query configuration
+  filters   Json // Filter criteria
+  columns   String[] // Columns to display
+  sortBy    String?
+  sortOrder String   @default("desc")
+  groupBy   String?
+
+  // Sharing
+  isPublic   Boolean  @default(false)
+  sharedWith String[] // User IDs
+
+  // Scheduling (for reports)
+  isScheduled       Boolean   @default(false)
+  scheduleFrequency String? // daily, weekly, monthly
+  scheduleCron      String?
+  deliveryMethod    String? // email, webhook
+  deliveryTarget    String? // Email or URL
+  lastDeliveredAt   DateTime?
+
+  // Owner
+  createdBy     String
+  createdByName String?
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, createdBy])
+  @@index([organizationId, isPublic])
+}
+
 
 // =============================================================================
 // LIABILITIES
 // =============================================================================
 
+// =============================================================================
+// LIABILITIES ENGINE (ENHANCED - Full TS Compliance)
+// =============================================================================
+// Enterprise-grade liability management with event sourcing, multi-currency,
+// state machine, interest engine, risk/covenant tracking
+// Per Technical Specification Sections 1-23
+// =============================================================================
+
 model Liability {
   id String @id @default(cuid())
 
-  // Type & Status
-  type   String // loan, credit_line, overdraft, supplier_credit, deferred_payment, lease, guarantee, other
-  status String @default("active") // active, paid_off, defaulted, restructured, cancelled
-
-  // Basic Info
-  name        String
-  description String? @db.Text
-  reference   String? // External reference number
-
-  // Counterparty
+  // ==========================================================================
+  // IDENTITY (TS Section 3.1)
+  // ==========================================================================
+  liabilityId      String   @unique // Global, immutable, deterministic content-hash
+  legalReference   String? // Contract ID, invoice, tax notice, loan agreement
   counterpartyId   String?
   counterpartyName String
-  counterpartyType String? // bank, supplier, investor, government, other
+  counterpartyType String? // bank, supplier, investor, government, lessee, intercompany, other
+  partyId          String? // Party-based accounting link
+  legalEntityId    String?
+  jurisdictionIds  String[] // Array of jurisdictions
 
-  // Amounts
-  currency          String  @default("EUR")
-  principalAmount   Decimal @db.Decimal(15, 2)
-  outstandingAmount Decimal @db.Decimal(15, 2)
-  paidAmount        Decimal @default(0) @db.Decimal(15, 2)
+  // ==========================================================================
+  // CLASSIFICATION (TS Section 2)
+  // ==========================================================================
+  // Primary Class (2.1)
+  primaryClass String // accounts_payable, accrued_expenses, deferred_revenue, short_term_debt, long_term_debt, credit_line, lease_operating, lease_finance, tax_liability, payroll_liability, intercompany, contingent, off_balance_sheet
 
-  // Credit facilities
+  // Secondary Dimensions (2.2 - Orthogonal)
+  isInterestBearing Boolean @default(false)
+  isSecured         Boolean @default(false)
+  isFixed           Boolean @default(true) // Fixed vs variable rate
+  isGuaranteed      Boolean @default(false)
+  guarantorId       String?
+  guarantorName     String?
+
+  // ==========================================================================
+  // STATUS & STATE MACHINE (TS Section 5)
+  // ==========================================================================
+  status          String    @default("draft") // draft, recognized, active, partially_settled, restructured, in_dispute, in_default, fully_settled, written_off, archived
+  previousStatus  String?
+  statusChangedAt DateTime?
+  statusChangedBy String?
+
+  // ==========================================================================
+  // FINANCIAL ATTRIBUTES (TS Section 3.2)
+  // ==========================================================================
+  originalPrincipal    Decimal @db.Decimal(15, 2)
+  outstandingPrincipal Decimal @db.Decimal(15, 2)
+  accruedInterest      Decimal @default(0) @db.Decimal(15, 2)
+  feesPenalties        Decimal @default(0) @db.Decimal(15, 2)
+  totalOutstanding     Decimal @db.Decimal(15, 2) // principal + interest + fees
+  totalSettled         Decimal @default(0) @db.Decimal(15, 2)
+
+  // Currency
+  currency             String   @default("EUR")
+  reportingCurrency    String?
+  fxSource             String? // ecb, manual, market
+  fxRateAtRecognition  Decimal? @db.Decimal(15, 6)
+  fxRateAtSettlement   Decimal? @db.Decimal(15, 6)
+  fxRateHistory        Json? // Array of { date, rate, source }
+  amountInReporting    Decimal? @db.Decimal(15, 2)
+  unrealizedFxGainLoss Decimal  @default(0) @db.Decimal(15, 2)
+
+  // Credit Facilities (for credit_line type)
   creditLimit     Decimal? @db.Decimal(15, 2)
   availableCredit Decimal? @db.Decimal(15, 2)
   utilizationRate Decimal? @db.Decimal(5, 2)
 
-  // Interest
-  interestRate    Decimal? @db.Decimal(5, 4)
-  interestType    String? // fixed, variable, zero
-  interestAccrued Decimal  @default(0) @db.Decimal(15, 2)
+  // Amortization
+  amortizationMethod String? // straight_line, effective_interest, declining_balance, bullet
 
-  // Dates
-  startDate       DateTime
+  // Confidence
+  confidenceScore Decimal @default(1) @db.Decimal(3, 2) // 0.00-1.00
+
+  // ==========================================================================
+  // TEMPORAL ATTRIBUTES (TS Section 3.3)
+  // ==========================================================================
+  inceptionDate   DateTime
+  recognitionDate DateTime?
+  activationDate  DateTime?
   maturityDate    DateTime?
   nextPaymentDate DateTime?
   lastPaymentDate DateTime?
+  settledDate     DateTime?
 
-  // Payment Schedule
-  paymentFrequency String? // monthly, quarterly, annually, bullet, custom
-  paymentAmount    Decimal? @db.Decimal(15, 2)
-  paymentSchedule  Json? // Array of scheduled payments
+  // Grace periods
+  gracePeriodDays Int       @default(0)
+  graceEndDate    DateTime?
 
-  // Collateral & Security
-  isSecured             Boolean  @default(false)
-  collateralDescription String?
-  collateralValue       Decimal? @db.Decimal(15, 2)
+  // Early repayment
+  earlyRepaymentAllowed    Boolean  @default(true)
+  earlyRepaymentPenalty    Decimal? @db.Decimal(5, 2) // Percentage
+  earlyRepaymentConditions String?
 
-  // Covenants & Conditions
-  covenants Json? // Array of covenant objects
+  // ==========================================================================
+  // INTEREST ENGINE (TS Section 8)
+  // ==========================================================================
+  interestType         String? // fixed, variable, zero, step_up, step_down
+  interestRate         Decimal?  @db.Decimal(8, 5) // e.g., 0.05250 = 5.25%
+  interestIndex        String? // euribor, libor, sofr, prime
+  interestSpread       Decimal?  @db.Decimal(5, 4) // Spread over index
+  interestCompounding  String? // simple, monthly, quarterly, annually, continuous
+  interestDayCount     String? // actual_360, actual_365, 30_360
+  interestAccrualStart DateTime?
+  lastInterestAccrual  DateTime?
+  nextInterestAccrual  DateTime?
+  interestSchedule     Json? // Step-up/step-down schedule
 
-  // Risk & Alerts
-  riskLevel      String   @default("low") // low, medium, high, critical
-  alertThreshold Decimal? @db.Decimal(5, 2) // % of limit for alerts
+  // ==========================================================================
+  // FEES & PENALTIES (TS Section 8.2)
+  // ==========================================================================
+  originationFee     Decimal? @db.Decimal(15, 2)
+  originationFeeRate Decimal? @db.Decimal(5, 4)
+  commitmentFee      Decimal? @db.Decimal(15, 2)
+  commitmentFeeRate  Decimal? @db.Decimal(5, 4)
+  penaltiesAccrued   Decimal  @default(0) @db.Decimal(15, 2)
+  legalFeesAccrued   Decimal  @default(0) @db.Decimal(15, 2)
+  otherFeesAccrued   Decimal  @default(0) @db.Decimal(15, 2)
 
-  // Meta
-  tags        String[]
-  notes       String?  @db.Text
-  attachments Json?
+  // ==========================================================================
+  // PAYMENT SCHEDULE (TS Section 6)
+  // ==========================================================================
+  paymentFrequency      String? // weekly, bi_weekly, monthly, quarterly, semi_annually, annually, bullet, custom
+  regularPaymentAmount  Decimal? @db.Decimal(15, 2)
+  paymentSchedule       Json? // Array of { dueDate, principal, interest, fees, total, status }
+  totalPaymentsExpected Int      @default(0)
+  paymentsCompleted     Int      @default(0)
+  paymentsMissed        Int      @default(0)
 
-  // Relations
+  // ==========================================================================
+  // CASHFLOW INTEGRATION (TS Section 7)
+  // ==========================================================================
+  expectedCashImpact  Decimal?  @db.Decimal(15, 2)
+  earliestCashImpact  Decimal?  @db.Decimal(15, 2)
+  worstCaseCashImpact Decimal?  @db.Decimal(15, 2)
+  nextCashOutflow     DateTime?
+  cashflowProbability Decimal   @default(1) @db.Decimal(3, 2) // 0.00-1.00
+
+  // ==========================================================================
+  // COLLATERAL & SECURITY (TS Section 3)
+  // ==========================================================================
+  collateralDescription   String?
+  collateralValue         Decimal?  @db.Decimal(15, 2)
+  collateralCurrency      String?
+  collateralType          String? // real_estate, equipment, inventory, receivables, cash, securities, other
+  collateralValuationDate DateTime?
+
+  // ==========================================================================
+  // RISK & COVENANTS (TS Section 10)
+  // ==========================================================================
+  riskLevel          String    @default("low") // low, medium, high, critical
+  riskScore          Decimal?  @db.Decimal(5, 2)
+  defaultProbability Decimal?  @db.Decimal(5, 4)
+  covenants          Json? // Array of { name, type, threshold, currentValue, status, lastChecked }
+  covenantBreaches   Int       @default(0)
+  lastCovenantCheck  DateTime?
+  nextCovenantCheck  DateTime?
+
+  // Default tracking
+  isInDefault   Boolean   @default(false)
+  defaultDate   DateTime?
+  defaultReason String?
+  daysOverdue   Int       @default(0)
+
+  // ==========================================================================
+  // DISPUTE (TS Section 5.1)
+  // ==========================================================================
+  isDisputed        Boolean   @default(false)
+  disputeReason     String?   @db.Text
+  disputeAmount     Decimal?  @db.Decimal(15, 2)
+  disputeOpenedAt   DateTime?
+  disputeResolvedAt DateTime?
+  disputeResolution String?
+
+  // ==========================================================================
+  // RESTRUCTURING
+  // ==========================================================================
+  isRestructured      Boolean   @default(false)
+  restructuredDate    DateTime?
+  restructuredReason  String?
+  originalLiabilityId String? // Reference to pre-restructure liability
+  restructuredTerms   Json? // New terms after restructure
+
+  // ==========================================================================
+  // WRITE-OFF
+  // ==========================================================================
+  isWrittenOff       Boolean   @default(false)
+  writeOffDate       DateTime?
+  writeOffAmount     Decimal?  @db.Decimal(15, 2)
+  writeOffReason     String?
+  writeOffApprovedBy String?
+  writeOffReasonCode String? // bad_debt, statute_of_limitations, settlement, other
+
+  // ==========================================================================
+  // APPROVAL & AUTHORIZATION (TS Section 16)
+  // ==========================================================================
+  requiresApproval  Boolean   @default(false)
+  approvalThreshold Decimal?  @db.Decimal(15, 2)
+  approvalStatus    String? // pending, approved, rejected
+  approvedBy        String?
+  approvedAt        DateTime?
+  approvalChain     Json? // Multi-level approval chain
+
+  // ==========================================================================
+  // FX HEDGING (TS Section 9)
+  // ==========================================================================
+  isHedged        Boolean  @default(false)
+  hedgeId         String? // Link to FX hedge
+  hedgePercentage Decimal? @db.Decimal(5, 2)
+
+  // ==========================================================================
+  // METADATA & CLASSIFICATION (TS Section 3.4)
+  // ==========================================================================
+  name              String
+  description       String?  @db.Text
+  reference         String? // External reference number
+  internalReference String? // Internal tracking number
+  tags              String[]
+  systemTags        String[] // Auto-assigned: high_value, intercompany, cross_border, requires_approval, in_default
+  metadata          Json? // JSONB, arbitrary depth
+  attachments       Json? // Array of attachment references
+  notes             String?  @db.Text
+  internalNotes     String?  @db.Text
+
+  // Validation
+  validationMode String @default("hard") // soft, hard
+
+  // Localization (TS Section 14)
+  locale   String?
+  language String  @default("en")
+
+  // ==========================================================================
+  // SOURCE & ORIGIN
+  // ==========================================================================
+  sourceType    String  @default("manual") // manual, invoice, order, payroll, tax, lease, loan, import, intercompany, journal_entry
+  sourceId      String? // Reference to source object
+  sourceModule  String?
+  importBatchId String?
+
+  // ==========================================================================
+  // VERSION & AUDIT
+  // ==========================================================================
+  version     Int     @default(1)
+  eventCount  Int     @default(0)
+  lastEventId String?
+
+  // ==========================================================================
+  // ARCHIVAL (TS Section 18)
+  // ==========================================================================
+  archivedAt    DateTime?
+  archivedBy    String?
+  archiveReason String?
+
+  // ==========================================================================
+  // RELATIONS
+  // ==========================================================================
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-  // Payment history
-  payments LiabilityPayment[]
+  // Related records
+  events         LiabilityEvent[]
+  payments       LiabilityPayment[]
+  settlements    LiabilitySettlement[]
+  accruals       LiabilityAccrual[]
+  covenantChecks LiabilityCovenantCheck[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([organizationId, type])
+  @@unique([organizationId, liabilityId])
+  @@index([organizationId, primaryClass])
   @@index([organizationId, status])
   @@index([organizationId, maturityDate])
   @@index([organizationId, counterpartyId])
+  @@index([organizationId, partyId])
+  @@index([organizationId, legalEntityId])
+  @@index([organizationId, riskLevel])
+  @@index([organizationId, nextPaymentDate])
+  @@index([organizationId, isInDefault])
+  @@index([organizationId, currency])
 }
+
+// =============================================================================
+// LIABILITY EVENT (Event Sourcing - TS Section 4)
+// =============================================================================
+
+model LiabilityEvent {
+  id String @id @default(cuid())
+
+  // Identity
+  eventId     String    @unique // Deterministic, content-hash based
+  liabilityId String
+  liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+
+  // Event info
+  eventType String // LiabilityCreated, LiabilityRecognized, LiabilityActivated, LiabilityPartiallySettled, LiabilityRestructured, LiabilityDisputed, LiabilityDefaulted, LiabilityFullySettled, LiabilityWrittenOff, LiabilityArchived, LiabilityReversed, LiabilityAmended, InterestAccrued, FeeApplied, FXRevalued, PaymentScheduled, PaymentExecuted, PaymentFailed, CovenantChecked, CovenantBreached
+
+  // Temporal
+  timestamp     DateTime  @default(now())
+  effectiveDate DateTime?
+
+  // Actor
+  actorId   String?
+  actorName String?
+  actorType String  @default("user") // user, system, automation, api
+
+  // Payload
+  payload       Json // State delta / event data
+  previousState Json? // State before event (for reversals)
+
+  // Chain link (for integrity)
+  previousEventId String?
+  contentHash     String?
+
+  // Explain-Why (TS Section 11.9)
+  explanation String? @db.Text
+  ruleId      String?
+  ruleVersion String?
+
+  // Metadata
+  metadata Json?
+
+  // Reversal tracking
+  isReversed Boolean @default(false)
+  reversedBy String? // Event ID that reversed this
+  reversalOf String? // If this is a reversal, original event ID
+
+  @@index([liabilityId, timestamp])
+  @@index([liabilityId, eventType])
+  @@index([eventType, timestamp])
+}
+
+// =============================================================================
+// LIABILITY PAYMENT (TS Section 15)
+// =============================================================================
 
 model LiabilityPayment {
   id String @id @default(cuid())
-
-  // Payment details
-  amount          Decimal @db.Decimal(15, 2)
-  principalAmount Decimal @db.Decimal(15, 2)
-  interestAmount  Decimal @default(0) @db.Decimal(15, 2)
-  feesAmount      Decimal @default(0) @db.Decimal(15, 2)
-
-  currency    String    @default("EUR")
-  paymentDate DateTime
-  dueDate     DateTime?
-
-  // Status
-  status String @default("completed") // scheduled, completed, missed, partial
-
-  // Reference
-  reference     String?
-  transactionId String? // Link to Transaction if applicable
-
-  // Meta
-  notes String?
 
   // Relations
   liabilityId String
   liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
 
+  // Payment identity
+  paymentId String @unique // Deterministic ID
+
+  // Amounts
+  amount          Decimal @db.Decimal(15, 2)
+  principalAmount Decimal @db.Decimal(15, 2)
+  interestAmount  Decimal @default(0) @db.Decimal(15, 2)
+  feesAmount      Decimal @default(0) @db.Decimal(15, 2)
+  penaltyAmount   Decimal @default(0) @db.Decimal(15, 2)
+
+  // Currency
+  currency          String   @default("EUR")
+  fxRate            Decimal? @db.Decimal(15, 6)
+  amountInReporting Decimal? @db.Decimal(15, 2)
+
+  // Dates
+  scheduledDate DateTime?
+  dueDate       DateTime?
+  paymentDate   DateTime?
+  executedAt    DateTime?
+
+  // Status (TS Section 15.1)
+  status String @default("scheduled") // scheduled, pending_approval, approved, initiated, executed, failed, reversed, cancelled
+
+  // Approval (TS Section 15.2, 15.3)
+  requiresApproval  Boolean   @default(false)
+  approvalThreshold Decimal?  @db.Decimal(15, 2)
+  approvalStatus    String? // pending, approved, rejected
+  approvalChain     Json? // Multi-signature chain
+  approvedBy        String?
+  approvedAt        DateTime?
+
+  // Execution
+  executedBy    String?
+  paymentMethod String? // bank_transfer, check, cash, wire, ach, sepa, other
+  bankReference String?
+  transactionId String?
+
+  // Failure
+  failureReason String?
+  failureCode   String?
+  retryCount    Int       @default(0)
+  nextRetryAt   DateTime?
+
+  // Reversal
+  isReversed     Boolean   @default(false)
+  reversedAt     DateTime?
+  reversedBy     String?
+  reversalReason String?
+
+  // Reference
+  reference   String?
+  description String?
+  notes       String?
+
+  // Intercompany (TS Section 15.5)
+  isIntercompany            Boolean @default(false)
+  counterpartyLegalEntityId String?
+  nettingId                 String? // If part of netting arrangement
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([liabilityId, status])
+  @@index([liabilityId, scheduledDate])
+  @@index([liabilityId, paymentDate])
+  @@index([status, scheduledDate])
+}
+
+// =============================================================================
+// LIABILITY SETTLEMENT (Full/Partial Settlement Tracking)
+// =============================================================================
+
+model LiabilitySettlement {
+  id String @id @default(cuid())
+
+  // Relations
+  liabilityId String
+  liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+
+  // Settlement identity
+  settlementId String @unique
+
+  // Type
+  settlementType String // partial, full, early, restructured, write_off, offset
+
+  // Amounts
+  amount           Decimal @db.Decimal(15, 2)
+  principalSettled Decimal @db.Decimal(15, 2)
+  interestSettled  Decimal @default(0) @db.Decimal(15, 2)
+  feesSettled      Decimal @default(0) @db.Decimal(15, 2)
+  penaltiesWaived  Decimal @default(0) @db.Decimal(15, 2)
+
+  // Currency
+  currency   String   @default("EUR")
+  fxRate     Decimal? @db.Decimal(15, 6)
+  fxGainLoss Decimal  @default(0) @db.Decimal(15, 2)
+
+  // Before/After
+  outstandingBefore Decimal @db.Decimal(15, 2)
+  outstandingAfter  Decimal @db.Decimal(15, 2)
+
+  // Dates
+  settlementDate DateTime
+  effectiveDate  DateTime?
+
+  // Actor
+  settledBy  String?
+  approvedBy String?
+
+  // Reference
+  paymentId String? // Link to payment
+  reference String?
+  notes     String?
+
+  // Offset/Netting
+  isOffset           Boolean @default(false)
+  offsetReceivableId String?
+  nettingBatchId     String?
+
   createdAt DateTime @default(now())
 
-  @@index([liabilityId, paymentDate])
+  @@index([liabilityId, settlementDate])
+  @@index([liabilityId, settlementType])
 }
+
+// =============================================================================
+// LIABILITY ACCRUAL (Interest & Fee Accruals - TS Section 8)
+// =============================================================================
+
+model LiabilityAccrual {
+  id String @id @default(cuid())
+
+  // Relations
+  liabilityId String
+  liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+
+  // Accrual identity
+  accrualId String @unique
+
+  // Type
+  accrualType String // interest, commitment_fee, origination_fee, penalty, legal_fee, other_fee
+
+  // Period
+  periodStart DateTime
+  periodEnd   DateTime
+
+  // Calculation
+  principalBase Decimal  @db.Decimal(15, 2)
+  rate          Decimal? @db.Decimal(8, 5)
+  dayCount      Int?
+  dayCountBasis String? // actual_360, actual_365, 30_360
+
+  // Amount
+  amount            Decimal  @db.Decimal(15, 2)
+  currency          String   @default("EUR")
+  amountInReporting Decimal? @db.Decimal(15, 2)
+  fxRate            Decimal? @db.Decimal(15, 6)
+
+  // Status
+  status String @default("posted") // calculated, posted, reversed
+
+  // Posting
+  postedAt       DateTime?
+  postedBy       String?
+  journalEntryId String?
+
+  // Reversal
+  isReversed Boolean   @default(false)
+  reversedAt DateTime?
+  reversedBy String?
+
+  // Explain-Why
+  explanation        String?
+  calculationDetails Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([liabilityId, accrualType])
+  @@index([liabilityId, periodEnd])
+  @@index([periodEnd, status])
+}
+
+// =============================================================================
+// LIABILITY COVENANT CHECK (TS Section 10.2)
+// =============================================================================
+
+model LiabilityCovenantCheck {
+  id String @id @default(cuid())
+
+  // Relations
+  liabilityId String
+  liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
+
+  // Covenant info
+  covenantName String
+  covenantType String // debt_to_equity, interest_coverage, current_ratio, minimum_cash, maximum_leverage, custom
+
+  // Check details
+  checkDate DateTime
+  periodEnd DateTime?
+
+  // Threshold
+  threshold     Decimal  @db.Decimal(15, 4)
+  thresholdType String // minimum, maximum, range
+  thresholdMin  Decimal? @db.Decimal(15, 4)
+  thresholdMax  Decimal? @db.Decimal(15, 4)
+
+  // Actual value
+  actualValue Decimal @db.Decimal(15, 4)
+
+  // Result
+  status          String // compliant, warning, breached
+  variance        Decimal? @db.Decimal(15, 4)
+  variancePercent Decimal? @db.Decimal(5, 2)
+
+  // Breach handling
+  isBreached     Boolean   @default(false)
+  breachSeverity String? // minor, material, critical
+  breachNotified Boolean   @default(false)
+  notifiedAt     DateTime?
+  notifiedTo     String[]
+
+  // Waiver
+  isWaived         Boolean   @default(false)
+  waiverApprovedBy String?
+  waiverApprovedAt DateTime?
+  waiverReason     String?
+
+  // Evidence
+  calculationDetails  Json?
+  supportingDocuments Json?
+
+  // Actor
+  checkedBy String?
+
+  createdAt DateTime @default(now())
+
+  @@index([liabilityId, checkDate])
+  @@index([liabilityId, status])
+  @@index([status, checkDate])
+}
+
+// =============================================================================
+// LIABILITY IMPORT BATCH (TS Section 12)
+// =============================================================================
+
+model LiabilityImportBatch {
+  id String @id @default(cuid())
+
+  // Batch info
+  batchNumber      String  @unique
+  source           String // csv, quickbooks, xero, legacy_erp, mt940, camt, api
+  sourceIdentifier String?
+  sourceHash       String? // For deduplication
+
+  // Counts
+  totalRecords Int @default(0)
+  successCount Int @default(0)
+  errorCount   Int @default(0)
+  warningCount Int @default(0)
+  skippedCount Int @default(0)
+
+  // Status
+  status String @default("pending") // pending, processing, completed, failed, rolled_back
+
+  // Mode
+  importMode String @default("live") // dry_run, live, partial
+
+  // Filters
+  dateFrom           DateTime?
+  dateTo             DateTime?
+  counterpartyFilter String?
+  typeFilter         String?
+
+  // Mapping
+  fieldMapping    Json?
+  mappingTemplate String?
+
+  // Results
+  errors              Json?
+  warnings            Json?
+  createdLiabilityIds String[]
+
+  // Rollback
+  canRollback  Boolean   @default(true)
+  rolledBackAt DateTime?
+  rolledBackBy String?
+
+  // Actor
+  importedBy     String
+  importedByName String?
+
+  // Organization
+  organizationId String
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  @@index([organizationId, status])
+  @@index([organizationId, startedAt])
+}
+
+// =============================================================================
+// LIABILITY AUTOMATION RULE (TS Section 11)
+// =============================================================================
+
+model LiabilityAutomationRule {
+  id String @id @default(cuid())
+
+  // Identity
+  name        String
+  code        String
+  description String? @db.Text
+
+  // Trigger
+  triggerType       String // on_create, on_status_change, on_payment_due, on_threshold, scheduled, on_event
+  triggerConditions Json // Conditions to evaluate
+  schedule          String? // Cron for scheduled rules
+
+  // Scope
+  liabilityTypes    String[]
+  primaryClasses    String[]
+  counterpartyTypes String[]
+
+  // Action
+  actionType   String // auto_recognize, auto_accrue, auto_fee, auto_flag, auto_notify, propose_settlement, propose_refinance
+  actionConfig Json?
+
+  // Thresholds (TS Section 11.4)
+  confidenceThreshold Decimal @default(0.95) @db.Decimal(3, 2)
+  proposalThreshold   Decimal @default(0.70) @db.Decimal(3, 2)
+
+  // Human-in-the-loop (TS Section 11.3)
+  requiresApproval Boolean  @default(false)
+  approverRoles    String[]
+
+  // Conditional triggers (TS Section 11.8)
+  amountThreshold       Decimal? @db.Decimal(15, 2)
+  riskThreshold         String?
+  maturityDaysThreshold Int?
+
+  // Fallback (TS Section 11.12)
+  fallbackRuleId   String?
+  fallbackBehavior String? // route_to_queue, skip, default_action
+
+  // Explain-Why template
+  explanationTemplate String? @db.Text
+
+  // Execution stats
+  isActive       Boolean   @default(true)
+  priority       Int       @default(0)
+  lastExecutedAt DateTime?
+  executionCount Int       @default(0)
+  successCount   Int       @default(0)
+  failureCount   Int       @default(0)
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, code])
+  @@index([organizationId, isActive])
+  @@index([organizationId, triggerType])
+}
+
+// =============================================================================
+// LIABILITY EXCEPTION QUEUE (TS Section 11.5)
+// =============================================================================
+
+model LiabilityException {
+  id String @id @default(cuid())
+
+  // Source
+  liabilityId      String?
+  sourceObjectId   String?
+  sourceObjectType String?
+  sourceModule     String?
+
+  // Exception info
+  exceptionType    String // validation_failed, confidence_low, rule_conflict, payment_failed, covenant_breach, fx_mismatch, overpayment, double_recognition
+  exceptionCode    String?
+  exceptionMessage String
+  exceptionDetails Json?
+
+  // Context
+  validationMode   String?
+  validationErrors Json?
+  confidenceScore  Decimal? @db.Decimal(3, 2)
+
+  // Assignment
+  assignedTo     String?
+  assignedToName String?
+  assignedAt     DateTime?
+
+  // SLA
+  slaDeadline DateTime?
+  isOverdue   Boolean   @default(false)
+
+  // Escalation
+  escalationLevel Int       @default(0)
+  escalatedTo     String?
+  escalatedAt     DateTime?
+
+  // Resolution
+  status           String    @default("open") // open, in_progress, resolved, escalated, auto_resolved
+  resolvedAt       DateTime?
+  resolvedBy       String?
+  resolution       String?   @db.Text
+  resolutionAction String? // processed, skipped, corrected, manual_override
+
+  // Retry
+  retryCount  Int       @default(0)
+  maxRetries  Int       @default(3)
+  lastRetryAt DateTime?
+  nextRetryAt DateTime?
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, exceptionType])
+  @@index([organizationId, assignedTo])
+  @@index([organizationId, slaDeadline])
+  @@index([liabilityId, status])
+}
+
+// =============================================================================
+// LIABILITY SAVED VIEW (TS Section 13.3)
+// =============================================================================
+
+model LiabilitySavedView {
+  id String @id @default(cuid())
+
+  // Identity
+  name        String
+  description String?
+
+  // Query configuration
+  filters   Json // Filter criteria
+  columns   String[]
+  sortBy    String?
+  sortOrder String   @default("desc")
+  groupBy   String?
+
+  // Aggregations
+  includeAggregations Boolean  @default(false)
+  aggregationFields   String[]
+
+  // Sharing
+  isPublic   Boolean  @default(false)
+  sharedWith String[]
+
+  // Scheduling
+  isScheduled       Boolean   @default(false)
+  scheduleFrequency String?
+  scheduleCron      String?
+  deliveryMethod    String?
+  deliveryTarget    String?
+  lastDeliveredAt   DateTime?
+
+  // Export format
+  defaultExportFormat String @default("json") // json, csv, pdf, xbrl
+
+  // Owner
+  createdBy     String
+  createdByName String?
+
+  // Organization
+  organizationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, createdBy])
+  @@index([organizationId, isPublic])
+}
+
 
 // =============================================================================
 // INVENTORY

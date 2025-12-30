@@ -17,49 +17,58 @@ import {
     ChevronLeft,
     AlertTriangle,
     AlertCircle,
-    TrendingUp,
     TrendingDown,
     Calendar,
     Percent,
     X,
     Check,
-    Eye,
-    Edit,
-    Trash2,
     DollarSign,
-    Clock,
-    PiggyBank,
-    BarChart3,
 } from 'lucide-react';
 import { Card, Button, Badge, Input } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useLiabilitiesStore } from '@/store/liabilities-store';
-import type { Liability, LiabilityType, LiabilityAlert } from '@/types/liabilities';
+import type {
+    Liability,
+    LiabilityPrimaryClass,
+    LiabilityStatus,
+    RiskLevel,
+    CreateLiabilityRequest,
+} from '@/types/liabilities';
 
 // =============================================================================
 // TYPE ICONS & COLORS
 // =============================================================================
 
-const typeIcons: Record<LiabilityType, React.ElementType> = {
-    loan: Landmark,
+const primaryClassIcons: Record<string, React.ElementType> = {
+    accounts_payable: Truck,
+    accrued_expenses: FileText,
+    deferred_revenue: DollarSign,
+    short_term_debt: CreditCard,
+    long_term_debt: Landmark,
     credit_line: CreditCard,
-    overdraft: TrendingDown,
-    supplier_credit: Truck,
-    deferred_payment: FileText,
-    lease: Car,
-    guarantee: Shield,
-    other: HelpCircle,
+    lease_operating: Car,
+    lease_finance: Car,
+    tax_liability: FileText,
+    payroll_liability: Building2,
+    intercompany: Building2,
+    contingent: Shield,
+    off_balance_sheet: HelpCircle,
 };
 
-const typeColors: Record<LiabilityType, string> = {
-    loan: 'blue',
+const primaryClassColors: Record<string, string> = {
+    accounts_payable: 'amber',
+    accrued_expenses: 'gray',
+    deferred_revenue: 'purple',
+    short_term_debt: 'red',
+    long_term_debt: 'blue',
     credit_line: 'purple',
-    overdraft: 'red',
-    supplier_credit: 'amber',
-    deferred_payment: 'gray',
-    lease: 'cyan',
-    guarantee: 'rose',
-    other: 'gray',
+    lease_operating: 'cyan',
+    lease_finance: 'cyan',
+    tax_liability: 'rose',
+    payroll_liability: 'green',
+    intercompany: 'indigo',
+    contingent: 'orange',
+    off_balance_sheet: 'gray',
 };
 
 // =============================================================================
@@ -67,36 +76,51 @@ const typeColors: Record<LiabilityType, string> = {
 // =============================================================================
 
 function LiabilitiesList({
-                             onCreateNew,
-                             onSelectLiability,
-                         }: {
+    onCreateNew,
+    onSelectLiability,
+}: {
     onCreateNew: () => void;
     onSelectLiability: (liability: Liability) => void;
 }) {
     const { t, language } = useThemeStore();
-    const { liabilities, fetchLiabilities, isInitialized, isLoading, getSummary, getActiveAlerts, getUpcomingPayments } = useLiabilitiesStore();
-    useEffect(() => {
-  if (!isInitialized) {
-    fetchLiabilities();
-  }
-}, [fetchLiabilities, isInitialized]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [typeFilter, setTypeFilter] = useState<LiabilityType | 'all'>('all');
+    const {
+        liabilities,
+        fetchLiabilities,
+        isInitialized,
+        statistics,
+        fetchStatistics,
+        getTotalOutstanding,
+        getTotalOutstandingByCurrency,
+        getLiabilitiesInDefault,
+        getLiabilitiesInDispute,
+    } = useLiabilitiesStore();
 
-    const summary = getSummary();
-    const activeAlerts = getActiveAlerts();
-    const upcomingPayments = getUpcomingPayments(30);
+    useEffect(() => {
+        if (!isInitialized) {
+            fetchLiabilities();
+            fetchStatistics();
+        }
+    }, [fetchLiabilities, fetchStatistics, isInitialized]);
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [primaryClassFilter, setPrimaryClassFilter] = useState<string | 'all'>('all');
+
+    const inDefaultCount = getLiabilitiesInDefault().length;
+    const inDisputeCount = getLiabilitiesInDispute().length;
+    const totalOutstanding = getTotalOutstanding();
+    const outstandingByCurrency = getTotalOutstandingByCurrency();
 
     const filteredLiabilities = useMemo(() => {
         return liabilities.filter((lib) => {
-            if (lib.status !== 'active') return false;
+            // Filter out archived
+            if (lib.status === 'archived') return false;
             const matchesSearch =
                 lib.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                lib.counterparty.name.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesType = typeFilter === 'all' || lib.type === typeFilter;
-            return matchesSearch && matchesType;
+                lib.counterpartyName.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesClass = primaryClassFilter === 'all' || lib.primaryClass === primaryClassFilter;
+            return matchesSearch && matchesClass;
         });
-    }, [liabilities, searchQuery, typeFilter]);
+    }, [liabilities, searchQuery, primaryClassFilter]);
 
     const formatCurrency = (amount: number, currency: string) => {
         return new Intl.NumberFormat(language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : language === 'es' ? 'es-ES' : 'en-US', {
@@ -109,22 +133,24 @@ function LiabilitiesList({
         return new Date(dateStr).toLocaleDateString(language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : language === 'es' ? 'es-ES' : 'en-US');
     };
 
-    const getRiskBadge = (level: Liability['riskLevel']) => {
-        const config = {
-            low: { variant: 'success' as const, label: t('liabilities.risk.low') },
-            medium: { variant: 'warning' as const, label: t('liabilities.risk.medium') },
-            high: { variant: 'danger' as const, label: t('liabilities.risk.high') },
+    const getRiskBadge = (level: RiskLevel | string) => {
+        const config: Record<string, { variant: 'success' | 'warning' | 'danger' | 'neutral'; label: string }> = {
+            low: { variant: 'success', label: t('liabilities.risk.low') },
+            medium: { variant: 'warning', label: t('liabilities.risk.medium') },
+            high: { variant: 'danger', label: t('liabilities.risk.high') },
+            critical: { variant: 'danger', label: t('liabilities.risk.critical') || 'Critical' },
         };
-        return <Badge variant={config[level].variant} size="sm">{config[level].label}</Badge>;
+        const cfg = config[level] || config.medium;
+        return <Badge variant={cfg.variant} size="sm">{cfg.label}</Badge>;
     };
 
-    const liabilityTypes: Array<{ value: LiabilityType | 'all'; label: string }> = [
+    const primaryClassOptions: Array<{ value: string | 'all'; label: string }> = [
         { value: 'all', label: t('common.all') },
-        { value: 'loan', label: t('liabilities.type.loan') },
-        { value: 'credit_line', label: t('liabilities.type.credit_line') },
-        { value: 'supplier_credit', label: t('liabilities.type.supplier_credit') },
-        { value: 'lease', label: t('liabilities.type.lease') },
-        { value: 'guarantee', label: t('liabilities.type.guarantee') },
+        { value: 'long_term_debt', label: t('liabilities.class.long_term_debt') || 'Long-term Debt' },
+        { value: 'short_term_debt', label: t('liabilities.class.short_term_debt') || 'Short-term Debt' },
+        { value: 'credit_line', label: t('liabilities.class.credit_line') || 'Credit Line' },
+        { value: 'accounts_payable', label: t('liabilities.class.accounts_payable') || 'Accounts Payable' },
+        { value: 'lease_operating', label: t('liabilities.class.lease_operating') || 'Operating Lease' },
     ];
 
     return (
@@ -143,16 +169,18 @@ function LiabilitiesList({
             </div>
 
             {/* Alerts Banner */}
-            {activeAlerts.length > 0 && (
+            {(inDefaultCount > 0 || inDisputeCount > 0) && (
                 <Card variant="glass" padding="md" className="border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20">
                     <div className="flex items-start gap-3">
                         <AlertTriangle className="text-amber-500 flex-shrink-0" size={20} />
                         <div>
                             <p className="font-medium text-amber-700 dark:text-amber-300">
-                                {activeAlerts.length} {t('liabilities.activeAlerts')}
+                                {inDefaultCount + inDisputeCount} {t('liabilities.activeAlerts') || 'Active Alerts'}
                             </p>
                             <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
-                                {activeAlerts[0].message}
+                                {inDefaultCount > 0 && `${inDefaultCount} in default`}
+                                {inDefaultCount > 0 && inDisputeCount > 0 && ', '}
+                                {inDisputeCount > 0 && `${inDisputeCount} in dispute`}
                             </p>
                         </div>
                     </div>
@@ -169,35 +197,7 @@ function LiabilitiesList({
                         <div>
                             <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.totalLiabilities')}</p>
                             <p className="text-xl font-bold text-gray-900 dark:text-surface-100">
-                                {formatCurrency(summary.totalLiabilities, 'EUR')}
-                            </p>
-                        </div>
-                    </div>
-                </Card>
-
-                <Card variant="glass" padding="md">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
-                            <CreditCard size={20} className="text-green-500" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.availableCredit')}</p>
-                            <p className="text-xl font-bold text-green-600 dark:text-green-400">
-                                {formatCurrency(summary.availableCredit, 'EUR')}
-                            </p>
-                        </div>
-                    </div>
-                </Card>
-
-                <Card variant="glass" padding="md">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <Percent size={20} className="text-amber-500" />
-                        </div>
-                        <div>
-                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.utilization')}</p>
-                            <p className="text-xl font-bold text-gray-900 dark:text-surface-100">
-                                {summary.utilizationPercent.toFixed(1)}%
+                                {formatCurrency(totalOutstanding, 'EUR')}
                             </p>
                         </div>
                     </div>
@@ -206,41 +206,45 @@ function LiabilitiesList({
                 <Card variant="glass" padding="md">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                            <Calendar size={20} className="text-blue-500" />
+                            <Landmark size={20} className="text-blue-500" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.next30Days')}</p>
+                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.count') || 'Count'}</p>
                             <p className="text-xl font-bold text-gray-900 dark:text-surface-100">
-                                {formatCurrency(summary.upcomingPayments30Days, 'EUR')}
+                                {statistics?.totalCount || liabilities.length}
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+
+                <Card variant="glass" padding="md">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <AlertCircle size={20} className="text-amber-500" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.inDefault') || 'In Default'}</p>
+                            <p className="text-xl font-bold text-gray-900 dark:text-surface-100">
+                                {inDefaultCount}
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+
+                <Card variant="glass" padding="md">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
+                            <Calendar size={20} className="text-purple-500" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.inDispute') || 'In Dispute'}</p>
+                            <p className="text-xl font-bold text-gray-900 dark:text-surface-100">
+                                {inDisputeCount}
                             </p>
                         </div>
                     </div>
                 </Card>
             </div>
-
-            {/* Credit Utilization Bar */}
-            <Card variant="glass" padding="md">
-                <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-medium text-gray-700 dark:text-surface-300">{t('liabilities.creditUtilization')}</span>
-                    <span className="text-sm text-gray-500 dark:text-surface-400">
-            {formatCurrency(summary.totalCreditLimit - summary.availableCredit, 'EUR')} / {formatCurrency(summary.totalCreditLimit, 'EUR')}
-          </span>
-                </div>
-                <div className="w-full h-3 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
-                    <div
-                        className={`h-full rounded-full transition-all ${
-                            summary.utilizationPercent >= 90 ? 'bg-red-500' : summary.utilizationPercent >= 80 ? 'bg-amber-500' : 'bg-green-500'
-                        }`}
-                        style={{ width: `${Math.min(summary.utilizationPercent, 100)}%` }}
-                    />
-                </div>
-                <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-surface-400">
-                    <span>0%</span>
-                    <span className="text-amber-500">80%</span>
-                    <span className="text-red-500">90%</span>
-                    <span>100%</span>
-                </div>
-            </Card>
 
             {/* Search and Filters */}
             <div className="flex flex-col sm:flex-row gap-4">
@@ -255,17 +259,17 @@ function LiabilitiesList({
                     />
                 </div>
                 <div className="flex gap-2 overflow-x-auto">
-                    {liabilityTypes.map((type) => (
+                    {primaryClassOptions.map((option) => (
                         <button
-                            key={type.value}
-                            onClick={() => setTypeFilter(type.value)}
+                            key={option.value}
+                            onClick={() => setPrimaryClassFilter(option.value)}
                             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
-                                typeFilter === type.value
+                                primaryClassFilter === option.value
                                     ? 'bg-[var(--accent-primary)] text-white'
                                     : 'bg-gray-100 dark:bg-surface-800/50 text-gray-600 dark:text-surface-400 hover:bg-gray-200 dark:hover:bg-surface-700/50'
                             }`}
                         >
-                            {type.label}
+                            {option.label}
                         </button>
                     ))}
                 </div>
@@ -284,8 +288,8 @@ function LiabilitiesList({
             ) : (
                 <div className="space-y-3">
                     {filteredLiabilities.map((liability, index) => {
-                        const Icon = typeIcons[liability.type];
-                        const hasAlerts = liability.alerts.some((a) => !a.isRead);
+                        const Icon = primaryClassIcons[liability.primaryClass as string] || HelpCircle;
+                        const hasIssues = liability.isInDefault || liability.isDisputed;
 
                         return (
                             <motion.div
@@ -298,49 +302,34 @@ function LiabilitiesList({
                                     variant="glass"
                                     padding="md"
                                     hover
-                                    className={`cursor-pointer ${hasAlerts ? 'border-l-4 border-amber-500' : ''}`}
+                                    className={`cursor-pointer ${hasIssues ? 'border-l-4 border-amber-500' : ''}`}
                                     onClick={() => onSelectLiability(liability)}
                                 >
                                     <div className="flex items-center justify-between gap-4">
                                         <div className="flex items-center gap-4 min-w-0">
-                                            <div className={`w-10 h-10 rounded-xl bg-${typeColors[liability.type]}-500/10 flex items-center justify-center flex-shrink-0`}>
-                                                <Icon size={20} className={`text-${typeColors[liability.type]}-500`} />
+                                            <div className={`w-10 h-10 rounded-xl bg-${primaryClassColors[liability.primaryClass as string] || 'gray'}-500/10 flex items-center justify-center flex-shrink-0`}>
+                                                <Icon size={20} className={`text-${primaryClassColors[liability.primaryClass as string] || 'gray'}-500`} />
                                             </div>
                                             <div className="min-w-0">
                                                 <div className="flex items-center gap-2">
-                          <span className="font-semibold text-gray-900 dark:text-surface-100 truncate">
-                            {liability.name}
-                          </span>
-                                                    <Badge variant="neutral" size="sm">{t(`liabilities.type.${liability.type}`)}</Badge>
-                                                    {hasAlerts && <AlertCircle size={16} className="text-amber-500" />}
+                                                    <span className="font-semibold text-gray-900 dark:text-surface-100 truncate">
+                                                        {liability.name}
+                                                    </span>
+                                                    <Badge variant="neutral" size="sm">
+                                                        {t(`liabilities.class.${liability.primaryClass}`) || liability.primaryClass}
+                                                    </Badge>
+                                                    {hasIssues && <AlertCircle size={16} className="text-amber-500" />}
                                                 </div>
                                                 <p className="text-sm text-gray-500 dark:text-surface-400 truncate">
-                                                    {liability.counterparty.name}
+                                                    {liability.counterpartyName}
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div className="flex items-center gap-6">
-                                            {/* Credit limit bar for applicable types */}
-                                            {liability.creditLimit && (
-                                                <div className="hidden md:block w-32">
-                                                    <div className="flex justify-between text-xs text-gray-500 mb-1">
-                                                        <span>{liability.creditLimit.utilizationPercent.toFixed(0)}%</span>
-                                                    </div>
-                                                    <div className="w-full h-2 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden">
-                                                        <div
-                                                            className={`h-full rounded-full ${
-                                                                liability.creditLimit.utilizationPercent >= 90 ? 'bg-red-500' : liability.creditLimit.utilizationPercent >= 80 ? 'bg-amber-500' : 'bg-green-500'
-                                                            }`}
-                                                            style={{ width: `${liability.creditLimit.utilizationPercent}%` }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )}
-
                                             <div className="text-right">
                                                 <p className="font-semibold text-gray-900 dark:text-surface-100">
-                                                    {formatCurrency(liability.currentBalance, liability.currency)}
+                                                    {formatCurrency(liability.totalOutstanding, liability.currency)}
                                                 </p>
                                                 {liability.maturityDate && (
                                                     <p className="text-sm text-gray-500 dark:text-surface-400">
@@ -363,12 +352,16 @@ function LiabilitiesList({
             {/* Exposure Summary */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card variant="glass" padding="md">
-                    <h3 className="font-medium text-gray-700 dark:text-surface-300 mb-4">{t('liabilities.byCounterparty')}</h3>
+                    <h3 className="font-medium text-gray-700 dark:text-surface-300 mb-4">{t('liabilities.byClass') || 'By Class'}</h3>
                     <div className="space-y-3">
-                        {Object.entries(summary.byCounterpartyType).map(([type, amount]) => (
-                            <div key={type} className="flex items-center justify-between">
-                                <span className="text-gray-600 dark:text-surface-400">{t(`liabilities.counterparty.${type}`)}</span>
-                                <span className="font-medium text-gray-900 dark:text-surface-100">{formatCurrency(amount, 'EUR')}</span>
+                        {statistics?.byPrimaryClass && Object.entries(statistics.byPrimaryClass).map(([classKey, data]) => (
+                            <div key={classKey} className="flex items-center justify-between">
+                                <span className="text-gray-600 dark:text-surface-400">
+                                    {t(`liabilities.class.${classKey}`) || classKey}
+                                </span>
+                                <span className="font-medium text-gray-900 dark:text-surface-100">
+                                    {formatCurrency(data.outstanding, 'EUR')}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -377,10 +370,12 @@ function LiabilitiesList({
                 <Card variant="glass" padding="md">
                     <h3 className="font-medium text-gray-700 dark:text-surface-300 mb-4">{t('liabilities.byCurrency')}</h3>
                     <div className="space-y-3">
-                        {Object.entries(summary.byCurrency).map(([currency, amount]) => (
+                        {Object.entries(outstandingByCurrency).map(([currency, amount]) => (
                             <div key={currency} className="flex items-center justify-between">
                                 <span className="text-gray-600 dark:text-surface-400">{currency}</span>
-                                <span className="font-medium text-gray-900 dark:text-surface-100">{formatCurrency(amount, currency)}</span>
+                                <span className="font-medium text-gray-900 dark:text-surface-100">
+                                    {formatCurrency(amount, currency)}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -391,77 +386,102 @@ function LiabilitiesList({
 }
 
 // =============================================================================
-// LIABILITIES WIZARD
+// LIABILITIES WIZARD (Simplified)
 // =============================================================================
 
+interface WizardState {
+    step: number;
+    primaryClass: LiabilityPrimaryClass | string;
+    name: string;
+    counterpartyName: string;
+    counterpartyType: string;
+    currency: string;
+    originalPrincipal: number;
+    outstandingPrincipal: number;
+    inceptionDate: string;
+    maturityDate: string;
+    interestRate: number;
+    isInterestBearing: boolean;
+    notes: string;
+}
+
+const initialWizardState: WizardState = {
+    step: 1,
+    primaryClass: '',
+    name: '',
+    counterpartyName: '',
+    counterpartyType: 'bank',
+    currency: 'EUR',
+    originalPrincipal: 0,
+    outstandingPrincipal: 0,
+    inceptionDate: new Date().toISOString().split('T')[0],
+    maturityDate: '',
+    interestRate: 0,
+    isInterestBearing: false,
+    notes: '',
+};
+
 function LiabilitiesWizard({
-                               onClose,
-                               onComplete,
-                           }: {
+    onClose,
+    onComplete,
+}: {
     onClose: () => void;
     onComplete: (liability: Liability) => void;
 }) {
     const { t, language } = useThemeStore();
-    const { wizardState, updateWizardState, setWizardStep, createLiability, resetWizard } = useLiabilitiesStore();
+    const { createLiability } = useLiabilitiesStore();
+    const [wizardState, setWizardState] = useState<WizardState>(initialWizardState);
 
     const steps = [
-        { id: 1, label: t('liabilities.wizard.type'), icon: HelpCircle },
-        { id: 2, label: t('liabilities.wizard.counterparty'), icon: Building2 },
-        { id: 3, label: t('liabilities.wizard.amount'), icon: DollarSign },
-        { id: 4, label: t('liabilities.wizard.terms'), icon: Percent },
-        { id: 5, label: t('liabilities.wizard.timing'), icon: Calendar },
-        { id: 6, label: t('liabilities.wizard.review'), icon: Check },
+        { id: 1, label: t('liabilities.wizard.type') || 'Type', icon: HelpCircle },
+        { id: 2, label: t('liabilities.wizard.counterparty') || 'Counterparty', icon: Building2 },
+        { id: 3, label: t('liabilities.wizard.amount') || 'Amount', icon: DollarSign },
+        { id: 4, label: t('liabilities.wizard.terms') || 'Terms', icon: Percent },
+        { id: 5, label: t('liabilities.wizard.review') || 'Review', icon: Check },
     ];
 
     const currentStep = wizardState.step;
 
-    const goNext = () => currentStep < 6 && setWizardStep(currentStep + 1);
-    const goBack = () => currentStep > 1 && setWizardStep(currentStep - 1);
+    const updateState = (updates: Partial<WizardState>) => {
+        setWizardState((prev) => ({ ...prev, ...updates }));
+    };
+
+    const goNext = () => currentStep < 5 && updateState({ step: currentStep + 1 });
+    const goBack = () => currentStep > 1 && updateState({ step: currentStep - 1 });
 
     const formatCurrency = (amount: number, currency: string) => {
         return new Intl.NumberFormat(language === 'de' ? 'de-DE' : 'en-US', { style: 'currency', currency }).format(amount);
     };
 
-    const liabilityTypeOptions: Array<{ value: LiabilityType; label: string; description: string; icon: React.ElementType }> = [
-        { value: 'loan', label: t('liabilities.type.loan'), description: t('liabilities.typeDesc.loan'), icon: Landmark },
-        { value: 'credit_line', label: t('liabilities.type.credit_line'), description: t('liabilities.typeDesc.credit_line'), icon: CreditCard },
-        { value: 'overdraft', label: t('liabilities.type.overdraft'), description: t('liabilities.typeDesc.overdraft'), icon: TrendingDown },
-        { value: 'supplier_credit', label: t('liabilities.type.supplier_credit'), description: t('liabilities.typeDesc.supplier_credit'), icon: Truck },
-        { value: 'lease', label: t('liabilities.type.lease'), description: t('liabilities.typeDesc.lease'), icon: Car },
-        { value: 'guarantee', label: t('liabilities.type.guarantee'), description: t('liabilities.typeDesc.guarantee'), icon: Shield },
+    const primaryClassOptions: Array<{ value: string; label: string; description: string; icon: React.ElementType }> = [
+        { value: 'long_term_debt', label: t('liabilities.class.long_term_debt') || 'Long-term Debt', description: 'Bank loans, bonds, mortgages', icon: Landmark },
+        { value: 'credit_line', label: t('liabilities.class.credit_line') || 'Credit Line', description: 'Revolving credit facilities', icon: CreditCard },
+        { value: 'short_term_debt', label: t('liabilities.class.short_term_debt') || 'Short-term Debt', description: 'Due within 12 months', icon: TrendingDown },
+        { value: 'accounts_payable', label: t('liabilities.class.accounts_payable') || 'Accounts Payable', description: 'Supplier invoices', icon: Truck },
+        { value: 'lease_operating', label: t('liabilities.class.lease_operating') || 'Operating Lease', description: 'Equipment, vehicle leases', icon: Car },
+        { value: 'tax_liability', label: t('liabilities.class.tax_liability') || 'Tax Liability', description: 'Taxes owed', icon: Shield },
     ];
 
-    const handleCreate = () => {
-        const hasCreditLimit = ['credit_line', 'overdraft', 'supplier_credit'].includes(wizardState.type || '');
-
-        const liability = createLiability({
-            type: wizardState.type!,
-            status: 'active',
+    const handleCreate = async () => {
+        const request: CreateLiabilityRequest = {
             name: wizardState.name,
-            counterparty: wizardState.counterparty as any,
-            originalAmount: wizardState.originalAmount,
-            currentBalance: wizardState.currentBalance || wizardState.originalAmount,
+            primaryClass: wizardState.primaryClass,
+            counterpartyName: wizardState.counterpartyName,
+            counterpartyType: wizardState.counterpartyType as any,
+            originalPrincipal: wizardState.originalPrincipal,
+            outstandingPrincipal: wizardState.outstandingPrincipal || wizardState.originalPrincipal,
             currency: wizardState.currency,
-            creditLimit: hasCreditLimit ? {
-                totalLimit: wizardState.creditLimit.totalLimit || wizardState.originalAmount,
-                usedAmount: wizardState.currentBalance || 0,
-                availableAmount: (wizardState.creditLimit.totalLimit || wizardState.originalAmount) - (wizardState.currentBalance || 0),
-                currency: wizardState.currency,
-                utilizationPercent: ((wizardState.currentBalance || 0) / (wizardState.creditLimit.totalLimit || wizardState.originalAmount || 1)) * 100,
-                expiryDate: wizardState.creditLimit.expiryDate,
-            } : undefined,
-            interestTerms: wizardState.interestTerms as any,
-            repaymentTerms: wizardState.repaymentTerms as any,
-            startDate: wizardState.startDate,
-            maturityType: wizardState.maturityType,
+            inceptionDate: wizardState.inceptionDate,
             maturityDate: wizardState.maturityDate || undefined,
-            collateral: wizardState.hasCollateral ? wizardState.collateral as any : undefined,
-            riskLevel: 'low',
-            notes: wizardState.notes,
-        });
+            isInterestBearing: wizardState.isInterestBearing,
+            interestRate: wizardState.interestRate || undefined,
+            notes: wizardState.notes || undefined,
+        };
 
-        resetWizard();
-        onComplete(liability);
+        const liability = await createLiability(request);
+        if (liability) {
+            onComplete(liability);
+        }
     };
 
     const renderStepContent = () => {
@@ -471,24 +491,26 @@ function LiabilitiesWizard({
                     <div className="space-y-6">
                         <div>
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-surface-100">
-                                {t('liabilities.wizard.selectType')}
+                                {t('liabilities.wizard.selectType') || 'Select Liability Type'}
                             </h2>
-                            <p className="text-gray-500 dark:text-surface-400 mt-1">{t('liabilities.wizard.selectTypeDesc')}</p>
+                            <p className="text-gray-500 dark:text-surface-400 mt-1">
+                                {t('liabilities.wizard.selectTypeDesc') || 'Choose the type that best describes this liability'}
+                            </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {liabilityTypeOptions.map((option) => {
+                            {primaryClassOptions.map((option) => {
                                 const Icon = option.icon;
                                 return (
                                     <button
                                         key={option.value}
-                                        onClick={() => updateWizardState({ type: option.value })}
+                                        onClick={() => updateState({ primaryClass: option.value })}
                                         className={`p-4 rounded-xl border-2 text-left transition-all ${
-                                            wizardState.type === option.value
+                                            wizardState.primaryClass === option.value
                                                 ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5'
                                                 : 'border-gray-200 dark:border-surface-700 hover:border-gray-300'
                                         }`}
                                     >
-                                        <Icon size={24} className={wizardState.type === option.value ? 'text-[var(--accent-primary)]' : 'text-gray-400'} />
+                                        <Icon size={24} className={wizardState.primaryClass === option.value ? 'text-[var(--accent-primary)]' : 'text-gray-400'} />
                                         <p className="font-semibold text-gray-900 dark:text-surface-100 mt-2">{option.label}</p>
                                         <p className="text-sm text-gray-500 dark:text-surface-400 mt-1">{option.description}</p>
                                     </button>
@@ -503,53 +525,42 @@ function LiabilitiesWizard({
                     <div className="space-y-6">
                         <div>
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-surface-100">
-                                {t('liabilities.wizard.whoIs')}
+                                {t('liabilities.wizard.whoIs') || 'Who is the counterparty?'}
                             </h2>
-                            <p className="text-gray-500 dark:text-surface-400 mt-1">{t('liabilities.wizard.whoIsDesc')}</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-2">
-                                    {t('liabilities.counterpartyType')}
+                                    {t('liabilities.counterpartyType') || 'Counterparty Type'}
                                 </label>
                                 <div className="flex gap-3">
-                                    {(['bank', 'supplier', 'leasing', 'other'] as const).map((type) => (
+                                    {(['bank', 'supplier', 'investor', 'government', 'other'] as const).map((type) => (
                                         <button
                                             key={type}
-                                            onClick={() => updateWizardState({ counterparty: { ...wizardState.counterparty, type } })}
+                                            onClick={() => updateState({ counterpartyType: type })}
                                             className={`flex-1 p-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                                                wizardState.counterparty.type === type
+                                                wizardState.counterpartyType === type
                                                     ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5 text-[var(--accent-primary)]'
                                                     : 'border-gray-200 dark:border-surface-700 text-gray-600 dark:text-surface-400'
                                             }`}
                                         >
-                                            {t(`liabilities.counterparty.${type}`)}
+                                            {t(`liabilities.counterparty.${type}`) || type}
                                         </button>
                                     ))}
                                 </div>
                             </div>
                             <Input
-                                label={t('liabilities.counterpartyName')}
-                                value={wizardState.counterparty.name || ''}
-                                onChange={(e) => updateWizardState({ counterparty: { ...wizardState.counterparty, name: e.target.value } })}
+                                label={t('liabilities.counterpartyName') || 'Counterparty Name'}
+                                value={wizardState.counterpartyName}
+                                onChange={(e) => updateState({ counterpartyName: e.target.value })}
                                 placeholder="Deutsche Bank"
                             />
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
-                                    {t('liabilities.country')}
-                                </label>
-                                <select
-                                    value={wizardState.counterparty.country || 'DE'}
-                                    onChange={(e) => updateWizardState({ counterparty: { ...wizardState.counterparty, country: e.target.value } })}
-                                    className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl"
-                                >
-                                    <option value="DE">Deutschland</option>
-                                    <option value="AT">Österreich</option>
-                                    <option value="CH">Schweiz</option>
-                                    <option value="FR">Frankreich</option>
-                                    <option value="NL">Niederlande</option>
-                                </select>
-                            </div>
+                            <Input
+                                label={t('liabilities.name') || 'Liability Name'}
+                                value={wizardState.name}
+                                onChange={(e) => updateState({ name: e.target.value })}
+                                placeholder="Term Loan 2024"
+                            />
                         </div>
                     </div>
                 );
@@ -559,23 +570,17 @@ function LiabilitiesWizard({
                     <div className="space-y-6">
                         <div>
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-surface-100">
-                                {t('liabilities.wizard.amounts')}
+                                {t('liabilities.wizard.amounts') || 'Amounts'}
                             </h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Input
-                                label={t('liabilities.name')}
-                                value={wizardState.name}
-                                onChange={(e) => updateWizardState({ name: e.target.value })}
-                                placeholder={t('liabilities.namePlaceholder')}
-                            />
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
-                                    {t('invoice.currency')}
+                                    {t('invoice.currency') || 'Currency'}
                                 </label>
                                 <select
                                     value={wizardState.currency}
-                                    onChange={(e) => updateWizardState({ currency: e.target.value })}
+                                    onChange={(e) => updateState({ currency: e.target.value })}
                                     className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl"
                                 >
                                     <option value="EUR">EUR</option>
@@ -585,33 +590,18 @@ function LiabilitiesWizard({
                                 </select>
                             </div>
                             <Input
-                                label={['credit_line', 'overdraft', 'supplier_credit'].includes(wizardState.type || '')
-                                    ? t('liabilities.creditLimit')
-                                    : t('liabilities.originalAmount')}
+                                label={t('liabilities.originalAmount') || 'Original Principal'}
                                 type="number"
-                                value={wizardState.originalAmount || ''}
-                                onChange={(e) => updateWizardState({ originalAmount: Number(e.target.value) })}
+                                value={wizardState.originalPrincipal || ''}
+                                onChange={(e) => updateState({ originalPrincipal: Number(e.target.value) })}
                             />
                             <Input
-                                label={['credit_line', 'overdraft', 'supplier_credit'].includes(wizardState.type || '')
-                                    ? t('liabilities.currentlyUsed')
-                                    : t('liabilities.currentBalance')}
+                                label={t('liabilities.currentBalance') || 'Outstanding Principal'}
                                 type="number"
-                                value={wizardState.currentBalance || ''}
-                                onChange={(e) => updateWizardState({ currentBalance: Number(e.target.value) })}
+                                value={wizardState.outstandingPrincipal || ''}
+                                onChange={(e) => updateState({ outstandingPrincipal: Number(e.target.value) })}
                             />
                         </div>
-
-                        {['credit_line', 'overdraft', 'supplier_credit'].includes(wizardState.type || '') && wizardState.originalAmount > 0 && (
-                            <Card variant="glass" padding="md" className="bg-green-50 dark:bg-green-900/20">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-green-700 dark:text-green-300">{t('liabilities.available')}</span>
-                                    <span className="text-xl font-bold text-green-600 dark:text-green-400">
-                    {formatCurrency(wizardState.originalAmount - (wizardState.currentBalance || 0), wizardState.currency)}
-                  </span>
-                                </div>
-                            </Card>
-                        )}
                     </div>
                 );
 
@@ -620,212 +610,106 @@ function LiabilitiesWizard({
                     <div className="space-y-6">
                         <div>
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-surface-100">
-                                {t('liabilities.wizard.terms')}
-                            </h2>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
-                                    {t('liabilities.interestType')}
-                                </label>
-                                <select
-                                    value={wizardState.interestTerms.type || 'unknown'}
-                                    onChange={(e) => updateWizardState({ interestTerms: { ...wizardState.interestTerms, type: e.target.value as any } })}
-                                    className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl"
-                                >
-                                    <option value="fixed">{t('liabilities.interest.fixed')}</option>
-                                    <option value="variable">{t('liabilities.interest.variable')}</option>
-                                    <option value="none">{t('liabilities.interest.none')}</option>
-                                    <option value="unknown">{t('liabilities.interest.unknown')}</option>
-                                </select>
-                            </div>
-
-                            {(wizardState.interestTerms.type === 'fixed' || wizardState.interestTerms.type === 'variable') && (
-                                <Input
-                                    label={t('liabilities.interestRate')}
-                                    type="number"
-                                    step="0.1"
-                                    value={wizardState.interestTerms.rate || ''}
-                                    onChange={(e) => updateWizardState({ interestTerms: { ...wizardState.interestTerms, rate: Number(e.target.value) } })}
-                                    placeholder="4.5"
-                                />
-                            )}
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
-                                    {t('liabilities.repaymentSchedule')}
-                                </label>
-                                <select
-                                    value={wizardState.repaymentTerms.schedule || 'monthly'}
-                                    onChange={(e) => updateWizardState({ repaymentTerms: { ...wizardState.repaymentTerms, schedule: e.target.value as any } })}
-                                    className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl"
-                                >
-                                    <option value="monthly">{t('liabilities.schedule.monthly')}</option>
-                                    <option value="quarterly">{t('liabilities.schedule.quarterly')}</option>
-                                    <option value="annually">{t('liabilities.schedule.annually')}</option>
-                                    <option value="on_demand">{t('liabilities.schedule.on_demand')}</option>
-                                    <option value="at_maturity">{t('liabilities.schedule.at_maturity')}</option>
-                                </select>
-                            </div>
-
-                            {wizardState.repaymentTerms.schedule !== 'on_demand' && wizardState.repaymentTerms.schedule !== 'at_maturity' && (
-                                <Input
-                                    label={t('liabilities.repaymentAmount')}
-                                    type="number"
-                                    value={wizardState.repaymentTerms.amount || ''}
-                                    onChange={(e) => updateWizardState({ repaymentTerms: { ...wizardState.repaymentTerms, amount: Number(e.target.value) } })}
-                                />
-                            )}
-                        </div>
-                    </div>
-                );
-
-            case 5: // Timing
-                return (
-                    <div className="space-y-6">
-                        <div>
-                            <h2 className="text-xl font-semibold text-gray-900 dark:text-surface-100">
-                                {t('liabilities.wizard.timing')}
+                                {t('liabilities.wizard.terms') || 'Terms'}
                             </h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Input
-                                label={t('liabilities.startDate')}
+                                label={t('liabilities.startDate') || 'Inception Date'}
                                 type="date"
-                                value={wizardState.startDate}
-                                onChange={(e) => updateWizardState({ startDate: e.target.value })}
+                                value={wizardState.inceptionDate}
+                                onChange={(e) => updateState({ inceptionDate: e.target.value })}
                             />
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
-                                    {t('liabilities.maturityType')}
-                                </label>
-                                <select
-                                    value={wizardState.maturityType}
-                                    onChange={(e) => updateWizardState({ maturityType: e.target.value as any })}
-                                    className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl"
-                                >
-                                    <option value="fixed">{t('liabilities.maturity.fixed')}</option>
-                                    <option value="rolling">{t('liabilities.maturity.rolling')}</option>
-                                    <option value="on_demand">{t('liabilities.maturity.on_demand')}</option>
-                                    <option value="ongoing">{t('liabilities.maturity.ongoing')}</option>
-                                </select>
-                            </div>
-                            {wizardState.maturityType === 'fixed' && (
-                                <Input
-                                    label={t('liabilities.maturityDate')}
-                                    type="date"
-                                    value={wizardState.maturityDate}
-                                    onChange={(e) => updateWizardState({ maturityDate: e.target.value })}
-                                />
-                            )}
-                        </div>
-
-                        {/* Collateral */}
-                        <div className="border-t border-gray-200 dark:border-surface-700 pt-6">
-                            <label className="flex items-center gap-3 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={wizardState.hasCollateral}
-                                    onChange={(e) => updateWizardState({ hasCollateral: e.target.checked })}
-                                    className="w-5 h-5 rounded border-gray-300 text-[var(--accent-primary)]"
-                                />
-                                <span className="font-medium text-gray-700 dark:text-surface-300">{t('liabilities.hasCollateral')}</span>
-                            </label>
-
-                            {wizardState.hasCollateral && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-surface-300 mb-1.5">
-                                            {t('liabilities.collateralType')}
-                                        </label>
-                                        <select
-                                            value={wizardState.collateral.type || 'property'}
-                                            onChange={(e) => updateWizardState({ collateral: { ...wizardState.collateral, isSecured: true, type: e.target.value as any } })}
-                                            className="w-full px-4 py-2.5 bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 rounded-xl"
-                                        >
-                                            <option value="cash">{t('liabilities.collateral.cash')}</option>
-                                            <option value="property">{t('liabilities.collateral.property')}</option>
-                                            <option value="equipment">{t('liabilities.collateral.equipment')}</option>
-                                            <option value="guarantee">{t('liabilities.collateral.guarantee')}</option>
-                                        </select>
-                                    </div>
-                                    <Input
-                                        label={t('liabilities.collateralValue')}
-                                        type="number"
-                                        value={wizardState.collateral.value || ''}
-                                        onChange={(e) => updateWizardState({ collateral: { ...wizardState.collateral, value: Number(e.target.value) } })}
+                            <Input
+                                label={t('liabilities.maturityDate') || 'Maturity Date'}
+                                type="date"
+                                value={wizardState.maturityDate}
+                                onChange={(e) => updateState({ maturityDate: e.target.value })}
+                            />
+                            <div className="md:col-span-2">
+                                <label className="flex items-center gap-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={wizardState.isInterestBearing}
+                                        onChange={(e) => updateState({ isInterestBearing: e.target.checked })}
+                                        className="w-5 h-5 rounded border-gray-300 text-[var(--accent-primary)]"
                                     />
-                                </div>
+                                    <span className="font-medium text-gray-700 dark:text-surface-300">
+                                        {t('liabilities.isInterestBearing') || 'Interest Bearing'}
+                                    </span>
+                                </label>
+                            </div>
+                            {wizardState.isInterestBearing && (
+                                <Input
+                                    label={t('liabilities.interestRate') || 'Interest Rate (%)'}
+                                    type="number"
+                                    step="0.1"
+                                    value={wizardState.interestRate || ''}
+                                    onChange={(e) => updateState({ interestRate: Number(e.target.value) })}
+                                    placeholder="4.5"
+                                />
                             )}
                         </div>
                     </div>
                 );
 
-            case 6: // Review
+            case 5: // Review
                 return (
                     <div className="space-y-6">
                         <div>
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-surface-100">
-                                {t('liabilities.wizard.review')}
+                                {t('liabilities.wizard.review') || 'Review'}
                             </h2>
-                            <p className="text-gray-500 dark:text-surface-400 mt-1">{t('liabilities.wizard.reviewDesc')}</p>
+                            <p className="text-gray-500 dark:text-surface-400 mt-1">
+                                {t('liabilities.wizard.reviewDesc') || 'Review your liability details before creating'}
+                            </p>
                         </div>
 
                         <Card variant="glass" padding="lg">
                             <div className="space-y-4">
                                 <div className="flex justify-between">
-                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.type.label')}</span>
-                                    <Badge variant="info">{t(`liabilities.type.${wizardState.type}`)}</Badge>
+                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.class.label') || 'Class'}</span>
+                                    <Badge variant="info">{t(`liabilities.class.${wizardState.primaryClass}`) || wizardState.primaryClass}</Badge>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.name')}</span>
+                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.name') || 'Name'}</span>
                                     <span className="font-medium text-gray-900 dark:text-surface-100">{wizardState.name}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.counterpartyName')}</span>
-                                    <span className="font-medium text-gray-900 dark:text-surface-100">{wizardState.counterparty.name}</span>
+                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.counterpartyName') || 'Counterparty'}</span>
+                                    <span className="font-medium text-gray-900 dark:text-surface-100">{wizardState.counterpartyName}</span>
                                 </div>
 
                                 <div className="border-t border-gray-200 dark:border-surface-700 pt-4">
                                     <div className="flex justify-between">
-                    <span className="text-gray-500 dark:text-surface-400">
-                      {['credit_line', 'overdraft', 'supplier_credit'].includes(wizardState.type || '')
-                          ? t('liabilities.creditLimit')
-                          : t('liabilities.originalAmount')}
-                    </span>
+                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.originalAmount') || 'Original Principal'}</span>
                                         <span className="font-medium text-gray-900 dark:text-surface-100">
-                      {formatCurrency(wizardState.originalAmount, wizardState.currency)}
-                    </span>
+                                            {formatCurrency(wizardState.originalPrincipal, wizardState.currency)}
+                                        </span>
                                     </div>
                                     <div className="flex justify-between mt-2">
-                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.currentBalance')}</span>
+                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.currentBalance') || 'Outstanding'}</span>
                                         <span className="font-semibold text-[var(--accent-primary)]">
-                      {formatCurrency(wizardState.currentBalance || 0, wizardState.currency)}
-                    </span>
+                                            {formatCurrency(wizardState.outstandingPrincipal || wizardState.originalPrincipal, wizardState.currency)}
+                                        </span>
                                     </div>
                                 </div>
 
-                                {wizardState.interestTerms.rate && (
+                                {wizardState.interestRate > 0 && (
                                     <div className="flex justify-between">
-                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.interestRate')}</span>
-                                        <span className="font-medium text-gray-900 dark:text-surface-100">{wizardState.interestTerms.rate}%</span>
+                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.interestRate') || 'Interest Rate'}</span>
+                                        <span className="font-medium text-gray-900 dark:text-surface-100">{wizardState.interestRate}%</span>
                                     </div>
                                 )}
 
                                 {wizardState.maturityDate && (
                                     <div className="flex justify-between">
-                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.maturityDate')}</span>
+                                        <span className="text-gray-500 dark:text-surface-400">{t('liabilities.maturityDate') || 'Maturity'}</span>
                                         <span className="font-medium text-gray-900 dark:text-surface-100">{wizardState.maturityDate}</span>
                                     </div>
                                 )}
                             </div>
                         </Card>
-
-                        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-                            <p className="text-sm text-blue-700 dark:text-blue-300">
-                                💡 {t('liabilities.wizard.tip')}
-                            </p>
-                        </div>
                     </div>
                 );
 
@@ -842,7 +726,9 @@ function LiabilitiesWizard({
                     <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-700">
                         <X size={20} className="text-gray-500" />
                     </button>
-                    <h1 className="font-semibold text-gray-900 dark:text-surface-100">{t('liabilities.wizard.title')}</h1>
+                    <h1 className="font-semibold text-gray-900 dark:text-surface-100">
+                        {t('liabilities.wizard.title') || 'Add Liability'}
+                    </h1>
                     <div className="w-10" />
                 </div>
             </div>
@@ -857,7 +743,7 @@ function LiabilitiesWizard({
                         return (
                             <button
                                 key={step.id}
-                                onClick={() => step.id < currentStep && setWizardStep(step.id)}
+                                onClick={() => step.id < currentStep && updateState({ step: step.id })}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
                                     isActive ? 'bg-[var(--accent-primary)] text-white' : isCompleted ? 'bg-green-100 dark:bg-green-900/20 text-green-700' : 'bg-gray-100 dark:bg-surface-700 text-gray-400'
                                 }`}
@@ -887,12 +773,12 @@ function LiabilitiesWizard({
                         {t('common.back')}
                     </Button>
                     <div className="flex gap-3">
-                        {currentStep === 6 ? (
+                        {currentStep === 5 ? (
                             <Button variant="primary" leftIcon={<Check size={18} />} onClick={handleCreate}>
-                                {t('liabilities.save')}
+                                {t('liabilities.save') || 'Create Liability'}
                             </Button>
                         ) : (
-                            <Button variant="primary" rightIcon={<ChevronRight size={18} />} onClick={goNext} disabled={currentStep === 1 && !wizardState.type}>
+                            <Button variant="primary" rightIcon={<ChevronRight size={18} />} onClick={goNext} disabled={currentStep === 1 && !wizardState.primaryClass}>
                                 {t('common.next')}
                             </Button>
                         )}
@@ -909,11 +795,9 @@ function LiabilitiesWizard({
 
 export default function LiabilitiesPage() {
     const [showWizard, setShowWizard] = useState(false);
-    const [selectedLiability, setSelectedLiability] = useState<Liability | null>(null);
-    const { resetWizard } = useLiabilitiesStore();
+    const [_selectedLiability, setSelectedLiability] = useState<Liability | null>(null);
 
     const handleCreateNew = () => {
-        resetWizard();
         setShowWizard(true);
     };
 

@@ -110,7 +110,7 @@ export default function QuickActions() {
         title: 'Upcoming Payment',
         description: `Payment due`,
         amount: pay.amount,
-        dueDate: pay.date,
+        dueDate: pay.scheduledDate || pay.dueDate,
         link: '/dashboard/liabilities',
       })
     })

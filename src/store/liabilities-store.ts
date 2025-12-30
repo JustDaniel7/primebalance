@@ -1,393 +1,1539 @@
+// =============================================================================
+// LIABILITIES ENGINE - ZUSTAND STORE (Full API Integration)
+// src/store/liabilities-store.ts
+// =============================================================================
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
     Liability,
-    LiabilityType,
+    LiabilityEvent,
     LiabilityPayment,
-    LiabilitySummary,
-    LiabilityWizardState,
-    LiabilityAlert,
-    LiabilityClassification,
-    LiabilityCounterparty,
-    CreditLimit,
-    InterestTerms,
-    RepaymentTerms,
-    Collateral,
+    LiabilitySettlement,
+    LiabilityAccrual,
+    LiabilityCovenantCheck,
+    LiabilityException,
+    LiabilityImportBatch,
+    LiabilitySavedView,
+    LiabilityFilters,
+    LiabilityPagination,
+    LiabilityStatistics,
+    CreateLiabilityRequest,
+    SettleLiabilityRequest,
+    SchedulePaymentRequest,
+    AccrueInterestRequest,
+    ApplyFeeRequest,
+    CheckCovenantRequest,
+    ImportLiabilitiesRequest,
+    LiabilityPrimaryClass,
+    LiabilityStatus,
+    RiskLevel,
 } from '@/types/liabilities';
 
 // =============================================================================
-// LIABILITIES STORE - API CONNECTED
+// STATE INTERFACE
 // =============================================================================
 
 interface LiabilitiesState {
+    // Core data
     liabilities: Liability[];
+    currentLiability: Liability | null;
+
+    // Related data for current liability
+    events: LiabilityEvent[];
     payments: LiabilityPayment[];
-    wizardState: LiabilityWizardState;
+    settlements: LiabilitySettlement[];
+    accruals: LiabilityAccrual[];
+    covenantChecks: LiabilityCovenantCheck[];
+
+    // Exception queue
+    exceptions: LiabilityException[];
+
+    // Import batches
+    importBatches: LiabilityImportBatch[];
+
+    // Saved views
+    savedViews: LiabilitySavedView[];
+
+    // UI State
     isLoading: boolean;
     error: string | null;
     isInitialized: boolean;
 
-    // API Actions
-    fetchLiabilities: () => Promise<void>;
+    // Pagination & Filters
+    pagination: LiabilityPagination;
+    filters: LiabilityFilters;
+    currentView: string | null;
 
-    // CRUD
-    createLiability: (liability: Omit<Liability, 'id' | 'createdAt' | 'updatedAt' | 'alerts' | 'classifications'>) => Liability;
-    updateLiability: (id: string, updates: Partial<Liability>) => void;
-    deleteLiability: (id: string) => void;
+    // Statistics
+    statistics: LiabilityStatistics | null;
 
-    // Payments
-    addPayment: (payment: Omit<LiabilityPayment, 'id'>) => void;
-    updatePayment: (id: string, updates: Partial<LiabilityPayment>) => void;
+    // ==========================================================================
+    // API ACTIONS - CRUD
+    // ==========================================================================
 
-    // Credit limits
-    updateCreditUsage: (id: string, usedAmount: number) => void;
-    drawFromCreditLine: (id: string, amount: number) => void;
-    repayToCreditLine: (id: string, amount: number) => void;
+    fetchLiabilities: (filters?: LiabilityFilters, page?: number, limit?: number) => Promise<void>;
+    fetchLiability: (id: string, options?: {
+        includeEvents?: boolean;
+        includePayments?: boolean;
+        includeSettlements?: boolean;
+        includeAccruals?: boolean;
+        includeCovenantChecks?: boolean;
+    }) => Promise<Liability | null>;
+    fetchLiabilityAsOf: (id: string, asOfDate: string) => Promise<any>;
+    createLiability: (data: CreateLiabilityRequest) => Promise<Liability | null>;
+    updateLiability: (id: string, updates: Partial<Liability>) => Promise<Liability | null>;
 
-    // Wizard
-    setWizardStep: (step: number) => void;
-    updateWizardState: (updates: Partial<LiabilityWizardState>) => void;
-    resetWizard: () => void;
+    // ==========================================================================
+    // API ACTIONS - STATE TRANSITIONS
+    // ==========================================================================
 
-    // Analytics
-    getSummary: () => LiabilitySummary;
-    getByType: (type: LiabilityType) => Liability[];
-    getActiveAlerts: () => LiabilityAlert[];
+    recognizeLiability: (id: string, data?: { recognitionDate?: string; notes?: string }) => Promise<boolean>;
+    activateLiability: (id: string, data?: { activationDate?: string; notes?: string }) => Promise<boolean>;
+    settleLiability: (id: string, data: SettleLiabilityRequest) => Promise<boolean>;
+    reverseLiability: (id: string, data: { reason: string; reversalType?: 'full' | 'partial'; amount?: number }) => Promise<boolean>;
+    disputeLiability: (id: string, data: { reason: string; disputeAmount?: number }) => Promise<boolean>;
+    resolveDispute: (id: string, data: { resolution: string; adjustedAmount?: number }) => Promise<boolean>;
+    defaultLiability: (id: string, data: { reason: string; defaultDate?: string }) => Promise<boolean>;
+    writeOffLiability: (id: string, data: { reason: string; reasonCode: string; amount?: number }) => Promise<boolean>;
+    restructureLiability: (id: string, data: { reason: string; newTerms: any }) => Promise<boolean>;
+    archiveLiability: (id: string, data?: { reason?: string }) => Promise<boolean>;
+
+    // ==========================================================================
+    // API ACTIONS - PAYMENTS
+    // ==========================================================================
+
+    fetchPayments: (liabilityId: string) => Promise<void>;
+    schedulePayment: (liabilityId: string, data: SchedulePaymentRequest) => Promise<boolean>;
+    executePayment: (paymentId: string, data?: { paymentMethod?: string; bankReference?: string }) => Promise<boolean>;
+    approvePayment: (paymentId: string, comments?: string) => Promise<boolean>;
+    rejectPayment: (paymentId: string, reason: string) => Promise<boolean>;
+
+    // ==========================================================================
+    // API ACTIONS - INTEREST & FEES
+    // ==========================================================================
+
+    accrueInterest: (liabilityId: string, data?: AccrueInterestRequest) => Promise<boolean>;
+    applyFee: (liabilityId: string, data: ApplyFeeRequest) => Promise<boolean>;
+    fetchAccruals: (liabilityId: string) => Promise<void>;
+
+    // ==========================================================================
+    // API ACTIONS - FX
+    // ==========================================================================
+
+    revalueFx: (liabilityId: string, data: { newFxRate: number; fxSource?: string }) => Promise<boolean>;
+
+    // ==========================================================================
+    // API ACTIONS - COVENANTS
+    // ==========================================================================
+
+    fetchCovenantChecks: (liabilityId: string) => Promise<void>;
+    checkCovenant: (liabilityId: string, data: CheckCovenantRequest) => Promise<boolean>;
+
+    // ==========================================================================
+    // API ACTIONS - EVENTS
+    // ==========================================================================
+
+    fetchEvents: (liabilityId: string, options?: { eventType?: string; limit?: number }) => Promise<void>;
+
+    // ==========================================================================
+    // API ACTIONS - IMPORT/EXPORT
+    // ==========================================================================
+
+    importLiabilities: (data: ImportLiabilitiesRequest) => Promise<{ batchNumber: string; results: any } | null>;
+    fetchImportBatches: () => Promise<void>;
+    rollbackImport: (batchId: string) => Promise<boolean>;
+
+    // ==========================================================================
+    // API ACTIONS - EXCEPTIONS
+    // ==========================================================================
+
+    fetchExceptions: (filters?: { status?: string; type?: string }) => Promise<void>;
+    resolveException: (id: string, data: { resolution: string; resolutionAction?: string }) => Promise<boolean>;
+
+    // ==========================================================================
+    // API ACTIONS - STATISTICS
+    // ==========================================================================
+
+    fetchStatistics: () => Promise<void>;
+
+    // ==========================================================================
+    // API ACTIONS - BATCH
+    // ==========================================================================
+
+    batchOperation: (operation: string, liabilityIds: string[], params?: any) => Promise<any>;
+
+    // ==========================================================================
+    // LOCAL ACTIONS
+    // ==========================================================================
+
+    setCurrentLiability: (liability: Liability | null) => void;
+    setFilters: (filters: Partial<LiabilityFilters>) => void;
+    clearFilters: () => void;
+    setCurrentView: (viewId: string | null) => void;
+    clearError: () => void;
+    reset: () => void;
+
+    // ==========================================================================
+    // COMPUTED / GETTERS
+    // ==========================================================================
+
+    getLiabilityById: (id: string) => Liability | undefined;
+    getLiabilitiesByStatus: (status: LiabilityStatus | string) => Liability[];
+    getLiabilitiesByPrimaryClass: (primaryClass: LiabilityPrimaryClass | string) => Liability[];
+    getLiabilitiesByRiskLevel: (riskLevel: RiskLevel | string) => Liability[];
+    getLiabilitiesInDefault: () => Liability[];
+    getLiabilitiesInDispute: () => Liability[];
+    getOverdueLiabilities: () => Liability[];
     getUpcomingPayments: (days: number) => LiabilityPayment[];
     getUpcomingMaturities: (days: number) => Liability[];
-
-    // Risk
-    checkUtilization: (id: string) => { level: 'ok' | 'warning' | 'critical'; percent: number };
-    generateAlerts: () => void;
-    markAlertRead: (liabilityId: string, alertId: string) => void;
-
-    // Classification
-    classifyLiability: (liability: Partial<Liability>) => LiabilityClassification[];
+    getTotalOutstanding: () => number;
+    getTotalOutstandingByCurrency: () => Record<string, number>;
+    getSummary: () => {
+        totalLiabilities: number;
+        shortTermTotal: number;
+        longTermTotal: number;
+        totalCreditLimit: number;
+        availableCredit: number;
+        drawnDebt: number;
+        utilizationPercent: number;
+        upcomingPayments30Days: number;
+        upcomingMaturities90Days: number;
+    };
+    getActiveAlerts: () => Array<{
+        id: string;
+        type: string;
+        message: string;
+        severity: 'warning' | 'critical';
+        liabilityId?: string;
+    }>;
 }
 
-const initialWizardState: LiabilityWizardState = {
-    step: 1,
-    type: null,
-    counterparty: {},
-    name: '',
-    originalAmount: 0,
-    currentBalance: 0,
-    currency: 'EUR',
-    hasCreditLimit: false,
-    creditLimit: {},
-    interestTerms: { type: 'fixed' },
-    repaymentTerms: { schedule: 'monthly' },
-    startDate: new Date().toISOString().split('T')[0],
-    maturityType: 'fixed',
-    maturityDate: '',
-    hasCollateral: false,
-    collateral: {},
-    notes: '',
+// =============================================================================
+// INITIAL STATE
+// =============================================================================
+
+const initialFilters: LiabilityFilters = {};
+
+const initialPagination: LiabilityPagination = {
+    page: 1,
+    limit: 50,
+    total: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrevious: false,
 };
 
-function mapApiToLiability(api: any): Liability {
-    return {
-        id: api.id,
-        type: api.type,
-        classifications: api.classifications || [],
-        status: api.status,
-        name: api.name,
-        description: api.description,
-        reference: api.reference,
-        counterparty: api.counterparty || {
-            name: api.counterpartyName || '',
-            type: api.counterpartyType || 'other',
-            country: api.counterpartyCountry || '',
-        },
-        originalAmount: Number(api.originalAmount || api.principalAmount) || 0,
-        currentBalance: Number(api.currentBalance || api.outstandingAmount) || 0,
-        currency: api.currency || 'EUR',
-        creditLimit: api.creditLimit ? {
-            totalLimit: Number(api.creditLimit.totalLimit || api.creditLimit) || 0,
-            usedAmount: Number(api.creditLimit.usedAmount) || 0,
-            availableAmount: Number(api.creditLimit.availableAmount || api.availableCredit) || 0,
-            currency: api.currency || 'EUR',
-            expiryDate: api.creditLimit.expiryDate,
-            utilizationPercent: Number(api.creditLimit.utilizationPercent || api.utilizationRate) || 0,
-        } : undefined,
-        interestTerms: api.interestTerms || {
-            type: api.interestType || 'fixed',
-            rate: api.interestRate ? Number(api.interestRate) : undefined,
-        },
-        repaymentTerms: api.repaymentTerms || {
-            schedule: api.paymentFrequency || 'monthly',
-            amount: api.paymentAmount ? Number(api.paymentAmount) : undefined,
-            nextPaymentDate: api.nextPaymentDate?.split('T')[0],
-        },
-        startDate: api.startDate?.split('T')[0] || api.startDate,
-        maturityType: api.maturityType || 'fixed',
-        maturityDate: api.maturityDate?.split('T')[0],
-        reviewDate: api.reviewDate?.split('T')[0],
-        collateral: api.collateral || (api.isSecured ? {
-            isSecured: true,
-            description: api.collateralDescription,
-            value: api.collateralValue ? Number(api.collateralValue) : undefined,
-        } : undefined),
-        covenants: api.covenants,
-        specialConditions: api.specialConditions,
-        riskLevel: api.riskLevel || 'low',
-        alerts: api.alerts || [],
-        attachments: api.attachments,
-        notes: api.notes,
-        createdAt: api.createdAt,
-        updatedAt: api.updatedAt,
-    };
-}
+// =============================================================================
+// STORE IMPLEMENTATION
+// =============================================================================
 
 export const useLiabilitiesStore = create<LiabilitiesState>()(
     persist(
         (set, get) => ({
+            // Initial state
             liabilities: [],
+            currentLiability: null,
+            events: [],
             payments: [],
-            wizardState: initialWizardState,
+            settlements: [],
+            accruals: [],
+            covenantChecks: [],
+            exceptions: [],
+            importBatches: [],
+            savedViews: [],
             isLoading: false,
             error: null,
             isInitialized: false,
+            pagination: initialPagination,
+            filters: initialFilters,
+            currentView: null,
+            statistics: null,
 
-            fetchLiabilities: async () => {
+            // ========================================================================
+            // FETCH LIABILITIES
+            // ========================================================================
+
+            fetchLiabilities: async (filters?: LiabilityFilters, page = 1, limit = 50) => {
                 set({ isLoading: true, error: null });
                 try {
-                    const response = await fetch('/api/liabilities');
+                    const params = new URLSearchParams();
+                    params.set('page', String(page));
+                    params.set('limit', String(limit));
+
+                    const activeFilters = filters || get().filters;
+
+                    if (activeFilters.primaryClass) params.set('primaryClass', activeFilters.primaryClass);
+                    if (activeFilters.primaryClasses?.length) params.set('primaryClasses', activeFilters.primaryClasses.join(','));
+                    if (activeFilters.status) params.set('status', activeFilters.status);
+                    if (activeFilters.statuses?.length) params.set('statuses', activeFilters.statuses.join(','));
+                    if (activeFilters.counterpartyId) params.set('counterpartyId', activeFilters.counterpartyId);
+                    if (activeFilters.counterpartyName) params.set('counterpartyName', activeFilters.counterpartyName);
+                    if (activeFilters.counterpartyType) params.set('counterpartyType', activeFilters.counterpartyType);
+                    if (activeFilters.partyId) params.set('partyId', activeFilters.partyId);
+                    if (activeFilters.legalEntityId) params.set('legalEntityId', activeFilters.legalEntityId);
+                    if (activeFilters.currency) params.set('currency', activeFilters.currency);
+                    if (activeFilters.riskLevel) params.set('riskLevel', activeFilters.riskLevel);
+                    if (activeFilters.riskLevels?.length) params.set('riskLevels', activeFilters.riskLevels.join(','));
+                    if (activeFilters.isInDefault !== undefined) params.set('isInDefault', String(activeFilters.isInDefault));
+                    if (activeFilters.isDisputed !== undefined) params.set('isDisputed', String(activeFilters.isDisputed));
+                    if (activeFilters.isHedged !== undefined) params.set('isHedged', String(activeFilters.isHedged));
+                    if (activeFilters.isInterestBearing !== undefined) params.set('isInterestBearing', String(activeFilters.isInterestBearing));
+                    if (activeFilters.isSecured !== undefined) params.set('isSecured', String(activeFilters.isSecured));
+                    if (activeFilters.maturityFrom) params.set('maturityFrom', activeFilters.maturityFrom);
+                    if (activeFilters.maturityTo) params.set('maturityTo', activeFilters.maturityTo);
+                    if (activeFilters.inceptionFrom) params.set('inceptionFrom', activeFilters.inceptionFrom);
+                    if (activeFilters.inceptionTo) params.set('inceptionTo', activeFilters.inceptionTo);
+                    if (activeFilters.amountMin !== undefined) params.set('amountMin', String(activeFilters.amountMin));
+                    if (activeFilters.amountMax !== undefined) params.set('amountMax', String(activeFilters.amountMax));
+                    if (activeFilters.tags?.length) params.set('tags', activeFilters.tags.join(','));
+                    if (activeFilters.sourceType) params.set('sourceType', activeFilters.sourceType);
+                    if (activeFilters.search) params.set('search', activeFilters.search);
+
+                    const response = await fetch(`/api/liabilities?${params.toString()}`);
                     if (!response.ok) throw new Error('Failed to fetch liabilities');
+
                     const data = await response.json();
-                    const liabilities = (data.liabilities || data || []).map(mapApiToLiability);
-                    set({ liabilities, isLoading: false, isInitialized: true });
-                } catch (error) {
-                    console.error('Failed to fetch liabilities:', error);
-                    set({ error: (error as Error).message, isLoading: false, isInitialized: true });
+
+                    set({
+                        liabilities: data.liabilities,
+                        pagination: data.pagination,
+                        statistics: data.statistics,
+                        isLoading: false,
+                        isInitialized: true,
+                    });
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
                 }
             },
 
-            createLiability: (liabilityData) => {
-                const now = new Date().toISOString();
-                const classifications = get().classifyLiability(liabilityData);
-                const newLiability: Liability = {
-                    ...liabilityData,
-                    id: `lib-${Date.now()}`,
-                    classifications,
-                    alerts: [],
-                    createdAt: now,
-                    updatedAt: now,
-                };
+            // ========================================================================
+            // FETCH SINGLE LIABILITY
+            // ========================================================================
 
-                set((state) => ({ liabilities: [...state.liabilities, newLiability] }));
+            fetchLiability: async (id, options = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const params = new URLSearchParams();
+                    if (options.includeEvents) params.set('includeEvents', 'true');
+                    if (options.includePayments) params.set('includePayments', 'true');
+                    if (options.includeSettlements) params.set('includeSettlements', 'true');
+                    if (options.includeAccruals) params.set('includeAccruals', 'true');
+                    if (options.includeCovenantChecks) params.set('includeCovenantChecks', 'true');
 
-                fetch('/api/liabilities', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        type: liabilityData.type,
-                        name: liabilityData.name,
-                        description: liabilityData.description,
-                        counterpartyName: liabilityData.counterparty.name,
-                        counterpartyType: liabilityData.counterparty.type,
-                        currency: liabilityData.currency,
-                        principalAmount: liabilityData.originalAmount,
-                        outstandingAmount: liabilityData.currentBalance,
-                        creditLimit: liabilityData.creditLimit?.totalLimit,
-                        interestRate: liabilityData.interestTerms.rate,
-                        interestType: liabilityData.interestTerms.type,
-                        startDate: liabilityData.startDate,
-                        maturityDate: liabilityData.maturityDate,
-                        paymentFrequency: liabilityData.repaymentTerms.schedule,
-                        paymentAmount: liabilityData.repaymentTerms.amount,
-                        isSecured: liabilityData.collateral?.isSecured,
-                        riskLevel: liabilityData.riskLevel,
-                        notes: liabilityData.notes,
-                    }),
-                }).catch(console.error);
+                    const url = params.toString()
+                        ? `/api/liabilities/${id}?${params.toString()}`
+                        : `/api/liabilities/${id}`;
 
-                return newLiability;
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            set({ currentLiability: null, isLoading: false });
+                            return null;
+                        }
+                        throw new Error('Failed to fetch liability');
+                    }
+
+                    const data = await response.json();
+
+                    set({
+                        currentLiability: data.liability,
+                        events: data.events || [],
+                        payments: data.payments || [],
+                        settlements: data.settlements || [],
+                        accruals: data.accruals || [],
+                        covenantChecks: data.covenantChecks || [],
+                        isLoading: false,
+                    });
+
+                    return data.liability;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return null;
+                }
             },
 
-            updateLiability: (id, updates) => {
-                set((state) => ({
-                    liabilities: state.liabilities.map((l) =>
-                        l.id === id ? { ...l, ...updates, updatedAt: new Date().toISOString() } : l
-                    ),
-                }));
+            // ========================================================================
+            // FETCH LIABILITY AS OF (Time-Travel)
+            // ========================================================================
 
-                fetch(`/api/liabilities/${id}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updates),
-                }).catch(console.error);
+            fetchLiabilityAsOf: async (id, asOfDate) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}?as_of=${encodeURIComponent(asOfDate)}`);
+                    if (!response.ok) throw new Error('Failed to fetch historical state');
+
+                    const data = await response.json();
+                    set({ isLoading: false });
+                    return data;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return null;
+                }
             },
 
-            deleteLiability: (id) => {
-                set((state) => ({
-                    liabilities: state.liabilities.filter((l) => l.id !== id),
-                }));
+            // ========================================================================
+            // CREATE LIABILITY
+            // ========================================================================
 
-                fetch(`/api/liabilities/${id}`, { method: 'DELETE' }).catch(console.error);
+            createLiability: async (data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/liabilities', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to create liability');
+                    }
+
+                    const result = await response.json();
+
+                    // Add to list
+                    set((state) => ({
+                        liabilities: [result.liability, ...state.liabilities],
+                        currentLiability: result.liability,
+                        isLoading: false,
+                    }));
+
+                    return result.liability;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return null;
+                }
             },
 
-            addPayment: (paymentData) => {
-                const payment: LiabilityPayment = { ...paymentData, id: `pay-${Date.now()}` };
-                set((state) => ({ payments: [...state.payments, payment] }));
+            // ========================================================================
+            // UPDATE LIABILITY (Draft only)
+            // ========================================================================
+
+            updateLiability: async (id, updates) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updates),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to update liability');
+                    }
+
+                    const result = await response.json();
+
+                    // Update in list
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return result.liability;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return null;
+                }
             },
 
-            updatePayment: (id, updates) => {
-                set((state) => ({
-                    payments: state.payments.map((p) => p.id === id ? { ...p, ...updates } : p),
-                }));
+            // ========================================================================
+            // STATE TRANSITIONS
+            // ========================================================================
+
+            recognizeLiability: async (id, data = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/recognize`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to recognize liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
             },
 
-            updateCreditUsage: (id, usedAmount) => {
-                set((state) => ({
-                    liabilities: state.liabilities.map((l) => {
-                        if (l.id !== id || !l.creditLimit) return l;
-                        const availableAmount = l.creditLimit.totalLimit - usedAmount;
-                        const utilizationPercent = (usedAmount / l.creditLimit.totalLimit) * 100;
-                        return {
-                            ...l,
-                            creditLimit: { ...l.creditLimit, usedAmount, availableAmount, utilizationPercent },
-                            currentBalance: usedAmount,
-                        };
-                    }),
-                }));
+            activateLiability: async (id, data = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/activate`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to activate liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
             },
 
-            drawFromCreditLine: (id, amount) => {
-                const lib = get().liabilities.find((l) => l.id === id);
-                if (!lib?.creditLimit) return;
-                get().updateCreditUsage(id, lib.creditLimit.usedAmount + amount);
+            settleLiability: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/settle`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to settle liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        settlements: state.currentLiability?.id === result.liability.id
+                            ? [result.settlement, ...state.settlements]
+                            : state.settlements,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
             },
 
-            repayToCreditLine: (id, amount) => {
-                const lib = get().liabilities.find((l) => l.id === id);
-                if (!lib?.creditLimit) return;
-                get().updateCreditUsage(id, Math.max(0, lib.creditLimit.usedAmount - amount));
+            reverseLiability: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/reverse`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to reverse liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
             },
 
-            setWizardStep: (step) => set((state) => ({ wizardState: { ...state.wizardState, step } })),
+            disputeLiability: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/dispute`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
 
-            updateWizardState: (updates) => set((state) => ({ wizardState: { ...state.wizardState, ...updates } })),
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to dispute liability');
+                    }
 
-            resetWizard: () => set({ wizardState: initialWizardState }),
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            resolveDispute: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/dispute`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to resolve dispute');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            defaultLiability: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/default`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to mark as default');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            writeOffLiability: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/write-off`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to write off liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            restructureLiability: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/restructure`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to restructure liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            archiveLiability: async (id, data = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${id}/archive`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to archive liability');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id ? result.liability : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? result.liability
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            // ========================================================================
+            // PAYMENTS
+            // ========================================================================
+
+            fetchPayments: async (liabilityId) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/payments`);
+                    if (!response.ok) throw new Error('Failed to fetch payments');
+
+                    const data = await response.json();
+                    set({ payments: data.payments, isLoading: false });
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                }
+            },
+
+            schedulePayment: async (liabilityId, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/payments`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to schedule payment');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        payments: [result.payment, ...state.payments],
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            executePayment: async (paymentId, data = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/payments/${paymentId}/execute`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to execute payment');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        payments: state.payments.map((p) =>
+                            p.id === result.payment.id ? result.payment : p
+                        ),
+                        liabilities: state.liabilities.map((l) =>
+                            l.id === result.liability.id
+                                ? { ...l, ...result.liability }
+                                : l
+                        ),
+                        currentLiability: state.currentLiability?.id === result.liability.id
+                            ? { ...state.currentLiability, ...result.liability }
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            approvePayment: async (paymentId, comments) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/payments/${paymentId}/approve`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ comments }),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to approve payment');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        payments: state.payments.map((p) =>
+                            p.id === result.payment.id ? result.payment : p
+                        ),
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            rejectPayment: async (paymentId, reason) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/payments/${paymentId}/approve`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ reason }),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to reject payment');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        payments: state.payments.map((p) =>
+                            p.id === result.payment.id ? result.payment : p
+                        ),
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            // ========================================================================
+            // INTEREST & FEES
+            // ========================================================================
+
+            accrueInterest: async (liabilityId, data = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/accrue`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to accrue interest');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        accruals: [result.accrual, ...state.accruals],
+                        liabilities: state.liabilities.map((l) =>
+                            l.liabilityId === result.liability.liabilityId
+                                ? { ...l, ...result.liability }
+                                : l
+                        ),
+                        currentLiability: state.currentLiability?.liabilityId === result.liability.liabilityId
+                            ? { ...state.currentLiability, ...result.liability }
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            applyFee: async (liabilityId, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/fees`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to apply fee');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        accruals: [result.accrual, ...state.accruals],
+                        liabilities: state.liabilities.map((l) =>
+                            l.liabilityId === result.liability.liabilityId
+                                ? { ...l, ...result.liability }
+                                : l
+                        ),
+                        currentLiability: state.currentLiability?.liabilityId === result.liability.liabilityId
+                            ? { ...state.currentLiability, ...result.liability }
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            fetchAccruals: async (liabilityId) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/fees`);
+                    if (!response.ok) throw new Error('Failed to fetch accruals');
+
+                    const data = await response.json();
+                    set({ accruals: data.accruals, isLoading: false });
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                }
+            },
+
+            // ========================================================================
+            // FX REVALUATION
+            // ========================================================================
+
+            revalueFx: async (liabilityId, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/fx-revalue`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to revalue FX');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        liabilities: state.liabilities.map((l) =>
+                            l.liabilityId === result.liability.liabilityId
+                                ? { ...l, ...result.liability }
+                                : l
+                        ),
+                        currentLiability: state.currentLiability?.liabilityId === result.liability.liabilityId
+                            ? { ...state.currentLiability, ...result.liability }
+                            : state.currentLiability,
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            // ========================================================================
+            // COVENANTS
+            // ========================================================================
+
+            fetchCovenantChecks: async (liabilityId) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/covenants`);
+                    if (!response.ok) throw new Error('Failed to fetch covenant checks');
+
+                    const data = await response.json();
+                    set({ covenantChecks: data.checks, isLoading: false });
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                }
+            },
+
+            checkCovenant: async (liabilityId, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/${liabilityId}/covenants`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to check covenant');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        covenantChecks: [result.check, ...state.covenantChecks],
+                        isLoading: false,
+                    }));
+
+                    // Refresh liability if breach occurred
+                    if (result.isBreached) {
+                        get().fetchLiability(liabilityId);
+                    }
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            // ========================================================================
+            // EVENTS
+            // ========================================================================
+
+            fetchEvents: async (liabilityId, options = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const params = new URLSearchParams();
+                    if (options.eventType) params.set('eventType', options.eventType);
+                    if (options.limit) params.set('limit', String(options.limit));
+
+                    const url = params.toString()
+                        ? `/api/liabilities/${liabilityId}/events?${params.toString()}`
+                        : `/api/liabilities/${liabilityId}/events`;
+
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Failed to fetch events');
+
+                    const data = await response.json();
+                    set({ events: data.events, isLoading: false });
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                }
+            },
+
+            // ========================================================================
+            // IMPORT/EXPORT
+            // ========================================================================
+
+            importLiabilities: async (data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/liabilities/import', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to import liabilities');
+                    }
+
+                    const result = await response.json();
+
+                    // Refresh liabilities list
+                    get().fetchLiabilities();
+                    get().fetchImportBatches();
+
+                    set({ isLoading: false });
+                    return { batchNumber: result.batchNumber, results: result.results };
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return null;
+                }
+            },
+
+            fetchImportBatches: async () => {
+                try {
+                    const response = await fetch('/api/liabilities/import');
+                    if (!response.ok) throw new Error('Failed to fetch import batches');
+
+                    const data = await response.json();
+                    set({ importBatches: data.batches });
+                } catch (error: any) {
+                    set({ error: error.message });
+                }
+            },
+
+            rollbackImport: async (batchId) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/import/${batchId}/rollback`, {
+                        method: 'POST',
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to rollback import');
+                    }
+
+                    // Refresh data
+                    get().fetchLiabilities();
+                    get().fetchImportBatches();
+
+                    set({ isLoading: false });
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            // ========================================================================
+            // EXCEPTIONS
+            // ========================================================================
+
+            fetchExceptions: async (filters = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const params = new URLSearchParams();
+                    if (filters.status) params.set('status', filters.status);
+                    if (filters.type) params.set('type', filters.type);
+
+                    const url = params.toString()
+                        ? `/api/liabilities/exceptions?${params.toString()}`
+                        : '/api/liabilities/exceptions';
+
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Failed to fetch exceptions');
+
+                    const data = await response.json();
+                    set({ exceptions: data.exceptions, isLoading: false });
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                }
+            },
+
+            resolveException: async (id, data) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch(`/api/liabilities/exceptions/${id}/resolve`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to resolve exception');
+                    }
+
+                    const result = await response.json();
+
+                    set((state) => ({
+                        exceptions: state.exceptions.map((e) =>
+                            e.id === result.exception.id ? result.exception : e
+                        ),
+                        isLoading: false,
+                    }));
+
+                    return true;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return false;
+                }
+            },
+
+            // ========================================================================
+            // STATISTICS
+            // ========================================================================
+
+            fetchStatistics: async () => {
+                try {
+                    const response = await fetch('/api/liabilities/statistics');
+                    if (!response.ok) throw new Error('Failed to fetch statistics');
+
+                    const data = await response.json();
+                    set({ statistics: data });
+                } catch (error: any) {
+                    set({ error: error.message });
+                }
+            },
+
+            // ========================================================================
+            // BATCH OPERATIONS
+            // ========================================================================
+
+            batchOperation: async (operation, liabilityIds, params = {}) => {
+                set({ isLoading: true, error: null });
+                try {
+                    const response = await fetch('/api/liabilities/batch', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ operation, liabilityIds, params }),
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to execute batch operation');
+                    }
+
+                    const result = await response.json();
+
+                    // Refresh liabilities
+                    get().fetchLiabilities();
+
+                    set({ isLoading: false });
+                    return result;
+                } catch (error: any) {
+                    set({ error: error.message, isLoading: false });
+                    return null;
+                }
+            },
+
+            // ========================================================================
+            // LOCAL ACTIONS
+            // ========================================================================
+
+            setCurrentLiability: (liability) => set({ currentLiability: liability }),
+
+            setFilters: (filters) => set((state) => ({
+                filters: { ...state.filters, ...filters },
+            })),
+
+            clearFilters: () => set({ filters: initialFilters }),
+
+            setCurrentView: (viewId) => set({ currentView: viewId }),
+
+            clearError: () => set({ error: null }),
+
+            reset: () => set({
+                liabilities: [],
+                currentLiability: null,
+                events: [],
+                payments: [],
+                settlements: [],
+                accruals: [],
+                covenantChecks: [],
+                exceptions: [],
+                importBatches: [],
+                isLoading: false,
+                error: null,
+                isInitialized: false,
+                pagination: initialPagination,
+                filters: initialFilters,
+                statistics: null,
+            }),
+
+            // ========================================================================
+            // GETTERS / COMPUTED
+            // ========================================================================
+
+            getLiabilityById: (id) => {
+                return get().liabilities.find((l) => l.id === id || l.liabilityId === id);
+            },
+
+            getLiabilitiesByStatus: (status) => {
+                return get().liabilities.filter((l) => l.status === status);
+            },
+
+            getLiabilitiesByPrimaryClass: (primaryClass) => {
+                return get().liabilities.filter((l) => l.primaryClass === primaryClass);
+            },
+
+            getLiabilitiesByRiskLevel: (riskLevel) => {
+                return get().liabilities.filter((l) => l.riskLevel === riskLevel);
+            },
+
+            getLiabilitiesInDefault: () => {
+                return get().liabilities.filter((l) => l.isInDefault);
+            },
+
+            getLiabilitiesInDispute: () => {
+                return get().liabilities.filter((l) => l.isDisputed);
+            },
+
+            getOverdueLiabilities: () => {
+                return get().liabilities.filter((l) => l.daysOverdue > 0);
+            },
+
+            getUpcomingPayments: (days) => {
+                const now = new Date();
+                const futureDate = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+                return get().payments.filter((p) => {
+                    if (!p.scheduledDate) return false;
+                    const scheduled = new Date(p.scheduledDate);
+                    return scheduled >= now && scheduled <= futureDate && p.status === 'scheduled';
+                });
+            },
+
+            getUpcomingMaturities: (days) => {
+                const now = new Date();
+                const futureDate = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+                return get().liabilities.filter((l) => {
+                    if (!l.maturityDate) return false;
+                    const maturity = new Date(l.maturityDate);
+                    return maturity >= now && maturity <= futureDate;
+                });
+            },
+
+            getTotalOutstanding: () => {
+                return get().liabilities.reduce((sum, l) => sum + (l.totalOutstanding || 0), 0);
+            },
+
+            getTotalOutstandingByCurrency: () => {
+                return get().liabilities.reduce((acc, l) => {
+                    const currency = l.currency || 'EUR';
+                    acc[currency] = (acc[currency] || 0) + (l.totalOutstanding || 0);
+                    return acc;
+                }, {} as Record<string, number>);
+            },
 
             getSummary: () => {
-                const { liabilities, payments } = get();
-                const active = liabilities.filter((l) => l.status === 'active');
-                const today = new Date();
-                const in30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
-                const in90Days = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000);
+                const liabilities = get().liabilities;
+                const payments = get().payments;
+                const now = new Date();
+                const in30Days = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+                const in90Days = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
 
-                let totalLiabilities = 0, shortTermTotal = 0, longTermTotal = 0, drawnDebt = 0;
-                let availableCredit = 0, totalCreditLimit = 0;
-                const byCounterpartyType: Record<string, number> = {};
-                const byCurrency: Record<string, number> = {};
+                const shortTermClasses = ['accounts_payable', 'accrued_expenses', 'short_term_debt', 'tax_liability', 'payroll_liability'];
+                const longTermClasses = ['long_term_debt', 'lease_finance', 'lease_operating'];
 
-                active.forEach((lib) => {
-                    totalLiabilities += lib.currentBalance;
-                    if (lib.classifications.includes('short_term')) shortTermTotal += lib.currentBalance;
-                    else if (lib.classifications.includes('long_term')) longTermTotal += lib.currentBalance;
-                    if (lib.classifications.includes('drawn_debt')) drawnDebt += lib.currentBalance;
-                    if (lib.creditLimit) {
-                        availableCredit += lib.creditLimit.availableAmount;
-                        totalCreditLimit += lib.creditLimit.totalLimit;
-                    }
-                    const cType = lib.counterparty.type;
-                    byCounterpartyType[cType] = (byCounterpartyType[cType] || 0) + lib.currentBalance;
-                    byCurrency[lib.currency] = (byCurrency[lib.currency] || 0) + lib.currentBalance;
-                });
+                const shortTermTotal = liabilities
+                    .filter((l) => shortTermClasses.includes(l.primaryClass as string))
+                    .reduce((sum, l) => sum + (l.totalOutstanding || 0), 0);
+
+                const longTermTotal = liabilities
+                    .filter((l) => longTermClasses.includes(l.primaryClass as string))
+                    .reduce((sum, l) => sum + (l.totalOutstanding || 0), 0);
+
+                const totalLiabilities = liabilities.reduce((sum, l) => sum + (l.totalOutstanding || 0), 0);
+
+                const totalCreditLimit = liabilities
+                    .filter((l) => l.creditLimit && l.creditLimit > 0)
+                    .reduce((sum, l) => sum + (l.creditLimit || 0), 0);
+
+                const drawnDebt = liabilities
+                    .filter((l) => l.creditLimit && l.creditLimit > 0)
+                    .reduce((sum, l) => sum + (l.totalOutstanding || 0), 0);
+
+                const availableCredit = totalCreditLimit - drawnDebt;
+                const utilizationPercent = totalCreditLimit > 0 ? (drawnDebt / totalCreditLimit) * 100 : 0;
 
                 const upcomingPayments30Days = payments
-                    .filter((p) => p.status === 'scheduled' && new Date(p.date) <= in30Days)
-                    .reduce((sum, p) => sum + p.amount, 0);
+                    .filter((p) => {
+                        if (!p.scheduledDate) return false;
+                        const scheduled = new Date(p.scheduledDate);
+                        return scheduled >= now && scheduled <= in30Days && p.status === 'scheduled';
+                    })
+                    .reduce((sum, p) => sum + (p.amount || 0), 0);
 
-                const upcomingMaturities90Days = liabilities.filter(
-                    (l) => l.maturityDate && new Date(l.maturityDate) <= in90Days
-                ).length;
+                const upcomingMaturities90Days = liabilities.filter((l) => {
+                    if (!l.maturityDate) return false;
+                    const maturity = new Date(l.maturityDate);
+                    return maturity >= now && maturity <= in90Days;
+                }).length;
 
                 return {
                     totalLiabilities,
                     shortTermTotal,
                     longTermTotal,
-                    drawnDebt,
-                    availableCredit,
                     totalCreditLimit,
-                    utilizationPercent: totalCreditLimit > 0 ? ((totalCreditLimit - availableCredit) / totalCreditLimit) * 100 : 0,
-                    byCounterpartyType,
-                    byCurrency,
+                    availableCredit,
+                    drawnDebt,
+                    utilizationPercent,
                     upcomingPayments30Days,
                     upcomingMaturities90Days,
                 };
             },
 
-            getByType: (type) => get().liabilities.filter((l) => l.type === type),
+            getActiveAlerts: () => {
+                const liabilities = get().liabilities;
+                const alerts: Array<{
+                    id: string;
+                    type: string;
+                    message: string;
+                    severity: 'warning' | 'critical';
+                    liabilityId?: string;
+                }> = [];
 
-            getActiveAlerts: () => get().liabilities.flatMap((l) => l.alerts.filter((a) => !a.isRead)),
+                // Check for liabilities in default
+                liabilities.filter((l) => l.isInDefault).forEach((l) => {
+                    alerts.push({
+                        id: `default-${l.id}`,
+                        type: 'default',
+                        message: `${l.name} is in default`,
+                        severity: 'critical',
+                        liabilityId: l.id,
+                    });
+                });
 
-            getUpcomingPayments: (days) => {
-                const cutoff = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
-                return get().payments.filter((p) => p.status === 'scheduled' && new Date(p.date) <= cutoff);
-            },
+                // Check for covenant breaches
+                liabilities.filter((l) => l.covenantBreaches > 0).forEach((l) => {
+                    alerts.push({
+                        id: `covenant-${l.id}`,
+                        type: 'covenant_breach',
+                        message: `${l.name} has ${l.covenantBreaches} covenant breach(es)`,
+                        severity: 'critical',
+                        liabilityId: l.id,
+                    });
+                });
 
-            getUpcomingMaturities: (days) => {
-                const cutoff = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
-                return get().liabilities.filter(
-                    (l) => l.status === 'active' && l.maturityDate && new Date(l.maturityDate) <= cutoff
-                );
-            },
+                // Check for overdue liabilities
+                liabilities.filter((l) => l.daysOverdue > 0).forEach((l) => {
+                    alerts.push({
+                        id: `overdue-${l.id}`,
+                        type: 'overdue',
+                        message: `${l.name} is ${l.daysOverdue} days overdue`,
+                        severity: l.daysOverdue > 30 ? 'critical' : 'warning',
+                        liabilityId: l.id,
+                    });
+                });
 
-            checkUtilization: (id) => {
-                const lib = get().liabilities.find((l) => l.id === id);
-                if (!lib?.creditLimit) return { level: 'ok' as const, percent: 0 };
-                const percent = lib.creditLimit.utilizationPercent;
-                if (percent >= 90) return { level: 'critical' as const, percent };
-                if (percent >= 80) return { level: 'warning' as const, percent };
-                return { level: 'ok' as const, percent };
-            },
+                // Check for disputed liabilities
+                liabilities.filter((l) => l.isDisputed).forEach((l) => {
+                    alerts.push({
+                        id: `dispute-${l.id}`,
+                        type: 'dispute',
+                        message: `${l.name} is under dispute`,
+                        severity: 'warning',
+                        liabilityId: l.id,
+                    });
+                });
 
-            generateAlerts: () => {
-                // Placeholder for alert generation logic
-            },
-
-            markAlertRead: (liabilityId, alertId) => {
-                set((state) => ({
-                    liabilities: state.liabilities.map((l) => {
-                        if (l.id !== liabilityId) return l;
-                        return {
-                            ...l,
-                            alerts: l.alerts.map((a) => a.id === alertId ? { ...a, isRead: true } : a),
-                        };
-                    }),
-                }));
-            },
-
-            classifyLiability: (liability) => {
-                const classifications: LiabilityClassification[] = [];
-                const hasCreditLimit = ['credit_line', 'overdraft', 'supplier_credit'].includes(liability.type || '');
-
-                if (hasCreditLimit && liability.creditLimit && (liability.creditLimit as CreditLimit).usedAmount > 0) {
-                    classifications.push('drawn_debt');
-                }
-                if (hasCreditLimit && liability.creditLimit && (liability.creditLimit as CreditLimit).availableAmount > 0) {
-                    classifications.push('undrawn_credit');
-                }
-                if (liability.type === 'guarantee') {
-                    classifications.push('contingent');
-                }
-                if (liability.maturityDate) {
-                    const months = (new Date(liability.maturityDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30);
-                    if (months <= 12) classifications.push('short_term');
-                    else classifications.push('long_term');
-                }
-                return classifications;
+                return alerts;
             },
         }),
         {
-            name: 'primebalance-liabilities',
+            name: 'primebalance-liabilities-v2',
             partialize: (state) => ({
-                liabilities: state.liabilities,
-                payments: state.payments,
+                filters: state.filters,
+                currentView: state.currentView,
             }),
         }
     )
 );
+
+// =============================================================================
+// SELECTOR HOOKS (Performance optimization)
+// =============================================================================
+
+export const useLiabilitiesList = () => useLiabilitiesStore((state) => state.liabilities);
+export const useCurrentLiability = () => useLiabilitiesStore((state) => state.currentLiability);
+export const useLiabilitiesLoading = () => useLiabilitiesStore((state) => state.isLoading);
+export const useLiabilitiesError = () => useLiabilitiesStore((state) => state.error);
+export const useLiabilitiesPagination = () => useLiabilitiesStore((state) => state.pagination);
+export const useLiabilitiesFilters = () => useLiabilitiesStore((state) => state.filters);
+export const useLiabilitiesStatistics = () => useLiabilitiesStore((state) => state.statistics);
+export const useLiabilityEvents = () => useLiabilitiesStore((state) => state.events);
+export const useLiabilityPayments = () => useLiabilitiesStore((state) => state.payments);
+export const useLiabilitySettlements = () => useLiabilitiesStore((state) => state.settlements);
+export const useLiabilityAccruals = () => useLiabilitiesStore((state) => state.accruals);
+export const useLiabilityCovenantChecks = () => useLiabilitiesStore((state) => state.covenantChecks);
+export const useLiabilityExceptions = () => useLiabilitiesStore((state) => state.exceptions);

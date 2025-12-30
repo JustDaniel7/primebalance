@@ -53,33 +53,51 @@ export async function POST(
             },
         });
 
-        // Create archive item
+        // Create archive record
         try {
-            await prisma.archiveItem.create({
+            await prisma.archiveRecord.create({
                 data: {
-                    category: 'invoices',
-                    status: 'archived',
-                    originalId: invoice.id,
-                    originalType: 'invoice',
+                    archiveRecordId: `arc_${user.organizationId.slice(-6)}_invoice_${invoice.id}_v1_${Date.now()}`,
+                    originalObjectId: invoice.id,
+                    objectType: 'invoice',
+                    objectVersion: 1,
+                    triggerType: 'user_action',
+                    triggerReason: 'Invoice archived',
                     title: `Invoice ${invoice.invoiceNumber}`,
                     description: `Invoice for ${(invoice.recipient as any)?.name || 'Customer'}`,
-                    amount: invoice.total,
-                    currency: invoice.currency,
-                    counterparty: (invoice.recipient as any)?.name,
-                    itemDate: invoice.invoiceDate,
-                    fiscalYear: invoice.invoiceDate.getFullYear(),
-                    metadata: {
+                    content: {
                         invoiceNumber: invoice.invoiceNumber,
                         status: invoice.status,
                         total: Number(invoice.total),
                     },
-                    archivedBy: user.id,
-                    archiveReason: 'Invoice archived',
+                    contentType: 'application/json',
+                    contentHash: `sha256_${Date.now().toString(16)}`,
+                    amount: invoice.total,
+                    currency: invoice.currency,
+                    category: 'financial',
+                    counterpartyName: (invoice.recipient as any)?.name,
+                    effectiveDate: invoice.invoiceDate,
+                    fiscalYear: invoice.invoiceDate.getFullYear(),
+                    actorType: 'user',
+                    status: 'archived',
+                    retentionStatus: 'active',
+                    language: 'en',
+                    timezone: 'UTC',
+                    versionNumber: 1,
+                    isCurrentVersion: true,
+                    signatureCount: 0,
+                    integrityVerified: true,
+                    legalHold: false,
+                    accessCount: 0,
+                    exportCount: 0,
+                    documentCount: 0,
+                    archivedAt: new Date(),
+                    createdAt: new Date(),
                     organizationId: user.organizationId,
                 },
             });
         } catch (e) {
-            console.log('Archive item creation skipped:', e);
+            console.log('Archive record creation skipped:', e);
         }
 
         return NextResponse.json({

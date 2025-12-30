@@ -202,7 +202,7 @@ export default function LiabilitiesSummary() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium text-gray-900 dark:text-surface-100">
-                        {formatCurrency(liability.currentBalance, true)}
+                        {formatCurrency(liability.totalOutstanding, true)}
                       </span>
                       <span className={`text-[10px] px-1.5 py-0.5 rounded ${
                         isUrgent

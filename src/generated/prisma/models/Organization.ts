@@ -228,7 +228,7 @@ export type OrganizationWhereInput = {
   receipts?: Prisma.ReceiptListRelationFilter
   chatChannels?: Prisma.ChatChannelListRelationFilter
   orders?: Prisma.OrderListRelationFilter
-  archiveItems?: Prisma.ArchiveItemListRelationFilter
+  archiveItems?: Prisma.ArchiveRecordListRelationFilter
   liabilities?: Prisma.LiabilityListRelationFilter
   inventoryItems?: Prisma.InventoryItemListRelationFilter
   receivables?: Prisma.ReceivableListRelationFilter
@@ -311,7 +311,7 @@ export type OrganizationOrderByWithRelationInput = {
   receipts?: Prisma.ReceiptOrderByRelationAggregateInput
   chatChannels?: Prisma.ChatChannelOrderByRelationAggregateInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
-  archiveItems?: Prisma.ArchiveItemOrderByRelationAggregateInput
+  archiveItems?: Prisma.ArchiveRecordOrderByRelationAggregateInput
   liabilities?: Prisma.LiabilityOrderByRelationAggregateInput
   inventoryItems?: Prisma.InventoryItemOrderByRelationAggregateInput
   receivables?: Prisma.ReceivableOrderByRelationAggregateInput
@@ -397,7 +397,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   receipts?: Prisma.ReceiptListRelationFilter
   chatChannels?: Prisma.ChatChannelListRelationFilter
   orders?: Prisma.OrderListRelationFilter
-  archiveItems?: Prisma.ArchiveItemListRelationFilter
+  archiveItems?: Prisma.ArchiveRecordListRelationFilter
   liabilities?: Prisma.LiabilityListRelationFilter
   inventoryItems?: Prisma.InventoryItemListRelationFilter
   receivables?: Prisma.ReceivableListRelationFilter
@@ -512,7 +512,7 @@ export type OrganizationCreateInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -595,7 +595,7 @@ export type OrganizationUncheckedCreateInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -678,7 +678,7 @@ export type OrganizationUpdateInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -761,7 +761,7 @@ export type OrganizationUncheckedUpdateInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1913,7 +1913,7 @@ export type OrganizationCreateWithoutUsersInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -1995,7 +1995,7 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2093,7 +2093,7 @@ export type OrganizationUpdateWithoutUsersInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -2175,7 +2175,7 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2257,7 +2257,7 @@ export type OrganizationCreateWithoutFinancialAccountsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -2339,7 +2339,7 @@ export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2437,7 +2437,7 @@ export type OrganizationUpdateWithoutFinancialAccountsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -2519,7 +2519,7 @@ export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2601,7 +2601,7 @@ export type OrganizationCreateWithoutTransactionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -2683,7 +2683,7 @@ export type OrganizationUncheckedCreateWithoutTransactionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2781,7 +2781,7 @@ export type OrganizationUpdateWithoutTransactionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -2863,7 +2863,7 @@ export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2945,7 +2945,7 @@ export type OrganizationCreateWithoutReceiptsInput = {
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -3027,7 +3027,7 @@ export type OrganizationUncheckedCreateWithoutReceiptsInput = {
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3125,7 +3125,7 @@ export type OrganizationUpdateWithoutReceiptsInput = {
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -3207,7 +3207,7 @@ export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3289,7 +3289,7 @@ export type OrganizationCreateWithoutChatChannelsInput = {
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -3371,7 +3371,7 @@ export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3469,7 +3469,7 @@ export type OrganizationUpdateWithoutChatChannelsInput = {
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -3551,7 +3551,7 @@ export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3634,7 +3634,7 @@ export type OrganizationCreateWithoutInvoiceInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -3716,7 +3716,7 @@ export type OrganizationUncheckedCreateWithoutInvoiceInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3814,7 +3814,7 @@ export type OrganizationUpdateWithoutInvoiceInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -3896,7 +3896,7 @@ export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3977,7 +3977,7 @@ export type OrganizationCreateWithoutOrdersInput = {
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -4059,7 +4059,7 @@ export type OrganizationUncheckedCreateWithoutOrdersInput = {
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4157,7 +4157,7 @@ export type OrganizationUpdateWithoutOrdersInput = {
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -4239,7 +4239,7 @@ export type OrganizationUncheckedUpdateWithoutOrdersInput = {
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -4666,7 +4666,7 @@ export type OrganizationCreateWithoutLiabilitiesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
   treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
@@ -4748,7 +4748,7 @@ export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
   treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4846,7 +4846,7 @@ export type OrganizationUpdateWithoutLiabilitiesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
   treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
@@ -4928,7 +4928,7 @@ export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
   treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5010,7 +5010,7 @@ export type OrganizationCreateWithoutInventoryItemsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
   treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
@@ -5092,7 +5092,7 @@ export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
   treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5190,7 +5190,7 @@ export type OrganizationUpdateWithoutInventoryItemsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
   treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
@@ -5272,7 +5272,7 @@ export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
   treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5354,7 +5354,7 @@ export type OrganizationCreateWithoutReceivablesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
@@ -5436,7 +5436,7 @@ export type OrganizationUncheckedCreateWithoutReceivablesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5534,7 +5534,7 @@ export type OrganizationUpdateWithoutReceivablesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
@@ -5616,7 +5616,7 @@ export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5698,7 +5698,7 @@ export type OrganizationCreateWithoutTreasuryAccountsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -5780,7 +5780,7 @@ export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5878,7 +5878,7 @@ export type OrganizationUpdateWithoutTreasuryAccountsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -5960,7 +5960,7 @@ export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6042,7 +6042,7 @@ export type OrganizationCreateWithoutCapitalBucketsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -6124,7 +6124,7 @@ export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6222,7 +6222,7 @@ export type OrganizationUpdateWithoutCapitalBucketsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -6304,7 +6304,7 @@ export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6386,7 +6386,7 @@ export type OrganizationCreateWithoutCreditFacilitiesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -6468,7 +6468,7 @@ export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6566,7 +6566,7 @@ export type OrganizationUpdateWithoutCreditFacilitiesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -6648,7 +6648,7 @@ export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6730,7 +6730,7 @@ export type OrganizationCreateWithoutTreasuryDecisionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -6812,7 +6812,7 @@ export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6910,7 +6910,7 @@ export type OrganizationUpdateWithoutTreasuryDecisionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -6992,7 +6992,7 @@ export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7074,7 +7074,7 @@ export type OrganizationCreateWithoutTreasuryScenariosInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -7156,7 +7156,7 @@ export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7254,7 +7254,7 @@ export type OrganizationUpdateWithoutTreasuryScenariosInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -7336,7 +7336,7 @@ export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7418,7 +7418,7 @@ export type OrganizationCreateWithoutNettingOpportunitiesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -7500,7 +7500,7 @@ export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7598,7 +7598,7 @@ export type OrganizationUpdateWithoutNettingOpportunitiesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -7680,7 +7680,7 @@ export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7762,7 +7762,7 @@ export type OrganizationCreateWithoutAssetsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -7844,7 +7844,7 @@ export type OrganizationUncheckedCreateWithoutAssetsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7942,7 +7942,7 @@ export type OrganizationUpdateWithoutAssetsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -8024,7 +8024,7 @@ export type OrganizationUncheckedUpdateWithoutAssetsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8106,7 +8106,7 @@ export type OrganizationCreateWithoutAssetDisposalsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -8188,7 +8188,7 @@ export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8286,7 +8286,7 @@ export type OrganizationUpdateWithoutAssetDisposalsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -8368,7 +8368,7 @@ export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8450,7 +8450,7 @@ export type OrganizationCreateWithoutCapExBudgetsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -8532,7 +8532,7 @@ export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8630,7 +8630,7 @@ export type OrganizationUpdateWithoutCapExBudgetsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -8712,7 +8712,7 @@ export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8794,7 +8794,7 @@ export type OrganizationCreateWithoutCostCenterInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -8876,7 +8876,7 @@ export type OrganizationUncheckedCreateWithoutCostCenterInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8974,7 +8974,7 @@ export type OrganizationUpdateWithoutCostCenterInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -9056,7 +9056,7 @@ export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9138,7 +9138,7 @@ export type OrganizationCreateWithoutProjectInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -9220,7 +9220,7 @@ export type OrganizationUncheckedCreateWithoutProjectInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9318,7 +9318,7 @@ export type OrganizationUpdateWithoutProjectInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -9400,7 +9400,7 @@ export type OrganizationUncheckedUpdateWithoutProjectInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9482,7 +9482,7 @@ export type OrganizationCreateWithoutTimeEntriesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -9564,7 +9564,7 @@ export type OrganizationUncheckedCreateWithoutTimeEntriesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9662,7 +9662,7 @@ export type OrganizationUpdateWithoutTimeEntriesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -9744,7 +9744,7 @@ export type OrganizationUncheckedUpdateWithoutTimeEntriesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9826,7 +9826,7 @@ export type OrganizationCreateWithoutInternalChargebacksInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -9908,7 +9908,7 @@ export type OrganizationUncheckedCreateWithoutInternalChargebacksInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10006,7 +10006,7 @@ export type OrganizationUpdateWithoutInternalChargebacksInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -10088,7 +10088,7 @@ export type OrganizationUncheckedUpdateWithoutInternalChargebacksInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10170,7 +10170,7 @@ export type OrganizationCreateWithoutAccountingPeriodsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -10252,7 +10252,7 @@ export type OrganizationUncheckedCreateWithoutAccountingPeriodsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10350,7 +10350,7 @@ export type OrganizationUpdateWithoutAccountingPeriodsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -10432,7 +10432,7 @@ export type OrganizationUncheckedUpdateWithoutAccountingPeriodsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10514,7 +10514,7 @@ export type OrganizationCreateWithoutPeriodAdjustmentsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -10596,7 +10596,7 @@ export type OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10694,7 +10694,7 @@ export type OrganizationUpdateWithoutPeriodAdjustmentsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -10776,7 +10776,7 @@ export type OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10858,7 +10858,7 @@ export type OrganizationCreateWithoutCustomersInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -10940,7 +10940,7 @@ export type OrganizationUncheckedCreateWithoutCustomersInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11038,7 +11038,7 @@ export type OrganizationUpdateWithoutCustomersInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -11120,7 +11120,7 @@ export type OrganizationUncheckedUpdateWithoutCustomersInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11202,7 +11202,7 @@ export type OrganizationCreateWithoutCustomerPaymentsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -11284,7 +11284,7 @@ export type OrganizationUncheckedCreateWithoutCustomerPaymentsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11382,7 +11382,7 @@ export type OrganizationUpdateWithoutCustomerPaymentsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -11464,7 +11464,7 @@ export type OrganizationUncheckedUpdateWithoutCustomerPaymentsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11546,7 +11546,7 @@ export type OrganizationCreateWithoutCustomerCreditEventsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -11628,7 +11628,7 @@ export type OrganizationUncheckedCreateWithoutCustomerCreditEventsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11726,7 +11726,7 @@ export type OrganizationUpdateWithoutCustomerCreditEventsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -11808,7 +11808,7 @@ export type OrganizationUncheckedUpdateWithoutCustomerCreditEventsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11890,7 +11890,7 @@ export type OrganizationCreateWithoutSuppliersInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -11972,7 +11972,7 @@ export type OrganizationUncheckedCreateWithoutSuppliersInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12070,7 +12070,7 @@ export type OrganizationUpdateWithoutSuppliersInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -12152,7 +12152,7 @@ export type OrganizationUncheckedUpdateWithoutSuppliersInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12234,7 +12234,7 @@ export type OrganizationCreateWithoutNettingAgreementsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -12316,7 +12316,7 @@ export type OrganizationUncheckedCreateWithoutNettingAgreementsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12414,7 +12414,7 @@ export type OrganizationUpdateWithoutNettingAgreementsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -12496,7 +12496,7 @@ export type OrganizationUncheckedUpdateWithoutNettingAgreementsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12578,7 +12578,7 @@ export type OrganizationCreateWithoutNettingSessionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -12660,7 +12660,7 @@ export type OrganizationUncheckedCreateWithoutNettingSessionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12758,7 +12758,7 @@ export type OrganizationUpdateWithoutNettingSessionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -12840,7 +12840,7 @@ export type OrganizationUncheckedUpdateWithoutNettingSessionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12922,7 +12922,7 @@ export type OrganizationCreateWithoutSettlementInstructionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -13004,7 +13004,7 @@ export type OrganizationUncheckedCreateWithoutSettlementInstructionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13102,7 +13102,7 @@ export type OrganizationUpdateWithoutSettlementInstructionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -13184,7 +13184,7 @@ export type OrganizationUncheckedUpdateWithoutSettlementInstructionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13266,7 +13266,7 @@ export type OrganizationCreateWithoutOffsetEntriesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -13348,7 +13348,7 @@ export type OrganizationUncheckedCreateWithoutOffsetEntriesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13446,7 +13446,7 @@ export type OrganizationUpdateWithoutOffsetEntriesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -13528,7 +13528,7 @@ export type OrganizationUncheckedUpdateWithoutOffsetEntriesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13610,7 +13610,7 @@ export type OrganizationCreateWithoutOffersInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -13692,7 +13692,7 @@ export type OrganizationUncheckedCreateWithoutOffersInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13790,7 +13790,7 @@ export type OrganizationUpdateWithoutOffersInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -13872,7 +13872,7 @@ export type OrganizationUncheckedUpdateWithoutOffersInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13954,7 +13954,7 @@ export type OrganizationCreateWithoutOfferTemplatesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -14036,7 +14036,7 @@ export type OrganizationUncheckedCreateWithoutOfferTemplatesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14134,7 +14134,7 @@ export type OrganizationUpdateWithoutOfferTemplatesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -14216,7 +14216,7 @@ export type OrganizationUncheckedUpdateWithoutOfferTemplatesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14298,7 +14298,7 @@ export type OrganizationCreateWithoutTasksInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -14380,7 +14380,7 @@ export type OrganizationUncheckedCreateWithoutTasksInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14478,7 +14478,7 @@ export type OrganizationUpdateWithoutTasksInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -14560,7 +14560,7 @@ export type OrganizationUncheckedUpdateWithoutTasksInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14642,7 +14642,7 @@ export type OrganizationCreateWithoutTaskTagsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -14724,7 +14724,7 @@ export type OrganizationUncheckedCreateWithoutTaskTagsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14822,7 +14822,7 @@ export type OrganizationUpdateWithoutTaskTagsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -14904,7 +14904,7 @@ export type OrganizationUncheckedUpdateWithoutTaskTagsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14986,7 +14986,7 @@ export type OrganizationCreateWithoutRisksInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -15068,7 +15068,7 @@ export type OrganizationUncheckedCreateWithoutRisksInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15166,7 +15166,7 @@ export type OrganizationUpdateWithoutRisksInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -15248,7 +15248,7 @@ export type OrganizationUncheckedUpdateWithoutRisksInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15330,7 +15330,7 @@ export type OrganizationCreateWithoutTaskNotificationsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -15412,7 +15412,7 @@ export type OrganizationUncheckedCreateWithoutTaskNotificationsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15510,7 +15510,7 @@ export type OrganizationUpdateWithoutTaskNotificationsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -15592,7 +15592,7 @@ export type OrganizationUncheckedUpdateWithoutTaskNotificationsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15674,7 +15674,7 @@ export type OrganizationCreateWithoutSavedTaskFiltersInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -15756,7 +15756,7 @@ export type OrganizationUncheckedCreateWithoutSavedTaskFiltersInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15854,7 +15854,7 @@ export type OrganizationUpdateWithoutSavedTaskFiltersInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -15936,7 +15936,7 @@ export type OrganizationUncheckedUpdateWithoutSavedTaskFiltersInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16018,7 +16018,7 @@ export type OrganizationCreateWithoutRevenueForecastsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -16100,7 +16100,7 @@ export type OrganizationUncheckedCreateWithoutRevenueForecastsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16198,7 +16198,7 @@ export type OrganizationUpdateWithoutRevenueForecastsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -16280,7 +16280,7 @@ export type OrganizationUncheckedUpdateWithoutRevenueForecastsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16362,7 +16362,7 @@ export type OrganizationCreateWithoutCostForecastsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -16444,7 +16444,7 @@ export type OrganizationUncheckedCreateWithoutCostForecastsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16542,7 +16542,7 @@ export type OrganizationUpdateWithoutCostForecastsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -16624,7 +16624,7 @@ export type OrganizationUncheckedUpdateWithoutCostForecastsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16706,7 +16706,7 @@ export type OrganizationCreateWithoutCashForecastsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -16788,7 +16788,7 @@ export type OrganizationUncheckedCreateWithoutCashForecastsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16886,7 +16886,7 @@ export type OrganizationUpdateWithoutCashForecastsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -16968,7 +16968,7 @@ export type OrganizationUncheckedUpdateWithoutCashForecastsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17050,7 +17050,7 @@ export type OrganizationCreateWithoutForecastScenariosInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -17132,7 +17132,7 @@ export type OrganizationUncheckedCreateWithoutForecastScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17230,7 +17230,7 @@ export type OrganizationUpdateWithoutForecastScenariosInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -17312,7 +17312,7 @@ export type OrganizationUncheckedUpdateWithoutForecastScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17394,7 +17394,7 @@ export type OrganizationCreateWithoutForecastAlertsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -17476,7 +17476,7 @@ export type OrganizationUncheckedCreateWithoutForecastAlertsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17574,7 +17574,7 @@ export type OrganizationUpdateWithoutForecastAlertsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -17656,7 +17656,7 @@ export type OrganizationUncheckedUpdateWithoutForecastAlertsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17738,7 +17738,7 @@ export type OrganizationCreateWithoutForecastVariancesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -17820,7 +17820,7 @@ export type OrganizationUncheckedCreateWithoutForecastVariancesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17918,7 +17918,7 @@ export type OrganizationUpdateWithoutForecastVariancesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -18000,7 +18000,7 @@ export type OrganizationUncheckedUpdateWithoutForecastVariancesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18082,7 +18082,7 @@ export type OrganizationCreateWithoutScenariosInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -18164,7 +18164,7 @@ export type OrganizationUncheckedCreateWithoutScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18262,7 +18262,7 @@ export type OrganizationUpdateWithoutScenariosInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -18344,7 +18344,7 @@ export type OrganizationUncheckedUpdateWithoutScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18426,7 +18426,7 @@ export type OrganizationCreateWithoutStressTestsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -18508,7 +18508,7 @@ export type OrganizationUncheckedCreateWithoutStressTestsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18606,7 +18606,7 @@ export type OrganizationUpdateWithoutStressTestsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -18688,7 +18688,7 @@ export type OrganizationUncheckedUpdateWithoutStressTestsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18770,7 +18770,7 @@ export type OrganizationCreateWithoutSimulationStatesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -18852,7 +18852,7 @@ export type OrganizationUncheckedCreateWithoutSimulationStatesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18950,7 +18950,7 @@ export type OrganizationUpdateWithoutSimulationStatesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -19032,7 +19032,7 @@ export type OrganizationUncheckedUpdateWithoutSimulationStatesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19114,7 +19114,7 @@ export type OrganizationCreateWithoutKpisInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -19196,7 +19196,7 @@ export type OrganizationUncheckedCreateWithoutKpisInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19294,7 +19294,7 @@ export type OrganizationUpdateWithoutKpisInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -19376,7 +19376,7 @@ export type OrganizationUncheckedUpdateWithoutKpisInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19458,7 +19458,7 @@ export type OrganizationCreateWithoutKpialertsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -19540,7 +19540,7 @@ export type OrganizationUncheckedCreateWithoutKpialertsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19638,7 +19638,7 @@ export type OrganizationUpdateWithoutKpialertsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -19720,7 +19720,7 @@ export type OrganizationUncheckedUpdateWithoutKpialertsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19802,7 +19802,7 @@ export type OrganizationCreateWithoutFxratesInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -19884,7 +19884,7 @@ export type OrganizationUncheckedCreateWithoutFxratesInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19982,7 +19982,7 @@ export type OrganizationUpdateWithoutFxratesInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -20064,7 +20064,7 @@ export type OrganizationUncheckedUpdateWithoutFxratesInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20146,7 +20146,7 @@ export type OrganizationCreateWithoutFxexposuresInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -20228,7 +20228,7 @@ export type OrganizationUncheckedCreateWithoutFxexposuresInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -20326,7 +20326,7 @@ export type OrganizationUpdateWithoutFxexposuresInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -20408,7 +20408,7 @@ export type OrganizationUncheckedUpdateWithoutFxexposuresInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20490,7 +20490,7 @@ export type OrganizationCreateWithoutFxconversionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -20572,7 +20572,7 @@ export type OrganizationUncheckedCreateWithoutFxconversionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -20670,7 +20670,7 @@ export type OrganizationUpdateWithoutFxconversionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -20752,7 +20752,7 @@ export type OrganizationUncheckedUpdateWithoutFxconversionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20834,7 +20834,7 @@ export type OrganizationCreateWithoutFxscenariosInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -20916,7 +20916,7 @@ export type OrganizationUncheckedCreateWithoutFxscenariosInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -21014,7 +21014,7 @@ export type OrganizationUpdateWithoutFxscenariosInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -21096,7 +21096,7 @@ export type OrganizationUncheckedUpdateWithoutFxscenariosInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -21178,7 +21178,7 @@ export type OrganizationCreateWithoutFxforecastsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -21260,7 +21260,7 @@ export type OrganizationUncheckedCreateWithoutFxforecastsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -21358,7 +21358,7 @@ export type OrganizationUpdateWithoutFxforecastsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -21440,7 +21440,7 @@ export type OrganizationUncheckedUpdateWithoutFxforecastsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -21522,7 +21522,7 @@ export type OrganizationCreateWithoutFxcostsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -21604,7 +21604,7 @@ export type OrganizationUncheckedCreateWithoutFxcostsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -21702,7 +21702,7 @@ export type OrganizationUpdateWithoutFxcostsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -21784,7 +21784,7 @@ export type OrganizationUncheckedUpdateWithoutFxcostsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -21866,7 +21866,7 @@ export type OrganizationCreateWithoutFxriskIndicatorsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -21948,7 +21948,7 @@ export type OrganizationUncheckedCreateWithoutFxriskIndicatorsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -22046,7 +22046,7 @@ export type OrganizationUpdateWithoutFxriskIndicatorsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -22128,7 +22128,7 @@ export type OrganizationUncheckedUpdateWithoutFxriskIndicatorsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -22210,7 +22210,7 @@ export type OrganizationCreateWithoutFxauditLogsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -22292,7 +22292,7 @@ export type OrganizationUncheckedCreateWithoutFxauditLogsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -22390,7 +22390,7 @@ export type OrganizationUpdateWithoutFxauditLogsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -22472,7 +22472,7 @@ export type OrganizationUncheckedUpdateWithoutFxauditLogsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -22554,7 +22554,7 @@ export type OrganizationCreateWithoutInvestorSnapshotsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -22636,7 +22636,7 @@ export type OrganizationUncheckedCreateWithoutInvestorSnapshotsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -22734,7 +22734,7 @@ export type OrganizationUpdateWithoutInvestorSnapshotsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -22816,7 +22816,7 @@ export type OrganizationUncheckedUpdateWithoutInvestorSnapshotsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -22898,7 +22898,7 @@ export type OrganizationCreateWithoutBoardReportsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -22980,7 +22980,7 @@ export type OrganizationUncheckedCreateWithoutBoardReportsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -23078,7 +23078,7 @@ export type OrganizationUpdateWithoutBoardReportsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -23160,7 +23160,7 @@ export type OrganizationUncheckedUpdateWithoutBoardReportsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -23242,7 +23242,7 @@ export type OrganizationCreateWithoutRunwayProjectionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -23324,7 +23324,7 @@ export type OrganizationUncheckedCreateWithoutRunwayProjectionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -23422,7 +23422,7 @@ export type OrganizationUpdateWithoutRunwayProjectionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -23504,7 +23504,7 @@ export type OrganizationUncheckedUpdateWithoutRunwayProjectionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -23586,7 +23586,7 @@ export type OrganizationCreateWithoutInvestorAccessLogsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -23668,7 +23668,7 @@ export type OrganizationUncheckedCreateWithoutInvestorAccessLogsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -23766,7 +23766,7 @@ export type OrganizationUpdateWithoutInvestorAccessLogsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -23848,7 +23848,7 @@ export type OrganizationUncheckedUpdateWithoutInvestorAccessLogsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -23930,7 +23930,7 @@ export type OrganizationCreateWithoutCashflowItemsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -24012,7 +24012,7 @@ export type OrganizationUncheckedCreateWithoutCashflowItemsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -24110,7 +24110,7 @@ export type OrganizationUpdateWithoutCashflowItemsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -24192,7 +24192,7 @@ export type OrganizationUncheckedUpdateWithoutCashflowItemsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -24274,7 +24274,7 @@ export type OrganizationCreateWithoutLiquidityScenariosInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -24356,7 +24356,7 @@ export type OrganizationUncheckedCreateWithoutLiquidityScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -24454,7 +24454,7 @@ export type OrganizationUpdateWithoutLiquidityScenariosInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -24536,7 +24536,7 @@ export type OrganizationUncheckedUpdateWithoutLiquidityScenariosInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -24618,7 +24618,7 @@ export type OrganizationCreateWithoutLiquidityGapsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -24700,7 +24700,7 @@ export type OrganizationUncheckedCreateWithoutLiquidityGapsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -24798,7 +24798,7 @@ export type OrganizationUpdateWithoutLiquidityGapsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -24880,7 +24880,7 @@ export type OrganizationUncheckedUpdateWithoutLiquidityGapsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -24962,7 +24962,7 @@ export type OrganizationCreateWithoutLiquidityRiskSignalsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -25044,7 +25044,7 @@ export type OrganizationUncheckedCreateWithoutLiquidityRiskSignalsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -25142,7 +25142,7 @@ export type OrganizationUpdateWithoutLiquidityRiskSignalsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -25224,7 +25224,7 @@ export type OrganizationUncheckedUpdateWithoutLiquidityRiskSignalsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -25306,7 +25306,7 @@ export type OrganizationCreateWithoutLiquidityAuditLogsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -25388,7 +25388,7 @@ export type OrganizationUncheckedCreateWithoutLiquidityAuditLogsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -25486,7 +25486,7 @@ export type OrganizationUpdateWithoutLiquidityAuditLogsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -25568,7 +25568,7 @@ export type OrganizationUncheckedUpdateWithoutLiquidityAuditLogsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -25650,7 +25650,7 @@ export type OrganizationCreateWithoutLiquidityPositionsInput = {
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
@@ -25732,7 +25732,7 @@ export type OrganizationUncheckedCreateWithoutLiquidityPositionsInput = {
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  archiveItems?: Prisma.ArchiveItemUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
   liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
   receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
@@ -25830,7 +25830,7 @@ export type OrganizationUpdateWithoutLiquidityPositionsInput = {
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
@@ -25912,7 +25912,7 @@ export type OrganizationUncheckedUpdateWithoutLiquidityPositionsInput = {
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  archiveItems?: Prisma.ArchiveItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
   receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -26184,7 +26184,7 @@ export type OrganizationCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.T
  * OrganizationCountOutputType without action
  */
 export type OrganizationCountOutputTypeCountArchiveItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ArchiveItemWhereInput
+  where?: Prisma.ArchiveRecordWhereInput
 }
 
 /**
@@ -26838,7 +26838,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     receipts: Prisma.$ReceiptPayload<ExtArgs>[]
     chatChannels: Prisma.$ChatChannelPayload<ExtArgs>[]
     orders: Prisma.$OrderPayload<ExtArgs>[]
-    archiveItems: Prisma.$ArchiveItemPayload<ExtArgs>[]
+    archiveItems: Prisma.$ArchiveRecordPayload<ExtArgs>[]
     liabilities: Prisma.$LiabilityPayload<ExtArgs>[]
     inventoryItems: Prisma.$InventoryItemPayload<ExtArgs>[]
     receivables: Prisma.$ReceivablePayload<ExtArgs>[]
@@ -27314,7 +27314,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   receipts<T extends Prisma.Organization$receiptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$receiptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   chatChannels<T extends Prisma.Organization$chatChannelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$chatChannelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orders<T extends Prisma.Organization$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  archiveItems<T extends Prisma.Organization$archiveItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$archiveItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArchiveItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  archiveItems<T extends Prisma.Organization$archiveItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$archiveItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArchiveRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   liabilities<T extends Prisma.Organization$liabilitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$liabilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   inventoryItems<T extends Prisma.Organization$inventoryItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$inventoryItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivables<T extends Prisma.Organization$receivablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$receivablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReceivablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -27953,23 +27953,23 @@ export type Organization$ordersArgs<ExtArgs extends runtime.Types.Extensions.Int
  */
 export type Organization$archiveItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ArchiveItem
+   * Select specific fields to fetch from the ArchiveRecord
    */
-  select?: Prisma.ArchiveItemSelect<ExtArgs> | null
+  select?: Prisma.ArchiveRecordSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ArchiveItem
+   * Omit specific fields from the ArchiveRecord
    */
-  omit?: Prisma.ArchiveItemOmit<ExtArgs> | null
+  omit?: Prisma.ArchiveRecordOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ArchiveItemInclude<ExtArgs> | null
-  where?: Prisma.ArchiveItemWhereInput
-  orderBy?: Prisma.ArchiveItemOrderByWithRelationInput | Prisma.ArchiveItemOrderByWithRelationInput[]
-  cursor?: Prisma.ArchiveItemWhereUniqueInput
+  include?: Prisma.ArchiveRecordInclude<ExtArgs> | null
+  where?: Prisma.ArchiveRecordWhereInput
+  orderBy?: Prisma.ArchiveRecordOrderByWithRelationInput | Prisma.ArchiveRecordOrderByWithRelationInput[]
+  cursor?: Prisma.ArchiveRecordWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ArchiveItemScalarFieldEnum | Prisma.ArchiveItemScalarFieldEnum[]
+  distinct?: Prisma.ArchiveRecordScalarFieldEnum | Prisma.ArchiveRecordScalarFieldEnum[]
 }
 
 /**

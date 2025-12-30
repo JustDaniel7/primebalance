@@ -27,65 +27,233 @@ export type AggregateLiability = {
 }
 
 export type LiabilityAvgAggregateOutputType = {
-  principalAmount: runtime.Decimal | null
-  outstandingAmount: runtime.Decimal | null
-  paidAmount: runtime.Decimal | null
+  originalPrincipal: runtime.Decimal | null
+  outstandingPrincipal: runtime.Decimal | null
+  accruedInterest: runtime.Decimal | null
+  feesPenalties: runtime.Decimal | null
+  totalOutstanding: runtime.Decimal | null
+  totalSettled: runtime.Decimal | null
+  fxRateAtRecognition: runtime.Decimal | null
+  fxRateAtSettlement: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  unrealizedFxGainLoss: runtime.Decimal | null
   creditLimit: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   utilizationRate: runtime.Decimal | null
+  confidenceScore: runtime.Decimal | null
+  gracePeriodDays: number | null
+  earlyRepaymentPenalty: runtime.Decimal | null
   interestRate: runtime.Decimal | null
-  interestAccrued: runtime.Decimal | null
-  paymentAmount: runtime.Decimal | null
+  interestSpread: runtime.Decimal | null
+  originationFee: runtime.Decimal | null
+  originationFeeRate: runtime.Decimal | null
+  commitmentFee: runtime.Decimal | null
+  commitmentFeeRate: runtime.Decimal | null
+  penaltiesAccrued: runtime.Decimal | null
+  legalFeesAccrued: runtime.Decimal | null
+  otherFeesAccrued: runtime.Decimal | null
+  regularPaymentAmount: runtime.Decimal | null
+  totalPaymentsExpected: number | null
+  paymentsCompleted: number | null
+  paymentsMissed: number | null
+  expectedCashImpact: runtime.Decimal | null
+  earliestCashImpact: runtime.Decimal | null
+  worstCaseCashImpact: runtime.Decimal | null
+  cashflowProbability: runtime.Decimal | null
   collateralValue: runtime.Decimal | null
-  alertThreshold: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  defaultProbability: runtime.Decimal | null
+  covenantBreaches: number | null
+  daysOverdue: number | null
+  disputeAmount: runtime.Decimal | null
+  writeOffAmount: runtime.Decimal | null
+  approvalThreshold: runtime.Decimal | null
+  hedgePercentage: runtime.Decimal | null
+  version: number | null
+  eventCount: number | null
 }
 
 export type LiabilitySumAggregateOutputType = {
-  principalAmount: runtime.Decimal | null
-  outstandingAmount: runtime.Decimal | null
-  paidAmount: runtime.Decimal | null
+  originalPrincipal: runtime.Decimal | null
+  outstandingPrincipal: runtime.Decimal | null
+  accruedInterest: runtime.Decimal | null
+  feesPenalties: runtime.Decimal | null
+  totalOutstanding: runtime.Decimal | null
+  totalSettled: runtime.Decimal | null
+  fxRateAtRecognition: runtime.Decimal | null
+  fxRateAtSettlement: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  unrealizedFxGainLoss: runtime.Decimal | null
   creditLimit: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   utilizationRate: runtime.Decimal | null
+  confidenceScore: runtime.Decimal | null
+  gracePeriodDays: number | null
+  earlyRepaymentPenalty: runtime.Decimal | null
   interestRate: runtime.Decimal | null
-  interestAccrued: runtime.Decimal | null
-  paymentAmount: runtime.Decimal | null
+  interestSpread: runtime.Decimal | null
+  originationFee: runtime.Decimal | null
+  originationFeeRate: runtime.Decimal | null
+  commitmentFee: runtime.Decimal | null
+  commitmentFeeRate: runtime.Decimal | null
+  penaltiesAccrued: runtime.Decimal | null
+  legalFeesAccrued: runtime.Decimal | null
+  otherFeesAccrued: runtime.Decimal | null
+  regularPaymentAmount: runtime.Decimal | null
+  totalPaymentsExpected: number | null
+  paymentsCompleted: number | null
+  paymentsMissed: number | null
+  expectedCashImpact: runtime.Decimal | null
+  earliestCashImpact: runtime.Decimal | null
+  worstCaseCashImpact: runtime.Decimal | null
+  cashflowProbability: runtime.Decimal | null
   collateralValue: runtime.Decimal | null
-  alertThreshold: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  defaultProbability: runtime.Decimal | null
+  covenantBreaches: number | null
+  daysOverdue: number | null
+  disputeAmount: runtime.Decimal | null
+  writeOffAmount: runtime.Decimal | null
+  approvalThreshold: runtime.Decimal | null
+  hedgePercentage: runtime.Decimal | null
+  version: number | null
+  eventCount: number | null
 }
 
 export type LiabilityMinAggregateOutputType = {
   id: string | null
-  type: string | null
-  status: string | null
-  name: string | null
-  description: string | null
-  reference: string | null
+  liabilityId: string | null
+  legalReference: string | null
   counterpartyId: string | null
   counterpartyName: string | null
   counterpartyType: string | null
+  partyId: string | null
+  legalEntityId: string | null
+  primaryClass: string | null
+  isInterestBearing: boolean | null
+  isSecured: boolean | null
+  isFixed: boolean | null
+  isGuaranteed: boolean | null
+  guarantorId: string | null
+  guarantorName: string | null
+  status: string | null
+  previousStatus: string | null
+  statusChangedAt: Date | null
+  statusChangedBy: string | null
+  originalPrincipal: runtime.Decimal | null
+  outstandingPrincipal: runtime.Decimal | null
+  accruedInterest: runtime.Decimal | null
+  feesPenalties: runtime.Decimal | null
+  totalOutstanding: runtime.Decimal | null
+  totalSettled: runtime.Decimal | null
   currency: string | null
-  principalAmount: runtime.Decimal | null
-  outstandingAmount: runtime.Decimal | null
-  paidAmount: runtime.Decimal | null
+  reportingCurrency: string | null
+  fxSource: string | null
+  fxRateAtRecognition: runtime.Decimal | null
+  fxRateAtSettlement: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  unrealizedFxGainLoss: runtime.Decimal | null
   creditLimit: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   utilizationRate: runtime.Decimal | null
-  interestRate: runtime.Decimal | null
-  interestType: string | null
-  interestAccrued: runtime.Decimal | null
-  startDate: Date | null
+  amortizationMethod: string | null
+  confidenceScore: runtime.Decimal | null
+  inceptionDate: Date | null
+  recognitionDate: Date | null
+  activationDate: Date | null
   maturityDate: Date | null
   nextPaymentDate: Date | null
   lastPaymentDate: Date | null
+  settledDate: Date | null
+  gracePeriodDays: number | null
+  graceEndDate: Date | null
+  earlyRepaymentAllowed: boolean | null
+  earlyRepaymentPenalty: runtime.Decimal | null
+  earlyRepaymentConditions: string | null
+  interestType: string | null
+  interestRate: runtime.Decimal | null
+  interestIndex: string | null
+  interestSpread: runtime.Decimal | null
+  interestCompounding: string | null
+  interestDayCount: string | null
+  interestAccrualStart: Date | null
+  lastInterestAccrual: Date | null
+  nextInterestAccrual: Date | null
+  originationFee: runtime.Decimal | null
+  originationFeeRate: runtime.Decimal | null
+  commitmentFee: runtime.Decimal | null
+  commitmentFeeRate: runtime.Decimal | null
+  penaltiesAccrued: runtime.Decimal | null
+  legalFeesAccrued: runtime.Decimal | null
+  otherFeesAccrued: runtime.Decimal | null
   paymentFrequency: string | null
-  paymentAmount: runtime.Decimal | null
-  isSecured: boolean | null
+  regularPaymentAmount: runtime.Decimal | null
+  totalPaymentsExpected: number | null
+  paymentsCompleted: number | null
+  paymentsMissed: number | null
+  expectedCashImpact: runtime.Decimal | null
+  earliestCashImpact: runtime.Decimal | null
+  worstCaseCashImpact: runtime.Decimal | null
+  nextCashOutflow: Date | null
+  cashflowProbability: runtime.Decimal | null
   collateralDescription: string | null
   collateralValue: runtime.Decimal | null
+  collateralCurrency: string | null
+  collateralType: string | null
+  collateralValuationDate: Date | null
   riskLevel: string | null
-  alertThreshold: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  defaultProbability: runtime.Decimal | null
+  covenantBreaches: number | null
+  lastCovenantCheck: Date | null
+  nextCovenantCheck: Date | null
+  isInDefault: boolean | null
+  defaultDate: Date | null
+  defaultReason: string | null
+  daysOverdue: number | null
+  isDisputed: boolean | null
+  disputeReason: string | null
+  disputeAmount: runtime.Decimal | null
+  disputeOpenedAt: Date | null
+  disputeResolvedAt: Date | null
+  disputeResolution: string | null
+  isRestructured: boolean | null
+  restructuredDate: Date | null
+  restructuredReason: string | null
+  originalLiabilityId: string | null
+  isWrittenOff: boolean | null
+  writeOffDate: Date | null
+  writeOffAmount: runtime.Decimal | null
+  writeOffReason: string | null
+  writeOffApprovedBy: string | null
+  writeOffReasonCode: string | null
+  requiresApproval: boolean | null
+  approvalThreshold: runtime.Decimal | null
+  approvalStatus: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  isHedged: boolean | null
+  hedgeId: string | null
+  hedgePercentage: runtime.Decimal | null
+  name: string | null
+  description: string | null
+  reference: string | null
+  internalReference: string | null
   notes: string | null
+  internalNotes: string | null
+  validationMode: string | null
+  locale: string | null
+  language: string | null
+  sourceType: string | null
+  sourceId: string | null
+  sourceModule: string | null
+  importBatchId: string | null
+  version: number | null
+  eventCount: number | null
+  lastEventId: string | null
+  archivedAt: Date | null
+  archivedBy: string | null
+  archiveReason: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -93,36 +261,138 @@ export type LiabilityMinAggregateOutputType = {
 
 export type LiabilityMaxAggregateOutputType = {
   id: string | null
-  type: string | null
-  status: string | null
-  name: string | null
-  description: string | null
-  reference: string | null
+  liabilityId: string | null
+  legalReference: string | null
   counterpartyId: string | null
   counterpartyName: string | null
   counterpartyType: string | null
+  partyId: string | null
+  legalEntityId: string | null
+  primaryClass: string | null
+  isInterestBearing: boolean | null
+  isSecured: boolean | null
+  isFixed: boolean | null
+  isGuaranteed: boolean | null
+  guarantorId: string | null
+  guarantorName: string | null
+  status: string | null
+  previousStatus: string | null
+  statusChangedAt: Date | null
+  statusChangedBy: string | null
+  originalPrincipal: runtime.Decimal | null
+  outstandingPrincipal: runtime.Decimal | null
+  accruedInterest: runtime.Decimal | null
+  feesPenalties: runtime.Decimal | null
+  totalOutstanding: runtime.Decimal | null
+  totalSettled: runtime.Decimal | null
   currency: string | null
-  principalAmount: runtime.Decimal | null
-  outstandingAmount: runtime.Decimal | null
-  paidAmount: runtime.Decimal | null
+  reportingCurrency: string | null
+  fxSource: string | null
+  fxRateAtRecognition: runtime.Decimal | null
+  fxRateAtSettlement: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  unrealizedFxGainLoss: runtime.Decimal | null
   creditLimit: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   utilizationRate: runtime.Decimal | null
-  interestRate: runtime.Decimal | null
-  interestType: string | null
-  interestAccrued: runtime.Decimal | null
-  startDate: Date | null
+  amortizationMethod: string | null
+  confidenceScore: runtime.Decimal | null
+  inceptionDate: Date | null
+  recognitionDate: Date | null
+  activationDate: Date | null
   maturityDate: Date | null
   nextPaymentDate: Date | null
   lastPaymentDate: Date | null
+  settledDate: Date | null
+  gracePeriodDays: number | null
+  graceEndDate: Date | null
+  earlyRepaymentAllowed: boolean | null
+  earlyRepaymentPenalty: runtime.Decimal | null
+  earlyRepaymentConditions: string | null
+  interestType: string | null
+  interestRate: runtime.Decimal | null
+  interestIndex: string | null
+  interestSpread: runtime.Decimal | null
+  interestCompounding: string | null
+  interestDayCount: string | null
+  interestAccrualStart: Date | null
+  lastInterestAccrual: Date | null
+  nextInterestAccrual: Date | null
+  originationFee: runtime.Decimal | null
+  originationFeeRate: runtime.Decimal | null
+  commitmentFee: runtime.Decimal | null
+  commitmentFeeRate: runtime.Decimal | null
+  penaltiesAccrued: runtime.Decimal | null
+  legalFeesAccrued: runtime.Decimal | null
+  otherFeesAccrued: runtime.Decimal | null
   paymentFrequency: string | null
-  paymentAmount: runtime.Decimal | null
-  isSecured: boolean | null
+  regularPaymentAmount: runtime.Decimal | null
+  totalPaymentsExpected: number | null
+  paymentsCompleted: number | null
+  paymentsMissed: number | null
+  expectedCashImpact: runtime.Decimal | null
+  earliestCashImpact: runtime.Decimal | null
+  worstCaseCashImpact: runtime.Decimal | null
+  nextCashOutflow: Date | null
+  cashflowProbability: runtime.Decimal | null
   collateralDescription: string | null
   collateralValue: runtime.Decimal | null
+  collateralCurrency: string | null
+  collateralType: string | null
+  collateralValuationDate: Date | null
   riskLevel: string | null
-  alertThreshold: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  defaultProbability: runtime.Decimal | null
+  covenantBreaches: number | null
+  lastCovenantCheck: Date | null
+  nextCovenantCheck: Date | null
+  isInDefault: boolean | null
+  defaultDate: Date | null
+  defaultReason: string | null
+  daysOverdue: number | null
+  isDisputed: boolean | null
+  disputeReason: string | null
+  disputeAmount: runtime.Decimal | null
+  disputeOpenedAt: Date | null
+  disputeResolvedAt: Date | null
+  disputeResolution: string | null
+  isRestructured: boolean | null
+  restructuredDate: Date | null
+  restructuredReason: string | null
+  originalLiabilityId: string | null
+  isWrittenOff: boolean | null
+  writeOffDate: Date | null
+  writeOffAmount: runtime.Decimal | null
+  writeOffReason: string | null
+  writeOffApprovedBy: string | null
+  writeOffReasonCode: string | null
+  requiresApproval: boolean | null
+  approvalThreshold: runtime.Decimal | null
+  approvalStatus: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  isHedged: boolean | null
+  hedgeId: string | null
+  hedgePercentage: runtime.Decimal | null
+  name: string | null
+  description: string | null
+  reference: string | null
+  internalReference: string | null
   notes: string | null
+  internalNotes: string | null
+  validationMode: string | null
+  locale: string | null
+  language: string | null
+  sourceType: string | null
+  sourceId: string | null
+  sourceModule: string | null
+  importBatchId: string | null
+  version: number | null
+  eventCount: number | null
+  lastEventId: string | null
+  archivedAt: Date | null
+  archivedBy: string | null
+  archiveReason: string | null
   organizationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -130,40 +400,149 @@ export type LiabilityMaxAggregateOutputType = {
 
 export type LiabilityCountAggregateOutputType = {
   id: number
-  type: number
-  status: number
-  name: number
-  description: number
-  reference: number
+  liabilityId: number
+  legalReference: number
   counterpartyId: number
   counterpartyName: number
   counterpartyType: number
+  partyId: number
+  legalEntityId: number
+  jurisdictionIds: number
+  primaryClass: number
+  isInterestBearing: number
+  isSecured: number
+  isFixed: number
+  isGuaranteed: number
+  guarantorId: number
+  guarantorName: number
+  status: number
+  previousStatus: number
+  statusChangedAt: number
+  statusChangedBy: number
+  originalPrincipal: number
+  outstandingPrincipal: number
+  accruedInterest: number
+  feesPenalties: number
+  totalOutstanding: number
+  totalSettled: number
   currency: number
-  principalAmount: number
-  outstandingAmount: number
-  paidAmount: number
+  reportingCurrency: number
+  fxSource: number
+  fxRateAtRecognition: number
+  fxRateAtSettlement: number
+  fxRateHistory: number
+  amountInReporting: number
+  unrealizedFxGainLoss: number
   creditLimit: number
   availableCredit: number
   utilizationRate: number
-  interestRate: number
-  interestType: number
-  interestAccrued: number
-  startDate: number
+  amortizationMethod: number
+  confidenceScore: number
+  inceptionDate: number
+  recognitionDate: number
+  activationDate: number
   maturityDate: number
   nextPaymentDate: number
   lastPaymentDate: number
+  settledDate: number
+  gracePeriodDays: number
+  graceEndDate: number
+  earlyRepaymentAllowed: number
+  earlyRepaymentPenalty: number
+  earlyRepaymentConditions: number
+  interestType: number
+  interestRate: number
+  interestIndex: number
+  interestSpread: number
+  interestCompounding: number
+  interestDayCount: number
+  interestAccrualStart: number
+  lastInterestAccrual: number
+  nextInterestAccrual: number
+  interestSchedule: number
+  originationFee: number
+  originationFeeRate: number
+  commitmentFee: number
+  commitmentFeeRate: number
+  penaltiesAccrued: number
+  legalFeesAccrued: number
+  otherFeesAccrued: number
   paymentFrequency: number
-  paymentAmount: number
+  regularPaymentAmount: number
   paymentSchedule: number
-  isSecured: number
+  totalPaymentsExpected: number
+  paymentsCompleted: number
+  paymentsMissed: number
+  expectedCashImpact: number
+  earliestCashImpact: number
+  worstCaseCashImpact: number
+  nextCashOutflow: number
+  cashflowProbability: number
   collateralDescription: number
   collateralValue: number
-  covenants: number
+  collateralCurrency: number
+  collateralType: number
+  collateralValuationDate: number
   riskLevel: number
-  alertThreshold: number
+  riskScore: number
+  defaultProbability: number
+  covenants: number
+  covenantBreaches: number
+  lastCovenantCheck: number
+  nextCovenantCheck: number
+  isInDefault: number
+  defaultDate: number
+  defaultReason: number
+  daysOverdue: number
+  isDisputed: number
+  disputeReason: number
+  disputeAmount: number
+  disputeOpenedAt: number
+  disputeResolvedAt: number
+  disputeResolution: number
+  isRestructured: number
+  restructuredDate: number
+  restructuredReason: number
+  originalLiabilityId: number
+  restructuredTerms: number
+  isWrittenOff: number
+  writeOffDate: number
+  writeOffAmount: number
+  writeOffReason: number
+  writeOffApprovedBy: number
+  writeOffReasonCode: number
+  requiresApproval: number
+  approvalThreshold: number
+  approvalStatus: number
+  approvedBy: number
+  approvedAt: number
+  approvalChain: number
+  isHedged: number
+  hedgeId: number
+  hedgePercentage: number
+  name: number
+  description: number
+  reference: number
+  internalReference: number
   tags: number
-  notes: number
+  systemTags: number
+  metadata: number
   attachments: number
+  notes: number
+  internalNotes: number
+  validationMode: number
+  locale: number
+  language: number
+  sourceType: number
+  sourceId: number
+  sourceModule: number
+  importBatchId: number
+  version: number
+  eventCount: number
+  lastEventId: number
+  archivedAt: number
+  archivedBy: number
+  archiveReason: number
   organizationId: number
   createdAt: number
   updatedAt: number
@@ -172,65 +551,233 @@ export type LiabilityCountAggregateOutputType = {
 
 
 export type LiabilityAvgAggregateInputType = {
-  principalAmount?: true
-  outstandingAmount?: true
-  paidAmount?: true
+  originalPrincipal?: true
+  outstandingPrincipal?: true
+  accruedInterest?: true
+  feesPenalties?: true
+  totalOutstanding?: true
+  totalSettled?: true
+  fxRateAtRecognition?: true
+  fxRateAtSettlement?: true
+  amountInReporting?: true
+  unrealizedFxGainLoss?: true
   creditLimit?: true
   availableCredit?: true
   utilizationRate?: true
+  confidenceScore?: true
+  gracePeriodDays?: true
+  earlyRepaymentPenalty?: true
   interestRate?: true
-  interestAccrued?: true
-  paymentAmount?: true
+  interestSpread?: true
+  originationFee?: true
+  originationFeeRate?: true
+  commitmentFee?: true
+  commitmentFeeRate?: true
+  penaltiesAccrued?: true
+  legalFeesAccrued?: true
+  otherFeesAccrued?: true
+  regularPaymentAmount?: true
+  totalPaymentsExpected?: true
+  paymentsCompleted?: true
+  paymentsMissed?: true
+  expectedCashImpact?: true
+  earliestCashImpact?: true
+  worstCaseCashImpact?: true
+  cashflowProbability?: true
   collateralValue?: true
-  alertThreshold?: true
+  riskScore?: true
+  defaultProbability?: true
+  covenantBreaches?: true
+  daysOverdue?: true
+  disputeAmount?: true
+  writeOffAmount?: true
+  approvalThreshold?: true
+  hedgePercentage?: true
+  version?: true
+  eventCount?: true
 }
 
 export type LiabilitySumAggregateInputType = {
-  principalAmount?: true
-  outstandingAmount?: true
-  paidAmount?: true
+  originalPrincipal?: true
+  outstandingPrincipal?: true
+  accruedInterest?: true
+  feesPenalties?: true
+  totalOutstanding?: true
+  totalSettled?: true
+  fxRateAtRecognition?: true
+  fxRateAtSettlement?: true
+  amountInReporting?: true
+  unrealizedFxGainLoss?: true
   creditLimit?: true
   availableCredit?: true
   utilizationRate?: true
+  confidenceScore?: true
+  gracePeriodDays?: true
+  earlyRepaymentPenalty?: true
   interestRate?: true
-  interestAccrued?: true
-  paymentAmount?: true
+  interestSpread?: true
+  originationFee?: true
+  originationFeeRate?: true
+  commitmentFee?: true
+  commitmentFeeRate?: true
+  penaltiesAccrued?: true
+  legalFeesAccrued?: true
+  otherFeesAccrued?: true
+  regularPaymentAmount?: true
+  totalPaymentsExpected?: true
+  paymentsCompleted?: true
+  paymentsMissed?: true
+  expectedCashImpact?: true
+  earliestCashImpact?: true
+  worstCaseCashImpact?: true
+  cashflowProbability?: true
   collateralValue?: true
-  alertThreshold?: true
+  riskScore?: true
+  defaultProbability?: true
+  covenantBreaches?: true
+  daysOverdue?: true
+  disputeAmount?: true
+  writeOffAmount?: true
+  approvalThreshold?: true
+  hedgePercentage?: true
+  version?: true
+  eventCount?: true
 }
 
 export type LiabilityMinAggregateInputType = {
   id?: true
-  type?: true
-  status?: true
-  name?: true
-  description?: true
-  reference?: true
+  liabilityId?: true
+  legalReference?: true
   counterpartyId?: true
   counterpartyName?: true
   counterpartyType?: true
+  partyId?: true
+  legalEntityId?: true
+  primaryClass?: true
+  isInterestBearing?: true
+  isSecured?: true
+  isFixed?: true
+  isGuaranteed?: true
+  guarantorId?: true
+  guarantorName?: true
+  status?: true
+  previousStatus?: true
+  statusChangedAt?: true
+  statusChangedBy?: true
+  originalPrincipal?: true
+  outstandingPrincipal?: true
+  accruedInterest?: true
+  feesPenalties?: true
+  totalOutstanding?: true
+  totalSettled?: true
   currency?: true
-  principalAmount?: true
-  outstandingAmount?: true
-  paidAmount?: true
+  reportingCurrency?: true
+  fxSource?: true
+  fxRateAtRecognition?: true
+  fxRateAtSettlement?: true
+  amountInReporting?: true
+  unrealizedFxGainLoss?: true
   creditLimit?: true
   availableCredit?: true
   utilizationRate?: true
-  interestRate?: true
-  interestType?: true
-  interestAccrued?: true
-  startDate?: true
+  amortizationMethod?: true
+  confidenceScore?: true
+  inceptionDate?: true
+  recognitionDate?: true
+  activationDate?: true
   maturityDate?: true
   nextPaymentDate?: true
   lastPaymentDate?: true
+  settledDate?: true
+  gracePeriodDays?: true
+  graceEndDate?: true
+  earlyRepaymentAllowed?: true
+  earlyRepaymentPenalty?: true
+  earlyRepaymentConditions?: true
+  interestType?: true
+  interestRate?: true
+  interestIndex?: true
+  interestSpread?: true
+  interestCompounding?: true
+  interestDayCount?: true
+  interestAccrualStart?: true
+  lastInterestAccrual?: true
+  nextInterestAccrual?: true
+  originationFee?: true
+  originationFeeRate?: true
+  commitmentFee?: true
+  commitmentFeeRate?: true
+  penaltiesAccrued?: true
+  legalFeesAccrued?: true
+  otherFeesAccrued?: true
   paymentFrequency?: true
-  paymentAmount?: true
-  isSecured?: true
+  regularPaymentAmount?: true
+  totalPaymentsExpected?: true
+  paymentsCompleted?: true
+  paymentsMissed?: true
+  expectedCashImpact?: true
+  earliestCashImpact?: true
+  worstCaseCashImpact?: true
+  nextCashOutflow?: true
+  cashflowProbability?: true
   collateralDescription?: true
   collateralValue?: true
+  collateralCurrency?: true
+  collateralType?: true
+  collateralValuationDate?: true
   riskLevel?: true
-  alertThreshold?: true
+  riskScore?: true
+  defaultProbability?: true
+  covenantBreaches?: true
+  lastCovenantCheck?: true
+  nextCovenantCheck?: true
+  isInDefault?: true
+  defaultDate?: true
+  defaultReason?: true
+  daysOverdue?: true
+  isDisputed?: true
+  disputeReason?: true
+  disputeAmount?: true
+  disputeOpenedAt?: true
+  disputeResolvedAt?: true
+  disputeResolution?: true
+  isRestructured?: true
+  restructuredDate?: true
+  restructuredReason?: true
+  originalLiabilityId?: true
+  isWrittenOff?: true
+  writeOffDate?: true
+  writeOffAmount?: true
+  writeOffReason?: true
+  writeOffApprovedBy?: true
+  writeOffReasonCode?: true
+  requiresApproval?: true
+  approvalThreshold?: true
+  approvalStatus?: true
+  approvedBy?: true
+  approvedAt?: true
+  isHedged?: true
+  hedgeId?: true
+  hedgePercentage?: true
+  name?: true
+  description?: true
+  reference?: true
+  internalReference?: true
   notes?: true
+  internalNotes?: true
+  validationMode?: true
+  locale?: true
+  language?: true
+  sourceType?: true
+  sourceId?: true
+  sourceModule?: true
+  importBatchId?: true
+  version?: true
+  eventCount?: true
+  lastEventId?: true
+  archivedAt?: true
+  archivedBy?: true
+  archiveReason?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -238,36 +785,138 @@ export type LiabilityMinAggregateInputType = {
 
 export type LiabilityMaxAggregateInputType = {
   id?: true
-  type?: true
-  status?: true
-  name?: true
-  description?: true
-  reference?: true
+  liabilityId?: true
+  legalReference?: true
   counterpartyId?: true
   counterpartyName?: true
   counterpartyType?: true
+  partyId?: true
+  legalEntityId?: true
+  primaryClass?: true
+  isInterestBearing?: true
+  isSecured?: true
+  isFixed?: true
+  isGuaranteed?: true
+  guarantorId?: true
+  guarantorName?: true
+  status?: true
+  previousStatus?: true
+  statusChangedAt?: true
+  statusChangedBy?: true
+  originalPrincipal?: true
+  outstandingPrincipal?: true
+  accruedInterest?: true
+  feesPenalties?: true
+  totalOutstanding?: true
+  totalSettled?: true
   currency?: true
-  principalAmount?: true
-  outstandingAmount?: true
-  paidAmount?: true
+  reportingCurrency?: true
+  fxSource?: true
+  fxRateAtRecognition?: true
+  fxRateAtSettlement?: true
+  amountInReporting?: true
+  unrealizedFxGainLoss?: true
   creditLimit?: true
   availableCredit?: true
   utilizationRate?: true
-  interestRate?: true
-  interestType?: true
-  interestAccrued?: true
-  startDate?: true
+  amortizationMethod?: true
+  confidenceScore?: true
+  inceptionDate?: true
+  recognitionDate?: true
+  activationDate?: true
   maturityDate?: true
   nextPaymentDate?: true
   lastPaymentDate?: true
+  settledDate?: true
+  gracePeriodDays?: true
+  graceEndDate?: true
+  earlyRepaymentAllowed?: true
+  earlyRepaymentPenalty?: true
+  earlyRepaymentConditions?: true
+  interestType?: true
+  interestRate?: true
+  interestIndex?: true
+  interestSpread?: true
+  interestCompounding?: true
+  interestDayCount?: true
+  interestAccrualStart?: true
+  lastInterestAccrual?: true
+  nextInterestAccrual?: true
+  originationFee?: true
+  originationFeeRate?: true
+  commitmentFee?: true
+  commitmentFeeRate?: true
+  penaltiesAccrued?: true
+  legalFeesAccrued?: true
+  otherFeesAccrued?: true
   paymentFrequency?: true
-  paymentAmount?: true
-  isSecured?: true
+  regularPaymentAmount?: true
+  totalPaymentsExpected?: true
+  paymentsCompleted?: true
+  paymentsMissed?: true
+  expectedCashImpact?: true
+  earliestCashImpact?: true
+  worstCaseCashImpact?: true
+  nextCashOutflow?: true
+  cashflowProbability?: true
   collateralDescription?: true
   collateralValue?: true
+  collateralCurrency?: true
+  collateralType?: true
+  collateralValuationDate?: true
   riskLevel?: true
-  alertThreshold?: true
+  riskScore?: true
+  defaultProbability?: true
+  covenantBreaches?: true
+  lastCovenantCheck?: true
+  nextCovenantCheck?: true
+  isInDefault?: true
+  defaultDate?: true
+  defaultReason?: true
+  daysOverdue?: true
+  isDisputed?: true
+  disputeReason?: true
+  disputeAmount?: true
+  disputeOpenedAt?: true
+  disputeResolvedAt?: true
+  disputeResolution?: true
+  isRestructured?: true
+  restructuredDate?: true
+  restructuredReason?: true
+  originalLiabilityId?: true
+  isWrittenOff?: true
+  writeOffDate?: true
+  writeOffAmount?: true
+  writeOffReason?: true
+  writeOffApprovedBy?: true
+  writeOffReasonCode?: true
+  requiresApproval?: true
+  approvalThreshold?: true
+  approvalStatus?: true
+  approvedBy?: true
+  approvedAt?: true
+  isHedged?: true
+  hedgeId?: true
+  hedgePercentage?: true
+  name?: true
+  description?: true
+  reference?: true
+  internalReference?: true
   notes?: true
+  internalNotes?: true
+  validationMode?: true
+  locale?: true
+  language?: true
+  sourceType?: true
+  sourceId?: true
+  sourceModule?: true
+  importBatchId?: true
+  version?: true
+  eventCount?: true
+  lastEventId?: true
+  archivedAt?: true
+  archivedBy?: true
+  archiveReason?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -275,40 +924,149 @@ export type LiabilityMaxAggregateInputType = {
 
 export type LiabilityCountAggregateInputType = {
   id?: true
-  type?: true
-  status?: true
-  name?: true
-  description?: true
-  reference?: true
+  liabilityId?: true
+  legalReference?: true
   counterpartyId?: true
   counterpartyName?: true
   counterpartyType?: true
+  partyId?: true
+  legalEntityId?: true
+  jurisdictionIds?: true
+  primaryClass?: true
+  isInterestBearing?: true
+  isSecured?: true
+  isFixed?: true
+  isGuaranteed?: true
+  guarantorId?: true
+  guarantorName?: true
+  status?: true
+  previousStatus?: true
+  statusChangedAt?: true
+  statusChangedBy?: true
+  originalPrincipal?: true
+  outstandingPrincipal?: true
+  accruedInterest?: true
+  feesPenalties?: true
+  totalOutstanding?: true
+  totalSettled?: true
   currency?: true
-  principalAmount?: true
-  outstandingAmount?: true
-  paidAmount?: true
+  reportingCurrency?: true
+  fxSource?: true
+  fxRateAtRecognition?: true
+  fxRateAtSettlement?: true
+  fxRateHistory?: true
+  amountInReporting?: true
+  unrealizedFxGainLoss?: true
   creditLimit?: true
   availableCredit?: true
   utilizationRate?: true
-  interestRate?: true
-  interestType?: true
-  interestAccrued?: true
-  startDate?: true
+  amortizationMethod?: true
+  confidenceScore?: true
+  inceptionDate?: true
+  recognitionDate?: true
+  activationDate?: true
   maturityDate?: true
   nextPaymentDate?: true
   lastPaymentDate?: true
+  settledDate?: true
+  gracePeriodDays?: true
+  graceEndDate?: true
+  earlyRepaymentAllowed?: true
+  earlyRepaymentPenalty?: true
+  earlyRepaymentConditions?: true
+  interestType?: true
+  interestRate?: true
+  interestIndex?: true
+  interestSpread?: true
+  interestCompounding?: true
+  interestDayCount?: true
+  interestAccrualStart?: true
+  lastInterestAccrual?: true
+  nextInterestAccrual?: true
+  interestSchedule?: true
+  originationFee?: true
+  originationFeeRate?: true
+  commitmentFee?: true
+  commitmentFeeRate?: true
+  penaltiesAccrued?: true
+  legalFeesAccrued?: true
+  otherFeesAccrued?: true
   paymentFrequency?: true
-  paymentAmount?: true
+  regularPaymentAmount?: true
   paymentSchedule?: true
-  isSecured?: true
+  totalPaymentsExpected?: true
+  paymentsCompleted?: true
+  paymentsMissed?: true
+  expectedCashImpact?: true
+  earliestCashImpact?: true
+  worstCaseCashImpact?: true
+  nextCashOutflow?: true
+  cashflowProbability?: true
   collateralDescription?: true
   collateralValue?: true
-  covenants?: true
+  collateralCurrency?: true
+  collateralType?: true
+  collateralValuationDate?: true
   riskLevel?: true
-  alertThreshold?: true
+  riskScore?: true
+  defaultProbability?: true
+  covenants?: true
+  covenantBreaches?: true
+  lastCovenantCheck?: true
+  nextCovenantCheck?: true
+  isInDefault?: true
+  defaultDate?: true
+  defaultReason?: true
+  daysOverdue?: true
+  isDisputed?: true
+  disputeReason?: true
+  disputeAmount?: true
+  disputeOpenedAt?: true
+  disputeResolvedAt?: true
+  disputeResolution?: true
+  isRestructured?: true
+  restructuredDate?: true
+  restructuredReason?: true
+  originalLiabilityId?: true
+  restructuredTerms?: true
+  isWrittenOff?: true
+  writeOffDate?: true
+  writeOffAmount?: true
+  writeOffReason?: true
+  writeOffApprovedBy?: true
+  writeOffReasonCode?: true
+  requiresApproval?: true
+  approvalThreshold?: true
+  approvalStatus?: true
+  approvedBy?: true
+  approvedAt?: true
+  approvalChain?: true
+  isHedged?: true
+  hedgeId?: true
+  hedgePercentage?: true
+  name?: true
+  description?: true
+  reference?: true
+  internalReference?: true
   tags?: true
-  notes?: true
+  systemTags?: true
+  metadata?: true
   attachments?: true
+  notes?: true
+  internalNotes?: true
+  validationMode?: true
+  locale?: true
+  language?: true
+  sourceType?: true
+  sourceId?: true
+  sourceModule?: true
+  importBatchId?: true
+  version?: true
+  eventCount?: true
+  lastEventId?: true
+  archivedAt?: true
+  archivedBy?: true
+  archiveReason?: true
   organizationId?: true
   createdAt?: true
   updatedAt?: true
@@ -403,40 +1161,149 @@ export type LiabilityGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type LiabilityGroupByOutputType = {
   id: string
-  type: string
-  status: string
-  name: string
-  description: string | null
-  reference: string | null
+  liabilityId: string
+  legalReference: string | null
   counterpartyId: string | null
   counterpartyName: string
   counterpartyType: string | null
+  partyId: string | null
+  legalEntityId: string | null
+  jurisdictionIds: string[]
+  primaryClass: string
+  isInterestBearing: boolean
+  isSecured: boolean
+  isFixed: boolean
+  isGuaranteed: boolean
+  guarantorId: string | null
+  guarantorName: string | null
+  status: string
+  previousStatus: string | null
+  statusChangedAt: Date | null
+  statusChangedBy: string | null
+  originalPrincipal: runtime.Decimal
+  outstandingPrincipal: runtime.Decimal
+  accruedInterest: runtime.Decimal
+  feesPenalties: runtime.Decimal
+  totalOutstanding: runtime.Decimal
+  totalSettled: runtime.Decimal
   currency: string
-  principalAmount: runtime.Decimal
-  outstandingAmount: runtime.Decimal
-  paidAmount: runtime.Decimal
+  reportingCurrency: string | null
+  fxSource: string | null
+  fxRateAtRecognition: runtime.Decimal | null
+  fxRateAtSettlement: runtime.Decimal | null
+  fxRateHistory: runtime.JsonValue | null
+  amountInReporting: runtime.Decimal | null
+  unrealizedFxGainLoss: runtime.Decimal
   creditLimit: runtime.Decimal | null
   availableCredit: runtime.Decimal | null
   utilizationRate: runtime.Decimal | null
-  interestRate: runtime.Decimal | null
-  interestType: string | null
-  interestAccrued: runtime.Decimal
-  startDate: Date
+  amortizationMethod: string | null
+  confidenceScore: runtime.Decimal
+  inceptionDate: Date
+  recognitionDate: Date | null
+  activationDate: Date | null
   maturityDate: Date | null
   nextPaymentDate: Date | null
   lastPaymentDate: Date | null
+  settledDate: Date | null
+  gracePeriodDays: number
+  graceEndDate: Date | null
+  earlyRepaymentAllowed: boolean
+  earlyRepaymentPenalty: runtime.Decimal | null
+  earlyRepaymentConditions: string | null
+  interestType: string | null
+  interestRate: runtime.Decimal | null
+  interestIndex: string | null
+  interestSpread: runtime.Decimal | null
+  interestCompounding: string | null
+  interestDayCount: string | null
+  interestAccrualStart: Date | null
+  lastInterestAccrual: Date | null
+  nextInterestAccrual: Date | null
+  interestSchedule: runtime.JsonValue | null
+  originationFee: runtime.Decimal | null
+  originationFeeRate: runtime.Decimal | null
+  commitmentFee: runtime.Decimal | null
+  commitmentFeeRate: runtime.Decimal | null
+  penaltiesAccrued: runtime.Decimal
+  legalFeesAccrued: runtime.Decimal
+  otherFeesAccrued: runtime.Decimal
   paymentFrequency: string | null
-  paymentAmount: runtime.Decimal | null
+  regularPaymentAmount: runtime.Decimal | null
   paymentSchedule: runtime.JsonValue | null
-  isSecured: boolean
+  totalPaymentsExpected: number
+  paymentsCompleted: number
+  paymentsMissed: number
+  expectedCashImpact: runtime.Decimal | null
+  earliestCashImpact: runtime.Decimal | null
+  worstCaseCashImpact: runtime.Decimal | null
+  nextCashOutflow: Date | null
+  cashflowProbability: runtime.Decimal
   collateralDescription: string | null
   collateralValue: runtime.Decimal | null
-  covenants: runtime.JsonValue | null
+  collateralCurrency: string | null
+  collateralType: string | null
+  collateralValuationDate: Date | null
   riskLevel: string
-  alertThreshold: runtime.Decimal | null
+  riskScore: runtime.Decimal | null
+  defaultProbability: runtime.Decimal | null
+  covenants: runtime.JsonValue | null
+  covenantBreaches: number
+  lastCovenantCheck: Date | null
+  nextCovenantCheck: Date | null
+  isInDefault: boolean
+  defaultDate: Date | null
+  defaultReason: string | null
+  daysOverdue: number
+  isDisputed: boolean
+  disputeReason: string | null
+  disputeAmount: runtime.Decimal | null
+  disputeOpenedAt: Date | null
+  disputeResolvedAt: Date | null
+  disputeResolution: string | null
+  isRestructured: boolean
+  restructuredDate: Date | null
+  restructuredReason: string | null
+  originalLiabilityId: string | null
+  restructuredTerms: runtime.JsonValue | null
+  isWrittenOff: boolean
+  writeOffDate: Date | null
+  writeOffAmount: runtime.Decimal | null
+  writeOffReason: string | null
+  writeOffApprovedBy: string | null
+  writeOffReasonCode: string | null
+  requiresApproval: boolean
+  approvalThreshold: runtime.Decimal | null
+  approvalStatus: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  approvalChain: runtime.JsonValue | null
+  isHedged: boolean
+  hedgeId: string | null
+  hedgePercentage: runtime.Decimal | null
+  name: string
+  description: string | null
+  reference: string | null
+  internalReference: string | null
   tags: string[]
-  notes: string | null
+  systemTags: string[]
+  metadata: runtime.JsonValue | null
   attachments: runtime.JsonValue | null
+  notes: string | null
+  internalNotes: string | null
+  validationMode: string
+  locale: string | null
+  language: string
+  sourceType: string
+  sourceId: string | null
+  sourceModule: string | null
+  importBatchId: string | null
+  version: number
+  eventCount: number
+  lastEventId: string | null
+  archivedAt: Date | null
+  archivedBy: string | null
+  archiveReason: string | null
   organizationId: string
   createdAt: Date
   updatedAt: Date
@@ -467,172 +1334,621 @@ export type LiabilityWhereInput = {
   OR?: Prisma.LiabilityWhereInput[]
   NOT?: Prisma.LiabilityWhereInput | Prisma.LiabilityWhereInput[]
   id?: Prisma.StringFilter<"Liability"> | string
-  type?: Prisma.StringFilter<"Liability"> | string
-  status?: Prisma.StringFilter<"Liability"> | string
-  name?: Prisma.StringFilter<"Liability"> | string
-  description?: Prisma.StringNullableFilter<"Liability"> | string | null
-  reference?: Prisma.StringNullableFilter<"Liability"> | string | null
+  liabilityId?: Prisma.StringFilter<"Liability"> | string
+  legalReference?: Prisma.StringNullableFilter<"Liability"> | string | null
   counterpartyId?: Prisma.StringNullableFilter<"Liability"> | string | null
   counterpartyName?: Prisma.StringFilter<"Liability"> | string
   counterpartyType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  partyId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  legalEntityId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  jurisdictionIds?: Prisma.StringNullableListFilter<"Liability">
+  primaryClass?: Prisma.StringFilter<"Liability"> | string
+  isInterestBearing?: Prisma.BoolFilter<"Liability"> | boolean
+  isSecured?: Prisma.BoolFilter<"Liability"> | boolean
+  isFixed?: Prisma.BoolFilter<"Liability"> | boolean
+  isGuaranteed?: Prisma.BoolFilter<"Liability"> | boolean
+  guarantorId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  guarantorName?: Prisma.StringNullableFilter<"Liability"> | string | null
+  status?: Prisma.StringFilter<"Liability"> | string
+  previousStatus?: Prisma.StringNullableFilter<"Liability"> | string | null
+  statusChangedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  statusChangedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  originalPrincipal?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Liability"> | string
-  principalAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.StringNullableFilter<"Liability"> | string | null
+  fxSource?: Prisma.StringNullableFilter<"Liability"> | string | null
+  fxRateAtRecognition?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.JsonNullableFilter<"Liability">
+  amountInReporting?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.StringNullableFilter<"Liability"> | string | null
-  interestAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFilter<"Liability"> | Date | string
+  amortizationMethod?: Prisma.StringNullableFilter<"Liability"> | string | null
+  confidenceScore?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFilter<"Liability"> | Date | string
+  recognitionDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  activationDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   maturityDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   nextPaymentDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  settledDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  gracePeriodDays?: Prisma.IntFilter<"Liability"> | number
+  graceEndDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFilter<"Liability"> | boolean
+  earlyRepaymentPenalty?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestSpread?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestDayCount?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestAccrualStart?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  lastInterestAccrual?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  nextInterestAccrual?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  interestSchedule?: Prisma.JsonNullableFilter<"Liability">
+  originationFee?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.StringNullableFilter<"Liability"> | string | null
-  paymentAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.JsonNullableFilter<"Liability">
-  isSecured?: Prisma.BoolFilter<"Liability"> | boolean
+  totalPaymentsExpected?: Prisma.IntFilter<"Liability"> | number
+  paymentsCompleted?: Prisma.IntFilter<"Liability"> | number
+  paymentsMissed?: Prisma.IntFilter<"Liability"> | number
+  expectedCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  cashflowProbability?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.StringNullableFilter<"Liability"> | string | null
   collateralValue?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.JsonNullableFilter<"Liability">
+  collateralCurrency?: Prisma.StringNullableFilter<"Liability"> | string | null
+  collateralType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  collateralValuationDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   riskLevel?: Prisma.StringFilter<"Liability"> | string
-  alertThreshold?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.JsonNullableFilter<"Liability">
+  covenantBreaches?: Prisma.IntFilter<"Liability"> | number
+  lastCovenantCheck?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  nextCovenantCheck?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  isInDefault?: Prisma.BoolFilter<"Liability"> | boolean
+  defaultDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  defaultReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  daysOverdue?: Prisma.IntFilter<"Liability"> | number
+  isDisputed?: Prisma.BoolFilter<"Liability"> | boolean
+  disputeReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  disputeAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  disputeResolvedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  disputeResolution?: Prisma.StringNullableFilter<"Liability"> | string | null
+  isRestructured?: Prisma.BoolFilter<"Liability"> | boolean
+  restructuredDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  restructuredReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  originalLiabilityId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  restructuredTerms?: Prisma.JsonNullableFilter<"Liability">
+  isWrittenOff?: Prisma.BoolFilter<"Liability"> | boolean
+  writeOffDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  writeOffAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  writeOffApprovedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  writeOffReasonCode?: Prisma.StringNullableFilter<"Liability"> | string | null
+  requiresApproval?: Prisma.BoolFilter<"Liability"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableFilter<"Liability"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  approvalChain?: Prisma.JsonNullableFilter<"Liability">
+  isHedged?: Prisma.BoolFilter<"Liability"> | boolean
+  hedgeId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  hedgePercentage?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFilter<"Liability"> | string
+  description?: Prisma.StringNullableFilter<"Liability"> | string | null
+  reference?: Prisma.StringNullableFilter<"Liability"> | string | null
+  internalReference?: Prisma.StringNullableFilter<"Liability"> | string | null
   tags?: Prisma.StringNullableListFilter<"Liability">
-  notes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  systemTags?: Prisma.StringNullableListFilter<"Liability">
+  metadata?: Prisma.JsonNullableFilter<"Liability">
   attachments?: Prisma.JsonNullableFilter<"Liability">
+  notes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  internalNotes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  validationMode?: Prisma.StringFilter<"Liability"> | string
+  locale?: Prisma.StringNullableFilter<"Liability"> | string | null
+  language?: Prisma.StringFilter<"Liability"> | string
+  sourceType?: Prisma.StringFilter<"Liability"> | string
+  sourceId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  sourceModule?: Prisma.StringNullableFilter<"Liability"> | string | null
+  importBatchId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  version?: Prisma.IntFilter<"Liability"> | number
+  eventCount?: Prisma.IntFilter<"Liability"> | number
+  lastEventId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  archivedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  archiveReason?: Prisma.StringNullableFilter<"Liability"> | string | null
   organizationId?: Prisma.StringFilter<"Liability"> | string
   createdAt?: Prisma.DateTimeFilter<"Liability"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Liability"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  events?: Prisma.LiabilityEventListRelationFilter
   payments?: Prisma.LiabilityPaymentListRelationFilter
+  settlements?: Prisma.LiabilitySettlementListRelationFilter
+  accruals?: Prisma.LiabilityAccrualListRelationFilter
+  covenantChecks?: Prisma.LiabilityCovenantCheckListRelationFilter
 }
 
 export type LiabilityOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
-  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  legalReference?: Prisma.SortOrderInput | Prisma.SortOrder
   counterpartyId?: Prisma.SortOrderInput | Prisma.SortOrder
   counterpartyName?: Prisma.SortOrder
   counterpartyType?: Prisma.SortOrderInput | Prisma.SortOrder
+  partyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  legalEntityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jurisdictionIds?: Prisma.SortOrder
+  primaryClass?: Prisma.SortOrder
+  isInterestBearing?: Prisma.SortOrder
+  isSecured?: Prisma.SortOrder
+  isFixed?: Prisma.SortOrder
+  isGuaranteed?: Prisma.SortOrder
+  guarantorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  guarantorName?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  previousStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusChangedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusChangedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  reportingCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateHistory?: Prisma.SortOrderInput | Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrderInput | Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrderInput | Prisma.SortOrder
   availableCredit?: Prisma.SortOrderInput | Prisma.SortOrder
   utilizationRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestType?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
+  amortizationMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  inceptionDate?: Prisma.SortOrder
+  recognitionDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  activationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   maturityDate?: Prisma.SortOrderInput | Prisma.SortOrder
   nextPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  settledDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  graceEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  earlyRepaymentAllowed?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrderInput | Prisma.SortOrder
+  earlyRepaymentConditions?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestType?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestIndex?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestSpread?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestCompounding?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestDayCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestAccrualStart?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastInterestAccrual?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextInterestAccrual?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestSchedule?: Prisma.SortOrderInput | Prisma.SortOrder
+  originationFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
   paymentFrequency?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentSchedule?: Prisma.SortOrderInput | Prisma.SortOrder
-  isSecured?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrderInput | Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrderInput | Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextCashOutflow?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   collateralValue?: Prisma.SortOrderInput | Prisma.SortOrder
-  covenants?: Prisma.SortOrderInput | Prisma.SortOrder
+  collateralCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  collateralType?: Prisma.SortOrderInput | Prisma.SortOrder
+  collateralValuationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  riskScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrderInput | Prisma.SortOrder
+  covenants?: Prisma.SortOrderInput | Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  lastCovenantCheck?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextCovenantCheck?: Prisma.SortOrderInput | Prisma.SortOrder
+  isInDefault?: Prisma.SortOrder
+  defaultDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  disputeReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeOpenedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeResolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeResolution?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRestructured?: Prisma.SortOrder
+  restructuredDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  restructuredReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  originalLiabilityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  restructuredTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  isWrittenOff?: Prisma.SortOrder
+  writeOffDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffApprovedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffReasonCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalChain?: Prisma.SortOrderInput | Prisma.SortOrder
+  isHedged?: Prisma.SortOrder
+  hedgeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  internalReference?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  systemTags?: Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   attachments?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  validationMode?: Prisma.SortOrder
+  locale?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrder
+  sourceType?: Prisma.SortOrder
+  sourceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceModule?: Prisma.SortOrderInput | Prisma.SortOrder
+  importBatchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
+  lastEventId?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  archiveReason?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  events?: Prisma.LiabilityEventOrderByRelationAggregateInput
   payments?: Prisma.LiabilityPaymentOrderByRelationAggregateInput
+  settlements?: Prisma.LiabilitySettlementOrderByRelationAggregateInput
+  accruals?: Prisma.LiabilityAccrualOrderByRelationAggregateInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckOrderByRelationAggregateInput
 }
 
 export type LiabilityWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  liabilityId?: string
+  organizationId_liabilityId?: Prisma.LiabilityOrganizationIdLiabilityIdCompoundUniqueInput
   AND?: Prisma.LiabilityWhereInput | Prisma.LiabilityWhereInput[]
   OR?: Prisma.LiabilityWhereInput[]
   NOT?: Prisma.LiabilityWhereInput | Prisma.LiabilityWhereInput[]
-  type?: Prisma.StringFilter<"Liability"> | string
-  status?: Prisma.StringFilter<"Liability"> | string
-  name?: Prisma.StringFilter<"Liability"> | string
-  description?: Prisma.StringNullableFilter<"Liability"> | string | null
-  reference?: Prisma.StringNullableFilter<"Liability"> | string | null
+  legalReference?: Prisma.StringNullableFilter<"Liability"> | string | null
   counterpartyId?: Prisma.StringNullableFilter<"Liability"> | string | null
   counterpartyName?: Prisma.StringFilter<"Liability"> | string
   counterpartyType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  partyId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  legalEntityId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  jurisdictionIds?: Prisma.StringNullableListFilter<"Liability">
+  primaryClass?: Prisma.StringFilter<"Liability"> | string
+  isInterestBearing?: Prisma.BoolFilter<"Liability"> | boolean
+  isSecured?: Prisma.BoolFilter<"Liability"> | boolean
+  isFixed?: Prisma.BoolFilter<"Liability"> | boolean
+  isGuaranteed?: Prisma.BoolFilter<"Liability"> | boolean
+  guarantorId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  guarantorName?: Prisma.StringNullableFilter<"Liability"> | string | null
+  status?: Prisma.StringFilter<"Liability"> | string
+  previousStatus?: Prisma.StringNullableFilter<"Liability"> | string | null
+  statusChangedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  statusChangedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  originalPrincipal?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Liability"> | string
-  principalAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.StringNullableFilter<"Liability"> | string | null
+  fxSource?: Prisma.StringNullableFilter<"Liability"> | string | null
+  fxRateAtRecognition?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.JsonNullableFilter<"Liability">
+  amountInReporting?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.StringNullableFilter<"Liability"> | string | null
-  interestAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFilter<"Liability"> | Date | string
+  amortizationMethod?: Prisma.StringNullableFilter<"Liability"> | string | null
+  confidenceScore?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFilter<"Liability"> | Date | string
+  recognitionDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  activationDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   maturityDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   nextPaymentDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  settledDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  gracePeriodDays?: Prisma.IntFilter<"Liability"> | number
+  graceEndDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFilter<"Liability"> | boolean
+  earlyRepaymentPenalty?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestSpread?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestDayCount?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestAccrualStart?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  lastInterestAccrual?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  nextInterestAccrual?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  interestSchedule?: Prisma.JsonNullableFilter<"Liability">
+  originationFee?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.StringNullableFilter<"Liability"> | string | null
-  paymentAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.JsonNullableFilter<"Liability">
-  isSecured?: Prisma.BoolFilter<"Liability"> | boolean
+  totalPaymentsExpected?: Prisma.IntFilter<"Liability"> | number
+  paymentsCompleted?: Prisma.IntFilter<"Liability"> | number
+  paymentsMissed?: Prisma.IntFilter<"Liability"> | number
+  expectedCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  cashflowProbability?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.StringNullableFilter<"Liability"> | string | null
   collateralValue?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.JsonNullableFilter<"Liability">
+  collateralCurrency?: Prisma.StringNullableFilter<"Liability"> | string | null
+  collateralType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  collateralValuationDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   riskLevel?: Prisma.StringFilter<"Liability"> | string
-  alertThreshold?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.JsonNullableFilter<"Liability">
+  covenantBreaches?: Prisma.IntFilter<"Liability"> | number
+  lastCovenantCheck?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  nextCovenantCheck?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  isInDefault?: Prisma.BoolFilter<"Liability"> | boolean
+  defaultDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  defaultReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  daysOverdue?: Prisma.IntFilter<"Liability"> | number
+  isDisputed?: Prisma.BoolFilter<"Liability"> | boolean
+  disputeReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  disputeAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  disputeResolvedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  disputeResolution?: Prisma.StringNullableFilter<"Liability"> | string | null
+  isRestructured?: Prisma.BoolFilter<"Liability"> | boolean
+  restructuredDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  restructuredReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  originalLiabilityId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  restructuredTerms?: Prisma.JsonNullableFilter<"Liability">
+  isWrittenOff?: Prisma.BoolFilter<"Liability"> | boolean
+  writeOffDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  writeOffAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  writeOffApprovedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  writeOffReasonCode?: Prisma.StringNullableFilter<"Liability"> | string | null
+  requiresApproval?: Prisma.BoolFilter<"Liability"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableFilter<"Liability"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  approvalChain?: Prisma.JsonNullableFilter<"Liability">
+  isHedged?: Prisma.BoolFilter<"Liability"> | boolean
+  hedgeId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  hedgePercentage?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFilter<"Liability"> | string
+  description?: Prisma.StringNullableFilter<"Liability"> | string | null
+  reference?: Prisma.StringNullableFilter<"Liability"> | string | null
+  internalReference?: Prisma.StringNullableFilter<"Liability"> | string | null
   tags?: Prisma.StringNullableListFilter<"Liability">
-  notes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  systemTags?: Prisma.StringNullableListFilter<"Liability">
+  metadata?: Prisma.JsonNullableFilter<"Liability">
   attachments?: Prisma.JsonNullableFilter<"Liability">
+  notes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  internalNotes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  validationMode?: Prisma.StringFilter<"Liability"> | string
+  locale?: Prisma.StringNullableFilter<"Liability"> | string | null
+  language?: Prisma.StringFilter<"Liability"> | string
+  sourceType?: Prisma.StringFilter<"Liability"> | string
+  sourceId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  sourceModule?: Prisma.StringNullableFilter<"Liability"> | string | null
+  importBatchId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  version?: Prisma.IntFilter<"Liability"> | number
+  eventCount?: Prisma.IntFilter<"Liability"> | number
+  lastEventId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  archivedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  archiveReason?: Prisma.StringNullableFilter<"Liability"> | string | null
   organizationId?: Prisma.StringFilter<"Liability"> | string
   createdAt?: Prisma.DateTimeFilter<"Liability"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Liability"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  events?: Prisma.LiabilityEventListRelationFilter
   payments?: Prisma.LiabilityPaymentListRelationFilter
-}, "id">
+  settlements?: Prisma.LiabilitySettlementListRelationFilter
+  accruals?: Prisma.LiabilityAccrualListRelationFilter
+  covenantChecks?: Prisma.LiabilityCovenantCheckListRelationFilter
+}, "id" | "liabilityId" | "organizationId_liabilityId">
 
 export type LiabilityOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
-  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  legalReference?: Prisma.SortOrderInput | Prisma.SortOrder
   counterpartyId?: Prisma.SortOrderInput | Prisma.SortOrder
   counterpartyName?: Prisma.SortOrder
   counterpartyType?: Prisma.SortOrderInput | Prisma.SortOrder
+  partyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  legalEntityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jurisdictionIds?: Prisma.SortOrder
+  primaryClass?: Prisma.SortOrder
+  isInterestBearing?: Prisma.SortOrder
+  isSecured?: Prisma.SortOrder
+  isFixed?: Prisma.SortOrder
+  isGuaranteed?: Prisma.SortOrder
+  guarantorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  guarantorName?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  previousStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusChangedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusChangedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  reportingCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxSource?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrderInput | Prisma.SortOrder
+  fxRateHistory?: Prisma.SortOrderInput | Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrderInput | Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrderInput | Prisma.SortOrder
   availableCredit?: Prisma.SortOrderInput | Prisma.SortOrder
   utilizationRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestRate?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestType?: Prisma.SortOrderInput | Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
+  amortizationMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  inceptionDate?: Prisma.SortOrder
+  recognitionDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  activationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   maturityDate?: Prisma.SortOrderInput | Prisma.SortOrder
   nextPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  settledDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  graceEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  earlyRepaymentAllowed?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrderInput | Prisma.SortOrder
+  earlyRepaymentConditions?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestType?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestIndex?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestSpread?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestCompounding?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestDayCount?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestAccrualStart?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastInterestAccrual?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextInterestAccrual?: Prisma.SortOrderInput | Prisma.SortOrder
+  interestSchedule?: Prisma.SortOrderInput | Prisma.SortOrder
+  originationFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrderInput | Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
   paymentFrequency?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentSchedule?: Prisma.SortOrderInput | Prisma.SortOrder
-  isSecured?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrderInput | Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrderInput | Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextCashOutflow?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   collateralValue?: Prisma.SortOrderInput | Prisma.SortOrder
-  covenants?: Prisma.SortOrderInput | Prisma.SortOrder
+  collateralCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  collateralType?: Prisma.SortOrderInput | Prisma.SortOrder
+  collateralValuationDate?: Prisma.SortOrderInput | Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  riskScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrderInput | Prisma.SortOrder
+  covenants?: Prisma.SortOrderInput | Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  lastCovenantCheck?: Prisma.SortOrderInput | Prisma.SortOrder
+  nextCovenantCheck?: Prisma.SortOrderInput | Prisma.SortOrder
+  isInDefault?: Prisma.SortOrder
+  defaultDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  disputeReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeOpenedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeResolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  disputeResolution?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRestructured?: Prisma.SortOrder
+  restructuredDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  restructuredReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  originalLiabilityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  restructuredTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  isWrittenOff?: Prisma.SortOrder
+  writeOffDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffApprovedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  writeOffReasonCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalChain?: Prisma.SortOrderInput | Prisma.SortOrder
+  isHedged?: Prisma.SortOrder
+  hedgeId?: Prisma.SortOrderInput | Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  internalReference?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  systemTags?: Prisma.SortOrder
+  metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   attachments?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  validationMode?: Prisma.SortOrder
+  locale?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrder
+  sourceType?: Prisma.SortOrder
+  sourceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceModule?: Prisma.SortOrderInput | Prisma.SortOrder
+  importBatchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
+  lastEventId?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  archivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  archiveReason?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -648,40 +1964,149 @@ export type LiabilityScalarWhereWithAggregatesInput = {
   OR?: Prisma.LiabilityScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LiabilityScalarWhereWithAggregatesInput | Prisma.LiabilityScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Liability"> | string
-  type?: Prisma.StringWithAggregatesFilter<"Liability"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Liability"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Liability"> | string
-  description?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
-  reference?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  liabilityId?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  legalReference?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
   counterpartyId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
   counterpartyName?: Prisma.StringWithAggregatesFilter<"Liability"> | string
   counterpartyType?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  partyId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  legalEntityId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  jurisdictionIds?: Prisma.StringNullableListFilter<"Liability">
+  primaryClass?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  isInterestBearing?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  isSecured?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  isFixed?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  isGuaranteed?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  guarantorId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  guarantorName?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  previousStatus?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  statusChangedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  statusChangedBy?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  originalPrincipal?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"Liability"> | string
-  principalAmount?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  fxSource?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  fxRateAtRecognition?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  amountInReporting?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
-  interestAccrued?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeWithAggregatesFilter<"Liability"> | Date | string
+  amortizationMethod?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  confidenceScore?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeWithAggregatesFilter<"Liability"> | Date | string
+  recognitionDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  activationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
   maturityDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
   nextPaymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  settledDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  gracePeriodDays?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  graceEndDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  earlyRepaymentPenalty?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  interestType?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  interestRate?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  interestSpread?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  interestDayCount?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  interestAccrualStart?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  lastInterestAccrual?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  nextInterestAccrual?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  interestSchedule?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  originationFee?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
-  paymentAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
-  isSecured?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  totalPaymentsExpected?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  paymentsCompleted?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  paymentsMissed?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  expectedCashImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  cashflowProbability?: Prisma.DecimalWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
   collateralValue?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  collateralCurrency?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  collateralType?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  collateralValuationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
   riskLevel?: Prisma.StringWithAggregatesFilter<"Liability"> | string
-  alertThreshold?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  covenantBreaches?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  lastCovenantCheck?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  nextCovenantCheck?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  isInDefault?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  defaultDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  defaultReason?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  daysOverdue?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  isDisputed?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  disputeReason?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  disputeAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  disputeResolvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  disputeResolution?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  isRestructured?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  restructuredDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  restructuredReason?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  originalLiabilityId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  restructuredTerms?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  isWrittenOff?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  writeOffDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  writeOffAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  writeOffApprovedBy?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  writeOffReasonCode?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  requiresApproval?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  approvalChain?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  isHedged?: Prisma.BoolWithAggregatesFilter<"Liability"> | boolean
+  hedgeId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  hedgePercentage?: Prisma.DecimalNullableWithAggregatesFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  reference?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  internalReference?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
   tags?: Prisma.StringNullableListFilter<"Liability">
-  notes?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  systemTags?: Prisma.StringNullableListFilter<"Liability">
+  metadata?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
   attachments?: Prisma.JsonNullableWithAggregatesFilter<"Liability">
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  internalNotes?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  validationMode?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  locale?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  language?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  sourceType?: Prisma.StringWithAggregatesFilter<"Liability"> | string
+  sourceId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  sourceModule?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  importBatchId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  version?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  eventCount?: Prisma.IntWithAggregatesFilter<"Liability"> | number
+  lastEventId?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Liability"> | Date | string | null
+  archivedBy?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
+  archiveReason?: Prisma.StringNullableWithAggregatesFilter<"Liability"> | string | null
   organizationId?: Prisma.StringWithAggregatesFilter<"Liability"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Liability"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Liability"> | Date | string
@@ -689,208 +2114,769 @@ export type LiabilityScalarWhereWithAggregatesInput = {
 
 export type LiabilityCreateInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutLiabilitiesInput
+  events?: Prisma.LiabilityEventCreateNestedManyWithoutLiabilityInput
   payments?: Prisma.LiabilityPaymentCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckCreateNestedManyWithoutLiabilityInput
 }
 
 export type LiabilityUncheckedCreateInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.LiabilityEventUncheckedCreateNestedManyWithoutLiabilityInput
   payments?: Prisma.LiabilityPaymentUncheckedCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementUncheckedCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualUncheckedCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedCreateNestedManyWithoutLiabilityInput
 }
 
 export type LiabilityUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutLiabilitiesNestedInput
+  events?: Prisma.LiabilityEventUpdateManyWithoutLiabilityNestedInput
   payments?: Prisma.LiabilityPaymentUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUpdateManyWithoutLiabilityNestedInput
 }
 
 export type LiabilityUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUncheckedUpdateManyWithoutLiabilityNestedInput
   payments?: Prisma.LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUncheckedUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUncheckedUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedUpdateManyWithoutLiabilityNestedInput
 }
 
 export type LiabilityCreateManyInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -898,80 +2884,298 @@ export type LiabilityCreateManyInput = {
 
 export type LiabilityUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LiabilityUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -987,93 +3191,342 @@ export type LiabilityOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type LiabilityOrganizationIdLiabilityIdCompoundUniqueInput = {
+  organizationId: string
+  liabilityId: string
+}
+
 export type LiabilityCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  legalReference?: Prisma.SortOrder
   counterpartyId?: Prisma.SortOrder
   counterpartyName?: Prisma.SortOrder
   counterpartyType?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
+  legalEntityId?: Prisma.SortOrder
+  jurisdictionIds?: Prisma.SortOrder
+  primaryClass?: Prisma.SortOrder
+  isInterestBearing?: Prisma.SortOrder
+  isSecured?: Prisma.SortOrder
+  isFixed?: Prisma.SortOrder
+  isGuaranteed?: Prisma.SortOrder
+  guarantorId?: Prisma.SortOrder
+  guarantorName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  previousStatus?: Prisma.SortOrder
+  statusChangedAt?: Prisma.SortOrder
+  statusChangedBy?: Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  reportingCurrency?: Prisma.SortOrder
+  fxSource?: Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrder
+  fxRateHistory?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   utilizationRate?: Prisma.SortOrder
-  interestRate?: Prisma.SortOrder
-  interestType?: Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
+  amortizationMethod?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  inceptionDate?: Prisma.SortOrder
+  recognitionDate?: Prisma.SortOrder
+  activationDate?: Prisma.SortOrder
   maturityDate?: Prisma.SortOrder
   nextPaymentDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
+  settledDate?: Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  graceEndDate?: Prisma.SortOrder
+  earlyRepaymentAllowed?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrder
+  earlyRepaymentConditions?: Prisma.SortOrder
+  interestType?: Prisma.SortOrder
+  interestRate?: Prisma.SortOrder
+  interestIndex?: Prisma.SortOrder
+  interestSpread?: Prisma.SortOrder
+  interestCompounding?: Prisma.SortOrder
+  interestDayCount?: Prisma.SortOrder
+  interestAccrualStart?: Prisma.SortOrder
+  lastInterestAccrual?: Prisma.SortOrder
+  nextInterestAccrual?: Prisma.SortOrder
+  interestSchedule?: Prisma.SortOrder
+  originationFee?: Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
   paymentFrequency?: Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrder
   paymentSchedule?: Prisma.SortOrder
-  isSecured?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrder
+  nextCashOutflow?: Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralDescription?: Prisma.SortOrder
   collateralValue?: Prisma.SortOrder
-  covenants?: Prisma.SortOrder
+  collateralCurrency?: Prisma.SortOrder
+  collateralType?: Prisma.SortOrder
+  collateralValuationDate?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrder
+  covenants?: Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  lastCovenantCheck?: Prisma.SortOrder
+  nextCovenantCheck?: Prisma.SortOrder
+  isInDefault?: Prisma.SortOrder
+  defaultDate?: Prisma.SortOrder
+  defaultReason?: Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  disputeReason?: Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrder
+  disputeOpenedAt?: Prisma.SortOrder
+  disputeResolvedAt?: Prisma.SortOrder
+  disputeResolution?: Prisma.SortOrder
+  isRestructured?: Prisma.SortOrder
+  restructuredDate?: Prisma.SortOrder
+  restructuredReason?: Prisma.SortOrder
+  originalLiabilityId?: Prisma.SortOrder
+  restructuredTerms?: Prisma.SortOrder
+  isWrittenOff?: Prisma.SortOrder
+  writeOffDate?: Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrder
+  writeOffReason?: Prisma.SortOrder
+  writeOffApprovedBy?: Prisma.SortOrder
+  writeOffReasonCode?: Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  approvalChain?: Prisma.SortOrder
+  isHedged?: Prisma.SortOrder
+  hedgeId?: Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  internalReference?: Prisma.SortOrder
   tags?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  systemTags?: Prisma.SortOrder
+  metadata?: Prisma.SortOrder
   attachments?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  internalNotes?: Prisma.SortOrder
+  validationMode?: Prisma.SortOrder
+  locale?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  sourceType?: Prisma.SortOrder
+  sourceId?: Prisma.SortOrder
+  sourceModule?: Prisma.SortOrder
+  importBatchId?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
+  lastEventId?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  archivedBy?: Prisma.SortOrder
+  archiveReason?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type LiabilityAvgOrderByAggregateInput = {
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   utilizationRate?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrder
+  interestSpread?: Prisma.SortOrder
+  originationFee?: Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralValue?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
 }
 
 export type LiabilityMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  legalReference?: Prisma.SortOrder
   counterpartyId?: Prisma.SortOrder
   counterpartyName?: Prisma.SortOrder
   counterpartyType?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
+  legalEntityId?: Prisma.SortOrder
+  primaryClass?: Prisma.SortOrder
+  isInterestBearing?: Prisma.SortOrder
+  isSecured?: Prisma.SortOrder
+  isFixed?: Prisma.SortOrder
+  isGuaranteed?: Prisma.SortOrder
+  guarantorId?: Prisma.SortOrder
+  guarantorName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  previousStatus?: Prisma.SortOrder
+  statusChangedAt?: Prisma.SortOrder
+  statusChangedBy?: Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  reportingCurrency?: Prisma.SortOrder
+  fxSource?: Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   utilizationRate?: Prisma.SortOrder
-  interestRate?: Prisma.SortOrder
-  interestType?: Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
+  amortizationMethod?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  inceptionDate?: Prisma.SortOrder
+  recognitionDate?: Prisma.SortOrder
+  activationDate?: Prisma.SortOrder
   maturityDate?: Prisma.SortOrder
   nextPaymentDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
+  settledDate?: Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  graceEndDate?: Prisma.SortOrder
+  earlyRepaymentAllowed?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrder
+  earlyRepaymentConditions?: Prisma.SortOrder
+  interestType?: Prisma.SortOrder
+  interestRate?: Prisma.SortOrder
+  interestIndex?: Prisma.SortOrder
+  interestSpread?: Prisma.SortOrder
+  interestCompounding?: Prisma.SortOrder
+  interestDayCount?: Prisma.SortOrder
+  interestAccrualStart?: Prisma.SortOrder
+  lastInterestAccrual?: Prisma.SortOrder
+  nextInterestAccrual?: Prisma.SortOrder
+  originationFee?: Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
   paymentFrequency?: Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrder
-  isSecured?: Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrder
+  nextCashOutflow?: Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralDescription?: Prisma.SortOrder
   collateralValue?: Prisma.SortOrder
+  collateralCurrency?: Prisma.SortOrder
+  collateralType?: Prisma.SortOrder
+  collateralValuationDate?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  lastCovenantCheck?: Prisma.SortOrder
+  nextCovenantCheck?: Prisma.SortOrder
+  isInDefault?: Prisma.SortOrder
+  defaultDate?: Prisma.SortOrder
+  defaultReason?: Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  disputeReason?: Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrder
+  disputeOpenedAt?: Prisma.SortOrder
+  disputeResolvedAt?: Prisma.SortOrder
+  disputeResolution?: Prisma.SortOrder
+  isRestructured?: Prisma.SortOrder
+  restructuredDate?: Prisma.SortOrder
+  restructuredReason?: Prisma.SortOrder
+  originalLiabilityId?: Prisma.SortOrder
+  isWrittenOff?: Prisma.SortOrder
+  writeOffDate?: Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrder
+  writeOffReason?: Prisma.SortOrder
+  writeOffApprovedBy?: Prisma.SortOrder
+  writeOffReasonCode?: Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  isHedged?: Prisma.SortOrder
+  hedgeId?: Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  internalReference?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  internalNotes?: Prisma.SortOrder
+  validationMode?: Prisma.SortOrder
+  locale?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  sourceType?: Prisma.SortOrder
+  sourceId?: Prisma.SortOrder
+  sourceModule?: Prisma.SortOrder
+  importBatchId?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
+  lastEventId?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  archivedBy?: Prisma.SortOrder
+  archiveReason?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1081,53 +3534,188 @@ export type LiabilityMaxOrderByAggregateInput = {
 
 export type LiabilityMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  legalReference?: Prisma.SortOrder
   counterpartyId?: Prisma.SortOrder
   counterpartyName?: Prisma.SortOrder
   counterpartyType?: Prisma.SortOrder
+  partyId?: Prisma.SortOrder
+  legalEntityId?: Prisma.SortOrder
+  primaryClass?: Prisma.SortOrder
+  isInterestBearing?: Prisma.SortOrder
+  isSecured?: Prisma.SortOrder
+  isFixed?: Prisma.SortOrder
+  isGuaranteed?: Prisma.SortOrder
+  guarantorId?: Prisma.SortOrder
+  guarantorName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  previousStatus?: Prisma.SortOrder
+  statusChangedAt?: Prisma.SortOrder
+  statusChangedBy?: Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  reportingCurrency?: Prisma.SortOrder
+  fxSource?: Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   utilizationRate?: Prisma.SortOrder
-  interestRate?: Prisma.SortOrder
-  interestType?: Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
+  amortizationMethod?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  inceptionDate?: Prisma.SortOrder
+  recognitionDate?: Prisma.SortOrder
+  activationDate?: Prisma.SortOrder
   maturityDate?: Prisma.SortOrder
   nextPaymentDate?: Prisma.SortOrder
   lastPaymentDate?: Prisma.SortOrder
+  settledDate?: Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  graceEndDate?: Prisma.SortOrder
+  earlyRepaymentAllowed?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrder
+  earlyRepaymentConditions?: Prisma.SortOrder
+  interestType?: Prisma.SortOrder
+  interestRate?: Prisma.SortOrder
+  interestIndex?: Prisma.SortOrder
+  interestSpread?: Prisma.SortOrder
+  interestCompounding?: Prisma.SortOrder
+  interestDayCount?: Prisma.SortOrder
+  interestAccrualStart?: Prisma.SortOrder
+  lastInterestAccrual?: Prisma.SortOrder
+  nextInterestAccrual?: Prisma.SortOrder
+  originationFee?: Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
   paymentFrequency?: Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrder
-  isSecured?: Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrder
+  nextCashOutflow?: Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralDescription?: Prisma.SortOrder
   collateralValue?: Prisma.SortOrder
+  collateralCurrency?: Prisma.SortOrder
+  collateralType?: Prisma.SortOrder
+  collateralValuationDate?: Prisma.SortOrder
   riskLevel?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  lastCovenantCheck?: Prisma.SortOrder
+  nextCovenantCheck?: Prisma.SortOrder
+  isInDefault?: Prisma.SortOrder
+  defaultDate?: Prisma.SortOrder
+  defaultReason?: Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  isDisputed?: Prisma.SortOrder
+  disputeReason?: Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrder
+  disputeOpenedAt?: Prisma.SortOrder
+  disputeResolvedAt?: Prisma.SortOrder
+  disputeResolution?: Prisma.SortOrder
+  isRestructured?: Prisma.SortOrder
+  restructuredDate?: Prisma.SortOrder
+  restructuredReason?: Prisma.SortOrder
+  originalLiabilityId?: Prisma.SortOrder
+  isWrittenOff?: Prisma.SortOrder
+  writeOffDate?: Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrder
+  writeOffReason?: Prisma.SortOrder
+  writeOffApprovedBy?: Prisma.SortOrder
+  writeOffReasonCode?: Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  isHedged?: Prisma.SortOrder
+  hedgeId?: Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  internalReference?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  internalNotes?: Prisma.SortOrder
+  validationMode?: Prisma.SortOrder
+  locale?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  sourceType?: Prisma.SortOrder
+  sourceId?: Prisma.SortOrder
+  sourceModule?: Prisma.SortOrder
+  importBatchId?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
+  lastEventId?: Prisma.SortOrder
+  archivedAt?: Prisma.SortOrder
+  archivedBy?: Prisma.SortOrder
+  archiveReason?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type LiabilitySumOrderByAggregateInput = {
-  principalAmount?: Prisma.SortOrder
-  outstandingAmount?: Prisma.SortOrder
-  paidAmount?: Prisma.SortOrder
+  originalPrincipal?: Prisma.SortOrder
+  outstandingPrincipal?: Prisma.SortOrder
+  accruedInterest?: Prisma.SortOrder
+  feesPenalties?: Prisma.SortOrder
+  totalOutstanding?: Prisma.SortOrder
+  totalSettled?: Prisma.SortOrder
+  fxRateAtRecognition?: Prisma.SortOrder
+  fxRateAtSettlement?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  unrealizedFxGainLoss?: Prisma.SortOrder
   creditLimit?: Prisma.SortOrder
   availableCredit?: Prisma.SortOrder
   utilizationRate?: Prisma.SortOrder
+  confidenceScore?: Prisma.SortOrder
+  gracePeriodDays?: Prisma.SortOrder
+  earlyRepaymentPenalty?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
-  interestAccrued?: Prisma.SortOrder
-  paymentAmount?: Prisma.SortOrder
+  interestSpread?: Prisma.SortOrder
+  originationFee?: Prisma.SortOrder
+  originationFeeRate?: Prisma.SortOrder
+  commitmentFee?: Prisma.SortOrder
+  commitmentFeeRate?: Prisma.SortOrder
+  penaltiesAccrued?: Prisma.SortOrder
+  legalFeesAccrued?: Prisma.SortOrder
+  otherFeesAccrued?: Prisma.SortOrder
+  regularPaymentAmount?: Prisma.SortOrder
+  totalPaymentsExpected?: Prisma.SortOrder
+  paymentsCompleted?: Prisma.SortOrder
+  paymentsMissed?: Prisma.SortOrder
+  expectedCashImpact?: Prisma.SortOrder
+  earliestCashImpact?: Prisma.SortOrder
+  worstCaseCashImpact?: Prisma.SortOrder
+  cashflowProbability?: Prisma.SortOrder
   collateralValue?: Prisma.SortOrder
-  alertThreshold?: Prisma.SortOrder
+  riskScore?: Prisma.SortOrder
+  defaultProbability?: Prisma.SortOrder
+  covenantBreaches?: Prisma.SortOrder
+  daysOverdue?: Prisma.SortOrder
+  disputeAmount?: Prisma.SortOrder
+  writeOffAmount?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  hedgePercentage?: Prisma.SortOrder
+  version?: Prisma.SortOrder
+  eventCount?: Prisma.SortOrder
 }
 
 export type LiabilityScalarRelationFilter = {
@@ -1177,13 +3765,45 @@ export type LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.LiabilityScalarWhereInput | Prisma.LiabilityScalarWhereInput[]
 }
 
+export type LiabilityCreatejurisdictionIdsInput = {
+  set: string[]
+}
+
 export type LiabilityCreatetagsInput = {
   set: string[]
+}
+
+export type LiabilityCreatesystemTagsInput = {
+  set: string[]
+}
+
+export type LiabilityUpdatejurisdictionIdsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type LiabilityUpdatetagsInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type LiabilityUpdatesystemTagsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type LiabilityCreateNestedOneWithoutEventsInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutEventsInput, Prisma.LiabilityUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutEventsInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+}
+
+export type LiabilityUpdateOneRequiredWithoutEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutEventsInput, Prisma.LiabilityUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutEventsInput
+  upsert?: Prisma.LiabilityUpsertWithoutEventsInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiabilityUpdateToOneWithWhereWithoutEventsInput, Prisma.LiabilityUpdateWithoutEventsInput>, Prisma.LiabilityUncheckedUpdateWithoutEventsInput>
 }
 
 export type LiabilityCreateNestedOneWithoutPaymentsInput = {
@@ -1200,86 +3820,354 @@ export type LiabilityUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LiabilityUpdateToOneWithWhereWithoutPaymentsInput, Prisma.LiabilityUpdateWithoutPaymentsInput>, Prisma.LiabilityUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type LiabilityCreateNestedOneWithoutSettlementsInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutSettlementsInput, Prisma.LiabilityUncheckedCreateWithoutSettlementsInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutSettlementsInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+}
+
+export type LiabilityUpdateOneRequiredWithoutSettlementsNestedInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutSettlementsInput, Prisma.LiabilityUncheckedCreateWithoutSettlementsInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutSettlementsInput
+  upsert?: Prisma.LiabilityUpsertWithoutSettlementsInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiabilityUpdateToOneWithWhereWithoutSettlementsInput, Prisma.LiabilityUpdateWithoutSettlementsInput>, Prisma.LiabilityUncheckedUpdateWithoutSettlementsInput>
+}
+
+export type LiabilityCreateNestedOneWithoutAccrualsInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutAccrualsInput, Prisma.LiabilityUncheckedCreateWithoutAccrualsInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutAccrualsInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+}
+
+export type LiabilityUpdateOneRequiredWithoutAccrualsNestedInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutAccrualsInput, Prisma.LiabilityUncheckedCreateWithoutAccrualsInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutAccrualsInput
+  upsert?: Prisma.LiabilityUpsertWithoutAccrualsInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiabilityUpdateToOneWithWhereWithoutAccrualsInput, Prisma.LiabilityUpdateWithoutAccrualsInput>, Prisma.LiabilityUncheckedUpdateWithoutAccrualsInput>
+}
+
+export type LiabilityCreateNestedOneWithoutCovenantChecksInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutCovenantChecksInput, Prisma.LiabilityUncheckedCreateWithoutCovenantChecksInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutCovenantChecksInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+}
+
+export type LiabilityUpdateOneRequiredWithoutCovenantChecksNestedInput = {
+  create?: Prisma.XOR<Prisma.LiabilityCreateWithoutCovenantChecksInput, Prisma.LiabilityUncheckedCreateWithoutCovenantChecksInput>
+  connectOrCreate?: Prisma.LiabilityCreateOrConnectWithoutCovenantChecksInput
+  upsert?: Prisma.LiabilityUpsertWithoutCovenantChecksInput
+  connect?: Prisma.LiabilityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiabilityUpdateToOneWithWhereWithoutCovenantChecksInput, Prisma.LiabilityUpdateWithoutCovenantChecksInput>, Prisma.LiabilityUncheckedUpdateWithoutCovenantChecksInput>
+}
+
 export type LiabilityCreateWithoutOrganizationInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.LiabilityEventCreateNestedManyWithoutLiabilityInput
   payments?: Prisma.LiabilityPaymentCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckCreateNestedManyWithoutLiabilityInput
 }
 
 export type LiabilityUncheckedCreateWithoutOrganizationInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.LiabilityEventUncheckedCreateNestedManyWithoutLiabilityInput
   payments?: Prisma.LiabilityPaymentUncheckedCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementUncheckedCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualUncheckedCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedCreateNestedManyWithoutLiabilityInput
 }
 
 export type LiabilityCreateOrConnectWithoutOrganizationInput = {
@@ -1313,125 +4201,1092 @@ export type LiabilityScalarWhereInput = {
   OR?: Prisma.LiabilityScalarWhereInput[]
   NOT?: Prisma.LiabilityScalarWhereInput | Prisma.LiabilityScalarWhereInput[]
   id?: Prisma.StringFilter<"Liability"> | string
-  type?: Prisma.StringFilter<"Liability"> | string
-  status?: Prisma.StringFilter<"Liability"> | string
-  name?: Prisma.StringFilter<"Liability"> | string
-  description?: Prisma.StringNullableFilter<"Liability"> | string | null
-  reference?: Prisma.StringNullableFilter<"Liability"> | string | null
+  liabilityId?: Prisma.StringFilter<"Liability"> | string
+  legalReference?: Prisma.StringNullableFilter<"Liability"> | string | null
   counterpartyId?: Prisma.StringNullableFilter<"Liability"> | string | null
   counterpartyName?: Prisma.StringFilter<"Liability"> | string
   counterpartyType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  partyId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  legalEntityId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  jurisdictionIds?: Prisma.StringNullableListFilter<"Liability">
+  primaryClass?: Prisma.StringFilter<"Liability"> | string
+  isInterestBearing?: Prisma.BoolFilter<"Liability"> | boolean
+  isSecured?: Prisma.BoolFilter<"Liability"> | boolean
+  isFixed?: Prisma.BoolFilter<"Liability"> | boolean
+  isGuaranteed?: Prisma.BoolFilter<"Liability"> | boolean
+  guarantorId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  guarantorName?: Prisma.StringNullableFilter<"Liability"> | string | null
+  status?: Prisma.StringFilter<"Liability"> | string
+  previousStatus?: Prisma.StringNullableFilter<"Liability"> | string | null
+  statusChangedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  statusChangedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  originalPrincipal?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Liability"> | string
-  principalAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.StringNullableFilter<"Liability"> | string | null
+  fxSource?: Prisma.StringNullableFilter<"Liability"> | string | null
+  fxRateAtRecognition?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.JsonNullableFilter<"Liability">
+  amountInReporting?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.StringNullableFilter<"Liability"> | string | null
-  interestAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFilter<"Liability"> | Date | string
+  amortizationMethod?: Prisma.StringNullableFilter<"Liability"> | string | null
+  confidenceScore?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFilter<"Liability"> | Date | string
+  recognitionDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  activationDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   maturityDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   nextPaymentDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   lastPaymentDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  settledDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  gracePeriodDays?: Prisma.IntFilter<"Liability"> | number
+  graceEndDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFilter<"Liability"> | boolean
+  earlyRepaymentPenalty?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestSpread?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestDayCount?: Prisma.StringNullableFilter<"Liability"> | string | null
+  interestAccrualStart?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  lastInterestAccrual?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  nextInterestAccrual?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  interestSchedule?: Prisma.JsonNullableFilter<"Liability">
+  originationFee?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.StringNullableFilter<"Liability"> | string | null
-  paymentAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.JsonNullableFilter<"Liability">
-  isSecured?: Prisma.BoolFilter<"Liability"> | boolean
+  totalPaymentsExpected?: Prisma.IntFilter<"Liability"> | number
+  paymentsCompleted?: Prisma.IntFilter<"Liability"> | number
+  paymentsMissed?: Prisma.IntFilter<"Liability"> | number
+  expectedCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  cashflowProbability?: Prisma.DecimalFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.StringNullableFilter<"Liability"> | string | null
   collateralValue?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.JsonNullableFilter<"Liability">
+  collateralCurrency?: Prisma.StringNullableFilter<"Liability"> | string | null
+  collateralType?: Prisma.StringNullableFilter<"Liability"> | string | null
+  collateralValuationDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
   riskLevel?: Prisma.StringFilter<"Liability"> | string
-  alertThreshold?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.JsonNullableFilter<"Liability">
+  covenantBreaches?: Prisma.IntFilter<"Liability"> | number
+  lastCovenantCheck?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  nextCovenantCheck?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  isInDefault?: Prisma.BoolFilter<"Liability"> | boolean
+  defaultDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  defaultReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  daysOverdue?: Prisma.IntFilter<"Liability"> | number
+  isDisputed?: Prisma.BoolFilter<"Liability"> | boolean
+  disputeReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  disputeAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  disputeResolvedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  disputeResolution?: Prisma.StringNullableFilter<"Liability"> | string | null
+  isRestructured?: Prisma.BoolFilter<"Liability"> | boolean
+  restructuredDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  restructuredReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  originalLiabilityId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  restructuredTerms?: Prisma.JsonNullableFilter<"Liability">
+  isWrittenOff?: Prisma.BoolFilter<"Liability"> | boolean
+  writeOffDate?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  writeOffAmount?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.StringNullableFilter<"Liability"> | string | null
+  writeOffApprovedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  writeOffReasonCode?: Prisma.StringNullableFilter<"Liability"> | string | null
+  requiresApproval?: Prisma.BoolFilter<"Liability"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableFilter<"Liability"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  approvalChain?: Prisma.JsonNullableFilter<"Liability">
+  isHedged?: Prisma.BoolFilter<"Liability"> | boolean
+  hedgeId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  hedgePercentage?: Prisma.DecimalNullableFilter<"Liability"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFilter<"Liability"> | string
+  description?: Prisma.StringNullableFilter<"Liability"> | string | null
+  reference?: Prisma.StringNullableFilter<"Liability"> | string | null
+  internalReference?: Prisma.StringNullableFilter<"Liability"> | string | null
   tags?: Prisma.StringNullableListFilter<"Liability">
-  notes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  systemTags?: Prisma.StringNullableListFilter<"Liability">
+  metadata?: Prisma.JsonNullableFilter<"Liability">
   attachments?: Prisma.JsonNullableFilter<"Liability">
+  notes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  internalNotes?: Prisma.StringNullableFilter<"Liability"> | string | null
+  validationMode?: Prisma.StringFilter<"Liability"> | string
+  locale?: Prisma.StringNullableFilter<"Liability"> | string | null
+  language?: Prisma.StringFilter<"Liability"> | string
+  sourceType?: Prisma.StringFilter<"Liability"> | string
+  sourceId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  sourceModule?: Prisma.StringNullableFilter<"Liability"> | string | null
+  importBatchId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  version?: Prisma.IntFilter<"Liability"> | number
+  eventCount?: Prisma.IntFilter<"Liability"> | number
+  lastEventId?: Prisma.StringNullableFilter<"Liability"> | string | null
+  archivedAt?: Prisma.DateTimeNullableFilter<"Liability"> | Date | string | null
+  archivedBy?: Prisma.StringNullableFilter<"Liability"> | string | null
+  archiveReason?: Prisma.StringNullableFilter<"Liability"> | string | null
   organizationId?: Prisma.StringFilter<"Liability"> | string
   createdAt?: Prisma.DateTimeFilter<"Liability"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Liability"> | Date | string
 }
 
-export type LiabilityCreateWithoutPaymentsInput = {
+export type LiabilityCreateWithoutEventsInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutLiabilitiesInput
+  payments?: Prisma.LiabilityPaymentCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityUncheckedCreateWithoutEventsInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payments?: Prisma.LiabilityPaymentUncheckedCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementUncheckedCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualUncheckedCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityCreateOrConnectWithoutEventsInput = {
+  where: Prisma.LiabilityWhereUniqueInput
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutEventsInput, Prisma.LiabilityUncheckedCreateWithoutEventsInput>
+}
+
+export type LiabilityUpsertWithoutEventsInput = {
+  update: Prisma.XOR<Prisma.LiabilityUpdateWithoutEventsInput, Prisma.LiabilityUncheckedUpdateWithoutEventsInput>
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutEventsInput, Prisma.LiabilityUncheckedCreateWithoutEventsInput>
+  where?: Prisma.LiabilityWhereInput
+}
+
+export type LiabilityUpdateToOneWithWhereWithoutEventsInput = {
+  where?: Prisma.LiabilityWhereInput
+  data: Prisma.XOR<Prisma.LiabilityUpdateWithoutEventsInput, Prisma.LiabilityUncheckedUpdateWithoutEventsInput>
+}
+
+export type LiabilityUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutLiabilitiesNestedInput
+  payments?: Prisma.LiabilityPaymentUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUncheckedUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUncheckedUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityCreateWithoutPaymentsInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutLiabilitiesInput
+  events?: Prisma.LiabilityEventCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckCreateNestedManyWithoutLiabilityInput
 }
 
 export type LiabilityUncheckedCreateWithoutPaymentsInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.LiabilityEventUncheckedCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementUncheckedCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualUncheckedCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedCreateNestedManyWithoutLiabilityInput
 }
 
 export type LiabilityCreateOrConnectWithoutPaymentsInput = {
@@ -1452,244 +5307,2810 @@ export type LiabilityUpdateToOneWithWhereWithoutPaymentsInput = {
 
 export type LiabilityUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutLiabilitiesNestedInput
+  events?: Prisma.LiabilityEventUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUpdateManyWithoutLiabilityNestedInput
 }
 
 export type LiabilityUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUncheckedUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUncheckedUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUncheckedUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityCreateWithoutSettlementsInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutLiabilitiesInput
+  events?: Prisma.LiabilityEventCreateNestedManyWithoutLiabilityInput
+  payments?: Prisma.LiabilityPaymentCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityUncheckedCreateWithoutSettlementsInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  events?: Prisma.LiabilityEventUncheckedCreateNestedManyWithoutLiabilityInput
+  payments?: Prisma.LiabilityPaymentUncheckedCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualUncheckedCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityCreateOrConnectWithoutSettlementsInput = {
+  where: Prisma.LiabilityWhereUniqueInput
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutSettlementsInput, Prisma.LiabilityUncheckedCreateWithoutSettlementsInput>
+}
+
+export type LiabilityUpsertWithoutSettlementsInput = {
+  update: Prisma.XOR<Prisma.LiabilityUpdateWithoutSettlementsInput, Prisma.LiabilityUncheckedUpdateWithoutSettlementsInput>
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutSettlementsInput, Prisma.LiabilityUncheckedCreateWithoutSettlementsInput>
+  where?: Prisma.LiabilityWhereInput
+}
+
+export type LiabilityUpdateToOneWithWhereWithoutSettlementsInput = {
+  where?: Prisma.LiabilityWhereInput
+  data: Prisma.XOR<Prisma.LiabilityUpdateWithoutSettlementsInput, Prisma.LiabilityUncheckedUpdateWithoutSettlementsInput>
+}
+
+export type LiabilityUpdateWithoutSettlementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutLiabilitiesNestedInput
+  events?: Prisma.LiabilityEventUpdateManyWithoutLiabilityNestedInput
+  payments?: Prisma.LiabilityPaymentUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityUncheckedUpdateWithoutSettlementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUncheckedUpdateManyWithoutLiabilityNestedInput
+  payments?: Prisma.LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUncheckedUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityCreateWithoutAccrualsInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutLiabilitiesInput
+  events?: Prisma.LiabilityEventCreateNestedManyWithoutLiabilityInput
+  payments?: Prisma.LiabilityPaymentCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityUncheckedCreateWithoutAccrualsInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  events?: Prisma.LiabilityEventUncheckedCreateNestedManyWithoutLiabilityInput
+  payments?: Prisma.LiabilityPaymentUncheckedCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementUncheckedCreateNestedManyWithoutLiabilityInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityCreateOrConnectWithoutAccrualsInput = {
+  where: Prisma.LiabilityWhereUniqueInput
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutAccrualsInput, Prisma.LiabilityUncheckedCreateWithoutAccrualsInput>
+}
+
+export type LiabilityUpsertWithoutAccrualsInput = {
+  update: Prisma.XOR<Prisma.LiabilityUpdateWithoutAccrualsInput, Prisma.LiabilityUncheckedUpdateWithoutAccrualsInput>
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutAccrualsInput, Prisma.LiabilityUncheckedCreateWithoutAccrualsInput>
+  where?: Prisma.LiabilityWhereInput
+}
+
+export type LiabilityUpdateToOneWithWhereWithoutAccrualsInput = {
+  where?: Prisma.LiabilityWhereInput
+  data: Prisma.XOR<Prisma.LiabilityUpdateWithoutAccrualsInput, Prisma.LiabilityUncheckedUpdateWithoutAccrualsInput>
+}
+
+export type LiabilityUpdateWithoutAccrualsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutLiabilitiesNestedInput
+  events?: Prisma.LiabilityEventUpdateManyWithoutLiabilityNestedInput
+  payments?: Prisma.LiabilityPaymentUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityUncheckedUpdateWithoutAccrualsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUncheckedUpdateManyWithoutLiabilityNestedInput
+  payments?: Prisma.LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUncheckedUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityCreateWithoutCovenantChecksInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutLiabilitiesInput
+  events?: Prisma.LiabilityEventCreateNestedManyWithoutLiabilityInput
+  payments?: Prisma.LiabilityPaymentCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityUncheckedCreateWithoutCovenantChecksInput = {
+  id?: string
+  liabilityId: string
+  legalReference?: string | null
+  counterpartyId?: string | null
+  counterpartyName: string
+  counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
+  maturityDate?: Date | string | null
+  nextPaymentDate?: Date | string | null
+  lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: string | null
+  collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
+  riskLevel?: string
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
+  tags?: Prisma.LiabilityCreatetagsInput | string[]
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
+  organizationId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  events?: Prisma.LiabilityEventUncheckedCreateNestedManyWithoutLiabilityInput
+  payments?: Prisma.LiabilityPaymentUncheckedCreateNestedManyWithoutLiabilityInput
+  settlements?: Prisma.LiabilitySettlementUncheckedCreateNestedManyWithoutLiabilityInput
+  accruals?: Prisma.LiabilityAccrualUncheckedCreateNestedManyWithoutLiabilityInput
+}
+
+export type LiabilityCreateOrConnectWithoutCovenantChecksInput = {
+  where: Prisma.LiabilityWhereUniqueInput
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutCovenantChecksInput, Prisma.LiabilityUncheckedCreateWithoutCovenantChecksInput>
+}
+
+export type LiabilityUpsertWithoutCovenantChecksInput = {
+  update: Prisma.XOR<Prisma.LiabilityUpdateWithoutCovenantChecksInput, Prisma.LiabilityUncheckedUpdateWithoutCovenantChecksInput>
+  create: Prisma.XOR<Prisma.LiabilityCreateWithoutCovenantChecksInput, Prisma.LiabilityUncheckedCreateWithoutCovenantChecksInput>
+  where?: Prisma.LiabilityWhereInput
+}
+
+export type LiabilityUpdateToOneWithWhereWithoutCovenantChecksInput = {
+  where?: Prisma.LiabilityWhereInput
+  data: Prisma.XOR<Prisma.LiabilityUpdateWithoutCovenantChecksInput, Prisma.LiabilityUncheckedUpdateWithoutCovenantChecksInput>
+}
+
+export type LiabilityUpdateWithoutCovenantChecksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutLiabilitiesNestedInput
+  events?: Prisma.LiabilityEventUpdateManyWithoutLiabilityNestedInput
+  payments?: Prisma.LiabilityPaymentUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUpdateManyWithoutLiabilityNestedInput
+}
+
+export type LiabilityUncheckedUpdateWithoutCovenantChecksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
+  counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.LiabilityUpdatetagsInput | string[]
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUncheckedUpdateManyWithoutLiabilityNestedInput
+  payments?: Prisma.LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUncheckedUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUncheckedUpdateManyWithoutLiabilityNestedInput
 }
 
 export type LiabilityCreateManyOrganizationInput = {
   id?: string
-  type: string
-  status?: string
-  name: string
-  description?: string | null
-  reference?: string | null
+  liabilityId: string
+  legalReference?: string | null
   counterpartyId?: string | null
   counterpartyName: string
   counterpartyType?: string | null
+  partyId?: string | null
+  legalEntityId?: string | null
+  jurisdictionIds?: Prisma.LiabilityCreatejurisdictionIdsInput | string[]
+  primaryClass: string
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: string | null
+  guarantorName?: string | null
+  status?: string
+  previousStatus?: string | null
+  statusChangedAt?: Date | string | null
+  statusChangedBy?: string | null
+  originalPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: string | null
+  fxSource?: string | null
+  fxRateAtRecognition?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: string | null
-  interestAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate: Date | string
+  amortizationMethod?: string | null
+  confidenceScore?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate: Date | string
+  recognitionDate?: Date | string | null
+  activationDate?: Date | string | null
   maturityDate?: Date | string | null
   nextPaymentDate?: Date | string | null
   lastPaymentDate?: Date | string | null
+  settledDate?: Date | string | null
+  gracePeriodDays?: number
+  graceEndDate?: Date | string | null
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: string | null
+  interestType?: string | null
+  interestRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: string | null
+  interestSpread?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: string | null
+  interestDayCount?: string | null
+  interestAccrualStart?: Date | string | null
+  lastInterestAccrual?: Date | string | null
+  nextInterestAccrual?: Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: string | null
-  paymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: boolean
+  totalPaymentsExpected?: number
+  paymentsCompleted?: number
+  paymentsMissed?: number
+  expectedCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Date | string | null
+  cashflowProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: string | null
   collateralValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: string | null
+  collateralType?: string | null
+  collateralValuationDate?: Date | string | null
   riskLevel?: string
-  alertThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: number
+  lastCovenantCheck?: Date | string | null
+  nextCovenantCheck?: Date | string | null
+  isInDefault?: boolean
+  defaultDate?: Date | string | null
+  defaultReason?: string | null
+  daysOverdue?: number
+  isDisputed?: boolean
+  disputeReason?: string | null
+  disputeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Date | string | null
+  disputeResolvedAt?: Date | string | null
+  disputeResolution?: string | null
+  isRestructured?: boolean
+  restructuredDate?: Date | string | null
+  restructuredReason?: string | null
+  originalLiabilityId?: string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: boolean
+  writeOffDate?: Date | string | null
+  writeOffAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: string | null
+  writeOffApprovedBy?: string | null
+  writeOffReasonCode?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: boolean
+  hedgeId?: string | null
+  hedgePercentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name: string
+  description?: string | null
+  reference?: string | null
+  internalReference?: string | null
   tags?: Prisma.LiabilityCreatetagsInput | string[]
-  notes?: string | null
+  systemTags?: Prisma.LiabilityCreatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: string | null
+  internalNotes?: string | null
+  validationMode?: string
+  locale?: string | null
+  language?: string
+  sourceType?: string
+  sourceId?: string | null
+  sourceModule?: string | null
+  importBatchId?: string | null
+  version?: number
+  eventCount?: number
+  lastEventId?: string | null
+  archivedAt?: Date | string | null
+  archivedBy?: string | null
+  archiveReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type LiabilityUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUpdateManyWithoutLiabilityNestedInput
   payments?: Prisma.LiabilityPaymentUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUpdateManyWithoutLiabilityNestedInput
 }
 
 export type LiabilityUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.LiabilityEventUncheckedUpdateManyWithoutLiabilityNestedInput
   payments?: Prisma.LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput
+  settlements?: Prisma.LiabilitySettlementUncheckedUpdateManyWithoutLiabilityNestedInput
+  accruals?: Prisma.LiabilityAccrualUncheckedUpdateManyWithoutLiabilityNestedInput
+  covenantChecks?: Prisma.LiabilityCovenantCheckUncheckedUpdateManyWithoutLiabilityNestedInput
 }
 
 export type LiabilityUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  legalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   counterpartyName?: Prisma.StringFieldUpdateOperationsInput | string
   counterpartyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  partyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jurisdictionIds?: Prisma.LiabilityUpdatejurisdictionIdsInput | string[]
+  primaryClass?: Prisma.StringFieldUpdateOperationsInput | string
+  isInterestBearing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFixed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isGuaranteed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  guarantorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guarantorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  previousStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  statusChangedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  outstandingPrincipal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accruedInterest?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  feesPenalties?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalOutstanding?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalSettled?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  reportingCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxSource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fxRateAtRecognition?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateAtSettlement?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  fxRateHistory?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unrealizedFxGainLoss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   creditLimit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   availableCredit?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   utilizationRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  interestAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  amortizationMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidenceScore?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  inceptionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recognitionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   maturityDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   nextPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastPaymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gracePeriodDays?: Prisma.IntFieldUpdateOperationsInput | number
+  graceEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  earlyRepaymentAllowed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyRepaymentPenalty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earlyRepaymentConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestIndex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestSpread?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  interestCompounding?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestDayCount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interestAccrualStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInterestAccrual?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interestSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  originationFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  originationFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFee?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  commitmentFeeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  penaltiesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  legalFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otherFeesAccrued?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentFrequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  regularPaymentAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   paymentSchedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isSecured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totalPaymentsExpected?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsCompleted?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentsMissed?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  earliestCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  worstCaseCashImpact?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  nextCashOutflow?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cashflowProbability?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   collateralDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   collateralValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  collateralCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  collateralValuationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
-  alertThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  riskScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  defaultProbability?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  covenants?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  covenantBreaches?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextCovenantCheck?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isInDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  defaultDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  defaultReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  daysOverdue?: Prisma.IntFieldUpdateOperationsInput | number
+  isDisputed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  disputeOpenedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeResolution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRestructured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  restructuredDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  restructuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  originalLiabilityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  restructuredTerms?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isWrittenOff?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  writeOffDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  writeOffAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  writeOffReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffApprovedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  writeOffReasonCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isHedged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hedgeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hedgePercentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.LiabilityUpdatetagsInput | string[]
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  systemTags?: Prisma.LiabilityUpdatesystemTagsInput | string[]
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validationMode?: Prisma.StringFieldUpdateOperationsInput | string
+  locale?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceModule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  importBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  eventCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastEventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1700,11 +8121,19 @@ export type LiabilityUncheckedUpdateManyWithoutOrganizationInput = {
  */
 
 export type LiabilityCountOutputType = {
+  events: number
   payments: number
+  settlements: number
+  accruals: number
+  covenantChecks: number
 }
 
 export type LiabilityCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  events?: boolean | LiabilityCountOutputTypeCountEventsArgs
   payments?: boolean | LiabilityCountOutputTypeCountPaymentsArgs
+  settlements?: boolean | LiabilityCountOutputTypeCountSettlementsArgs
+  accruals?: boolean | LiabilityCountOutputTypeCountAccrualsArgs
+  covenantChecks?: boolean | LiabilityCountOutputTypeCountCovenantChecksArgs
 }
 
 /**
@@ -1720,91 +8149,341 @@ export type LiabilityCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
 /**
  * LiabilityCountOutputType without action
  */
+export type LiabilityCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiabilityEventWhereInput
+}
+
+/**
+ * LiabilityCountOutputType without action
+ */
 export type LiabilityCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LiabilityPaymentWhereInput
+}
+
+/**
+ * LiabilityCountOutputType without action
+ */
+export type LiabilityCountOutputTypeCountSettlementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiabilitySettlementWhereInput
+}
+
+/**
+ * LiabilityCountOutputType without action
+ */
+export type LiabilityCountOutputTypeCountAccrualsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiabilityAccrualWhereInput
+}
+
+/**
+ * LiabilityCountOutputType without action
+ */
+export type LiabilityCountOutputTypeCountCovenantChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiabilityCovenantCheckWhereInput
 }
 
 
 export type LiabilitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  type?: boolean
-  status?: boolean
-  name?: boolean
-  description?: boolean
-  reference?: boolean
+  liabilityId?: boolean
+  legalReference?: boolean
   counterpartyId?: boolean
   counterpartyName?: boolean
   counterpartyType?: boolean
+  partyId?: boolean
+  legalEntityId?: boolean
+  jurisdictionIds?: boolean
+  primaryClass?: boolean
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: boolean
+  guarantorName?: boolean
+  status?: boolean
+  previousStatus?: boolean
+  statusChangedAt?: boolean
+  statusChangedBy?: boolean
+  originalPrincipal?: boolean
+  outstandingPrincipal?: boolean
+  accruedInterest?: boolean
+  feesPenalties?: boolean
+  totalOutstanding?: boolean
+  totalSettled?: boolean
   currency?: boolean
-  principalAmount?: boolean
-  outstandingAmount?: boolean
-  paidAmount?: boolean
+  reportingCurrency?: boolean
+  fxSource?: boolean
+  fxRateAtRecognition?: boolean
+  fxRateAtSettlement?: boolean
+  fxRateHistory?: boolean
+  amountInReporting?: boolean
+  unrealizedFxGainLoss?: boolean
   creditLimit?: boolean
   availableCredit?: boolean
   utilizationRate?: boolean
-  interestRate?: boolean
-  interestType?: boolean
-  interestAccrued?: boolean
-  startDate?: boolean
+  amortizationMethod?: boolean
+  confidenceScore?: boolean
+  inceptionDate?: boolean
+  recognitionDate?: boolean
+  activationDate?: boolean
   maturityDate?: boolean
   nextPaymentDate?: boolean
   lastPaymentDate?: boolean
+  settledDate?: boolean
+  gracePeriodDays?: boolean
+  graceEndDate?: boolean
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: boolean
+  earlyRepaymentConditions?: boolean
+  interestType?: boolean
+  interestRate?: boolean
+  interestIndex?: boolean
+  interestSpread?: boolean
+  interestCompounding?: boolean
+  interestDayCount?: boolean
+  interestAccrualStart?: boolean
+  lastInterestAccrual?: boolean
+  nextInterestAccrual?: boolean
+  interestSchedule?: boolean
+  originationFee?: boolean
+  originationFeeRate?: boolean
+  commitmentFee?: boolean
+  commitmentFeeRate?: boolean
+  penaltiesAccrued?: boolean
+  legalFeesAccrued?: boolean
+  otherFeesAccrued?: boolean
   paymentFrequency?: boolean
-  paymentAmount?: boolean
+  regularPaymentAmount?: boolean
   paymentSchedule?: boolean
-  isSecured?: boolean
+  totalPaymentsExpected?: boolean
+  paymentsCompleted?: boolean
+  paymentsMissed?: boolean
+  expectedCashImpact?: boolean
+  earliestCashImpact?: boolean
+  worstCaseCashImpact?: boolean
+  nextCashOutflow?: boolean
+  cashflowProbability?: boolean
   collateralDescription?: boolean
   collateralValue?: boolean
-  covenants?: boolean
+  collateralCurrency?: boolean
+  collateralType?: boolean
+  collateralValuationDate?: boolean
   riskLevel?: boolean
-  alertThreshold?: boolean
+  riskScore?: boolean
+  defaultProbability?: boolean
+  covenants?: boolean
+  covenantBreaches?: boolean
+  lastCovenantCheck?: boolean
+  nextCovenantCheck?: boolean
+  isInDefault?: boolean
+  defaultDate?: boolean
+  defaultReason?: boolean
+  daysOverdue?: boolean
+  isDisputed?: boolean
+  disputeReason?: boolean
+  disputeAmount?: boolean
+  disputeOpenedAt?: boolean
+  disputeResolvedAt?: boolean
+  disputeResolution?: boolean
+  isRestructured?: boolean
+  restructuredDate?: boolean
+  restructuredReason?: boolean
+  originalLiabilityId?: boolean
+  restructuredTerms?: boolean
+  isWrittenOff?: boolean
+  writeOffDate?: boolean
+  writeOffAmount?: boolean
+  writeOffReason?: boolean
+  writeOffApprovedBy?: boolean
+  writeOffReasonCode?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  approvalChain?: boolean
+  isHedged?: boolean
+  hedgeId?: boolean
+  hedgePercentage?: boolean
+  name?: boolean
+  description?: boolean
+  reference?: boolean
+  internalReference?: boolean
   tags?: boolean
-  notes?: boolean
+  systemTags?: boolean
+  metadata?: boolean
   attachments?: boolean
+  notes?: boolean
+  internalNotes?: boolean
+  validationMode?: boolean
+  locale?: boolean
+  language?: boolean
+  sourceType?: boolean
+  sourceId?: boolean
+  sourceModule?: boolean
+  importBatchId?: boolean
+  version?: boolean
+  eventCount?: boolean
+  lastEventId?: boolean
+  archivedAt?: boolean
+  archivedBy?: boolean
+  archiveReason?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  events?: boolean | Prisma.Liability$eventsArgs<ExtArgs>
   payments?: boolean | Prisma.Liability$paymentsArgs<ExtArgs>
+  settlements?: boolean | Prisma.Liability$settlementsArgs<ExtArgs>
+  accruals?: boolean | Prisma.Liability$accrualsArgs<ExtArgs>
+  covenantChecks?: boolean | Prisma.Liability$covenantChecksArgs<ExtArgs>
   _count?: boolean | Prisma.LiabilityCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["liability"]>
 
 export type LiabilitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  type?: boolean
-  status?: boolean
-  name?: boolean
-  description?: boolean
-  reference?: boolean
+  liabilityId?: boolean
+  legalReference?: boolean
   counterpartyId?: boolean
   counterpartyName?: boolean
   counterpartyType?: boolean
+  partyId?: boolean
+  legalEntityId?: boolean
+  jurisdictionIds?: boolean
+  primaryClass?: boolean
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: boolean
+  guarantorName?: boolean
+  status?: boolean
+  previousStatus?: boolean
+  statusChangedAt?: boolean
+  statusChangedBy?: boolean
+  originalPrincipal?: boolean
+  outstandingPrincipal?: boolean
+  accruedInterest?: boolean
+  feesPenalties?: boolean
+  totalOutstanding?: boolean
+  totalSettled?: boolean
   currency?: boolean
-  principalAmount?: boolean
-  outstandingAmount?: boolean
-  paidAmount?: boolean
+  reportingCurrency?: boolean
+  fxSource?: boolean
+  fxRateAtRecognition?: boolean
+  fxRateAtSettlement?: boolean
+  fxRateHistory?: boolean
+  amountInReporting?: boolean
+  unrealizedFxGainLoss?: boolean
   creditLimit?: boolean
   availableCredit?: boolean
   utilizationRate?: boolean
-  interestRate?: boolean
-  interestType?: boolean
-  interestAccrued?: boolean
-  startDate?: boolean
+  amortizationMethod?: boolean
+  confidenceScore?: boolean
+  inceptionDate?: boolean
+  recognitionDate?: boolean
+  activationDate?: boolean
   maturityDate?: boolean
   nextPaymentDate?: boolean
   lastPaymentDate?: boolean
+  settledDate?: boolean
+  gracePeriodDays?: boolean
+  graceEndDate?: boolean
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: boolean
+  earlyRepaymentConditions?: boolean
+  interestType?: boolean
+  interestRate?: boolean
+  interestIndex?: boolean
+  interestSpread?: boolean
+  interestCompounding?: boolean
+  interestDayCount?: boolean
+  interestAccrualStart?: boolean
+  lastInterestAccrual?: boolean
+  nextInterestAccrual?: boolean
+  interestSchedule?: boolean
+  originationFee?: boolean
+  originationFeeRate?: boolean
+  commitmentFee?: boolean
+  commitmentFeeRate?: boolean
+  penaltiesAccrued?: boolean
+  legalFeesAccrued?: boolean
+  otherFeesAccrued?: boolean
   paymentFrequency?: boolean
-  paymentAmount?: boolean
+  regularPaymentAmount?: boolean
   paymentSchedule?: boolean
-  isSecured?: boolean
+  totalPaymentsExpected?: boolean
+  paymentsCompleted?: boolean
+  paymentsMissed?: boolean
+  expectedCashImpact?: boolean
+  earliestCashImpact?: boolean
+  worstCaseCashImpact?: boolean
+  nextCashOutflow?: boolean
+  cashflowProbability?: boolean
   collateralDescription?: boolean
   collateralValue?: boolean
-  covenants?: boolean
+  collateralCurrency?: boolean
+  collateralType?: boolean
+  collateralValuationDate?: boolean
   riskLevel?: boolean
-  alertThreshold?: boolean
+  riskScore?: boolean
+  defaultProbability?: boolean
+  covenants?: boolean
+  covenantBreaches?: boolean
+  lastCovenantCheck?: boolean
+  nextCovenantCheck?: boolean
+  isInDefault?: boolean
+  defaultDate?: boolean
+  defaultReason?: boolean
+  daysOverdue?: boolean
+  isDisputed?: boolean
+  disputeReason?: boolean
+  disputeAmount?: boolean
+  disputeOpenedAt?: boolean
+  disputeResolvedAt?: boolean
+  disputeResolution?: boolean
+  isRestructured?: boolean
+  restructuredDate?: boolean
+  restructuredReason?: boolean
+  originalLiabilityId?: boolean
+  restructuredTerms?: boolean
+  isWrittenOff?: boolean
+  writeOffDate?: boolean
+  writeOffAmount?: boolean
+  writeOffReason?: boolean
+  writeOffApprovedBy?: boolean
+  writeOffReasonCode?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  approvalChain?: boolean
+  isHedged?: boolean
+  hedgeId?: boolean
+  hedgePercentage?: boolean
+  name?: boolean
+  description?: boolean
+  reference?: boolean
+  internalReference?: boolean
   tags?: boolean
-  notes?: boolean
+  systemTags?: boolean
+  metadata?: boolean
   attachments?: boolean
+  notes?: boolean
+  internalNotes?: boolean
+  validationMode?: boolean
+  locale?: boolean
+  language?: boolean
+  sourceType?: boolean
+  sourceId?: boolean
+  sourceModule?: boolean
+  importBatchId?: boolean
+  version?: boolean
+  eventCount?: boolean
+  lastEventId?: boolean
+  archivedAt?: boolean
+  archivedBy?: boolean
+  archiveReason?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1813,40 +8492,149 @@ export type LiabilitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type LiabilitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  type?: boolean
-  status?: boolean
-  name?: boolean
-  description?: boolean
-  reference?: boolean
+  liabilityId?: boolean
+  legalReference?: boolean
   counterpartyId?: boolean
   counterpartyName?: boolean
   counterpartyType?: boolean
+  partyId?: boolean
+  legalEntityId?: boolean
+  jurisdictionIds?: boolean
+  primaryClass?: boolean
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: boolean
+  guarantorName?: boolean
+  status?: boolean
+  previousStatus?: boolean
+  statusChangedAt?: boolean
+  statusChangedBy?: boolean
+  originalPrincipal?: boolean
+  outstandingPrincipal?: boolean
+  accruedInterest?: boolean
+  feesPenalties?: boolean
+  totalOutstanding?: boolean
+  totalSettled?: boolean
   currency?: boolean
-  principalAmount?: boolean
-  outstandingAmount?: boolean
-  paidAmount?: boolean
+  reportingCurrency?: boolean
+  fxSource?: boolean
+  fxRateAtRecognition?: boolean
+  fxRateAtSettlement?: boolean
+  fxRateHistory?: boolean
+  amountInReporting?: boolean
+  unrealizedFxGainLoss?: boolean
   creditLimit?: boolean
   availableCredit?: boolean
   utilizationRate?: boolean
-  interestRate?: boolean
-  interestType?: boolean
-  interestAccrued?: boolean
-  startDate?: boolean
+  amortizationMethod?: boolean
+  confidenceScore?: boolean
+  inceptionDate?: boolean
+  recognitionDate?: boolean
+  activationDate?: boolean
   maturityDate?: boolean
   nextPaymentDate?: boolean
   lastPaymentDate?: boolean
+  settledDate?: boolean
+  gracePeriodDays?: boolean
+  graceEndDate?: boolean
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: boolean
+  earlyRepaymentConditions?: boolean
+  interestType?: boolean
+  interestRate?: boolean
+  interestIndex?: boolean
+  interestSpread?: boolean
+  interestCompounding?: boolean
+  interestDayCount?: boolean
+  interestAccrualStart?: boolean
+  lastInterestAccrual?: boolean
+  nextInterestAccrual?: boolean
+  interestSchedule?: boolean
+  originationFee?: boolean
+  originationFeeRate?: boolean
+  commitmentFee?: boolean
+  commitmentFeeRate?: boolean
+  penaltiesAccrued?: boolean
+  legalFeesAccrued?: boolean
+  otherFeesAccrued?: boolean
   paymentFrequency?: boolean
-  paymentAmount?: boolean
+  regularPaymentAmount?: boolean
   paymentSchedule?: boolean
-  isSecured?: boolean
+  totalPaymentsExpected?: boolean
+  paymentsCompleted?: boolean
+  paymentsMissed?: boolean
+  expectedCashImpact?: boolean
+  earliestCashImpact?: boolean
+  worstCaseCashImpact?: boolean
+  nextCashOutflow?: boolean
+  cashflowProbability?: boolean
   collateralDescription?: boolean
   collateralValue?: boolean
-  covenants?: boolean
+  collateralCurrency?: boolean
+  collateralType?: boolean
+  collateralValuationDate?: boolean
   riskLevel?: boolean
-  alertThreshold?: boolean
+  riskScore?: boolean
+  defaultProbability?: boolean
+  covenants?: boolean
+  covenantBreaches?: boolean
+  lastCovenantCheck?: boolean
+  nextCovenantCheck?: boolean
+  isInDefault?: boolean
+  defaultDate?: boolean
+  defaultReason?: boolean
+  daysOverdue?: boolean
+  isDisputed?: boolean
+  disputeReason?: boolean
+  disputeAmount?: boolean
+  disputeOpenedAt?: boolean
+  disputeResolvedAt?: boolean
+  disputeResolution?: boolean
+  isRestructured?: boolean
+  restructuredDate?: boolean
+  restructuredReason?: boolean
+  originalLiabilityId?: boolean
+  restructuredTerms?: boolean
+  isWrittenOff?: boolean
+  writeOffDate?: boolean
+  writeOffAmount?: boolean
+  writeOffReason?: boolean
+  writeOffApprovedBy?: boolean
+  writeOffReasonCode?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  approvalChain?: boolean
+  isHedged?: boolean
+  hedgeId?: boolean
+  hedgePercentage?: boolean
+  name?: boolean
+  description?: boolean
+  reference?: boolean
+  internalReference?: boolean
   tags?: boolean
-  notes?: boolean
+  systemTags?: boolean
+  metadata?: boolean
   attachments?: boolean
+  notes?: boolean
+  internalNotes?: boolean
+  validationMode?: boolean
+  locale?: boolean
+  language?: boolean
+  sourceType?: boolean
+  sourceId?: boolean
+  sourceModule?: boolean
+  importBatchId?: boolean
+  version?: boolean
+  eventCount?: boolean
+  lastEventId?: boolean
+  archivedAt?: boolean
+  archivedBy?: boolean
+  archiveReason?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1855,49 +8643,162 @@ export type LiabilitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type LiabilitySelectScalar = {
   id?: boolean
-  type?: boolean
-  status?: boolean
-  name?: boolean
-  description?: boolean
-  reference?: boolean
+  liabilityId?: boolean
+  legalReference?: boolean
   counterpartyId?: boolean
   counterpartyName?: boolean
   counterpartyType?: boolean
+  partyId?: boolean
+  legalEntityId?: boolean
+  jurisdictionIds?: boolean
+  primaryClass?: boolean
+  isInterestBearing?: boolean
+  isSecured?: boolean
+  isFixed?: boolean
+  isGuaranteed?: boolean
+  guarantorId?: boolean
+  guarantorName?: boolean
+  status?: boolean
+  previousStatus?: boolean
+  statusChangedAt?: boolean
+  statusChangedBy?: boolean
+  originalPrincipal?: boolean
+  outstandingPrincipal?: boolean
+  accruedInterest?: boolean
+  feesPenalties?: boolean
+  totalOutstanding?: boolean
+  totalSettled?: boolean
   currency?: boolean
-  principalAmount?: boolean
-  outstandingAmount?: boolean
-  paidAmount?: boolean
+  reportingCurrency?: boolean
+  fxSource?: boolean
+  fxRateAtRecognition?: boolean
+  fxRateAtSettlement?: boolean
+  fxRateHistory?: boolean
+  amountInReporting?: boolean
+  unrealizedFxGainLoss?: boolean
   creditLimit?: boolean
   availableCredit?: boolean
   utilizationRate?: boolean
-  interestRate?: boolean
-  interestType?: boolean
-  interestAccrued?: boolean
-  startDate?: boolean
+  amortizationMethod?: boolean
+  confidenceScore?: boolean
+  inceptionDate?: boolean
+  recognitionDate?: boolean
+  activationDate?: boolean
   maturityDate?: boolean
   nextPaymentDate?: boolean
   lastPaymentDate?: boolean
+  settledDate?: boolean
+  gracePeriodDays?: boolean
+  graceEndDate?: boolean
+  earlyRepaymentAllowed?: boolean
+  earlyRepaymentPenalty?: boolean
+  earlyRepaymentConditions?: boolean
+  interestType?: boolean
+  interestRate?: boolean
+  interestIndex?: boolean
+  interestSpread?: boolean
+  interestCompounding?: boolean
+  interestDayCount?: boolean
+  interestAccrualStart?: boolean
+  lastInterestAccrual?: boolean
+  nextInterestAccrual?: boolean
+  interestSchedule?: boolean
+  originationFee?: boolean
+  originationFeeRate?: boolean
+  commitmentFee?: boolean
+  commitmentFeeRate?: boolean
+  penaltiesAccrued?: boolean
+  legalFeesAccrued?: boolean
+  otherFeesAccrued?: boolean
   paymentFrequency?: boolean
-  paymentAmount?: boolean
+  regularPaymentAmount?: boolean
   paymentSchedule?: boolean
-  isSecured?: boolean
+  totalPaymentsExpected?: boolean
+  paymentsCompleted?: boolean
+  paymentsMissed?: boolean
+  expectedCashImpact?: boolean
+  earliestCashImpact?: boolean
+  worstCaseCashImpact?: boolean
+  nextCashOutflow?: boolean
+  cashflowProbability?: boolean
   collateralDescription?: boolean
   collateralValue?: boolean
-  covenants?: boolean
+  collateralCurrency?: boolean
+  collateralType?: boolean
+  collateralValuationDate?: boolean
   riskLevel?: boolean
-  alertThreshold?: boolean
+  riskScore?: boolean
+  defaultProbability?: boolean
+  covenants?: boolean
+  covenantBreaches?: boolean
+  lastCovenantCheck?: boolean
+  nextCovenantCheck?: boolean
+  isInDefault?: boolean
+  defaultDate?: boolean
+  defaultReason?: boolean
+  daysOverdue?: boolean
+  isDisputed?: boolean
+  disputeReason?: boolean
+  disputeAmount?: boolean
+  disputeOpenedAt?: boolean
+  disputeResolvedAt?: boolean
+  disputeResolution?: boolean
+  isRestructured?: boolean
+  restructuredDate?: boolean
+  restructuredReason?: boolean
+  originalLiabilityId?: boolean
+  restructuredTerms?: boolean
+  isWrittenOff?: boolean
+  writeOffDate?: boolean
+  writeOffAmount?: boolean
+  writeOffReason?: boolean
+  writeOffApprovedBy?: boolean
+  writeOffReasonCode?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  approvalChain?: boolean
+  isHedged?: boolean
+  hedgeId?: boolean
+  hedgePercentage?: boolean
+  name?: boolean
+  description?: boolean
+  reference?: boolean
+  internalReference?: boolean
   tags?: boolean
-  notes?: boolean
+  systemTags?: boolean
+  metadata?: boolean
   attachments?: boolean
+  notes?: boolean
+  internalNotes?: boolean
+  validationMode?: boolean
+  locale?: boolean
+  language?: boolean
+  sourceType?: boolean
+  sourceId?: boolean
+  sourceModule?: boolean
+  importBatchId?: boolean
+  version?: boolean
+  eventCount?: boolean
+  lastEventId?: boolean
+  archivedAt?: boolean
+  archivedBy?: boolean
+  archiveReason?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LiabilityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "status" | "name" | "description" | "reference" | "counterpartyId" | "counterpartyName" | "counterpartyType" | "currency" | "principalAmount" | "outstandingAmount" | "paidAmount" | "creditLimit" | "availableCredit" | "utilizationRate" | "interestRate" | "interestType" | "interestAccrued" | "startDate" | "maturityDate" | "nextPaymentDate" | "lastPaymentDate" | "paymentFrequency" | "paymentAmount" | "paymentSchedule" | "isSecured" | "collateralDescription" | "collateralValue" | "covenants" | "riskLevel" | "alertThreshold" | "tags" | "notes" | "attachments" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["liability"]>
+export type LiabilityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "liabilityId" | "legalReference" | "counterpartyId" | "counterpartyName" | "counterpartyType" | "partyId" | "legalEntityId" | "jurisdictionIds" | "primaryClass" | "isInterestBearing" | "isSecured" | "isFixed" | "isGuaranteed" | "guarantorId" | "guarantorName" | "status" | "previousStatus" | "statusChangedAt" | "statusChangedBy" | "originalPrincipal" | "outstandingPrincipal" | "accruedInterest" | "feesPenalties" | "totalOutstanding" | "totalSettled" | "currency" | "reportingCurrency" | "fxSource" | "fxRateAtRecognition" | "fxRateAtSettlement" | "fxRateHistory" | "amountInReporting" | "unrealizedFxGainLoss" | "creditLimit" | "availableCredit" | "utilizationRate" | "amortizationMethod" | "confidenceScore" | "inceptionDate" | "recognitionDate" | "activationDate" | "maturityDate" | "nextPaymentDate" | "lastPaymentDate" | "settledDate" | "gracePeriodDays" | "graceEndDate" | "earlyRepaymentAllowed" | "earlyRepaymentPenalty" | "earlyRepaymentConditions" | "interestType" | "interestRate" | "interestIndex" | "interestSpread" | "interestCompounding" | "interestDayCount" | "interestAccrualStart" | "lastInterestAccrual" | "nextInterestAccrual" | "interestSchedule" | "originationFee" | "originationFeeRate" | "commitmentFee" | "commitmentFeeRate" | "penaltiesAccrued" | "legalFeesAccrued" | "otherFeesAccrued" | "paymentFrequency" | "regularPaymentAmount" | "paymentSchedule" | "totalPaymentsExpected" | "paymentsCompleted" | "paymentsMissed" | "expectedCashImpact" | "earliestCashImpact" | "worstCaseCashImpact" | "nextCashOutflow" | "cashflowProbability" | "collateralDescription" | "collateralValue" | "collateralCurrency" | "collateralType" | "collateralValuationDate" | "riskLevel" | "riskScore" | "defaultProbability" | "covenants" | "covenantBreaches" | "lastCovenantCheck" | "nextCovenantCheck" | "isInDefault" | "defaultDate" | "defaultReason" | "daysOverdue" | "isDisputed" | "disputeReason" | "disputeAmount" | "disputeOpenedAt" | "disputeResolvedAt" | "disputeResolution" | "isRestructured" | "restructuredDate" | "restructuredReason" | "originalLiabilityId" | "restructuredTerms" | "isWrittenOff" | "writeOffDate" | "writeOffAmount" | "writeOffReason" | "writeOffApprovedBy" | "writeOffReasonCode" | "requiresApproval" | "approvalThreshold" | "approvalStatus" | "approvedBy" | "approvedAt" | "approvalChain" | "isHedged" | "hedgeId" | "hedgePercentage" | "name" | "description" | "reference" | "internalReference" | "tags" | "systemTags" | "metadata" | "attachments" | "notes" | "internalNotes" | "validationMode" | "locale" | "language" | "sourceType" | "sourceId" | "sourceModule" | "importBatchId" | "version" | "eventCount" | "lastEventId" | "archivedAt" | "archivedBy" | "archiveReason" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["liability"]>
 export type LiabilityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  events?: boolean | Prisma.Liability$eventsArgs<ExtArgs>
   payments?: boolean | Prisma.Liability$paymentsArgs<ExtArgs>
+  settlements?: boolean | Prisma.Liability$settlementsArgs<ExtArgs>
+  accruals?: boolean | Prisma.Liability$accrualsArgs<ExtArgs>
+  covenantChecks?: boolean | Prisma.Liability$covenantChecksArgs<ExtArgs>
   _count?: boolean | Prisma.LiabilityCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LiabilityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1911,44 +8812,157 @@ export type $LiabilityPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Liability"
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
+    events: Prisma.$LiabilityEventPayload<ExtArgs>[]
     payments: Prisma.$LiabilityPaymentPayload<ExtArgs>[]
+    settlements: Prisma.$LiabilitySettlementPayload<ExtArgs>[]
+    accruals: Prisma.$LiabilityAccrualPayload<ExtArgs>[]
+    covenantChecks: Prisma.$LiabilityCovenantCheckPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    type: string
-    status: string
-    name: string
-    description: string | null
-    reference: string | null
+    liabilityId: string
+    legalReference: string | null
     counterpartyId: string | null
     counterpartyName: string
     counterpartyType: string | null
+    partyId: string | null
+    legalEntityId: string | null
+    jurisdictionIds: string[]
+    primaryClass: string
+    isInterestBearing: boolean
+    isSecured: boolean
+    isFixed: boolean
+    isGuaranteed: boolean
+    guarantorId: string | null
+    guarantorName: string | null
+    status: string
+    previousStatus: string | null
+    statusChangedAt: Date | null
+    statusChangedBy: string | null
+    originalPrincipal: runtime.Decimal
+    outstandingPrincipal: runtime.Decimal
+    accruedInterest: runtime.Decimal
+    feesPenalties: runtime.Decimal
+    totalOutstanding: runtime.Decimal
+    totalSettled: runtime.Decimal
     currency: string
-    principalAmount: runtime.Decimal
-    outstandingAmount: runtime.Decimal
-    paidAmount: runtime.Decimal
+    reportingCurrency: string | null
+    fxSource: string | null
+    fxRateAtRecognition: runtime.Decimal | null
+    fxRateAtSettlement: runtime.Decimal | null
+    fxRateHistory: runtime.JsonValue | null
+    amountInReporting: runtime.Decimal | null
+    unrealizedFxGainLoss: runtime.Decimal
     creditLimit: runtime.Decimal | null
     availableCredit: runtime.Decimal | null
     utilizationRate: runtime.Decimal | null
-    interestRate: runtime.Decimal | null
-    interestType: string | null
-    interestAccrued: runtime.Decimal
-    startDate: Date
+    amortizationMethod: string | null
+    confidenceScore: runtime.Decimal
+    inceptionDate: Date
+    recognitionDate: Date | null
+    activationDate: Date | null
     maturityDate: Date | null
     nextPaymentDate: Date | null
     lastPaymentDate: Date | null
+    settledDate: Date | null
+    gracePeriodDays: number
+    graceEndDate: Date | null
+    earlyRepaymentAllowed: boolean
+    earlyRepaymentPenalty: runtime.Decimal | null
+    earlyRepaymentConditions: string | null
+    interestType: string | null
+    interestRate: runtime.Decimal | null
+    interestIndex: string | null
+    interestSpread: runtime.Decimal | null
+    interestCompounding: string | null
+    interestDayCount: string | null
+    interestAccrualStart: Date | null
+    lastInterestAccrual: Date | null
+    nextInterestAccrual: Date | null
+    interestSchedule: runtime.JsonValue | null
+    originationFee: runtime.Decimal | null
+    originationFeeRate: runtime.Decimal | null
+    commitmentFee: runtime.Decimal | null
+    commitmentFeeRate: runtime.Decimal | null
+    penaltiesAccrued: runtime.Decimal
+    legalFeesAccrued: runtime.Decimal
+    otherFeesAccrued: runtime.Decimal
     paymentFrequency: string | null
-    paymentAmount: runtime.Decimal | null
+    regularPaymentAmount: runtime.Decimal | null
     paymentSchedule: runtime.JsonValue | null
-    isSecured: boolean
+    totalPaymentsExpected: number
+    paymentsCompleted: number
+    paymentsMissed: number
+    expectedCashImpact: runtime.Decimal | null
+    earliestCashImpact: runtime.Decimal | null
+    worstCaseCashImpact: runtime.Decimal | null
+    nextCashOutflow: Date | null
+    cashflowProbability: runtime.Decimal
     collateralDescription: string | null
     collateralValue: runtime.Decimal | null
-    covenants: runtime.JsonValue | null
+    collateralCurrency: string | null
+    collateralType: string | null
+    collateralValuationDate: Date | null
     riskLevel: string
-    alertThreshold: runtime.Decimal | null
+    riskScore: runtime.Decimal | null
+    defaultProbability: runtime.Decimal | null
+    covenants: runtime.JsonValue | null
+    covenantBreaches: number
+    lastCovenantCheck: Date | null
+    nextCovenantCheck: Date | null
+    isInDefault: boolean
+    defaultDate: Date | null
+    defaultReason: string | null
+    daysOverdue: number
+    isDisputed: boolean
+    disputeReason: string | null
+    disputeAmount: runtime.Decimal | null
+    disputeOpenedAt: Date | null
+    disputeResolvedAt: Date | null
+    disputeResolution: string | null
+    isRestructured: boolean
+    restructuredDate: Date | null
+    restructuredReason: string | null
+    originalLiabilityId: string | null
+    restructuredTerms: runtime.JsonValue | null
+    isWrittenOff: boolean
+    writeOffDate: Date | null
+    writeOffAmount: runtime.Decimal | null
+    writeOffReason: string | null
+    writeOffApprovedBy: string | null
+    writeOffReasonCode: string | null
+    requiresApproval: boolean
+    approvalThreshold: runtime.Decimal | null
+    approvalStatus: string | null
+    approvedBy: string | null
+    approvedAt: Date | null
+    approvalChain: runtime.JsonValue | null
+    isHedged: boolean
+    hedgeId: string | null
+    hedgePercentage: runtime.Decimal | null
+    name: string
+    description: string | null
+    reference: string | null
+    internalReference: string | null
     tags: string[]
-    notes: string | null
+    systemTags: string[]
+    metadata: runtime.JsonValue | null
     attachments: runtime.JsonValue | null
+    notes: string | null
+    internalNotes: string | null
+    validationMode: string
+    locale: string | null
+    language: string
+    sourceType: string
+    sourceId: string | null
+    sourceModule: string | null
+    importBatchId: string | null
+    version: number
+    eventCount: number
+    lastEventId: string | null
+    archivedAt: Date | null
+    archivedBy: string | null
+    archiveReason: string | null
     organizationId: string
     createdAt: Date
     updatedAt: Date
@@ -2347,7 +9361,11 @@ readonly fields: LiabilityFieldRefs;
 export interface Prisma__LiabilityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  events<T extends Prisma.Liability$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Liability$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiabilityEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Liability$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Liability$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiabilityPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  settlements<T extends Prisma.Liability$settlementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Liability$settlementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiabilitySettlementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accruals<T extends Prisma.Liability$accrualsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Liability$accrualsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiabilityAccrualPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  covenantChecks<T extends Prisma.Liability$covenantChecksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Liability$covenantChecksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiabilityCovenantCheckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2378,40 +9396,149 @@ export interface Prisma__LiabilityClient<T, Null = never, ExtArgs extends runtim
  */
 export interface LiabilityFieldRefs {
   readonly id: Prisma.FieldRef<"Liability", 'String'>
-  readonly type: Prisma.FieldRef<"Liability", 'String'>
-  readonly status: Prisma.FieldRef<"Liability", 'String'>
-  readonly name: Prisma.FieldRef<"Liability", 'String'>
-  readonly description: Prisma.FieldRef<"Liability", 'String'>
-  readonly reference: Prisma.FieldRef<"Liability", 'String'>
+  readonly liabilityId: Prisma.FieldRef<"Liability", 'String'>
+  readonly legalReference: Prisma.FieldRef<"Liability", 'String'>
   readonly counterpartyId: Prisma.FieldRef<"Liability", 'String'>
   readonly counterpartyName: Prisma.FieldRef<"Liability", 'String'>
   readonly counterpartyType: Prisma.FieldRef<"Liability", 'String'>
+  readonly partyId: Prisma.FieldRef<"Liability", 'String'>
+  readonly legalEntityId: Prisma.FieldRef<"Liability", 'String'>
+  readonly jurisdictionIds: Prisma.FieldRef<"Liability", 'String[]'>
+  readonly primaryClass: Prisma.FieldRef<"Liability", 'String'>
+  readonly isInterestBearing: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly isSecured: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly isFixed: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly isGuaranteed: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly guarantorId: Prisma.FieldRef<"Liability", 'String'>
+  readonly guarantorName: Prisma.FieldRef<"Liability", 'String'>
+  readonly status: Prisma.FieldRef<"Liability", 'String'>
+  readonly previousStatus: Prisma.FieldRef<"Liability", 'String'>
+  readonly statusChangedAt: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly statusChangedBy: Prisma.FieldRef<"Liability", 'String'>
+  readonly originalPrincipal: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly outstandingPrincipal: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly accruedInterest: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly feesPenalties: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly totalOutstanding: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly totalSettled: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Liability", 'String'>
-  readonly principalAmount: Prisma.FieldRef<"Liability", 'Decimal'>
-  readonly outstandingAmount: Prisma.FieldRef<"Liability", 'Decimal'>
-  readonly paidAmount: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly reportingCurrency: Prisma.FieldRef<"Liability", 'String'>
+  readonly fxSource: Prisma.FieldRef<"Liability", 'String'>
+  readonly fxRateAtRecognition: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly fxRateAtSettlement: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly fxRateHistory: Prisma.FieldRef<"Liability", 'Json'>
+  readonly amountInReporting: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly unrealizedFxGainLoss: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly creditLimit: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly availableCredit: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly utilizationRate: Prisma.FieldRef<"Liability", 'Decimal'>
-  readonly interestRate: Prisma.FieldRef<"Liability", 'Decimal'>
-  readonly interestType: Prisma.FieldRef<"Liability", 'String'>
-  readonly interestAccrued: Prisma.FieldRef<"Liability", 'Decimal'>
-  readonly startDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly amortizationMethod: Prisma.FieldRef<"Liability", 'String'>
+  readonly confidenceScore: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly inceptionDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly recognitionDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly activationDate: Prisma.FieldRef<"Liability", 'DateTime'>
   readonly maturityDate: Prisma.FieldRef<"Liability", 'DateTime'>
   readonly nextPaymentDate: Prisma.FieldRef<"Liability", 'DateTime'>
   readonly lastPaymentDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly settledDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly gracePeriodDays: Prisma.FieldRef<"Liability", 'Int'>
+  readonly graceEndDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly earlyRepaymentAllowed: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly earlyRepaymentPenalty: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly earlyRepaymentConditions: Prisma.FieldRef<"Liability", 'String'>
+  readonly interestType: Prisma.FieldRef<"Liability", 'String'>
+  readonly interestRate: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly interestIndex: Prisma.FieldRef<"Liability", 'String'>
+  readonly interestSpread: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly interestCompounding: Prisma.FieldRef<"Liability", 'String'>
+  readonly interestDayCount: Prisma.FieldRef<"Liability", 'String'>
+  readonly interestAccrualStart: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly lastInterestAccrual: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly nextInterestAccrual: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly interestSchedule: Prisma.FieldRef<"Liability", 'Json'>
+  readonly originationFee: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly originationFeeRate: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly commitmentFee: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly commitmentFeeRate: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly penaltiesAccrued: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly legalFeesAccrued: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly otherFeesAccrued: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly paymentFrequency: Prisma.FieldRef<"Liability", 'String'>
-  readonly paymentAmount: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly regularPaymentAmount: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly paymentSchedule: Prisma.FieldRef<"Liability", 'Json'>
-  readonly isSecured: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly totalPaymentsExpected: Prisma.FieldRef<"Liability", 'Int'>
+  readonly paymentsCompleted: Prisma.FieldRef<"Liability", 'Int'>
+  readonly paymentsMissed: Prisma.FieldRef<"Liability", 'Int'>
+  readonly expectedCashImpact: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly earliestCashImpact: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly worstCaseCashImpact: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly nextCashOutflow: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly cashflowProbability: Prisma.FieldRef<"Liability", 'Decimal'>
   readonly collateralDescription: Prisma.FieldRef<"Liability", 'String'>
   readonly collateralValue: Prisma.FieldRef<"Liability", 'Decimal'>
-  readonly covenants: Prisma.FieldRef<"Liability", 'Json'>
+  readonly collateralCurrency: Prisma.FieldRef<"Liability", 'String'>
+  readonly collateralType: Prisma.FieldRef<"Liability", 'String'>
+  readonly collateralValuationDate: Prisma.FieldRef<"Liability", 'DateTime'>
   readonly riskLevel: Prisma.FieldRef<"Liability", 'String'>
-  readonly alertThreshold: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly riskScore: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly defaultProbability: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly covenants: Prisma.FieldRef<"Liability", 'Json'>
+  readonly covenantBreaches: Prisma.FieldRef<"Liability", 'Int'>
+  readonly lastCovenantCheck: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly nextCovenantCheck: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly isInDefault: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly defaultDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly defaultReason: Prisma.FieldRef<"Liability", 'String'>
+  readonly daysOverdue: Prisma.FieldRef<"Liability", 'Int'>
+  readonly isDisputed: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly disputeReason: Prisma.FieldRef<"Liability", 'String'>
+  readonly disputeAmount: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly disputeOpenedAt: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly disputeResolvedAt: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly disputeResolution: Prisma.FieldRef<"Liability", 'String'>
+  readonly isRestructured: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly restructuredDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly restructuredReason: Prisma.FieldRef<"Liability", 'String'>
+  readonly originalLiabilityId: Prisma.FieldRef<"Liability", 'String'>
+  readonly restructuredTerms: Prisma.FieldRef<"Liability", 'Json'>
+  readonly isWrittenOff: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly writeOffDate: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly writeOffAmount: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly writeOffReason: Prisma.FieldRef<"Liability", 'String'>
+  readonly writeOffApprovedBy: Prisma.FieldRef<"Liability", 'String'>
+  readonly writeOffReasonCode: Prisma.FieldRef<"Liability", 'String'>
+  readonly requiresApproval: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly approvalThreshold: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly approvalStatus: Prisma.FieldRef<"Liability", 'String'>
+  readonly approvedBy: Prisma.FieldRef<"Liability", 'String'>
+  readonly approvedAt: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly approvalChain: Prisma.FieldRef<"Liability", 'Json'>
+  readonly isHedged: Prisma.FieldRef<"Liability", 'Boolean'>
+  readonly hedgeId: Prisma.FieldRef<"Liability", 'String'>
+  readonly hedgePercentage: Prisma.FieldRef<"Liability", 'Decimal'>
+  readonly name: Prisma.FieldRef<"Liability", 'String'>
+  readonly description: Prisma.FieldRef<"Liability", 'String'>
+  readonly reference: Prisma.FieldRef<"Liability", 'String'>
+  readonly internalReference: Prisma.FieldRef<"Liability", 'String'>
   readonly tags: Prisma.FieldRef<"Liability", 'String[]'>
-  readonly notes: Prisma.FieldRef<"Liability", 'String'>
+  readonly systemTags: Prisma.FieldRef<"Liability", 'String[]'>
+  readonly metadata: Prisma.FieldRef<"Liability", 'Json'>
   readonly attachments: Prisma.FieldRef<"Liability", 'Json'>
+  readonly notes: Prisma.FieldRef<"Liability", 'String'>
+  readonly internalNotes: Prisma.FieldRef<"Liability", 'String'>
+  readonly validationMode: Prisma.FieldRef<"Liability", 'String'>
+  readonly locale: Prisma.FieldRef<"Liability", 'String'>
+  readonly language: Prisma.FieldRef<"Liability", 'String'>
+  readonly sourceType: Prisma.FieldRef<"Liability", 'String'>
+  readonly sourceId: Prisma.FieldRef<"Liability", 'String'>
+  readonly sourceModule: Prisma.FieldRef<"Liability", 'String'>
+  readonly importBatchId: Prisma.FieldRef<"Liability", 'String'>
+  readonly version: Prisma.FieldRef<"Liability", 'Int'>
+  readonly eventCount: Prisma.FieldRef<"Liability", 'Int'>
+  readonly lastEventId: Prisma.FieldRef<"Liability", 'String'>
+  readonly archivedAt: Prisma.FieldRef<"Liability", 'DateTime'>
+  readonly archivedBy: Prisma.FieldRef<"Liability", 'String'>
+  readonly archiveReason: Prisma.FieldRef<"Liability", 'String'>
   readonly organizationId: Prisma.FieldRef<"Liability", 'String'>
   readonly createdAt: Prisma.FieldRef<"Liability", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Liability", 'DateTime'>
@@ -2811,6 +9938,30 @@ export type LiabilityDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * Liability.events
+ */
+export type Liability$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiabilityEvent
+   */
+  select?: Prisma.LiabilityEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiabilityEvent
+   */
+  omit?: Prisma.LiabilityEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiabilityEventInclude<ExtArgs> | null
+  where?: Prisma.LiabilityEventWhereInput
+  orderBy?: Prisma.LiabilityEventOrderByWithRelationInput | Prisma.LiabilityEventOrderByWithRelationInput[]
+  cursor?: Prisma.LiabilityEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiabilityEventScalarFieldEnum | Prisma.LiabilityEventScalarFieldEnum[]
+}
+
+/**
  * Liability.payments
  */
 export type Liability$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2832,6 +9983,78 @@ export type Liability$paymentsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.LiabilityPaymentScalarFieldEnum | Prisma.LiabilityPaymentScalarFieldEnum[]
+}
+
+/**
+ * Liability.settlements
+ */
+export type Liability$settlementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiabilitySettlement
+   */
+  select?: Prisma.LiabilitySettlementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiabilitySettlement
+   */
+  omit?: Prisma.LiabilitySettlementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiabilitySettlementInclude<ExtArgs> | null
+  where?: Prisma.LiabilitySettlementWhereInput
+  orderBy?: Prisma.LiabilitySettlementOrderByWithRelationInput | Prisma.LiabilitySettlementOrderByWithRelationInput[]
+  cursor?: Prisma.LiabilitySettlementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiabilitySettlementScalarFieldEnum | Prisma.LiabilitySettlementScalarFieldEnum[]
+}
+
+/**
+ * Liability.accruals
+ */
+export type Liability$accrualsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiabilityAccrual
+   */
+  select?: Prisma.LiabilityAccrualSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiabilityAccrual
+   */
+  omit?: Prisma.LiabilityAccrualOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiabilityAccrualInclude<ExtArgs> | null
+  where?: Prisma.LiabilityAccrualWhereInput
+  orderBy?: Prisma.LiabilityAccrualOrderByWithRelationInput | Prisma.LiabilityAccrualOrderByWithRelationInput[]
+  cursor?: Prisma.LiabilityAccrualWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiabilityAccrualScalarFieldEnum | Prisma.LiabilityAccrualScalarFieldEnum[]
+}
+
+/**
+ * Liability.covenantChecks
+ */
+export type Liability$covenantChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiabilityCovenantCheck
+   */
+  select?: Prisma.LiabilityCovenantCheckSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiabilityCovenantCheck
+   */
+  omit?: Prisma.LiabilityCovenantCheckOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiabilityCovenantCheckInclude<ExtArgs> | null
+  where?: Prisma.LiabilityCovenantCheckWhereInput
+  orderBy?: Prisma.LiabilityCovenantCheckOrderByWithRelationInput | Prisma.LiabilityCovenantCheckOrderByWithRelationInput[]
+  cursor?: Prisma.LiabilityCovenantCheckWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiabilityCovenantCheckScalarFieldEnum | Prisma.LiabilityCovenantCheckScalarFieldEnum[]
 }
 
 /**

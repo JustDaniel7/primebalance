@@ -103,10 +103,10 @@ export async function GET() {
 
   const shortTermLiab = liabilitiesData
     .filter(l => !l.maturityDate || new Date(l.maturityDate) <= oneYearFromNow)
-    .reduce((sum, l) => sum + Number(l.outstandingAmount || l.principalAmount || 0), 0);
+    .reduce((sum, l) => sum + Number(l.totalOutstanding || l.originalPrincipal || 0), 0);
   const longTermLiab = liabilitiesData
     .filter(l => l.maturityDate && new Date(l.maturityDate) > oneYearFromNow)
-    .reduce((sum, l) => sum + Number(l.outstandingAmount || l.principalAmount || 0), 0);
+    .reduce((sum, l) => sum + Number(l.totalOutstanding || l.originalPrincipal || 0), 0);
   const totalLiab = shortTermLiab + longTermLiab;
 
   // Get receivables for working capital

@@ -128,20 +128,105 @@ export type InvoicePayment = Prisma.InvoicePaymentModel
  */
 export type Order = Prisma.OrderModel
 /**
- * Model ArchiveItem
+ * Model ArchiveRecord
  * 
  */
-export type ArchiveItem = Prisma.ArchiveItemModel
+export type ArchiveRecord = Prisma.ArchiveRecordModel
+/**
+ * Model ArchiveLink
+ * 
+ */
+export type ArchiveLink = Prisma.ArchiveLinkModel
+/**
+ * Model ArchiveVersion
+ * 
+ */
+export type ArchiveVersion = Prisma.ArchiveVersionModel
+/**
+ * Model ArchiveAccessLog
+ * 
+ */
+export type ArchiveAccessLog = Prisma.ArchiveAccessLogModel
+/**
+ * Model ArchiveRetentionPolicy
+ * 
+ */
+export type ArchiveRetentionPolicy = Prisma.ArchiveRetentionPolicyModel
+/**
+ * Model ArchiveExport
+ * 
+ */
+export type ArchiveExport = Prisma.ArchiveExportModel
+/**
+ * Model ArchiveImportBatch
+ * 
+ */
+export type ArchiveImportBatch = Prisma.ArchiveImportBatchModel
+/**
+ * Model ArchiveAutomationRule
+ * 
+ */
+export type ArchiveAutomationRule = Prisma.ArchiveAutomationRuleModel
+/**
+ * Model ArchiveException
+ * 
+ */
+export type ArchiveException = Prisma.ArchiveExceptionModel
+/**
+ * Model ArchiveSavedView
+ * 
+ */
+export type ArchiveSavedView = Prisma.ArchiveSavedViewModel
 /**
  * Model Liability
  * 
  */
 export type Liability = Prisma.LiabilityModel
 /**
+ * Model LiabilityEvent
+ * 
+ */
+export type LiabilityEvent = Prisma.LiabilityEventModel
+/**
  * Model LiabilityPayment
  * 
  */
 export type LiabilityPayment = Prisma.LiabilityPaymentModel
+/**
+ * Model LiabilitySettlement
+ * 
+ */
+export type LiabilitySettlement = Prisma.LiabilitySettlementModel
+/**
+ * Model LiabilityAccrual
+ * 
+ */
+export type LiabilityAccrual = Prisma.LiabilityAccrualModel
+/**
+ * Model LiabilityCovenantCheck
+ * 
+ */
+export type LiabilityCovenantCheck = Prisma.LiabilityCovenantCheckModel
+/**
+ * Model LiabilityImportBatch
+ * 
+ */
+export type LiabilityImportBatch = Prisma.LiabilityImportBatchModel
+/**
+ * Model LiabilityAutomationRule
+ * 
+ */
+export type LiabilityAutomationRule = Prisma.LiabilityAutomationRuleModel
+/**
+ * Model LiabilityException
+ * 
+ */
+export type LiabilityException = Prisma.LiabilityExceptionModel
+/**
+ * Model LiabilitySavedView
+ * 
+ */
+export type LiabilitySavedView = Prisma.LiabilitySavedViewModel
 /**
  * Model InventoryItem
  * 

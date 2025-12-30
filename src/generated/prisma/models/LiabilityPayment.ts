@@ -31,6 +31,11 @@ export type LiabilityPaymentAvgAggregateOutputType = {
   principalAmount: runtime.Decimal | null
   interestAmount: runtime.Decimal | null
   feesAmount: runtime.Decimal | null
+  penaltyAmount: runtime.Decimal | null
+  fxRate: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  approvalThreshold: runtime.Decimal | null
+  retryCount: number | null
 }
 
 export type LiabilityPaymentSumAggregateOutputType = {
@@ -38,57 +43,144 @@ export type LiabilityPaymentSumAggregateOutputType = {
   principalAmount: runtime.Decimal | null
   interestAmount: runtime.Decimal | null
   feesAmount: runtime.Decimal | null
+  penaltyAmount: runtime.Decimal | null
+  fxRate: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  approvalThreshold: runtime.Decimal | null
+  retryCount: number | null
 }
 
 export type LiabilityPaymentMinAggregateOutputType = {
   id: string | null
+  liabilityId: string | null
+  paymentId: string | null
   amount: runtime.Decimal | null
   principalAmount: runtime.Decimal | null
   interestAmount: runtime.Decimal | null
   feesAmount: runtime.Decimal | null
+  penaltyAmount: runtime.Decimal | null
   currency: string | null
-  paymentDate: Date | null
+  fxRate: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  scheduledDate: Date | null
   dueDate: Date | null
+  paymentDate: Date | null
+  executedAt: Date | null
   status: string | null
-  reference: string | null
+  requiresApproval: boolean | null
+  approvalThreshold: runtime.Decimal | null
+  approvalStatus: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  executedBy: string | null
+  paymentMethod: string | null
+  bankReference: string | null
   transactionId: string | null
+  failureReason: string | null
+  failureCode: string | null
+  retryCount: number | null
+  nextRetryAt: Date | null
+  isReversed: boolean | null
+  reversedAt: Date | null
+  reversedBy: string | null
+  reversalReason: string | null
+  reference: string | null
+  description: string | null
   notes: string | null
-  liabilityId: string | null
+  isIntercompany: boolean | null
+  counterpartyLegalEntityId: string | null
+  nettingId: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type LiabilityPaymentMaxAggregateOutputType = {
   id: string | null
+  liabilityId: string | null
+  paymentId: string | null
   amount: runtime.Decimal | null
   principalAmount: runtime.Decimal | null
   interestAmount: runtime.Decimal | null
   feesAmount: runtime.Decimal | null
+  penaltyAmount: runtime.Decimal | null
   currency: string | null
-  paymentDate: Date | null
+  fxRate: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  scheduledDate: Date | null
   dueDate: Date | null
+  paymentDate: Date | null
+  executedAt: Date | null
   status: string | null
-  reference: string | null
+  requiresApproval: boolean | null
+  approvalThreshold: runtime.Decimal | null
+  approvalStatus: string | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  executedBy: string | null
+  paymentMethod: string | null
+  bankReference: string | null
   transactionId: string | null
+  failureReason: string | null
+  failureCode: string | null
+  retryCount: number | null
+  nextRetryAt: Date | null
+  isReversed: boolean | null
+  reversedAt: Date | null
+  reversedBy: string | null
+  reversalReason: string | null
+  reference: string | null
+  description: string | null
   notes: string | null
-  liabilityId: string | null
+  isIntercompany: boolean | null
+  counterpartyLegalEntityId: string | null
+  nettingId: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type LiabilityPaymentCountAggregateOutputType = {
   id: number
+  liabilityId: number
+  paymentId: number
   amount: number
   principalAmount: number
   interestAmount: number
   feesAmount: number
+  penaltyAmount: number
   currency: number
-  paymentDate: number
+  fxRate: number
+  amountInReporting: number
+  scheduledDate: number
   dueDate: number
+  paymentDate: number
+  executedAt: number
   status: number
-  reference: number
+  requiresApproval: number
+  approvalThreshold: number
+  approvalStatus: number
+  approvalChain: number
+  approvedBy: number
+  approvedAt: number
+  executedBy: number
+  paymentMethod: number
+  bankReference: number
   transactionId: number
+  failureReason: number
+  failureCode: number
+  retryCount: number
+  nextRetryAt: number
+  isReversed: number
+  reversedAt: number
+  reversedBy: number
+  reversalReason: number
+  reference: number
+  description: number
   notes: number
-  liabilityId: number
+  isIntercompany: number
+  counterpartyLegalEntityId: number
+  nettingId: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -98,6 +190,11 @@ export type LiabilityPaymentAvgAggregateInputType = {
   principalAmount?: true
   interestAmount?: true
   feesAmount?: true
+  penaltyAmount?: true
+  fxRate?: true
+  amountInReporting?: true
+  approvalThreshold?: true
+  retryCount?: true
 }
 
 export type LiabilityPaymentSumAggregateInputType = {
@@ -105,57 +202,144 @@ export type LiabilityPaymentSumAggregateInputType = {
   principalAmount?: true
   interestAmount?: true
   feesAmount?: true
+  penaltyAmount?: true
+  fxRate?: true
+  amountInReporting?: true
+  approvalThreshold?: true
+  retryCount?: true
 }
 
 export type LiabilityPaymentMinAggregateInputType = {
   id?: true
+  liabilityId?: true
+  paymentId?: true
   amount?: true
   principalAmount?: true
   interestAmount?: true
   feesAmount?: true
+  penaltyAmount?: true
   currency?: true
-  paymentDate?: true
+  fxRate?: true
+  amountInReporting?: true
+  scheduledDate?: true
   dueDate?: true
+  paymentDate?: true
+  executedAt?: true
   status?: true
-  reference?: true
+  requiresApproval?: true
+  approvalThreshold?: true
+  approvalStatus?: true
+  approvedBy?: true
+  approvedAt?: true
+  executedBy?: true
+  paymentMethod?: true
+  bankReference?: true
   transactionId?: true
+  failureReason?: true
+  failureCode?: true
+  retryCount?: true
+  nextRetryAt?: true
+  isReversed?: true
+  reversedAt?: true
+  reversedBy?: true
+  reversalReason?: true
+  reference?: true
+  description?: true
   notes?: true
-  liabilityId?: true
+  isIntercompany?: true
+  counterpartyLegalEntityId?: true
+  nettingId?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type LiabilityPaymentMaxAggregateInputType = {
   id?: true
+  liabilityId?: true
+  paymentId?: true
   amount?: true
   principalAmount?: true
   interestAmount?: true
   feesAmount?: true
+  penaltyAmount?: true
   currency?: true
-  paymentDate?: true
+  fxRate?: true
+  amountInReporting?: true
+  scheduledDate?: true
   dueDate?: true
+  paymentDate?: true
+  executedAt?: true
   status?: true
-  reference?: true
+  requiresApproval?: true
+  approvalThreshold?: true
+  approvalStatus?: true
+  approvedBy?: true
+  approvedAt?: true
+  executedBy?: true
+  paymentMethod?: true
+  bankReference?: true
   transactionId?: true
+  failureReason?: true
+  failureCode?: true
+  retryCount?: true
+  nextRetryAt?: true
+  isReversed?: true
+  reversedAt?: true
+  reversedBy?: true
+  reversalReason?: true
+  reference?: true
+  description?: true
   notes?: true
-  liabilityId?: true
+  isIntercompany?: true
+  counterpartyLegalEntityId?: true
+  nettingId?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type LiabilityPaymentCountAggregateInputType = {
   id?: true
+  liabilityId?: true
+  paymentId?: true
   amount?: true
   principalAmount?: true
   interestAmount?: true
   feesAmount?: true
+  penaltyAmount?: true
   currency?: true
-  paymentDate?: true
+  fxRate?: true
+  amountInReporting?: true
+  scheduledDate?: true
   dueDate?: true
+  paymentDate?: true
+  executedAt?: true
   status?: true
-  reference?: true
+  requiresApproval?: true
+  approvalThreshold?: true
+  approvalStatus?: true
+  approvalChain?: true
+  approvedBy?: true
+  approvedAt?: true
+  executedBy?: true
+  paymentMethod?: true
+  bankReference?: true
   transactionId?: true
+  failureReason?: true
+  failureCode?: true
+  retryCount?: true
+  nextRetryAt?: true
+  isReversed?: true
+  reversedAt?: true
+  reversedBy?: true
+  reversalReason?: true
+  reference?: true
+  description?: true
   notes?: true
-  liabilityId?: true
+  isIntercompany?: true
+  counterpartyLegalEntityId?: true
+  nettingId?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -247,19 +431,47 @@ export type LiabilityPaymentGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type LiabilityPaymentGroupByOutputType = {
   id: string
+  liabilityId: string
+  paymentId: string
   amount: runtime.Decimal
   principalAmount: runtime.Decimal
   interestAmount: runtime.Decimal
   feesAmount: runtime.Decimal
+  penaltyAmount: runtime.Decimal
   currency: string
-  paymentDate: Date
+  fxRate: runtime.Decimal | null
+  amountInReporting: runtime.Decimal | null
+  scheduledDate: Date | null
   dueDate: Date | null
+  paymentDate: Date | null
+  executedAt: Date | null
   status: string
-  reference: string | null
+  requiresApproval: boolean
+  approvalThreshold: runtime.Decimal | null
+  approvalStatus: string | null
+  approvalChain: runtime.JsonValue | null
+  approvedBy: string | null
+  approvedAt: Date | null
+  executedBy: string | null
+  paymentMethod: string | null
+  bankReference: string | null
   transactionId: string | null
+  failureReason: string | null
+  failureCode: string | null
+  retryCount: number
+  nextRetryAt: Date | null
+  isReversed: boolean
+  reversedAt: Date | null
+  reversedBy: string | null
+  reversalReason: string | null
+  reference: string | null
+  description: string | null
   notes: string | null
-  liabilityId: string
+  isIntercompany: boolean
+  counterpartyLegalEntityId: string | null
+  nettingId: string | null
   createdAt: Date
+  updatedAt: Date
   _count: LiabilityPaymentCountAggregateOutputType | null
   _avg: LiabilityPaymentAvgAggregateOutputType | null
   _sum: LiabilityPaymentSumAggregateOutputType | null
@@ -287,76 +499,188 @@ export type LiabilityPaymentWhereInput = {
   OR?: Prisma.LiabilityPaymentWhereInput[]
   NOT?: Prisma.LiabilityPaymentWhereInput | Prisma.LiabilityPaymentWhereInput[]
   id?: Prisma.StringFilter<"LiabilityPayment"> | string
+  liabilityId?: Prisma.StringFilter<"LiabilityPayment"> | string
+  paymentId?: Prisma.StringFilter<"LiabilityPayment"> | string
   amount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"LiabilityPayment"> | string
-  paymentDate?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
+  fxRate?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  paymentDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  executedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
   status?: Prisma.StringFilter<"LiabilityPayment"> | string
-  reference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  requiresApproval?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  approvalChain?: Prisma.JsonNullableFilter<"LiabilityPayment">
+  approvedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  executedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  paymentMethod?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  bankReference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   transactionId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  failureReason?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  failureCode?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  retryCount?: Prisma.IntFilter<"LiabilityPayment"> | number
+  nextRetryAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  isReversed?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  reversedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  reversedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  reversalReason?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  reference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  description?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   notes?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
-  liabilityId?: Prisma.StringFilter<"LiabilityPayment"> | string
+  isIntercompany?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  counterpartyLegalEntityId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  nettingId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
   liability?: Prisma.XOR<Prisma.LiabilityScalarRelationFilter, Prisma.LiabilityWhereInput>
 }
 
 export type LiabilityPaymentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  paymentDate?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledDate?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  executedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalChain?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  executedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  bankReference?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  failureReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  failureCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isReversed?: Prisma.SortOrder
+  reversedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reversedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  reversalReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  liabilityId?: Prisma.SortOrder
+  isIntercompany?: Prisma.SortOrder
+  counterpartyLegalEntityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  nettingId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   liability?: Prisma.LiabilityOrderByWithRelationInput
 }
 
 export type LiabilityPaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  paymentId?: string
   AND?: Prisma.LiabilityPaymentWhereInput | Prisma.LiabilityPaymentWhereInput[]
   OR?: Prisma.LiabilityPaymentWhereInput[]
   NOT?: Prisma.LiabilityPaymentWhereInput | Prisma.LiabilityPaymentWhereInput[]
+  liabilityId?: Prisma.StringFilter<"LiabilityPayment"> | string
   amount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"LiabilityPayment"> | string
-  paymentDate?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
+  fxRate?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  paymentDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  executedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
   status?: Prisma.StringFilter<"LiabilityPayment"> | string
-  reference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  requiresApproval?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  approvalChain?: Prisma.JsonNullableFilter<"LiabilityPayment">
+  approvedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  executedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  paymentMethod?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  bankReference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   transactionId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  failureReason?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  failureCode?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  retryCount?: Prisma.IntFilter<"LiabilityPayment"> | number
+  nextRetryAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  isReversed?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  reversedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  reversedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  reversalReason?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  reference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  description?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   notes?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
-  liabilityId?: Prisma.StringFilter<"LiabilityPayment"> | string
+  isIntercompany?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  counterpartyLegalEntityId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  nettingId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
   liability?: Prisma.XOR<Prisma.LiabilityScalarRelationFilter, Prisma.LiabilityWhereInput>
-}, "id">
+}, "id" | "paymentId">
 
 export type LiabilityPaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  paymentDate?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduledDate?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  executedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvalChain?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  executedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  bankReference?: Prisma.SortOrderInput | Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  failureReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  failureCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isReversed?: Prisma.SortOrder
+  reversedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reversedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  reversalReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  liabilityId?: Prisma.SortOrder
+  isIntercompany?: Prisma.SortOrder
+  counterpartyLegalEntityId?: Prisma.SortOrderInput | Prisma.SortOrder
+  nettingId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.LiabilityPaymentCountOrderByAggregateInput
   _avg?: Prisma.LiabilityPaymentAvgOrderByAggregateInput
   _max?: Prisma.LiabilityPaymentMaxOrderByAggregateInput
@@ -369,137 +693,361 @@ export type LiabilityPaymentScalarWhereWithAggregatesInput = {
   OR?: Prisma.LiabilityPaymentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LiabilityPaymentScalarWhereWithAggregatesInput | Prisma.LiabilityPaymentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"LiabilityPayment"> | string
+  liabilityId?: Prisma.StringWithAggregatesFilter<"LiabilityPayment"> | string
+  paymentId?: Prisma.StringWithAggregatesFilter<"LiabilityPayment"> | string
   amount?: Prisma.DecimalWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"LiabilityPayment"> | string
-  paymentDate?: Prisma.DateTimeWithAggregatesFilter<"LiabilityPayment"> | Date | string
+  fxRate?: Prisma.DecimalNullableWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.DecimalNullableWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
+  paymentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
+  executedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
   status?: Prisma.StringWithAggregatesFilter<"LiabilityPayment"> | string
-  reference?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  requiresApproval?: Prisma.BoolWithAggregatesFilter<"LiabilityPayment"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableWithAggregatesFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  approvalChain?: Prisma.JsonNullableWithAggregatesFilter<"LiabilityPayment">
+  approvedBy?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
+  executedBy?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  paymentMethod?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  bankReference?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
   transactionId?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  failureReason?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  failureCode?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  retryCount?: Prisma.IntWithAggregatesFilter<"LiabilityPayment"> | number
+  nextRetryAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
+  isReversed?: Prisma.BoolWithAggregatesFilter<"LiabilityPayment"> | boolean
+  reversedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiabilityPayment"> | Date | string | null
+  reversedBy?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  reversalReason?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  reference?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  description?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
-  liabilityId?: Prisma.StringWithAggregatesFilter<"LiabilityPayment"> | string
+  isIntercompany?: Prisma.BoolWithAggregatesFilter<"LiabilityPayment"> | boolean
+  counterpartyLegalEntityId?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
+  nettingId?: Prisma.StringNullableWithAggregatesFilter<"LiabilityPayment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LiabilityPayment"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LiabilityPayment"> | Date | string
 }
 
 export type LiabilityPaymentCreateInput = {
   id?: string
+  paymentId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  paymentDate: Date | string
+  fxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Date | string | null
   dueDate?: Date | string | null
+  paymentDate?: Date | string | null
+  executedAt?: Date | string | null
   status?: string
-  reference?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  executedBy?: string | null
+  paymentMethod?: string | null
+  bankReference?: string | null
   transactionId?: string | null
+  failureReason?: string | null
+  failureCode?: string | null
+  retryCount?: number
+  nextRetryAt?: Date | string | null
+  isReversed?: boolean
+  reversedAt?: Date | string | null
+  reversedBy?: string | null
+  reversalReason?: string | null
+  reference?: string | null
+  description?: string | null
   notes?: string | null
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: string | null
+  nettingId?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   liability: Prisma.LiabilityCreateNestedOneWithoutPaymentsInput
 }
 
 export type LiabilityPaymentUncheckedCreateInput = {
   id?: string
+  liabilityId: string
+  paymentId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  paymentDate: Date | string
+  fxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Date | string | null
   dueDate?: Date | string | null
+  paymentDate?: Date | string | null
+  executedAt?: Date | string | null
   status?: string
-  reference?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  executedBy?: string | null
+  paymentMethod?: string | null
+  bankReference?: string | null
   transactionId?: string | null
+  failureReason?: string | null
+  failureCode?: string | null
+  retryCount?: number
+  nextRetryAt?: Date | string | null
+  isReversed?: boolean
+  reversedAt?: Date | string | null
+  reversedBy?: string | null
+  reversalReason?: string | null
+  reference?: string | null
+  description?: string | null
   notes?: string | null
-  liabilityId: string
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: string | null
+  nettingId?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LiabilityPaymentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   liability?: Prisma.LiabilityUpdateOneRequiredWithoutPaymentsNestedInput
 }
 
 export type LiabilityPaymentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LiabilityPaymentCreateManyInput = {
   id?: string
+  liabilityId: string
+  paymentId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  paymentDate: Date | string
+  fxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Date | string | null
   dueDate?: Date | string | null
+  paymentDate?: Date | string | null
+  executedAt?: Date | string | null
   status?: string
-  reference?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  executedBy?: string | null
+  paymentMethod?: string | null
+  bankReference?: string | null
   transactionId?: string | null
+  failureReason?: string | null
+  failureCode?: string | null
+  retryCount?: number
+  nextRetryAt?: Date | string | null
+  isReversed?: boolean
+  reversedAt?: Date | string | null
+  reversedBy?: string | null
+  reversalReason?: string | null
+  reference?: string | null
+  description?: string | null
   notes?: string | null
-  liabilityId: string
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: string | null
+  nettingId?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LiabilityPaymentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LiabilityPaymentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  liabilityId?: Prisma.StringFieldUpdateOperationsInput | string
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LiabilityPaymentListRelationFilter = {
@@ -514,19 +1062,47 @@ export type LiabilityPaymentOrderByRelationAggregateInput = {
 
 export type LiabilityPaymentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  paymentDate?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  scheduledDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  paymentDate?: Prisma.SortOrder
+  executedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrder
+  approvalChain?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  executedBy?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  bankReference?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  failureReason?: Prisma.SortOrder
+  failureCode?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrder
+  isReversed?: Prisma.SortOrder
+  reversedAt?: Prisma.SortOrder
+  reversedBy?: Prisma.SortOrder
+  reversalReason?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  liabilityId?: Prisma.SortOrder
+  isIntercompany?: Prisma.SortOrder
+  counterpartyLegalEntityId?: Prisma.SortOrder
+  nettingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type LiabilityPaymentAvgOrderByAggregateInput = {
@@ -534,40 +1110,99 @@ export type LiabilityPaymentAvgOrderByAggregateInput = {
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
 }
 
 export type LiabilityPaymentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  paymentDate?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  scheduledDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  paymentDate?: Prisma.SortOrder
+  executedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  executedBy?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  bankReference?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  failureReason?: Prisma.SortOrder
+  failureCode?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrder
+  isReversed?: Prisma.SortOrder
+  reversedAt?: Prisma.SortOrder
+  reversedBy?: Prisma.SortOrder
+  reversalReason?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  liabilityId?: Prisma.SortOrder
+  isIntercompany?: Prisma.SortOrder
+  counterpartyLegalEntityId?: Prisma.SortOrder
+  nettingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type LiabilityPaymentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  liabilityId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  paymentDate?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  scheduledDate?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
+  paymentDate?: Prisma.SortOrder
+  executedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  reference?: Prisma.SortOrder
+  requiresApproval?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  approvalStatus?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
+  executedBy?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  bankReference?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  failureReason?: Prisma.SortOrder
+  failureCode?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrder
+  isReversed?: Prisma.SortOrder
+  reversedAt?: Prisma.SortOrder
+  reversedBy?: Prisma.SortOrder
+  reversalReason?: Prisma.SortOrder
+  reference?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  liabilityId?: Prisma.SortOrder
+  isIntercompany?: Prisma.SortOrder
+  counterpartyLegalEntityId?: Prisma.SortOrder
+  nettingId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type LiabilityPaymentSumOrderByAggregateInput = {
@@ -575,6 +1210,11 @@ export type LiabilityPaymentSumOrderByAggregateInput = {
   principalAmount?: Prisma.SortOrder
   interestAmount?: Prisma.SortOrder
   feesAmount?: Prisma.SortOrder
+  penaltyAmount?: Prisma.SortOrder
+  fxRate?: Prisma.SortOrder
+  amountInReporting?: Prisma.SortOrder
+  approvalThreshold?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
 }
 
 export type LiabilityPaymentCreateNestedManyWithoutLiabilityInput = {
@@ -621,34 +1261,90 @@ export type LiabilityPaymentUncheckedUpdateManyWithoutLiabilityNestedInput = {
 
 export type LiabilityPaymentCreateWithoutLiabilityInput = {
   id?: string
+  paymentId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  paymentDate: Date | string
+  fxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Date | string | null
   dueDate?: Date | string | null
+  paymentDate?: Date | string | null
+  executedAt?: Date | string | null
   status?: string
-  reference?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  executedBy?: string | null
+  paymentMethod?: string | null
+  bankReference?: string | null
   transactionId?: string | null
+  failureReason?: string | null
+  failureCode?: string | null
+  retryCount?: number
+  nextRetryAt?: Date | string | null
+  isReversed?: boolean
+  reversedAt?: Date | string | null
+  reversedBy?: string | null
+  reversalReason?: string | null
+  reference?: string | null
+  description?: string | null
   notes?: string | null
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: string | null
+  nettingId?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LiabilityPaymentUncheckedCreateWithoutLiabilityInput = {
   id?: string
+  paymentId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  paymentDate: Date | string
+  fxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Date | string | null
   dueDate?: Date | string | null
+  paymentDate?: Date | string | null
+  executedAt?: Date | string | null
   status?: string
-  reference?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  executedBy?: string | null
+  paymentMethod?: string | null
+  bankReference?: string | null
   transactionId?: string | null
+  failureReason?: string | null
+  failureCode?: string | null
+  retryCount?: number
+  nextRetryAt?: Date | string | null
+  isReversed?: boolean
+  reversedAt?: Date | string | null
+  reversedBy?: string | null
+  reversalReason?: string | null
+  reference?: string | null
+  description?: string | null
   notes?: string | null
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: string | null
+  nettingId?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LiabilityPaymentCreateOrConnectWithoutLiabilityInput = {
@@ -682,159 +1378,411 @@ export type LiabilityPaymentScalarWhereInput = {
   OR?: Prisma.LiabilityPaymentScalarWhereInput[]
   NOT?: Prisma.LiabilityPaymentScalarWhereInput | Prisma.LiabilityPaymentScalarWhereInput[]
   id?: Prisma.StringFilter<"LiabilityPayment"> | string
+  liabilityId?: Prisma.StringFilter<"LiabilityPayment"> | string
+  paymentId?: Prisma.StringFilter<"LiabilityPayment"> | string
   amount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"LiabilityPayment"> | string
-  paymentDate?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
+  fxRate?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
   dueDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  paymentDate?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  executedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
   status?: Prisma.StringFilter<"LiabilityPayment"> | string
-  reference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  requiresApproval?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  approvalThreshold?: Prisma.DecimalNullableFilter<"LiabilityPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  approvalChain?: Prisma.JsonNullableFilter<"LiabilityPayment">
+  approvedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  executedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  paymentMethod?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  bankReference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   transactionId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  failureReason?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  failureCode?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  retryCount?: Prisma.IntFilter<"LiabilityPayment"> | number
+  nextRetryAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  isReversed?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  reversedAt?: Prisma.DateTimeNullableFilter<"LiabilityPayment"> | Date | string | null
+  reversedBy?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  reversalReason?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  reference?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  description?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   notes?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
-  liabilityId?: Prisma.StringFilter<"LiabilityPayment"> | string
+  isIntercompany?: Prisma.BoolFilter<"LiabilityPayment"> | boolean
+  counterpartyLegalEntityId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
+  nettingId?: Prisma.StringNullableFilter<"LiabilityPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"LiabilityPayment"> | Date | string
 }
 
 export type LiabilityPaymentCreateManyLiabilityInput = {
   id?: string
+  paymentId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
-  paymentDate: Date | string
+  fxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Date | string | null
   dueDate?: Date | string | null
+  paymentDate?: Date | string | null
+  executedAt?: Date | string | null
   status?: string
-  reference?: string | null
+  requiresApproval?: boolean
+  approvalThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  executedBy?: string | null
+  paymentMethod?: string | null
+  bankReference?: string | null
   transactionId?: string | null
+  failureReason?: string | null
+  failureCode?: string | null
+  retryCount?: number
+  nextRetryAt?: Date | string | null
+  isReversed?: boolean
+  reversedAt?: Date | string | null
+  reversedBy?: string | null
+  reversalReason?: string | null
+  reference?: string | null
+  description?: string | null
   notes?: string | null
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: string | null
+  nettingId?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type LiabilityPaymentUpdateWithoutLiabilityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LiabilityPaymentUncheckedUpdateWithoutLiabilityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LiabilityPaymentUncheckedUpdateManyWithoutLiabilityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   principalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feesAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  penaltyAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fxRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  amountInReporting?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiresApproval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvalThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  approvalStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalChain?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  executedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bankReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failureCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isReversed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reversedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reversedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reversalReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isIntercompany?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  counterpartyLegalEntityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nettingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type LiabilityPaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  liabilityId?: boolean
+  paymentId?: boolean
   amount?: boolean
   principalAmount?: boolean
   interestAmount?: boolean
   feesAmount?: boolean
+  penaltyAmount?: boolean
   currency?: boolean
-  paymentDate?: boolean
+  fxRate?: boolean
+  amountInReporting?: boolean
+  scheduledDate?: boolean
   dueDate?: boolean
+  paymentDate?: boolean
+  executedAt?: boolean
   status?: boolean
-  reference?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvalChain?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  executedBy?: boolean
+  paymentMethod?: boolean
+  bankReference?: boolean
   transactionId?: boolean
+  failureReason?: boolean
+  failureCode?: boolean
+  retryCount?: boolean
+  nextRetryAt?: boolean
+  isReversed?: boolean
+  reversedAt?: boolean
+  reversedBy?: boolean
+  reversalReason?: boolean
+  reference?: boolean
+  description?: boolean
   notes?: boolean
-  liabilityId?: boolean
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: boolean
+  nettingId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   liability?: boolean | Prisma.LiabilityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["liabilityPayment"]>
 
 export type LiabilityPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  liabilityId?: boolean
+  paymentId?: boolean
   amount?: boolean
   principalAmount?: boolean
   interestAmount?: boolean
   feesAmount?: boolean
+  penaltyAmount?: boolean
   currency?: boolean
-  paymentDate?: boolean
+  fxRate?: boolean
+  amountInReporting?: boolean
+  scheduledDate?: boolean
   dueDate?: boolean
+  paymentDate?: boolean
+  executedAt?: boolean
   status?: boolean
-  reference?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvalChain?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  executedBy?: boolean
+  paymentMethod?: boolean
+  bankReference?: boolean
   transactionId?: boolean
+  failureReason?: boolean
+  failureCode?: boolean
+  retryCount?: boolean
+  nextRetryAt?: boolean
+  isReversed?: boolean
+  reversedAt?: boolean
+  reversedBy?: boolean
+  reversalReason?: boolean
+  reference?: boolean
+  description?: boolean
   notes?: boolean
-  liabilityId?: boolean
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: boolean
+  nettingId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   liability?: boolean | Prisma.LiabilityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["liabilityPayment"]>
 
 export type LiabilityPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  liabilityId?: boolean
+  paymentId?: boolean
   amount?: boolean
   principalAmount?: boolean
   interestAmount?: boolean
   feesAmount?: boolean
+  penaltyAmount?: boolean
   currency?: boolean
-  paymentDate?: boolean
+  fxRate?: boolean
+  amountInReporting?: boolean
+  scheduledDate?: boolean
   dueDate?: boolean
+  paymentDate?: boolean
+  executedAt?: boolean
   status?: boolean
-  reference?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvalChain?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  executedBy?: boolean
+  paymentMethod?: boolean
+  bankReference?: boolean
   transactionId?: boolean
+  failureReason?: boolean
+  failureCode?: boolean
+  retryCount?: boolean
+  nextRetryAt?: boolean
+  isReversed?: boolean
+  reversedAt?: boolean
+  reversedBy?: boolean
+  reversalReason?: boolean
+  reference?: boolean
+  description?: boolean
   notes?: boolean
-  liabilityId?: boolean
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: boolean
+  nettingId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   liability?: boolean | Prisma.LiabilityDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["liabilityPayment"]>
 
 export type LiabilityPaymentSelectScalar = {
   id?: boolean
+  liabilityId?: boolean
+  paymentId?: boolean
   amount?: boolean
   principalAmount?: boolean
   interestAmount?: boolean
   feesAmount?: boolean
+  penaltyAmount?: boolean
   currency?: boolean
-  paymentDate?: boolean
+  fxRate?: boolean
+  amountInReporting?: boolean
+  scheduledDate?: boolean
   dueDate?: boolean
+  paymentDate?: boolean
+  executedAt?: boolean
   status?: boolean
-  reference?: boolean
+  requiresApproval?: boolean
+  approvalThreshold?: boolean
+  approvalStatus?: boolean
+  approvalChain?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
+  executedBy?: boolean
+  paymentMethod?: boolean
+  bankReference?: boolean
   transactionId?: boolean
+  failureReason?: boolean
+  failureCode?: boolean
+  retryCount?: boolean
+  nextRetryAt?: boolean
+  isReversed?: boolean
+  reversedAt?: boolean
+  reversedBy?: boolean
+  reversalReason?: boolean
+  reference?: boolean
+  description?: boolean
   notes?: boolean
-  liabilityId?: boolean
+  isIntercompany?: boolean
+  counterpartyLegalEntityId?: boolean
+  nettingId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type LiabilityPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "principalAmount" | "interestAmount" | "feesAmount" | "currency" | "paymentDate" | "dueDate" | "status" | "reference" | "transactionId" | "notes" | "liabilityId" | "createdAt", ExtArgs["result"]["liabilityPayment"]>
+export type LiabilityPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "liabilityId" | "paymentId" | "amount" | "principalAmount" | "interestAmount" | "feesAmount" | "penaltyAmount" | "currency" | "fxRate" | "amountInReporting" | "scheduledDate" | "dueDate" | "paymentDate" | "executedAt" | "status" | "requiresApproval" | "approvalThreshold" | "approvalStatus" | "approvalChain" | "approvedBy" | "approvedAt" | "executedBy" | "paymentMethod" | "bankReference" | "transactionId" | "failureReason" | "failureCode" | "retryCount" | "nextRetryAt" | "isReversed" | "reversedAt" | "reversedBy" | "reversalReason" | "reference" | "description" | "notes" | "isIntercompany" | "counterpartyLegalEntityId" | "nettingId" | "createdAt" | "updatedAt", ExtArgs["result"]["liabilityPayment"]>
 export type LiabilityPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   liability?: boolean | Prisma.LiabilityDefaultArgs<ExtArgs>
 }
@@ -852,19 +1800,47 @@ export type $LiabilityPaymentPayload<ExtArgs extends runtime.Types.Extensions.In
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    liabilityId: string
+    paymentId: string
     amount: runtime.Decimal
     principalAmount: runtime.Decimal
     interestAmount: runtime.Decimal
     feesAmount: runtime.Decimal
+    penaltyAmount: runtime.Decimal
     currency: string
-    paymentDate: Date
+    fxRate: runtime.Decimal | null
+    amountInReporting: runtime.Decimal | null
+    scheduledDate: Date | null
     dueDate: Date | null
+    paymentDate: Date | null
+    executedAt: Date | null
     status: string
-    reference: string | null
+    requiresApproval: boolean
+    approvalThreshold: runtime.Decimal | null
+    approvalStatus: string | null
+    approvalChain: runtime.JsonValue | null
+    approvedBy: string | null
+    approvedAt: Date | null
+    executedBy: string | null
+    paymentMethod: string | null
+    bankReference: string | null
     transactionId: string | null
+    failureReason: string | null
+    failureCode: string | null
+    retryCount: number
+    nextRetryAt: Date | null
+    isReversed: boolean
+    reversedAt: Date | null
+    reversedBy: string | null
+    reversalReason: string | null
+    reference: string | null
+    description: string | null
     notes: string | null
-    liabilityId: string
+    isIntercompany: boolean
+    counterpartyLegalEntityId: string | null
+    nettingId: string | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["liabilityPayment"]>
   composites: {}
 }
@@ -1290,19 +2266,47 @@ export interface Prisma__LiabilityPaymentClient<T, Null = never, ExtArgs extends
  */
 export interface LiabilityPaymentFieldRefs {
   readonly id: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly liabilityId: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly paymentId: Prisma.FieldRef<"LiabilityPayment", 'String'>
   readonly amount: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
   readonly principalAmount: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
   readonly interestAmount: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
   readonly feesAmount: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
+  readonly penaltyAmount: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
   readonly currency: Prisma.FieldRef<"LiabilityPayment", 'String'>
-  readonly paymentDate: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly fxRate: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
+  readonly amountInReporting: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
+  readonly scheduledDate: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
   readonly dueDate: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly paymentDate: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly executedAt: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
   readonly status: Prisma.FieldRef<"LiabilityPayment", 'String'>
-  readonly reference: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly requiresApproval: Prisma.FieldRef<"LiabilityPayment", 'Boolean'>
+  readonly approvalThreshold: Prisma.FieldRef<"LiabilityPayment", 'Decimal'>
+  readonly approvalStatus: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly approvalChain: Prisma.FieldRef<"LiabilityPayment", 'Json'>
+  readonly approvedBy: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly approvedAt: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly executedBy: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly paymentMethod: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly bankReference: Prisma.FieldRef<"LiabilityPayment", 'String'>
   readonly transactionId: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly failureReason: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly failureCode: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly retryCount: Prisma.FieldRef<"LiabilityPayment", 'Int'>
+  readonly nextRetryAt: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly isReversed: Prisma.FieldRef<"LiabilityPayment", 'Boolean'>
+  readonly reversedAt: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly reversedBy: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly reversalReason: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly reference: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly description: Prisma.FieldRef<"LiabilityPayment", 'String'>
   readonly notes: Prisma.FieldRef<"LiabilityPayment", 'String'>
-  readonly liabilityId: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly isIntercompany: Prisma.FieldRef<"LiabilityPayment", 'Boolean'>
+  readonly counterpartyLegalEntityId: Prisma.FieldRef<"LiabilityPayment", 'String'>
+  readonly nettingId: Prisma.FieldRef<"LiabilityPayment", 'String'>
   readonly createdAt: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"LiabilityPayment", 'DateTime'>
 }
     
 

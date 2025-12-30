@@ -27,6 +27,2170 @@ const daysFromNow = (days: number) => {
   return d
 }
 
+// Helper to generate payment schedule
+function generatePaymentSchedule(
+  startDate: Date,
+  endDate: Date,
+  frequency: string,
+  amount: number
+): Array<{ date: string; amount: number; status: string }> {
+  const schedule: Array<{ date: string; amount: number; status: string }> = []
+  const current = new Date(startDate)
+  const end = new Date(endDate)
+  const now = new Date()
+
+  const monthIncrement = frequency === 'monthly' ? 1 : frequency === 'quarterly' ? 3 : frequency === 'semi_annually' ? 6 : 12
+
+  while (current <= end) {
+    schedule.push({
+      date: current.toISOString(),
+      amount,
+      status: current < now ? 'completed' : 'scheduled',
+    })
+    current.setMonth(current.getMonth() + monthIncrement)
+  }
+
+  return schedule
+}
+
+  // =============================================================================
+// ARCHIVE SEED DATA (Add to prisma/seed.ts)
+// =============================================================================
+
+async function seedArchive(organizationId: string, userId: string) {
+  console.log('Seeding archive records...');
+
+  const now = new Date();
+  const orgSuffix = organizationId.slice(-6);
+
+  // Helper to generate content hash
+  function generateHash(content: any): string {
+    const str = JSON.stringify(content, Object.keys(content).sort());
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return `sha256_${Math.abs(hash).toString(16).padStart(64, '0')}`;
+  }
+
+  // ==========================================================================
+  // RETENTION POLICIES
+  // ==========================================================================
+
+  const retentionPolicies = await Promise.all([
+    prisma.archiveRetentionPolicy.upsert({
+      where: { organizationId_code: { organizationId, code: 'DE-STANDARD' } },
+      update: {},
+      create: {
+        name: 'German Standard Retention',
+        code: 'DE-STANDARD',
+        description: 'Standard 10-year retention per German tax law (AO §147, HGB §257)',
+        objectTypes: ['invoice', 'order', 'payment', 'journal_entry', 'report'],
+        jurisdictions: ['DE'],
+        categories: ['financial', 'accounting'],
+        retentionYears: 10,
+        retentionMonths: 0,
+        retentionStartTrigger: 'fiscal_year_end',
+        legalBasis: 'AO §147, HGB §257',
+        legalReference: 'German Tax Code / Commercial Code',
+        warningDaysBefore: 90,
+        autoExtendOnAccess: false,
+        priority: 10,
+        isActive: true,
+        organizationId,
+      },
+    }),
+    prisma.archiveRetentionPolicy.upsert({
+      where: { organizationId_code: { organizationId, code: 'EU-TAX' } },
+      update: {},
+      create: {
+        name: 'EU Tax Documents',
+        code: 'EU-TAX',
+        description: 'Tax-relevant documents for EU jurisdictions',
+        objectTypes: ['tax_filing', 'report', 'invoice'],
+        jurisdictions: ['DE', 'AT', 'FR', 'NL', 'BE'],
+        categories: ['compliance', 'financial'],
+        retentionYears: 10,
+        retentionMonths: 0,
+        retentionStartTrigger: 'fiscal_year_end',
+        legalBasis: 'EU VAT Directive',
+        warningDaysBefore: 180,
+        autoExtendOnAccess: true,
+        autoExtendDays: 365,
+        priority: 20,
+        isActive: true,
+        organizationId,
+      },
+    }),
+    prisma.archiveRetentionPolicy.upsert({
+      where: { organizationId_code: { organizationId, code: 'CONTRACTS' } },
+      update: {},
+      create: {
+        name: 'Contract Retention',
+        code: 'CONTRACTS',
+        description: 'Retention for contracts and agreements',
+        objectTypes: ['offer', 'approval_decision', 'policy_rule'],
+        jurisdictions: [],
+        categories: ['governance'],
+        retentionYears: 15,
+        retentionMonths: 0,
+        retentionStartTrigger: 'archive_date',
+        warningDaysBefore: 365,
+        autoExtendOnAccess: false,
+        priority: 5,
+        isActive: true,
+        organizationId,
+      },
+    }),
+  ]);
+
+  console.log(`  Created ${retentionPolicies.length} retention policies`);
+
+  // ==========================================================================
+  // ARCHIVE RECORDS
+  // ==========================================================================
+
+  // Record 1: Completed Invoice (fully archived)
+  const invoice1Content = {
+    invoiceNumber: 'INV-2024-00142',
+    customerName: 'Acme Corp',
+    customerId: 'cust_acme_001',
+    issueDate: '2024-03-15',
+    dueDate: '2024-04-14',
+    items: [
+      { description: 'Enterprise License Q1', quantity: 1, unitPrice: 15000, total: 15000 },
+      { description: 'Implementation Services', quantity: 40, unitPrice: 150, total: 6000 },
+    ],
+    subtotal: 21000,
+    taxRate: 0.19,
+    taxAmount: 3990,
+    total: 24990,
+    currency: 'EUR',
+    status: 'paid',
+    paidAt: '2024-04-02',
+  };
+
+  const archiveRecord1 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_invoice_inv-2024-00142_v1_1710500000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_invoice_inv-2024-00142_v1_1710500000000`,
+      originalObjectId: 'inv-2024-00142',
+      objectType: 'invoice',
+      objectVersion: 1,
+      legalEntityId: 'le_main',
+      partyId: 'party_acme',
+
+      createdAt: new Date('2024-03-15'),
+      archivedAt: new Date('2024-04-10'),
+      effectiveDate: new Date('2024-03-15'),
+      accountingPeriod: '2024-03',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q1',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(invoice1Content),
+      signatureCount: 1,
+      integrityVerified: true,
+      lastVerifiedAt: now,
+
+      triggerType: 'status_finalization',
+      triggerReason: 'Invoice fully paid',
+      triggerExplanation: 'Invoice INV-2024-00142 was marked as paid on 2024-04-02 and archived per retention policy.',
+      initiatingActor: userId,
+      initiatingActorName: 'System',
+      actorType: 'system',
+      sourceModule: 'invoices',
+      linkedEntityIds: ['order_ord-2024-00089', 'payment_pmt-2024-00156'],
+
+      title: 'Invoice INV-2024-00142 - Acme Corp',
+      description: 'Enterprise License Q1 + Implementation Services',
+      content: invoice1Content,
+      contentType: 'json',
+      contentSize: JSON.stringify(invoice1Content).length,
+
+      amount: 24990,
+      currency: 'EUR',
+
+      category: 'financial',
+      subcategory: 'sales_invoice',
+      jurisdictionIds: ['DE'],
+      tags: ['enterprise', 'q1-2024', 'paid'],
+      systemTags: ['auto-archived', 'high_value'],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      locale: 'de-DE',
+      language: 'de',
+
+      counterpartyId: 'cust_acme_001',
+      counterpartyName: 'Acme Corp',
+      counterpartyType: 'customer',
+
+      versionNumber: 1,
+      isCurrentVersion: true,
+
+      retentionPolicyId: retentionPolicies[0].id,
+      retentionStartDate: new Date('2025-01-01'),
+      retentionEndDate: new Date('2035-01-01'),
+      retentionStatus: 'active',
+
+      status: 'archived',
+      accessCount: 3,
+      lastAccessedAt: new Date('2024-09-15'),
+
+      documentCount: 1,
+      attachments: [{ id: 'att_1', name: 'invoice.pdf', type: 'application/pdf', size: 125000, url: '/attachments/inv-2024-00142.pdf' }],
+
+      organizationId,
+    },
+  });
+
+  // Record 2: Journal Entry (period closing)
+  const journalContent = {
+    entryNumber: 'JE-2024-Q1-001',
+    entryDate: '2024-03-31',
+    description: 'Q1 2024 Accrual Adjustment',
+    lines: [
+      { account: '6000', description: 'Revenue Accrual', debit: 0, credit: 45000 },
+      { account: '1400', description: 'Accounts Receivable', debit: 45000, credit: 0 },
+    ],
+    totalDebit: 45000,
+    totalCredit: 45000,
+    currency: 'EUR',
+    periodClosed: true,
+  };
+
+  const archiveRecord2 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_journal_entry_je-2024-q1-001_v1_1711900000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_journal_entry_je-2024-q1-001_v1_1711900000000`,
+      originalObjectId: 'je-2024-q1-001',
+      objectType: 'journal_entry',
+      objectVersion: 1,
+
+      createdAt: new Date('2024-03-31'),
+      archivedAt: new Date('2024-04-05'),
+      effectiveDate: new Date('2024-03-31'),
+      accountingPeriod: '2024-03',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q1',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(journalContent),
+      signatureCount: 2,
+      integrityVerified: true,
+      lastVerifiedAt: now,
+
+      triggerType: 'period_close',
+      triggerReason: 'Q1 2024 period closed',
+      triggerExplanation: 'Journal entry archived as part of Q1 2024 period close process.',
+      initiatingActor: userId,
+      initiatingActorName: 'Finance Manager',
+      actorType: 'user',
+      sourceModule: 'accounting',
+      linkedEntityIds: [],
+
+      title: 'Journal Entry JE-2024-Q1-001 - Q1 Accrual',
+      description: 'Q1 2024 Accrual Adjustment',
+      content: journalContent,
+      contentType: 'json',
+      contentSize: JSON.stringify(journalContent).length,
+
+      amount: 45000,
+      currency: 'EUR',
+
+      category: 'accounting',
+      subcategory: 'accrual',
+      jurisdictionIds: ['DE'],
+      tags: ['q1-2024', 'period-close', 'accrual'],
+      systemTags: ['period-close-archived'],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      language: 'en',
+
+      versionNumber: 1,
+      isCurrentVersion: true,
+
+      retentionPolicyId: retentionPolicies[0].id,
+      retentionStartDate: new Date('2025-01-01'),
+      retentionEndDate: new Date('2035-01-01'),
+      retentionStatus: 'active',
+
+      status: 'archived',
+
+      organizationId,
+    },
+  });
+
+  // Record 3: Tax Filing (compliance, legal hold)
+  const taxFilingContent = {
+    filingType: 'VAT_RETURN',
+    period: '2024-Q1',
+    filingNumber: 'VAT-2024-Q1-DE',
+    submittedAt: '2024-04-10T14:30:00Z',
+    confirmedAt: '2024-04-10T14:35:22Z',
+    confirmationNumber: 'BZSt-2024-0412-8821',
+    netRevenue: 850000,
+    outputVAT: 161500,
+    inputVAT: 42300,
+    vatPayable: 119200,
+    currency: 'EUR',
+    jurisdiction: 'DE',
+    status: 'confirmed',
+  };
+
+  const archiveRecord3 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_tax_filing_vat-2024-q1-de_v1_1712700000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_tax_filing_vat-2024-q1-de_v1_1712700000000`,
+      originalObjectId: 'vat-2024-q1-de',
+      objectType: 'tax_filing',
+      objectVersion: 1,
+
+      createdAt: new Date('2024-04-10'),
+      archivedAt: new Date('2024-04-10'),
+      effectiveDate: new Date('2024-03-31'),
+      accountingPeriod: '2024-Q1',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q1',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(taxFilingContent),
+      signatureCount: 1,
+      integrityVerified: true,
+      lastVerifiedAt: now,
+
+      triggerType: 'external_submission',
+      triggerReason: 'VAT return submitted to tax authority',
+      triggerExplanation: 'Q1 2024 VAT return was submitted to BZSt and confirmed. Archived immediately per compliance requirements.',
+      initiatingActor: userId,
+      initiatingActorName: 'Tax Manager',
+      actorType: 'user',
+      sourceModule: 'tax',
+      linkedEntityIds: [],
+
+      title: 'VAT Return Q1 2024 - Germany',
+      description: 'Quarterly VAT return for German jurisdiction',
+      content: taxFilingContent,
+      contentType: 'json',
+      contentSize: JSON.stringify(taxFilingContent).length,
+
+      amount: 119200,
+      currency: 'EUR',
+
+      category: 'compliance',
+      subcategory: 'tax_filing',
+      jurisdictionIds: ['DE'],
+      tags: ['vat', 'q1-2024', 'germany', 'submitted'],
+      systemTags: ['compliance-critical', 'submitted-to-authority'],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      language: 'de',
+
+      versionNumber: 1,
+      isCurrentVersion: true,
+
+      retentionPolicyId: retentionPolicies[1].id,
+      retentionStartDate: new Date('2025-01-01'),
+      retentionEndDate: new Date('2035-01-01'),
+      retentionStatus: 'legal_hold',
+      legalHold: true,
+      legalHoldReason: 'Ongoing tax audit for fiscal years 2023-2024',
+      legalHoldBy: userId,
+      legalHoldAt: new Date('2024-11-01'),
+
+      status: 'legal_hold',
+      accessCount: 8,
+      lastAccessedAt: new Date('2024-11-15'),
+
+      organizationId,
+    },
+  });
+
+  // Record 4: Order (multi-version example)
+  const order1ContentV1 = {
+    orderNumber: 'ORD-2024-00201',
+    customerName: 'TechStart GmbH',
+    orderDate: '2024-05-10',
+    items: [
+      { description: 'Consulting Package', quantity: 80, unitPrice: 200, total: 16000 },
+    ],
+    subtotal: 16000,
+    taxAmount: 3040,
+    total: 19040,
+    currency: 'EUR',
+    status: 'confirmed',
+  };
+
+  const order1ContentV2 = {
+    ...order1ContentV1,
+    items: [
+      { description: 'Consulting Package', quantity: 120, unitPrice: 200, total: 24000 },
+    ],
+    subtotal: 24000,
+    taxAmount: 4560,
+    total: 28560,
+    amendmentReason: 'Customer requested additional hours',
+  };
+
+  // Version 1 (superseded)
+  const archiveRecord4v1 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_order_ord-2024-00201_v1_1715300000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_order_ord-2024-00201_v1_1715300000000`,
+      originalObjectId: 'ord-2024-00201',
+      objectType: 'order',
+      objectVersion: 1,
+
+      createdAt: new Date('2024-05-10'),
+      archivedAt: new Date('2024-05-10'),
+      effectiveDate: new Date('2024-05-10'),
+      accountingPeriod: '2024-05',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q2',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(order1ContentV1),
+      signatureCount: 1,
+      integrityVerified: true,
+
+      triggerType: 'status_finalization',
+      triggerReason: 'Order confirmed',
+      initiatingActor: userId,
+      actorType: 'user',
+      sourceModule: 'orders',
+
+      title: 'Order ORD-2024-00201 - TechStart GmbH (v1)',
+      content: order1ContentV1,
+      contentType: 'json',
+      contentSize: JSON.stringify(order1ContentV1).length,
+
+      amount: 19040,
+      currency: 'EUR',
+
+      category: 'financial',
+      jurisdictionIds: ['DE'],
+      tags: ['consulting'],
+      systemTags: [],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      counterpartyName: 'TechStart GmbH',
+      counterpartyType: 'customer',
+
+      versionNumber: 1,
+      isCurrentVersion: false,
+      supersededBy: `arc_${orgSuffix}_order_ord-2024-00201_v2_1716200000000`,
+
+      retentionStatus: 'active',
+      status: 'archived',
+
+      organizationId,
+    },
+  });
+
+  // Version 2 (current)
+  const archiveRecord4v2 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_order_ord-2024-00201_v2_1716200000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_order_ord-2024-00201_v2_1716200000000`,
+      originalObjectId: 'ord-2024-00201',
+      objectType: 'order',
+      objectVersion: 2,
+      parentRecordId: archiveRecord4v1.id,
+
+      createdAt: new Date('2024-05-20'),
+      archivedAt: new Date('2024-05-20'),
+      effectiveDate: new Date('2024-05-20'),
+      accountingPeriod: '2024-05',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q2',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(order1ContentV2),
+      predecessorHash: generateHash(order1ContentV1),
+      signatureCount: 1,
+      integrityVerified: true,
+
+      triggerType: 'state_supersession',
+      triggerReason: 'Order amended',
+      triggerExplanation: 'Order was amended to add 40 additional consulting hours per customer request.',
+      initiatingActor: userId,
+      actorType: 'user',
+      sourceModule: 'orders',
+
+      title: 'Order ORD-2024-00201 - TechStart GmbH (v2)',
+      description: 'Amended order with additional hours',
+      content: order1ContentV2,
+      contentType: 'json',
+      contentSize: JSON.stringify(order1ContentV2).length,
+
+      amount: 28560,
+      currency: 'EUR',
+
+      category: 'financial',
+      jurisdictionIds: ['DE'],
+      tags: ['consulting', 'amended'],
+      systemTags: ['version-chain'],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      counterpartyName: 'TechStart GmbH',
+      counterpartyType: 'customer',
+
+      versionNumber: 2,
+      isCurrentVersion: true,
+      supersedes: `arc_${orgSuffix}_order_ord-2024-00201_v1_1715300000000`,
+      versionReason: 'Amendment: additional consulting hours',
+
+      retentionStatus: 'active',
+      status: 'archived',
+
+      organizationId,
+    },
+  });
+
+  // Record 5: Payment (linked to invoice)
+  const paymentContent = {
+    paymentId: 'PMT-2024-00156',
+    amount: 24990,
+    currency: 'EUR',
+    paymentDate: '2024-04-02',
+    paymentMethod: 'bank_transfer',
+    bankReference: 'SEPA-2024-04-02-ACME-001',
+    invoiceId: 'inv-2024-00142',
+    customerName: 'Acme Corp',
+    status: 'cleared',
+  };
+
+  const archiveRecord5 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_payment_pmt-2024-00156_v1_1712100000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_payment_pmt-2024-00156_v1_1712100000000`,
+      originalObjectId: 'pmt-2024-00156',
+      objectType: 'payment',
+      objectVersion: 1,
+
+      createdAt: new Date('2024-04-02'),
+      archivedAt: new Date('2024-04-03'),
+      effectiveDate: new Date('2024-04-02'),
+      accountingPeriod: '2024-04',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q2',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(paymentContent),
+      signatureCount: 1,
+      integrityVerified: true,
+
+      triggerType: 'status_finalization',
+      triggerReason: 'Payment cleared',
+      initiatingActor: 'system',
+      actorType: 'system',
+      sourceModule: 'treasury',
+      linkedEntityIds: ['inv-2024-00142'],
+
+      title: 'Payment PMT-2024-00156 - Acme Corp',
+      content: paymentContent,
+      contentType: 'json',
+      contentSize: JSON.stringify(paymentContent).length,
+
+      amount: 24990,
+      currency: 'EUR',
+
+      category: 'financial',
+      subcategory: 'incoming_payment',
+      jurisdictionIds: ['DE'],
+      tags: ['bank-transfer', 'cleared'],
+      systemTags: ['auto-archived'],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      counterpartyName: 'Acme Corp',
+      counterpartyType: 'customer',
+
+      versionNumber: 1,
+      isCurrentVersion: true,
+
+      retentionStatus: 'active',
+      status: 'archived',
+
+      organizationId,
+    },
+  });
+
+  // Record 6: Depreciation Run
+  const depreciationContent = {
+    runId: 'DEP-2024-06',
+    runDate: '2024-06-30',
+    period: '2024-06',
+    assetCount: 45,
+    totalDepreciation: 12500,
+    currency: 'EUR',
+    method: 'straight_line',
+    assets: [
+      { assetId: 'AST-001', name: 'Office Equipment', depreciation: 500 },
+      { assetId: 'AST-002', name: 'Computer Hardware', depreciation: 2000 },
+      { assetId: 'AST-003', name: 'Furniture', depreciation: 750 },
+    ],
+  };
+
+  const archiveRecord6 = await prisma.archiveRecord.upsert({
+    where: { organizationId_archiveRecordId: {
+        organizationId,
+        archiveRecordId: `arc_${orgSuffix}_depreciation_run_dep-2024-06_v1_1719700000000`
+      }},
+    update: {},
+    create: {
+      archiveRecordId: `arc_${orgSuffix}_depreciation_run_dep-2024-06_v1_1719700000000`,
+      originalObjectId: 'dep-2024-06',
+      objectType: 'depreciation_run',
+      objectVersion: 1,
+
+      createdAt: new Date('2024-06-30'),
+      archivedAt: new Date('2024-07-01'),
+      effectiveDate: new Date('2024-06-30'),
+      accountingPeriod: '2024-06',
+      fiscalYear: 2024,
+      fiscalPeriod: 'Q2',
+      timezone: 'Europe/Berlin',
+
+      contentHash: generateHash(depreciationContent),
+      signatureCount: 1,
+      integrityVerified: true,
+
+      triggerType: 'batch_job',
+      triggerReason: 'Monthly depreciation run completed',
+      initiatingActor: 'system',
+      actorType: 'automation',
+      sourceModule: 'assets',
+
+      title: 'Depreciation Run June 2024',
+      description: 'Monthly depreciation calculation for 45 assets',
+      content: depreciationContent,
+      contentType: 'json',
+      contentSize: JSON.stringify(depreciationContent).length,
+
+      amount: 12500,
+      currency: 'EUR',
+
+      category: 'financial',
+      subcategory: 'depreciation',
+      jurisdictionIds: ['DE'],
+      tags: ['monthly', 'assets'],
+      systemTags: ['batch-archived'],
+      confidenceScore: 1.0,
+      validationMode: 'hard',
+
+      versionNumber: 1,
+      isCurrentVersion: true,
+
+      retentionStatus: 'active',
+      status: 'archived',
+
+      organizationId,
+    },
+  });
+
+  console.log('  Created 7 archive records (including 2 versions of one order)');
+
+  // ==========================================================================
+  // ARCHIVE LINKS (Netting & Linkage Graph)
+  // ==========================================================================
+
+  await Promise.all([
+    // Invoice -> Payment link
+    prisma.archiveLink.upsert({
+      where: {
+        sourceArchiveId_targetArchiveId_linkType: {
+          sourceArchiveId: archiveRecord1.id,
+          targetArchiveId: archiveRecord5.id,
+          linkType: 'generates',
+        },
+      },
+      update: {},
+      create: {
+        sourceArchiveId: archiveRecord1.id,
+        targetArchiveId: archiveRecord5.id,
+        linkType: 'generates',
+        linkDirection: 'outbound',
+        linkDescription: 'Invoice generated this payment',
+        linkedBy: userId,
+      },
+    }),
+    // Payment -> Invoice link (reverse)
+    prisma.archiveLink.upsert({
+      where: {
+        sourceArchiveId_targetArchiveId_linkType: {
+          sourceArchiveId: archiveRecord5.id,
+          targetArchiveId: archiveRecord1.id,
+          linkType: 'derives_from',
+        },
+      },
+      update: {},
+      create: {
+        sourceArchiveId: archiveRecord5.id,
+        targetArchiveId: archiveRecord1.id,
+        linkType: 'derives_from',
+        linkDirection: 'inbound',
+        linkDescription: 'Payment derives from this invoice',
+        linkedBy: userId,
+      },
+    }),
+    // Order v2 supersedes v1
+    prisma.archiveLink.upsert({
+      where: {
+        sourceArchiveId_targetArchiveId_linkType: {
+          sourceArchiveId: archiveRecord4v2.id,
+          targetArchiveId: archiveRecord4v1.id,
+          linkType: 'supersedes',
+        },
+      },
+      update: {},
+      create: {
+        sourceArchiveId: archiveRecord4v2.id,
+        targetArchiveId: archiveRecord4v1.id,
+        linkType: 'supersedes',
+        linkDirection: 'outbound',
+        linkDescription: 'Amended order supersedes original',
+        linkedBy: userId,
+      },
+    }),
+    // Tax filing references journal entry
+    prisma.archiveLink.upsert({
+      where: {
+        sourceArchiveId_targetArchiveId_linkType: {
+          sourceArchiveId: archiveRecord3.id,
+          targetArchiveId: archiveRecord2.id,
+          linkType: 'references',
+        },
+      },
+      update: {},
+      create: {
+        sourceArchiveId: archiveRecord3.id,
+        targetArchiveId: archiveRecord2.id,
+        linkType: 'references',
+        linkDirection: 'bidirectional',
+        linkDescription: 'Tax filing references Q1 accrual entries',
+        linkedBy: userId,
+      },
+    }),
+  ]);
+
+  console.log('  Created 4 archive links');
+
+  // ==========================================================================
+  // VERSION RECORDS
+  // ==========================================================================
+
+  await Promise.all([
+    prisma.archiveVersion.upsert({
+      where: {
+        archiveRecordId_versionNumber: {
+          archiveRecordId: archiveRecord4v1.id,
+          versionNumber: 1,
+        },
+      },
+      update: {},
+      create: {
+        archiveRecordId: archiveRecord4v1.id,
+        versionNumber: 1,
+        versionHash: generateHash(order1ContentV1),
+        contentSnapshot: order1ContentV1,
+        changeDescription: 'Initial order creation',
+        changedFields: [],
+        createdBy: userId,
+        createdByName: 'Sales Manager',
+      },
+    }),
+    prisma.archiveVersion.upsert({
+      where: {
+        archiveRecordId_versionNumber: {
+          archiveRecordId: archiveRecord4v2.id,
+          versionNumber: 2,
+        },
+      },
+      update: {},
+      create: {
+        archiveRecordId: archiveRecord4v2.id,
+        versionNumber: 2,
+        versionHash: generateHash(order1ContentV2),
+        previousVersionId: archiveRecord4v1.id,
+        contentSnapshot: order1ContentV2,
+        changeDescription: 'Amendment: increased consulting hours from 80 to 120',
+        changedFields: ['items', 'subtotal', 'taxAmount', 'total'],
+        createdBy: userId,
+        createdByName: 'Sales Manager',
+      },
+    }),
+  ]);
+
+  console.log('  Created 2 version records');
+
+  // ==========================================================================
+  // ACCESS LOGS
+  // ==========================================================================
+
+  await Promise.all([
+    prisma.archiveAccessLog.create({
+      data: {
+        archiveRecordId: archiveRecord3.id,
+        accessType: 'view',
+        accessReason: 'Tax audit review',
+        accessScope: 'full',
+        actorId: userId,
+        actorName: 'Auditor',
+        actorRole: 'auditor',
+        actorType: 'user',
+        accessGranted: true,
+      },
+    }),
+    prisma.archiveAccessLog.create({
+      data: {
+        archiveRecordId: archiveRecord1.id,
+        accessType: 'export',
+        accessReason: 'Customer requested copy',
+        accessScope: 'full',
+        actorId: userId,
+        actorName: 'Support Agent',
+        actorRole: 'user',
+        actorType: 'user',
+        accessGranted: true,
+      },
+    }),
+  ]);
+
+  console.log('  Created 2 access logs');
+
+  // ==========================================================================
+  // EXCEPTION (Example)
+  // ==========================================================================
+
+  await prisma.archiveException.upsert({
+    where: { id: 'exc_archive_sample_001' },
+    update: {},
+    create: {
+      id: 'exc_archive_sample_001',
+      sourceObjectId: 'inv-2024-00187',
+      sourceObjectType: 'invoice',
+      sourceModule: 'invoices',
+      exceptionType: 'validation_failed',
+      exceptionCode: 'MISSING_COUNTERPARTY',
+      exceptionMessage: 'Invoice cannot be archived: missing counterparty information',
+      exceptionDetails: {
+        missingFields: ['counterpartyId', 'counterpartyName'],
+        invoiceNumber: 'INV-2024-00187',
+      },
+      validationMode: 'hard',
+      validationErrors: [
+        { code: 'REQUIRED_FIELD', message: 'counterpartyId is required', field: 'counterpartyId' },
+        { code: 'REQUIRED_FIELD', message: 'counterpartyName is required', field: 'counterpartyName' },
+      ],
+      confidenceScore: 0.4,
+      slaDeadline: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      status: 'open',
+      organizationId,
+    },
+  });
+
+  console.log('  Created 1 exception record');
+
+  // ==========================================================================
+  // SAVED VIEW
+  // ==========================================================================
+
+  await prisma.archiveSavedView.upsert({
+    where: { id: 'view_archive_sample_001' },
+    update: {},
+    create: {
+      id: 'view_archive_sample_001',
+      name: 'Q1 2024 Financial Archives',
+      description: 'All financial archives from Q1 2024',
+      filters: {
+        category: 'financial',
+        fiscalYear: 2024,
+        fiscalPeriod: 'Q1',
+      },
+      columns: ['archiveRecordId', 'objectType', 'title', 'amount', 'currency', 'archivedAt', 'status'],
+      sortBy: 'archivedAt',
+      sortOrder: 'desc',
+      isPublic: true,
+      sharedWith: [],
+      isScheduled: false,
+      createdBy: userId,
+      createdByName: 'Finance Manager',
+      organizationId,
+    },
+  });
+
+  console.log('  Created 1 saved view');
+
+  console.log('Archive seeding completed!');
+}
+
+  // =============================================================================
+// LIABILITIES ENGINE - SEED DATA
+// Add this function BEFORE main() in prisma/seed.ts
+// =============================================================================
+
+async function seedLiabilities(organizationId: string, userId: string) {
+  console.log('🏦 Seeding Liabilities Engine...');
+
+  const now = new Date();
+  const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const threeMonthsAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+  const sixMonthsAgo = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+  const oneYearAgo = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+  const inThreeMonths = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
+  const inSixMonths = new Date(now.getTime() + 180 * 24 * 60 * 60 * 1000);
+  const inOneYear = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+  const inTwoYears = new Date(now.getTime() + 730 * 24 * 60 * 60 * 1000);
+  const inFiveYears = new Date(now.getTime() + 1825 * 24 * 60 * 60 * 1000);
+
+  // =========================================================================
+  // AUTOMATION RULES
+  // =========================================================================
+
+  const automationRules = [
+    {
+      name: 'Auto-Recognize AP Invoices',
+      code: 'AUTO_RECOGNIZE_AP',
+      description: 'Automatically recognize accounts payable from validated invoices',
+      triggerType: 'on_create',
+      triggerConditions: { sourceType: 'invoice', primaryClass: 'accounts_payable' },
+      liabilityTypes: [],
+      primaryClasses: ['accounts_payable'],
+      counterpartyTypes: ['supplier'],
+      actionType: 'auto_recognize',
+      actionConfig: { autoActivate: false },
+      confidenceThreshold: 0.95,
+      proposalThreshold: 0.70,
+      requiresApproval: false,
+      approverRoles: [],
+      isActive: true,
+      priority: 10,
+      explanationTemplate: 'Auto-recognized from invoice {sourceId} with confidence {confidenceScore}',
+      organizationId,
+    },
+    {
+      name: 'Monthly Interest Accrual',
+      code: 'MONTHLY_INTEREST',
+      description: 'Accrue interest monthly for all interest-bearing liabilities',
+      triggerType: 'scheduled',
+      triggerConditions: { isInterestBearing: true },
+      schedule: '0 0 1 * *', // First of each month
+      liabilityTypes: [],
+      primaryClasses: ['long_term_debt', 'short_term_debt', 'credit_line'],
+      counterpartyTypes: ['bank'],
+      actionType: 'auto_accrue',
+      actionConfig: { accrualType: 'interest' },
+      confidenceThreshold: 0.95,
+      proposalThreshold: 0.70,
+      requiresApproval: false,
+      approverRoles: [],
+      isActive: true,
+      priority: 20,
+      explanationTemplate: 'Monthly interest accrual for {liabilityId}',
+      organizationId,
+    },
+    {
+      name: 'High-Value Payment Approval',
+      code: 'HIGH_VALUE_APPROVAL',
+      description: 'Require approval for payments over €50,000',
+      triggerType: 'on_event',
+      triggerConditions: { eventType: 'PaymentScheduled' },
+      liabilityTypes: [],
+      primaryClasses: [],
+      counterpartyTypes: [],
+      actionType: 'auto_flag',
+      actionConfig: { flag: 'requires_approval' },
+      confidenceThreshold: 1.0,
+      proposalThreshold: 1.0,
+      requiresApproval: true,
+      approverRoles: ['finance_manager', 'cfo'],
+      amountThreshold: 50000,
+      isActive: true,
+      priority: 100,
+      explanationTemplate: 'Payment of {amount} requires approval (threshold: €50,000)',
+      organizationId,
+    },
+    {
+      name: 'Overdue Alert',
+      code: 'OVERDUE_ALERT',
+      description: 'Flag liabilities as overdue after grace period',
+      triggerType: 'scheduled',
+      triggerConditions: { status: 'active' },
+      schedule: '0 6 * * *', // Daily at 6 AM
+      liabilityTypes: [],
+      primaryClasses: [],
+      counterpartyTypes: [],
+      actionType: 'auto_flag',
+      actionConfig: { checkOverdue: true, escalateAfterDays: 30 },
+      confidenceThreshold: 1.0,
+      proposalThreshold: 1.0,
+      requiresApproval: false,
+      approverRoles: [],
+      maturityDaysThreshold: 0,
+      isActive: true,
+      priority: 50,
+      explanationTemplate: 'Liability {liabilityId} is {daysOverdue} days overdue',
+      organizationId,
+    },
+  ];
+
+  for (const rule of automationRules) {
+    await prisma.liabilityAutomationRule.create({ data: rule });
+  }
+  console.log(`  ✓ Created ${automationRules.length} automation rules`);
+
+  // =========================================================================
+  // LIABILITIES
+  // =========================================================================
+
+  const liabilities = [
+    // 1. Bank Term Loan (Long-term Debt)
+    {
+      liabilityId: 'LIA-2024-LTD-00001',
+      name: 'Deutsche Bank Term Loan',
+      primaryClass: 'long_term_debt',
+      status: 'active',
+      counterpartyId: 'CPTY-DBANK-001',
+      counterpartyName: 'Deutsche Bank AG',
+      counterpartyType: 'bank',
+      partyId: 'PARTY-DBANK',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE', 'EU'],
+      legalReference: 'LOAN-DB-2023-4521',
+      isInterestBearing: true,
+      isSecured: true,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 500000,
+      outstandingPrincipal: 425000,
+      accruedInterest: 1875,
+      feesPenalties: 0,
+      totalOutstanding: 426875,
+      totalSettled: 75000,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      confidenceScore: 1.0,
+      inceptionDate: oneYearAgo,
+      recognitionDate: oneYearAgo,
+      activationDate: oneYearAgo,
+      maturityDate: inFiveYears,
+      nextPaymentDate: inOneYear,
+      gracePeriodDays: 5,
+      earlyRepaymentAllowed: true,
+      earlyRepaymentPenalty: 2.0,
+      interestType: 'fixed',
+      interestRate: 0.045,
+      interestCompounding: 'monthly',
+      interestDayCount: 'actual_360',
+      interestAccrualStart: oneYearAgo,
+      lastInterestAccrual: oneMonthAgo,
+      paymentFrequency: 'quarterly',
+      regularPaymentAmount: 25000,
+      paymentSchedule: generatePaymentSchedule(oneYearAgo, inFiveYears, 'quarterly', 25000),
+      totalPaymentsExpected: 20,
+      paymentsCompleted: 4,
+      paymentsMissed: 0,
+      expectedCashImpact: 426875,
+      cashflowProbability: 1.0,
+      collateralDescription: 'Company real estate - Berlin office building',
+      collateralValue: 750000,
+      collateralCurrency: 'EUR',
+      collateralType: 'real_estate',
+      collateralValuationDate: sixMonthsAgo,
+      riskLevel: 'low',
+      covenants: [
+        { name: 'Debt-to-Equity', type: 'debt_to_equity', threshold: 2.5, thresholdType: 'maximum', status: 'compliant', lastChecked: oneMonthAgo.toISOString() },
+        { name: 'Interest Coverage', type: 'interest_coverage', threshold: 3.0, thresholdType: 'minimum', status: 'compliant', lastChecked: oneMonthAgo.toISOString() },
+      ],
+      covenantBreaches: 0,
+      lastCovenantCheck: oneMonthAgo,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: true,
+      approvalThreshold: 50000,
+      isHedged: false,
+      tags: ['term-loan', 'secured', 'bank'],
+      systemTags: ['high_value'],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'manual',
+      version: 5,
+      eventCount: 8,
+      organizationId,
+    },
+
+    // 2. Revolving Credit Facility
+    {
+      liabilityId: 'LIA-2024-CRL-00001',
+      name: 'Commerzbank Credit Line',
+      primaryClass: 'credit_line',
+      status: 'active',
+      counterpartyId: 'CPTY-COBA-001',
+      counterpartyName: 'Commerzbank AG',
+      counterpartyType: 'bank',
+      partyId: 'PARTY-COBA',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE', 'EU'],
+      legalReference: 'RCF-CB-2024-1122',
+      isInterestBearing: true,
+      isSecured: false,
+      isFixed: false,
+      isGuaranteed: false,
+      originalPrincipal: 0,
+      outstandingPrincipal: 75000,
+      accruedInterest: 312.50,
+      feesPenalties: 0,
+      totalOutstanding: 75312.50,
+      totalSettled: 25000,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      creditLimit: 200000,
+      availableCredit: 125000,
+      utilizationRate: 37.5,
+      confidenceScore: 1.0,
+      inceptionDate: sixMonthsAgo,
+      recognitionDate: sixMonthsAgo,
+      activationDate: sixMonthsAgo,
+      maturityDate: inTwoYears,
+      gracePeriodDays: 0,
+      earlyRepaymentAllowed: true,
+      interestType: 'variable',
+      interestRate: 0.05,
+      interestIndex: 'euribor',
+      interestSpread: 0.02,
+      interestCompounding: 'monthly',
+      interestDayCount: 'actual_360',
+      interestAccrualStart: sixMonthsAgo,
+      lastInterestAccrual: oneMonthAgo,
+      commitmentFee: 500,
+      commitmentFeeRate: 0.0025,
+      expectedCashImpact: 75312.50,
+      cashflowProbability: 0.9,
+      riskLevel: 'low',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['credit-line', 'revolving', 'variable-rate'],
+      systemTags: [],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'manual',
+      version: 3,
+      eventCount: 5,
+      organizationId,
+    },
+
+    // 3. Supplier Accounts Payable
+    {
+      liabilityId: 'LIA-2024-AP-00001',
+      name: 'TechSupply GmbH - Hardware Invoice',
+      primaryClass: 'accounts_payable',
+      status: 'active',
+      counterpartyId: 'CPTY-TECH-001',
+      counterpartyName: 'TechSupply GmbH',
+      counterpartyType: 'supplier',
+      partyId: 'PARTY-TECH',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE'],
+      legalReference: 'INV-TS-2024-8899',
+      isInterestBearing: false,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 24500,
+      outstandingPrincipal: 24500,
+      accruedInterest: 0,
+      feesPenalties: 0,
+      totalOutstanding: 24500,
+      totalSettled: 0,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      confidenceScore: 1.0,
+      inceptionDate: oneMonthAgo,
+      recognitionDate: oneMonthAgo,
+      activationDate: oneMonthAgo,
+      maturityDate: inThreeMonths,
+      nextPaymentDate: inThreeMonths,
+      gracePeriodDays: 14,
+      earlyRepaymentAllowed: true,
+      paymentFrequency: 'bullet',
+      regularPaymentAmount: 24500,
+      totalPaymentsExpected: 1,
+      paymentsCompleted: 0,
+      paymentsMissed: 0,
+      expectedCashImpact: 24500,
+      cashflowProbability: 1.0,
+      riskLevel: 'low',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['ap', 'hardware', 'supplier'],
+      systemTags: [],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'invoice',
+      sourceId: 'INV-2024-00142',
+      version: 2,
+      eventCount: 3,
+      organizationId,
+    },
+
+    // 4. Accrued Expenses (Payroll)
+    {
+      liabilityId: 'LIA-2024-ACC-00001',
+      name: 'Q4 2024 Accrued Salaries',
+      primaryClass: 'accrued_expenses',
+      status: 'recognized',
+      counterpartyName: 'Employees',
+      counterpartyType: 'other',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE'],
+      isInterestBearing: false,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 185000,
+      outstandingPrincipal: 185000,
+      accruedInterest: 0,
+      feesPenalties: 0,
+      totalOutstanding: 185000,
+      totalSettled: 0,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      confidenceScore: 0.95,
+      inceptionDate: now,
+      recognitionDate: now,
+      gracePeriodDays: 0,
+      expectedCashImpact: 185000,
+      cashflowProbability: 1.0,
+      riskLevel: 'low',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['accrual', 'payroll', 'q4-2024'],
+      systemTags: [],
+      validationMode: 'soft',
+      language: 'en',
+      sourceType: 'payroll',
+      version: 1,
+      eventCount: 2,
+      organizationId,
+    },
+
+    // 5. Tax Liability (VAT)
+    {
+      liabilityId: 'LIA-2024-TAX-00001',
+      name: 'Q3 2024 VAT Payable',
+      primaryClass: 'tax_liability',
+      status: 'active',
+      counterpartyId: 'CPTY-FA-DE',
+      counterpartyName: 'Finanzamt Berlin',
+      counterpartyType: 'government',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE'],
+      legalReference: 'VAT-2024-Q3-DE',
+      isInterestBearing: false,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 42800,
+      outstandingPrincipal: 42800,
+      accruedInterest: 0,
+      feesPenalties: 0,
+      totalOutstanding: 42800,
+      totalSettled: 0,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      confidenceScore: 1.0,
+      inceptionDate: threeMonthsAgo,
+      recognitionDate: threeMonthsAgo,
+      activationDate: threeMonthsAgo,
+      maturityDate: new Date(now.getTime() + 15 * 24 * 60 * 60 * 1000), // Due in 15 days
+      nextPaymentDate: new Date(now.getTime() + 15 * 24 * 60 * 60 * 1000),
+      gracePeriodDays: 0,
+      paymentFrequency: 'bullet',
+      regularPaymentAmount: 42800,
+      totalPaymentsExpected: 1,
+      paymentsCompleted: 0,
+      paymentsMissed: 0,
+      expectedCashImpact: 42800,
+      cashflowProbability: 1.0,
+      riskLevel: 'medium',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['tax', 'vat', 'q3-2024'],
+      systemTags: ['requires_attention'],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'tax',
+      version: 2,
+      eventCount: 3,
+      organizationId,
+    },
+
+    // 6. Lease Liability (Finance Lease)
+    {
+      liabilityId: 'LIA-2024-LFL-00001',
+      name: 'Office Equipment Finance Lease',
+      primaryClass: 'lease_finance',
+      status: 'active',
+      counterpartyId: 'CPTY-SIEMENS-001',
+      counterpartyName: 'Siemens Financial Services',
+      counterpartyType: 'bank',
+      partyId: 'PARTY-SIEMENS',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE'],
+      legalReference: 'LEASE-SFS-2024-3344',
+      isInterestBearing: true,
+      isSecured: true,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 48000,
+      outstandingPrincipal: 36000,
+      accruedInterest: 180,
+      feesPenalties: 0,
+      totalOutstanding: 36180,
+      totalSettled: 12000,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      amortizationMethod: 'straight_line',
+      confidenceScore: 1.0,
+      inceptionDate: sixMonthsAgo,
+      recognitionDate: sixMonthsAgo,
+      activationDate: sixMonthsAgo,
+      maturityDate: inTwoYears,
+      nextPaymentDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+      gracePeriodDays: 5,
+      earlyRepaymentAllowed: false,
+      interestType: 'fixed',
+      interestRate: 0.06,
+      interestCompounding: 'monthly',
+      interestDayCount: 'actual_360',
+      interestAccrualStart: sixMonthsAgo,
+      lastInterestAccrual: oneMonthAgo,
+      paymentFrequency: 'monthly',
+      regularPaymentAmount: 2000,
+      paymentSchedule: generatePaymentSchedule(sixMonthsAgo, inTwoYears, 'monthly', 2000),
+      totalPaymentsExpected: 24,
+      paymentsCompleted: 6,
+      paymentsMissed: 0,
+      expectedCashImpact: 36180,
+      cashflowProbability: 1.0,
+      collateralDescription: 'Leased office equipment',
+      collateralValue: 40000,
+      collateralCurrency: 'EUR',
+      collateralType: 'equipment',
+      riskLevel: 'low',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['lease', 'equipment', 'finance-lease'],
+      systemTags: [],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'lease',
+      version: 7,
+      eventCount: 12,
+      organizationId,
+    },
+
+    // 7. Intercompany Liability
+    {
+      liabilityId: 'LIA-2024-IC-00001',
+      name: 'Intercompany Loan from Parent',
+      primaryClass: 'intercompany',
+      status: 'active',
+      counterpartyId: 'CPTY-PARENT-001',
+      counterpartyName: 'PrimeBalance Holdings Ltd',
+      counterpartyType: 'intercompany',
+      partyId: 'PARTY-PARENT',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE', 'GB'],
+      legalReference: 'IC-LOAN-2024-001',
+      isInterestBearing: true,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 150000,
+      outstandingPrincipal: 150000,
+      accruedInterest: 1875,
+      feesPenalties: 0,
+      totalOutstanding: 151875,
+      totalSettled: 0,
+      currency: 'GBP',
+      reportingCurrency: 'EUR',
+      fxRateAtRecognition: 1.17,
+      amountInReporting: 177693.75,
+      unrealizedFxGainLoss: 0,
+      confidenceScore: 1.0,
+      inceptionDate: threeMonthsAgo,
+      recognitionDate: threeMonthsAgo,
+      activationDate: threeMonthsAgo,
+      maturityDate: inOneYear,
+      gracePeriodDays: 30,
+      earlyRepaymentAllowed: true,
+      interestType: 'fixed',
+      interestRate: 0.05,
+      interestCompounding: 'quarterly',
+      interestDayCount: 'actual_365',
+      interestAccrualStart: threeMonthsAgo,
+      lastInterestAccrual: oneMonthAgo,
+      paymentFrequency: 'bullet',
+      regularPaymentAmount: 151875,
+      totalPaymentsExpected: 1,
+      paymentsCompleted: 0,
+      paymentsMissed: 0,
+      expectedCashImpact: 151875,
+      cashflowProbability: 1.0,
+      riskLevel: 'low',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: true,
+      hedgePercentage: 100,
+      tags: ['intercompany', 'gbp', 'parent-loan'],
+      systemTags: ['intercompany', 'cross_border'],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'intercompany',
+      version: 3,
+      eventCount: 5,
+      organizationId,
+    },
+
+    // 8. Liability in Dispute
+    {
+      liabilityId: 'LIA-2024-AP-00002',
+      name: 'CloudServices Inc - Disputed Invoice',
+      primaryClass: 'accounts_payable',
+      status: 'in_dispute',
+      counterpartyId: 'CPTY-CLOUD-001',
+      counterpartyName: 'CloudServices Inc',
+      counterpartyType: 'supplier',
+      partyId: 'PARTY-CLOUD',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE', 'US'],
+      legalReference: 'INV-CS-2024-5566',
+      isInterestBearing: false,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 18500,
+      outstandingPrincipal: 18500,
+      accruedInterest: 0,
+      feesPenalties: 0,
+      totalOutstanding: 18500,
+      totalSettled: 0,
+      currency: 'USD',
+      reportingCurrency: 'EUR',
+      fxRateAtRecognition: 0.92,
+      amountInReporting: 17020,
+      confidenceScore: 0.6,
+      inceptionDate: oneMonthAgo,
+      recognitionDate: oneMonthAgo,
+      activationDate: oneMonthAgo,
+      maturityDate: inThreeMonths,
+      gracePeriodDays: 30,
+      expectedCashImpact: 18500,
+      cashflowProbability: 0.5,
+      riskLevel: 'high',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: true,
+      disputeReason: 'Services not delivered as per contract specifications. Missing 40% of agreed deliverables.',
+      disputeAmount: 7400,
+      disputeOpenedAt: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000),
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['ap', 'disputed', 'usd'],
+      systemTags: ['cross_border', 'in_dispute'],
+      validationMode: 'soft',
+      language: 'en',
+      sourceType: 'invoice',
+      version: 4,
+      eventCount: 6,
+      organizationId,
+    },
+
+    // 9. Liability in Default
+    {
+      liabilityId: 'LIA-2023-AP-00099',
+      name: 'OldSupplier Ltd - Overdue Payment',
+      primaryClass: 'accounts_payable',
+      status: 'in_default',
+      counterpartyId: 'CPTY-OLD-001',
+      counterpartyName: 'OldSupplier Ltd',
+      counterpartyType: 'supplier',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE'],
+      legalReference: 'INV-OS-2023-9901',
+      isInterestBearing: false,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 8500,
+      outstandingPrincipal: 8500,
+      accruedInterest: 0,
+      feesPenalties: 425,
+      totalOutstanding: 8925,
+      totalSettled: 0,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      confidenceScore: 1.0,
+      inceptionDate: sixMonthsAgo,
+      recognitionDate: sixMonthsAgo,
+      activationDate: sixMonthsAgo,
+      maturityDate: threeMonthsAgo,
+      gracePeriodDays: 14,
+      expectedCashImpact: 8925,
+      cashflowProbability: 1.0,
+      riskLevel: 'critical',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: true,
+      defaultDate: new Date(threeMonthsAgo.getTime() + 14 * 24 * 60 * 60 * 1000),
+      defaultReason: 'Payment missed - cash flow constraints',
+      daysOverdue: 76,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      penaltiesAccrued: 425,
+      isHedged: false,
+      tags: ['ap', 'overdue', 'default'],
+      systemTags: ['in_default', 'requires_attention'],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'invoice',
+      version: 6,
+      eventCount: 9,
+      organizationId,
+    },
+
+    // 10. Fully Settled Liability (for history)
+    {
+      liabilityId: 'LIA-2024-AP-00003',
+      name: 'Office Supplies GmbH - Paid Invoice',
+      primaryClass: 'accounts_payable',
+      status: 'fully_settled',
+      counterpartyId: 'CPTY-OFFICE-001',
+      counterpartyName: 'Office Supplies GmbH',
+      counterpartyType: 'supplier',
+      legalEntityId: 'LE-DE-001',
+      jurisdictionIds: ['DE'],
+      legalReference: 'INV-OS-2024-1234',
+      isInterestBearing: false,
+      isSecured: false,
+      isFixed: true,
+      isGuaranteed: false,
+      originalPrincipal: 3200,
+      outstandingPrincipal: 0,
+      accruedInterest: 0,
+      feesPenalties: 0,
+      totalOutstanding: 0,
+      totalSettled: 3200,
+      currency: 'EUR',
+      reportingCurrency: 'EUR',
+      confidenceScore: 1.0,
+      inceptionDate: threeMonthsAgo,
+      recognitionDate: threeMonthsAgo,
+      activationDate: threeMonthsAgo,
+      maturityDate: oneMonthAgo,
+      settledDate: new Date(oneMonthAgo.getTime() - 7 * 24 * 60 * 60 * 1000),
+      lastPaymentDate: new Date(oneMonthAgo.getTime() - 7 * 24 * 60 * 60 * 1000),
+      gracePeriodDays: 14,
+      paymentFrequency: 'bullet',
+      totalPaymentsExpected: 1,
+      paymentsCompleted: 1,
+      paymentsMissed: 0,
+      expectedCashImpact: 0,
+      cashflowProbability: 0,
+      riskLevel: 'low',
+      covenants: [],
+      covenantBreaches: 0,
+      isInDefault: false,
+      daysOverdue: 0,
+      isDisputed: false,
+      isRestructured: false,
+      isWrittenOff: false,
+      requiresApproval: false,
+      isHedged: false,
+      tags: ['ap', 'paid'],
+      systemTags: [],
+      validationMode: 'hard',
+      language: 'en',
+      sourceType: 'invoice',
+      version: 4,
+      eventCount: 5,
+      organizationId,
+    },
+  ];
+
+  const createdLiabilities = [];
+  for (const liability of liabilities) {
+    const created = await prisma.liability.create({ data: liability });
+    createdLiabilities.push(created);
+  }
+  console.log(`  ✓ Created ${liabilities.length} liabilities`);
+
+  // =========================================================================
+  // LIABILITY EVENTS
+  // =========================================================================
+
+  const events = [];
+  for (const liability of createdLiabilities) {
+    // Created event
+    events.push({
+      eventId: `evt_${liability.liabilityId}_created_${liability.inceptionDate.getTime()}`,
+      liabilityId: liability.id,
+      eventType: 'LiabilityCreated',
+      timestamp: liability.inceptionDate,
+      effectiveDate: liability.inceptionDate,
+      actorId: userId,
+      actorName: 'System Admin',
+      actorType: 'user',
+      payload: {
+        liabilityId: liability.liabilityId,
+        name: liability.name,
+        primaryClass: liability.primaryClass,
+        originalPrincipal: Number(liability.originalPrincipal),
+        currency: liability.currency,
+      },
+      explanation: `Liability ${liability.liabilityId} created`,
+    });
+
+    // Recognized event (if recognized)
+    if (liability.recognitionDate) {
+      events.push({
+        eventId: `evt_${liability.liabilityId}_recognized_${liability.recognitionDate.getTime()}`,
+        liabilityId: liability.id,
+        eventType: 'LiabilityRecognized',
+        timestamp: liability.recognitionDate,
+        effectiveDate: liability.recognitionDate,
+        actorId: userId,
+        actorName: 'System Admin',
+        actorType: 'user',
+        payload: { status: 'recognized' },
+        explanation: `Liability ${liability.liabilityId} recognized`,
+      });
+    }
+
+    // Activated event (if active)
+    if (liability.activationDate && liability.status !== 'draft' && liability.status !== 'recognized') {
+      events.push({
+        eventId: `evt_${liability.liabilityId}_activated_${liability.activationDate.getTime()}`,
+        liabilityId: liability.id,
+        eventType: 'LiabilityActivated',
+        timestamp: liability.activationDate,
+        effectiveDate: liability.activationDate,
+        actorId: userId,
+        actorName: 'System Admin',
+        actorType: 'user',
+        payload: { status: 'active' },
+        explanation: `Liability ${liability.liabilityId} activated`,
+      });
+    }
+
+    // Status-specific events
+    if (liability.status === 'in_dispute') {
+      events.push({
+        eventId: `evt_${liability.liabilityId}_disputed_${now.getTime()}`,
+        liabilityId: liability.id,
+        eventType: 'LiabilityDisputed',
+        timestamp: liability.disputeOpenedAt || now,
+        actorId: userId,
+        actorName: 'System Admin',
+        actorType: 'user',
+        payload: {
+          status: 'in_dispute',
+          reason: liability.disputeReason,
+          disputeAmount: Number(liability.disputeAmount),
+        },
+        explanation: `Dispute opened for ${liability.liabilityId}`,
+      });
+    }
+
+    if (liability.status === 'in_default') {
+      events.push({
+        eventId: `evt_${liability.liabilityId}_defaulted_${now.getTime()}`,
+        liabilityId: liability.id,
+        eventType: 'LiabilityDefaulted',
+        timestamp: liability.defaultDate || now,
+        actorId: userId,
+        actorName: 'System Admin',
+        actorType: 'user',
+        payload: {
+          status: 'in_default',
+          reason: liability.defaultReason,
+          daysOverdue: liability.daysOverdue,
+        },
+        explanation: `Liability ${liability.liabilityId} marked as default`,
+      });
+    }
+
+    if (liability.status === 'fully_settled') {
+      events.push({
+        eventId: `evt_${liability.liabilityId}_settled_${now.getTime()}`,
+        liabilityId: liability.id,
+        eventType: 'LiabilityFullySettled',
+        timestamp: liability.settledDate || now,
+        actorId: userId,
+        actorName: 'System Admin',
+        actorType: 'user',
+        payload: {
+          status: 'fully_settled',
+          amount: Number(liability.totalSettled),
+        },
+        explanation: `Liability ${liability.liabilityId} fully settled`,
+      });
+    }
+  }
+
+  for (const event of events) {
+    await prisma.liabilityEvent.create({ data: event });
+  }
+  console.log(`  ✓ Created ${events.length} liability events`);
+
+  // =========================================================================
+  // PAYMENTS (For active liabilities with payment history)
+  // =========================================================================
+
+  const payments = [];
+
+  // Bank Term Loan - 4 completed quarterly payments
+  const termLoan = createdLiabilities.find(l => l.liabilityId === 'LIA-2024-LTD-00001');
+  if (termLoan) {
+    for (let i = 0; i < 4; i++) {
+      const paymentDate = new Date(oneYearAgo.getTime() + (i + 1) * 90 * 24 * 60 * 60 * 1000);
+      payments.push({
+        liabilityId: termLoan.id,
+        paymentId: `PMT-${termLoan.liabilityId}-${i + 1}`,
+        amount: 25000,
+        principalAmount: 18750,
+        interestAmount: 5625,
+        feesAmount: 625,
+        penaltyAmount: 0,
+        currency: 'EUR',
+        scheduledDate: paymentDate,
+        dueDate: paymentDate,
+        paymentDate: paymentDate,
+        executedAt: paymentDate,
+        status: 'executed',
+        requiresApproval: true,
+        approvalStatus: 'approved',
+        executedBy: userId,
+        paymentMethod: 'bank_transfer',
+        bankReference: `DB-TL-2024-Q${i + 1}`,
+      });
+    }
+  }
+
+  // Finance Lease - 6 completed monthly payments
+  const lease = createdLiabilities.find(l => l.liabilityId === 'LIA-2024-LFL-00001');
+  if (lease) {
+    for (let i = 0; i < 6; i++) {
+      const paymentDate = new Date(sixMonthsAgo.getTime() + (i + 1) * 30 * 24 * 60 * 60 * 1000);
+      payments.push({
+        liabilityId: lease.id,
+        paymentId: `PMT-${lease.liabilityId}-${i + 1}`,
+        amount: 2000,
+        principalAmount: 1700,
+        interestAmount: 300,
+        feesAmount: 0,
+        penaltyAmount: 0,
+        currency: 'EUR',
+        scheduledDate: paymentDate,
+        dueDate: paymentDate,
+        paymentDate: paymentDate,
+        executedAt: paymentDate,
+        status: 'executed',
+        requiresApproval: false,
+        executedBy: userId,
+        paymentMethod: 'direct_debit',
+        bankReference: `SFS-LEASE-M${i + 1}`,
+      });
+    }
+
+    // Next scheduled payment
+    payments.push({
+      liabilityId: lease.id,
+      paymentId: `PMT-${lease.liabilityId}-7`,
+      amount: 2000,
+      principalAmount: 1700,
+      interestAmount: 300,
+      feesAmount: 0,
+      penaltyAmount: 0,
+      currency: 'EUR',
+      scheduledDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+      dueDate: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+      status: 'scheduled',
+      requiresApproval: false,
+    });
+  }
+
+  // Settled liability payment
+  const settledLia = createdLiabilities.find(l => l.liabilityId === 'LIA-2024-AP-00003');
+  if (settledLia) {
+    payments.push({
+      liabilityId: settledLia.id,
+      paymentId: `PMT-${settledLia.liabilityId}-1`,
+      amount: 3200,
+      principalAmount: 3200,
+      interestAmount: 0,
+      feesAmount: 0,
+      penaltyAmount: 0,
+      currency: 'EUR',
+      scheduledDate: oneMonthAgo,
+      dueDate: oneMonthAgo,
+      paymentDate: new Date(oneMonthAgo.getTime() - 7 * 24 * 60 * 60 * 1000),
+      executedAt: new Date(oneMonthAgo.getTime() - 7 * 24 * 60 * 60 * 1000),
+      status: 'executed',
+      requiresApproval: false,
+      executedBy: userId,
+      paymentMethod: 'bank_transfer',
+      bankReference: 'OS-PAY-2024-1234',
+    });
+  }
+
+  for (const payment of payments) {
+    await prisma.liabilityPayment.create({ data: payment });
+  }
+  console.log(`  ✓ Created ${payments.length} payments`);
+
+  // =========================================================================
+  // SETTLEMENTS
+  // =========================================================================
+
+  const settlements = [];
+
+  // Term loan settlements
+  if (termLoan) {
+    for (let i = 0; i < 4; i++) {
+      const settleDate = new Date(oneYearAgo.getTime() + (i + 1) * 90 * 24 * 60 * 60 * 1000);
+      settlements.push({
+        liabilityId: termLoan.id,
+        settlementId: `SET-${termLoan.liabilityId}-${i + 1}`,
+        settlementType: 'partial',
+        amount: 25000,
+        principalSettled: 18750,
+        interestSettled: 5625,
+        feesSettled: 625,
+        penaltiesWaived: 0,
+        currency: 'EUR',
+        fxGainLoss: 0,
+        outstandingBefore: 500000 - i * 18750,
+        outstandingAfter: 500000 - (i + 1) * 18750,
+        settlementDate: settleDate,
+        effectiveDate: settleDate,
+        settledBy: userId,
+      });
+    }
+  }
+
+  // Settled AP
+  if (settledLia) {
+    settlements.push({
+      liabilityId: settledLia.id,
+      settlementId: `SET-${settledLia.liabilityId}-1`,
+      settlementType: 'full',
+      amount: 3200,
+      principalSettled: 3200,
+      interestSettled: 0,
+      feesSettled: 0,
+      penaltiesWaived: 0,
+      currency: 'EUR',
+      fxGainLoss: 0,
+      outstandingBefore: 3200,
+      outstandingAfter: 0,
+      settlementDate: new Date(oneMonthAgo.getTime() - 7 * 24 * 60 * 60 * 1000),
+      effectiveDate: new Date(oneMonthAgo.getTime() - 7 * 24 * 60 * 60 * 1000),
+      settledBy: userId,
+    });
+  }
+
+  for (const settlement of settlements) {
+    await prisma.liabilitySettlement.create({ data: settlement });
+  }
+  console.log(`  ✓ Created ${settlements.length} settlements`);
+
+  // =========================================================================
+  // INTEREST ACCRUALS
+  // =========================================================================
+
+  const accruals = [];
+
+  // Term loan interest accruals
+  if (termLoan) {
+    for (let i = 0; i < 12; i++) {
+      const periodStart = new Date(oneYearAgo.getTime() + i * 30 * 24 * 60 * 60 * 1000);
+      const periodEnd = new Date(oneYearAgo.getTime() + (i + 1) * 30 * 24 * 60 * 60 * 1000);
+      const principal = 500000 - Math.floor(i / 3) * 18750;
+      const amount = (principal * 0.045 * 30) / 360;
+
+      accruals.push({
+        liabilityId: termLoan.id,
+        accrualId: `ACC-${termLoan.liabilityId}-INT-${i + 1}`,
+        accrualType: 'interest',
+        periodStart,
+        periodEnd,
+        principalBase: principal,
+        rate: 0.045,
+        dayCount: 30,
+        dayCountBasis: 'actual_360',
+        amount,
+        currency: 'EUR',
+        status: 'posted',
+        postedAt: periodEnd,
+        postedBy: userId,
+        explanation: `Monthly interest accrual for period ${i + 1}`,
+      });
+    }
+  }
+
+  for (const accrual of accruals) {
+    await prisma.liabilityAccrual.create({ data: accrual });
+  }
+  console.log(`  ✓ Created ${accruals.length} accruals`);
+
+  // =========================================================================
+  // COVENANT CHECKS
+  // =========================================================================
+
+  const covenantChecks = [];
+
+  if (termLoan) {
+    // Quarterly covenant checks
+    for (let i = 0; i < 4; i++) {
+      const checkDate = new Date(oneYearAgo.getTime() + (i + 1) * 90 * 24 * 60 * 60 * 1000);
+
+      covenantChecks.push({
+        liabilityId: termLoan.id,
+        covenantName: 'Debt-to-Equity',
+        covenantType: 'debt_to_equity',
+        checkDate,
+        periodEnd: checkDate,
+        threshold: 2.5,
+        thresholdType: 'maximum',
+        actualValue: 1.8 + Math.random() * 0.3,
+        status: 'compliant',
+        variance: -0.5,
+        variancePercent: -20,
+        isBreached: false,
+        checkedBy: userId,
+        calculationDetails: { totalDebt: 500000, totalEquity: 300000 },
+      });
+
+      covenantChecks.push({
+        liabilityId: termLoan.id,
+        covenantName: 'Interest Coverage',
+        covenantType: 'interest_coverage',
+        checkDate,
+        periodEnd: checkDate,
+        threshold: 3.0,
+        thresholdType: 'minimum',
+        actualValue: 4.2 + Math.random() * 0.5,
+        status: 'compliant',
+        variance: 1.2,
+        variancePercent: 40,
+        isBreached: false,
+        checkedBy: userId,
+        calculationDetails: { ebit: 95000, interestExpense: 22500 },
+      });
+    }
+  }
+
+  for (const check of covenantChecks) {
+    await prisma.liabilityCovenantCheck.create({ data: check });
+  }
+  console.log(`  ✓ Created ${covenantChecks.length} covenant checks`);
+
+  // =========================================================================
+  // EXCEPTIONS
+  // =========================================================================
+
+  const exceptions = [
+    {
+      liabilityId: createdLiabilities.find(l => l.liabilityId === 'LIA-2024-AP-00002')?.id,
+      exceptionType: 'validation_failed',
+      exceptionCode: 'DISPUTED_AMOUNT_MISMATCH',
+      exceptionMessage: 'Disputed amount does not match supporting documentation',
+      exceptionDetails: { calculatedDispute: 8200, recordedDispute: 7400 },
+      validationMode: 'soft',
+      confidenceScore: 0.6,
+      slaDeadline: new Date(now.getTime() + 48 * 60 * 60 * 1000),
+      status: 'open',
+      organizationId,
+    },
+    {
+      liabilityId: createdLiabilities.find(l => l.liabilityId === 'LIA-2023-AP-00099')?.id,
+      exceptionType: 'payment_failed',
+      exceptionCode: 'INSUFFICIENT_FUNDS',
+      exceptionMessage: 'Scheduled payment could not be processed due to insufficient funds',
+      exceptionDetails: { attemptedAmount: 8500, availableBalance: 2100 },
+      slaDeadline: new Date(now.getTime() - 24 * 60 * 60 * 1000),
+      isOverdue: true,
+      status: 'escalated',
+      escalationLevel: 1,
+      escalatedTo: userId,
+      escalatedAt: new Date(now.getTime() - 12 * 60 * 60 * 1000),
+      organizationId,
+    },
+  ];
+
+  for (const exception of exceptions) {
+    if (exception.liabilityId) {
+      await prisma.liabilityException.create({ data: exception });
+    }
+  }
+  console.log(`  ✓ Created ${exceptions.filter(e => e.liabilityId).length} exceptions`);
+
+  // =========================================================================
+  // SAVED VIEWS
+  // =========================================================================
+
+  const savedViews = [
+    {
+      name: 'Active Bank Loans',
+      description: 'All active loans from banking institutions',
+      filters: {
+        primaryClasses: ['long_term_debt', 'short_term_debt', 'credit_line'],
+        counterpartyType: 'bank',
+        status: 'active',
+      },
+      columns: ['liabilityId', 'name', 'counterpartyName', 'outstandingPrincipal', 'interestRate', 'maturityDate'],
+      sortBy: 'maturityDate',
+      sortOrder: 'asc',
+      includeAggregations: true,
+      aggregationFields: ['totalOutstanding'],
+      isPublic: true,
+      sharedWith: [],
+      defaultExportFormat: 'csv',
+      createdBy: userId,
+      createdByName: 'System Admin',
+      organizationId,
+    },
+    {
+      name: 'At Risk Liabilities',
+      description: 'Liabilities with high risk or in default/dispute',
+      filters: {
+        riskLevels: ['high', 'critical'],
+      },
+      columns: ['liabilityId', 'name', 'counterpartyName', 'totalOutstanding', 'riskLevel', 'daysOverdue', 'status'],
+      sortBy: 'riskLevel',
+      sortOrder: 'desc',
+      includeAggregations: true,
+      aggregationFields: ['totalOutstanding'],
+      isPublic: true,
+      sharedWith: [],
+      defaultExportFormat: 'json',
+      createdBy: userId,
+      createdByName: 'System Admin',
+      organizationId,
+    },
+    {
+      name: 'Upcoming Maturities (90 Days)',
+      description: 'Liabilities maturing in the next 90 days',
+      filters: {
+        maturityTo: new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      columns: ['liabilityId', 'name', 'counterpartyName', 'totalOutstanding', 'maturityDate', 'currency'],
+      sortBy: 'maturityDate',
+      sortOrder: 'asc',
+      includeAggregations: true,
+      aggregationFields: ['totalOutstanding'],
+      isPublic: false,
+      sharedWith: [],
+      defaultExportFormat: 'pdf',
+      createdBy: userId,
+      createdByName: 'System Admin',
+      organizationId,
+    },
+  ];
+
+  for (const view of savedViews) {
+    await prisma.liabilitySavedView.create({ data: view });
+  }
+  console.log(`  ✓ Created ${savedViews.length} saved views`);
+
+  console.log('✅ Liabilities Engine seeding complete!\n');
+}
+
+
 async function main() {
   console.log('🌱 Seeding PrimeBalance Database...\n')
   console.log('=' .repeat(60))
@@ -130,12 +2294,29 @@ async function main() {
   await prisma.inventoryBatch.deleteMany({})
   await prisma.inventoryItem.deleteMany({})
   
-  // Liabilities module
+  // Liabilities module (child tables first)
+  await prisma.liabilitySavedView.deleteMany({})
+  await prisma.liabilityException.deleteMany({})
+  await prisma.liabilityCovenantCheck.deleteMany({})
+  await prisma.liabilityAccrual.deleteMany({})
+  await prisma.liabilitySettlement.deleteMany({})
+  await prisma.liabilityEvent.deleteMany({})
   await prisma.liabilityPayment.deleteMany({})
+  await prisma.liabilityImportBatch.deleteMany({})
+  await prisma.liabilityAutomationRule.deleteMany({})
   await prisma.liability.deleteMany({})
-  
-  // Core business
-  await prisma.archiveItem.deleteMany({})
+
+  // Archive module (child tables first)
+  await prisma.archiveAccessLog.deleteMany({})
+  await prisma.archiveVersion.deleteMany({})
+  await prisma.archiveLink.deleteMany({})
+  await prisma.archiveException.deleteMany({})
+  await prisma.archiveExport.deleteMany({})
+  await prisma.archiveImportBatch.deleteMany({})
+  await prisma.archiveSavedView.deleteMany({})
+  await prisma.archiveAutomationRule.deleteMany({})
+  await prisma.archiveRetentionPolicy.deleteMany({})
+  await prisma.archiveRecord.deleteMany({})
   await prisma.order.deleteMany({})
   await prisma.invoice.deleteMany({})
   
@@ -708,172 +2889,18 @@ async function main() {
   }
   console.log('  ✓ Created', orders.length, 'orders')
 
-  // =============================================================================
-  // 13. ARCHIVE ITEMS
-  // =============================================================================
-  console.log('\n📁 Creating Archive Items...')
-  const archiveItems = [
-    { category: 'bookings', originalId: 'txn-2024-final', originalType: 'transaction', title: 'Year-End Closing Entries 2024', description: 'Final adjusting entries for fiscal year 2024', amount: 125000, itemDate: '2024-12-31', fiscalYear: 2024, tags: ['year-end', 'adjustments'] },
-    { category: 'invoices', originalId: 'inv-2024-078', originalType: 'invoice', title: 'Invoice Schmidt & Partner', description: 'Consulting services November 2024', amount: 8500, counterparty: 'Schmidt & Partner GmbH', itemDate: '2024-11-30', fiscalYear: 2024, tags: ['consulting', 'paid'] },
-    { category: 'invoices', originalId: 'inv-2024-079', originalType: 'invoice', title: 'Invoice Tech Solutions', description: 'IT Support December 2024', amount: 3200, counterparty: 'Tech Solutions AG', itemDate: '2024-12-15', fiscalYear: 2024, tags: ['it', 'support'] },
-    { category: 'bank', originalId: 'stmt-2024-12', originalType: 'statement', title: 'Bank Statement December 2024', description: 'Monthly bank reconciliation statement', amount: 142500, counterparty: 'UBS AG', itemDate: '2024-12-31', fiscalYear: 2024, tags: ['reconciliation'] },
-    { category: 'contracts', originalId: 'contract-2024-015', originalType: 'contract', title: 'Service Agreement - TechCorp', description: '12-month service agreement', amount: 96000, counterparty: 'TechCorp Ltd', itemDate: '2024-01-15', fiscalYear: 2024, tags: ['annual', 'services'] },
-    { category: 'documents', originalId: 'doc-2024-tax', originalType: 'document', title: 'Tax Return 2023', description: 'Filed corporate tax return', amount: 45000, itemDate: '2024-03-31', fiscalYear: 2024, tags: ['tax', 'filed'] },
-  ]
 
-  for (const item of archiveItems) {
-    await prisma.archiveItem.create({
-      data: {
-        category: item.category,
-        originalId: item.originalId,
-        originalType: item.originalType,
-        title: item.title,
-        description: item.description,
-        amount: item.amount,
-        currency: 'EUR',
-        counterparty: item.counterparty,
-        itemDate: new Date(item.itemDate),
-        fiscalYear: item.fiscalYear,
-        tags: item.tags,
-        archivedBy: user.id,
-        organizationId: org.id,
-      },
-    })
-  }
-  console.log('  ✓ Created', archiveItems.length, 'archive items')
 
   // =============================================================================
-  // 14. LIABILITIES
+  // 14. LIABILITIES (comprehensive seed)
   // =============================================================================
-  console.log('\n💰 Creating Liabilities...')
-  const liabilities = [
-    {
-      type: 'loan',
-      name: 'Business Expansion Loan',
-      counterpartyName: 'UBS AG',
-      counterpartyType: 'bank',
-      principalAmount: 150000,
-      outstandingAmount: 120000,
-      paidAmount: 30000,
-      interestRate: 3.5,
-      interestType: 'fixed',
-      startDate: '2023-06-01',
-      maturityDate: '2028-06-01',
-      paymentFrequency: 'monthly',
-      paymentAmount: 2850,
-      nextPaymentDate: '2025-02-01',
-      riskLevel: 'low',
-    },
-    {
-      type: 'credit_line',
-      name: 'Operating Credit Line',
-      counterpartyName: 'Credit Suisse',
-      counterpartyType: 'bank',
-      principalAmount: 0,
-      outstandingAmount: 25000,
-      creditLimit: 100000,
-      availableCredit: 75000,
-      interestRate: 5.25,
-      interestType: 'variable',
-      startDate: '2024-01-01',
-      maturityDate: '2025-12-31',
-      riskLevel: 'low',
-    },
-    {
-      type: 'supplier_credit',
-      name: 'Hardware Supplier Credit',
-      counterpartyName: 'Dell Technologies',
-      counterpartyType: 'supplier',
-      principalAmount: 45000,
-      outstandingAmount: 35000,
-      paidAmount: 10000,
-      startDate: '2024-11-01',
-      maturityDate: '2025-05-01',
-      paymentFrequency: 'monthly',
-      paymentAmount: 7500,
-      nextPaymentDate: '2025-02-01',
-      riskLevel: 'low',
-    },
-    {
-      type: 'lease',
-      name: 'Office Lease Obligation',
-      counterpartyName: 'Swiss Property AG',
-      counterpartyType: 'other',
-      principalAmount: 216000,
-      outstandingAmount: 162000,
-      paidAmount: 54000,
-      startDate: '2023-01-01',
-      maturityDate: '2026-12-31',
-      paymentFrequency: 'monthly',
-      paymentAmount: 4500,
-      nextPaymentDate: '2025-02-01',
-      riskLevel: 'low',
-    },
-  ]
-
-  const liabilityMap: Record<string, string> = {}
-  for (const lib of liabilities) {
-    const utilizationRate = lib.creditLimit ? (lib.outstandingAmount / lib.creditLimit) * 100 : null
-    
-    const created = await prisma.liability.create({
-      data: {
-        type: lib.type,
-        name: lib.name,
-        counterpartyName: lib.counterpartyName,
-        counterpartyType: lib.counterpartyType,
-        currency: 'EUR',
-        principalAmount: lib.principalAmount,
-        outstandingAmount: lib.outstandingAmount,
-        paidAmount: lib.paidAmount || 0,
-        creditLimit: lib.creditLimit,
-        availableCredit: lib.availableCredit,
-        utilizationRate,
-        interestRate: lib.interestRate,
-        interestType: lib.interestType,
-        startDate: new Date(lib.startDate),
-        maturityDate: lib.maturityDate ? new Date(lib.maturityDate) : null,
-        nextPaymentDate: lib.nextPaymentDate ? new Date(lib.nextPaymentDate) : null,
-        paymentFrequency: lib.paymentFrequency,
-        paymentAmount: lib.paymentAmount,
-        riskLevel: lib.riskLevel,
-        organizationId: org.id,
-      },
-    })
-    liabilityMap[lib.name] = created.id
-  }
-  console.log('  ✓ Created', liabilities.length, 'liabilities')
+  await seedLiabilities(org.id, user.id)
 
   // =============================================================================
-  // 14b. LIABILITY PAYMENTS
+  // 14b. ARCHIVE (comprehensive seed)
   // =============================================================================
-  console.log('\n💸 Creating Liability Payments...')
-  const liabilityPayments = [
-    // Business Expansion Loan payments
-    { liabilityName: 'Business Expansion Loan', amount: 2850, principalAmount: 2500, interestAmount: 350, paymentDate: daysAgo(60), status: 'completed' },
-    { liabilityName: 'Business Expansion Loan', amount: 2850, principalAmount: 2510, interestAmount: 340, paymentDate: daysAgo(30), status: 'completed' },
-    { liabilityName: 'Business Expansion Loan', amount: 2850, principalAmount: 2520, interestAmount: 330, paymentDate: daysAgo(0), status: 'completed' },
-    // Hardware Supplier Credit payments
-    { liabilityName: 'Hardware Supplier Credit', amount: 7500, principalAmount: 7500, interestAmount: 0, paymentDate: daysAgo(45), status: 'completed' },
-    { liabilityName: 'Hardware Supplier Credit', amount: 2500, principalAmount: 2500, interestAmount: 0, paymentDate: daysAgo(15), status: 'completed' },
-    // Office Lease payments
-    { liabilityName: 'Office Lease Obligation', amount: 4500, principalAmount: 4500, interestAmount: 0, paymentDate: daysAgo(60), status: 'completed' },
-    { liabilityName: 'Office Lease Obligation', amount: 4500, principalAmount: 4500, interestAmount: 0, paymentDate: daysAgo(30), status: 'completed' },
-    { liabilityName: 'Office Lease Obligation', amount: 4500, principalAmount: 4500, interestAmount: 0, paymentDate: daysAgo(0), status: 'completed' },
-  ]
+  await seedArchive(org.id, user.id)
 
-  for (const pmt of liabilityPayments) {
-    await prisma.liabilityPayment.create({
-      data: {
-        amount: pmt.amount,
-        principalAmount: pmt.principalAmount,
-        interestAmount: pmt.interestAmount,
-        paymentDate: pmt.paymentDate,
-        status: pmt.status,
-        liabilityId: liabilityMap[pmt.liabilityName],
-      },
-    })
-  }
-  console.log('  ✓ Created', liabilityPayments.length, 'liability payments')
 
   // =============================================================================
   // 15. INVENTORY
@@ -3300,9 +5327,8 @@ async function main() {
   console.log('  • ' + reports.length + ' Saved reports')
   console.log('  • ' + invoices.length + ' Invoices')
   console.log('  • ' + orders.length + ' Orders')
-  console.log('  • ' + archiveItems.length + ' Archive items')
-  console.log('  • ' + liabilities.length + ' Liabilities')
-  console.log('  • ' + liabilityPayments.length + ' Liability payments')
+  console.log('  • 7 Archive records with versions, links, and policies')
+  console.log('  • 10 Liabilities with events, payments, settlements, and accruals')
   console.log('  • ' + inventory.length + ' Inventory items')
   console.log('  • ' + batches.length + ' Inventory batches')
   console.log('  • ' + movements.length + ' Inventory movements')

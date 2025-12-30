@@ -235,7 +235,7 @@ async function generateBalanceSheet(orgId: string, dateRange: DateRange) {
 
   const totalCash = treasuryAccounts.reduce((sum, t) => sum + Number(t.currentBalance), 0)
 
-  const totalLiabilities = liabilities.reduce((sum, l) => sum + Number(l.outstandingAmount), 0)
+  const totalLiabilities = liabilities.reduce((sum, l) => sum + Number(l.totalOutstanding), 0)
 
   const equity = (totalAssets + totalReceivables + fixedAssets + totalCash) - totalLiabilities
 
@@ -429,11 +429,11 @@ async function generateTaxSummary(orgId: string, dateRange: DateRange) {
   const taxLiabilities = await prisma.liability.findMany({
     where: {
       organizationId: orgId,
-      type: 'tax',
+      primaryClass: 'tax_liability',
     },
   })
 
-  const taxOwed = taxLiabilities.reduce((sum, l) => sum + Number(l.outstandingAmount), 0)
+  const taxOwed = taxLiabilities.reduce((sum, l) => sum + Number(l.totalOutstanding), 0)
 
   return {
     headers: ['Category', 'Amount'],
@@ -538,9 +538,9 @@ async function generateAPAgingReport(orgId: string) {
 
   liabilities.forEach(l => {
     // Liability uses maturityDate, not dueDate
-    const dueDate = l.maturityDate ? new Date(l.maturityDate) : new Date(l.startDate)
+    const dueDate = l.maturityDate ? new Date(l.maturityDate) : new Date(l.inceptionDate)
     const daysOverdue = Math.floor((now.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
-    const amount = Number(l.outstandingAmount)
+    const amount = Number(l.totalOutstanding)
 
     if (daysOverdue <= 0) {
       buckets.current.count += 1
@@ -560,7 +560,7 @@ async function generateAPAgingReport(orgId: string) {
     }
   })
 
-  const totalOutstanding = liabilities.reduce((sum, l) => sum + Number(l.outstandingAmount), 0)
+  const totalOutstanding = liabilities.reduce((sum, l) => sum + Number(l.totalOutstanding), 0)
 
   return {
     headers: ['Aging Bucket', 'Count', 'Amount', 'Percentage'],
