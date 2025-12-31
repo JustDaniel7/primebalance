@@ -10,14 +10,14 @@ import Link from 'next/link'
 import { SearchIcon, BellIcon, PlusIcon, ChevronDownIcon } from '@/components/ui/Icons'
 import Button from '@/components/ui/Button'
 import { Sun, Moon } from 'lucide-react'
+import { useSearch } from '@/contexts/SearchContext'
 
 export default function Header() {
   const { user } = useStore()
   const { themeMode, setThemeMode, resolvedTheme, t } = useThemeStore()
   const { data: session } = useSession()
   const router = useRouter()
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const { open: openSearch } = useSearch()
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
@@ -80,65 +80,31 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 h-16 lg:h-20 bg-white/80 dark:bg-surface-950/80 border-b border-gray-200 dark:border-surface-800/50 backdrop-blur-xl transition-colors">
       <div className="flex items-center justify-between h-full px-4 lg:px-8">
-        {/* Search - hidden on mobile, visible on larger screens */}
+        {/* Global Search Button - hidden on mobile, visible on larger screens */}
         <div className="hidden md:block flex-1 max-w-xl">
-          <div className="relative">
-            <SearchIcon
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-surface-500"
-            />
-            <input
-              type="search"
-              placeholder={t('header.search')}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setSearchOpen(true)}
-              onBlur={() => setTimeout(() => setSearchOpen(false), 200)}
-              className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-900/60 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 placeholder:text-gray-400 dark:placeholder:text-surface-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30 focus:border-[var(--accent-primary)]/30"
-              aria-label="Search transactions, accounts, reports"
-              role="searchbox"
-            />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden lg:block">
-              <kbd className="px-2 py-1 text-xs text-gray-500 dark:text-surface-500 bg-gray-200 dark:bg-surface-800 rounded-md border border-gray-300 dark:border-surface-700">
-                ⌘K
-              </kbd>
-            </div>
-          </div>
-
-          {/* Search results dropdown */}
-          <AnimatePresence>
-            {searchOpen && searchQuery && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 right-0 max-w-xl mt-2 bg-white dark:bg-surface-900 border border-gray-200 dark:border-surface-700 rounded-xl overflow-hidden shadow-lg"
-              >
-                <div className="p-2">
-                  <p className="px-3 py-2 text-xs font-medium text-gray-500 dark:text-surface-500 uppercase">
-                    Quick Results
-                  </p>
-                  <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors text-left">
-                    <div className="w-8 h-8 rounded-lg bg-[var(--accent-primary)]/10 flex items-center justify-center">
-                      <SearchIcon size={16} className="text-[var(--accent-primary)]" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-700 dark:text-surface-200">
-                        Search for &quot;{searchQuery}&quot;
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-surface-500">
-                        Press Enter to search
-                      </p>
-                    </div>
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <button
+            onClick={openSearch}
+            className="w-full flex items-center gap-3 pl-4 pr-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-900/60 border border-gray-200 dark:border-surface-700/50 text-gray-400 dark:text-surface-500 hover:border-[var(--accent-primary)]/30 hover:bg-gray-50 dark:hover:bg-surface-900/80 transition-all duration-200"
+            aria-label="Open global search"
+          >
+            <SearchIcon size={18} />
+            <span className="flex-1 text-left text-sm">{t('header.search')}</span>
+            <kbd className="hidden lg:inline-flex items-center gap-1 px-2 py-1 text-xs bg-gray-200 dark:bg-surface-800 rounded-md border border-gray-300 dark:border-surface-700">
+              <span className="text-[10px]">⌘</span>K
+            </kbd>
+          </button>
         </div>
 
-        {/* Mobile spacer */}
-        <div className="md:hidden flex-1" />
+        {/* Mobile search button */}
+        <div className="md:hidden flex-1">
+          <button
+            onClick={openSearch}
+            className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors"
+            aria-label="Open search"
+          >
+            <SearchIcon size={20} className="text-gray-500 dark:text-surface-400" />
+          </button>
+        </div>
 
         {/* Actions */}
         <div className="flex items-center gap-2 lg:gap-3 ml-4">
