@@ -285,6 +285,7 @@
   "tax.connections": "Connections",
   "ai.title": "AI Assistant",
   "ai.subtitle": "Get intelligent insights and recommendations",
+  "ai.greeting": "Hello! I'm your AI financial assistant. How can I help you today?",
   "ai.askAnything": "Ask me anything about your finances...",
   "ai.suggestions": "Suggested Questions",
   "ai.recentChats": "Recent Conversations",

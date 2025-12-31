@@ -132,8 +132,8 @@ export default function AssistantPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-full">
         {/* Chat Area */}
-        <div className="lg:col-span-3 flex flex-col">
-          <Card variant="glass" padding="none" className="flex-1 flex flex-col">
+        <div className="lg:col-span-3 flex flex-col min-h-0 overflow-hidden">
+          <Card variant="glass" padding="none" className="flex-1 flex flex-col min-h-0 overflow-hidden">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {messages.map((message, index) => (
