@@ -61,8 +61,8 @@ export async function POST(
                 organizationId: user.organizationId,
             }
         })
-    } catch (e) {
-        console.log('Archive record creation skipped:', e);
+    } catch {
+        // Archive record creation is non-critical, continue with report archival
     }
 
     // Update report status

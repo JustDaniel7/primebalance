@@ -28,13 +28,13 @@ export async function GET(req: NextRequest) {
       id: r.id,
       name: r.name,
       type: r.type,
-      description: (r as any).description,
+      description: r.description,
       parameters: r.parameters,
-      status: (r as any).status || 'active',
+      status: r.status || 'active',
       isScheduled: r.isScheduled,
       scheduleFreq: r.scheduleFreq,
       lastGenerated: r.lastGenerated?.toISOString(),
-      archivedAt: (r as any).archivedAt?.toISOString(),
+      archivedAt: r.archivedAt?.toISOString(),
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
     })),
@@ -58,12 +58,11 @@ export async function POST(req: NextRequest) {
       userId: user.id,
       name,
       type,
-      // @ts-ignore - description may not exist in older schema
       description,
       parameters: parameters || {},
       isScheduled: isScheduled || false,
       scheduleFreq,
-    } as any,
+    },
   })
 
   return NextResponse.json({

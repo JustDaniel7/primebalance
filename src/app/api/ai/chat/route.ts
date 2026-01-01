@@ -143,7 +143,6 @@ export async function POST(req: NextRequest) {
           console.error('Failed to parse function arguments:', toolCall.function.arguments)
         }
 
-        console.log(`Executing tool: ${functionName}`, functionArgs)
 
         // Execute the tool with organization context
         const result = await executeToolCall(

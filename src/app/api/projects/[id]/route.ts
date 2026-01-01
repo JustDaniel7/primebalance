@@ -14,7 +14,6 @@ export async function GET(
 
         const { id } = await params;
 
-        // @ts-ignore
         const project = await prisma.project.findFirst({
             where: {
                 id,

@@ -32,7 +32,12 @@
       "Bash(npm run logs:*)",
       "Bash(gcloud logging read:*)",
       "Bash(gcloud run services describe:*)",
-      "Bash(gcloud run services update:*)"
+      "Bash(gcloud run services update:*)",
+      "Bash(head:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npm ls:*)"
     ]
   }
 }

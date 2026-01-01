@@ -9,7 +9,6 @@ function createPool(): Pool {
   const cloudSqlConnection = process.env.CLOUD_SQL_CONNECTION_NAME
   
   if (isCloudRun && cloudSqlConnection) {
-    console.log('🔌 Using Cloud SQL socket:', cloudSqlConnection)
     return new Pool({
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
@@ -19,13 +18,12 @@ function createPool(): Pool {
   }
   
   // Local development (including npm start locally)
-  console.log('🔌 Using local database connection')
   return new Pool({
-    host: '127.0.0.1',
-    port: 5433,
-    database: 'primebalance',
-    user: 'primebalance_app',
-    password: process.env.DB_PASSWORD || 'demoPassword089',
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: parseInt(process.env.DB_PORT || '5433'),
+    database: process.env.DB_NAME || 'primebalance',
+    user: process.env.DB_USER || 'primebalance_app',
+    password: process.env.DB_PASSWORD,
   })
 }
 

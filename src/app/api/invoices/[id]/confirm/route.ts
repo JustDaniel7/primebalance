@@ -99,8 +99,8 @@ export async function POST(
                     organizationId: user.organizationId,
                 },
             });
-        } catch (e) {
-            console.log('Receivable creation skipped:', e);
+        } catch {
+            // Receivable creation is non-critical, continue with invoice confirmation
         }
 
         return NextResponse.json({

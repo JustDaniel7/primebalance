@@ -63,7 +63,6 @@ export const authOptions: AuthOptions = {
               },
               select: { id: true, organizationId: true }
             })
-            console.log(`Auto-created user ${user.email} linked to org ${org.name}`)
           }
         }
         
@@ -76,7 +75,6 @@ export const authOptions: AuthOptions = {
               data: { organizationId: org.id }
             })
             dbUser.organizationId = org.id
-            console.log(`Linked existing user ${user.email} to org ${org.name}`)
           }
         }
         
