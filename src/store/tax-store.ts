@@ -112,11 +112,12 @@ interface TaxStore {
   // Optimization Actions
   runOptimizationAnalysis: (context: Partial<OptimizationContext>) => void;
   runOptimizationAnalysisFromApi: (options?: {
+    mode?: 'template' | 'ai';
     annualRevenue?: number;
     dividendFlows?: Array<{ fromEntityId: string; toEntityId: string; amount: number }>;
     royaltyFlows?: Array<{ fromEntityId: string; toEntityId: string; amount: number }>;
     currentEffectiveTaxRate?: number;
-  }) => Promise<void>;
+  }) => Promise<{ aiAvailable?: boolean; mode?: string } | void>;
   dismissSuggestion: (suggestionId: string) => void;
   
   // Notification Actions
@@ -554,6 +555,12 @@ export const useTaxStore = create<TaxStore>()(
               isAnalyzing: false,
               notifications: [...state.notifications, ...newNotifications],
             }));
+
+            // Return metadata about the analysis
+            return {
+              aiAvailable: data.aiAvailable,
+              mode: data.mode,
+            };
           } else {
             set({ isAnalyzing: false });
           }

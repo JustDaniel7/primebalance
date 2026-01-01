@@ -1,5 +1,5 @@
 // src/app/api/tax/optimize/route.ts
-// Tax Optimization Analysis API - Template-based, cost-effective approach
+// Tax Optimization Analysis API - Template-based + AI-enhanced modes
 
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
@@ -17,6 +17,13 @@ import {
   OptimizationResult,
 } from '@/lib/tax-optimization-engine'
 import { getJurisdiction } from '@/data/jurisdictions'
+
+// DeepSeek API configuration
+const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY
+const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions'
+
+// Optimization modes
+export type OptimizationMode = 'template' | 'ai'
 
 // =============================================================================
 // DB ENTITY TO TAX ENGINE CONVERSION
@@ -188,6 +195,220 @@ function generateExecutiveSummary(result: OptimizationResult, context: TemplateC
 }
 
 // =============================================================================
+// DEEPSEEK AI ENHANCEMENT
+// =============================================================================
+
+interface AIEnhancedSuggestion {
+  id: string
+  enhancedDescription: string
+  keyInsights: string[]
+  actionableSteps: string[]
+  riskAssessment: string
+}
+
+async function enhanceSuggestionsWithAI(
+  suggestions: TaxOptimizationSuggestion[],
+  context: TemplateContext,
+  entities: DBEntity[]
+): Promise<TaxOptimizationSuggestion[]> {
+  if (!DEEPSEEK_API_KEY || suggestions.length === 0) {
+    return suggestions
+  }
+
+  // Build context for AI
+  const structureSummary = entities.map(e => {
+    const j = getJurisdiction(e.jurisdiction)
+    return `- ${e.name} (${e.type}) in ${j?.name || e.jurisdiction}${e.revenue ? `, revenue: $${e.revenue.toLocaleString()}` : ''}`
+  }).join('\n')
+
+  // Limit to top 5 suggestions for cost efficiency
+  const topSuggestions = suggestions.slice(0, 5)
+
+  const suggestionsSummary = topSuggestions.map((s, i) => `
+${i + 1}. ${s.title}
+   Category: ${s.category}
+   Priority: ${s.priority}
+   Estimated Savings: $${(s.estimatedSavingsMin || 0).toLocaleString()} - $${(s.estimatedSavingsMax || 0).toLocaleString()}
+   Current Description: ${s.description.substring(0, 200)}...
+`).join('\n')
+
+  const systemPrompt = `You are a senior international tax advisor specializing in corporate tax optimization. Your role is to enhance tax optimization suggestions with practical, actionable insights.
+
+Guidelines:
+- Be specific and practical, not generic
+- Reference actual tax rules and treaties where relevant
+- Consider implementation complexity realistically
+- Highlight key risks and compliance requirements
+- Keep language professional but accessible
+- Focus on actionable next steps`
+
+  const userPrompt = `Analyze this corporate structure and enhance the following tax optimization suggestions:
+
+CORPORATE STRUCTURE:
+${structureSummary}
+
+Total Revenue: $${context.totalRevenue.toLocaleString()}
+Jurisdictions: ${context.jurisdictions.join(', ')}
+
+OPTIMIZATION SUGGESTIONS TO ENHANCE:
+${suggestionsSummary}
+
+For each suggestion, provide:
+1. An enhanced description (2-3 sentences) that adds specific value
+2. 2-3 key insights specific to this structure
+3. Top 3 actionable next steps
+4. A brief risk assessment (1-2 sentences)
+
+Respond in JSON format:
+{
+  "enhancements": [
+    {
+      "id": "suggestion_id",
+      "enhancedDescription": "...",
+      "keyInsights": ["...", "..."],
+      "actionableSteps": ["...", "...", "..."],
+      "riskAssessment": "..."
+    }
+  ],
+  "executiveSummary": "A 2-3 sentence executive summary of the overall optimization opportunities"
+}`
+
+  try {
+    const response = await fetch(DEEPSEEK_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        temperature: 0.3,
+        max_tokens: 2000,
+        response_format: { type: 'json_object' }
+      })
+    })
+
+    if (!response.ok) {
+      console.error('DeepSeek API error:', response.status)
+      return suggestions
+    }
+
+    const data = await response.json()
+    const content = data.choices?.[0]?.message?.content
+
+    if (!content) {
+      return suggestions
+    }
+
+    const parsed = JSON.parse(content) as {
+      enhancements: AIEnhancedSuggestion[]
+      executiveSummary?: string
+    }
+
+    // Merge AI enhancements with original suggestions
+    return suggestions.map(suggestion => {
+      const enhancement = parsed.enhancements?.find(e =>
+        e.id === suggestion.id ||
+        suggestion.title.toLowerCase().includes(e.id?.toLowerCase() || '')
+      )
+
+      if (!enhancement) {
+        return suggestion
+      }
+
+      // Build enhanced description
+      const aiEnhancedDescription = enhancement.enhancedDescription
+        ? `${enhancement.enhancedDescription}\n\n${suggestion.description}`
+        : suggestion.description
+
+      // Add AI insights to the suggestion
+      const aiInsights = enhancement.keyInsights?.length
+        ? `\n\n**AI Insights:**\n${enhancement.keyInsights.map(i => `• ${i}`).join('\n')}`
+        : ''
+
+      return {
+        ...suggestion,
+        description: aiEnhancedDescription + aiInsights,
+        // Add AI-generated actionable steps if available
+        ...(enhancement.actionableSteps?.length && {
+          aiActionableSteps: enhancement.actionableSteps,
+        }),
+        ...(enhancement.riskAssessment && {
+          aiRiskAssessment: enhancement.riskAssessment,
+        }),
+      }
+    })
+
+  } catch (error) {
+    console.error('AI enhancement error:', error)
+    return suggestions
+  }
+}
+
+async function generateAIExecutiveSummary(
+  result: OptimizationResult,
+  context: TemplateContext,
+  entities: DBEntity[]
+): Promise<string> {
+  if (!DEEPSEEK_API_KEY || result.suggestions.length === 0) {
+    return generateExecutiveSummary(result, context)
+  }
+
+  const structureSummary = entities.map(e => {
+    const j = getJurisdiction(e.jurisdiction)
+    return `${e.name} (${j?.name || e.jurisdiction})`
+  }).join(', ')
+
+  const topSuggestions = result.suggestions.slice(0, 3).map(s => s.title).join(', ')
+
+  try {
+    const response = await fetch(DEEPSEEK_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a tax advisor. Write a brief, professional executive summary.'
+          },
+          {
+            role: 'user',
+            content: `Write a 2-3 sentence executive summary for a tax optimization analysis.
+
+Structure: ${structureSummary}
+Total potential savings: $${result.potentialSavings.toLocaleString()}
+Top opportunities: ${topSuggestions}
+Number of suggestions: ${result.suggestions.length}
+
+Be specific, professional, and actionable. Do not use generic phrases.`
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: 200
+      })
+    })
+
+    if (!response.ok) {
+      return generateExecutiveSummary(result, context)
+    }
+
+    const data = await response.json()
+    return data.choices?.[0]?.message?.content || generateExecutiveSummary(result, context)
+
+  } catch {
+    return generateExecutiveSummary(result, context)
+  }
+}
+
+// =============================================================================
 // API HANDLER
 // =============================================================================
 
@@ -198,6 +419,7 @@ export async function POST(request: NextRequest) {
 
     // Parse request body for optional overrides
     let body: {
+      mode?: OptimizationMode
       annualRevenue?: number
       dividendFlows?: Array<{ fromEntityId: string; toEntityId: string; amount: number }>
       royaltyFlows?: Array<{ fromEntityId: string; toEntityId: string; amount: number }>
@@ -291,23 +513,44 @@ export async function POST(request: NextRequest) {
       hasIntercompanyTransactions: false,
     }
 
-    // Enhance suggestions with better descriptions
-    const enhancedSuggestions = result.suggestions.map(s =>
-      enhanceSuggestionDescription(s, templateContext)
-    )
+    // Determine optimization mode (default to 'template' for cost efficiency)
+    const mode: OptimizationMode = body.mode || 'template'
+    const useAI = mode === 'ai' && !!DEEPSEEK_API_KEY
+
+    let enhancedSuggestions: TaxOptimizationSuggestion[]
+    let summary: string
+
+    if (useAI) {
+      // AI-enhanced mode: Use DeepSeek to enhance suggestions
+      enhancedSuggestions = await enhanceSuggestionsWithAI(
+        result.suggestions,
+        templateContext,
+        entities
+      )
+      summary = await generateAIExecutiveSummary(
+        { ...result, suggestions: enhancedSuggestions },
+        templateContext,
+        entities
+      )
+    } else {
+      // Template mode: Use rule-based template enhancement
+      enhancedSuggestions = result.suggestions.map(s =>
+        enhanceSuggestionDescription(s, templateContext)
+      )
+      summary = generateExecutiveSummary(result, templateContext)
+    }
 
     const enhancedResult: OptimizationResult = {
       ...result,
       suggestions: enhancedSuggestions,
     }
 
-    // Generate executive summary
-    const summary = generateExecutiveSummary(enhancedResult, templateContext)
-
     return NextResponse.json({
       success: true,
       result: enhancedResult,
       summary,
+      mode,
+      aiAvailable: !!DEEPSEEK_API_KEY,
       entityCount: entities.length,
       jurisdictions,
       analysisTimestamp: new Date().toISOString(),

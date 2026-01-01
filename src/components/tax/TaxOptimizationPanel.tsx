@@ -428,12 +428,17 @@ interface TaxOptimizationPanelProps {
   onRunAnalysis?: () => void;
 }
 
+type OptimizationMode = 'template' | 'ai';
+
 export const TaxOptimizationPanel: React.FC<TaxOptimizationPanelProps> = ({
   onRunAnalysis,
 }) => {
   const { optimizationResult, isAnalyzing, dismissSuggestion, runOptimizationAnalysisFromApi } = useTaxStore();
   const [selectedCategory, setSelectedCategory] = useState<OptimizationCategory | 'ALL'>('ALL');
   const [selectedPriority, setSelectedPriority] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
+  const [optimizationMode, setOptimizationMode] = useState<OptimizationMode>('template');
+  const [aiAvailable, setAiAvailable] = useState<boolean | null>(null);
+  const [lastUsedMode, setLastUsedMode] = useState<string | null>(null);
 
   const filteredSuggestions = useMemo(() => {
     if (!optimizationResult) return [];
@@ -454,15 +459,21 @@ export const TaxOptimizationPanel: React.FC<TaxOptimizationPanelProps> = ({
     }).format(amount);
   };
 
-  const handleRunAnalysis = () => {
+  const handleRunAnalysis = async () => {
     if (onRunAnalysis) {
       onRunAnalysis();
     } else {
       // Use API-based optimization that analyzes DB entities
-      runOptimizationAnalysisFromApi({
+      const result = await runOptimizationAnalysisFromApi({
+        mode: optimizationMode,
         annualRevenue: 10000000,
         currentEffectiveTaxRate: 25,
       });
+
+      if (result) {
+        setAiAvailable(result.aiAvailable ?? null);
+        setLastUsedMode(result.mode ?? null);
+      }
     }
   };
 
@@ -476,28 +487,84 @@ export const TaxOptimizationPanel: React.FC<TaxOptimizationPanelProps> = ({
             Tax Optimization
           </h2>
           <p className="text-slate-500 dark:text-slate-400">
-            AI-powered suggestions to optimize your tax structure
+            {optimizationMode === 'ai' ? 'AI-enhanced' : 'Rule-based'} suggestions to optimize your tax structure
           </p>
         </div>
 
-        <button
-          onClick={handleRunAnalysis}
-          disabled={isAnalyzing}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 disabled:opacity-50"
-        >
-          {isAnalyzing ? (
-            <>
-              <RefreshCw className="w-4 h-4 animate-spin" />
-              Analyzing...
-            </>
-          ) : (
-            <>
-              <Sparkles className="w-4 h-4" />
-              Run Analysis
-            </>
-          )}
-        </button>
+        <div className="flex items-center gap-3">
+          {/* Mode Selector */}
+          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+            <button
+              onClick={() => setOptimizationMode('template')}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5 ${
+                optimizationMode === 'template'
+                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+              title="Fast, rule-based analysis with no AI cost"
+            >
+              <Target className="w-3.5 h-3.5" />
+              Standard
+            </button>
+            <button
+              onClick={() => setOptimizationMode('ai')}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5 ${
+                optimizationMode === 'ai'
+                  ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+              title="AI-enhanced analysis with DeepSeek for deeper insights"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              AI-Enhanced
+            </button>
+          </div>
+
+          {/* Run Analysis Button */}
+          <button
+            onClick={handleRunAnalysis}
+            disabled={isAnalyzing}
+            className={`px-4 py-2 text-white rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 ${
+              optimizationMode === 'ai'
+                ? 'bg-purple-500 hover:bg-purple-600'
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
+          >
+            {isAnalyzing ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                {optimizationMode === 'ai' ? 'AI Analyzing...' : 'Analyzing...'}
+              </>
+            ) : (
+              <>
+                {optimizationMode === 'ai' ? <Sparkles className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                Run Analysis
+              </>
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* Mode Info Banner */}
+      {lastUsedMode && (
+        <div className={`rounded-lg p-3 flex items-center gap-2 text-sm ${
+          lastUsedMode === 'ai'
+            ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300'
+            : 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+        }`}>
+          <Info className="w-4 h-4 flex-shrink-0" />
+          <span>
+            {lastUsedMode === 'ai'
+              ? 'Results enhanced with AI insights from DeepSeek'
+              : 'Results generated using rule-based analysis (no AI cost)'}
+          </span>
+          {aiAvailable === false && optimizationMode === 'ai' && (
+            <span className="ml-2 text-yellow-600 dark:text-yellow-400">
+              (AI not configured - using standard mode)
+            </span>
+          )}
+        </div>
+      )}
 
       {/* Summary Cards */}
       {optimizationResult && (
