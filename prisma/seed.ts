@@ -2595,17 +2595,36 @@ async function main() {
   console.log('  ✓ Created', messages.length, 'chat messages')
 
   // =============================================================================
-  // 7. CORPORATE ENTITIES
+  // 7. CORPORATE ENTITIES (with hierarchy)
   // =============================================================================
   console.log('\n🏢 Creating Corporate Entities...')
-  const entities = [
-    { name: 'Demo Company GmbH', type: 'corporation', jurisdiction: 'CH', taxId: 'CHE-123.456.789', ownershipPercent: 100, revenue: 910000, expenses: 753000, taxLiability: 31400, effectiveTaxRate: 20 },
+  const entityMap: Record<string, string> = {}
+
+  // Create parent entity first
+  const parentEntity = await prisma.corporateEntity.create({
+    data: {
+      name: 'Demo Company GmbH',
+      type: 'holding',
+      jurisdiction: 'CH',
+      taxId: 'CHE-123.456.789',
+      ownershipPercent: 100,
+      revenue: 910000,
+      expenses: 753000,
+      taxLiability: 31400,
+      effectiveTaxRate: 20,
+      incorporationDate: new Date('2020-01-15'),
+      userId: user.id,
+    },
+  })
+  entityMap['Demo Company GmbH'] = parentEntity.id
+
+  // Create child entities with parent reference
+  const childEntities = [
     { name: 'Demo Tech AG', type: 'corporation', jurisdiction: 'CH', taxId: 'CHE-987.654.321', ownershipPercent: 100, revenue: 450000, expenses: 380000, taxLiability: 14000, effectiveTaxRate: 20 },
     { name: 'Demo Services LLC', type: 'llc', jurisdiction: 'DE', taxId: 'DE123456789', ownershipPercent: 80, revenue: 280000, expenses: 220000, taxLiability: 18000, effectiveTaxRate: 30 },
   ]
 
-  const entityMap: Record<string, string> = {}
-  for (const e of entities) {
+  for (const e of childEntities) {
     const created = await prisma.corporateEntity.create({
       data: {
         name: e.name,
@@ -2618,12 +2637,13 @@ async function main() {
         taxLiability: e.taxLiability,
         effectiveTaxRate: e.effectiveTaxRate,
         incorporationDate: new Date('2020-01-15'),
+        parentId: parentEntity.id,
         userId: user.id,
       },
     })
     entityMap[e.name] = created.id
   }
-  console.log('  ✓ Created', entities.length, 'corporate entities')
+  console.log('  ✓ Created 3 corporate entities (1 holding + 2 subsidiaries)')
 
   // =============================================================================
   // 8. WALLETS
@@ -5321,7 +5341,7 @@ async function main() {
   console.log('  • ' + receipts.length + ' Receipts')
   console.log('  • ' + channelsData.length + ' Chat channels')
   console.log('  • ' + messages.length + ' Chat messages')
-  console.log('  • ' + entities.length + ' Corporate entities')
+  console.log('  • 3 Corporate entities (1 holding + 2 subsidiaries)')
   console.log('  • ' + wallets.length + ' Wallets')
   console.log('  • ' + suggestions.length + ' AI suggestions')
   console.log('  • ' + reports.length + ' Saved reports')

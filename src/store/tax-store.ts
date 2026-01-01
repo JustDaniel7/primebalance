@@ -85,6 +85,8 @@ interface TaxStore {
   // API Fetch
   fetchEntities: () => Promise<void>;
   createEntity: (data: CreateEntityData) => Promise<ApiEntityHierarchy | null>;
+  updateApiEntity: (id: string, data: Partial<CreateEntityData>) => Promise<boolean>;
+  deleteApiEntity: (id: string) => Promise<boolean>;
   
   // Structure Actions
   createStructure: (name: string, parentEntity: Omit<CorporateEntity, 'id' | 'createdAt' | 'updatedAt'>) => string;
@@ -207,6 +209,44 @@ export const useTaxStore = create<TaxStore>()(
         } catch (error) {
           console.error('createEntity error:', error);
           return null;
+        }
+      },
+
+      updateApiEntity: async (id, data) => {
+        try {
+          const res = await fetch(`/api/tax/entities/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || 'Failed to update entity');
+          }
+          // Refetch to get updated hierarchy
+          get().fetchEntities();
+          return true;
+        } catch (error) {
+          console.error('updateApiEntity error:', error);
+          return false;
+        }
+      },
+
+      deleteApiEntity: async (id) => {
+        try {
+          const res = await fetch(`/api/tax/entities/${id}`, {
+            method: 'DELETE',
+          });
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || 'Failed to delete entity');
+          }
+          // Refetch to get updated hierarchy
+          get().fetchEntities();
+          return true;
+        } catch (error) {
+          console.error('deleteApiEntity error:', error);
+          return false;
         }
       },
 

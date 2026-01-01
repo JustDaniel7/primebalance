@@ -25,7 +25,7 @@ import {
   Flag,
 } from 'lucide-react';
 import { CorporateEntity, EntityType, CorporateStructure } from '@/types/tax';
-import { useTaxStore } from '@/store/tax-store';
+import { useTaxStore, type ApiEntityHierarchy } from '@/store/tax-store';
 import { getJurisdiction, getGroupedJurisdictions } from '@/data/jurisdictions';
 
 // =============================================================================
@@ -614,18 +614,409 @@ const EntityForm: React.FC<EntityFormProps> = ({
 };
 
 // =============================================================================
+// API ENTITY CARD (for database entities)
+// =============================================================================
+
+interface ApiEntityCardProps {
+  entity: ApiEntityHierarchy;
+  depth: number;
+  onEdit: (entity: ApiEntityHierarchy) => void;
+  onDelete: (id: string) => void;
+  onAddChild: (parentId: string) => void;
+}
+
+const ApiEntityCard: React.FC<ApiEntityCardProps> = ({ entity, depth, onEdit, onDelete, onAddChild }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
+  const hasChildren = entity.children && entity.children.length > 0;
+  const jurisdiction = getJurisdiction(entity.jurisdiction);
+
+  // Map entity type to config
+  const typeKey = entity.type.toUpperCase() as EntityType;
+  const config = entityTypeConfig[typeKey] || entityTypeConfig[EntityType.CORPORATION];
+  const Icon = config?.icon || Building2;
+
+  return (
+    <div className={depth > 0 ? 'ml-8 border-l-2 border-slate-200 dark:border-slate-700 pl-4' : ''}>
+      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 mb-2 hover:shadow-md transition-shadow">
+        <div className="flex items-start justify-between">
+          <div className="flex items-start gap-4">
+            {hasChildren && (
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded mt-1"
+              >
+                {isExpanded ? (
+                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                )}
+              </button>
+            )}
+            {!hasChildren && <div className="w-6" />}
+
+            <div className={`p-2 rounded-lg ${config?.color || 'text-slate-500 bg-slate-100'}`}>
+              <Icon className="w-5 h-5" />
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">{entity.name}</h3>
+              <div className="flex items-center gap-3 mt-1 text-sm text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1">
+                  <Globe className="w-3 h-3" />
+                  {jurisdiction?.name || entity.jurisdiction}
+                </span>
+                {entity.taxId && (
+                  <span className="flex items-center gap-1">
+                    Tax ID: {entity.taxId}
+                  </span>
+                )}
+                {entity.ownershipPercent && (
+                  <span className="flex items-center gap-1">
+                    <Percent className="w-3 h-3" />
+                    {entity.ownershipPercent}% owned
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 text-sm">
+            {entity.revenue != null && (
+              <div className="text-right">
+                <div className="text-slate-400 text-xs">Revenue</div>
+                <div className="text-slate-900 dark:text-white font-medium">
+                  €{entity.revenue.toLocaleString()}
+                </div>
+              </div>
+            )}
+            {entity.taxLiability != null && (
+              <div className="text-right">
+                <div className="text-slate-400 text-xs">Tax Liability</div>
+                <div className="text-slate-900 dark:text-white font-medium">
+                  €{entity.taxLiability.toLocaleString()}
+                </div>
+              </div>
+            )}
+            {entity.effectiveTaxRate != null && (
+              <div className="text-right">
+                <div className="text-slate-400 text-xs">Effective Rate</div>
+                <div className="text-slate-900 dark:text-white font-medium">
+                  {entity.effectiveTaxRate}%
+                </div>
+              </div>
+            )}
+
+            {/* Actions Menu */}
+            <div className="relative">
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+              >
+                <MoreVertical className="w-4 h-4 text-slate-500" />
+              </button>
+
+              <AnimatePresence>
+                {showMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="absolute right-0 mt-1 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-10"
+                  >
+                    <button
+                      onClick={() => {
+                        onEdit(entity);
+                        setShowMenu(false);
+                      }}
+                      className="w-full px-4 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-300"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Edit Entity
+                    </button>
+                    <button
+                      onClick={() => {
+                        onAddChild(entity.id);
+                        setShowMenu(false);
+                      }}
+                      className="w-full px-4 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-300"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add Subsidiary
+                    </button>
+                    {!entity.parentId || entity.children.length === 0 ? (
+                      <button
+                        onClick={() => {
+                          onDelete(entity.id);
+                          setShowMenu(false);
+                        }}
+                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Delete Entity
+                      </button>
+                    ) : null}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Children */}
+      {hasChildren && isExpanded && (
+        <div className="space-y-2">
+          {entity.children.map((child) => (
+            <ApiEntityCard
+              key={child.id}
+              entity={child}
+              depth={depth + 1}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              onAddChild={onAddChild}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// =============================================================================
+// API ENTITY FORM MODAL
+// =============================================================================
+
+interface ApiEntityFormProps {
+  entity?: ApiEntityHierarchy;
+  parentId?: string | null;
+  onClose: () => void;
+}
+
+const ApiEntityForm: React.FC<ApiEntityFormProps> = ({ entity, parentId, onClose }) => {
+  const { createEntity, updateApiEntity } = useTaxStore();
+  const groupedJurisdictions = useMemo(() => getGroupedJurisdictions(), []);
+
+  const [formData, setFormData] = useState({
+    name: entity?.name || '',
+    type: entity?.type || 'subsidiary',
+    jurisdiction: entity?.jurisdiction || 'DE',
+    taxId: entity?.taxId || '',
+    incorporationDate: entity?.incorporationDate || '',
+    ownershipPercent: entity?.ownershipPercent ?? 100,
+    revenue: entity?.revenue ?? 0,
+    expenses: entity?.expenses ?? 0,
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      if (entity) {
+        await updateApiEntity(entity.id, formData);
+      } else {
+        await createEntity({
+          ...formData,
+          parentId: parentId || undefined,
+        });
+      }
+      onClose();
+    } catch (error) {
+      console.error('Failed to save entity:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
+      >
+        <div className="p-6 border-b border-slate-200 dark:border-slate-700">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
+            {entity ? 'Edit Entity' : 'Add New Entity'}
+          </h2>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Entity Name *
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              placeholder="e.g., Acme Europe GmbH"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Entity Type *
+              </label>
+              <select
+                required
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                <option value="holding">Holding Company</option>
+                <option value="subsidiary">Subsidiary</option>
+                <option value="operating_company">Operating Company</option>
+                <option value="branch">Branch</option>
+                <option value="corporation">Corporation</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Jurisdiction *
+              </label>
+              <select
+                required
+                value={formData.jurisdiction}
+                onChange={(e) => setFormData({ ...formData, jurisdiction: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                {groupedJurisdictions.map(group => (
+                  <optgroup key={group.label} label={group.label}>
+                    {group.options.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.flag} {option.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Tax ID
+              </label>
+              <input
+                type="text"
+                value={formData.taxId}
+                onChange={(e) => setFormData({ ...formData, taxId: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Ownership %
+              </label>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                value={formData.ownershipPercent}
+                onChange={(e) => setFormData({ ...formData, ownershipPercent: Number(e.target.value) })}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Revenue (€)
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.revenue}
+                onChange={(e) => setFormData({ ...formData, revenue: Number(e.target.value) })}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Expenses (€)
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.expenses}
+                onChange={(e) => setFormData({ ...formData, expenses: Number(e.target.value) })}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 disabled:opacity-50"
+            >
+              {isSubmitting ? (
+                <>Saving...</>
+              ) : (
+                <>
+                  <Check className="w-4 h-4" />
+                  {entity ? 'Update Entity' : 'Add Entity'}
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// =============================================================================
 // MAIN COMPONENT
 // =============================================================================
 
 export const CorporateStructureEditor: React.FC = () => {
-  const { structures, activeStructureId, getActiveStructure, deleteEntity, createStructure } = useTaxStore();
+  const { structures, activeStructureId, getActiveStructure, deleteEntity, createStructure, apiEntities, fetchEntities, isInitialized, deleteApiEntity } = useTaxStore();
   const activeStructure = getActiveStructure();
+
+  // Fetch database entities on mount
+  React.useEffect(() => {
+    if (!isInitialized) {
+      fetchEntities();
+    }
+  }, [fetchEntities, isInitialized]);
 
   const [showEntityForm, setShowEntityForm] = useState(false);
   const [editingEntity, setEditingEntity] = useState<CorporateEntity | undefined>();
   const [parentIdForNewEntity, setParentIdForNewEntity] = useState<string | null>(null);
   const [showNewStructureForm, setShowNewStructureForm] = useState(false);
   const [newStructureName, setNewStructureName] = useState('');
+
+  // API entity editing state
+  const [showApiEntityForm, setShowApiEntityForm] = useState(false);
+  const [editingApiEntity, setEditingApiEntity] = useState<ApiEntityHierarchy | undefined>();
+  const [apiParentIdForNew, setApiParentIdForNew] = useState<string | null>(null);
 
   const handleAddChild = (parentId: string) => {
     setParentIdForNewEntity(parentId);
@@ -643,6 +1034,28 @@ export const CorporateStructureEditor: React.FC = () => {
     if (activeStructureId && confirm('Are you sure you want to delete this entity and all its children?')) {
       deleteEntity(activeStructureId, entityId);
     }
+  };
+
+  // API entity handlers
+  const handleApiEdit = (entity: ApiEntityHierarchy) => {
+    setEditingApiEntity(entity);
+    setApiParentIdForNew(entity.parentId);
+    setShowApiEntityForm(true);
+  };
+
+  const handleApiDelete = async (entityId: string) => {
+    if (confirm('Are you sure you want to delete this entity? Entities with subsidiaries cannot be deleted.')) {
+      const success = await deleteApiEntity(entityId);
+      if (!success) {
+        alert('Failed to delete entity. Make sure it has no subsidiaries.');
+      }
+    }
+  };
+
+  const handleApiAddChild = (parentId: string) => {
+    setEditingApiEntity(undefined);
+    setApiParentIdForNew(parentId);
+    setShowApiEntityForm(true);
   };
 
   const handleCreateStructure = () => {
@@ -679,7 +1092,19 @@ export const CorporateStructureEditor: React.FC = () => {
           </p>
         </div>
         
-        {activeStructure ? (
+        {apiEntities.length > 0 ? (
+          <button
+            onClick={() => {
+              // Find root entity for adding new child
+              const rootId = apiEntities[0]?.id;
+              if (rootId) handleApiAddChild(rootId);
+            }}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Add Entity
+          </button>
+        ) : activeStructure ? (
           <button
             onClick={() => handleAddChild(activeStructure.ultimateParentId)}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2"
@@ -715,7 +1140,21 @@ export const CorporateStructureEditor: React.FC = () => {
       )}
 
       {/* Structure View */}
-      {activeStructure && rootEntity ? (
+      {apiEntities.length > 0 ? (
+        // Show database entities
+        <div className="space-y-4">
+          {apiEntities.map((entity) => (
+            <ApiEntityCard
+              key={entity.id}
+              entity={entity}
+              depth={0}
+              onEdit={handleApiEdit}
+              onDelete={handleApiDelete}
+              onAddChild={handleApiAddChild}
+            />
+          ))}
+        </div>
+      ) : activeStructure && rootEntity ? (
         <div className="space-y-4">
           <EntityCard
             entity={rootEntity}
@@ -756,6 +1195,21 @@ export const CorporateStructureEditor: React.FC = () => {
               setShowEntityForm(false);
               setEditingEntity(undefined);
               setParentIdForNewEntity(null);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* API Entity Form Modal */}
+      <AnimatePresence>
+        {showApiEntityForm && (
+          <ApiEntityForm
+            entity={editingApiEntity}
+            parentId={apiParentIdForNew}
+            onClose={() => {
+              setShowApiEntityForm(false);
+              setEditingApiEntity(undefined);
+              setApiParentIdForNew(null);
             }}
           />
         )}

@@ -55,35 +55,51 @@ import { TaxJurisdictionFull, JurisdictionType } from '@/types/tax';
 type TabId = 'overview' | 'structure' | 'jurisdictions' | 'optimization';
 
 // =============================================================================
+// OVERVIEW TAB HELPER FUNCTIONS
+// =============================================================================
+
+interface EntityNode {
+  jurisdiction?: string;
+  children?: EntityNode[];
+}
+
+// Helper to count all entities in hierarchy (including children)
+const countEntitiesInHierarchy = (entities: EntityNode[]): number => {
+  return entities.reduce((count, entity) => {
+    return count + 1 + countEntitiesInHierarchy(entity.children || []);
+  }, 0);
+};
+
+// Helper to collect all jurisdictions from hierarchy
+const collectJurisdictionsFromHierarchy = (entities: EntityNode[]): Set<string> => {
+  const jurisdictions = new Set<string>();
+  entities.forEach((entity) => {
+    if (entity.jurisdiction) jurisdictions.add(entity.jurisdiction);
+    collectJurisdictionsFromHierarchy(entity.children || []).forEach((j) => jurisdictions.add(j));
+  });
+  return jurisdictions;
+};
+
+// =============================================================================
 // OVERVIEW TAB COMPONENT
 // =============================================================================
 
 const OverviewTab: React.FC = () => {
   const { t } = useThemeStore();
-  const { getActiveStructure, notifications, optimizationResult } = useTaxStore();
-  const activeStructure = getActiveStructure();
+  const { apiEntities, apiTotals, notifications, optimizationResult } = useTaxStore();
 
   const stats = useMemo(() => {
-    if (!activeStructure) {
-      return {
-        totalEntities: 0,
-        jurisdictions: 0,
-        estimatedTax: 0,
-        potentialSavings: 0,
-      };
-    }
-
-    const uniqueJurisdictions = new Set(
-      activeStructure.entities.map((e) => e.jurisdictionCode)
-    );
+    const totalEntities = countEntitiesInHierarchy(apiEntities);
+    const uniqueJurisdictions = collectJurisdictionsFromHierarchy(apiEntities);
+    const estimatedTax = apiTotals?.taxLiability || 0;
 
     return {
-      totalEntities: activeStructure.entities.length,
+      totalEntities,
       jurisdictions: uniqueJurisdictions.size,
-      estimatedTax: 125000, // Mock value
+      estimatedTax,
       potentialSavings: optimizationResult?.potentialSavings || 0,
     };
-  }, [activeStructure, optimizationResult]);
+  }, [apiEntities, apiTotals, optimizationResult]);
 
   const unreadNotifications = notifications.filter((n) => !n.read && !n.dismissed);
 
@@ -262,16 +278,29 @@ const JurisdictionsTab: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<JurisdictionType | 'ALL'>('ALL');
   const [expandedJurisdiction, setExpandedJurisdiction] = useState<string | null>(null);
-
-  const groupedJurisdictions = getGroupedJurisdictions();
+  const [displayCount, setDisplayCount] = useState(24);
 
   const filteredJurisdictions = useMemo(() => {
-    return ALL_JURISDICTIONS.filter((j) => {
+    let results = ALL_JURISDICTIONS.filter((j) => {
       const matchesSearch = j.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            j.code.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesType = selectedType === 'ALL' || j.type === selectedType;
       return matchesSearch && matchesType;
     });
+
+    // When showing all, sort by type to get a better mix
+    if (selectedType === 'ALL' && !searchQuery) {
+      const typeOrder: Record<string, number> = {
+        [JurisdictionType.COUNTRY]: 0,
+        [JurisdictionType.US_FEDERAL]: 1,
+        [JurisdictionType.SPECIAL_ZONE]: 2,
+        [JurisdictionType.US_STATE]: 3,
+        [JurisdictionType.US_TERRITORY]: 4,
+      };
+      results = results.sort((a, b) => (typeOrder[a.type] ?? 99) - (typeOrder[b.type] ?? 99));
+    }
+
+    return results;
   }, [searchQuery, selectedType]);
 
   const jurisdictionTypes: Array<{ value: JurisdictionType | 'ALL'; label: string }> = [
@@ -317,7 +346,7 @@ const JurisdictionsTab: React.FC = () => {
 
       {/* Jurisdictions Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredJurisdictions.slice(0, 12).map((jurisdiction, index) => (
+        {filteredJurisdictions.slice(0, displayCount).map((jurisdiction, index) => (
           <motion.div
             key={jurisdiction.code}
             initial={{ opacity: 0, y: 20 }}
@@ -403,10 +432,15 @@ const JurisdictionsTab: React.FC = () => {
         ))}
       </div>
 
-      {filteredJurisdictions.length > 12 && (
-        <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
-          +{filteredJurisdictions.length - 12} more jurisdictions
-        </p>
+      {filteredJurisdictions.length > displayCount && (
+        <div className="text-center">
+          <button
+            onClick={() => setDisplayCount((prev) => prev + 24)}
+            className="px-6 py-2 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm font-medium"
+          >
+            Show More ({filteredJurisdictions.length - displayCount} remaining)
+          </button>
+        </div>
       )}
     </div>
   );
