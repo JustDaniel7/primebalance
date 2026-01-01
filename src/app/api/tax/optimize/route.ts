@@ -199,7 +199,7 @@ function generateExecutiveSummary(result: OptimizationResult, context: TemplateC
 // =============================================================================
 
 interface AIEnhancedSuggestion {
-  id: string
+  index: number
   enhancedDescription: string
   keyInsights: string[]
   actionableSteps: string[]
@@ -225,7 +225,7 @@ async function enhanceSuggestionsWithAI(
   const topSuggestions = suggestions.slice(0, 5)
 
   const suggestionsSummary = topSuggestions.map((s, i) => `
-${i + 1}. ${s.title}
+[${i}] ${s.title}
    Category: ${s.category}
    Priority: ${s.priority}
    Estimated Savings: $${(s.estimatedSavingsMin || 0).toLocaleString()} - $${(s.estimatedSavingsMax || 0).toLocaleString()}
@@ -253,25 +253,27 @@ Jurisdictions: ${context.jurisdictions.join(', ')}
 OPTIMIZATION SUGGESTIONS TO ENHANCE:
 ${suggestionsSummary}
 
-For each suggestion, provide:
-1. An enhanced description (2-3 sentences) that adds specific value
-2. 2-3 key insights specific to this structure
-3. Top 3 actionable next steps
+For each suggestion (use the [index] number provided), provide:
+1. An enhanced description (2-3 sentences) that adds specific value beyond the current description
+2. 2-3 key insights specific to THIS corporate structure
+3. Top 3 actionable next steps the company should take
 4. A brief risk assessment (1-2 sentences)
 
-Respond in JSON format:
+IMPORTANT: You MUST respond with valid JSON in this exact format:
 {
   "enhancements": [
     {
-      "id": "suggestion_id",
-      "enhancedDescription": "...",
-      "keyInsights": ["...", "..."],
-      "actionableSteps": ["...", "...", "..."],
-      "riskAssessment": "..."
+      "index": 0,
+      "enhancedDescription": "specific enhanced description here",
+      "keyInsights": ["insight 1", "insight 2"],
+      "actionableSteps": ["step 1", "step 2", "step 3"],
+      "riskAssessment": "risk assessment here"
     }
   ],
-  "executiveSummary": "A 2-3 sentence executive summary of the overall optimization opportunities"
-}`
+  "executiveSummary": "A 2-3 sentence executive summary"
+}
+
+Use the exact index numbers [0], [1], [2], etc. from the suggestions above.`
 
   try {
     const response = await fetch(DEEPSEEK_API_URL, {
@@ -309,30 +311,41 @@ Respond in JSON format:
       executiveSummary?: string
     }
 
+    console.log('AI response parsed:', JSON.stringify(parsed, null, 2))
+
+    // Create a map of index to enhancement for quick lookup
+    const enhancementMap = new Map<number, AIEnhancedSuggestion>()
+    for (const e of parsed.enhancements || []) {
+      enhancementMap.set(e.index, e)
+    }
+
     // Merge AI enhancements with original suggestions
-    return suggestions.map(suggestion => {
-      const enhancement = parsed.enhancements?.find(e =>
-        e.id === suggestion.id ||
-        suggestion.title.toLowerCase().includes(e.id?.toLowerCase() || '')
-      )
+    return suggestions.map((suggestion, idx) => {
+      // Only enhance the top 5 suggestions that were sent to the AI
+      const enhancement = idx < 5 ? enhancementMap.get(idx) : undefined
 
       if (!enhancement) {
         return suggestion
       }
 
-      // Build enhanced description
+      // Build enhanced description with AI insights
       const aiEnhancedDescription = enhancement.enhancedDescription
-        ? `${enhancement.enhancedDescription}\n\n${suggestion.description}`
+        ? `**AI Analysis:** ${enhancement.enhancedDescription}\n\n${suggestion.description}`
         : suggestion.description
 
       // Add AI insights to the suggestion
       const aiInsights = enhancement.keyInsights?.length
-        ? `\n\n**AI Insights:**\n${enhancement.keyInsights.map(i => `• ${i}`).join('\n')}`
+        ? `\n\n**Key Insights:**\n${enhancement.keyInsights.map(i => `• ${i}`).join('\n')}`
+        : ''
+
+      // Add risk assessment
+      const riskNote = enhancement.riskAssessment
+        ? `\n\n**AI Risk Assessment:** ${enhancement.riskAssessment}`
         : ''
 
       return {
         ...suggestion,
-        description: aiEnhancedDescription + aiInsights,
+        description: aiEnhancedDescription + aiInsights + riskNote,
         // Add AI-generated actionable steps if available
         ...(enhancement.actionableSteps?.length && {
           aiActionableSteps: enhancement.actionableSteps,

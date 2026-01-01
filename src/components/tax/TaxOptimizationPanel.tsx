@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 import {
   Lightbulb,
   TrendingUp,
@@ -189,9 +190,11 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({ suggestion, onDismiss }
               </button>
             </div>
 
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-              {suggestion.description}
-            </p>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mt-2 prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0">
+              <ReactMarkdown>
+                {suggestion.description}
+              </ReactMarkdown>
+            </div>
 
             {/* Savings Estimate */}
             <div className="flex items-center gap-4 mt-3">
