@@ -112,117 +112,118 @@ export async function POST(
             newStatus = LiabilityStatus.PARTIALLY_SETTLED;
         }
 
-        // Update payment
-        const updatedPayment = await (prisma as any).liabilityPayment.update({
-            where: { id: payment.id },
-            data: {
-                status: PaymentStatus.EXECUTED,
-                paymentDate: execDate,
-                executedAt: now,
-                executedBy: session.user.id,
-                paymentMethod,
-                bankReference,
-                transactionId,
-                notes: notes || payment.notes,
-            },
-        });
-
-        // Calculate next payment date
-        const nextPayment = await (prisma as any).liabilityPayment.findFirst({
-            where: {
-                liabilityId: liability.id,
-                status: { in: [PaymentStatus.SCHEDULED, PaymentStatus.APPROVED] },
-                scheduledDate: { gt: now },
-            },
-            orderBy: { scheduledDate: 'asc' },
-        });
-
-        // Update liability
-        const updatedLiability = await (prisma as any).liability.update({
-            where: { id: liability.id },
-            data: {
-                status: newStatus,
-                previousStatus: newStatus !== liability.status ? liability.status : undefined,
-                statusChangedAt: newStatus !== liability.status ? now : undefined,
-                statusChangedBy: newStatus !== liability.status ? session.user.id : undefined,
-                outstandingPrincipal: newOutstandingPrincipal,
-                accruedInterest: newAccruedInterest,
-                feesPenalties: newFeesPenalties,
-                totalOutstanding: newTotalOutstanding,
-                totalSettled: newTotalSettled,
-                lastPaymentDate: execDate,
-                nextPaymentDate: nextPayment?.scheduledDate || null,
-                nextCashOutflow: nextPayment?.scheduledDate || liability.maturityDate,
-                settledDate: newStatus === LiabilityStatus.FULLY_SETTLED ? execDate : null,
-                paymentsCompleted: liability.paymentsCompleted + 1,
-                expectedCashImpact: newTotalOutstanding,
-                version: liability.version + 1,
-                eventCount: liability.eventCount + 1,
-            },
-        });
-
-        // Create event
-        const eventId = `evt_${liability.liabilityId}_payment_executed_${now.getTime()}`;
-
-        await (prisma as any).liabilityEvent.create({
-            data: {
-                eventId,
-                liabilityId: liability.id,
-                eventType: LiabilityEventType.PAYMENT_EXECUTED,
-                timestamp: now,
-                effectiveDate: execDate,
-                actorId: session.user.id,
-                actorName: session.user.name || session.user.email,
-                actorType: 'user',
-                payload: {
-                    paymentId: payment.paymentId,
-                    amount: totalAmount,
-                    principalAmount,
-                    interestAmount,
-                    feesAmount,
+        // Use transaction to ensure atomicity
+        const result = await prisma.$transaction(async (tx) => {
+            // Update payment
+            const updatedPayment = await (tx as any).liabilityPayment.update({
+                where: { id: payment.id },
+                data: {
+                    status: PaymentStatus.EXECUTED,
+                    paymentDate: execDate,
+                    executedAt: now,
+                    executedBy: session.user.id,
                     paymentMethod,
                     bankReference,
                     transactionId,
-                    outstandingBefore: Number(liability.totalOutstanding),
-                    outstandingAfter: newTotalOutstanding,
-                    newStatus,
+                    notes: notes || payment.notes,
                 },
-                previousState: {
-                    status: liability.status,
-                    outstandingPrincipal: Number(liability.outstandingPrincipal),
-                    totalOutstanding: Number(liability.totalOutstanding),
-                },
-                previousEventId: liability.lastEventId,
-                explanation: `Payment of ${liability.currency} ${totalAmount.toLocaleString()} executed. ${newStatus === LiabilityStatus.FULLY_SETTLED ? 'Liability fully settled.' : `Remaining: ${liability.currency} ${newTotalOutstanding.toLocaleString()}`}`,
-            },
-        });
+            });
 
-        // Update liability last event ID
-        await (prisma as any).liability.update({
-            where: { id: liability.id },
-            data: { lastEventId: eventId },
+            // Calculate next payment date
+            const nextPayment = await (tx as any).liabilityPayment.findFirst({
+                where: {
+                    liabilityId: liability.id,
+                    status: { in: [PaymentStatus.SCHEDULED, PaymentStatus.APPROVED] },
+                    scheduledDate: { gt: now },
+                },
+                orderBy: { scheduledDate: 'asc' },
+            });
+
+            // Create event ID
+            const eventId = `evt_${liability.liabilityId}_payment_executed_${now.getTime()}`;
+
+            // Update liability with all fields including lastEventId
+            const updatedLiability = await (tx as any).liability.update({
+                where: { id: liability.id },
+                data: {
+                    status: newStatus,
+                    previousStatus: newStatus !== liability.status ? liability.status : undefined,
+                    statusChangedAt: newStatus !== liability.status ? now : undefined,
+                    statusChangedBy: newStatus !== liability.status ? session.user.id : undefined,
+                    outstandingPrincipal: newOutstandingPrincipal,
+                    accruedInterest: newAccruedInterest,
+                    feesPenalties: newFeesPenalties,
+                    totalOutstanding: newTotalOutstanding,
+                    totalSettled: newTotalSettled,
+                    lastPaymentDate: execDate,
+                    nextPaymentDate: nextPayment?.scheduledDate || null,
+                    nextCashOutflow: nextPayment?.scheduledDate || liability.maturityDate,
+                    settledDate: newStatus === LiabilityStatus.FULLY_SETTLED ? execDate : null,
+                    paymentsCompleted: liability.paymentsCompleted + 1,
+                    expectedCashImpact: newTotalOutstanding,
+                    version: liability.version + 1,
+                    eventCount: liability.eventCount + 1,
+                    lastEventId: eventId,
+                },
+            });
+
+            // Create event
+            await (tx as any).liabilityEvent.create({
+                data: {
+                    eventId,
+                    liabilityId: liability.id,
+                    eventType: LiabilityEventType.PAYMENT_EXECUTED,
+                    timestamp: now,
+                    effectiveDate: execDate,
+                    actorId: session.user.id,
+                    actorName: session.user.name || session.user.email,
+                    actorType: 'user',
+                    payload: {
+                        paymentId: payment.paymentId,
+                        amount: totalAmount,
+                        principalAmount,
+                        interestAmount,
+                        feesAmount,
+                        paymentMethod,
+                        bankReference,
+                        transactionId,
+                        outstandingBefore: Number(liability.totalOutstanding),
+                        outstandingAfter: newTotalOutstanding,
+                        newStatus,
+                    },
+                    previousState: {
+                        status: liability.status,
+                        outstandingPrincipal: Number(liability.outstandingPrincipal),
+                        totalOutstanding: Number(liability.totalOutstanding),
+                    },
+                    previousEventId: liability.lastEventId,
+                    explanation: `Payment of ${liability.currency} ${totalAmount.toLocaleString()} executed. ${newStatus === LiabilityStatus.FULLY_SETTLED ? 'Liability fully settled.' : `Remaining: ${liability.currency} ${newTotalOutstanding.toLocaleString()}`}`,
+                },
+            });
+
+            return { updatedPayment, updatedLiability, eventId };
         });
 
         return NextResponse.json({
             payment: {
-                ...updatedPayment,
-                amount: Number(updatedPayment.amount),
-                principalAmount: Number(updatedPayment.principalAmount),
-                interestAmount: Number(updatedPayment.interestAmount),
-                feesAmount: Number(updatedPayment.feesAmount),
+                ...result.updatedPayment,
+                amount: Number(result.updatedPayment.amount),
+                principalAmount: Number(result.updatedPayment.principalAmount),
+                interestAmount: Number(result.updatedPayment.interestAmount),
+                feesAmount: Number(result.updatedPayment.feesAmount),
             },
             liability: {
-                id: updatedLiability.id,
-                liabilityId: updatedLiability.liabilityId,
-                status: updatedLiability.status,
-                outstandingPrincipal: Number(updatedLiability.outstandingPrincipal),
-                totalOutstanding: Number(updatedLiability.totalOutstanding),
-                totalSettled: Number(updatedLiability.totalSettled),
+                id: result.updatedLiability.id,
+                liabilityId: result.updatedLiability.liabilityId,
+                status: result.updatedLiability.status,
+                outstandingPrincipal: Number(result.updatedLiability.outstandingPrincipal),
+                totalOutstanding: Number(result.updatedLiability.totalOutstanding),
+                totalSettled: Number(result.updatedLiability.totalSettled),
             },
             message: newStatus === LiabilityStatus.FULLY_SETTLED
                 ? `Payment executed. Liability ${liability.liabilityId} fully settled.`
                 : `Payment of ${liability.currency} ${totalAmount.toLocaleString()} executed`,
-            eventId,
+            eventId: result.eventId,
         });
     } catch (error) {
         console.error('Error executing payment:', error);

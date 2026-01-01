@@ -1,10 +1,13 @@
 // src/app/api/exchange-rates/convert/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchCryptoRates, fetchFiatRates, convertCurrency } from '@/lib/exchange-rates';
+import { getSessionWithOrg, unauthorized } from '@/lib/api-utils';
 
 // GET /api/exchange-rates/convert?from=BTC&to=USD&amount=1
 export async function GET(req: NextRequest) {
     try {
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
         const { searchParams } = new URL(req.url);
         const from = searchParams.get('from');
         const to = searchParams.get('to');

@@ -28,13 +28,13 @@ export type AggregateReceipt = {
 
 export type ReceiptAvgAggregateOutputType = {
   fileSize: number | null
-  amount: number | null
+  amount: runtime.Decimal | null
   confidence: number | null
 }
 
 export type ReceiptSumAggregateOutputType = {
   fileSize: number | null
-  amount: number | null
+  amount: runtime.Decimal | null
   confidence: number | null
 }
 
@@ -45,7 +45,7 @@ export type ReceiptMinAggregateOutputType = {
   fileType: string | null
   fileSize: number | null
   vendor: string | null
-  amount: number | null
+  amount: runtime.Decimal | null
   date: Date | null
   extractedText: string | null
   confidence: number | null
@@ -65,7 +65,7 @@ export type ReceiptMaxAggregateOutputType = {
   fileType: string | null
   fileSize: number | null
   vendor: string | null
-  amount: number | null
+  amount: runtime.Decimal | null
   date: Date | null
   extractedText: string | null
   confidence: number | null
@@ -266,7 +266,7 @@ export type ReceiptGroupByOutputType = {
   fileType: string
   fileSize: number
   vendor: string | null
-  amount: number | null
+  amount: runtime.Decimal | null
   date: Date | null
   extractedText: string | null
   confidence: number | null
@@ -309,7 +309,7 @@ export type ReceiptWhereInput = {
   fileType?: Prisma.StringFilter<"Receipt"> | string
   fileSize?: Prisma.IntFilter<"Receipt"> | number
   vendor?: Prisma.StringNullableFilter<"Receipt"> | string | null
-  amount?: Prisma.FloatNullableFilter<"Receipt"> | number | null
+  amount?: Prisma.DecimalNullableFilter<"Receipt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableFilter<"Receipt"> | number | null
@@ -356,7 +356,7 @@ export type ReceiptWhereUniqueInput = Prisma.AtLeast<{
   fileType?: Prisma.StringFilter<"Receipt"> | string
   fileSize?: Prisma.IntFilter<"Receipt"> | number
   vendor?: Prisma.StringNullableFilter<"Receipt"> | string | null
-  amount?: Prisma.FloatNullableFilter<"Receipt"> | number | null
+  amount?: Prisma.DecimalNullableFilter<"Receipt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableFilter<"Receipt"> | number | null
@@ -406,7 +406,7 @@ export type ReceiptScalarWhereWithAggregatesInput = {
   fileType?: Prisma.StringWithAggregatesFilter<"Receipt"> | string
   fileSize?: Prisma.IntWithAggregatesFilter<"Receipt"> | number
   vendor?: Prisma.StringNullableWithAggregatesFilter<"Receipt"> | string | null
-  amount?: Prisma.FloatNullableWithAggregatesFilter<"Receipt"> | number | null
+  amount?: Prisma.DecimalNullableWithAggregatesFilter<"Receipt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.DateTimeNullableWithAggregatesFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableWithAggregatesFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableWithAggregatesFilter<"Receipt"> | number | null
@@ -426,7 +426,7 @@ export type ReceiptCreateInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -446,7 +446,7 @@ export type ReceiptUncheckedCreateInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -466,7 +466,7 @@ export type ReceiptUpdateInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -486,7 +486,7 @@ export type ReceiptUncheckedUpdateInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -506,7 +506,7 @@ export type ReceiptCreateManyInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -526,7 +526,7 @@ export type ReceiptUpdateManyMutationInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -544,7 +544,7 @@ export type ReceiptUncheckedUpdateManyInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -731,6 +731,14 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type NullableFloatFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -746,7 +754,7 @@ export type ReceiptCreateWithoutOrganizationInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -765,7 +773,7 @@ export type ReceiptUncheckedCreateWithoutOrganizationInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -813,7 +821,7 @@ export type ReceiptScalarWhereInput = {
   fileType?: Prisma.StringFilter<"Receipt"> | string
   fileSize?: Prisma.IntFilter<"Receipt"> | number
   vendor?: Prisma.StringNullableFilter<"Receipt"> | string | null
-  amount?: Prisma.FloatNullableFilter<"Receipt"> | number | null
+  amount?: Prisma.DecimalNullableFilter<"Receipt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.DateTimeNullableFilter<"Receipt"> | Date | string | null
   extractedText?: Prisma.StringNullableFilter<"Receipt"> | string | null
   confidence?: Prisma.FloatNullableFilter<"Receipt"> | number | null
@@ -833,7 +841,7 @@ export type ReceiptCreateWithoutTransactionInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -852,7 +860,7 @@ export type ReceiptUncheckedCreateWithoutTransactionInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -897,7 +905,7 @@ export type ReceiptCreateManyOrganizationInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -916,7 +924,7 @@ export type ReceiptUpdateWithoutOrganizationInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -935,7 +943,7 @@ export type ReceiptUncheckedUpdateWithoutOrganizationInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -954,7 +962,7 @@ export type ReceiptUncheckedUpdateManyWithoutOrganizationInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -973,7 +981,7 @@ export type ReceiptCreateManyTransactionInput = {
   fileType: string
   fileSize: number
   vendor?: string | null
-  amount?: number | null
+  amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Date | string | null
   extractedText?: string | null
   confidence?: number | null
@@ -992,7 +1000,7 @@ export type ReceiptUpdateWithoutTransactionInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1011,7 +1019,7 @@ export type ReceiptUncheckedUpdateWithoutTransactionInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1030,7 +1038,7 @@ export type ReceiptUncheckedUpdateManyWithoutTransactionInput = {
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   extractedText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1157,7 +1165,7 @@ export type $ReceiptPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     fileType: string
     fileSize: number
     vendor: string | null
-    amount: number | null
+    amount: runtime.Decimal | null
     date: Date | null
     extractedText: string | null
     confidence: number | null
@@ -1599,7 +1607,7 @@ export interface ReceiptFieldRefs {
   readonly fileType: Prisma.FieldRef<"Receipt", 'String'>
   readonly fileSize: Prisma.FieldRef<"Receipt", 'Int'>
   readonly vendor: Prisma.FieldRef<"Receipt", 'String'>
-  readonly amount: Prisma.FieldRef<"Receipt", 'Float'>
+  readonly amount: Prisma.FieldRef<"Receipt", 'Decimal'>
   readonly date: Prisma.FieldRef<"Receipt", 'DateTime'>
   readonly extractedText: Prisma.FieldRef<"Receipt", 'String'>
   readonly confidence: Prisma.FieldRef<"Receipt", 'Float'>

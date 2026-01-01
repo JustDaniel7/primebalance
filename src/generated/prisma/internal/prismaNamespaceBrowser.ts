@@ -321,6 +321,7 @@ export const TransactionScalarFieldEnum = {
   tags: 'tags',
   tokenized: 'tokenized',
   txHash: 'txHash',
+  deletedAt: 'deletedAt',
   accountId: 'accountId',
   organizationId: 'organizationId',
   createdAt: 'createdAt',

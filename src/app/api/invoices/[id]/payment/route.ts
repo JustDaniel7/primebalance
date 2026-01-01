@@ -76,121 +76,151 @@ export async function POST(
         if (!amount || amount <= 0) return badRequest('Payment amount must be positive');
         if (!paymentDate) return badRequest('Payment date is required');
 
-        // Fetch existing invoice
-        const invoice = await prisma.invoice.findFirst({
-            where: {
-                id,
-                organizationId: user.organizationId,
-            },
+        const organizationId = user.organizationId;
+
+        // Use a serializable transaction to prevent race conditions
+        const result = await prisma.$transaction(async (tx) => {
+            // Fetch and lock the invoice within transaction
+            const invoice = await tx.invoice.findFirst({
+                where: {
+                    id,
+                    organizationId,
+                },
+            });
+
+            if (!invoice) {
+                throw new Error('INVOICE_NOT_FOUND');
+            }
+
+            // Check if can accept payment
+            if (!PAYABLE_STATUSES.includes(invoice.status)) {
+                throw new Error(`INVALID_STATUS:${invoice.status}`);
+            }
+
+            // Calculate amounts
+            const invoiceTotal = Number(invoice.total);
+            const currentPaid = Number((invoice as any).paidAmount || 0);
+            const currentOutstanding = Number((invoice as any).outstandingAmount || invoiceTotal);
+
+            if (amount > currentOutstanding) {
+                throw new Error(`OVERPAYMENT:${amount}:${currentOutstanding}`);
+            }
+
+            const newPaidAmount = currentPaid + amount;
+            const newOutstandingAmount = invoiceTotal - newPaidAmount;
+            const isFullyPaid = newOutstandingAmount <= 0.01; // Allow for rounding
+
+            // Determine new status
+            let newStatus = invoice.status;
+            if (isFullyPaid) {
+                newStatus = 'paid';
+            } else if (newPaidAmount > 0) {
+                newStatus = 'partially_paid';
+            }
+
+            // Update invoice
+            const updateData: any = {
+                status: newStatus,
+                paidAmount: newPaidAmount,
+                outstandingAmount: newOutstandingAmount,
+            };
+
+            if (isFullyPaid) {
+                updateData.paidAt = new Date();
+            }
+
+            const updated = await tx.invoice.update({
+                where: { id },
+                data: updateData,
+            });
+
+            // Try to create payment record if model exists
+            let paymentRecord = null;
+            try {
+                paymentRecord = await (tx as any).invoicePayment.create({
+                    data: {
+                        invoiceId: id,
+                        amount,
+                        currency: invoice.currency,
+                        paymentDate: new Date(paymentDate),
+                        paymentMethod: paymentMethod || 'bank_transfer',
+                        reference,
+                        notes,
+                        status: 'completed',
+                    },
+                });
+            } catch {
+                // Model doesn't exist yet
+            }
+
+            // Update related receivable if exists
+            try {
+                await tx.receivable.updateMany({
+                    where: {
+                        originReferenceId: invoice.invoiceNumber,
+                        organizationId,
+                    },
+                    data: {
+                        paidAmount: newPaidAmount,
+                        outstandingAmount: newOutstandingAmount,
+                        status: isFullyPaid ? 'paid' : 'partially_paid',
+                        lastActivityDate: new Date(),
+                    },
+                });
+            } catch {
+                // Receivable might not exist
+            }
+
+            return {
+                updated,
+                paymentRecord,
+                newPaidAmount,
+                newOutstandingAmount,
+                isFullyPaid,
+            };
+        }, {
+            isolationLevel: 'Serializable', // Prevent race conditions
         });
 
-        if (!invoice) return notFound('Invoice');
-
-        // Check if can accept payment
-        if (!PAYABLE_STATUSES.includes(invoice.status)) {
+        return NextResponse.json({
+            invoice: {
+                ...result.updated,
+                total: Number(result.updated.total),
+                subtotal: Number(result.updated.subtotal),
+                taxAmount: Number(result.updated.taxAmount),
+                taxRate: Number(result.updated.taxRate),
+                paidAmount: result.newPaidAmount,
+                outstandingAmount: result.newOutstandingAmount,
+            },
+            payment: result.paymentRecord,
+            message: result.isFullyPaid ? 'Invoice fully paid' : 'Payment applied successfully',
+        });
+    } catch (error: any) {
+        // Handle transaction errors
+        if (error.message === 'INVOICE_NOT_FOUND') {
+            return notFound('Invoice');
+        }
+        if (error.message?.startsWith('INVALID_STATUS:')) {
+            const status = error.message.split(':')[1];
             return NextResponse.json(
                 {
-                    error: `Cannot apply payment to invoice in ${invoice.status} status.`,
+                    error: `Cannot apply payment to invoice in ${status} status.`,
                     code: 'INVALID_STATUS',
                 },
                 { status: 400 }
             );
         }
-
-        // Calculate amounts
-        const invoiceTotal = Number(invoice.total);
-        const currentPaid = Number((invoice as any).paidAmount || 0);
-        const currentOutstanding = Number((invoice as any).outstandingAmount || invoiceTotal);
-
-        if (amount > currentOutstanding) {
+        if (error.message?.startsWith('OVERPAYMENT:')) {
+            const [, amt, outstanding] = error.message.split(':');
             return NextResponse.json(
                 {
-                    error: `Payment amount (${amount}) exceeds outstanding amount (${currentOutstanding})`,
+                    error: `Payment amount (${amt}) exceeds outstanding amount (${outstanding})`,
                     code: 'OVERPAYMENT',
                 },
                 { status: 400 }
             );
         }
 
-        const newPaidAmount = currentPaid + amount;
-        const newOutstandingAmount = invoiceTotal - newPaidAmount;
-        const isFullyPaid = newOutstandingAmount <= 0.01; // Allow for rounding
-
-        // Determine new status
-        let newStatus = invoice.status;
-        if (isFullyPaid) {
-            newStatus = 'paid';
-        } else if (newPaidAmount > 0) {
-            newStatus = 'partially_paid';
-        }
-
-        // Update invoice
-        const updateData: any = {
-            status: newStatus,
-            paidAmount: newPaidAmount,
-            outstandingAmount: newOutstandingAmount,
-        };
-
-        if (isFullyPaid) {
-            updateData.paidAt = new Date();
-        }
-
-        const updated = await prisma.invoice.update({
-            where: { id },
-            data: updateData,
-        });
-
-        // Try to create payment record if model exists
-        let paymentRecord = null;
-        try {
-            paymentRecord = await (prisma as any).invoicePayment.create({
-                data: {
-                    invoiceId: id,
-                    amount,
-                    currency: invoice.currency,
-                    paymentDate: new Date(paymentDate),
-                    paymentMethod: paymentMethod || 'bank_transfer',
-                    reference,
-                    notes,
-                    status: 'completed',
-                },
-            });
-        } catch {
-            // Model doesn't exist yet
-        }
-
-        // Update related receivable if exists
-        try {
-            await prisma.receivable.updateMany({
-                where: {
-                    originReferenceId: invoice.invoiceNumber,
-                    organizationId: user.organizationId,
-                },
-                data: {
-                    paidAmount: newPaidAmount,
-                    outstandingAmount: newOutstandingAmount,
-                    status: isFullyPaid ? 'paid' : 'partially_paid',
-                    lastActivityDate: new Date(),
-                },
-            });
-        } catch {
-            // Receivable might not exist
-        }
-
-        return NextResponse.json({
-            invoice: {
-                ...updated,
-                total: Number(updated.total),
-                subtotal: Number(updated.subtotal),
-                taxAmount: Number(updated.taxAmount),
-                taxRate: Number(updated.taxRate),
-                paidAmount: newPaidAmount,
-                outstandingAmount: newOutstandingAmount,
-            },
-            payment: paymentRecord,
-            message: isFullyPaid ? 'Invoice fully paid' : 'Payment applied successfully',
-        });
-    } catch (error) {
         console.error('Error applying payment:', error);
         return NextResponse.json(
             { error: 'Failed to apply payment' },

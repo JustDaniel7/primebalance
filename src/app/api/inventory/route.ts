@@ -38,18 +38,29 @@ export async function GET(req: NextRequest) {
   }
   
   let items, total
-  
+
   if (lowStock) {
-    // Use raw query for low stock filter
+    // Use safe parameterized raw query for the low stock comparison
     const lowStockItems = await prisma.$queryRaw<any[]>`
       SELECT * FROM "InventoryItem"
       WHERE "organizationId" = ${user.organizationId}
       AND "quantityAvailable" < "reorderPoint"
-      ${where.OR ? 'AND (' + where.OR.map(() => '"name" ILIKE $1 OR "sku" ILIKE $1 OR "barcode" ILIKE $1').join(' OR ') + ')' : ''}
       ORDER BY name ASC
       LIMIT ${limit} OFFSET ${offset}
     `
-    items = lowStockItems
+
+    // Filter by search in application if needed (to avoid SQL injection)
+    if (search) {
+      const searchLower = search.toLowerCase()
+      items = lowStockItems.filter(item =>
+        item.name?.toLowerCase().includes(searchLower) ||
+        item.sku?.toLowerCase().includes(searchLower) ||
+        item.barcode?.toLowerCase().includes(searchLower)
+      )
+    } else {
+      items = lowStockItems
+    }
+
     const countResult = await prisma.$queryRaw<any[]>`
       SELECT COUNT(*) as count FROM "InventoryItem"
       WHERE "organizationId" = ${user.organizationId}

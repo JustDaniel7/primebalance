@@ -27,24 +27,25 @@ export type AggregateTransaction = {
 }
 
 export type TransactionAvgAggregateOutputType = {
-  amount: number | null
+  amount: runtime.Decimal | null
 }
 
 export type TransactionSumAggregateOutputType = {
-  amount: number | null
+  amount: runtime.Decimal | null
 }
 
 export type TransactionMinAggregateOutputType = {
   id: string | null
   date: Date | null
   description: string | null
-  amount: number | null
+  amount: runtime.Decimal | null
   currency: string | null
   type: string | null
   category: string | null
   status: string | null
   tokenized: boolean | null
   txHash: string | null
+  deletedAt: Date | null
   accountId: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -55,13 +56,14 @@ export type TransactionMaxAggregateOutputType = {
   id: string | null
   date: Date | null
   description: string | null
-  amount: number | null
+  amount: runtime.Decimal | null
   currency: string | null
   type: string | null
   category: string | null
   status: string | null
   tokenized: boolean | null
   txHash: string | null
+  deletedAt: Date | null
   accountId: string | null
   organizationId: string | null
   createdAt: Date | null
@@ -80,6 +82,7 @@ export type TransactionCountAggregateOutputType = {
   tags: number
   tokenized: number
   txHash: number
+  deletedAt: number
   accountId: number
   organizationId: number
   createdAt: number
@@ -107,6 +110,7 @@ export type TransactionMinAggregateInputType = {
   status?: true
   tokenized?: true
   txHash?: true
+  deletedAt?: true
   accountId?: true
   organizationId?: true
   createdAt?: true
@@ -124,6 +128,7 @@ export type TransactionMaxAggregateInputType = {
   status?: true
   tokenized?: true
   txHash?: true
+  deletedAt?: true
   accountId?: true
   organizationId?: true
   createdAt?: true
@@ -142,6 +147,7 @@ export type TransactionCountAggregateInputType = {
   tags?: true
   tokenized?: true
   txHash?: true
+  deletedAt?: true
   accountId?: true
   organizationId?: true
   createdAt?: true
@@ -239,7 +245,7 @@ export type TransactionGroupByOutputType = {
   id: string
   date: Date
   description: string
-  amount: number
+  amount: runtime.Decimal
   currency: string
   type: string
   category: string | null
@@ -247,6 +253,7 @@ export type TransactionGroupByOutputType = {
   tags: string[]
   tokenized: boolean
   txHash: string | null
+  deletedAt: Date | null
   accountId: string
   organizationId: string
   createdAt: Date
@@ -280,7 +287,7 @@ export type TransactionWhereInput = {
   id?: Prisma.StringFilter<"Transaction"> | string
   date?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   description?: Prisma.StringFilter<"Transaction"> | string
-  amount?: Prisma.FloatFilter<"Transaction"> | number
+  amount?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Transaction"> | string
   type?: Prisma.StringFilter<"Transaction"> | string
   category?: Prisma.StringNullableFilter<"Transaction"> | string | null
@@ -288,6 +295,7 @@ export type TransactionWhereInput = {
   tags?: Prisma.StringNullableListFilter<"Transaction">
   tokenized?: Prisma.BoolFilter<"Transaction"> | boolean
   txHash?: Prisma.StringNullableFilter<"Transaction"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
   accountId?: Prisma.StringFilter<"Transaction"> | string
   organizationId?: Prisma.StringFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
@@ -309,6 +317,7 @@ export type TransactionOrderByWithRelationInput = {
   tags?: Prisma.SortOrder
   tokenized?: Prisma.SortOrder
   txHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   accountId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -325,7 +334,7 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TransactionWhereInput | Prisma.TransactionWhereInput[]
   date?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   description?: Prisma.StringFilter<"Transaction"> | string
-  amount?: Prisma.FloatFilter<"Transaction"> | number
+  amount?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Transaction"> | string
   type?: Prisma.StringFilter<"Transaction"> | string
   category?: Prisma.StringNullableFilter<"Transaction"> | string | null
@@ -333,6 +342,7 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   tags?: Prisma.StringNullableListFilter<"Transaction">
   tokenized?: Prisma.BoolFilter<"Transaction"> | boolean
   txHash?: Prisma.StringNullableFilter<"Transaction"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
   accountId?: Prisma.StringFilter<"Transaction"> | string
   organizationId?: Prisma.StringFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
@@ -354,6 +364,7 @@ export type TransactionOrderByWithAggregationInput = {
   tags?: Prisma.SortOrder
   tokenized?: Prisma.SortOrder
   txHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   accountId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -372,7 +383,7 @@ export type TransactionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"Transaction"> | Date | string
   description?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
-  amount?: Prisma.FloatWithAggregatesFilter<"Transaction"> | number
+  amount?: Prisma.DecimalWithAggregatesFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   type?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
@@ -380,6 +391,7 @@ export type TransactionScalarWhereWithAggregatesInput = {
   tags?: Prisma.StringNullableListFilter<"Transaction">
   tokenized?: Prisma.BoolWithAggregatesFilter<"Transaction"> | boolean
   txHash?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Transaction"> | Date | string | null
   accountId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   organizationId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Transaction"> | Date | string
@@ -390,7 +402,7 @@ export type TransactionCreateInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -398,6 +410,7 @@ export type TransactionCreateInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   account: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
@@ -409,7 +422,7 @@ export type TransactionUncheckedCreateInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -417,6 +430,7 @@ export type TransactionUncheckedCreateInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   accountId: string
   organizationId: string
   createdAt?: Date | string
@@ -428,7 +442,7 @@ export type TransactionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -436,6 +450,7 @@ export type TransactionUpdateInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
@@ -447,7 +462,7 @@ export type TransactionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -455,6 +470,7 @@ export type TransactionUncheckedUpdateInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -466,7 +482,7 @@ export type TransactionCreateManyInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -474,6 +490,7 @@ export type TransactionCreateManyInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   accountId: string
   organizationId: string
   createdAt?: Date | string
@@ -484,7 +501,7 @@ export type TransactionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,6 +509,7 @@ export type TransactionUpdateManyMutationInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -500,7 +518,7 @@ export type TransactionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -508,6 +526,7 @@ export type TransactionUncheckedUpdateManyInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -544,6 +563,7 @@ export type TransactionCountOrderByAggregateInput = {
   tags?: Prisma.SortOrder
   tokenized?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -565,6 +585,7 @@ export type TransactionMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   tokenized?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -582,6 +603,7 @@ export type TransactionMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   tokenized?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -710,7 +732,7 @@ export type TransactionCreateWithoutOrganizationInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -718,6 +740,7 @@ export type TransactionCreateWithoutOrganizationInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   account: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
@@ -728,7 +751,7 @@ export type TransactionUncheckedCreateWithoutOrganizationInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -736,6 +759,7 @@ export type TransactionUncheckedCreateWithoutOrganizationInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   accountId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -775,7 +799,7 @@ export type TransactionScalarWhereInput = {
   id?: Prisma.StringFilter<"Transaction"> | string
   date?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   description?: Prisma.StringFilter<"Transaction"> | string
-  amount?: Prisma.FloatFilter<"Transaction"> | number
+  amount?: Prisma.DecimalFilter<"Transaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Transaction"> | string
   type?: Prisma.StringFilter<"Transaction"> | string
   category?: Prisma.StringNullableFilter<"Transaction"> | string | null
@@ -783,6 +807,7 @@ export type TransactionScalarWhereInput = {
   tags?: Prisma.StringNullableListFilter<"Transaction">
   tokenized?: Prisma.BoolFilter<"Transaction"> | boolean
   txHash?: Prisma.StringNullableFilter<"Transaction"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
   accountId?: Prisma.StringFilter<"Transaction"> | string
   organizationId?: Prisma.StringFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
@@ -793,7 +818,7 @@ export type TransactionCreateWithoutAccountInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -801,6 +826,7 @@ export type TransactionCreateWithoutAccountInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutTransactionsInput
@@ -811,7 +837,7 @@ export type TransactionUncheckedCreateWithoutAccountInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -819,6 +845,7 @@ export type TransactionUncheckedCreateWithoutAccountInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -855,7 +882,7 @@ export type TransactionCreateWithoutReceiptsInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -863,6 +890,7 @@ export type TransactionCreateWithoutReceiptsInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   account: Prisma.FinancialAccountCreateNestedOneWithoutTransactionsInput
@@ -873,7 +901,7 @@ export type TransactionUncheckedCreateWithoutReceiptsInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -881,6 +909,7 @@ export type TransactionUncheckedCreateWithoutReceiptsInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   accountId: string
   organizationId: string
   createdAt?: Date | string
@@ -907,7 +936,7 @@ export type TransactionUpdateWithoutReceiptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -915,6 +944,7 @@ export type TransactionUpdateWithoutReceiptsInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
@@ -925,7 +955,7 @@ export type TransactionUncheckedUpdateWithoutReceiptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -933,6 +963,7 @@ export type TransactionUncheckedUpdateWithoutReceiptsInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -943,7 +974,7 @@ export type TransactionCreateManyOrganizationInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -951,6 +982,7 @@ export type TransactionCreateManyOrganizationInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   accountId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -960,7 +992,7 @@ export type TransactionUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -968,6 +1000,7 @@ export type TransactionUpdateWithoutOrganizationInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.FinancialAccountUpdateOneRequiredWithoutTransactionsNestedInput
@@ -978,7 +1011,7 @@ export type TransactionUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -986,6 +1019,7 @@ export type TransactionUncheckedUpdateWithoutOrganizationInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -996,7 +1030,7 @@ export type TransactionUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1004,6 +1038,7 @@ export type TransactionUncheckedUpdateManyWithoutOrganizationInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1013,7 +1048,7 @@ export type TransactionCreateManyAccountInput = {
   id?: string
   date: Date | string
   description: string
-  amount: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   type: string
   category?: string | null
@@ -1021,6 +1056,7 @@ export type TransactionCreateManyAccountInput = {
   tags?: Prisma.TransactionCreatetagsInput | string[]
   tokenized?: boolean
   txHash?: string | null
+  deletedAt?: Date | string | null
   organizationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1030,7 +1066,7 @@ export type TransactionUpdateWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1038,6 +1074,7 @@ export type TransactionUpdateWithoutAccountInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTransactionsNestedInput
@@ -1048,7 +1085,7 @@ export type TransactionUncheckedUpdateWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1056,6 +1093,7 @@ export type TransactionUncheckedUpdateWithoutAccountInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1066,7 +1104,7 @@ export type TransactionUncheckedUpdateManyWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1074,6 +1112,7 @@ export type TransactionUncheckedUpdateManyWithoutAccountInput = {
   tags?: Prisma.TransactionUpdatetagsInput | string[]
   tokenized?: Prisma.BoolFieldUpdateOperationsInput | boolean
   txHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1122,6 +1161,7 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   tags?: boolean
   tokenized?: boolean
   txHash?: boolean
+  deletedAt?: boolean
   accountId?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1144,6 +1184,7 @@ export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   tags?: boolean
   tokenized?: boolean
   txHash?: boolean
+  deletedAt?: boolean
   accountId?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1164,6 +1205,7 @@ export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   tags?: boolean
   tokenized?: boolean
   txHash?: boolean
+  deletedAt?: boolean
   accountId?: boolean
   organizationId?: boolean
   createdAt?: boolean
@@ -1184,13 +1226,14 @@ export type TransactionSelectScalar = {
   tags?: boolean
   tokenized?: boolean
   txHash?: boolean
+  deletedAt?: boolean
   accountId?: boolean
   organizationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "description" | "amount" | "currency" | "type" | "category" | "status" | "tags" | "tokenized" | "txHash" | "accountId" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
+export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "date" | "description" | "amount" | "currency" | "type" | "category" | "status" | "tags" | "tokenized" | "txHash" | "deletedAt" | "accountId" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
 export type TransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   account?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1217,7 +1260,7 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     date: Date
     description: string
-    amount: number
+    amount: runtime.Decimal
     currency: string
     type: string
     category: string | null
@@ -1225,6 +1268,7 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     tags: string[]
     tokenized: boolean
     txHash: string | null
+    deletedAt: Date | null
     accountId: string
     organizationId: string
     createdAt: Date
@@ -1658,7 +1702,7 @@ export interface TransactionFieldRefs {
   readonly id: Prisma.FieldRef<"Transaction", 'String'>
   readonly date: Prisma.FieldRef<"Transaction", 'DateTime'>
   readonly description: Prisma.FieldRef<"Transaction", 'String'>
-  readonly amount: Prisma.FieldRef<"Transaction", 'Float'>
+  readonly amount: Prisma.FieldRef<"Transaction", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Transaction", 'String'>
   readonly type: Prisma.FieldRef<"Transaction", 'String'>
   readonly category: Prisma.FieldRef<"Transaction", 'String'>
@@ -1666,6 +1710,7 @@ export interface TransactionFieldRefs {
   readonly tags: Prisma.FieldRef<"Transaction", 'String[]'>
   readonly tokenized: Prisma.FieldRef<"Transaction", 'Boolean'>
   readonly txHash: Prisma.FieldRef<"Transaction", 'String'>
+  readonly deletedAt: Prisma.FieldRef<"Transaction", 'DateTime'>
   readonly accountId: Prisma.FieldRef<"Transaction", 'String'>
   readonly organizationId: Prisma.FieldRef<"Transaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"Transaction", 'DateTime'>

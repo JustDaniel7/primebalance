@@ -81,7 +81,7 @@ const handlers: Record<ToolName, (args: HandlerArgs, orgId: string) => Promise<s
         type: t.type,
         category: t.category,
         status: t.status,
-        formattedAmount: formatCurrency(t.amount, t.currency),
+        formattedAmount: formatCurrency(Number(t.amount), t.currency),
         accountName: t.account?.name,
         accountNumber: t.account?.accountNumber
       })),
@@ -109,8 +109,8 @@ const handlers: Record<ToolName, (args: HandlerArgs, orgId: string) => Promise<s
     })
 
     // Calculate totals
-    const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0)
-    const expenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0)
+    const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + Number(t.amount), 0)
+    const expenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
     const netCashFlow = income - expenses
 
     // Group by specified field
@@ -124,7 +124,7 @@ const handlers: Record<ToolName, (args: HandlerArgs, orgId: string) => Promise<s
       }
       if (!grouped[key]) grouped[key] = { count: 0, total: 0 }
       grouped[key].count++
-      grouped[key].total += t.amount
+      grouped[key].total += Number(t.amount)
     })
 
     return JSON.stringify({
@@ -288,7 +288,7 @@ const handlers: Record<ToolName, (args: HandlerArgs, orgId: string) => Promise<s
         category: r.category,
         status: r.status,
         date: r.date?.toISOString().split('T')[0] || null,
-        formattedAmount: r.amount ? formatCurrency(r.amount) : 'N/A'
+        formattedAmount: r.amount ? formatCurrency(Number(r.amount)) : 'N/A'
       })),
       total,
       showing: receipts.length
@@ -410,7 +410,7 @@ const handlers: Record<ToolName, (args: HandlerArgs, orgId: string) => Promise<s
         name: a.name,
         type: a.type,
         isActive: a.isActive,
-        formattedBalance: formatCurrency(a.balance, a.currency)
+        formattedBalance: formatCurrency(Number(a.balance), a.currency)
       })),
       total,
       showing: accounts.length

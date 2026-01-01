@@ -176,7 +176,7 @@ model FinancialAccount {
   name          String
   accountNumber String
   type          String // asset, liability, equity, revenue, expense, bank, crypto
-  balance       Float   @default(0)
+  balance       Decimal @default(0) @db.Decimal(19, 4)
   currency      String  @default("USD")
   isActive      Boolean @default(true)
   description   String?
@@ -207,7 +207,7 @@ model Transaction {
   id          String   @id @default(cuid())
   date        DateTime
   description String
-  amount      Float
+  amount      Decimal  @db.Decimal(19, 4)
   currency    String   @default("USD")
   type        String // income, expense, transfer
   category    String?
@@ -217,6 +217,9 @@ model Transaction {
   // Blockchain
   tokenized Boolean @default(false)
   txHash    String?
+
+  // Soft delete
+  deletedAt DateTime?
 
   // Relations
   accountId      String
@@ -231,6 +234,7 @@ model Transaction {
   @@index([organizationId, date])
   @@index([organizationId, type])
   @@index([organizationId, status])
+  @@index([deletedAt])
 }
 
 // =============================================================================
@@ -248,7 +252,7 @@ model Receipt {
 
   // OCR/AI extracted data
   vendor        String?
-  amount        Float?
+  amount        Decimal?  @db.Decimal(19, 4)
   date          DateTime?
   extractedText String?   @db.Text
   confidence    Float? // AI confidence score

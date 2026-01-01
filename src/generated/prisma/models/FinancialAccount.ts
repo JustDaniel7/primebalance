@@ -27,11 +27,11 @@ export type AggregateFinancialAccount = {
 }
 
 export type FinancialAccountAvgAggregateOutputType = {
-  balance: number | null
+  balance: runtime.Decimal | null
 }
 
 export type FinancialAccountSumAggregateOutputType = {
-  balance: number | null
+  balance: runtime.Decimal | null
 }
 
 export type FinancialAccountMinAggregateOutputType = {
@@ -39,7 +39,7 @@ export type FinancialAccountMinAggregateOutputType = {
   name: string | null
   accountNumber: string | null
   type: string | null
-  balance: number | null
+  balance: runtime.Decimal | null
   currency: string | null
   isActive: boolean | null
   description: string | null
@@ -54,7 +54,7 @@ export type FinancialAccountMaxAggregateOutputType = {
   name: string | null
   accountNumber: string | null
   type: string | null
-  balance: number | null
+  balance: runtime.Decimal | null
   currency: string | null
   isActive: boolean | null
   description: string | null
@@ -226,7 +226,7 @@ export type FinancialAccountGroupByOutputType = {
   name: string
   accountNumber: string
   type: string
-  balance: number
+  balance: runtime.Decimal
   currency: string
   isActive: boolean
   description: string | null
@@ -264,7 +264,7 @@ export type FinancialAccountWhereInput = {
   name?: Prisma.StringFilter<"FinancialAccount"> | string
   accountNumber?: Prisma.StringFilter<"FinancialAccount"> | string
   type?: Prisma.StringFilter<"FinancialAccount"> | string
-  balance?: Prisma.FloatFilter<"FinancialAccount"> | number
+  balance?: Prisma.DecimalFilter<"FinancialAccount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"FinancialAccount"> | string
   isActive?: Prisma.BoolFilter<"FinancialAccount"> | boolean
   description?: Prisma.StringNullableFilter<"FinancialAccount"> | string | null
@@ -306,7 +306,7 @@ export type FinancialAccountWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"FinancialAccount"> | string
   accountNumber?: Prisma.StringFilter<"FinancialAccount"> | string
   type?: Prisma.StringFilter<"FinancialAccount"> | string
-  balance?: Prisma.FloatFilter<"FinancialAccount"> | number
+  balance?: Prisma.DecimalFilter<"FinancialAccount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"FinancialAccount"> | string
   isActive?: Prisma.BoolFilter<"FinancialAccount"> | boolean
   description?: Prisma.StringNullableFilter<"FinancialAccount"> | string | null
@@ -348,7 +348,7 @@ export type FinancialAccountScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"FinancialAccount"> | string
   accountNumber?: Prisma.StringWithAggregatesFilter<"FinancialAccount"> | string
   type?: Prisma.StringWithAggregatesFilter<"FinancialAccount"> | string
-  balance?: Prisma.FloatWithAggregatesFilter<"FinancialAccount"> | number
+  balance?: Prisma.DecimalWithAggregatesFilter<"FinancialAccount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"FinancialAccount"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"FinancialAccount"> | boolean
   description?: Prisma.StringNullableWithAggregatesFilter<"FinancialAccount"> | string | null
@@ -363,7 +363,7 @@ export type FinancialAccountCreateInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -380,7 +380,7 @@ export type FinancialAccountUncheckedCreateInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -397,7 +397,7 @@ export type FinancialAccountUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -414,7 +414,7 @@ export type FinancialAccountUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -431,7 +431,7 @@ export type FinancialAccountCreateManyInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -446,7 +446,7 @@ export type FinancialAccountUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -459,7 +459,7 @@ export type FinancialAccountUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -609,12 +609,12 @@ export type FinancialAccountUncheckedCreateNestedManyWithoutParentInput = {
   connect?: Prisma.FinancialAccountWhereUniqueInput | Prisma.FinancialAccountWhereUniqueInput[]
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -678,7 +678,7 @@ export type FinancialAccountCreateWithoutOrganizationInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -694,7 +694,7 @@ export type FinancialAccountUncheckedCreateWithoutOrganizationInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -739,7 +739,7 @@ export type FinancialAccountScalarWhereInput = {
   name?: Prisma.StringFilter<"FinancialAccount"> | string
   accountNumber?: Prisma.StringFilter<"FinancialAccount"> | string
   type?: Prisma.StringFilter<"FinancialAccount"> | string
-  balance?: Prisma.FloatFilter<"FinancialAccount"> | number
+  balance?: Prisma.DecimalFilter<"FinancialAccount"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"FinancialAccount"> | string
   isActive?: Prisma.BoolFilter<"FinancialAccount"> | boolean
   description?: Prisma.StringNullableFilter<"FinancialAccount"> | string | null
@@ -754,7 +754,7 @@ export type FinancialAccountCreateWithoutChildrenInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -770,7 +770,7 @@ export type FinancialAccountUncheckedCreateWithoutChildrenInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -791,7 +791,7 @@ export type FinancialAccountCreateWithoutParentInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -807,7 +807,7 @@ export type FinancialAccountUncheckedCreateWithoutParentInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -844,7 +844,7 @@ export type FinancialAccountUpdateWithoutChildrenInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -860,7 +860,7 @@ export type FinancialAccountUncheckedUpdateWithoutChildrenInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -892,7 +892,7 @@ export type FinancialAccountCreateWithoutTransactionsInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -908,7 +908,7 @@ export type FinancialAccountUncheckedCreateWithoutTransactionsInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -940,7 +940,7 @@ export type FinancialAccountUpdateWithoutTransactionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -956,7 +956,7 @@ export type FinancialAccountUncheckedUpdateWithoutTransactionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -972,7 +972,7 @@ export type FinancialAccountCreateManyOrganizationInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -986,7 +986,7 @@ export type FinancialAccountUpdateWithoutOrganizationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1002,7 +1002,7 @@ export type FinancialAccountUncheckedUpdateWithoutOrganizationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1018,7 +1018,7 @@ export type FinancialAccountUncheckedUpdateManyWithoutOrganizationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1032,7 +1032,7 @@ export type FinancialAccountCreateManyParentInput = {
   name: string
   accountNumber: string
   type: string
-  balance?: number
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   isActive?: boolean
   description?: string | null
@@ -1046,7 +1046,7 @@ export type FinancialAccountUpdateWithoutParentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1062,7 +1062,7 @@ export type FinancialAccountUncheckedUpdateWithoutParentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1078,7 +1078,7 @@ export type FinancialAccountUncheckedUpdateManyWithoutParentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  balance?: Prisma.FloatFieldUpdateOperationsInput | number
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1226,7 +1226,7 @@ export type $FinancialAccountPayload<ExtArgs extends runtime.Types.Extensions.In
     name: string
     accountNumber: string
     type: string
-    balance: number
+    balance: runtime.Decimal
     currency: string
     isActive: boolean
     description: string | null
@@ -1665,7 +1665,7 @@ export interface FinancialAccountFieldRefs {
   readonly name: Prisma.FieldRef<"FinancialAccount", 'String'>
   readonly accountNumber: Prisma.FieldRef<"FinancialAccount", 'String'>
   readonly type: Prisma.FieldRef<"FinancialAccount", 'String'>
-  readonly balance: Prisma.FieldRef<"FinancialAccount", 'Float'>
+  readonly balance: Prisma.FieldRef<"FinancialAccount", 'Decimal'>
   readonly currency: Prisma.FieldRef<"FinancialAccount", 'String'>
   readonly isActive: Prisma.FieldRef<"FinancialAccount", 'Boolean'>
   readonly description: Prisma.FieldRef<"FinancialAccount", 'String'>

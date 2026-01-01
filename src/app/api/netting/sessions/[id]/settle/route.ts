@@ -5,14 +5,15 @@ import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api
 
 type Params = { params: Promise<{ id: string }> };
 
-export async function POST(req: NextRequest, { params }: Params) {
+export async function POST(_req: NextRequest, { params }: Params) {
   const user = await getSessionWithOrg();
   if (!user?.organizationId) return unauthorized();
 
   const { id } = await params;
+  const organizationId = user.organizationId;
 
   const session = await prisma.nettingSession.findFirst({
-    where: { id, organizationId: user.organizationId },
+    where: { id, organizationId },
     include: { settlements: true },
   });
 
@@ -22,23 +23,37 @@ export async function POST(req: NextRequest, { params }: Params) {
     return badRequest('Session must be approved before settlement');
   }
 
-  // Mark all settlement instructions as completed
-  await prisma.settlementInstruction.updateMany({
-    where: { sessionId: id, status: 'pending' },
-    data: { status: 'completed', processedAt: new Date() },
-  });
+  // Use transaction to ensure atomicity and prevent double settlement
+  const updated = await prisma.$transaction(async (tx) => {
+    // Re-check status within transaction to prevent race conditions
+    const currentSession = await tx.nettingSession.findFirst({
+      where: { id, organizationId },
+    });
 
-  // Update session status
-  const updated = await prisma.nettingSession.update({
-    where: { id },
-    data: { status: 'settled' },
-    include: { positions: true, settlements: true },
-  });
+    if (currentSession?.status !== 'approved') {
+      throw new Error('SESSION_ALREADY_SETTLED');
+    }
 
-  // Update agreement's last netting date
-  await prisma.nettingAgreement.update({
-    where: { id: session.agreementId },
-    data: { lastNettingDate: session.nettingDate },
+    // Mark all settlement instructions as completed
+    await tx.settlementInstruction.updateMany({
+      where: { sessionId: id, status: 'pending' },
+      data: { status: 'completed', processedAt: new Date() },
+    });
+
+    // Update session status
+    const updatedSession = await tx.nettingSession.update({
+      where: { id },
+      data: { status: 'settled' },
+      include: { positions: true, settlements: true },
+    });
+
+    // Update agreement's last netting date
+    await tx.nettingAgreement.update({
+      where: { id: session.agreementId },
+      data: { lastNettingDate: session.nettingDate },
+    });
+
+    return updatedSession;
   });
 
   return NextResponse.json(updated);

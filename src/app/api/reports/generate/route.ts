@@ -178,13 +178,13 @@ async function generateProfitLoss(orgId: string, dateRange: DateRange) {
 
   const revenue = transactions
       .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0)
+      .reduce((sum, t) => sum + Number(t.amount), 0)
 
   const invoiceRevenue = invoices.reduce((sum, i) => sum + Number(i.total), 0)
 
   const expenses = transactions
       .filter(t => t.type === 'expense')
-      .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+      .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
   const netIncome = revenue + invoiceRevenue - expenses
 
@@ -192,7 +192,8 @@ async function generateProfitLoss(orgId: string, dateRange: DateRange) {
   const byCategory: Record<string, number> = {}
   transactions.forEach(t => {
     const cat = t.category || 'Uncategorized'
-    byCategory[cat] = (byCategory[cat] || 0) + (t.type === 'income' ? t.amount : -Math.abs(t.amount))
+    const amt = Number(t.amount)
+    byCategory[cat] = (byCategory[cat] || 0) + (t.type === 'income' ? amt : -Math.abs(amt))
   })
 
   return {
@@ -248,7 +249,7 @@ async function generateBalanceSheet(orgId: string, dateRange: DateRange) {
 
   const totalAssets = accounts
       .filter(a => a.type === 'asset' || a.type === 'bank')
-      .reduce((sum, a) => sum + a.balance, 0)
+      .reduce((sum, a) => sum + Number(a.balance), 0)
 
   const totalReceivables = receivables.reduce((sum, r) => sum + Number(r.outstandingAmount), 0)
 
@@ -298,11 +299,11 @@ async function generateCashFlow(orgId: string, dateRange: DateRange) {
 
   const inflows = transactions
       .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0)
+      .reduce((sum, t) => sum + Number(t.amount), 0)
 
   const outflows = transactions
       .filter(t => t.type === 'expense')
-      .reduce((sum, t) => sum + Math.abs(t.amount), 0)
+      .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
   const netCashFlow = inflows - outflows
 
@@ -371,7 +372,7 @@ async function generateExpenseReport(orgId: string, dateRange: DateRange) {
     const cat = t.category || 'Uncategorized'
     if (!byCategory[cat]) byCategory[cat] = { count: 0, amount: 0 }
     byCategory[cat].count += 1
-    byCategory[cat].amount += Math.abs(t.amount)
+    byCategory[cat].amount += Math.abs(Number(t.amount))
   })
 
   const rows = Object.entries(byCategory).map(([category, data], i) => ({
@@ -381,7 +382,7 @@ async function generateExpenseReport(orgId: string, dateRange: DateRange) {
     amount: data.amount,
   }))
 
-  const totalExpenses = transactions.reduce((sum, t) => sum + Math.abs(t.amount), 0)
+  const totalExpenses = transactions.reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0)
 
   return {
     headers: ['Category', 'Count', 'Amount'],
@@ -414,7 +415,7 @@ async function generateIncomeReport(orgId: string, dateRange: DateRange) {
     },
   })
 
-  const transactionIncome = transactions.reduce((sum, t) => sum + t.amount, 0)
+  const transactionIncome = transactions.reduce((sum, t) => sum + Number(t.amount), 0)
   const invoiceIncome = invoices.reduce((sum, i) => sum + Number(i.total), 0)
 
   return {

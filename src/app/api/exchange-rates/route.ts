@@ -1,10 +1,13 @@
 // src/app/api/exchange-rates/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchCryptoRates, fetchFiatRates, fetchAllRates, SUPPORTED_CRYPTO, SUPPORTED_FIAT } from '@/lib/exchange-rates';
+import { getSessionWithOrg, unauthorized } from '@/lib/api-utils';
 
 // GET /api/exchange-rates
 export async function GET(req: NextRequest) {
     try {
+        const user = await getSessionWithOrg();
+        if (!user?.organizationId) return unauthorized();
         const { searchParams } = new URL(req.url);
         const type = searchParams.get('type') || 'all'; // 'crypto', 'fiat', 'all'
         const base = searchParams.get('base') || 'USD';
