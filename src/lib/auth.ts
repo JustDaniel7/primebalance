@@ -41,7 +41,7 @@ if (process.env.ENABLE_DEMO_AUTH === 'true') {
       },
       async authorize(credentials) {
         // Only allow specific demo accounts in demo mode
-        const demoAccounts = ['demo@example.com', 'test@example.com', 'admin@example.com']
+        const demoAccounts = ['demo@primebalance.app', 'demo@example.com', 'test@example.com', 'admin@example.com']
 
         if (credentials?.email && demoAccounts.includes(credentials.email.toLowerCase())) {
           // In demo mode, verify against demo password

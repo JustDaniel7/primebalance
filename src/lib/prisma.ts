@@ -7,14 +7,17 @@ import { Pool, PoolConfig } from 'pg'
 // CONNECTION POOL CONFIGURATION
 // =============================================================================
 
+// Reduce pool size for local development to prevent connection exhaustion
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 // Base pool configuration with proper timeouts and limits
 const basePoolConfig: Partial<PoolConfig> = {
-  // Connection limits
-  max: parseInt(process.env.DB_POOL_MAX || '20'),          // Maximum connections
-  min: parseInt(process.env.DB_POOL_MIN || '2'),           // Minimum idle connections
+  // Connection limits - smaller for dev to prevent exhaustion during hot reload
+  max: parseInt(process.env.DB_POOL_MAX || (isDevelopment ? '5' : '20')),
+  min: parseInt(process.env.DB_POOL_MIN || '1'),
 
   // Timeouts (in milliseconds)
-  idleTimeoutMillis: 30000,         // Close idle connections after 30 seconds
+  idleTimeoutMillis: isDevelopment ? 10000 : 30000,  // Close idle faster in dev
   connectionTimeoutMillis: 10000,   // Fail if can't connect within 10 seconds
 
   // Statement timeout (prevent long-running queries)
@@ -47,7 +50,32 @@ function createPool(): Pool {
   })
 }
 
-const pool = createPool()
+// =============================================================================
+// SINGLETON PATTERN FOR DEVELOPMENT
+// Prevents connection pool exhaustion during Next.js hot reloading
+// =============================================================================
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+  pool: Pool | undefined
+}
+
+// Reuse existing pool and client in development, or create new ones
+const pool = globalForPrisma.pool ?? createPool()
 const adapter = new PrismaPg(pool)
 
-export const prisma = new PrismaClient({ adapter })
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({ adapter })
+
+// Store in global object during development to survive hot reloads
+if (isDevelopment) {
+  globalForPrisma.prisma = prisma
+  globalForPrisma.pool = pool
+}
+
+// Graceful shutdown handler
+if (typeof process !== 'undefined') {
+  process.on('beforeExit', async () => {
+    await prisma.$disconnect()
+    await pool.end()
+  })
+}
