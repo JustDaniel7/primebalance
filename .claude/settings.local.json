@@ -28,7 +28,11 @@
       "Bash(curl:*)",
       "Bash(npx prisma db seed:*)",
       "Bash(npx tsx:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm run logs:*)",
+      "Bash(gcloud logging read:*)",
+      "Bash(gcloud run services describe:*)",
+      "Bash(gcloud run services update:*)"
     ]
   }
 }

@@ -3,12 +3,13 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { 
-  Transaction, 
-  Account, 
-  Wallet, 
-  ChatMessage, 
-  User, 
+import type {
+  Transaction,
+  Account,
+  Wallet,
+  ChatMessage,
+  TeamChatMessage,
+  User,
   FinancialMetrics,
   AISuggestion,
   CryptoToken
@@ -59,7 +60,7 @@ interface AppState {
   // Chat
   chatChannels: ChatChannel[]
   activeChannelId: string | null
-  channelMessages: Record<string, ChatMessage[]>
+  channelMessages: Record<string, TeamChatMessage[]>
   
   // AI Assistant
   aiChatMessages: ChatMessage[]
@@ -325,7 +326,7 @@ export const useStore = create<AppState>()(
 
       fetchChannelMessages: async (channelId) => {
         try {
-          const messages = await api<ChatMessage[]>(`/api/chat/channels/${channelId}/messages`)
+          const messages = await api<TeamChatMessage[]>(`/api/chat/channels/${channelId}/messages`)
           set((state) => ({
             channelMessages: { ...state.channelMessages, [channelId]: messages },
           }))
@@ -336,7 +337,7 @@ export const useStore = create<AppState>()(
 
       sendChannelMessage: async (channelId, content) => {
         try {
-          const message = await api<ChatMessage>(`/api/chat/channels/${channelId}/messages`, {
+          const message = await api<TeamChatMessage>(`/api/chat/channels/${channelId}/messages`, {
             method: 'POST',
             body: JSON.stringify({ content }),
           })

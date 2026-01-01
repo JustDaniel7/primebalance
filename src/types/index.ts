@@ -246,6 +246,20 @@ export interface TeamMember {
   permissions: string[]
 }
 
+export interface TeamChatMessage {
+  id: string
+  content: string
+  channelId: string
+  userId: string
+  user: {
+    id: string
+    name: string | null
+    image: string | null
+  }
+  createdAt: string
+  updatedAt: string
+}
+
 export interface ChatRoom {
   id: string
   name: string
