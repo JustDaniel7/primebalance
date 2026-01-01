@@ -36,29 +36,34 @@
 #    gcloud iam service-accounts create github-actions \
 #      --display-name="GitHub Actions"
 #
-#    # Grant required roles
+#    # Grant required roles (least-privilege)
 #    PROJECT_ID=$(gcloud config get-value project)
 #    SA_EMAIL="github-actions@${PROJECT_ID}.iam.gserviceaccount.com"
 #
+#    # Cloud Run developer: can deploy/update services (not delete or modify IAM)
 #    gcloud projects add-iam-policy-binding $PROJECT_ID \
 #      --member="serviceAccount:${SA_EMAIL}" \
-#      --role="roles/run.admin"
+#      --role="roles/run.developer"
 #
+#    # Cloud Build builder: sufficient for building images
 #    gcloud projects add-iam-policy-binding $PROJECT_ID \
 #      --member="serviceAccount:${SA_EMAIL}" \
-#      --role="roles/cloudbuild.builds.editor"
+#      --role="roles/cloudbuild.builds.builder"
 #
+#    # Service Account User: required to deploy as compute service account
 #    gcloud projects add-iam-policy-binding $PROJECT_ID \
 #      --member="serviceAccount:${SA_EMAIL}" \
 #      --role="roles/iam.serviceAccountUser"
 #
+#    # Cloud SQL client: for database connections
 #    gcloud projects add-iam-policy-binding $PROJECT_ID \
 #      --member="serviceAccount:${SA_EMAIL}" \
 #      --role="roles/cloudsql.client"
 #
+#    # Artifact Registry writer: for pushing container images
 #    gcloud projects add-iam-policy-binding $PROJECT_ID \
 #      --member="serviceAccount:${SA_EMAIL}" \
-#      --role="roles/storage.admin"
+#      --role="roles/artifactregistry.writer"
 #
 # 4. Allow GitHub to impersonate the Service Account:
 #    (Replace YOUR_GITHUB_ORG/YOUR_REPO with your actual repo)

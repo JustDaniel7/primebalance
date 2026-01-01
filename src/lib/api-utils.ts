@@ -4,7 +4,8 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
+import { checkRateLimit, getRateLimitId, RATE_LIMITS, type RateLimitConfig } from '@/lib/rate-limit'
 
 // Extended session user type with organizationId
 interface SessionUser {
@@ -111,3 +112,40 @@ export function notFound(resource: string) {
 export function badRequest(message: string) {
   return NextResponse.json({ error: message }, { status: 400 })
 }
+
+export function rateLimited(resetTime: number) {
+  const retryAfter = Math.ceil((resetTime - Date.now()) / 1000)
+  return NextResponse.json(
+    { error: 'Too many requests. Please try again later.' },
+    {
+      status: 429,
+      headers: {
+        'Retry-After': String(retryAfter),
+        'X-RateLimit-Reset': String(resetTime),
+      }
+    }
+  )
+}
+
+/**
+ * Check rate limit for an API request.
+ * Returns a 429 response if rate limited, or null if allowed.
+ */
+export function withRateLimit(
+  req: NextRequest,
+  organizationId: string | null | undefined,
+  config: RateLimitConfig = RATE_LIMITS.standard,
+  endpoint?: string
+): NextResponse | null {
+  const identifier = getRateLimitId(req, organizationId, endpoint)
+  const result = checkRateLimit(identifier, config)
+
+  if (!result.success) {
+    return rateLimited(result.resetTime)
+  }
+
+  return null
+}
+
+// Re-export rate limit configs for convenience
+export { RATE_LIMITS }

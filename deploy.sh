@@ -108,7 +108,11 @@ if [ "$INIT_DB" = true ]; then
         --storage-type=SSD \
         --storage-size=10GB \
         --availability-type=zonal \
-        --database-flags=cloudsql.iam_authentication=on
+        --database-flags=cloudsql.iam_authentication=on \
+        --backup-start-time=03:00 \
+        --enable-point-in-time-recovery \
+        --retained-backups-count=7 \
+        --retained-transaction-log-days=7
     
     echo "Creating database..."
     gcloud sql databases create $DB_NAME --instance=$DB_INSTANCE

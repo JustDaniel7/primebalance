@@ -38,7 +38,9 @@
       "Bash(npx eslint:*)",
       "Bash(npx next lint:*)",
       "Bash(npm ls:*)",
-      "Bash(sort:*)"
+      "Bash(sort:*)",
+      "Bash(nc:*)",
+      "Bash(PGPASSWORD=demoPassword089 psql:*)"
     ]
   }
 }

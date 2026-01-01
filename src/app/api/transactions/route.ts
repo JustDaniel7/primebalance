@@ -30,8 +30,18 @@ export async function GET(req: NextRequest) {
     }),
     prisma.transaction.count({ where })
   ])
-  
-  return NextResponse.json({ transactions, total, limit, offset })
+
+  // Convert Decimal fields to numbers for JSON serialization
+  const serialized = transactions.map(tx => ({
+    ...tx,
+    amount: Number(tx.amount),
+    account: tx.account ? {
+      ...tx.account,
+      balance: Number(tx.account.balance),
+    } : null,
+  }))
+
+  return NextResponse.json({ transactions: serialized, total, limit, offset })
 }
 
 // POST /api/transactions

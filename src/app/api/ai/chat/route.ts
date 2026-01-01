@@ -2,9 +2,10 @@
 // DeepSeek AI Chat API with function calling
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils'
+import { getSessionWithOrg, unauthorized, badRequest, withRateLimit, RATE_LIMITS } from '@/lib/api-utils'
 import { AI_TOOLS } from '@/lib/ai/tools'
 import { executeToolCall } from '@/lib/ai/handlers'
+import { captureException } from '@/lib/error-tracking'
 
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions'
@@ -80,6 +81,10 @@ export async function POST(req: NextRequest) {
     return unauthorized()
   }
 
+  // Rate limit AI requests (20 per minute)
+  const rateLimitResponse = withRateLimit(req, user.organizationId, RATE_LIMITS.ai, 'ai-chat')
+  if (rateLimitResponse) return rateLimitResponse
+
   try {
     const body = await req.json()
     const { messages: clientMessages } = body as {
@@ -104,10 +109,14 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
-      console.error('DeepSeek API error:', response.status, errorData)
+      captureException(new Error(`DeepSeek API error: ${response.status}`), {
+        organizationId: user.organizationId,
+        endpoint: 'ai-chat',
+        extra: { status: response.status, errorData }
+      })
       return NextResponse.json(
-        { error: 'AI service error', details: errorData },
-        { status: response.status }
+        { error: 'AI service temporarily unavailable' },
+        { status: 503 }
       )
     }
 
@@ -164,10 +173,15 @@ export async function POST(req: NextRequest) {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
-        console.error('DeepSeek API error during tool processing:', response.status, errorData)
+        captureException(new Error(`DeepSeek API error during tool processing: ${response.status}`), {
+          organizationId: user.organizationId,
+          endpoint: 'ai-chat',
+          action: 'tool-processing',
+          extra: { status: response.status, errorData, iteration: iterations }
+        })
         return NextResponse.json(
-          { error: 'AI service error during data processing', details: errorData },
-          { status: response.status }
+          { error: 'AI service temporarily unavailable' },
+          { status: 503 }
         )
       }
 
@@ -185,9 +199,12 @@ export async function POST(req: NextRequest) {
     })
 
   } catch (error) {
-    console.error('AI chat error:', error)
+    captureException(error, {
+      organizationId: user.organizationId,
+      endpoint: 'ai-chat',
+    })
     return NextResponse.json(
-      { error: 'Failed to process chat request', details: error instanceof Error ? error.message : 'Unknown error' },
+      { error: 'Failed to process chat request' },
       { status: 500 }
     )
   }

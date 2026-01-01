@@ -87,15 +87,41 @@ export async function GET(req: NextRequest) {
     }
   })
   
-  return NextResponse.json({ 
-    receivables, 
-    total, 
-    limit, 
+  // Convert Decimal fields to numbers for JSON serialization
+  const serializedReceivables = receivables.map(r => ({
+    ...r,
+    originalAmount: Number(r.originalAmount),
+    outstandingAmount: Number(r.outstandingAmount),
+    paidAmount: Number(r.paidAmount),
+    paymentApplications: r.paymentApplications?.map(p => ({
+      ...p,
+      amount: Number(p.amount),
+    })),
+    events: r.events?.map(e => ({
+      ...e,
+      amount: e.amount ? Number(e.amount) : null,
+    })),
+  }))
+
+  return NextResponse.json({
+    receivables: serializedReceivables,
+    total,
+    limit,
     offset,
     summary: {
-      byStatus: summary,
-      byAging: agingSummary,
-      totals: totals._sum
+      byStatus: summary.map(s => ({
+        ...s,
+        _sum: { outstandingAmount: Number(s._sum.outstandingAmount || 0) }
+      })),
+      byAging: agingSummary.map(s => ({
+        ...s,
+        _sum: { outstandingAmount: Number(s._sum.outstandingAmount || 0) }
+      })),
+      totals: {
+        originalAmount: Number(totals._sum.originalAmount || 0),
+        outstandingAmount: Number(totals._sum.outstandingAmount || 0),
+        paidAmount: Number(totals._sum.paidAmount || 0),
+      }
     }
   })
 }

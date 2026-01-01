@@ -15,8 +15,18 @@ export async function GET(req: NextRequest) {
     include: { children: true },
     orderBy: { accountNumber: 'asc' }
   })
-  
-  return NextResponse.json(accounts)
+
+  // Convert Decimal fields to numbers for JSON serialization
+  const serialized = accounts.map(acc => ({
+    ...acc,
+    balance: Number(acc.balance),
+    children: acc.children?.map(child => ({
+      ...child,
+      balance: Number(child.balance),
+    })),
+  }))
+
+  return NextResponse.json(serialized)
 }
 
 // POST /api/accounts

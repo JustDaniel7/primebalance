@@ -62,7 +62,19 @@ export async function GET(req: NextRequest) {
     sum + (Number(b.targetAmount) - Number(b.currentAmount)), 0)
   
   const nettingSavings = nettingOpportunities.reduce((sum, n) => sum + Number(n.savingsAmount), 0)
-  
+
+  // Helper to convert Decimal fields to numbers
+  const serializeDecimals = <T extends Record<string, unknown>>(obj: T): T => {
+    const result = { ...obj } as Record<string, unknown>
+    for (const key in result) {
+      const val = result[key]
+      if (val !== null && typeof val === 'object' && 'toNumber' in (val as object)) {
+        result[key] = Number(val)
+      }
+    }
+    return result as T
+  }
+
   return NextResponse.json({
     summary: {
       totalCash,
@@ -78,10 +90,10 @@ export async function GET(req: NextRequest) {
     },
     cashByClassification,
     cashByCurrency,
-    accounts,
-    buckets,
-    facilities,
-    pendingDecisions,
-    nettingOpportunities,
+    accounts: accounts.map(serializeDecimals),
+    buckets: buckets.map(serializeDecimals),
+    facilities: facilities.map(serializeDecimals),
+    pendingDecisions: pendingDecisions.map(serializeDecimals),
+    nettingOpportunities: nettingOpportunities.map(serializeDecimals),
   })
 }
