@@ -431,7 +431,7 @@ interface TaxOptimizationPanelProps {
 export const TaxOptimizationPanel: React.FC<TaxOptimizationPanelProps> = ({
   onRunAnalysis,
 }) => {
-  const { optimizationResult, isAnalyzing, dismissSuggestion, runOptimizationAnalysis } = useTaxStore();
+  const { optimizationResult, isAnalyzing, dismissSuggestion, runOptimizationAnalysisFromApi } = useTaxStore();
   const [selectedCategory, setSelectedCategory] = useState<OptimizationCategory | 'ALL'>('ALL');
   const [selectedPriority, setSelectedPriority] = useState<'ALL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
 
@@ -458,10 +458,9 @@ export const TaxOptimizationPanel: React.FC<TaxOptimizationPanelProps> = ({
     if (onRunAnalysis) {
       onRunAnalysis();
     } else {
-      runOptimizationAnalysis({
+      // Use API-based optimization that analyzes DB entities
+      runOptimizationAnalysisFromApi({
         annualRevenue: 10000000,
-        dividendFlows: [],
-        royaltyFlows: [],
         currentEffectiveTaxRate: 25,
       });
     }

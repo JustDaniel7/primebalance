@@ -111,6 +111,12 @@ interface TaxStore {
   
   // Optimization Actions
   runOptimizationAnalysis: (context: Partial<OptimizationContext>) => void;
+  runOptimizationAnalysisFromApi: (options?: {
+    annualRevenue?: number;
+    dividendFlows?: Array<{ fromEntityId: string; toEntityId: string; amount: number }>;
+    royaltyFlows?: Array<{ fromEntityId: string; toEntityId: string; amount: number }>;
+    currentEffectiveTaxRate?: number;
+  }) => Promise<void>;
   dismissSuggestion: (suggestionId: string) => void;
   
   // Notification Actions
@@ -504,6 +510,57 @@ export const useTaxStore = create<TaxStore>()(
           isAnalyzing: false,
           notifications: [...state.notifications, ...newNotifications],
         }));
+      },
+
+      // API-based optimization analysis (uses DB entities)
+      runOptimizationAnalysisFromApi: async (options) => {
+        set({ isAnalyzing: true });
+
+        try {
+          const res = await fetch('/api/tax/optimize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(options || {}),
+          });
+
+          if (!res.ok) {
+            throw new Error('Failed to run optimization analysis');
+          }
+
+          const data = await res.json();
+
+          if (data.success && data.result) {
+            // Generate notifications for high-priority suggestions
+            const newNotifications: TaxNotification[] = data.result.suggestions
+              .filter((s: TaxOptimizationSuggestion) => s.priority === 'HIGH')
+              .slice(0, 3)
+              .map((s: TaxOptimizationSuggestion) => ({
+                id: generateId(),
+                type: TaxNotificationType.OPTIMIZATION_FOUND,
+                title: 'Tax Optimization Opportunity',
+                message: `${s.title}: Potential savings of $${(s.estimatedSavingsMin || 0).toLocaleString()} - $${(s.estimatedSavingsMax || 0).toLocaleString()}`,
+                priority: 'HIGH' as const,
+                category: 'OPTIMIZATION' as const,
+                actionRequired: true,
+                actionLabel: 'View Details',
+                optimizationSuggestionId: s.id,
+                read: false,
+                dismissed: false,
+                createdAt: new Date().toISOString(),
+              }));
+
+            set(state => ({
+              optimizationResult: data.result,
+              isAnalyzing: false,
+              notifications: [...state.notifications, ...newNotifications],
+            }));
+          } else {
+            set({ isAnalyzing: false });
+          }
+        } catch (error) {
+          console.error('runOptimizationAnalysisFromApi error:', error);
+          set({ isAnalyzing: false });
+        }
       },
 
       dismissSuggestion: (suggestionId) => {
