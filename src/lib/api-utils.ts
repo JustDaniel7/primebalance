@@ -1,14 +1,30 @@
 // src/lib/api-utils.ts
-// NEW FILE: Shared API utilities
+// Shared API utilities for authentication and error handling
 
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
+// Extended session user type with organizationId
+interface SessionUser {
+  id?: string
+  email?: string | null
+  name?: string | null
+  image?: string | null
+  organizationId?: string
+}
+
+/**
+ * Get the current session with organization context.
+ * This function handles user creation for new OAuth logins and validates
+ * organization membership.
+ */
 export async function getSessionWithOrg() {
   const session = await getServerSession(authOptions)
   if (!session?.user?.email) return null
+
+  const sessionUser = session.user as SessionUser
 
   // First try to find the user by email
   let user = await prisma.user.findUnique({
@@ -16,29 +32,46 @@ export async function getSessionWithOrg() {
     include: { organization: true }
   })
 
-  // If user not found but session has organizationId (from JWT), create user on the fly
-  if (!user && (session.user as any).organizationId) {
-    const orgId = (session.user as any).organizationId as string
-    try {
-      user = await prisma.user.create({
-        data: {
-          email: session.user.email,
-          name: session.user.name || 'User',
-          organizationId: orgId,
-        },
-        include: { organization: true }
-      })
-    } catch {
-      // User might have been created by another request, try to fetch again
-      user = await prisma.user.findUnique({
-        where: { email: session.user.email },
-        include: { organization: true }
-      })
+  // If user exists, return them (they already have an org assignment)
+  if (user) {
+    return user
+  }
+
+  // User doesn't exist - handle first-time login
+  // Check if organizationId was passed in JWT from OAuth callback
+  const jwtOrgId = sessionUser.organizationId
+
+  if (jwtOrgId) {
+    // Verify the organization actually exists before creating user
+    const org = await prisma.organization.findUnique({
+      where: { id: jwtOrgId }
+    })
+
+    if (org) {
+      try {
+        user = await prisma.user.create({
+          data: {
+            email: session.user.email,
+            name: session.user.name || 'User',
+            organizationId: org.id,
+          },
+          include: { organization: true }
+        })
+        return user
+      } catch {
+        // Race condition: user created by another request
+        user = await prisma.user.findUnique({
+          where: { email: session.user.email },
+          include: { organization: true }
+        })
+        if (user) return user
+      }
     }
   }
 
-  // If still no user but we have an email, try to link to first available org
-  if (!user) {
+  // No JWT org ID or org doesn't exist - only auto-assign in development
+  // In production, users should be invited to an organization explicitly
+  if (process.env.NODE_ENV === 'development' || process.env.AUTO_ASSIGN_ORG === 'true') {
     const org = await prisma.organization.findFirst()
     if (org) {
       try {
@@ -50,17 +83,21 @@ export async function getSessionWithOrg() {
           },
           include: { organization: true }
         })
+        return user
       } catch {
-        // User might have been created by another request, try to fetch again
+        // Race condition: user created by another request
         user = await prisma.user.findUnique({
           where: { email: session.user.email },
           include: { organization: true }
         })
+        if (user) return user
       }
     }
   }
 
-  return user
+  // In production without AUTO_ASSIGN_ORG, return null
+  // User needs to be invited to an organization
+  return null
 }
 
 export function unauthorized() {

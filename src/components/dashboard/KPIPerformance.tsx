@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useKPIStore } from '@/store/kpi-store'
 import { useThemeStore } from '@/store/theme-store'
@@ -32,16 +32,20 @@ export default function KPIPerformance() {
 
   useEffect(() => {
     if (!isInitialized) {
-      fetchKPIs()
-      fetchAlerts()
+      // Fetch both in parallel
+      Promise.all([fetchKPIs(), fetchAlerts()])
     }
   }, [isInitialized, fetchKPIs, fetchAlerts])
 
-  // Calculate summary stats from KPIs (KPIStatus: 'on_track' | 'watch' | 'off_track')
-  const onTrack = kpis.filter((k) => k.value?.status === 'on_track').length
-  const watch = kpis.filter((k) => k.value?.status === 'watch').length
-  const offTrack = kpis.filter((k) => k.value?.status === 'off_track').length
-  const total = kpis.length
+  // Memoize summary stats to avoid recalculating on every render
+  const { onTrack, watch, offTrack, total } = useMemo(() => {
+    return {
+      onTrack: kpis.filter((k) => k.value?.status === 'on_track').length,
+      watch: kpis.filter((k) => k.value?.status === 'watch').length,
+      offTrack: kpis.filter((k) => k.value?.status === 'off_track').length,
+      total: kpis.length,
+    }
+  }, [kpis])
 
   const formatNumber = (value: number, decimals = 1) => {
     if (Math.abs(value) >= 1000000) {
@@ -94,14 +98,29 @@ export default function KPIPerformance() {
     }
   }
 
-  // Get top KPIs to display
-  const pinnedKPIs = kpis.filter((k) => k.isPinned).slice(0, 4)
-  const displayKPIs = pinnedKPIs.length > 0
-    ? pinnedKPIs
-    : kpis.filter((k) => k.value?.status === 'off_track' || k.value?.status === 'watch').slice(0, 4)
+  // Memoize KPI display list to avoid recalculating on every render
+  const { finalKPIs, hasPinnedKPIs } = useMemo(() => {
+    const pinnedKPIs = kpis.filter((k) => k.isPinned).slice(0, 4)
+    if (pinnedKPIs.length > 0) {
+      return { finalKPIs: pinnedKPIs, hasPinnedKPIs: true }
+    }
 
-  // If no at-risk KPIs, show first few
-  const finalKPIs = displayKPIs.length > 0 ? displayKPIs : kpis.slice(0, 4)
+    const atRiskKPIs = kpis
+      .filter((k) => k.value?.status === 'off_track' || k.value?.status === 'watch')
+      .slice(0, 4)
+
+    if (atRiskKPIs.length > 0) {
+      return { finalKPIs: atRiskKPIs, hasPinnedKPIs: false }
+    }
+
+    return { finalKPIs: kpis.slice(0, 4), hasPinnedKPIs: false }
+  }, [kpis])
+
+  // Memoize unread alerts count
+  const unreadAlertsCount = useMemo(
+    () => alerts.filter((a) => !a.isRead).length,
+    [alerts]
+  )
 
   return (
     <motion.div
@@ -204,7 +223,7 @@ export default function KPIPerformance() {
         {finalKPIs.length > 0 && (
           <div className="space-y-2 mb-6">
             <span className="text-xs font-medium text-gray-500 dark:text-surface-400">
-              {pinnedKPIs.length > 0 ? 'Pinned KPIs' : 'Key Metrics'}
+              {hasPinnedKPIs ? 'Pinned KPIs' : 'Key Metrics'}
             </span>
             {finalKPIs.map((kpi, index) => (
               <motion.div
@@ -257,7 +276,7 @@ export default function KPIPerformance() {
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
               <span className="text-xs font-medium text-amber-400">
-                {alerts.filter((a) => !a.isRead).length} Active Alerts
+                {unreadAlertsCount} Active Alerts
               </span>
             </div>
             <div className="text-xs text-gray-500 dark:text-surface-500 line-clamp-2">

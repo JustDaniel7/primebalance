@@ -1,9 +1,13 @@
 // src/app/api/reports/generate/route.ts
-// REPLACE: Fixed Prisma field names and Decimal handling
+// Financial report generation API
+// CACHED: Reports are cached for 30 minutes per organization + report type
 
 import { NextRequest, NextResponse } from 'next/server'
+import { unstable_cache } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils'
+import { CACHE_TTL, CACHE_TAGS } from '@/lib/cache'
+import { logger } from '@/lib/logger'
 
 interface DateRange {
   start: Date
@@ -39,6 +43,59 @@ function getDateRange(period: string): DateRange {
   return { start, end }
 }
 
+/**
+ * Generate a report with caching
+ * Cache key includes org ID, report type, and period to ensure proper isolation
+ */
+async function generateCachedReport(
+  orgId: string,
+  reportType: string,
+  period: string,
+  dateRange: DateRange
+): Promise<unknown> {
+  // Normalize report type for cache key
+  const normalizedType = reportType.replace(/-/g, '_')
+
+  // Create a cached version of the report generator
+  const cachedGenerator = unstable_cache(
+    async () => {
+      logger.debug('Generating fresh report', { orgId, reportType: normalizedType, period })
+
+      switch (normalizedType) {
+        case 'profit_loss':
+          return generateProfitLoss(orgId, dateRange)
+        case 'balance_sheet':
+          return generateBalanceSheet(orgId, dateRange)
+        case 'cash_flow':
+          return generateCashFlow(orgId, dateRange)
+        case 'expense_report':
+          return generateExpenseReport(orgId, dateRange)
+        case 'income_report':
+          return generateIncomeReport(orgId, dateRange)
+        case 'tax_summary':
+          return generateTaxSummary(orgId, dateRange)
+        case 'ar_aging':
+          return generateARAgingReport(orgId)
+        case 'ap_aging':
+          return generateAPAgingReport(orgId)
+        case 'inventory_valuation':
+          return generateInventoryValuation(orgId)
+        case 'asset_register':
+          return generateAssetRegister(orgId)
+        default:
+          throw new Error(`Unknown report type: ${reportType}`)
+      }
+    },
+    [`report-${orgId}-${normalizedType}-${period}`],
+    {
+      revalidate: CACHE_TTL.REPORTS,
+      tags: [CACHE_TAGS.REPORTS, `reports-${orgId}`, `report-${normalizedType}`],
+    }
+  )
+
+  return cachedGenerator()
+}
+
 export async function POST(req: NextRequest) {
   const user = await getSessionWithOrg()
   if (!user?.organizationId) return unauthorized()
@@ -50,66 +107,30 @@ export async function POST(req: NextRequest) {
     return badRequest('Report type is required')
   }
 
+  // Validate report type
+  const validTypes = [
+    'profit-loss', 'profit_loss',
+    'balance-sheet', 'balance_sheet',
+    'cash-flow', 'cash_flow',
+    'expense-report', 'expense_report',
+    'income-report', 'income_report',
+    'tax-summary', 'tax_summary',
+    'ar-aging', 'ar_aging',
+    'ap-aging', 'ap_aging',
+    'inventory-valuation', 'inventory_valuation',
+    'asset-register', 'asset_register',
+  ]
+
+  if (!validTypes.includes(reportType)) {
+    return badRequest(`Unknown report type: ${reportType}`)
+  }
+
   const dateRange = getDateRange(period)
   const orgId = user.organizationId
 
   try {
-    let reportData: unknown = null
-
-    switch (reportType) {
-      case 'profit-loss':
-      case 'profit_loss':
-        reportData = await generateProfitLoss(orgId, dateRange)
-        break
-
-      case 'balance-sheet':
-      case 'balance_sheet':
-        reportData = await generateBalanceSheet(orgId, dateRange)
-        break
-
-      case 'cash-flow':
-      case 'cash_flow':
-        reportData = await generateCashFlow(orgId, dateRange)
-        break
-
-      case 'expense-report':
-      case 'expense_report':
-        reportData = await generateExpenseReport(orgId, dateRange)
-        break
-
-      case 'income-report':
-      case 'income_report':
-        reportData = await generateIncomeReport(orgId, dateRange)
-        break
-
-      case 'tax-summary':
-      case 'tax_summary':
-        reportData = await generateTaxSummary(orgId, dateRange)
-        break
-
-      case 'ar-aging':
-      case 'ar_aging':
-        reportData = await generateARAgingReport(orgId)
-        break
-
-      case 'ap-aging':
-      case 'ap_aging':
-        reportData = await generateAPAgingReport(orgId)
-        break
-
-      case 'inventory-valuation':
-      case 'inventory_valuation':
-        reportData = await generateInventoryValuation(orgId)
-        break
-
-      case 'asset-register':
-      case 'asset_register':
-        reportData = await generateAssetRegister(orgId)
-        break
-
-      default:
-        return badRequest(`Unknown report type: ${reportType}`)
-    }
+    // Use cached report generation (30 minute TTL)
+    const reportData = await generateCachedReport(orgId, reportType, period, dateRange)
 
     return NextResponse.json({
       success: true,
@@ -123,7 +144,7 @@ export async function POST(req: NextRequest) {
       data: reportData,
     })
   } catch (error) {
-    console.error('Report generation error:', error)
+    logger.error('Report generation error', { reportType, period, orgId }, error as Error)
     return NextResponse.json(
         { error: 'Failed to generate report', details: (error as Error).message },
         { status: 500 }

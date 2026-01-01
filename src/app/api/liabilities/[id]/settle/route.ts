@@ -165,60 +165,6 @@ export async function POST(
         // Generate settlement ID
         const settlementId = `SET-${liability.liabilityId}-${now.getTime()}`;
 
-        // Create settlement record
-        const settlement = await (prisma as any).liabilitySettlement.create({
-            data: {
-                liabilityId: liability.id,
-                settlementId,
-                settlementType: actualSettlementType,
-                amount,
-                principalSettled: actualPrincipalAmount,
-                interestSettled: interestAmount,
-                feesSettled: feesAmount,
-                penaltiesWaived,
-                currency: liability.currency,
-                fxRate,
-                fxGainLoss,
-                outstandingBefore: totalOutstanding,
-                outstandingAfter: newTotalOutstanding,
-                settlementDate: settleDate,
-                effectiveDate: settleDate,
-                settledBy: session.user.id,
-                paymentId,
-                reference,
-                notes,
-                isOffset,
-                offsetReceivableId,
-                nettingBatchId,
-            },
-        });
-
-        // Update liability
-        const updated = await (prisma as any).liability.update({
-            where: { id: liability.id },
-            data: {
-                status: newStatus,
-                previousStatus: liability.status,
-                statusChangedAt: newStatus !== liability.status ? now : undefined,
-                statusChangedBy: newStatus !== liability.status ? session.user.id : undefined,
-                outstandingPrincipal: newOutstandingPrincipal,
-                accruedInterest: newAccruedInterest,
-                feesPenalties: newFeesPenalties,
-                totalOutstanding: newTotalOutstanding,
-                totalSettled: newTotalSettled,
-                lastPaymentDate: settleDate,
-                settledDate: newStatus === LiabilityStatus.FULLY_SETTLED ? settleDate : null,
-                fxRateAtSettlement: newStatus === LiabilityStatus.FULLY_SETTLED ? fxRate : null,
-                unrealizedFxGainLoss: Number(liability.unrealizedFxGainLoss) + fxGainLoss,
-                availableCredit,
-                utilizationRate,
-                paymentsCompleted: liability.paymentsCompleted + 1,
-                expectedCashImpact: newTotalOutstanding,
-                version: liability.version + 1,
-                eventCount: liability.eventCount + 1,
-            },
-        });
-
         // Create event
         const eventType = newStatus === LiabilityStatus.FULLY_SETTLED
             ? LiabilityEventType.LIABILITY_FULLY_SETTLED
@@ -226,17 +172,12 @@ export async function POST(
 
         const eventId = `evt_${liability.liabilityId}_settled_${now.getTime()}`;
 
-        await (prisma as any).liabilityEvent.create({
-            data: {
-                eventId,
-                liabilityId: liability.id,
-                eventType,
-                timestamp: now,
-                effectiveDate: settleDate,
-                actorId: session.user.id,
-                actorName: session.user.name || session.user.email,
-                actorType: 'user',
-                payload: {
+        // Execute all writes in a single transaction for data integrity
+        const { settlement, updated } = await prisma.$transaction(async (tx) => {
+            // 1. Create settlement record
+            const settlement = await (tx as any).liabilitySettlement.create({
+                data: {
+                    liabilityId: liability.id,
                     settlementId,
                     settlementType: actualSettlementType,
                     amount,
@@ -244,28 +185,88 @@ export async function POST(
                     interestSettled: interestAmount,
                     feesSettled: feesAmount,
                     penaltiesWaived,
+                    currency: liability.currency,
+                    fxRate,
+                    fxGainLoss,
                     outstandingBefore: totalOutstanding,
                     outstandingAfter: newTotalOutstanding,
-                    fxGainLoss,
+                    settlementDate: settleDate,
+                    effectiveDate: settleDate,
+                    settledBy: session.user.id,
+                    paymentId,
+                    reference,
+                    notes,
                     isOffset,
-                    status: newStatus,
+                    offsetReceivableId,
+                    nettingBatchId,
                 },
-                previousState: {
-                    status: liability.status,
-                    outstandingPrincipal: outstandingBefore,
-                    accruedInterest: interestBefore,
-                    feesPenalties: feesBefore,
-                    totalOutstanding,
-                },
-                previousEventId: liability.lastEventId,
-                explanation: `Settlement of ${liability.currency} ${amount.toLocaleString()} recorded. ${newStatus === LiabilityStatus.FULLY_SETTLED ? 'Liability fully settled.' : `Remaining: ${liability.currency} ${newTotalOutstanding.toLocaleString()}`}`,
-            },
-        });
+            });
 
-        // Update last event ID
-        await (prisma as any).liability.update({
-            where: { id: liability.id },
-            data: { lastEventId: eventId },
+            // 2. Update liability with all fields including lastEventId
+            const updated = await (tx as any).liability.update({
+                where: { id: liability.id },
+                data: {
+                    status: newStatus,
+                    previousStatus: liability.status,
+                    statusChangedAt: newStatus !== liability.status ? now : undefined,
+                    statusChangedBy: newStatus !== liability.status ? session.user.id : undefined,
+                    outstandingPrincipal: newOutstandingPrincipal,
+                    accruedInterest: newAccruedInterest,
+                    feesPenalties: newFeesPenalties,
+                    totalOutstanding: newTotalOutstanding,
+                    totalSettled: newTotalSettled,
+                    lastPaymentDate: settleDate,
+                    settledDate: newStatus === LiabilityStatus.FULLY_SETTLED ? settleDate : null,
+                    fxRateAtSettlement: newStatus === LiabilityStatus.FULLY_SETTLED ? fxRate : null,
+                    unrealizedFxGainLoss: Number(liability.unrealizedFxGainLoss) + fxGainLoss,
+                    availableCredit,
+                    utilizationRate,
+                    paymentsCompleted: liability.paymentsCompleted + 1,
+                    expectedCashImpact: newTotalOutstanding,
+                    version: liability.version + 1,
+                    eventCount: liability.eventCount + 1,
+                    lastEventId: eventId,
+                },
+            });
+
+            // 3. Create event record
+            await (tx as any).liabilityEvent.create({
+                data: {
+                    eventId,
+                    liabilityId: liability.id,
+                    eventType,
+                    timestamp: now,
+                    effectiveDate: settleDate,
+                    actorId: session.user.id,
+                    actorName: session.user.name || session.user.email,
+                    actorType: 'user',
+                    payload: {
+                        settlementId,
+                        settlementType: actualSettlementType,
+                        amount,
+                        principalSettled: actualPrincipalAmount,
+                        interestSettled: interestAmount,
+                        feesSettled: feesAmount,
+                        penaltiesWaived,
+                        outstandingBefore: totalOutstanding,
+                        outstandingAfter: newTotalOutstanding,
+                        fxGainLoss,
+                        isOffset,
+                        status: newStatus,
+                    },
+                    previousState: {
+                        status: liability.status,
+                        outstandingPrincipal: outstandingBefore,
+                        accruedInterest: interestBefore,
+                        feesPenalties: feesBefore,
+                        totalOutstanding,
+                    },
+                    previousEventId: liability.lastEventId,
+                    explanation: `Settlement of ${liability.currency} ${amount.toLocaleString()} recorded. ${newStatus === LiabilityStatus.FULLY_SETTLED ? 'Liability fully settled.' : `Remaining: ${liability.currency} ${newTotalOutstanding.toLocaleString()}`}`,
+                },
+            });
+
+            return { settlement, updated };
         });
 
         return NextResponse.json({

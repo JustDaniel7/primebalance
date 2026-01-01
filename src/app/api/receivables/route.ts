@@ -1,6 +1,7 @@
 // src/app/api/receivables/route.ts
 
 import { NextRequest, NextResponse } from 'next/server'
+import { Prisma } from '@/generated/prisma/client'
 import { prisma } from '@/lib/prisma'
 import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils'
 
@@ -35,7 +36,7 @@ export async function GET(req: NextRequest) {
   const limit = parseInt(searchParams.get('limit') || '50')
   const offset = parseInt(searchParams.get('offset') || '0')
   
-  const where: any = { organizationId: user.organizationId }
+  const where: Prisma.ReceivableWhereInput = { organizationId: user.organizationId }
   if (status) where.status = status
   if (riskLevel) where.riskLevel = riskLevel
   if (agingBucket) where.agingBucket = agingBucket

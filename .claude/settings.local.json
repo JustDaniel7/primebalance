@@ -37,7 +37,8 @@
       "Bash(npm run lint:*)",
       "Bash(npx eslint:*)",
       "Bash(npx next lint:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "Bash(sort:*)"
     ]
   }
 }

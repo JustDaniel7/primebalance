@@ -1,5 +1,6 @@
 // src/app/api/projects/route.ts
 import { NextRequest, NextResponse } from 'next/server';
+import { Prisma } from '@/generated/prisma/client';
 import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils';
 import { prisma } from '@/lib/prisma';
 
@@ -13,7 +14,7 @@ export async function GET(req: NextRequest) {
         const type = searchParams.get('type');
         const costCenterId = searchParams.get('costCenterId');
 
-        const where: any = {
+        const where: Prisma.ProjectWhereInput = {
             organizationId: user.organizationId,
         };
 
@@ -38,7 +39,7 @@ export async function GET(req: NextRequest) {
         });
 
         // Calculate derived fields
-        const projectsWithCalculations = projects.map((p: any) => ({
+        const projectsWithCalculations = projects.map((p) => ({
             ...p,
             budgetRemaining: Number(p.budgetAmount) - Number(p.budgetSpent),
             budgetVariance: Number(p.budgetAmount) - Number(p.budgetSpent),

@@ -709,6 +709,7 @@ model Invoice {
   @@index([organizationId, customerId])
   @@index([organizationId, isLatest])
   @@index([organizationId, fiscalYear])
+  @@index([organizationId, status, dueDate]) // Composite for overdue/outstanding queries
 }
 
 // =============================================================================
@@ -5120,6 +5121,8 @@ model Task {
   @@index([organizationId, dueDate])
   @@index([organizationId, sourceSystem])
   @@index([organizationId, slaBreach])
+  @@index([organizationId, status, dueDate]) // Composite for common filtered queries
+  @@index([organizationId, status, priority]) // Composite for priority-based views
 }
 
 // Task Assignees (many-to-many)

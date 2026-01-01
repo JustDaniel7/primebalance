@@ -66,7 +66,24 @@ export async function POST(req: NextRequest) {
   if (!orderNumber || !customerName || !orderDate || !items) {
     return badRequest('Missing required fields')
   }
-  
+
+  // Validate date formats
+  const parsedOrderDate = new Date(orderDate)
+  if (isNaN(parsedOrderDate.getTime())) {
+    return badRequest('Invalid order date format')
+  }
+
+  let parsedDeliveryDate: Date | null = null
+  if (expectedDeliveryDate) {
+    parsedDeliveryDate = new Date(expectedDeliveryDate)
+    if (isNaN(parsedDeliveryDate.getTime())) {
+      return badRequest('Invalid expected delivery date format')
+    }
+    if (parsedDeliveryDate < parsedOrderDate) {
+      return badRequest('Expected delivery date cannot be before order date')
+    }
+  }
+
   const order = await prisma.order.create({
     data: {
       orderNumber,
@@ -74,8 +91,8 @@ export async function POST(req: NextRequest) {
       customerName,
       customerEmail,
       customerAddress,
-      orderDate: new Date(orderDate),
-      expectedDeliveryDate: expectedDeliveryDate ? new Date(expectedDeliveryDate) : null,
+      orderDate: parsedOrderDate,
+      expectedDeliveryDate: parsedDeliveryDate,
       items,
       currency: currency || 'EUR',
       subtotal,
