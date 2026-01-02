@@ -2659,7 +2659,7 @@ async function main() {
     await prisma.wallet.upsert({
       where: { userId_address_network: { userId: user.id, address: w.address, network: w.network } },
       update: {},
-      create: { ...w, userId: user.id },
+      create: { ...w, userId: user.id, organizationId: org.id },
     })
   }
   console.log('  ✓ Created', wallets.length, 'wallets')

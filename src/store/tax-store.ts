@@ -30,6 +30,7 @@ import {
 export interface ApiEntityHierarchy {
   id: string;
   name: string;
+  legalName?: string;
   type: string;
   jurisdiction: string;
   taxId: string | null;

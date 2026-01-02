@@ -625,6 +625,51 @@ interface ApiEntityCardProps {
   onAddChild: (parentId: string) => void;
 }
 
+// Currency mapping by jurisdiction
+const jurisdictionCurrencyMap: Record<string, string> = {
+  'US': 'USD', 'US-DE': 'USD', 'US-WY': 'USD', 'US-NV': 'USD', 'US-FL': 'USD', 'US-TX': 'USD', 'US-CA': 'USD',
+  'DE': 'EUR', 'FR': 'EUR', 'NL': 'EUR', 'IE': 'EUR', 'LU': 'EUR', 'AT': 'EUR', 'BE': 'EUR', 'ES': 'EUR', 'IT': 'EUR', 'PT': 'EUR', 'FI': 'EUR', 'EE': 'EUR', 'LT': 'EUR', 'LV': 'EUR', 'SK': 'EUR', 'SI': 'EUR', 'MT': 'EUR', 'CY': 'EUR', 'GR': 'EUR',
+  'GB': 'GBP', 'UK': 'GBP',
+  'CH': 'CHF', 'LI': 'CHF',
+  'SG': 'SGD',
+  'HK': 'HKD',
+  'JP': 'JPY',
+  'CN': 'CNY',
+  'CA': 'CAD',
+  'AU': 'AUD',
+  'NZ': 'NZD',
+  'AE': 'AED', 'BH': 'BHD',
+  'KR': 'KRW',
+  'IN': 'INR',
+  'BR': 'BRL',
+  'MX': 'MXN',
+  'SE': 'SEK',
+  'NO': 'NOK',
+  'DK': 'DKK',
+  'PL': 'PLN',
+  'CZ': 'CZK',
+  'HU': 'HUF',
+  'RO': 'RON',
+  'BG': 'BGN',
+  'HR': 'HRK',
+  'IL': 'ILS',
+  'ZA': 'ZAR',
+  'TW': 'TWD',
+  'TH': 'THB',
+  'MY': 'MYR',
+  'ID': 'IDR',
+  'PH': 'PHP',
+  'VN': 'VND',
+};
+
+const getCurrencyForJurisdiction = (jurisdictionCode: string): string => {
+  if (jurisdictionCurrencyMap[jurisdictionCode]) {
+    return jurisdictionCurrencyMap[jurisdictionCode];
+  }
+  const baseCode = jurisdictionCode.split('-')[0];
+  return jurisdictionCurrencyMap[baseCode] || 'USD';
+};
+
 const ApiEntityCard: React.FC<ApiEntityCardProps> = ({ entity, depth, onEdit, onDelete, onAddChild }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
@@ -636,12 +681,17 @@ const ApiEntityCard: React.FC<ApiEntityCardProps> = ({ entity, depth, onEdit, on
   const config = entityTypeConfig[typeKey] || entityTypeConfig[EntityType.CORPORATION];
   const Icon = config?.icon || Building2;
 
+  // Get currency for this jurisdiction
+  const currency = getCurrencyForJurisdiction(entity.jurisdiction);
+
   return (
     <div className={depth > 0 ? 'ml-8 border-l-2 border-slate-200 dark:border-slate-700 pl-4' : ''}>
-      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 mb-2 hover:shadow-md transition-shadow">
+      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 mb-3 hover:shadow-md transition-shadow">
+        {/* Header Row */}
         <div className="flex items-start justify-between">
-          <div className="flex items-start gap-4">
-            {hasChildren && (
+          <div className="flex items-start gap-3">
+            {/* Expand/Collapse */}
+            {hasChildren ? (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded mt-1"
@@ -652,113 +702,119 @@ const ApiEntityCard: React.FC<ApiEntityCardProps> = ({ entity, depth, onEdit, on
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 )}
               </button>
+            ) : (
+              <div className="w-6" />
             )}
-            {!hasChildren && <div className="w-6" />}
 
-            <div className={`p-2 rounded-lg ${config?.color || 'text-slate-500 bg-slate-100'}`}>
+            {/* Icon */}
+            <div className={`p-2.5 rounded-lg ${config?.color || 'text-slate-500 bg-slate-100'}`}>
               <Icon className="w-5 h-5" />
             </div>
 
+            {/* Entity Info */}
             <div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">{entity.name}</h3>
-              <div className="flex items-center gap-3 mt-1 text-sm text-slate-500 dark:text-slate-400">
-                <span className="flex items-center gap-1">
-                  <Globe className="w-3 h-3" />
-                  {jurisdiction?.name || entity.jurisdiction}
-                </span>
-                {entity.taxId && (
-                  <span className="flex items-center gap-1">
-                    Tax ID: {entity.taxId}
-                  </span>
-                )}
-                {entity.ownershipPercent && (
-                  <span className="flex items-center gap-1">
-                    <Percent className="w-3 h-3" />
-                    {entity.ownershipPercent}% owned
-                  </span>
-                )}
-              </div>
+              <h3 className="font-semibold text-slate-900 dark:text-white text-base">
+                {entity.name}
+              </h3>
+              {entity.legalName && entity.legalName !== entity.name && (
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  {entity.legalName}
+                </p>
+              )}
+              <span className="inline-block mt-2 text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium">
+                {config?.label || entity.type}
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-sm">
-            {entity.revenue != null && (
-              <div className="text-right">
-                <div className="text-slate-400 text-xs">Revenue</div>
-                <div className="text-slate-900 dark:text-white font-medium">
-                  €{entity.revenue.toLocaleString()}
-                </div>
-              </div>
-            )}
-            {entity.taxLiability != null && (
-              <div className="text-right">
-                <div className="text-slate-400 text-xs">Tax Liability</div>
-                <div className="text-slate-900 dark:text-white font-medium">
-                  €{entity.taxLiability.toLocaleString()}
-                </div>
-              </div>
-            )}
-            {entity.effectiveTaxRate != null && (
-              <div className="text-right">
-                <div className="text-slate-400 text-xs">Effective Rate</div>
-                <div className="text-slate-900 dark:text-white font-medium">
-                  {entity.effectiveTaxRate}%
-                </div>
-              </div>
-            )}
+          {/* Actions Menu */}
+          <div className="relative">
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+            >
+              <MoreVertical className="w-4 h-4 text-slate-500" />
+            </button>
 
-            {/* Actions Menu */}
-            <div className="relative">
-              <button
-                onClick={() => setShowMenu(!showMenu)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
-              >
-                <MoreVertical className="w-4 h-4 text-slate-500" />
-              </button>
-
-              <AnimatePresence>
-                {showMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute right-0 mt-1 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-10"
+            <AnimatePresence>
+              {showMenu && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="absolute right-0 mt-1 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-10"
+                >
+                  <button
+                    onClick={() => {
+                      onEdit(entity);
+                      setShowMenu(false);
+                    }}
+                    className="w-full px-4 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-300"
                   >
+                    <Edit2 className="w-4 h-4" />
+                    Edit Entity
+                  </button>
+                  <button
+                    onClick={() => {
+                      onAddChild(entity.id);
+                      setShowMenu(false);
+                    }}
+                    className="w-full px-4 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-300"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add Subsidiary
+                  </button>
+                  {!entity.parentId || entity.children.length === 0 ? (
                     <button
                       onClick={() => {
-                        onEdit(entity);
+                        onDelete(entity.id);
                         setShowMenu(false);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-300"
+                      className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2"
                     >
-                      <Edit2 className="w-4 h-4" />
-                      Edit Entity
+                      <Trash2 className="w-4 h-4" />
+                      Delete Entity
                     </button>
-                    <button
-                      onClick={() => {
-                        onAddChild(entity.id);
-                        setShowMenu(false);
-                      }}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 text-slate-700 dark:text-slate-300"
-                    >
-                      <Plus className="w-4 h-4" />
-                      Add Subsidiary
-                    </button>
-                    {!entity.parentId || entity.children.length === 0 ? (
-                      <button
-                        onClick={() => {
-                          onDelete(entity.id);
-                          setShowMenu(false);
-                        }}
-                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        Delete Entity
-                      </button>
-                    ) : null}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  ) : null}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Details Row */}
+        <div className="flex items-center gap-8 mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+          {/* Jurisdiction */}
+          <div className="flex items-center gap-2">
+            <Globe className="w-4 h-4 text-slate-400" />
+            <div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Jurisdiction</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-1.5">
+                {jurisdiction?.flag && <span>{jurisdiction.flag}</span>}
+                <span>{jurisdiction?.shortName || entity.jurisdiction}</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Tax Rate */}
+          <div className="flex items-center gap-2">
+            <Percent className="w-4 h-4 text-slate-400" />
+            <div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Tax Rate</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-white">
+                {jurisdiction?.corporateTax?.standardRate ?? entity.effectiveTaxRate ?? 0}%
+              </p>
+            </div>
+          </div>
+
+          {/* Currency */}
+          <div className="flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-slate-400" />
+            <div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Currency</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-white">
+                {currency}
+              </p>
             </div>
           </div>
         </div>
@@ -766,7 +822,7 @@ const ApiEntityCard: React.FC<ApiEntityCardProps> = ({ entity, depth, onEdit, on
 
       {/* Children */}
       {hasChildren && isExpanded && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {entity.children.map((child) => (
             <ApiEntityCard
               key={child.id}

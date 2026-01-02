@@ -5,10 +5,8 @@ import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
 import { useSession, signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { SearchIcon, BellIcon, PlusIcon, ChevronDownIcon } from '@/components/ui/Icons'
-import Button from '@/components/ui/Button'
+import { SearchIcon, BellIcon, ChevronDownIcon } from '@/components/ui/Icons'
 import { Sun, Moon } from 'lucide-react'
 import { useSearch } from '@/contexts/SearchContext'
 
@@ -16,7 +14,6 @@ export default function Header() {
   const { user } = useStore()
   const { themeMode, setThemeMode, resolvedTheme, t } = useThemeStore()
   const { data: session } = useSession()
-  const router = useRouter()
   const { open: openSearch } = useSearch()
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -122,27 +119,6 @@ export default function Header() {
             )}
           </button>
           
-          {/* Quick add button */}
-          <Button
-            variant="primary"
-            size="sm"
-            leftIcon={<PlusIcon size={16} />}
-            className="hidden sm:flex"
-          >
-            <span className="hidden lg:inline">{t('header.newTransaction')}</span>
-            <span className="lg:hidden">{t('header.new')}</span>
-          </Button>
-          
-          {/* Mobile: icon only */}
-          <Button
-            variant="primary"
-            size="sm"
-            className="sm:hidden p-2"
-            onClick={() => router.push('/dashboard/transactions')}
-          >
-            <PlusIcon size={16} />
-          </Button>
-
           {/* Notifications */}
           <div className="relative" ref={notificationRef}>
             <button

@@ -461,7 +461,7 @@ function SelectOrganizationForm() {
                     variant="primary"
                     size="lg"
                     className="w-full"
-                    disabled={isSubmitting || !inviteCode.trim() || (codeValidation && !codeValidation.valid)}
+                    disabled={isSubmitting || !inviteCode.trim() || !!(codeValidation && !codeValidation.valid)}
                   >
                     {isSubmitting ? 'Joining...' : 'Join Organization'}
                   </Button>
