@@ -167,21 +167,28 @@ model Organization {
   risks                  Risk[]
   taskNotifications      TaskNotification[]
   savedTaskFilters       SavedTaskFilter[]
+
+  dunningImportBatches       DunningImportBatch[]
+  dunningAutomationRules     DunningAutomationRule[]
+  dunningExceptions          DunningException[]
+  dunningSavedViews          DunningSavedView[]
+  dunningTemplates           DunningTemplate[]
+  dunningJurisdictionConfigs DunningJurisdictionConfig[]
 }
 
 // Organization Invitations for multi-tenant access
 model OrganizationInvitation {
-  id             String    @id @default(cuid())
-  email          String?   // If inviting a specific email
-  inviteCode     String    @unique // Shareable invite code
-  role           String    @default("member") // owner, admin, member
-  expiresAt      DateTime
-  usedAt         DateTime?
-  usedByUserId   String?
+  id           String    @id @default(cuid())
+  email        String? // If inviting a specific email
+  inviteCode   String    @unique // Shareable invite code
+  role         String    @default("member") // owner, admin, member
+  expiresAt    DateTime
+  usedAt       DateTime?
+  usedByUserId String?
 
   // Relations
-  organizationId String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   createdByUserId String?
 
   createdAt DateTime @default(now())
@@ -642,7 +649,7 @@ model Invoice {
   servicePeriodEnd   DateTime?
 
   // Items & Totals
-  items           Json    // InvoiceLineItem[]
+  items           Json // InvoiceLineItem[]
   currency        String  @default("EUR")
   subtotal        Decimal @db.Decimal(15, 2)
   taxAmount       Decimal @db.Decimal(15, 2)
@@ -656,25 +663,25 @@ model Invoice {
   outstandingAmount Decimal @default(0) @db.Decimal(15, 2)
 
   // Tax
-  applyTax          Boolean  @default(true)
-  taxRate           Decimal  @db.Decimal(5, 2)
+  applyTax          Boolean @default(true)
+  taxRate           Decimal @db.Decimal(5, 2)
   taxClassification String? // standard, reduced, zero, exempt, reverse_charge
   taxExemptReason   String? // small_business, reverse_charge, export, other
   taxExemptNote     String?
   taxJurisdiction   String?
 
   // FX Tracking
-  fxRateToBase Decimal? @db.Decimal(15, 6)
+  fxRateToBase Decimal?  @db.Decimal(15, 6)
   fxRateDate   DateTime?
   baseCurrency String?
-  totalInBase  Decimal? @db.Decimal(15, 2)
+  totalInBase  Decimal?  @db.Decimal(15, 2)
 
   // Fiscal Period
   fiscalYear   Int?
   fiscalPeriod String? // M01-M12
 
   // Payment Terms
-  payment      Json?   // Legacy InvoicePayment object
+  payment      Json? // Legacy InvoicePayment object
   paymentTerms String? // due_on_receipt, net_7, net_14, net_30, net_45, net_60, net_90
   bankDetails  Json?
 
@@ -695,9 +702,9 @@ model Invoice {
   cancellationReason String?
 
   // Meta
-  notes         String?  @db.Text
-  internalNotes String?  @db.Text
-  language      String   @default("en")
+  notes         String? @db.Text
+  internalNotes String? @db.Text
+  language      String  @default("en")
   reference     String?
   poNumber      String?
 
@@ -752,8 +759,8 @@ model InvoiceVersion {
 
   // Version Info
   version       Int
-  snapshot      Json     // Full invoice state at this version
-  changeType    String   // created, updated, confirmed, sent, payment_applied, cancelled, archived
+  snapshot      Json // Full invoice state at this version
+  changeType    String // created, updated, confirmed, sent, payment_applied, cancelled, archived
   changeReason  String?
   changedFields String[] // List of fields that changed
 
@@ -855,6 +862,7 @@ model InvoicePayment {
   @@index([invoiceId, paymentDate])
   @@index([invoiceId, status])
 }
+
 // =============================================================================
 // ORDERS
 // =============================================================================
@@ -1532,7 +1540,6 @@ model ArchiveSavedView {
   @@index([organizationId, createdBy])
   @@index([organizationId, isPublic])
 }
-
 
 // =============================================================================
 // LIABILITIES
@@ -2366,7 +2373,6 @@ model LiabilitySavedView {
   @@index([organizationId, isPublic])
 }
 
-
 // =============================================================================
 // INVENTORY
 // =============================================================================
@@ -3055,6 +3061,945 @@ model TreasuryCashMovement {
 
   @@index([accountId, movementDate])
   @@index([accountId, type])
+}
+
+// =============================================================================
+// DUNNING & RECEIVABLES ENFORCEMENT ENGINE
+// TS Compliance: All 25 Sections
+// =============================================================================
+
+// =============================================================================
+// DUNNING - Core Entity (TS Section 3)
+// =============================================================================
+
+model Dunning {
+  id String @id @default(cuid())
+
+  // --- Identity (TS Section 3.1) ---
+  dunningId         String  @unique // Global, immutable, deterministic content-hash
+  dunningNumber     String // Human-readable, sequential, jurisdiction-aware
+  invoiceId         String? // Linked invoice
+  customerId        String? // Customer reference
+  customerName      String? // Denormalized for display
+  partyId           String? // Party-based accounting link
+  legalEntityId     String? // Legal entity reference
+  jurisdictionId    String? // Jurisdiction code (DE, AT, US-CA, etc.)
+  currency          String  @default("EUR") // Transaction currency
+  reportingCurrency String  @default("EUR") // Reporting currency
+
+  // --- Status & State Machine (TS Section 7) ---
+  status          String    @default("issued") // State machine status
+  previousStatus  String? // For transition tracking
+  statusChangedAt DateTime?
+  statusChangedBy String?
+  currentLevel    Int       @default(0) // 0=none, 1=reminder, 2=level1, 3=level2, 4=level3
+
+  // --- Financial Attributes (TS Section 3.2) ---
+  originalAmount    Decimal  @db.Decimal(19, 4) // Original invoice amount
+  outstandingAmount Decimal  @db.Decimal(19, 4) // Current outstanding
+  interestAccrued   Decimal  @default(0) @db.Decimal(19, 4) // Accumulated interest
+  feesAccrued       Decimal  @default(0) @db.Decimal(19, 4) // Accumulated fees
+  totalDue          Decimal  @db.Decimal(19, 4) // outstanding + interest + fees
+  fxRateAtCreation  Decimal? @db.Decimal(19, 8) // FX rate at dunning creation
+  amountInReporting Decimal? @db.Decimal(19, 4) // Amount in reporting currency
+
+  // --- Interest Calculation (TS Section 11) ---
+  interestRateApplied    Decimal?  @db.Decimal(8, 5) // Applied interest rate
+  interestRateSource     String? // 'statutory' | 'contractual' | 'jurisdiction'
+  interestStartDate      DateTime? // When interest starts accruing
+  interestLastCalculated DateTime? // Last calculation date
+  interestDayCount       String? // Day count basis
+
+  // --- Fee Calculation (TS Section 11) ---
+  flatFeeApplied    Decimal? @db.Decimal(19, 4) // Flat fee (e.g., EU late payment fee)
+  flatFeeSource     String? // Source of flat fee
+  customFeesApplied Decimal? @db.Decimal(19, 4) // Additional custom fees
+
+  // --- Temporal Attributes (TS Section 3.3) ---
+  invoiceDueDate    DateTime // Original invoice due date
+  invoiceIssuedDate DateTime? // Invoice issue date
+  daysPastDue       Int       @default(0) // Calculated days overdue
+  gracePeriodDays   Int       @default(0) // Grace period from contract
+  effectiveDueDate  DateTime? // Due date + grace period
+
+  // --- Level Timestamps ---
+  reminderProposedAt DateTime?
+  reminderApprovedAt DateTime?
+  reminderApprovedBy String?
+  reminderSentAt     DateTime?
+
+  dunningLevel1ProposedAt DateTime?
+  dunningLevel1ApprovedAt DateTime?
+  dunningLevel1ApprovedBy String?
+  dunningLevel1SentAt     DateTime?
+
+  dunningLevel2ProposedAt DateTime?
+  dunningLevel2ApprovedAt DateTime?
+  dunningLevel2ApprovedBy String?
+  dunningLevel2SentAt     DateTime?
+
+  dunningLevel3InitiatedAt DateTime? // Manual initiation only
+  dunningLevel3InitiatedBy String?
+  dunningLevel3ApprovedAt  DateTime?
+  dunningLevel3ApprovedBy  String[]  @default([]) // Multi-signature
+  dunningLevel3SentAt      DateTime?
+
+  escalationPreparedAt DateTime?
+  escalationPreparedBy String?
+
+  // --- Settlement & Resolution ---
+  settledAt           DateTime?
+  settledBy           String?
+  settledAmount       Decimal?  @db.Decimal(19, 4)
+  settlementReference String?
+
+  writtenOffAt       DateTime?
+  writtenOffBy       String?
+  writtenOffAmount   Decimal?  @db.Decimal(19, 4)
+  writeOffReason     String?
+  writeOffReasonCode String?
+
+  // --- Dispute (TS Section 14) ---
+  isDisputed        Boolean   @default(false)
+  disputedAt        DateTime?
+  disputedBy        String?
+  disputeReason     String?
+  disputeAmount     Decimal?  @db.Decimal(19, 4)
+  disputeResolvedAt DateTime?
+  disputeResolvedBy String?
+  disputeResolution String?
+
+  // --- Customer Context (TS Section 6.4) ---
+  customerType           String? // 'b2b' | 'consumer'
+  customerJurisdiction   String?
+  customerLanguage       String   @default("en")
+  customerDunningBlocked Boolean  @default(false)
+  customerPaymentHistory String? // 'good' | 'average' | 'poor'
+  customerRiskScore      Decimal? @db.Decimal(5, 2) // 0-100
+
+  // --- Contract Context (TS Section 6.5) ---
+  contractId                 String?
+  contractPaymentTerms       String? // e.g., "net30"
+  contractCustomDunningRules Json? // Custom rules from contract
+
+  // --- Communication Tracking ---
+  lastCommunicationAt   DateTime?
+  lastCommunicationType String? // 'email' | 'pdf' | 'postal'
+  communicationCount    Int       @default(0)
+
+  // --- Automation & Proposals (TS Section 9) ---
+  hasActiveProposal   Boolean @default(false)
+  activeProposalId    String?
+  activeProposalLevel String?
+
+  // --- Data Verification (TS Section 6) ---
+  lastVerificationAt DateTime?
+  verificationStatus String? // 'verified' | 'pending' | 'failed'
+  verificationErrors Json? // Array of verification errors
+  dataSourcesChecked String[]  @default([]) // Modules checked
+
+  // --- Metadata & Classification (TS Section 3.4) ---
+  metadata        Json? // Arbitrary depth JSONB
+  tags            String[] @default([]) // User-defined tags
+  systemTags      String[] @default([]) // Auto-assigned tags
+  confidenceScore Decimal  @default(1.0) @db.Decimal(4, 3) // 0.000-1.000
+  validationMode  String   @default("hard") // 'soft' | 'hard'
+  locale          String   @default("de-DE")
+  language        String   @default("de")
+
+  // --- Explain-Why (TS Section 9.8) ---
+  lastDecisionExplanation String?
+  lastRuleApplied         String?
+  lastRuleVersion         String?
+
+  // --- Event Chain ---
+  version     Int     @default(1)
+  eventCount  Int     @default(0)
+  lastEventId String?
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+
+  // --- Archival ---
+  archivedAt    DateTime?
+  archivedBy    String?
+  archiveReason String?
+
+  // --- Organization ---
+  organizationId String
+
+  // --- Relations ---
+  events           DunningEvent[]
+  proposals        DunningProposal[]
+  communications   DunningCommunication[]
+  interestAccruals DunningInterestAccrual[]
+  fees             DunningFee[]
+  disputes         DunningDisputeRecord[]
+
+  // --- Indexes ---
+  @@index([organizationId, status])
+  @@index([organizationId, currentLevel])
+  @@index([organizationId, daysPastDue])
+  @@index([organizationId, invoiceId])
+  @@index([organizationId, customerId])
+  @@index([organizationId, partyId])
+  @@index([organizationId, legalEntityId])
+  @@index([organizationId, jurisdictionId])
+  @@index([organizationId, isDisputed])
+  @@index([organizationId, hasActiveProposal])
+  @@index([organizationId, invoiceDueDate])
+  @@index([organizationId, currency])
+  @@index([dunningNumber])
+}
+
+// =============================================================================
+// DUNNING EVENT - Event Sourcing (TS Section 4)
+// =============================================================================
+
+model DunningEvent {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  eventId   String  @unique // Deterministic, content-hash based
+  dunningId String
+  dunning   Dunning @relation(fields: [dunningId], references: [id], onDelete: Cascade)
+
+  // --- Event Info ---
+  eventType     String // See TS Section 4.1
+  timestamp     DateTime  @default(now())
+  effectiveDate DateTime?
+
+  // --- Actor ---
+  actorId   String // User ID or 'SYSTEM'
+  actorName String?
+  actorType String  @default("user") // 'user' | 'system' | 'automation' | 'api'
+
+  // --- Payload ---
+  payload       Json // State delta
+  previousState Json? // For reversals
+
+  // --- Chain Link ---
+  previousEventId String? // Chain link
+  contentHash     String? // Integrity verification
+
+  // --- Explain-Why (TS Section 9.8) ---
+  explanation        String? // Human-readable explanation
+  ruleId             String? // Applied rule ID
+  ruleVersion        String? // Rule version
+  dataSourcesChecked String[] @default([]) // Modules queried
+  inputSnapshot      Json? // All queried data at decision time
+  decision           String? // Decision made
+
+  // --- Metadata ---
+  metadata Json?
+
+  // --- Reversal ---
+  isReversed Boolean @default(false)
+  reversedBy String? // Event ID that reversed this
+  reversalOf String? // Original event ID (if this is a reversal)
+
+  // --- Indexes ---
+  @@index([dunningId, timestamp])
+  @@index([dunningId, eventType])
+  @@index([eventType, timestamp])
+}
+
+// =============================================================================
+// DUNNING PROPOSAL - Auto-Proposed Actions (TS Section 8, 9)
+// =============================================================================
+
+model DunningProposal {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  proposalId String  @unique
+  dunningId  String
+  dunning    Dunning @relation(fields: [dunningId], references: [id], onDelete: Cascade)
+
+  // --- Proposal Info ---
+  proposalType  String // 'reminder' | 'level1' | 'level2'
+  proposalLevel Int // 1, 2, 3 (3 = manual only, never auto-proposed)
+  status        String @default("pending") // 'pending' | 'approved' | 'rejected' | 'expired' | 'sent'
+  priority      String @default("normal") // 'high' | 'normal' | 'low'
+
+  // --- Financial Details ---
+  outstandingAmount Decimal @db.Decimal(19, 4)
+  interestProposed  Decimal @default(0) @db.Decimal(19, 4)
+  feesProposed      Decimal @default(0) @db.Decimal(19, 4)
+  totalProposed     Decimal @db.Decimal(19, 4)
+  currency          String
+
+  // --- Data Verification (TS Section 6) ---
+  verificationStatus   String  @default("pending") // 'pending' | 'passed' | 'failed'
+  verificationChecks   Json // Results of all checks
+  verificationErrors   Json? // Any errors found
+  invoiceVerified      Boolean @default(false)
+  paymentVerified      Boolean @default(false)
+  disputeVerified      Boolean @default(false)
+  customerVerified     Boolean @default(false)
+  contractVerified     Boolean @default(false)
+  priorDunningVerified Boolean @default(false)
+
+  // --- Confidence (TS Section 9.4) ---
+  confidenceScore   Decimal @default(1.0) @db.Decimal(4, 3)
+  confidenceFactors Json? // Breakdown of confidence calculation
+
+  // --- Explain-Why (TS Section 9.8) ---
+  ruleId             String?
+  ruleVersion        String?
+  dataSourcesChecked String[] @default([])
+  inputSnapshot      Json? // All data at proposal time
+  explanation        String // Human-readable explanation
+
+  // --- Template & Content ---
+  templateId       String?
+  templateVersion  String?
+  generatedContent Json? // Pre-generated content
+
+  // --- Deadline ---
+  deadline  DateTime? // Deadline for customer response
+  expiresAt DateTime? // Proposal expires if not acted upon
+
+  // --- Resolution ---
+  approvedAt      DateTime?
+  approvedBy      String?
+  rejectedAt      DateTime?
+  rejectedBy      String?
+  rejectionReason String?
+  sentAt          DateTime?
+  sentBy          String?
+
+  // --- Timestamps ---
+  proposedAt DateTime @default(now())
+  proposedBy String   @default("SYSTEM")
+
+  // --- Organization ---
+  organizationId String
+
+  // --- Indexes ---
+  @@index([organizationId, status])
+  @@index([organizationId, proposalType])
+  @@index([organizationId, proposalLevel])
+  @@index([organizationId, confidenceScore])
+  @@index([dunningId, status])
+  @@index([proposedAt])
+}
+
+// =============================================================================
+// DUNNING COMMUNICATION - Sent Communications (TS Section 12)
+// =============================================================================
+
+model DunningCommunication {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  communicationId String  @unique
+  dunningId       String
+  dunning         Dunning @relation(fields: [dunningId], references: [id], onDelete: Cascade)
+  proposalId      String? // Link to proposal if applicable
+
+  // --- Communication Info ---
+  communicationType String // 'reminder' | 'level1' | 'level2' | 'level3'
+  level             Int // 1, 2, 3, 4 (4 = level 3)
+  channel           String // 'email' | 'pdf' | 'postal'
+  status            String @default("draft") // 'draft' | 'pending' | 'sent' | 'delivered' | 'failed' | 'bounced'
+
+  // --- Recipient ---
+  recipientName     String
+  recipientEmail    String?
+  recipientAddress  Json? // Postal address
+  recipientLanguage String  @default("en")
+
+  // --- Content ---
+  templateId      String
+  templateVersion String?
+  subject         String?
+  bodyHtml        String? // HTML content
+  bodyText        String? // Plain text content
+  attachments     Json? // Array of attachment references
+
+  // --- Financial Summary in Communication ---
+  outstandingAmount   Decimal   @db.Decimal(19, 4)
+  interestAmount      Decimal   @default(0) @db.Decimal(19, 4)
+  feesAmount          Decimal   @default(0) @db.Decimal(19, 4)
+  totalDue            Decimal   @db.Decimal(19, 4)
+  currency            String
+  paymentDeadline     DateTime?
+  paymentInstructions Json? // Bank details, etc.
+
+  // --- Delivery ---
+  scheduledAt   DateTime?
+  sentAt        DateTime?
+  sentBy        String?
+  deliveredAt   DateTime?
+  failedAt      DateTime?
+  failureReason String?
+  retryCount    Int       @default(0)
+  lastRetryAt   DateTime?
+
+  // --- External References ---
+  externalMessageId    String? // Email service message ID
+  postalTrackingNumber String? // Postal tracking
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  createdBy String?
+
+  // --- Organization ---
+  organizationId String
+
+  // --- Indexes ---
+  @@index([organizationId, status])
+  @@index([organizationId, communicationType])
+  @@index([dunningId, level])
+  @@index([sentAt])
+}
+
+// =============================================================================
+// DUNNING INTEREST ACCRUAL (TS Section 11)
+// =============================================================================
+
+model DunningInterestAccrual {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  accrualId String  @unique
+  dunningId String
+  dunning   Dunning @relation(fields: [dunningId], references: [id], onDelete: Cascade)
+
+  // --- Period ---
+  periodStart  DateTime
+  periodEnd    DateTime
+  daysInPeriod Int
+
+  // --- Calculation ---
+  principalBase Decimal @db.Decimal(19, 4) // Amount interest is calculated on
+  interestRate  Decimal @db.Decimal(8, 5) // Annual rate
+  rateSource    String // 'statutory' | 'contractual' | 'jurisdiction'
+  dayCountBasis String  @default("actual_365") // Day count convention
+
+  // --- Amount ---
+  amount            Decimal  @db.Decimal(19, 4)
+  currency          String
+  amountInReporting Decimal? @db.Decimal(19, 4)
+  fxRate            Decimal? @db.Decimal(19, 8)
+
+  // --- Jurisdiction ---
+  jurisdictionId String?
+  statutoryRate  Decimal? @db.Decimal(8, 5)
+
+  // --- Status ---
+  status     String    @default("calculated") // 'calculated' | 'applied' | 'reversed'
+  appliedAt  DateTime?
+  appliedBy  String?
+  reversedAt DateTime?
+  reversedBy String?
+
+  // --- Explain-Why ---
+  calculationDetails Json? // Full calculation breakdown
+  explanation        String?
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  createdBy String?
+
+  // --- Indexes ---
+  @@index([dunningId, periodEnd])
+  @@index([status])
+}
+
+// =============================================================================
+// DUNNING FEE (TS Section 11)
+// =============================================================================
+
+model DunningFee {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  feeId     String  @unique
+  dunningId String
+  dunning   Dunning @relation(fields: [dunningId], references: [id], onDelete: Cascade)
+
+  // --- Fee Info ---
+  feeType     String // 'flat_fee' | 'percentage_fee' | 'processing_fee' | 'legal_fee' | 'collection_fee'
+  feeSource   String // 'statutory' | 'contractual' | 'jurisdiction' | 'custom'
+  description String?
+
+  // --- Amount ---
+  amount            Decimal  @db.Decimal(19, 4)
+  currency          String
+  amountInReporting Decimal? @db.Decimal(19, 4)
+  fxRate            Decimal? @db.Decimal(19, 8)
+
+  // --- Calculation ---
+  baseAmount Decimal? @db.Decimal(19, 4) // If percentage-based
+  percentage Decimal? @db.Decimal(8, 5) // If percentage-based
+
+  // --- Jurisdiction ---
+  jurisdictionId    String?
+  jurisdictionLimit Decimal? @db.Decimal(19, 4) // Max fee allowed by jurisdiction
+
+  // --- Level Association ---
+  dunningLevel Int? // Which level triggered this fee
+
+  // --- Status ---
+  status       String    @default("calculated") // 'calculated' | 'applied' | 'waived' | 'reversed'
+  appliedAt    DateTime?
+  appliedBy    String?
+  waivedAt     DateTime?
+  waivedBy     String?
+  waiverReason String?
+  reversedAt   DateTime?
+  reversedBy   String?
+
+  // --- Explain-Why ---
+  explanation String?
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  createdBy String?
+
+  // --- Indexes ---
+  @@index([dunningId, feeType])
+  @@index([status])
+}
+
+// =============================================================================
+// DUNNING DISPUTE RECORD (TS Section 14)
+// =============================================================================
+
+model DunningDisputeRecord {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  disputeId String  @unique
+  dunningId String
+  dunning   Dunning @relation(fields: [dunningId], references: [id], onDelete: Cascade)
+
+  // --- Dispute Info ---
+  status         String   @default("open") // 'open' | 'under_review' | 'resolved' | 'escalated'
+  disputeType    String? // 'amount' | 'service' | 'quality' | 'billing_error' | 'other'
+  reason         String
+  description    String?
+  disputedAmount Decimal? @db.Decimal(19, 4)
+  currency       String?
+
+  // --- Resolution ---
+  resolution     String?
+  resolutionType String? // 'upheld' | 'rejected' | 'partial' | 'withdrawn'
+  adjustedAmount Decimal?  @db.Decimal(19, 4)
+  resolvedAt     DateTime?
+  resolvedBy     String?
+
+  // --- Documentation ---
+  attachments     Json? // Array of document references
+  comments        Json? // Comment thread
+  escalationNotes String?
+
+  // --- Escalation ---
+  escalatedAt     DateTime?
+  escalatedTo     String?
+  escalationLevel Int       @default(0)
+
+  // --- SLA ---
+  slaDeadline DateTime?
+  isOverdue   Boolean   @default(false)
+
+  // --- Audit ---
+  openedAt  DateTime @default(now())
+  openedBy  String
+  updatedAt DateTime @updatedAt
+
+  // --- Organization ---
+  organizationId String
+
+  // --- Indexes ---
+  @@index([organizationId, status])
+  @@index([dunningId, status])
+  @@index([slaDeadline])
+}
+
+// =============================================================================
+// DUNNING IMPORT BATCH (TS Section 13)
+// =============================================================================
+
+model DunningImportBatch {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  batchNumber String @unique
+
+  // --- Source ---
+  source           String // 'csv' | 'quickbooks' | 'xero' | 'legacy_erp' | 'api'
+  sourceIdentifier String?
+  sourceHash       String? // For deduplication
+
+  // --- Counts ---
+  totalRecords Int @default(0)
+  successCount Int @default(0)
+  errorCount   Int @default(0)
+  warningCount Int @default(0)
+  skippedCount Int @default(0)
+
+  // --- Status ---
+  status     String @default("pending") // 'pending' | 'processing' | 'completed' | 'failed' | 'rolled_back'
+  importMode String @default("live") // 'dry_run' | 'live' | 'partial'
+
+  // --- Filters ---
+  dateFrom       DateTime?
+  dateTo         DateTime?
+  customerFilter String?
+
+  // --- Mapping ---
+  fieldMapping    Json?
+  mappingTemplate String?
+
+  // --- Results ---
+  errors            Json? // Array of errors
+  warnings          Json? // Array of warnings
+  createdDunningIds String[] @default([])
+
+  // --- Rollback ---
+  canRollback  Boolean   @default(false)
+  rolledBackAt DateTime?
+  rolledBackBy String?
+
+  // --- Audit ---
+  importedBy     String
+  importedByName String?
+  startedAt      DateTime  @default(now())
+  completedAt    DateTime?
+
+  // --- Organization ---
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // --- Indexes ---
+  @@index([organizationId, status])
+  @@index([organizationId, startedAt])
+}
+
+// =============================================================================
+// DUNNING AUTOMATION RULE (TS Section 9)
+// =============================================================================
+
+model DunningAutomationRule {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  name        String
+  code        String // Unique code per org
+  description String?
+
+  // --- Trigger ---
+  triggerType       String // 'scheduled' | 'on_overdue' | 'on_event' | 'on_threshold'
+  triggerConditions Json? // Conditions to match
+  schedule          String? // Cron expression for scheduled
+
+  // --- Scope ---
+  dunningLevels    Int[]    @default([]) // Which levels this applies to
+  customerTypes    String[] @default([]) // 'b2b' | 'consumer'
+  jurisdictions    String[] @default([]) // Jurisdiction codes
+  invoiceAmountMin Decimal? @db.Decimal(19, 4)
+  invoiceAmountMax Decimal? @db.Decimal(19, 4)
+
+  // --- Timing (TS Section 8) ---
+  reminderDaysAfterDue Int @default(3) // Days after due for reminder
+  level1DaysAfterDue   Int @default(14) // Days after due for level 1
+  level2DaysAfterDue   Int @default(30) // Days after due for level 2
+  minimumIntervalDays  Int @default(7) // Min days between levels
+
+  // --- Action ---
+  actionType   String // 'auto_propose' | 'auto_calculate_interest' | 'auto_calculate_fee' | 'auto_flag' | 'notify'
+  actionConfig Json?
+
+  // --- Thresholds ---
+  confidenceThreshold Decimal @default(0.95) @db.Decimal(4, 3) // For auto actions
+  proposalThreshold   Decimal @default(0.70) @db.Decimal(4, 3) // For proposals
+
+  // --- Human-in-the-loop ---
+  requiresApproval       Boolean  @default(true)
+  approverRoles          String[] @default([])
+  multiSignatureRequired Boolean  @default(false)
+  multiSignatureCount    Int      @default(2)
+
+  // --- Fallback ---
+  fallbackRuleId   String?
+  fallbackBehavior String? // 'route_to_queue' | 'skip' | 'default_action'
+
+  // --- Explain-Why Template ---
+  explanationTemplate String?
+
+  // --- Execution ---
+  isActive       Boolean   @default(true)
+  priority       Int       @default(50) // Lower = higher priority
+  lastExecutedAt DateTime?
+  executionCount Int       @default(0)
+  successCount   Int       @default(0)
+  failureCount   Int       @default(0)
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+
+  // --- Organization ---
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // --- Indexes ---
+  @@unique([organizationId, code])
+  @@index([organizationId, isActive, triggerType])
+  @@index([organizationId, priority])
+}
+
+// =============================================================================
+// DUNNING EXCEPTION (TS Section 9.5)
+// =============================================================================
+
+model DunningException {
+  id String @id @default(cuid())
+
+  // --- Source ---
+  dunningId        String?
+  proposalId       String?
+  sourceObjectId   String?
+  sourceObjectType String?
+  sourceModule     String?
+
+  // --- Exception Info ---
+  exceptionType    String // 'validation_failed' | 'confidence_low' | 'rule_conflict' | 'data_mismatch' | 'customer_blocked' | 'manual_review'
+  exceptionCode    String?
+  exceptionMessage String
+  exceptionDetails Json?
+
+  // --- Context ---
+  validationMode     String?
+  validationErrors   Json?
+  confidenceScore    Decimal? @db.Decimal(4, 3)
+  dataSourcesChecked String[] @default([])
+
+  // --- Assignment ---
+  assignedTo   String?
+  assignedName String?
+  assignedAt   DateTime?
+
+  // --- SLA ---
+  slaDeadline DateTime?
+  isOverdue   Boolean   @default(false)
+
+  // --- Escalation ---
+  escalationLevel Int       @default(0)
+  escalatedTo     String?
+  escalatedAt     DateTime?
+
+  // --- Resolution ---
+  status           String    @default("open") // 'open' | 'in_progress' | 'resolved' | 'escalated' | 'auto_resolved'
+  resolvedAt       DateTime?
+  resolvedBy       String?
+  resolution       String?
+  resolutionAction String? // 'processed' | 'skipped' | 'corrected' | 'manual_override'
+
+  // --- Retry ---
+  retryCount  Int       @default(0)
+  maxRetries  Int       @default(3)
+  lastRetryAt DateTime?
+  nextRetryAt DateTime?
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+
+  // --- Organization ---
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // --- Indexes ---
+  @@index([organizationId, status])
+  @@index([organizationId, exceptionType])
+  @@index([organizationId, assignedTo])
+  @@index([organizationId, slaDeadline])
+  @@index([dunningId, status])
+}
+
+// =============================================================================
+// DUNNING TEMPLATE (TS Section 12.3)
+// =============================================================================
+
+model DunningTemplate {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  code        String // Unique per org + jurisdiction + language + level
+  name        String
+  description String?
+
+  // --- Classification ---
+  dunningLevel   Int // 1=reminder, 2=level1, 3=level2, 4=level3
+  templateType   String  @default("email") // 'email' | 'pdf' | 'postal'
+  jurisdictionId String? // null = default
+  language       String  @default("en")
+  customerType   String? // 'b2b' | 'consumer' | null=both
+
+  // --- Content ---
+  subject    String? // Email subject
+  bodyHtml   String? // HTML body
+  bodyText   String? // Plain text body
+  headerHtml String? // Header template
+  footerHtml String? // Footer template
+
+  // --- Tone & Style (TS Section 8) ---
+  tone String @default("formal") // 'friendly' | 'formal' | 'firm' | 'final'
+
+  // --- Variables ---
+  availableVariables String[] @default([]) // List of placeholders
+  requiredVariables  String[] @default([]) // Must be provided
+
+  // --- Legal ---
+  legalDisclaimer      String?
+  includesInterest     Boolean @default(false)
+  includesFees         Boolean @default(false)
+  includesLegalWarning Boolean @default(false)
+
+  // --- Versioning ---
+  version           Int     @default(1)
+  isActive          Boolean @default(true)
+  previousVersionId String?
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+
+  // --- Organization ---
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // --- Indexes ---
+  @@unique([organizationId, code, version])
+  @@index([organizationId, dunningLevel, language])
+  @@index([organizationId, jurisdictionId, language])
+  @@index([organizationId, isActive])
+}
+
+// =============================================================================
+// DUNNING SAVED VIEW (TS Section 15.3)
+// =============================================================================
+
+model DunningSavedView {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  name        String
+  description String?
+
+  // --- Query Config ---
+  filters   Json? // Filter configuration
+  columns   String[] @default([]) // Visible columns
+  sortBy    String?
+  sortOrder String   @default("desc") // 'asc' | 'desc'
+  groupBy   String?
+
+  // --- Aggregations ---
+  includeAggregations Boolean  @default(false)
+  aggregationFields   String[] @default([])
+
+  // --- Sharing ---
+  isPublic   Boolean  @default(false)
+  sharedWith String[] @default([]) // User IDs
+
+  // --- Scheduling (TS Section 15.3) ---
+  isScheduled       Boolean   @default(false)
+  scheduleFrequency String? // 'daily' | 'weekly' | 'monthly'
+  scheduleCron      String?
+  deliveryMethod    String? // 'email' | 'webhook'
+  deliveryTarget    String? // Email or webhook URL
+  lastDeliveredAt   DateTime?
+
+  // --- Export ---
+  defaultExportFormat String @default("csv") // 'json' | 'csv' | 'pdf' | 'xbrl'
+
+  // --- Owner ---
+  createdBy     String
+  createdByName String?
+
+  // --- Audit ---
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // --- Organization ---
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // --- Indexes ---
+  @@index([organizationId, createdBy])
+  @@index([organizationId, isPublic])
+}
+
+// =============================================================================
+// DUNNING JURISDICTION CONFIG (TS Section 10)
+// =============================================================================
+
+model DunningJurisdictionConfig {
+  id String @id @default(cuid())
+
+  // --- Identity ---
+  jurisdictionId   String // e.g., 'DE', 'AT', 'US-CA', 'GB'
+  jurisdictionName String
+  country          String
+  region           String? // For US states, etc.
+
+  // --- Interest Rates (TS Section 11) ---
+  statutoryInterestRateB2B Decimal? @db.Decimal(8, 5) // B2B statutory rate
+  statutoryInterestRateB2C Decimal? @db.Decimal(8, 5) // Consumer statutory rate
+  interestRateReference    String? // e.g., 'ECB base rate + 9%'
+
+  // --- Fees (TS Section 11) ---
+  flatFeeAllowedB2B Boolean  @default(true)
+  flatFeeAmountB2B  Decimal? @db.Decimal(19, 4) // e.g., €40 EU flat fee
+  flatFeeAllowedB2C Boolean  @default(false)
+  flatFeeAmountB2C  Decimal? @db.Decimal(19, 4)
+  maxFeePercentage  Decimal? @db.Decimal(8, 5) // Max fee as % of amount
+
+  // --- Timing ---
+  defaultGracePeriodDays Int @default(0)
+  reminderAfterDays      Int @default(3)
+  level1AfterDays        Int @default(14)
+  level2AfterDays        Int @default(30)
+  level3MinDays          Int @default(45)
+
+  // --- Requirements ---
+  requiresWrittenNotice  Boolean @default(false)
+  requiresRegisteredMail Boolean @default(false)
+  formalRequirements     Json? // Specific legal requirements
+
+  // --- Language ---
+  defaultLanguage    String   @default("en")
+  supportedLanguages String[] @default(["en"])
+
+  // --- Tone ---
+  defaultToneReminder String @default("friendly")
+  defaultToneLevel1   String @default("formal")
+  defaultToneLevel2   String @default("firm")
+  defaultToneLevel3   String @default("final")
+
+  // --- Consumer Protection ---
+  consumerProtectionRules Json? // Special rules for consumers
+
+  // --- Active ---
+  isActive Boolean @default(true)
+
+  // --- Audit ---
+  updatedAt DateTime @updatedAt
+
+  // --- Organization ---
+  organizationId String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+
+  // --- Indexes ---
+  @@unique([organizationId, jurisdictionId])
+  @@index([organizationId, isActive])
 }
 
 model NettingOpportunity {

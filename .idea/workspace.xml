@@ -5,7 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <change afterPath="$PROJECT_DIR$/prisma/seed-dunning.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/approve-level3/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/approve/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/dispute/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/events/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/fees/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/initiate-level3/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/interest/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/propose/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/resolve/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/reverse/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/send/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/settle/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/verify/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/[id]/write-off/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/automation/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/automation/rules/[id]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/automation/run/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/exceptions/[id]/retry/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/exceptions/[id]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/exceptions/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/import/[batchId]/rollback/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/import/[batchId]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/import/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/jurisdiction/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/proposals/approve-bulk/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/proposals/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/statistics/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/templates/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/dunningStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/dunning.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next-env.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +51,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="dev-2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,34 +79,38 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="36qZWJufMjVj4i92D7t1IfexwCY" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.localhost:3000.executor&quot;: &quot;Debug&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev-2&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Konrad/Desktop/primebalance/src/types&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Konrad\\Desktop\\primebalance\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.localhost:3000.executor": "Debug",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHELLCHECK.PATH": "C:\\Users\\Konrad\\AppData\\Roaming\\JetBrains\\WebStorm2025.3\\plugins\\Shell Script\\shellcheck.exe",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.preferred.runtime.type.id": "node",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "last_opened_file_path": "C:/Users/Konrad/Desktop/primebalance/src/types",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propDebugger",
+    "ts.external.directory.path": "C:\\Users\\Konrad\\Desktop\\primebalance\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Konrad\Desktop\primebalance\src\types" />
@@ -78,6 +118,7 @@
       <recent name="C:\Users\Konrad\Desktop\primebalance\src\app\dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Konrad\Desktop\primebalance\src\app\api\dunning" />
       <recent name="C:\Users\Konrad\Desktop\primebalance" />
     </key>
   </component>
@@ -105,6 +146,8 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.localhost:3000" />
+        <item itemvalue="JavaScript Debug.localhost:3000" />
         <item itemvalue="JavaScript Debug.localhost:3000" />
       </list>
     </recent_temporary>
@@ -135,6 +178,8 @@
       <workItem from="1766317598562" duration="12586000" />
       <workItem from="1766486581555" duration="1853000" />
       <workItem from="1766531311267" duration="22989000" />
+      <workItem from="1767307759079" duration="293000" />
+      <workItem from="1767377046358" duration="8586000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -246,7 +291,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/app/dashboard/chat/page.tsx</url>
-          <line>27</line>
+          <line>24</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

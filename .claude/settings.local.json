@@ -50,7 +50,16 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(npx prisma migrate dev:*)"
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(gcloud config get-value:*)",
+      "Bash(where:*)",
+      "Bash(C:Python314python.exe --version)",
+      "Bash(cloud-sql-proxy:*)",
+      "Bash(./db-proxy-local.sh:*)",
+      "Bash(gcloud info:*)",
+      "Bash(gcloud projects add-iam-policy-binding:*)",
+      "Bash(PRISMA_MIGRATE_LOCK_TIMEOUT=60000 npx prisma migrate dev:*)",
+      "Bash(npm run dev:*)"
     ]
   }
 }
