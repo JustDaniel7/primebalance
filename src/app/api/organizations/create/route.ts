@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { nanoid } from 'nanoid'
+import { notifyWelcome } from '@/lib/notifications'
 
 function generateSlug(name: string): string {
   return name
@@ -96,6 +97,9 @@ export async function POST(req: NextRequest) {
 
       return organization
     })
+
+    // Send welcome notification to the new owner
+    await notifyWelcome(user.id, session.user.name || 'there', result.id)
 
     return NextResponse.json({
       success: true,

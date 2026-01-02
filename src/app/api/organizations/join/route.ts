@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { notifyWelcome } from '@/lib/notifications'
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -103,6 +104,9 @@ export async function POST(req: NextRequest) {
 
       return invitation.organization
     })
+
+    // Send welcome notification to the new member
+    await notifyWelcome(user.id, session.user.name || 'there', result.id)
 
     return NextResponse.json({
       success: true,

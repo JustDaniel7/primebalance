@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
+import { notifyOrgAdmins } from '@/lib/notifications';
 
 // Status constants
 const PAYABLE_STATUSES = ['confirmed', 'sent', 'partially_paid', 'overdue'];
@@ -181,6 +182,22 @@ export async function POST(
         }, {
             isolationLevel: 'Serializable', // Prevent race conditions
         });
+
+        // Notify organization admins about the payment
+        const currency = result.updated.currency || 'USD';
+        const formattedAmount = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency,
+        }).format(amount);
+
+        await notifyOrgAdmins(
+            user.organizationId,
+            result.isFullyPaid ? 'invoice_paid' : 'invoice_created',
+            result.isFullyPaid ? 'Invoice Fully Paid' : 'Payment Received',
+            result.isFullyPaid
+                ? `Invoice #${result.updated.invoiceNumber} (${formattedAmount}) has been fully paid`
+                : `Payment of ${formattedAmount} received for Invoice #${result.updated.invoiceNumber}`
+        );
 
         return NextResponse.json({
             invoice: {

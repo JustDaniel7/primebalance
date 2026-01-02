@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
+import { notifyTaskComment } from '@/lib/notifications';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -86,6 +87,20 @@ export async function POST(req: NextRequest, { params }: Params) {
       hasMentions: mentions.length > 0,
     },
   });
+
+  // Notify task owner and mentioned users about the comment
+  if (task.ownerId) {
+    await notifyTaskComment({
+      taskId: id,
+      taskTitle: task.title,
+      commentContent: body.content,
+      taskOwnerId: task.ownerId,
+      mentionedUserIds: mentions,
+      actorId: user.id!,
+      actorName: user.name || 'Someone',
+      organizationId: user.organizationId,
+    });
+  }
 
   return NextResponse.json(comment, { status: 201 });
 }

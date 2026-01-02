@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionWithOrg, unauthorized, notFound } from '@/lib/api-utils';
+import { notifyTaskStatusChange } from '@/lib/notifications';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -86,6 +87,20 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         newValue: body.status,
       },
     });
+
+    // Notify task owner about status change
+    if (existing.ownerId) {
+      await notifyTaskStatusChange({
+        taskId: id,
+        taskTitle: existing.title,
+        previousStatus: previousStatus,
+        newStatus: body.status,
+        ownerId: existing.ownerId,
+        actorId: user.id!,
+        actorName: user.name || 'Someone',
+        organizationId: user.organizationId,
+      });
+    }
   }
 
   return NextResponse.json(updated);

@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionWithOrg, unauthorized, badRequest } from '@/lib/api-utils';
+import { notifyTaskAssignment } from '@/lib/notifications';
 
 export async function GET(req: NextRequest) {
   const user = await getSessionWithOrg();
@@ -101,6 +102,16 @@ export async function POST(req: NextRequest) {
         },
       });
     }
+
+    // Notify assignees about the new task
+    await notifyTaskAssignment({
+      taskId: task.id,
+      taskTitle: task.title,
+      assigneeIds: body.assigneeIds,
+      actorId: user.id!,
+      actorName: user.name || 'Someone',
+      organizationId: user.organizationId,
+    });
   }
 
   const created = await prisma.task.findUnique({
