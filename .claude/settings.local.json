@@ -47,7 +47,9 @@
       "Bash(gcloud sql instances describe:*)",
       "Bash(gcloud alpha iap oauth-clients list:*)",
       "Bash(gcloud services list:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
