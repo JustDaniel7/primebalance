@@ -53,7 +53,7 @@ async function callDeepSeek(messages: ChatMessage[]): Promise<Response> {
       'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
     },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: 'deepseek-reasoner',
       messages,
       tools: AI_TOOLS,
       tool_choice: 'auto',

@@ -283,7 +283,7 @@ Use the exact index numbers [0], [1], [2], etc. from the suggestions above.`
         'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'deepseek-reasoner',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -386,7 +386,7 @@ async function generateAIExecutiveSummary(
         'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'deepseek-reasoner',
         messages: [
           {
             role: 'system',
