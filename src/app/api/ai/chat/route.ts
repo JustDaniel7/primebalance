@@ -37,6 +37,7 @@ You have access to tools that can query the organization's financial data. Use t
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant' | 'tool'
   content: string
+  reasoning_content?: string // Required for deepseek-reasoner model
   tool_calls?: Array<{
     id: string
     type: 'function'
@@ -45,15 +46,16 @@ interface ChatMessage {
   tool_call_id?: string
 }
 
-async function callDeepSeek(messages: ChatMessage[]): Promise<Response> {
-  const response = await fetch(DEEPSEEK_API_URL, {
+// Use deepseek-chat for tool calls (reasoner doesn't support tools)
+async function callDeepSeekWithTools(messages: ChatMessage[]): Promise<Response> {
+  return fetch(DEEPSEEK_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
     },
     body: JSON.stringify({
-      model: 'deepseek-reasoner',
+      model: 'deepseek-chat',
       messages,
       tools: AI_TOOLS,
       tool_choice: 'auto',
@@ -61,8 +63,34 @@ async function callDeepSeek(messages: ChatMessage[]): Promise<Response> {
       max_tokens: 2048
     })
   })
+}
 
-  return response
+// Use deepseek-reasoner for final analysis (better reasoning performance)
+async function callDeepSeekReasoner(messages: ChatMessage[]): Promise<Response> {
+  // Filter out tool-related fields for reasoner (it doesn't support them)
+  const cleanMessages = messages.map(m => {
+    if (m.role === 'tool') {
+      // Convert tool results to user context
+      return { role: 'user' as const, content: `[Data Result]: ${m.content}` }
+    }
+    // Remove tool_calls from assistant messages
+    const { tool_calls, ...rest } = m
+    return rest
+  })
+
+  return fetch(DEEPSEEK_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'deepseek-reasoner',
+      messages: cleanMessages,
+      temperature: 0.7,
+      max_tokens: 4096
+    })
+  })
 }
 
 export async function POST(req: NextRequest) {
@@ -104,8 +132,8 @@ export async function POST(req: NextRequest) {
       }))
     ]
 
-    // Initial API call
-    let response = await callDeepSeek(messages)
+    // Phase 1: Use deepseek-chat with tools to fetch data
+    let response = await callDeepSeekWithTools(messages)
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
@@ -123,9 +151,10 @@ export async function POST(req: NextRequest) {
     let data = await response.json()
     let assistantMessage = data.choices?.[0]?.message
 
-    // Handle tool calls (function calling loop)
+    // Handle tool calls (function calling loop) with deepseek-chat
     let iterations = 0
-    const maxIterations = 5 // Prevent infinite loops
+    const maxIterations = 5
+    let usedTools = false
 
     while (
       assistantMessage?.tool_calls &&
@@ -133,8 +162,9 @@ export async function POST(req: NextRequest) {
       iterations < maxIterations
     ) {
       iterations++
+      usedTools = true
 
-      // Add assistant message with tool calls to conversation
+      // Add assistant message with tool calls
       messages.push({
         role: 'assistant',
         content: assistantMessage.content || '',
@@ -152,7 +182,6 @@ export async function POST(req: NextRequest) {
           console.error('Failed to parse function arguments:', toolCall.function.arguments)
         }
 
-
         // Execute the tool with organization context
         const result = await executeToolCall(
           functionName,
@@ -168,8 +197,8 @@ export async function POST(req: NextRequest) {
         })
       }
 
-      // Make another API call with tool results
-      response = await callDeepSeek(messages)
+      // Continue with deepseek-chat for more tool calls
+      response = await callDeepSeekWithTools(messages)
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
@@ -189,12 +218,40 @@ export async function POST(req: NextRequest) {
       assistantMessage = data.choices?.[0]?.message
     }
 
+    // Phase 2: If tools were used, get final analysis from deepseek-reasoner
+    if (usedTools) {
+      // Add the chat model's response as context
+      if (assistantMessage?.content) {
+        messages.push({
+          role: 'assistant',
+          content: assistantMessage.content
+        })
+        // Ask reasoner to provide final analysis
+        messages.push({
+          role: 'user',
+          content: 'Based on the data above, provide a thorough analysis with insights and recommendations.'
+        })
+      }
+
+      response = await callDeepSeekReasoner(messages)
+
+      if (!response.ok) {
+        // Fallback to chat model response if reasoner fails
+        const content = assistantMessage?.content || 'I apologize, but I was unable to generate a response.'
+        return NextResponse.json({ role: 'assistant', content, usage: data.usage })
+      }
+
+      data = await response.json()
+      assistantMessage = data.choices?.[0]?.message
+    }
+
     // Extract final response
     const content = assistantMessage?.content || 'I apologize, but I was unable to generate a response. Please try again.'
 
     return NextResponse.json({
       role: 'assistant',
       content,
+      reasoning: assistantMessage?.reasoning_content, // Include reasoning if available
       usage: data.usage
     })
 
