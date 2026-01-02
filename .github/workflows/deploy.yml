@@ -133,9 +133,9 @@ jobs:
         id: region
         run: |
           if [ "${{ github.event.inputs.region }}" = "na" ]; then
-            echo "REGION=us-central1" >> $GITHUB_ENV
+            echo "value=us-central1" >> $GITHUB_OUTPUT
           else
-            echo "REGION=europe-west6" >> $GITHUB_ENV
+            echo "value=europe-west6" >> $GITHUB_OUTPUT
           fi
 
       - name: Authenticate to Google Cloud
@@ -149,20 +149,21 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Build Cloud SQL connection string
+        id: db
         run: |
-          SQL_CONNECTION="${{ secrets.GCP_PROJECT_ID }}:${{ env.REGION }}:${{ secrets.DB_INSTANCE }}"
+          SQL_CONNECTION="${{ secrets.GCP_PROJECT_ID }}:${{ steps.region.outputs.value }}:${{ secrets.DB_INSTANCE }}"
           DATABASE_URL="postgresql://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@localhost/${{ secrets.DB_NAME }}?host=/cloudsql/${SQL_CONNECTION}"
-          echo "SQL_CONNECTION=${SQL_CONNECTION}" >> $GITHUB_ENV
-          echo "DATABASE_URL=${DATABASE_URL}" >> $GITHUB_ENV
+          echo "sql_connection=${SQL_CONNECTION}" >> $GITHUB_OUTPUT
+          echo "database_url=${DATABASE_URL}" >> $GITHUB_OUTPUT
 
       - name: Get current service URL
         id: current-url
         run: |
           URL=$(gcloud run services describe ${{ env.SERVICE }} \
-            --region=${{ env.REGION }} \
+            --region=${{ steps.region.outputs.value }} \
             --format="value(status.url)" 2>/dev/null || echo "")
           if [ -z "$URL" ]; then
-            URL="https://${{ env.SERVICE }}-placeholder.${{ env.REGION }}.run.app"
+            URL="https://${{ env.SERVICE }}-placeholder.${{ steps.region.outputs.value }}.run.app"
           fi
           echo "url=${URL}" >> $GITHUB_OUTPUT
 
@@ -171,7 +172,7 @@ jobs:
         run: |
           gcloud run deploy ${{ env.SERVICE }} \
             --source . \
-            --region "${{ env.REGION }}" \
+            --region "${{ steps.region.outputs.value }}" \
             --platform managed \
             --allow-unauthenticated \
             --memory 512Mi \
@@ -179,22 +180,23 @@ jobs:
             --min-instances 0 \
             --max-instances 10 \
             --port 8080 \
-            --add-cloudsql-instances="${{ env.SQL_CONNECTION }}" \
-            --set-env-vars="^##^NODE_ENV=production##NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}##NEXTAUTH_URL=${{ steps.current-url.outputs.url }}##GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}##GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}##GITHUB_ID=${{ secrets.APP_GITHUB_ID }}##GITHUB_SECRET=${{ secrets.APP_GITHUB_SECRET }}##DATABASE_URL=${{ env.DATABASE_URL }}##CLOUD_SQL_CONNECTION_NAME=${{ env.SQL_CONNECTION }}##DB_NAME=${{ secrets.DB_NAME }}##DB_USER=${{ secrets.DB_USER }}##DB_PASSWORD=${{ secrets.DB_PASSWORD }}"
+            --add-cloudsql-instances="${{ steps.db.outputs.sql_connection }}" \
+            --set-env-vars="^##^NODE_ENV=production##NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}##NEXTAUTH_URL=${{ steps.current-url.outputs.url }}##GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}##GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}##GITHUB_ID=${{ secrets.APP_GITHUB_ID }}##GITHUB_SECRET=${{ secrets.APP_GITHUB_SECRET }}##DATABASE_URL=${{ steps.db.outputs.database_url }}##CLOUD_SQL_CONNECTION_NAME=${{ steps.db.outputs.sql_connection }}##DB_NAME=${{ secrets.DB_NAME }}##DB_USER=${{ secrets.DB_USER }}##DB_PASSWORD=${{ secrets.DB_PASSWORD }}"
 
       - name: Get deployed URL and update NEXTAUTH_URL
+        id: deployed
         run: |
           ACTUAL_URL=$(gcloud run services describe ${{ env.SERVICE }} \
-            --region=${{ env.REGION }} \
+            --region=${{ steps.region.outputs.value }} \
             --format="value(status.url)")
 
-          echo "SERVICE_URL=${ACTUAL_URL}" >> $GITHUB_ENV
+          echo "url=${ACTUAL_URL}" >> $GITHUB_OUTPUT
 
           EXPECTED_URL="${{ steps.current-url.outputs.url }}"
           if [ "$ACTUAL_URL" != "$EXPECTED_URL" ]; then
             echo "Updating NEXTAUTH_URL to: $ACTUAL_URL"
             gcloud run services update ${{ env.SERVICE }} \
-              --region="${{ env.REGION }}" \
+              --region="${{ steps.region.outputs.value }}" \
               --update-env-vars="NEXTAUTH_URL=${ACTUAL_URL}" \
               --quiet
           fi
@@ -205,8 +207,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| **Service URL** | ${{ env.SERVICE_URL }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Region** | ${{ env.REGION }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Database** | ${{ env.SQL_CONNECTION }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Service URL** | ${{ steps.deployed.outputs.url }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Region** | ${{ steps.region.outputs.value }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Database** | ${{ steps.db.outputs.sql_connection }} |" >> $GITHUB_STEP_SUMMARY
           echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| **Branch** | ${{ github.ref_name }} |" >> $GITHUB_STEP_SUMMARY
