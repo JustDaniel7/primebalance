@@ -40,7 +40,14 @@
       "Bash(npm ls:*)",
       "Bash(sort:*)",
       "Bash(nc:*)",
-      "Bash(PGPASSWORD=demoPassword089 psql:*)"
+      "Bash(PGPASSWORD=demoPassword089 psql:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gcloud auth list:*)",
+      "Bash(gcloud sql instances list:*)",
+      "Bash(gcloud sql instances describe:*)",
+      "Bash(gcloud alpha iap oauth-clients list:*)",
+      "Bash(gcloud services list:*)",
+      "Bash(git add:*)"
     ]
   }
 }

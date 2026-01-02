@@ -2375,11 +2375,11 @@ async function main() {
   // =============================================================================
   console.log('\n👤 Creating User...')
   const user = await prisma.user.upsert({
-    where: { email: 'demo@primebalance.app' },
+    where: { email: 'primebalanceus@gmail.com' },
     update: { organizationId: org.id },
     create: {
-      email: 'demo@primebalance.app',
-      name: 'Max Mustermann',
+      email: 'primebalanceus@gmail.com',
+      name: 'PrimeBalance Demo',
       role: 'owner',
       organizationId: org.id,
     },
