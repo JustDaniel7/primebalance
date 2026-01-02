@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useThemeStore } from '@/store/theme-store'
@@ -35,6 +35,7 @@ function SelectOrganizationForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { t } = useThemeStore()
+  const { update: updateSession } = useSession()
 
   const [viewMode, setViewMode] = useState<ViewMode>('select')
   const [isLoading, setIsLoading] = useState(true)
@@ -102,6 +103,10 @@ function SelectOrganizationForm() {
         return
       }
 
+      // CRITICAL: Update the session to refresh the JWT with the new organizationId
+      // This triggers the jwt callback with trigger='update', which re-fetches from DB
+      await updateSession()
+
       // Success - redirect to dashboard
       router.push(callbackUrl)
       router.refresh()
@@ -131,6 +136,9 @@ function SelectOrganizationForm() {
         return
       }
 
+      // CRITICAL: Update the session to refresh the JWT with the new organizationId
+      await updateSession()
+
       // Success - redirect to dashboard
       router.push(callbackUrl)
       router.refresh()
@@ -158,6 +166,9 @@ function SelectOrganizationForm() {
         setError(data.error || 'Failed to join organization')
         return
       }
+
+      // CRITICAL: Update the session to refresh the JWT with the new organizationId
+      await updateSession()
 
       router.push(callbackUrl)
       router.refresh()

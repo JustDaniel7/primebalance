@@ -99,7 +99,8 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
+      // On initial sign-in, user object is provided
       if (user?.email) {
         // Try to find existing user
         let dbUser = await prisma.user.findUnique({
@@ -135,8 +136,25 @@ export const authOptions: AuthOptions = {
         if (dbUser) {
           token.organizationId = dbUser.organizationId || undefined
           token.sub = dbUser.id
+          token.email = user.email
         }
       }
+
+      // CRITICAL: On session update or when user has no organizationId,
+      // always refresh from database to ensure token stays in sync
+      // This handles the case when user creates/joins an org after initial login
+      if (trigger === 'update' || (token.email && !token.organizationId)) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email as string },
+          select: { id: true, organizationId: true }
+        })
+
+        if (dbUser) {
+          token.organizationId = dbUser.organizationId || undefined
+          token.sub = dbUser.id
+        }
+      }
+
       return token
     },
     async session({ session, token }) {
