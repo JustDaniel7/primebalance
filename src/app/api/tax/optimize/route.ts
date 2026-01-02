@@ -283,7 +283,7 @@ Use the exact index numbers [0], [1], [2], etc. from the suggestions above.`
         'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'deepseek-reasoner',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -386,7 +386,7 @@ async function generateAIExecutiveSummary(
         'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'deepseek-reasoner',
         messages: [
           {
             role: 'system',
@@ -558,11 +558,14 @@ export async function POST(request: NextRequest) {
       suggestions: enhancedSuggestions,
     }
 
+    // Return the actual mode used, not the requested mode
+    const actualMode = useAI ? 'ai' : 'template'
+
     return NextResponse.json({
       success: true,
       result: enhancedResult,
       summary,
-      mode,
+      mode: actualMode,
       aiAvailable: !!DEEPSEEK_API_KEY,
       entityCount: entities.length,
       jurisdictions,

@@ -1,27 +1,26 @@
 // src/middleware.ts
 // Middleware to enforce organization context for authenticated users
+// SECURITY: This middleware ensures users cannot access protected routes
+// without being associated with an organization
 
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
-// Routes that don't require organization context
+// Routes that don't require authentication at all
 const PUBLIC_ROUTES = [
   '/auth/login',
   '/auth/register',
   '/auth/forgot-password',
-  '/auth/select-organization',
-  '/api/auth',
-  '/api/organizations/create',
-  '/api/organizations/join',
-  '/api/organizations/available',
+  '/api/auth', // NextAuth routes must be public
   '/_next',
   '/favicon.ico',
   '/images',
   '/fonts',
 ]
 
-// Routes that require authentication but not organization
+// Routes that require authentication but NOT organization context
+// (user can access these while setting up their organization)
 const AUTH_ONLY_ROUTES = [
   '/auth/select-organization',
   '/api/organizations/create',
@@ -29,10 +28,18 @@ const AUTH_ONLY_ROUTES = [
   '/api/organizations/available',
 ]
 
+/**
+ * Check if a value is a valid organization ID
+ * Must be a non-empty string (not null, undefined, empty string, or whitespace)
+ */
+function hasValidOrganizationId(organizationId: unknown): boolean {
+  return typeof organizationId === 'string' && organizationId.trim().length > 0
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Allow public routes
+  // Allow public routes (no auth required)
   if (PUBLIC_ROUTES.some(route => pathname.startsWith(route))) {
     return NextResponse.next()
   }
@@ -55,19 +62,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // User is authenticated but has no organization - redirect to selection page
-  if (!token.organizationId) {
-    // Don't redirect if already going to org selection or related APIs
-    if (pathname === '/auth/select-organization') {
-      return NextResponse.next()
-    }
-
+  // SECURITY: User is authenticated but has no valid organization
+  // This catches: null, undefined, empty string, whitespace-only strings
+  if (!hasValidOrganizationId(token.organizationId)) {
     const selectOrgUrl = new URL('/auth/select-organization', request.url)
     selectOrgUrl.searchParams.set('callbackUrl', pathname)
     return NextResponse.redirect(selectOrgUrl)
   }
 
-  // User has organization - allow access
+  // User has valid organization - allow access
   return NextResponse.next()
 }
 

@@ -2,4 +2,4 @@ node_modules
 .next
 .env
 # Sentry Config File
-.env.sentry-build-plugin
+.claude

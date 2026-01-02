@@ -451,3 +451,4 @@ export * from './tax-store';
 export * from './theme-store';
 export * from './wallet-store';
 export * from './receipts-store';
+export * from './notification-store';

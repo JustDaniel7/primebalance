@@ -9,12 +9,14 @@ import Link from 'next/link'
 import { SearchIcon, BellIcon, ChevronDownIcon } from '@/components/ui/Icons'
 import { Sun, Moon } from 'lucide-react'
 import { useSearch } from '@/contexts/SearchContext'
+import { useNotifications } from '@/hooks/useNotifications'
 
 export default function Header() {
   const { user } = useStore()
   const { themeMode, setThemeMode, resolvedTheme, t } = useThemeStore()
   const { data: session } = useSession()
   const { open: openSearch } = useSearch()
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications({ pollInterval: 60000 })
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
@@ -34,31 +36,6 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const notifications = [
-    {
-      id: '1',
-      title: 'Tax deadline approaching',
-      message: 'Q4 estimated taxes due in 15 days',
-      time: '2 hours ago',
-      unread: true,
-    },
-    {
-      id: '2',
-      title: 'Transaction synced',
-      message: '23 new transactions from Stripe',
-      time: '5 hours ago',
-      unread: true,
-    },
-    {
-      id: '3',
-      title: 'AI suggestion',
-      message: 'New optimization found for expenses',
-      time: '1 day ago',
-      unread: false,
-    },
-  ]
-
-  const unreadCount = notifications.filter((n) => n.unread).length
   const displayName = session?.user?.name || user?.name || 'User'
   const displayEmail = session?.user?.email || user?.email || ''
 
@@ -72,6 +49,21 @@ export default function Header() {
     } else {
       setThemeMode('dark')
     }
+  }
+
+  const formatTimeAgo = (timestamp: string) => {
+    const now = new Date()
+    const date = new Date(timestamp)
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+    if (seconds < 60) return 'just now'
+    const minutes = Math.floor(seconds / 60)
+    if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
+    const hours = Math.floor(minutes / 60)
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`
+    const days = Math.floor(hours / 24)
+    if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`
+    return date.toLocaleDateString()
   }
 
   return (
@@ -149,35 +141,45 @@ export default function Header() {
                   <div className="p-4 border-b border-gray-200 dark:border-surface-800/50">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-gray-900 dark:text-surface-100">{t('header.notifications')}</h3>
-                      <button className="text-xs text-[var(--accent-primary)] hover:opacity-80">
+                      <button
+                        onClick={() => markAllAsRead()}
+                        className="text-xs text-[var(--accent-primary)] hover:opacity-80"
+                      >
                         {t('header.markAllRead')}
                       </button>
                     </div>
                   </div>
                   <div className="max-h-80 overflow-y-auto">
-                    {notifications.map((notification) => (
-                      <button
-                        key={notification.id}
-                        className="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-surface-800/30 transition-colors border-b border-gray-100 dark:border-surface-800/30 last:border-0"
-                      >
-                        <div className="flex items-start gap-3">
-                          {notification.unread && (
-                            <span className="w-2 h-2 mt-2 rounded-full bg-[var(--accent-primary)] flex-shrink-0" />
-                          )}
-                          <div className={notification.unread ? '' : 'ml-5'}>
-                            <p className="text-sm font-medium text-gray-800 dark:text-surface-200">
-                              {notification.title}
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-surface-400 mt-0.5">
-                              {notification.message}
-                            </p>
-                            <p className="text-xs text-gray-400 dark:text-surface-500 mt-1">
-                              {notification.time}
-                            </p>
+                    {notifications.length === 0 ? (
+                      <div className="p-6 text-center text-gray-500 dark:text-surface-400 text-sm">
+                        No notifications
+                      </div>
+                    ) : (
+                      notifications.map((notification) => (
+                        <button
+                          key={notification.id}
+                          onClick={() => !notification.isRead && markAsRead(notification.id)}
+                          className="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-surface-800/30 transition-colors border-b border-gray-100 dark:border-surface-800/30 last:border-0"
+                        >
+                          <div className="flex items-start gap-3">
+                            {!notification.isRead && (
+                              <span className="w-2 h-2 mt-2 rounded-full bg-[var(--accent-primary)] flex-shrink-0" />
+                            )}
+                            <div className={!notification.isRead ? '' : 'ml-5'}>
+                              <p className="text-sm font-medium text-gray-800 dark:text-surface-200">
+                                {notification.title}
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-surface-400 mt-0.5">
+                                {notification.message}
+                              </p>
+                              <p className="text-xs text-gray-400 dark:text-surface-500 mt-1">
+                                {formatTimeAgo(notification.timestamp)}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </button>
-                    ))}
+                        </button>
+                      ))
+                    )}
                   </div>
                   <div className="p-3 border-t border-gray-200 dark:border-surface-800/50">
                     <button className="w-full py-2 text-sm text-center text-[var(--accent-primary)] hover:opacity-80 transition-colors">
