@@ -91,6 +91,8 @@ model Organization {
 
   // Relations
   users             User[]
+  invitations       OrganizationInvitation[]
+  wallets           Wallet[]
   transactions      Transaction[]
   financialAccounts FinancialAccount[]
   receipts          Receipt[]
@@ -165,6 +167,28 @@ model Organization {
   risks                  Risk[]
   taskNotifications      TaskNotification[]
   savedTaskFilters       SavedTaskFilter[]
+}
+
+// Organization Invitations for multi-tenant access
+model OrganizationInvitation {
+  id             String    @id @default(cuid())
+  email          String?   // If inviting a specific email
+  inviteCode     String    @unique // Shareable invite code
+  role           String    @default("member") // owner, admin, member
+  expiresAt      DateTime
+  usedAt         DateTime?
+  usedByUserId   String?
+
+  // Relations
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdByUserId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId])
+  @@index([email])
+  @@index([inviteCode])
 }
 
 // =============================================================================
@@ -382,7 +406,8 @@ model Wallet {
   // Relations
   userId         String
   user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  organizationId String?
+  organizationId String
+  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   tokens         WalletToken[]
   transactions   WalletTransaction[]
 

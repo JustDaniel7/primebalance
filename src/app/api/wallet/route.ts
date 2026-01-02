@@ -40,6 +40,11 @@ export async function POST(req: NextRequest) {
         });
         if (existing) return badRequest('Wallet address already exists on this network');
 
+        // SECURITY: organizationId is required for wallet creation
+        if (!user.organizationId) {
+            return badRequest('User must belong to an organization');
+        }
+
         const wallet = await prisma.wallet.create({
             data: {
                 name,
@@ -48,6 +53,7 @@ export async function POST(req: NextRequest) {
                 provider: provider || null,
                 isActive: true,
                 userId: user.id,
+                organizationId: user.organizationId,
             },
         });
 

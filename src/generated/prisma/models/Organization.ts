@@ -223,6 +223,8 @@ export type OrganizationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   users?: Prisma.UserListRelationFilter
+  invitations?: Prisma.OrganizationInvitationListRelationFilter
+  wallets?: Prisma.WalletListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   financialAccounts?: Prisma.FinancialAccountListRelationFilter
   receipts?: Prisma.ReceiptListRelationFilter
@@ -306,6 +308,8 @@ export type OrganizationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
+  invitations?: Prisma.OrganizationInvitationOrderByRelationAggregateInput
+  wallets?: Prisma.WalletOrderByRelationAggregateInput
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
   financialAccounts?: Prisma.FinancialAccountOrderByRelationAggregateInput
   receipts?: Prisma.ReceiptOrderByRelationAggregateInput
@@ -392,6 +396,8 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   users?: Prisma.UserListRelationFilter
+  invitations?: Prisma.OrganizationInvitationListRelationFilter
+  wallets?: Prisma.WalletListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   financialAccounts?: Prisma.FinancialAccountListRelationFilter
   receipts?: Prisma.ReceiptListRelationFilter
@@ -507,6 +513,8 @@ export type OrganizationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -590,6 +598,8 @@ export type OrganizationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -673,6 +683,8 @@ export type OrganizationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -756,6 +768,8 @@ export type OrganizationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -931,6 +945,20 @@ export type OrganizationUpdateOneWithoutUsersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutUsersInput, Prisma.OrganizationUpdateWithoutUsersInput>, Prisma.OrganizationUncheckedUpdateWithoutUsersInput>
 }
 
+export type OrganizationCreateNestedOneWithoutInvitationsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutInvitationsInput, Prisma.OrganizationUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutInvitationsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutInvitationsInput, Prisma.OrganizationUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutInvitationsInput
+  upsert?: Prisma.OrganizationUpsertWithoutInvitationsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutInvitationsInput, Prisma.OrganizationUpdateWithoutInvitationsInput>, Prisma.OrganizationUncheckedUpdateWithoutInvitationsInput>
+}
+
 export type OrganizationCreateNestedOneWithoutFinancialAccountsInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutFinancialAccountsInput, Prisma.OrganizationUncheckedCreateWithoutFinancialAccountsInput>
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutFinancialAccountsInput
@@ -985,6 +1013,20 @@ export type OrganizationUpdateOneRequiredWithoutChatChannelsNestedInput = {
   upsert?: Prisma.OrganizationUpsertWithoutChatChannelsInput
   connect?: Prisma.OrganizationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutChatChannelsInput, Prisma.OrganizationUpdateWithoutChatChannelsInput>, Prisma.OrganizationUncheckedUpdateWithoutChatChannelsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutWalletsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutWalletsInput, Prisma.OrganizationUncheckedCreateWithoutWalletsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutWalletsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutWalletsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutWalletsInput, Prisma.OrganizationUncheckedCreateWithoutWalletsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutWalletsInput
+  upsert?: Prisma.OrganizationUpsertWithoutWalletsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutWalletsInput, Prisma.OrganizationUpdateWithoutWalletsInput>, Prisma.OrganizationUncheckedUpdateWithoutWalletsInput>
 }
 
 export type OrganizationCreateNestedOneWithoutInvoiceInput = {
@@ -1908,6 +1950,8 @@ export type OrganizationCreateWithoutUsersInput = {
   taxId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -1990,6 +2034,8 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   taxId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2088,6 +2134,8 @@ export type OrganizationUpdateWithoutUsersInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -2170,6 +2218,360 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutInvitationsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutInvitationsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutInvitationsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutInvitationsInput, Prisma.OrganizationUncheckedCreateWithoutInvitationsInput>
+}
+
+export type OrganizationUpsertWithoutInvitationsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutInvitationsInput, Prisma.OrganizationUncheckedUpdateWithoutInvitationsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutInvitationsInput, Prisma.OrganizationUncheckedCreateWithoutInvitationsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutInvitationsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutInvitationsInput, Prisma.OrganizationUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type OrganizationUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2253,6 +2655,8 @@ export type OrganizationCreateWithoutFinancialAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
@@ -2335,6 +2739,8 @@ export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2433,6 +2839,8 @@ export type OrganizationUpdateWithoutFinancialAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
@@ -2515,6 +2923,8 @@ export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2597,6 +3007,8 @@ export type OrganizationCreateWithoutTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
@@ -2679,6 +3091,8 @@ export type OrganizationUncheckedCreateWithoutTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
@@ -2777,6 +3191,8 @@ export type OrganizationUpdateWithoutTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
@@ -2859,6 +3275,8 @@ export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -2941,6 +3359,8 @@ export type OrganizationCreateWithoutReceiptsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
@@ -3023,6 +3443,8 @@ export type OrganizationUncheckedCreateWithoutReceiptsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3121,6 +3543,8 @@ export type OrganizationUpdateWithoutReceiptsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
@@ -3203,6 +3627,8 @@ export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3285,6 +3711,8 @@ export type OrganizationCreateWithoutChatChannelsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -3367,6 +3795,8 @@ export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3465,6 +3895,8 @@ export type OrganizationUpdateWithoutChatChannelsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -3547,9 +3979,363 @@ export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutWalletsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutWalletsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutWalletsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutWalletsInput, Prisma.OrganizationUncheckedCreateWithoutWalletsInput>
+}
+
+export type OrganizationUpsertWithoutWalletsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutWalletsInput, Prisma.OrganizationUncheckedUpdateWithoutWalletsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutWalletsInput, Prisma.OrganizationUncheckedCreateWithoutWalletsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutWalletsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutWalletsInput, Prisma.OrganizationUncheckedUpdateWithoutWalletsInput>
+}
+
+export type OrganizationUpdateWithoutWalletsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutWalletsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
   archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
   liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3629,6 +4415,8 @@ export type OrganizationCreateWithoutInvoiceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -3711,6 +4499,8 @@ export type OrganizationUncheckedCreateWithoutInvoiceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -3809,6 +4599,8 @@ export type OrganizationUpdateWithoutInvoiceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -3891,6 +4683,8 @@ export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -3973,6 +4767,8 @@ export type OrganizationCreateWithoutOrdersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -4055,6 +4851,8 @@ export type OrganizationUncheckedCreateWithoutOrdersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4153,6 +4951,8 @@ export type OrganizationUpdateWithoutOrdersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -4235,6 +5035,8 @@ export type OrganizationUncheckedUpdateWithoutOrdersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -4317,6 +5119,8 @@ export type OrganizationCreateWithoutArchiveItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -4399,6 +5203,8 @@ export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4497,6 +5303,8 @@ export type OrganizationUpdateWithoutArchiveItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -4579,6 +5387,8 @@ export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -4661,6 +5471,8 @@ export type OrganizationCreateWithoutLiabilitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -4743,6 +5555,8 @@ export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -4841,6 +5655,8 @@ export type OrganizationUpdateWithoutLiabilitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -4923,6 +5739,8 @@ export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5005,6 +5823,8 @@ export type OrganizationCreateWithoutInventoryItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -5087,6 +5907,8 @@ export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5185,6 +6007,8 @@ export type OrganizationUpdateWithoutInventoryItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -5267,6 +6091,8 @@ export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5349,6 +6175,8 @@ export type OrganizationCreateWithoutReceivablesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -5431,6 +6259,8 @@ export type OrganizationUncheckedCreateWithoutReceivablesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5529,6 +6359,8 @@ export type OrganizationUpdateWithoutReceivablesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -5611,6 +6443,8 @@ export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -5693,6 +6527,8 @@ export type OrganizationCreateWithoutTreasuryAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -5775,6 +6611,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -5873,6 +6711,8 @@ export type OrganizationUpdateWithoutTreasuryAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -5955,6 +6795,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6037,6 +6879,8 @@ export type OrganizationCreateWithoutCapitalBucketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -6119,6 +6963,8 @@ export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6217,6 +7063,8 @@ export type OrganizationUpdateWithoutCapitalBucketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -6299,6 +7147,8 @@ export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6381,6 +7231,8 @@ export type OrganizationCreateWithoutCreditFacilitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -6463,6 +7315,8 @@ export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6561,6 +7415,8 @@ export type OrganizationUpdateWithoutCreditFacilitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -6643,6 +7499,8 @@ export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -6725,6 +7583,8 @@ export type OrganizationCreateWithoutTreasuryDecisionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -6807,6 +7667,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -6905,6 +7767,8 @@ export type OrganizationUpdateWithoutTreasuryDecisionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -6987,6 +7851,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7069,6 +7935,8 @@ export type OrganizationCreateWithoutTreasuryScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -7151,6 +8019,8 @@ export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7249,6 +8119,8 @@ export type OrganizationUpdateWithoutTreasuryScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -7331,6 +8203,8 @@ export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7413,6 +8287,8 @@ export type OrganizationCreateWithoutNettingOpportunitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -7495,6 +8371,8 @@ export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7593,6 +8471,8 @@ export type OrganizationUpdateWithoutNettingOpportunitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -7675,6 +8555,8 @@ export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7757,6 +8639,8 @@ export type OrganizationCreateWithoutAssetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -7839,6 +8723,8 @@ export type OrganizationUncheckedCreateWithoutAssetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7937,6 +8823,8 @@ export type OrganizationUpdateWithoutAssetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -8019,6 +8907,8 @@ export type OrganizationUncheckedUpdateWithoutAssetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8101,6 +8991,8 @@ export type OrganizationCreateWithoutAssetDisposalsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -8183,6 +9075,8 @@ export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8281,6 +9175,8 @@ export type OrganizationUpdateWithoutAssetDisposalsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -8363,6 +9259,8 @@ export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8445,6 +9343,8 @@ export type OrganizationCreateWithoutCapExBudgetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -8527,6 +9427,8 @@ export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8625,6 +9527,8 @@ export type OrganizationUpdateWithoutCapExBudgetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -8707,6 +9611,8 @@ export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8789,6 +9695,8 @@ export type OrganizationCreateWithoutCostCenterInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -8871,6 +9779,8 @@ export type OrganizationUncheckedCreateWithoutCostCenterInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8969,6 +9879,8 @@ export type OrganizationUpdateWithoutCostCenterInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -9051,6 +9963,8 @@ export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9133,6 +10047,8 @@ export type OrganizationCreateWithoutProjectInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -9215,6 +10131,8 @@ export type OrganizationUncheckedCreateWithoutProjectInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9313,6 +10231,8 @@ export type OrganizationUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -9395,6 +10315,8 @@ export type OrganizationUncheckedUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9477,6 +10399,8 @@ export type OrganizationCreateWithoutTimeEntriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -9559,6 +10483,8 @@ export type OrganizationUncheckedCreateWithoutTimeEntriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -9657,6 +10583,8 @@ export type OrganizationUpdateWithoutTimeEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -9739,6 +10667,8 @@ export type OrganizationUncheckedUpdateWithoutTimeEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -9821,6 +10751,8 @@ export type OrganizationCreateWithoutInternalChargebacksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -9903,6 +10835,8 @@ export type OrganizationUncheckedCreateWithoutInternalChargebacksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10001,6 +10935,8 @@ export type OrganizationUpdateWithoutInternalChargebacksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -10083,6 +11019,8 @@ export type OrganizationUncheckedUpdateWithoutInternalChargebacksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10165,6 +11103,8 @@ export type OrganizationCreateWithoutAccountingPeriodsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -10247,6 +11187,8 @@ export type OrganizationUncheckedCreateWithoutAccountingPeriodsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10345,6 +11287,8 @@ export type OrganizationUpdateWithoutAccountingPeriodsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -10427,6 +11371,8 @@ export type OrganizationUncheckedUpdateWithoutAccountingPeriodsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10509,6 +11455,8 @@ export type OrganizationCreateWithoutPeriodAdjustmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -10591,6 +11539,8 @@ export type OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -10689,6 +11639,8 @@ export type OrganizationUpdateWithoutPeriodAdjustmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -10771,6 +11723,8 @@ export type OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -10853,6 +11807,8 @@ export type OrganizationCreateWithoutCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -10935,6 +11891,8 @@ export type OrganizationUncheckedCreateWithoutCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11033,6 +11991,8 @@ export type OrganizationUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -11115,6 +12075,8 @@ export type OrganizationUncheckedUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11197,6 +12159,8 @@ export type OrganizationCreateWithoutCustomerPaymentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -11279,6 +12243,8 @@ export type OrganizationUncheckedCreateWithoutCustomerPaymentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11377,6 +12343,8 @@ export type OrganizationUpdateWithoutCustomerPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -11459,6 +12427,8 @@ export type OrganizationUncheckedUpdateWithoutCustomerPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11541,6 +12511,8 @@ export type OrganizationCreateWithoutCustomerCreditEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -11623,6 +12595,8 @@ export type OrganizationUncheckedCreateWithoutCustomerCreditEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -11721,6 +12695,8 @@ export type OrganizationUpdateWithoutCustomerCreditEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -11803,6 +12779,8 @@ export type OrganizationUncheckedUpdateWithoutCustomerCreditEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -11885,6 +12863,8 @@ export type OrganizationCreateWithoutSuppliersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -11967,6 +12947,8 @@ export type OrganizationUncheckedCreateWithoutSuppliersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12065,6 +13047,8 @@ export type OrganizationUpdateWithoutSuppliersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -12147,6 +13131,8 @@ export type OrganizationUncheckedUpdateWithoutSuppliersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12229,6 +13215,8 @@ export type OrganizationCreateWithoutNettingAgreementsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -12311,6 +13299,8 @@ export type OrganizationUncheckedCreateWithoutNettingAgreementsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12409,6 +13399,8 @@ export type OrganizationUpdateWithoutNettingAgreementsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -12491,6 +13483,8 @@ export type OrganizationUncheckedUpdateWithoutNettingAgreementsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12573,6 +13567,8 @@ export type OrganizationCreateWithoutNettingSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -12655,6 +13651,8 @@ export type OrganizationUncheckedCreateWithoutNettingSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -12753,6 +13751,8 @@ export type OrganizationUpdateWithoutNettingSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -12835,6 +13835,8 @@ export type OrganizationUncheckedUpdateWithoutNettingSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -12917,6 +13919,8 @@ export type OrganizationCreateWithoutSettlementInstructionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -12999,6 +14003,8 @@ export type OrganizationUncheckedCreateWithoutSettlementInstructionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13097,6 +14103,8 @@ export type OrganizationUpdateWithoutSettlementInstructionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -13179,6 +14187,8 @@ export type OrganizationUncheckedUpdateWithoutSettlementInstructionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13261,6 +14271,8 @@ export type OrganizationCreateWithoutOffsetEntriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -13343,6 +14355,8 @@ export type OrganizationUncheckedCreateWithoutOffsetEntriesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13441,6 +14455,8 @@ export type OrganizationUpdateWithoutOffsetEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -13523,6 +14539,8 @@ export type OrganizationUncheckedUpdateWithoutOffsetEntriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13605,6 +14623,8 @@ export type OrganizationCreateWithoutOffersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -13687,6 +14707,8 @@ export type OrganizationUncheckedCreateWithoutOffersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -13785,6 +14807,8 @@ export type OrganizationUpdateWithoutOffersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -13867,6 +14891,8 @@ export type OrganizationUncheckedUpdateWithoutOffersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -13949,6 +14975,8 @@ export type OrganizationCreateWithoutOfferTemplatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -14031,6 +15059,8 @@ export type OrganizationUncheckedCreateWithoutOfferTemplatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14129,6 +15159,8 @@ export type OrganizationUpdateWithoutOfferTemplatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -14211,6 +15243,8 @@ export type OrganizationUncheckedUpdateWithoutOfferTemplatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14293,6 +15327,8 @@ export type OrganizationCreateWithoutTasksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -14375,6 +15411,8 @@ export type OrganizationUncheckedCreateWithoutTasksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14473,6 +15511,8 @@ export type OrganizationUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -14555,6 +15595,8 @@ export type OrganizationUncheckedUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14637,6 +15679,8 @@ export type OrganizationCreateWithoutTaskTagsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -14719,6 +15763,8 @@ export type OrganizationUncheckedCreateWithoutTaskTagsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -14817,6 +15863,8 @@ export type OrganizationUpdateWithoutTaskTagsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -14899,6 +15947,8 @@ export type OrganizationUncheckedUpdateWithoutTaskTagsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -14981,6 +16031,8 @@ export type OrganizationCreateWithoutRisksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -15063,6 +16115,8 @@ export type OrganizationUncheckedCreateWithoutRisksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15161,6 +16215,8 @@ export type OrganizationUpdateWithoutRisksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -15243,6 +16299,8 @@ export type OrganizationUncheckedUpdateWithoutRisksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15325,6 +16383,8 @@ export type OrganizationCreateWithoutTaskNotificationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -15407,6 +16467,8 @@ export type OrganizationUncheckedCreateWithoutTaskNotificationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15505,6 +16567,8 @@ export type OrganizationUpdateWithoutTaskNotificationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -15587,6 +16651,8 @@ export type OrganizationUncheckedUpdateWithoutTaskNotificationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -15669,6 +16735,8 @@ export type OrganizationCreateWithoutSavedTaskFiltersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -15751,6 +16819,8 @@ export type OrganizationUncheckedCreateWithoutSavedTaskFiltersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -15849,6 +16919,8 @@ export type OrganizationUpdateWithoutSavedTaskFiltersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -15931,6 +17003,8 @@ export type OrganizationUncheckedUpdateWithoutSavedTaskFiltersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16013,6 +17087,8 @@ export type OrganizationCreateWithoutRevenueForecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -16095,6 +17171,8 @@ export type OrganizationUncheckedCreateWithoutRevenueForecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16193,6 +17271,8 @@ export type OrganizationUpdateWithoutRevenueForecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -16275,6 +17355,8 @@ export type OrganizationUncheckedUpdateWithoutRevenueForecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16357,6 +17439,8 @@ export type OrganizationCreateWithoutCostForecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -16439,6 +17523,8 @@ export type OrganizationUncheckedCreateWithoutCostForecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16537,6 +17623,8 @@ export type OrganizationUpdateWithoutCostForecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -16619,6 +17707,8 @@ export type OrganizationUncheckedUpdateWithoutCostForecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -16701,6 +17791,8 @@ export type OrganizationCreateWithoutCashForecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -16783,6 +17875,8 @@ export type OrganizationUncheckedCreateWithoutCashForecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -16881,6 +17975,8 @@ export type OrganizationUpdateWithoutCashForecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -16963,6 +18059,8 @@ export type OrganizationUncheckedUpdateWithoutCashForecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17045,6 +18143,8 @@ export type OrganizationCreateWithoutForecastScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -17127,6 +18227,8 @@ export type OrganizationUncheckedCreateWithoutForecastScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17225,6 +18327,8 @@ export type OrganizationUpdateWithoutForecastScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -17307,6 +18411,8 @@ export type OrganizationUncheckedUpdateWithoutForecastScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17389,6 +18495,8 @@ export type OrganizationCreateWithoutForecastAlertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -17471,6 +18579,8 @@ export type OrganizationUncheckedCreateWithoutForecastAlertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17569,6 +18679,8 @@ export type OrganizationUpdateWithoutForecastAlertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -17651,6 +18763,8 @@ export type OrganizationUncheckedUpdateWithoutForecastAlertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -17733,6 +18847,8 @@ export type OrganizationCreateWithoutForecastVariancesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -17815,6 +18931,8 @@ export type OrganizationUncheckedCreateWithoutForecastVariancesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -17913,6 +19031,8 @@ export type OrganizationUpdateWithoutForecastVariancesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -17995,6 +19115,8 @@ export type OrganizationUncheckedUpdateWithoutForecastVariancesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18077,6 +19199,8 @@ export type OrganizationCreateWithoutScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -18159,6 +19283,8 @@ export type OrganizationUncheckedCreateWithoutScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18257,6 +19383,8 @@ export type OrganizationUpdateWithoutScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -18339,6 +19467,8 @@ export type OrganizationUncheckedUpdateWithoutScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18421,6 +19551,8 @@ export type OrganizationCreateWithoutStressTestsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -18503,6 +19635,8 @@ export type OrganizationUncheckedCreateWithoutStressTestsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18601,6 +19735,8 @@ export type OrganizationUpdateWithoutStressTestsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -18683,6 +19819,8 @@ export type OrganizationUncheckedUpdateWithoutStressTestsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -18765,6 +19903,8 @@ export type OrganizationCreateWithoutSimulationStatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -18847,6 +19987,8 @@ export type OrganizationUncheckedCreateWithoutSimulationStatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -18945,6 +20087,8 @@ export type OrganizationUpdateWithoutSimulationStatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -19027,6 +20171,8 @@ export type OrganizationUncheckedUpdateWithoutSimulationStatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19109,6 +20255,8 @@ export type OrganizationCreateWithoutKpisInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -19191,6 +20339,8 @@ export type OrganizationUncheckedCreateWithoutKpisInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19289,6 +20439,8 @@ export type OrganizationUpdateWithoutKpisInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -19371,6 +20523,8 @@ export type OrganizationUncheckedUpdateWithoutKpisInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19453,6 +20607,8 @@ export type OrganizationCreateWithoutKpialertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -19535,6 +20691,8 @@ export type OrganizationUncheckedCreateWithoutKpialertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19633,6 +20791,8 @@ export type OrganizationUpdateWithoutKpialertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -19715,6 +20875,8 @@ export type OrganizationUncheckedUpdateWithoutKpialertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -19797,6 +20959,8 @@ export type OrganizationCreateWithoutFxratesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -19879,6 +21043,8 @@ export type OrganizationUncheckedCreateWithoutFxratesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -19977,6 +21143,8 @@ export type OrganizationUpdateWithoutFxratesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -20059,6 +21227,8 @@ export type OrganizationUncheckedUpdateWithoutFxratesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20141,6 +21311,8 @@ export type OrganizationCreateWithoutFxexposuresInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -20223,6 +21395,8 @@ export type OrganizationUncheckedCreateWithoutFxexposuresInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -20321,6 +21495,8 @@ export type OrganizationUpdateWithoutFxexposuresInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -20403,6 +21579,8 @@ export type OrganizationUncheckedUpdateWithoutFxexposuresInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20485,6 +21663,8 @@ export type OrganizationCreateWithoutFxconversionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -20567,6 +21747,8 @@ export type OrganizationUncheckedCreateWithoutFxconversionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -20665,6 +21847,8 @@ export type OrganizationUpdateWithoutFxconversionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -20747,6 +21931,8 @@ export type OrganizationUncheckedUpdateWithoutFxconversionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -20829,6 +22015,8 @@ export type OrganizationCreateWithoutFxscenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -20911,6 +22099,8 @@ export type OrganizationUncheckedCreateWithoutFxscenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -21009,6 +22199,8 @@ export type OrganizationUpdateWithoutFxscenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -21091,6 +22283,8 @@ export type OrganizationUncheckedUpdateWithoutFxscenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -21173,6 +22367,8 @@ export type OrganizationCreateWithoutFxforecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -21255,6 +22451,8 @@ export type OrganizationUncheckedCreateWithoutFxforecastsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -21353,6 +22551,8 @@ export type OrganizationUpdateWithoutFxforecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -21435,6 +22635,8 @@ export type OrganizationUncheckedUpdateWithoutFxforecastsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -21517,6 +22719,8 @@ export type OrganizationCreateWithoutFxcostsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -21599,6 +22803,8 @@ export type OrganizationUncheckedCreateWithoutFxcostsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -21697,6 +22903,8 @@ export type OrganizationUpdateWithoutFxcostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -21779,6 +22987,8 @@ export type OrganizationUncheckedUpdateWithoutFxcostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -21861,6 +23071,8 @@ export type OrganizationCreateWithoutFxriskIndicatorsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -21943,6 +23155,8 @@ export type OrganizationUncheckedCreateWithoutFxriskIndicatorsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -22041,6 +23255,8 @@ export type OrganizationUpdateWithoutFxriskIndicatorsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -22123,6 +23339,8 @@ export type OrganizationUncheckedUpdateWithoutFxriskIndicatorsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -22205,6 +23423,8 @@ export type OrganizationCreateWithoutFxauditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -22287,6 +23507,8 @@ export type OrganizationUncheckedCreateWithoutFxauditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -22385,6 +23607,8 @@ export type OrganizationUpdateWithoutFxauditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -22467,6 +23691,8 @@ export type OrganizationUncheckedUpdateWithoutFxauditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -22549,6 +23775,8 @@ export type OrganizationCreateWithoutInvestorSnapshotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -22631,6 +23859,8 @@ export type OrganizationUncheckedCreateWithoutInvestorSnapshotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -22729,6 +23959,8 @@ export type OrganizationUpdateWithoutInvestorSnapshotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -22811,6 +24043,8 @@ export type OrganizationUncheckedUpdateWithoutInvestorSnapshotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -22893,6 +24127,8 @@ export type OrganizationCreateWithoutBoardReportsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -22975,6 +24211,8 @@ export type OrganizationUncheckedCreateWithoutBoardReportsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -23073,6 +24311,8 @@ export type OrganizationUpdateWithoutBoardReportsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -23155,6 +24395,8 @@ export type OrganizationUncheckedUpdateWithoutBoardReportsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -23237,6 +24479,8 @@ export type OrganizationCreateWithoutRunwayProjectionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -23319,6 +24563,8 @@ export type OrganizationUncheckedCreateWithoutRunwayProjectionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -23417,6 +24663,8 @@ export type OrganizationUpdateWithoutRunwayProjectionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -23499,6 +24747,8 @@ export type OrganizationUncheckedUpdateWithoutRunwayProjectionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -23581,6 +24831,8 @@ export type OrganizationCreateWithoutInvestorAccessLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -23663,6 +24915,8 @@ export type OrganizationUncheckedCreateWithoutInvestorAccessLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -23761,6 +25015,8 @@ export type OrganizationUpdateWithoutInvestorAccessLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -23843,6 +25099,8 @@ export type OrganizationUncheckedUpdateWithoutInvestorAccessLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -23925,6 +25183,8 @@ export type OrganizationCreateWithoutCashflowItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -24007,6 +25267,8 @@ export type OrganizationUncheckedCreateWithoutCashflowItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -24105,6 +25367,8 @@ export type OrganizationUpdateWithoutCashflowItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -24187,6 +25451,8 @@ export type OrganizationUncheckedUpdateWithoutCashflowItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -24269,6 +25535,8 @@ export type OrganizationCreateWithoutLiquidityScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -24351,6 +25619,8 @@ export type OrganizationUncheckedCreateWithoutLiquidityScenariosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -24449,6 +25719,8 @@ export type OrganizationUpdateWithoutLiquidityScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -24531,6 +25803,8 @@ export type OrganizationUncheckedUpdateWithoutLiquidityScenariosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -24613,6 +25887,8 @@ export type OrganizationCreateWithoutLiquidityGapsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -24695,6 +25971,8 @@ export type OrganizationUncheckedCreateWithoutLiquidityGapsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -24793,6 +26071,8 @@ export type OrganizationUpdateWithoutLiquidityGapsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -24875,6 +26155,8 @@ export type OrganizationUncheckedUpdateWithoutLiquidityGapsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -24957,6 +26239,8 @@ export type OrganizationCreateWithoutLiquidityRiskSignalsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -25039,6 +26323,8 @@ export type OrganizationUncheckedCreateWithoutLiquidityRiskSignalsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -25137,6 +26423,8 @@ export type OrganizationUpdateWithoutLiquidityRiskSignalsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -25219,6 +26507,8 @@ export type OrganizationUncheckedUpdateWithoutLiquidityRiskSignalsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -25301,6 +26591,8 @@ export type OrganizationCreateWithoutLiquidityAuditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -25383,6 +26675,8 @@ export type OrganizationUncheckedCreateWithoutLiquidityAuditLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -25481,6 +26775,8 @@ export type OrganizationUpdateWithoutLiquidityAuditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -25563,6 +26859,8 @@ export type OrganizationUncheckedUpdateWithoutLiquidityAuditLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -25645,6 +26943,8 @@ export type OrganizationCreateWithoutLiquidityPositionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
@@ -25727,6 +27027,8 @@ export type OrganizationUncheckedCreateWithoutLiquidityPositionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
   financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
   receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
@@ -25825,6 +27127,8 @@ export type OrganizationUpdateWithoutLiquidityPositionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
@@ -25907,6 +27211,8 @@ export type OrganizationUncheckedUpdateWithoutLiquidityPositionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
   financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
   receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -25984,6 +27290,8 @@ export type OrganizationUncheckedUpdateWithoutLiquidityPositionsInput = {
 
 export type OrganizationCountOutputType = {
   users: number
+  invitations: number
+  wallets: number
   transactions: number
   financialAccounts: number
   receipts: number
@@ -26057,6 +27365,8 @@ export type OrganizationCountOutputType = {
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | OrganizationCountOutputTypeCountUsersArgs
+  invitations?: boolean | OrganizationCountOutputTypeCountInvitationsArgs
+  wallets?: boolean | OrganizationCountOutputTypeCountWalletsArgs
   transactions?: boolean | OrganizationCountOutputTypeCountTransactionsArgs
   financialAccounts?: boolean | OrganizationCountOutputTypeCountFinancialAccountsArgs
   receipts?: boolean | OrganizationCountOutputTypeCountReceiptsArgs
@@ -26143,6 +27453,20 @@ export type OrganizationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types
  */
 export type OrganizationCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationInvitationWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountWalletsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WalletWhereInput
 }
 
 /**
@@ -26641,6 +27965,8 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   createdAt?: boolean
   updatedAt?: boolean
   users?: boolean | Prisma.Organization$usersArgs<ExtArgs>
+  invitations?: boolean | Prisma.Organization$invitationsArgs<ExtArgs>
+  wallets?: boolean | Prisma.Organization$walletsArgs<ExtArgs>
   transactions?: boolean | Prisma.Organization$transactionsArgs<ExtArgs>
   financialAccounts?: boolean | Prisma.Organization$financialAccountsArgs<ExtArgs>
   receipts?: boolean | Prisma.Organization$receiptsArgs<ExtArgs>
@@ -26755,6 +28081,8 @@ export type OrganizationSelectScalar = {
 export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "country" | "industry" | "fiscalYearEnd" | "defaultCurrency" | "taxId" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Organization$usersArgs<ExtArgs>
+  invitations?: boolean | Prisma.Organization$invitationsArgs<ExtArgs>
+  wallets?: boolean | Prisma.Organization$walletsArgs<ExtArgs>
   transactions?: boolean | Prisma.Organization$transactionsArgs<ExtArgs>
   financialAccounts?: boolean | Prisma.Organization$financialAccountsArgs<ExtArgs>
   receipts?: boolean | Prisma.Organization$receiptsArgs<ExtArgs>
@@ -26833,6 +28161,8 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "Organization"
   objects: {
     users: Prisma.$UserPayload<ExtArgs>[]
+    invitations: Prisma.$OrganizationInvitationPayload<ExtArgs>[]
+    wallets: Prisma.$WalletPayload<ExtArgs>[]
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
     financialAccounts: Prisma.$FinancialAccountPayload<ExtArgs>[]
     receipts: Prisma.$ReceiptPayload<ExtArgs>[]
@@ -27309,6 +28639,8 @@ readonly fields: OrganizationFieldRefs;
 export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.Organization$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  invitations<T extends Prisma.Organization$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  wallets<T extends Prisma.Organization$walletsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.Organization$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   financialAccounts<T extends Prisma.Organization$financialAccountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$financialAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receipts<T extends Prisma.Organization$receiptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$receiptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -27826,6 +29158,54 @@ export type Organization$usersArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Organization.invitations
+ */
+export type Organization$invitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationInvitation
+   */
+  select?: Prisma.OrganizationInvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationInvitation
+   */
+  omit?: Prisma.OrganizationInvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInvitationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationInvitationWhereInput
+  orderBy?: Prisma.OrganizationInvitationOrderByWithRelationInput | Prisma.OrganizationInvitationOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationInvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationInvitationScalarFieldEnum | Prisma.OrganizationInvitationScalarFieldEnum[]
+}
+
+/**
+ * Organization.wallets
+ */
+export type Organization$walletsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Wallet
+   */
+  select?: Prisma.WalletSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Wallet
+   */
+  omit?: Prisma.WalletOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WalletInclude<ExtArgs> | null
+  where?: Prisma.WalletWhereInput
+  orderBy?: Prisma.WalletOrderByWithRelationInput | Prisma.WalletOrderByWithRelationInput[]
+  cursor?: Prisma.WalletWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WalletScalarFieldEnum | Prisma.WalletScalarFieldEnum[]
 }
 
 /**

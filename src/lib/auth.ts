@@ -99,44 +99,39 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/login",
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user?.email) {
         // Try to find existing user
         let dbUser = await prisma.user.findUnique({
           where: { email: user.email },
           select: { id: true, organizationId: true }
         })
-        
-        // If user doesn't exist, auto-create and link to first organization
+
+        // If user doesn't exist, create WITHOUT organization
+        // User will be redirected to /auth/select-organization to choose/create one
         if (!dbUser) {
-          // Find the first organization (from seed data)
-          const org = await prisma.organization.findFirst()
-          
-          if (org) {
-            // Create user linked to the organization
+          try {
             dbUser = await prisma.user.create({
               data: {
                 email: user.email,
                 name: user.name || 'User',
-                organizationId: org.id,
+                image: user.image,
+                // organizationId intentionally left null - user must select/create org
               },
+              select: { id: true, organizationId: true }
+            })
+          } catch {
+            // Race condition: user might have been created by another request
+            dbUser = await prisma.user.findUnique({
+              where: { email: user.email },
               select: { id: true, organizationId: true }
             })
           }
         }
-        
-        // If user exists but has no org, link to first available org
-        if (dbUser && !dbUser.organizationId) {
-          const org = await prisma.organization.findFirst()
-          if (org) {
-            await prisma.user.update({
-              where: { id: dbUser.id },
-              data: { organizationId: org.id }
-            })
-            dbUser.organizationId = org.id
-          }
-        }
-        
+
+        // Do NOT auto-assign to first org - user must explicitly join/create
+        // Middleware will redirect users without org to selection page
+
         if (dbUser) {
           token.organizationId = dbUser.organizationId || undefined
           token.sub = dbUser.id

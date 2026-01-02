@@ -389,6 +389,7 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Organization: 'Organization',
+  OrganizationInvitation: 'OrganizationInvitation',
   FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
   Receipt: 'Receipt',
@@ -553,7 +554,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "walletToken" | "walletTransaction" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "invoiceVersion" | "invoiceAccountingEvent" | "invoicePayment" | "order" | "archiveRecord" | "archiveLink" | "archiveVersion" | "archiveAccessLog" | "archiveRetentionPolicy" | "archiveExport" | "archiveImportBatch" | "archiveAutomationRule" | "archiveException" | "archiveSavedView" | "liability" | "liabilityEvent" | "liabilityPayment" | "liabilitySettlement" | "liabilityAccrual" | "liabilityCovenantCheck" | "liabilityImportBatch" | "liabilityAutomationRule" | "liabilityException" | "liabilitySavedView" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry" | "customer" | "customerContact" | "customerPayment" | "customerCreditEvent" | "customerRevenue" | "customerRiskIndicator" | "supplier" | "supplierContact" | "supplierBalance" | "supplierPayment" | "supplierReliability" | "supplierSpend" | "supplierRisk" | "nettingAgreement" | "nettingParty" | "nettingSession" | "nettingPosition" | "nettingTransaction" | "settlementInstruction" | "offsetEntry" | "offer" | "offerVersion" | "offerAuditLog" | "offerTemplate" | "task" | "taskAssignee" | "taskWatcher" | "taskTag" | "taskTagLink" | "taskDependency" | "taskComment" | "taskActivity" | "taskAttachment" | "risk" | "riskMitigationStep" | "taskRiskLink" | "riskComment" | "riskActivity" | "taskNotification" | "savedTaskFilter" | "revenueForecast" | "revenueLineItem" | "costForecast" | "costLineItem" | "cashForecast" | "cashForecastPeriod" | "forecastScenario" | "forecastAssumption" | "forecastAlert" | "forecastAnnotation" | "forecastVariance" | "scenario" | "scenarioAssumption" | "stressTest" | "simulationState" | "scenarioComment" | "scenarioDecision" | "scenarioChangeEvent" | "kPI" | "kPIHistory" | "kPIAlert" | "kPITarget" | "kPIBenchmark" | "fXRate" | "fXExposure" | "fXConversion" | "fXScenario" | "fXForecast" | "fXCost" | "fXRiskIndicator" | "fXAuditLog" | "investorSnapshot" | "boardReport" | "runwayProjection" | "investorAccessLog" | "cashflowItem" | "liquidityScenario" | "liquidityGap" | "liquidityRiskSignal" | "liquidityAuditLog" | "liquidityPosition"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "organizationInvitation" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "walletToken" | "walletTransaction" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "invoiceVersion" | "invoiceAccountingEvent" | "invoicePayment" | "order" | "archiveRecord" | "archiveLink" | "archiveVersion" | "archiveAccessLog" | "archiveRetentionPolicy" | "archiveExport" | "archiveImportBatch" | "archiveAutomationRule" | "archiveException" | "archiveSavedView" | "liability" | "liabilityEvent" | "liabilityPayment" | "liabilitySettlement" | "liabilityAccrual" | "liabilityCovenantCheck" | "liabilityImportBatch" | "liabilityAutomationRule" | "liabilityException" | "liabilitySavedView" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry" | "customer" | "customerContact" | "customerPayment" | "customerCreditEvent" | "customerRevenue" | "customerRiskIndicator" | "supplier" | "supplierContact" | "supplierBalance" | "supplierPayment" | "supplierReliability" | "supplierSpend" | "supplierRisk" | "nettingAgreement" | "nettingParty" | "nettingSession" | "nettingPosition" | "nettingTransaction" | "settlementInstruction" | "offsetEntry" | "offer" | "offerVersion" | "offerAuditLog" | "offerTemplate" | "task" | "taskAssignee" | "taskWatcher" | "taskTag" | "taskTagLink" | "taskDependency" | "taskComment" | "taskActivity" | "taskAttachment" | "risk" | "riskMitigationStep" | "taskRiskLink" | "riskComment" | "riskActivity" | "taskNotification" | "savedTaskFilter" | "revenueForecast" | "revenueLineItem" | "costForecast" | "costLineItem" | "cashForecast" | "cashForecastPeriod" | "forecastScenario" | "forecastAssumption" | "forecastAlert" | "forecastAnnotation" | "forecastVariance" | "scenario" | "scenarioAssumption" | "stressTest" | "simulationState" | "scenarioComment" | "scenarioDecision" | "scenarioChangeEvent" | "kPI" | "kPIHistory" | "kPIAlert" | "kPITarget" | "kPIBenchmark" | "fXRate" | "fXExposure" | "fXConversion" | "fXScenario" | "fXForecast" | "fXCost" | "fXRiskIndicator" | "fXAuditLog" | "investorSnapshot" | "boardReport" | "runwayProjection" | "investorAccessLog" | "cashflowItem" | "liquidityScenario" | "liquidityGap" | "liquidityRiskSignal" | "liquidityAuditLog" | "liquidityPosition"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -924,6 +925,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OrganizationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.OrganizationCountAggregateOutputType> | number
+        }
+      }
+    }
+    OrganizationInvitation: {
+      payload: Prisma.$OrganizationInvitationPayload<ExtArgs>
+      fields: Prisma.OrganizationInvitationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OrganizationInvitationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OrganizationInvitationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>
+        }
+        findFirst: {
+          args: Prisma.OrganizationInvitationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OrganizationInvitationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>
+        }
+        findMany: {
+          args: Prisma.OrganizationInvitationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>[]
+        }
+        create: {
+          args: Prisma.OrganizationInvitationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>
+        }
+        createMany: {
+          args: Prisma.OrganizationInvitationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OrganizationInvitationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>[]
+        }
+        delete: {
+          args: Prisma.OrganizationInvitationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>
+        }
+        update: {
+          args: Prisma.OrganizationInvitationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>
+        }
+        deleteMany: {
+          args: Prisma.OrganizationInvitationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OrganizationInvitationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OrganizationInvitationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>[]
+        }
+        upsert: {
+          args: Prisma.OrganizationInvitationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OrganizationInvitationPayload>
+        }
+        aggregate: {
+          args: Prisma.OrganizationInvitationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOrganizationInvitation>
+        }
+        groupBy: {
+          args: Prisma.OrganizationInvitationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OrganizationInvitationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OrganizationInvitationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OrganizationInvitationCountAggregateOutputType> | number
         }
       }
     }
@@ -12060,6 +12135,22 @@ export const OrganizationScalarFieldEnum = {
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
+export const OrganizationInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  inviteCode: 'inviteCode',
+  role: 'role',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  usedByUserId: 'usedByUserId',
+  organizationId: 'organizationId',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type OrganizationInvitationScalarFieldEnum = (typeof OrganizationInvitationScalarFieldEnum)[keyof typeof OrganizationInvitationScalarFieldEnum]
+
+
 export const FinancialAccountScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -16472,6 +16563,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   verificationToken?: Prisma.VerificationTokenOmit
   organization?: Prisma.OrganizationOmit
+  organizationInvitation?: Prisma.OrganizationInvitationOmit
   financialAccount?: Prisma.FinancialAccountOmit
   transaction?: Prisma.TransactionOmit
   receipt?: Prisma.ReceiptOmit

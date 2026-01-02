@@ -32,10 +32,13 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     where: { id, organizationId: user.organizationId },
     data: body
   })
-  
+
   if (result.count === 0) return notFound('Account')
-  
-  const updated = await prisma.financialAccount.findUnique({ where: { id } })
+
+  // SECURITY: Always include organizationId filter to prevent cross-org data leaks
+  const updated = await prisma.financialAccount.findFirst({
+    where: { id, organizationId: user.organizationId }
+  })
   return NextResponse.json(updated)
 }
 

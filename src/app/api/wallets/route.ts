@@ -55,6 +55,11 @@ export async function POST(req: NextRequest) {
   const user = await getSessionWithOrg();
   if (!user?.id) return unauthorized();
 
+  // SECURITY: organizationId is required for wallet creation
+  if (!user.organizationId) {
+    return badRequest('User must belong to an organization');
+  }
+
   const body = await req.json();
 
   if (!body.address) return badRequest('address is required');

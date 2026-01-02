@@ -56,6 +56,7 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Organization: 'Organization',
+  OrganizationInvitation: 'OrganizationInvitation',
   FinancialAccount: 'FinancialAccount',
   Transaction: 'Transaction',
   Receipt: 'Receipt',
@@ -289,6 +290,22 @@ export const OrganizationScalarFieldEnum = {
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const OrganizationInvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  inviteCode: 'inviteCode',
+  role: 'role',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  usedByUserId: 'usedByUserId',
+  organizationId: 'organizationId',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type OrganizationInvitationScalarFieldEnum = (typeof OrganizationInvitationScalarFieldEnum)[keyof typeof OrganizationInvitationScalarFieldEnum]
 
 
 export const FinancialAccountScalarFieldEnum = {
