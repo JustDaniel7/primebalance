@@ -95,6 +95,9 @@
 #    - APP_GITHUB_ID          : GitHub OAuth App ID (renamed to avoid conflict)
 #    - APP_GITHUB_SECRET      : GitHub OAuth App Secret
 #
+#    Optional (for AI features):
+#    - DEEPSEEK_API_KEY       : DeepSeek API key for AI-enhanced tax optimization
+#
 # ============================================================================
 
 name: Deploy to Cloud Run
@@ -181,7 +184,7 @@ jobs:
             --max-instances 10 \
             --port 8080 \
             --add-cloudsql-instances="${{ steps.db.outputs.sql_connection }}" \
-            --set-env-vars="^##^NODE_ENV=production##NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}##NEXTAUTH_URL=${{ steps.current-url.outputs.url }}##GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}##GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}##GITHUB_ID=${{ secrets.APP_GITHUB_ID }}##GITHUB_SECRET=${{ secrets.APP_GITHUB_SECRET }}##DATABASE_URL=${{ steps.db.outputs.database_url }}##CLOUD_SQL_CONNECTION_NAME=${{ steps.db.outputs.sql_connection }}##DB_NAME=${{ secrets.DB_NAME }}##DB_USER=${{ secrets.DB_USER }}##DB_PASSWORD=${{ secrets.DB_PASSWORD }}"
+            --set-env-vars="^##^NODE_ENV=production##NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}##NEXTAUTH_URL=${{ steps.current-url.outputs.url }}##GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}##GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}##GITHUB_ID=${{ secrets.APP_GITHUB_ID }}##GITHUB_SECRET=${{ secrets.APP_GITHUB_SECRET }}##DATABASE_URL=${{ steps.db.outputs.database_url }}##CLOUD_SQL_CONNECTION_NAME=${{ steps.db.outputs.sql_connection }}##DB_NAME=${{ secrets.DB_NAME }}##DB_USER=${{ secrets.DB_USER }}##DB_PASSWORD=${{ secrets.DB_PASSWORD }}##DEEPSEEK_API_KEY=${{ secrets.DEEPSEEK_API_KEY }}"
 
       - name: Get deployed URL and update NEXTAUTH_URL
         id: deployed
