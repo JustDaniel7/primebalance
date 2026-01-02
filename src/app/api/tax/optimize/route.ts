@@ -558,11 +558,14 @@ export async function POST(request: NextRequest) {
       suggestions: enhancedSuggestions,
     }
 
+    // Return the actual mode used, not the requested mode
+    const actualMode = useAI ? 'ai' : 'template'
+
     return NextResponse.json({
       success: true,
       result: enhancedResult,
       summary,
-      mode,
+      mode: actualMode,
       aiAvailable: !!DEEPSEEK_API_KEY,
       entityCount: entities.length,
       jurisdictions,
