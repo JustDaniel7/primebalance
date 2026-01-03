@@ -10,7 +10,7 @@ import { SearchIcon, BellIcon, ChevronDownIcon } from '@/components/ui/Icons'
 import { Sun, Moon, CheckCheck } from 'lucide-react'
 import { useSearch } from '@/contexts/SearchContext'
 import { useNotifications } from '@/hooks/useNotifications'
-import { showSuccess } from '@/lib/notifications'
+import toast from 'react-hot-toast'
 
 export default function Header() {
   const { user } = useStore()
@@ -145,7 +145,7 @@ export default function Header() {
                       <button
                         onClick={async () => {
                           await markAllAsRead()
-                          showSuccess('All notifications marked as read')
+                          toast.success('All notifications marked as read')
                         }}
                         disabled={unreadCount === 0}
                         className="flex items-center gap-1 text-xs text-[var(--accent-primary)] hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"

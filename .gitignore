@@ -4,7 +4,5 @@ node_modules
 # Sentry Config File
 .claude
 settings.local.json
-package-lock.json
-package.json
 .idea
 .vscode

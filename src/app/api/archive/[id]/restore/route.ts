@@ -68,6 +68,18 @@ export async function POST(
       case 'transaction': {
         const originalData = content.originalTransaction;
         if (originalData) {
+          // Get a default account for the organization
+          const defaultAccount = await prisma.financialAccount.findFirst({
+            where: { organizationId: session.user.organizationId },
+          });
+
+          if (!defaultAccount) {
+            return NextResponse.json({
+              error: 'No financial account found to restore transaction',
+              code: 'NO_ACCOUNT',
+            }, { status: 400 });
+          }
+
           // Create new transaction from archived data
           const newTransaction = await prisma.transaction.create({
             data: {
@@ -75,10 +87,11 @@ export async function POST(
               amount: record.amount || originalData.amount || 0,
               currency: record.currency || originalData.currency || 'USD',
               date: originalData.date ? new Date(originalData.date) : new Date(),
+              type: originalData.type || 'expense',
               category: originalData.category || record.subcategory || 'general',
               status: 'pending', // Reset to pending status
               organizationId: session.user.organizationId,
-              createdBy: session.user.id,
+              accountId: originalData.accountId || defaultAccount.id,
             },
           });
           restoredTo = `/dashboard/transactions?id=${newTransaction.id}`;
@@ -94,15 +107,16 @@ export async function POST(
               invoiceNumber: `RESTORED-${Date.now()}`,
               status: 'draft',
               dueDate: originalData.dueDate ? new Date(originalData.dueDate) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-              issueDate: new Date(),
+              invoiceDate: new Date(),
               subtotal: record.amount || originalData.subtotal || 0,
               taxAmount: originalData.taxAmount || 0,
-              totalAmount: record.amount || originalData.totalAmount || 0,
+              taxRate: originalData.taxRate || 0,
+              total: record.amount || originalData.total || originalData.totalAmount || 0,
               currency: record.currency || originalData.currency || 'USD',
               notes: `Restored from archive: ${record.archiveRecordId}`,
+              items: originalData.items || [],
               organizationId: session.user.organizationId,
-              customerId: originalData.customerId || null,
-              createdBy: session.user.id,
+              customerId: originalData.customerId || undefined,
             },
           });
           restoredTo = `/dashboard/invoices?id=${newInvoice.id}`;
@@ -113,17 +127,22 @@ export async function POST(
       case 'order': {
         const originalData = content.originalOrder;
         if (originalData) {
+          const total = record.amount || originalData.total || originalData.totalAmount || 0;
           const newOrder = await prisma.order.create({
             data: {
               orderNumber: `RESTORED-${Date.now()}`,
-              status: 'pending',
-              totalAmount: record.amount || originalData.totalAmount || 0,
-              currency: record.currency || originalData.currency || 'USD',
+              status: 'draft',
+              total: total,
+              subtotal: originalData.subtotal || total,
+              taxAmount: originalData.taxAmount || 0,
+              currency: record.currency || originalData.currency || 'EUR',
               orderDate: new Date(),
               notes: `Restored from archive: ${record.archiveRecordId}`,
               organizationId: session.user.organizationId,
-              customerId: originalData.customerId || null,
-              createdBy: session.user.id,
+              customerId: originalData.customerId || undefined,
+              customerName: originalData.customerName || record.counterpartyName || 'Unknown Customer',
+              items: originalData.items || [],
+              userId: session.user.id,
             },
           });
           restoredTo = `/dashboard/orders?id=${newOrder.id}`;
@@ -134,16 +153,20 @@ export async function POST(
       case 'project': {
         const originalData = content.originalProject;
         if (originalData) {
+          const startDate = originalData.plannedStartDate ? new Date(originalData.plannedStartDate) : new Date();
+          const endDate = originalData.plannedEndDate ? new Date(originalData.plannedEndDate) : new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
           const newProject = await prisma.project.create({
             data: {
+              code: originalData.code || `RESTORED-${Date.now()}`,
               name: originalData.name || record.title,
-              description: originalData.description || record.description,
-              status: 'active',
-              budget: record.amount || originalData.budget || 0,
-              currency: record.currency || originalData.currency || 'USD',
-              startDate: originalData.startDate ? new Date(originalData.startDate) : new Date(),
+              description: originalData.description || record.description || `Restored from archive: ${record.archiveRecordId}`,
+              status: 'planning',
+              budgetAmount: record.amount || originalData.budgetAmount || originalData.budget || 0,
+              currency: record.currency || originalData.currency || 'EUR',
+              plannedStartDate: startDate,
+              plannedEndDate: endDate,
               organizationId: session.user.organizationId,
-              createdBy: session.user.id,
+              ownerId: session.user.id,
             },
           });
           restoredTo = `/dashboard/projects?id=${newProject.id}`;

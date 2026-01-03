@@ -771,7 +771,7 @@ export default function AccountsPage() {
               <div className="flex items-center gap-3">
                 <AlertCircle className="w-5 h-5 text-red-600" />
                 <p className="text-red-600 dark:text-red-400">{error}</p>
-                <Button variant="secondary" size="sm" onClick={loadAccounts}>
+                <Button variant="secondary" size="sm" onClick={() => loadAccounts()}>
                   Retry
                 </Button>
               </div>

@@ -57,7 +57,10 @@ export async function POST(req: NextRequest) {
                 return badRequest(`Unsupported format: ${format}`)
         }
 
-        return new NextResponse(content, {
+        // Convert Uint8Array to Buffer for NextResponse compatibility
+        const responseBody = content instanceof Uint8Array ? Buffer.from(content) : content
+
+        return new NextResponse(responseBody, {
             headers: {
                 'Content-Type': contentType,
                 'Content-Disposition': `attachment; filename="${fileName}.${fileExtension}"`,

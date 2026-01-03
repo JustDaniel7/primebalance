@@ -942,7 +942,7 @@ export default function CustomersPage() {
                                 {atRiskCount > 0 && ` ${atRiskCount} ${t('customers.moreAtRisk') || 'more are at risk'}.`}
                             </p>
                         </div>
-                        <Button variant="secondary" size="sm" onClick={() => setFilterStatus('churned')}>
+                        <Button variant="secondary" size="sm" onClick={() => setFilterStatus(CustomerStatus.CHURNED)}>
                             {t('customers.viewChurned') || 'View Churned'}
                         </Button>
                     </div>
