@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import { useThemeStore } from '@/store/theme-store'
-import { Card, Button } from '@/components/ui'
+import { Card, Button, VoiceInputButton } from '@/components/ui'
 import { Send, Sparkles, MessageSquare, Lightbulb, TrendingUp, PieChart, Clock } from 'lucide-react'
 
 interface Message {
@@ -195,6 +195,10 @@ export default function AssistantPage() {
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder={t('ai.askAnything')}
                   className="flex-1 px-4 py-3 rounded-xl bg-gray-100 dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 placeholder:text-gray-400 dark:placeholder:text-surface-500 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
+                />
+                <VoiceInputButton
+                  onTranscript={(text) => setInput(prev => prev ? `${prev} ${text}` : text)}
+                  disabled={isTyping}
                 />
                 <Button variant="primary" onClick={handleSend} leftIcon={<Send size={18} />}>
                   {t('chat.send')}
