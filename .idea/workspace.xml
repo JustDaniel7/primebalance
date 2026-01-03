@@ -5,148 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40f71302-b061-4bd2-a927-249611c279ab" name="Changes" comment="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
-      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/send-email/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/api/dunning/send-email/test/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/browser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/browser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/commonInputTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/class.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/internal/prismaNamespaceBrowser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/AccountingPeriod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/AccountingPeriod.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveAccessLog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveAccessLog.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveAutomationRule.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveAutomationRule.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveException.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveExport.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveExport.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveImportBatch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveImportBatch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveLink.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveLink.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveRecord.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveRecord.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveRetentionPolicy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveRetentionPolicy.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveSavedView.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveSavedView.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveVersion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ArchiveVersion.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/BoardReport.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/BoardReport.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CashForecast.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CashForecast.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CashForecastPeriod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CashForecastPeriod.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CashflowItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CashflowItem.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CloseChecklistItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CloseChecklistItem.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CorporateEntity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CorporateEntity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CostCenter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CostCenter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CostForecast.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CostForecast.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CostLineItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CostLineItem.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Customer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Customer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CustomerContact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CustomerContact.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CustomerCreditEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CustomerCreditEvent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CustomerPayment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CustomerPayment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CustomerRevenue.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CustomerRevenue.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/CustomerRiskIndicator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/CustomerRiskIndicator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXAuditLog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXAuditLog.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXConversion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXConversion.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXCost.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXCost.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXExposure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXExposure.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXForecast.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXForecast.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXRate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXRate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXRiskIndicator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXRiskIndicator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FXScenario.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FXScenario.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/FinancialAccount.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/FinancialAccount.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ForecastAlert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ForecastAlert.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ForecastAnnotation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ForecastAnnotation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ForecastAssumption.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ForecastAssumption.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ForecastScenario.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ForecastScenario.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ForecastVariance.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ForecastVariance.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InternalChargeback.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InternalChargeback.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InvestorAccessLog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InvestorAccessLog.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InvestorSnapshot.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InvestorSnapshot.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Invoice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Invoice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InvoiceAccountingEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InvoiceAccountingEvent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InvoicePayment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InvoicePayment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/InvoiceVersion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/InvoiceVersion.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/KPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/KPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/KPIAlert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/KPIAlert.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/KPIBenchmark.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/KPIBenchmark.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/KPIHistory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/KPIHistory.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/KPITarget.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/KPITarget.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Liability.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Liability.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityAccrual.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityAccrual.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityAutomationRule.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityAutomationRule.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityCovenantCheck.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityCovenantCheck.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityEvent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityException.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityException.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityImportBatch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityImportBatch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityPayment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilityPayment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilitySavedView.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilitySavedView.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiabilitySettlement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiabilitySettlement.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityAuditLog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityAuditLog.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityGap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityGap.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityPosition.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityPosition.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityRiskSignal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityRiskSignal.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityScenario.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/LiquidityScenario.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/NettingAgreement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/NettingAgreement.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/NettingParty.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/NettingParty.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/NettingPosition.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/NettingPosition.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/NettingSession.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/NettingSession.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/NettingTransaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/NettingTransaction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Offer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Offer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/OfferAuditLog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/OfferAuditLog.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/OfferTemplate.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/OfferTemplate.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/OfferVersion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/OfferVersion.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/OffsetEntry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/OffsetEntry.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Order.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Order.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Organization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Organization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/OrganizationInvitation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/OrganizationInvitation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/PeriodAdjustment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/PeriodAdjustment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/PeriodAuditEntry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/PeriodAuditEntry.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/PeriodMissingItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/PeriodMissingItem.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Project.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Project.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ProjectMilestone.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ProjectMilestone.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Receipt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Receipt.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/RevenueForecast.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/RevenueForecast.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/RevenueLineItem.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/RevenueLineItem.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Risk.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Risk.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/RiskActivity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/RiskActivity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/RiskComment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/RiskComment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/RiskMitigationStep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/RiskMitigationStep.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/RunwayProjection.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/RunwayProjection.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SavedReport.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SavedReport.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SavedTaskFilter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SavedTaskFilter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Scenario.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Scenario.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioAssumption.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioAssumption.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioChangeEvent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioChangeEvent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioComment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioComment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioDecision.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/ScenarioDecision.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SettlementInstruction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SettlementInstruction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SimulationState.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SimulationState.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/StressTest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/StressTest.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Supplier.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Supplier.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SupplierBalance.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SupplierBalance.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SupplierContact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SupplierContact.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SupplierPayment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SupplierPayment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SupplierReliability.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SupplierReliability.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SupplierRisk.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SupplierRisk.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/SupplierSpend.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/SupplierSpend.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Task.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Task.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskActivity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskActivity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskAssignee.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskAssignee.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskAttachment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskAttachment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskComment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskComment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskDependency.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskDependency.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskNotification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskNotification.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskRiskLink.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskRiskLink.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskTag.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskTag.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskTagLink.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskTagLink.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TaskWatcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TaskWatcher.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/TimeEntry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/TimeEntry.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Transaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Transaction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/Wallet.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/Wallet.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/WalletToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/WalletToken.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma/models/WalletTransaction.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma/models/WalletTransaction.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next-env.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/dunning/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/dunning/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/auth.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -285,6 +147,7 @@
       <workItem from="1766531311267" duration="22989000" />
       <workItem from="1767307759079" duration="293000" />
       <workItem from="1767377046358" duration="19976000" />
+      <workItem from="1767471407888" duration="3518000" />
     </task>
     <task id="LOCAL-00001" summary="Added Liabilities, Orders and Archive">
       <option name="closed" value="true" />
@@ -390,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767393064716</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="button fixes at accounts, live exchange rates and some more button fixes at wallet, also prepared tool for live fiat exchange rates">
+      <option name="closed" value="true" />
+      <created>1767471534299</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1767471534299</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

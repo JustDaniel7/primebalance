@@ -6,3 +6,5 @@ node_modules
 settings.local.json
 package-lock.json
 package.json
+.idea
+.vscode

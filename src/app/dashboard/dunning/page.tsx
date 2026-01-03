@@ -1476,6 +1476,7 @@ export default function DunningPage() {
             {showNewDunningWizard && <NewDunningWizard jurisdictions={INITIAL_JURISDICTIONS} onClose={() => setShowNewDunningWizard(false)} onCreate={handleCreateDunning} />}
             {showNewTemplateWizard && <NewTemplateWizard onClose={() => setShowNewTemplateWizard(false)} onCreate={handleCreateTemplate} />}
             {showNewAutomationWizard && <NewAutomationWizard onClose={() => setShowNewAutomationWizard(false)} onCreate={handleCreateRule} />}
+            {showEmailTestModal && <EmailTestModal onClose={() => setShowEmailTestModal(false)} onTest={() => {}} />}
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -1527,7 +1528,7 @@ export default function DunningPage() {
                     {activeTab === 'automation' && <AutomationTab rules={rules} onToggleRule={handleToggleRule} onNewRule={() => setShowNewAutomationWizard(true)} />}
                     {activeTab === 'templates' && <TemplatesTab templates={templates} onEditTemplate={setEditingTemplate} onNewTemplate={() => setShowNewTemplateWizard(true)} />}
                     {activeTab === 'email-log' && <EmailLogTab emailLogs={emailLogs} formatDateTime={formatDateTime} />}
-                    {activeTab === 'settings' && <SettingsTab jurisdictions={INITIAL_JURISDICTIONS} />}
+                    {activeTab === 'settings' && <SettingsTab jurisdictions={INITIAL_JURISDICTIONS} onTestEmail={() => setShowEmailTestModal(true)} />}
                 </motion.div>
             </AnimatePresence>
         </div>
@@ -1892,9 +1893,39 @@ function EmailLogTab({ emailLogs, formatDateTime }: any) {
     );
 }
 
-function SettingsTab({ jurisdictions }: { jurisdictions: Jurisdiction[] }) {
+function SettingsTab({ jurisdictions, onTestEmail }: { jurisdictions: Jurisdiction[]; onTestEmail: () => void }) {
     return (
         <div className="space-y-6">
+            {/* Email Configuration */}
+            <Card className="p-6 border border-gray-200 dark:border-surface-700">
+                <div className="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Email Configuration</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Configure SMTP settings for sending dunning emails</p>
+                    </div>
+                    <button
+                        onClick={onTestEmail}
+                        className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold"
+                    >
+                        <Mail size={18} />
+                        Test Email
+                    </button>
+                </div>
+
+                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+                    <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2">Required Environment Variables:</h4>
+                    <code className="text-xs text-amber-700 dark:text-amber-300 block space-y-1">
+                        <div>SMTP_HOST=smtp.gmail.com</div>
+                        <div>SMTP_PORT=587</div>
+                        <div>SMTP_USER=your-email@gmail.com</div>
+                        <div>SMTP_PASS=your-app-password</div>
+                        <div>COMPANY_EMAIL=buchhaltung@company.de</div>
+                        <div>COMPANY_NAME=Company GmbH</div>
+                    </code>
+                </div>
+            </Card>
+
+            {/* Jurisdictions */}
             <Card className="p-6 border border-gray-200 dark:border-surface-700">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Jurisdiction Configurations</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

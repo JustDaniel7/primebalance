@@ -102,41 +102,53 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user, trigger }) {
       // On initial sign-in, user object is provided
       if (user?.email) {
-        // Try to find existing user
-        let dbUser = await prisma.user.findUnique({
-          where: { email: user.email },
-          select: { id: true, organizationId: true }
-        })
+        // Try to find existing user - wrap in try/catch for database connection failures
+        try {
+          let dbUser = await prisma.user.findUnique({
+            where: { email: user.email },
+            select: { id: true, organizationId: true }
+          })
 
-        // If user doesn't exist, create WITHOUT organization
-        // User will be redirected to /auth/select-organization to choose/create one
-        if (!dbUser) {
-          try {
-            dbUser = await prisma.user.create({
-              data: {
-                email: user.email,
-                name: user.name || 'User',
-                image: user.image,
-                // organizationId intentionally left null - user must select/create org
-              },
-              select: { id: true, organizationId: true }
-            })
-          } catch {
-            // Race condition: user might have been created by another request
-            dbUser = await prisma.user.findUnique({
-              where: { email: user.email },
-              select: { id: true, organizationId: true }
-            })
+          // If user doesn't exist, create WITHOUT organization
+          // User will be redirected to /auth/select-organization to choose/create one
+          if (!dbUser) {
+            try {
+              dbUser = await prisma.user.create({
+                data: {
+                  email: user.email,
+                  name: user.name || 'User',
+                  image: user.image,
+                  // organizationId intentionally left null - user must select/create org
+                },
+                select: { id: true, organizationId: true }
+              })
+            } catch {
+              // Race condition: user might have been created by another request
+              dbUser = await prisma.user.findUnique({
+                where: { email: user.email },
+                select: { id: true, organizationId: true }
+              })
+            }
           }
-        }
 
-        // Do NOT auto-assign to first org - user must explicitly join/create
-        // Middleware will redirect users without org to selection page
+          // Do NOT auto-assign to first org - user must explicitly join/create
+          // Middleware will redirect users without org to selection page
 
-        if (dbUser) {
-          token.organizationId = dbUser.organizationId || undefined
-          token.sub = dbUser.id
-          token.email = user.email
+          if (dbUser) {
+            token.organizationId = dbUser.organizationId || undefined
+            token.sub = dbUser.id
+            token.email = user.email
+          }
+        } catch (dbError) {
+          // Database not available - use demo/dev mode with user info from provider
+          if (process.env.NODE_ENV === 'development' || process.env.ENABLE_DEMO_AUTH === 'true') {
+            console.warn('Database not available, using demo mode authentication:', (dbError as Error).message)
+            token.sub = user.id || `demo-${user.email}`
+            token.email = user.email
+            token.organizationId = 'demo-org'
+          } else {
+            throw dbError
+          }
         }
       }
 
@@ -144,14 +156,27 @@ export const authOptions: AuthOptions = {
       // always refresh from database to ensure token stays in sync
       // This handles the case when user creates/joins an org after initial login
       if (trigger === 'update' || (token.email && !token.organizationId)) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email as string },
-          select: { id: true, organizationId: true }
-        })
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: token.email as string },
+            select: { id: true, organizationId: true }
+          })
 
-        if (dbUser) {
-          token.organizationId = dbUser.organizationId || undefined
-          token.sub = dbUser.id
+          if (dbUser) {
+            token.organizationId = dbUser.organizationId || undefined
+            token.sub = dbUser.id
+          }
+        } catch (dbError) {
+          // Database not available in dev/demo mode - keep existing token values
+          if (process.env.NODE_ENV === 'development' || process.env.ENABLE_DEMO_AUTH === 'true') {
+            console.warn('Database not available for session refresh:', (dbError as Error).message)
+            // Keep demo-org if no organizationId set
+            if (!token.organizationId) {
+              token.organizationId = 'demo-org'
+            }
+          } else {
+            throw dbError
+          }
         }
       }
 
