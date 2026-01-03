@@ -17,6 +17,7 @@ import {
 import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useProjectStore } from '@/store/project-store';
+import toast from 'react-hot-toast';
 import type { Project, CostCenter, ProjectStatus, ProjectType } from '@/types/project';
 import { PROJECT_STATUSES, PROJECT_TYPES, BUDGET_TYPES } from '@/types/project';
 
@@ -1426,6 +1427,230 @@ function ChargebacksTab() {
 }
 
 // =============================================================================
+// PROJECT DETAIL MODAL
+// =============================================================================
+
+function ProjectDetailModal({
+    project,
+    onClose,
+    onEdit,
+}: {
+    project: Project;
+    onClose: () => void;
+    onEdit: () => void;
+}) {
+    const { t } = useThemeStore();
+    const { updateProjectStatus, getTimeEntriesByProject, milestones } = useProjectStore();
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    const StatusIcon = STATUS_ICONS[project.status];
+    const TypeIcon = TYPE_ICONS[project.type];
+    const timeEntries = getTimeEntriesByProject(project.id);
+    const projectMilestones = milestones.filter(m => m.projectId === project.id);
+    const totalHours = timeEntries.reduce((sum, te) => sum + te.hours, 0);
+    const budgetPercent = project.budgetUtilization || 0;
+
+    const handleStatusChange = async (newStatus: ProjectStatus) => {
+        setIsUpdating(true);
+        const success = await updateProjectStatus(project.id, newStatus);
+        if (success) {
+            toast.success(`Project status updated to ${newStatus}`);
+        } else {
+            toast.error('Failed to update project status');
+        }
+        setIsUpdating(false);
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
+            >
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-[var(--accent-primary)]/10 flex items-center justify-center">
+                            <TypeIcon className="w-6 h-6 text-[var(--accent-primary)]" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{project.name}</h2>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.code}</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Button variant="secondary" size="sm" onClick={onEdit}>
+                            <Edit className="w-4 h-4 mr-1" />
+                            Edit
+                        </Button>
+                        <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">
+                            <X className="w-5 h-5 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 overflow-y-auto max-h-[calc(90vh-160px)]">
+                    {/* Status & Quick Actions */}
+                    <div className="flex flex-wrap items-center gap-3 mb-6">
+                        <span className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium ${STATUS_COLORS[project.status]}`}>
+                            <StatusIcon className="w-4 h-4" />
+                            {PROJECT_STATUSES.find(s => s.value === project.status)?.label || project.status}
+                        </span>
+                        {project.isBillable && (
+                            <Badge variant="success">Billable</Badge>
+                        )}
+                        <div className="flex-1" />
+                        <select
+                            value={project.status}
+                            onChange={(e) => handleStatusChange(e.target.value as ProjectStatus)}
+                            disabled={isUpdating}
+                            className="px-3 py-1.5 text-sm rounded-lg border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800"
+                        >
+                            {PROJECT_STATUSES.map(s => (
+                                <option key={s.value} value={s.value}>{s.label}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Metrics Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <Card variant="glass" padding="md">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Budget</p>
+                            <p className="text-lg font-bold text-gray-900 dark:text-white">{formatCurrency(project.budgetAmount || 0)}</p>
+                            <div className="h-1.5 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden mt-2">
+                                <div
+                                    className={`h-full rounded-full ${budgetPercent > 100 ? 'bg-red-500' : 'bg-emerald-500'}`}
+                                    style={{ width: `${Math.min(budgetPercent, 100)}%` }}
+                                />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">{budgetPercent.toFixed(0)}% used</p>
+                        </Card>
+                        <Card variant="glass" padding="md">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Spent</p>
+                            <p className="text-lg font-bold text-gray-900 dark:text-white">{formatCurrency(project.budgetSpent || 0)}</p>
+                            <p className="text-xs text-gray-500 mt-1">{formatCurrency(project.budgetRemaining || 0)} remaining</p>
+                        </Card>
+                        <Card variant="glass" padding="md">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Progress</p>
+                            <p className="text-lg font-bold text-gray-900 dark:text-white">{project.percentComplete || 0}%</p>
+                            <div className="h-1.5 bg-gray-200 dark:bg-surface-700 rounded-full overflow-hidden mt-2">
+                                <div
+                                    className="h-full bg-[var(--accent-primary)] rounded-full"
+                                    style={{ width: `${project.percentComplete || 0}%` }}
+                                />
+                            </div>
+                        </Card>
+                        <Card variant="glass" padding="md">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Hours Logged</p>
+                            <p className="text-lg font-bold text-gray-900 dark:text-white">{totalHours}h</p>
+                            <p className="text-xs text-gray-500 mt-1">{project.allocatedHours || 0}h allocated</p>
+                        </Card>
+                    </div>
+
+                    {/* Details Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Project Details</h3>
+                            <div className="space-y-2 text-sm">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Type</span>
+                                    <span className="font-medium text-gray-900 dark:text-white">
+                                        {PROJECT_TYPES.find(t => t.value === project.type)?.label}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Priority</span>
+                                    <span className="font-medium text-gray-900 dark:text-white capitalize">{project.priority}</span>
+                                </div>
+                                {project.ownerName && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-500">Owner</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">{project.ownerName}</span>
+                                    </div>
+                                )}
+                                {project.clientName && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-500">Client</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">{project.clientName}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Timeline</h3>
+                            <div className="space-y-2 text-sm">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Planned Start</span>
+                                    <span className="font-medium text-gray-900 dark:text-white">{formatDate(project.plannedStartDate)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Planned End</span>
+                                    <span className="font-medium text-gray-900 dark:text-white">{formatDate(project.plannedEndDate)}</span>
+                                </div>
+                                {project.actualStartDate && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-500">Actual Start</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">{formatDate(project.actualStartDate)}</span>
+                                    </div>
+                                )}
+                                {project.actualEndDate && (
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-500">Actual End</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">{formatDate(project.actualEndDate)}</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Description */}
+                    {project.description && (
+                        <div className="mb-6">
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Description</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-surface-900/50 p-3 rounded-lg">
+                                {project.description}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Milestones */}
+                    {projectMilestones.length > 0 && (
+                        <div>
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Milestones</h3>
+                            <div className="space-y-2">
+                                {projectMilestones.map(m => (
+                                    <div key={m.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-surface-900/50 rounded-lg">
+                                        <div className="flex items-center gap-3">
+                                            {m.isCompleted ? (
+                                                <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                            ) : (
+                                                <Clock className="w-5 h-5 text-gray-400" />
+                                            )}
+                                            <span className="text-sm font-medium text-gray-900 dark:text-white">{m.name}</span>
+                                        </div>
+                                        <span className="text-sm text-gray-500">{formatDate(m.dueDate)}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
+                    <Button variant="secondary" onClick={onClose}>
+                        Close
+                    </Button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
 // MAIN PAGE
 // =============================================================================
 
@@ -1437,7 +1662,6 @@ export default function ProjectsPage() {
         wizardOpen,
         openWizard,
         closeWizard,
-        selectProject,
         fetchProjects,
         fetchCostCenters,
         fetchTimeEntries,
@@ -1460,6 +1684,7 @@ export default function ProjectsPage() {
     const [typeFilter, setTypeFilter] = useState<ProjectType | 'all'>('all');
     const [editingCostCenter, setEditingCostCenter] = useState<CostCenter | null>(null);
     const [showExportModal, setShowExportModal] = useState(false);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     // Fetch data on mount
     useEffect(() => {
@@ -1538,6 +1763,7 @@ export default function ProjectsPage() {
         const fileName = `projects-export-${new Date().toISOString().split('T')[0]}`;
         const { content, mimeType, extension } = convertToFormat(exportData, format, 'projects');
         downloadFile(content, `${fileName}.${extension}`, mimeType);
+        toast.success(`Projects exported as ${format.toUpperCase()}`);
     };
 
     return (
@@ -1661,7 +1887,7 @@ export default function ProjectsPage() {
                             <ProjectCard
                                 key={project.id}
                                 project={project}
-                                onView={() => selectProject(project.id)}
+                                onView={() => setSelectedProject(project)}
                                 onEdit={() => openWizard(project)}
                                 onDelete={() => openDeleteConfirm(project.id, 'project')}
                             />
@@ -1720,6 +1946,20 @@ export default function ProjectsPage() {
             {/* Wizard Modal */}
             <AnimatePresence>
                 {wizardOpen && <ProjectWizard onClose={closeWizard} />}
+            </AnimatePresence>
+
+            {/* Project Detail Modal */}
+            <AnimatePresence>
+                {selectedProject && (
+                    <ProjectDetailModal
+                        project={selectedProject}
+                        onClose={() => setSelectedProject(null)}
+                        onEdit={() => {
+                            openWizard(selectedProject);
+                            setSelectedProject(null);
+                        }}
+                    />
+                )}
             </AnimatePresence>
 
             {/* Cost Center Edit Modal */}

@@ -7,9 +7,10 @@ import { useSession, signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { SearchIcon, BellIcon, ChevronDownIcon } from '@/components/ui/Icons'
-import { Sun, Moon } from 'lucide-react'
+import { Sun, Moon, CheckCheck } from 'lucide-react'
 import { useSearch } from '@/contexts/SearchContext'
 import { useNotifications } from '@/hooks/useNotifications'
+import { showSuccess } from '@/lib/notifications'
 
 export default function Header() {
   const { user } = useStore()
@@ -142,9 +143,14 @@ export default function Header() {
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-gray-900 dark:text-surface-100">{t('header.notifications')}</h3>
                       <button
-                        onClick={() => markAllAsRead()}
-                        className="text-xs text-[var(--accent-primary)] hover:opacity-80"
+                        onClick={async () => {
+                          await markAllAsRead()
+                          showSuccess('All notifications marked as read')
+                        }}
+                        disabled={unreadCount === 0}
+                        className="flex items-center gap-1 text-xs text-[var(--accent-primary)] hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
+                        <CheckCheck className="w-3 h-3" />
                         {t('header.markAllRead')}
                       </button>
                     </div>
@@ -182,9 +188,13 @@ export default function Header() {
                     )}
                   </div>
                   <div className="p-3 border-t border-gray-200 dark:border-surface-800/50">
-                    <button className="w-full py-2 text-sm text-center text-[var(--accent-primary)] hover:opacity-80 transition-colors">
+                    <Link
+                      href="/dashboard/task-center?tab=notifications"
+                      onClick={() => setNotificationsOpen(false)}
+                      className="w-full py-2 text-sm text-center text-[var(--accent-primary)] hover:opacity-80 transition-colors block"
+                    >
                       {t('header.viewAll')}
-                    </button>
+                    </Link>
                   </div>
                 </motion.div>
               )}

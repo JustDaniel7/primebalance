@@ -33,6 +33,7 @@ import {
 import type { CryptoToken } from '@/types';
 import React from "react";
 import { useExchangeRates } from '@/hooks/useExchangeRates';
+import toast from 'react-hot-toast';
 
 // =============================================================================
 // TYPES
@@ -818,6 +819,7 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     setSuccess(true);
+    toast.success(`Swapped ${fromAmount} ${fromToken} for ${toAmount} ${toToken}`);
     setTimeout(() => {
       setSwapping(false);
       onClose();
@@ -969,7 +971,8 @@ export default function WalletPage() {
 
   // Data
   const [wallets, setWallets] = useState<WalletData[]>([]);
-  const [transactions] = useState<WalletTransaction[]>(DEMO_TRANSACTIONS);
+  const [transactions, setTransactions] = useState<WalletTransaction[]>(DEMO_TRANSACTIONS);
+  const [isSyncingTx, setIsSyncingTx] = useState(false);
 
   // UI State
   const [isLoading, setIsLoading] = useState(true);
@@ -1040,6 +1043,33 @@ export default function WalletPage() {
       setDeletingWallet(null);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleSyncTransactions = async () => {
+    setIsSyncingTx(true);
+    try {
+      // Simulate fetching transactions from blockchain/API
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Add a new simulated transaction
+      const newTx: WalletTransaction = {
+        id: `tx-${Date.now()}`,
+        type: 'receive',
+        token: 'ETH',
+        amount: 0.5,
+        usdValue: 1000,
+        from: '0x9876...5432',
+        status: 'completed',
+        timestamp: new Date().toISOString(),
+      };
+
+      setTransactions(prev => [newTx, ...prev]);
+      toast.success('Transactions synced successfully');
+    } catch {
+      toast.error('Failed to sync transactions');
+    } finally {
+      setIsSyncingTx(false);
     }
   };
 
@@ -1192,6 +1222,18 @@ export default function WalletPage() {
         {/* History Tab */}
         {!isLoading && activeTab === 'history' && (
             <Card variant="glass" padding="md">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-gray-900 dark:text-white">Transaction History</h3>
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    leftIcon={<RefreshCw size={14} className={isSyncingTx ? 'animate-spin' : ''} />}
+                    onClick={handleSyncTransactions}
+                    disabled={isSyncingTx}
+                >
+                  {isSyncingTx ? 'Syncing...' : 'Sync'}
+                </Button>
+              </div>
               {transactions.length > 0 ? (
                   <div className="divide-y divide-gray-100 dark:divide-surface-700">
                     {transactions.map((tx) => (

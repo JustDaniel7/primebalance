@@ -37,6 +37,7 @@ import {
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useTreasuryStore } from '@/store/treasury-store';
+import toast from 'react-hot-toast';
 import type {
     TreasuryDecision,
     CapitalBucket,
@@ -127,6 +128,7 @@ export default function TreasuryPage() {
 
 const [activeTab, setActiveTab] = useState<'overview' | 'buckets' | 'facilities' | 'decisions' | 'scenarios'>('overview');
 const [selectedDecision, setSelectedDecision] = useState<TreasuryDecision | null>(null);
+const [selectedScenario, setSelectedScenario] = useState<TreasuryScenario | null>(null);
 
 useEffect(() => {
     recalculateCashPosition();
@@ -182,9 +184,23 @@ const getRiskBadge = (risk: RiskLevel) => (
           </div>
         );
       }
-    function setSelectedScenario(scenario: TreasuryScenario): void {
-        throw new Error('Function not implemented.');
-    }
+
+    const handleRebalance = () => {
+        const decision = rebalanceBuckets();
+        if (decision) {
+            toast.success(t('treasury.rebalanceDecisionCreated') || 'Rebalance decision created');
+            setActiveTab('decisions');
+        } else {
+            toast.success(t('treasury.allBucketsFunded') || 'All buckets are fully funded');
+        }
+    };
+
+    const handleRunScenario = (scenarioId: string) => {
+        const result = runScenario(scenarioId);
+        if (result) {
+            toast.success(t('treasury.scenarioCompleted') || 'Scenario simulation completed');
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -200,7 +216,7 @@ const getRiskBadge = (risk: RiskLevel) => (
                     <Button variant="secondary" leftIcon={<RefreshCw size={18} />} onClick={() => recalculateCashPosition()}>
                         {t('treasury.sync')}
                     </Button>
-                    <Button variant="primary" leftIcon={<Scale size={18} />} onClick={() => rebalanceBuckets()}>
+                    <Button variant="primary" leftIcon={<Scale size={18} />} onClick={handleRebalance}>
                         {t('treasury.rebalance')}
                     </Button>
                 </div>
@@ -676,7 +692,7 @@ const getRiskBadge = (risk: RiskLevel) => (
                                             leftIcon={<Play size={14} />}
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                runScenario(scenario.id);
+                                                handleRunScenario(scenario.id);
                                             }}
                                         >
                                             {t('treasury.run')}

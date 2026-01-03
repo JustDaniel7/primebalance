@@ -47,6 +47,7 @@ import {
 import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useKPIStore } from '@/store/kpi-store';
+import toast from 'react-hot-toast';
 import type {
     KPITab,
     KPITimeHorizon,
@@ -429,7 +430,10 @@ function OverviewTab() {
                                     )}
                                 </div>
                                 <button
-                                    onClick={() => dismissAlert(alert.id)}
+                                    onClick={() => {
+                                        dismissAlert(alert.id);
+                                        toast.success('Alert dismissed');
+                                    }}
                                     className="text-gray-400 hover:text-gray-600 flex-shrink-0"
                                 >
                                     <X size={16} />
@@ -1366,6 +1370,7 @@ export default function KPIsPage() {
         const fileName = `kpi-report-${new Date().toISOString().split('T')[0]}`;
         const { content, mimeType, extension } = convertToFormat(exportData, format, 'kpi-report');
         downloadFile(content, `${fileName}.${extension}`, mimeType);
+        toast.success(`KPI report exported as ${format.toUpperCase()}`);
     };
 
     const tabs: { id: KPITab; label: string; icon: React.ElementType }[] = [

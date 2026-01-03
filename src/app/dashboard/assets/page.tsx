@@ -10,8 +10,11 @@ import {
     Bell,
     Settings,
     RefreshCw,
+    Plus,
+    Download,
 } from 'lucide-react';
-import { Card } from '@/components/ui';
+import { Card, Button } from '@/components/ui';
+import toast from 'react-hot-toast';
 import { useAssetStore } from '@/store/asset-store';
 import { useThemeStore } from '@/store/theme-store';
 import {
@@ -54,6 +57,11 @@ const DepreciationTab: React.FC = () => {
         const count = postAllDueDepreciation(new Date().toISOString().split('T')[0], 'user');
         setLastRunResult(count);
         setIsRunning(false);
+        if (count > 0) {
+            toast.success(`${t('assets.depreciation.posted')} ${count} ${t('assets.depreciation.entriesSuccessfully')}`);
+        } else {
+            toast.success(t('assets.depreciation.upToDate') || 'All assets are up to date');
+        }
     };
 
     return (
@@ -177,8 +185,27 @@ const CapExTab: React.FC = () => {
     const { capExBudgets, createCapExBudget } = useAssetStore();
     const { t } = useThemeStore();
 
+    const handleCreateBudget = () => {
+        const year = new Date().getFullYear();
+        createCapExBudget({
+            name: `FY${year} CapEx Budget`,
+            fiscalYear: String(year),
+            budgetAmount: 100000,
+            currency: 'EUR',
+        });
+        toast.success(t('assets.capex.budgetCreated') || 'CapEx budget created successfully');
+    };
+
     return (
         <div className="space-y-6">
+            {/* Header with Add Budget Button */}
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.capex.title') || 'Capital Expenditure'}</h3>
+                <Button variant="primary" size="sm" leftIcon={<Plus size={16} />} onClick={handleCreateBudget}>
+                    {t('assets.capex.addBudget') || 'Add Budget'}
+                </Button>
+            </div>
+
             {capExBudgets.length === 0 ? (
                 <Card variant="glass" padding="lg" className="text-center">
                     <DollarSign className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
@@ -186,17 +213,9 @@ const CapExTab: React.FC = () => {
                     <p className="text-gray-500 dark:text-gray-400 mt-2 mb-4">
                         {t('assets.capex.noBudgetsDesc')}
                     </p>
-                    <button
-                        onClick={() => createCapExBudget({
-                            name: `FY${new Date().getFullYear()} CapEx Budget`,
-                            fiscalYear: String(new Date().getFullYear()),
-                            budgetAmount: 100000,
-                            currency: 'EUR',
-                        })}
-                        className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    >
+                    <Button variant="primary" onClick={handleCreateBudget}>
                         {t('assets.capex.createBudget')}
-                    </button>
+                    </Button>
                 </Card>
             ) : (
                 <>
@@ -245,33 +264,111 @@ const CapExTab: React.FC = () => {
 
 const ReportsTab: React.FC = () => {
     const { t } = useThemeStore();
+    const { getAssetRegister, getSummary } = useAssetStore();
+    const [isDownloading, setIsDownloading] = useState<string | null>(null);
 
     const reports = [
-        { name: t('assets.reports.assetRegister'), desc: t('assets.reports.assetRegisterDesc') },
-        { name: t('assets.reports.depSchedule'), desc: t('assets.reports.depScheduleDesc') },
-        { name: t('assets.reports.movementReport'), desc: t('assets.reports.movementReportDesc') },
-        { name: t('assets.reports.nbvSummary'), desc: t('assets.reports.nbvSummaryDesc') },
+        { id: 'asset_register', name: t('assets.reports.assetRegister'), desc: t('assets.reports.assetRegisterDesc') },
+        { id: 'dep_schedule', name: t('assets.reports.depSchedule'), desc: t('assets.reports.depScheduleDesc') },
+        { id: 'movement_report', name: t('assets.reports.movementReport'), desc: t('assets.reports.movementReportDesc') },
+        { id: 'nbv_summary', name: t('assets.reports.nbvSummary'), desc: t('assets.reports.nbvSummaryDesc') },
     ];
 
+    const downloadReport = async (reportId: string, format: 'csv' | 'pdf' = 'csv') => {
+        setIsDownloading(reportId);
+        try {
+            const register = getAssetRegister();
+            const summary = getSummary();
+
+            const reportData = {
+                headers: ['Asset Number', 'Name', 'Category', 'Acquisition Cost', 'Accumulated Depreciation', 'Net Book Value'],
+                rows: register.map(entry => ({
+                    asset_number: entry.asset.assetNumber,
+                    name: entry.asset.name,
+                    category: entry.asset.category,
+                    acquisition_cost: entry.acquisitionCost,
+                    accumulated_depreciation: entry.accumulatedDepreciation,
+                    net_book_value: entry.netBookValue,
+                })),
+                summary: {
+                    totalAssets: summary.totalAssets,
+                    totalValue: summary.totalValue,
+                    totalDepreciation: summary.totalDepreciation,
+                    netBookValue: summary.netBookValue,
+                },
+            };
+
+            const res = await fetch('/api/reports/download', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    reportData,
+                    format,
+                    fileName: `${reportId}_${new Date().toISOString().split('T')[0]}`,
+                    reportType: reportId,
+                }),
+            });
+
+            if (!res.ok) throw new Error('Download failed');
+
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${reportId}_${new Date().toISOString().split('T')[0]}.${format}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            toast.success(t('assets.reports.downloadSuccess') || 'Report downloaded successfully');
+        } catch {
+            toast.error(t('assets.reports.downloadFailed') || 'Failed to download report');
+        } finally {
+            setIsDownloading(null);
+        }
+    };
+
     return (
-        <Card variant="glass" padding="lg" className="text-center">
-            <BarChart3 className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.reports.title')}</h3>
-            <p className="text-gray-500 dark:text-gray-400 mt-2">
-                {t('assets.reports.description')}
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div className="space-y-6">
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.reports.title')}</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {reports.map(report => (
-                    <button
-                        key={report.name}
-                        className="p-4 bg-gray-50 dark:bg-slate-900 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
-                    >
-                        <p className="font-medium text-gray-900 dark:text-white">{report.name}</p>
-                        <p className="text-xs text-gray-500 mt-1">{report.desc}</p>
-                    </button>
+                    <Card key={report.id} variant="glass" padding="md">
+                        <div className="flex items-start justify-between">
+                            <div>
+                                <p className="font-medium text-gray-900 dark:text-white">{report.name}</p>
+                                <p className="text-sm text-gray-500 mt-1">{report.desc}</p>
+                            </div>
+                            <BarChart3 className="w-8 h-8 text-gray-300 dark:text-gray-600" />
+                        </div>
+                        <div className="flex gap-2 mt-4">
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                leftIcon={<Download size={14} />}
+                                onClick={() => downloadReport(report.id, 'csv')}
+                                disabled={isDownloading === report.id}
+                            >
+                                CSV
+                            </Button>
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                leftIcon={<Download size={14} />}
+                                onClick={() => downloadReport(report.id, 'pdf')}
+                                disabled={isDownloading === report.id}
+                            >
+                                PDF
+                            </Button>
+                        </div>
+                    </Card>
                 ))}
             </div>
-        </Card>
+        </div>
     );
 };
 

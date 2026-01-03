@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { X, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
 import { useAssetStore } from '@/store/asset-store';
 import { useThemeStore } from '@/store/theme-store';
+import toast from 'react-hot-toast';
 import { Asset, BookType } from '@/types/asset';
 import { calculateBookValue, calculateDisposalGainLoss } from '@/lib/depreciation-engine';
 
@@ -51,6 +52,8 @@ export const DisposalForm: React.FC<DisposalFormProps> = ({ asset, onClose }) =>
             'user'
         );
 
+        const disposalTypeLabel = formData.disposalType === 'SALE' ? t('assets.disposal.sold') || 'sold' : t('assets.disposal.disposed') || 'disposed';
+        toast.success(`${asset.name} ${disposalTypeLabel} ${t('assets.disposal.successfully') || 'successfully'}`);
         onClose();
     };
 

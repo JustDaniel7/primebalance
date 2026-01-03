@@ -64,6 +64,7 @@ import {
 import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useScenarioStore } from '@/store/scenario-store';
+import toast from 'react-hot-toast';
 import type {
     Scenario,
     ScenarioTab,
@@ -632,12 +633,14 @@ function CustomTab() {
         cloneScenario(baseScenarioId, newScenarioName);
         setNewScenarioName('');
         setShowCreateModal(false);
+        toast.success('Scenario created successfully');
     };
 
     const handleAddComment = () => {
         if (!commentText.trim() || !selectedScenario) return;
         addComment(selectedScenario.id, commentText);
         setCommentText('');
+        toast.success('Comment added');
     };
 
     return (
@@ -761,7 +764,10 @@ function CustomTab() {
                                                 variant="secondary"
                                                 size="sm"
                                                 leftIcon={<Lock size={14} />}
-                                                onClick={() => lockScenario(selectedScenario.id)}
+                                                onClick={() => {
+                                                    lockScenario(selectedScenario.id);
+                                                    toast.success('Scenario locked');
+                                                }}
                                             >
                                                 Lock
                                             </Button>
@@ -969,6 +975,7 @@ function StressTab() {
         if (!selectedTemplate) return;
         runStressTest(selectedTemplate, String(intensity));
         setSelectedTemplate(null);
+        toast.success('Stress test completed');
     };
 
     const getResultIcon = (result: string) => {
@@ -1161,6 +1168,7 @@ function SimulationTab() {
         pinSimulation(pinName);
         setPinName('');
         setShowPinModal(false);
+        toast.success('Simulation saved as scenario');
     };
 
     const baseScenario = scenarios.find((s) => s.id === baseScenarioId);
@@ -1600,6 +1608,7 @@ export default function ScenariosPage() {
         const fileName = `scenarios-export-${new Date().toISOString().split('T')[0]}`;
         const { content, mimeType, extension } = convertToFormat(exportData, format, 'scenarios');
         downloadFile(content, `${fileName}.${extension}`, mimeType);
+        toast.success(`Scenarios exported as ${format.toUpperCase()}`);
     };
 
     const tabs: { id: ScenarioTab; label: string; icon: React.ElementType }[] = [

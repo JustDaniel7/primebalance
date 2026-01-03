@@ -145,7 +145,7 @@ export default function KPIPerformance() {
             </div>
           </div>
           <Link
-            href="/dashboard/kpis"
+            href="/dashboard/kpi"
             className="flex items-center gap-1 text-xs text-[var(--accent-primary)] hover:opacity-80 transition-opacity"
           >
             View All

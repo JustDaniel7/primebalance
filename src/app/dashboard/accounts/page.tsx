@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeStore } from '@/store/theme-store';
 import { Card, Button, Badge } from '@/components/ui';
 import { useStore } from '@/store'
+import toast from 'react-hot-toast'
 import {
   PlusIcon,
   AccountsIcon,
@@ -538,14 +539,21 @@ export default function AccountsPage() {
   const [deletingAccount, setDeletingAccount] = useState<Account | null>(null);
 
   // Load accounts
-  const loadAccounts = async () => {
+  const loadAccounts = async (showToast = false) => {
     setIsLoading(true);
     setError(null);
     try {
       const data = await fetchAccounts();
       setAccounts(data);
-    } catch (err: any) {
-      setError(err.message);
+      if (showToast) {
+        toast.success(`Synced ${data.length} accounts successfully`);
+      }
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sync accounts';
+      setError(errorMessage);
+      if (showToast) {
+        toast.error(errorMessage);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -637,7 +645,7 @@ export default function AccountsPage() {
             <Button
                 variant="secondary"
                 leftIcon={<RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} />}
-                onClick={loadAccounts}
+                onClick={() => loadAccounts(true)}
                 disabled={isLoading}
             >
               Sync

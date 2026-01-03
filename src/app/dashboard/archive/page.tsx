@@ -16,7 +16,6 @@ import {
     Download,
     RotateCcw,
     Trash2,
-    Eye,
     Tag,
     Archive,
     X,
@@ -24,11 +23,13 @@ import {
     Shield,
     Settings,
     Activity,
+    Loader2,
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useArchiveStore } from '@/store/archive-store';
 import { ArchiveCategory, type ArchiveRecord } from '@/types/archive';
+import toast from 'react-hot-toast';
 
 // =============================================================================
 // CATEGORY ICONS MAP
@@ -68,7 +69,11 @@ export default function ArchivePage() {
         isLoading,
         statistics,
         fetchStatistics,
+        restoreArchive,
+        deleteArchive,
     } = useArchiveStore();
+    const [isRestoring, setIsRestoring] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         if (!isInitialized) {
@@ -167,6 +172,55 @@ export default function ArchivePage() {
     const handleResetFilter = () => {
         setSelectedCategory(null);
         clearFilters();
+    };
+
+    const handleRestore = async (item: ArchiveRecord) => {
+        if (!confirm(t('archive.confirmRestore') || 'Restore this item? It will be recreated in the active system.')) return;
+
+        setIsRestoring(true);
+        try {
+            const result = await restoreArchive(item.id);
+            if (result?.success) {
+                toast.success(t('archive.restoreSuccess') || 'Item restored successfully');
+                setSelectedItem(null);
+                if (result.restoredTo) {
+                    // Optional: navigate to restored item
+                    // window.location.href = result.restoredTo;
+                }
+            } else {
+                toast.error(t('archive.restoreFailed') || 'Failed to restore item');
+            }
+        } catch (e: unknown) {
+            const errorMessage = e instanceof Error ? e.message : 'Failed to restore item';
+            toast.error(errorMessage);
+        } finally {
+            setIsRestoring(false);
+        }
+    };
+
+    const handleDelete = async (item: ArchiveRecord) => {
+        if (item.legalHold) {
+            toast.error(t('archive.cannotDeleteLegalHold') || 'Cannot delete item on legal hold');
+            return;
+        }
+
+        if (!confirm(t('archive.confirmDelete') || 'Delete this archived item? This action cannot be undone.')) return;
+
+        setIsDeleting(true);
+        try {
+            const success = await deleteArchive(item.id);
+            if (success) {
+                toast.success(t('archive.deleteSuccess') || 'Item deleted successfully');
+                setSelectedItem(null);
+            } else {
+                toast.error(t('archive.deleteFailed') || 'Failed to delete item');
+            }
+        } catch (e: unknown) {
+            const errorMessage = e instanceof Error ? e.message : 'Failed to delete item';
+            toast.error(errorMessage);
+        } finally {
+            setIsDeleting(false);
+        }
     };
 
     // Category Cards
@@ -480,8 +534,34 @@ export default function ArchivePage() {
 
                             {/* Actions */}
                             <div className="p-6 border-t border-gray-200 dark:border-surface-700 flex gap-3">
-                                <Button variant="secondary" className="flex-1" onClick={() => setSelectedItem(null)}>
-                                    <Eye size={18} className="mr-2" />
+                                <Button
+                                    variant="primary"
+                                    className="flex-1"
+                                    onClick={() => handleRestore(selectedItem)}
+                                    disabled={isRestoring || selectedItem.legalHold || selectedItem.status === 'restored'}
+                                >
+                                    {isRestoring ? (
+                                        <Loader2 size={18} className="mr-2 animate-spin" />
+                                    ) : (
+                                        <RotateCcw size={18} className="mr-2" />
+                                    )}
+                                    {t('archive.restore') || 'Restore'}
+                                </Button>
+                                <Button
+                                    variant="danger"
+                                    className="flex-1"
+                                    onClick={() => handleDelete(selectedItem)}
+                                    disabled={isDeleting || selectedItem.legalHold}
+                                >
+                                    {isDeleting ? (
+                                        <Loader2 size={18} className="mr-2 animate-spin" />
+                                    ) : (
+                                        <Trash2 size={18} className="mr-2" />
+                                    )}
+                                    {t('common.delete') || 'Delete'}
+                                </Button>
+                                <Button variant="secondary" onClick={() => setSelectedItem(null)}>
+                                    <X size={18} className="mr-2" />
                                     {t('common.close') || 'Close'}
                                 </Button>
                             </div>

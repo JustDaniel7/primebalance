@@ -35,6 +35,7 @@ import {
 import { Card, Button, Badge, Input } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useReceivablesStore } from '@/store/receivables-store';
+import toast from 'react-hot-toast';
 import type { Receivable, ReceivableStatus, RiskLevel, AgingBucket } from '@/types/receivables';
 
 // =============================================================================
@@ -856,6 +857,7 @@ function ReceivableDetail({
         if (paymentAmount > 0 && paymentAmount <= receivable.outstandingAmount) {
             applyPayment(receivable.id, paymentAmount, 'payment');
             setShowPaymentForm(false);
+            toast.success(t('receivables.paymentApplied') || 'Payment applied successfully');
             onClose();
         }
     };
@@ -864,6 +866,7 @@ function ReceivableDetail({
         if (disputeReason) {
             openDispute(receivable.id, disputeReason);
             setShowDisputeForm(false);
+            toast.success(t('receivables.disputeOpened') || 'Dispute opened');
             onClose();
         }
     };
@@ -1015,7 +1018,10 @@ function ReceivableDetail({
                                 <Button variant="primary" leftIcon={<CreditCard size={16} />} onClick={() => setShowPaymentForm(true)}>
                                     {t('receivables.recordPayment')}
                                 </Button>
-                                <Button variant="secondary" leftIcon={<Send size={16} />} onClick={() => sendReminder(receivable.id)}>
+                                <Button variant="secondary" leftIcon={<Send size={16} />} onClick={() => {
+                                    sendReminder(receivable.id);
+                                    toast.success(t('receivables.reminderSent') || 'Payment reminder sent');
+                                }}>
                                     {t('receivables.sendReminder')}
                                 </Button>
                                 {!receivable.isDisputed && (

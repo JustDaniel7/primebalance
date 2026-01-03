@@ -40,6 +40,7 @@ import { Card, Button } from '@/components/ui';
 import { useFXStore } from '@/store/fx-store';
 import type { FXRiskLevel, ExposureType, TimeHorizon, CurrencyExposure, FXConversion, FXScenario } from '@/types/fx';
 import { EXPOSURE_TYPES, TIME_HORIZONS, MAJOR_CURRENCIES } from '@/types/fx';
+import toast from 'react-hot-toast';
 
 // =============================================================================
 // UTILITIES
@@ -111,27 +112,57 @@ function SectionHeader({ title, icon: Icon, badge }: { title: string; icon: any;
 // =============================================================================
 
 function CurrentRatesSection() {
-    const { dashboard } = useFXStore();
+    const { dashboard, fetchLiveRates, isSyncingLiveRates } = useFXStore();
     const currentRates = dashboard?.currentRates ?? [];
+
+    const handleFetchLiveRates = async () => {
+        const result = await fetchLiveRates(dashboard?.baseCurrency || 'EUR');
+        if (result.success) {
+            toast.success(`Synced ${result.ratesCount || 'live'} rates successfully`);
+        } else {
+            toast.error(result.message || 'Failed to fetch live rates');
+        }
+    };
 
     return (
         <div className="space-y-4">
-            <SectionHeader title="Current FX Rates" icon={Globe} badge="Live" />
+            <div className="flex items-center justify-between">
+                <SectionHeader title="Current FX Rates" icon={Globe} badge="Live" />
+                <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={handleFetchLiveRates}
+                    disabled={isSyncingLiveRates}
+                    leftIcon={<RefreshCw size={16} className={isSyncingLiveRates ? 'animate-spin' : ''} />}
+                >
+                    {isSyncingLiveRates ? 'Syncing...' : 'Fetch Live Rates'}
+                </Button>
+            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
-                {currentRates.map((rate) => (
-                    <Card key={rate.id} variant="glass" padding="sm" className="text-center">
-                        <p className="text-xs text-gray-500 font-medium">{rate.baseCurrency}/{rate.quoteCurrency}</p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
-                            {rate.rate != null ? (rate.rate >= 1 ? rate.rate.toFixed(4) : rate.rate.toFixed(6)) : '—'}
+                {currentRates.length === 0 ? (
+                    <div className="col-span-full text-center py-8">
+                        <Globe size={48} className="mx-auto text-gray-300 dark:text-surface-600 mb-4" />
+                        <p className="text-gray-500 dark:text-surface-400">No rates available</p>
+                        <p className="text-sm text-gray-400 dark:text-surface-500 mt-1">
+                            Click &quot;Fetch Live Rates&quot; to sync current exchange rates
                         </p>
-                        {rate.spread != null && (
-                            <p className="text-xs text-gray-400 mt-0.5">
-                                Spread: {(rate.spread * 100).toFixed(2)}%
+                    </div>
+                ) : (
+                    currentRates.map((rate) => (
+                        <Card key={rate.id} variant="glass" padding="sm" className="text-center">
+                            <p className="text-xs text-gray-500 font-medium">{rate.baseCurrency}/{rate.quoteCurrency}</p>
+                            <p className="text-lg font-bold text-gray-900 dark:text-white mt-1">
+                                {rate.rate != null ? (rate.rate >= 1 ? rate.rate.toFixed(4) : rate.rate.toFixed(6)) : '—'}
                             </p>
-                        )}
-                    </Card>
-                ))}
+                            {rate.spread != null && (
+                                <p className="text-xs text-gray-400 mt-0.5">
+                                    Spread: {(rate.spread * 100).toFixed(2)}%
+                                </p>
+                            )}
+                        </Card>
+                    ))
+                )}
             </div>
 
             {currentRates[0]?.timestamp && (

@@ -58,6 +58,7 @@ import {
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useTaskStore } from '@/store/taskcenter-store';
+import toast from 'react-hot-toast';
 import type {
     Task,
     Risk,
@@ -323,6 +324,7 @@ function TodayOverview() {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 completeTask(task.id);
+                                                toast.success('Task completed');
                                             }}
                                             className="flex-shrink-0"
                                         >
@@ -869,6 +871,7 @@ function TasksTab() {
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             completeTask(task.id);
+                                                            toast.success('Task completed');
                                                         }}
                                                         className="flex-shrink-0 hover:scale-110 transition-transform"
                                                     >
@@ -1407,15 +1410,15 @@ function RisksTab() {
 
 function ShortcutsTab() {
     const { t } = useThemeStore();
-    const { setTaskFilter, setRiskFilter } = useTaskStore();
+    const { setTaskFilter, setRiskFilter, setActiveTab } = useTaskStore();
 
     const quickLinks = [
-        { icon: Calendar, label: 'Due Today', action: () => { setTaskFilter({ dueDateFrom: new Date().toISOString().split('T')[0], dueDateTo: new Date().toISOString().split('T')[0] }); }, color: 'blue' },
-        { icon: AlertTriangle, label: 'Overdue Tasks', action: () => { setTaskFilter({ isOverdue: true }); }, color: 'red' },
-        { icon: Pause, label: 'Blocked Tasks', action: () => { setTaskFilter({ isBlocked: true }); }, color: 'orange' },
-        { icon: Eye, label: 'Needs Review', action: () => { setTaskFilter({ status: ['awaiting_review'] }); }, color: 'purple' },
-        { icon: AlertOctagon, label: 'Critical Risks', action: () => { setRiskFilter({ severity: ['critical'] }); }, color: 'red' },
-        { icon: Clock, label: 'Due This Week', action: () => { setTaskFilter({}); }, color: 'cyan' },
+        { icon: Calendar, label: 'Due Today', action: () => { setTaskFilter({ dueDateFrom: new Date().toISOString().split('T')[0], dueDateTo: new Date().toISOString().split('T')[0] }); setActiveTab('tasks'); toast.success('Filtering tasks due today'); }, color: 'blue' },
+        { icon: AlertTriangle, label: 'Overdue Tasks', action: () => { setTaskFilter({ isOverdue: true }); setActiveTab('tasks'); toast.success('Filtering overdue tasks'); }, color: 'red' },
+        { icon: Pause, label: 'Blocked Tasks', action: () => { setTaskFilter({ isBlocked: true }); setActiveTab('tasks'); toast.success('Filtering blocked tasks'); }, color: 'orange' },
+        { icon: Eye, label: 'Needs Review', action: () => { setTaskFilter({ status: ['awaiting_review'] }); setActiveTab('tasks'); toast.success('Filtering tasks awaiting review'); }, color: 'purple' },
+        { icon: AlertOctagon, label: 'Critical Risks', action: () => { setRiskFilter({ severity: ['critical'] }); setActiveTab('risks'); toast.success('Filtering critical risks'); }, color: 'red' },
+        { icon: Clock, label: 'Due This Week', action: () => { setTaskFilter({}); setActiveTab('tasks'); toast.success('Showing tasks due this week'); }, color: 'cyan' },
     ];
 
     const recentViews = [
@@ -1567,6 +1570,7 @@ function TaskWizardModal() {
             status: 'open',
         });
         setIsSubmitting(false);
+        toast.success('Task created successfully');
         closeTaskWizard();
     };
 
@@ -1700,7 +1704,13 @@ export default function TaskCenterPage() {
                     <button className="p-2 rounded-xl bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 text-gray-600 dark:text-surface-400 hover:bg-gray-50 dark:hover:bg-surface-800">
                         <Bell size={18} />
                     </button>
-                    <button className="p-2 rounded-xl bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 text-gray-600 dark:text-surface-400 hover:bg-gray-50 dark:hover:bg-surface-800">
+                    <button
+                        onClick={async () => {
+                            await Promise.all([fetchTasks(), fetchRisks()]);
+                            toast.success('Tasks and risks refreshed');
+                        }}
+                        className="p-2 rounded-xl bg-white dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700 text-gray-600 dark:text-surface-400 hover:bg-gray-50 dark:hover:bg-surface-800"
+                    >
                         <RefreshCw size={18} />
                     </button>
                 </div>

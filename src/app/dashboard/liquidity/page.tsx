@@ -33,6 +33,7 @@ import {
 import { Card, Button } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useLiquidityStore } from '@/store/liquidity-store';
+import toast from 'react-hot-toast';
 import type {
     TimelinePeriod,
     CashflowItem,
@@ -168,7 +169,10 @@ function ScenarioSelector() {
                     key={type}
                     onClick={() => {
                         setSelectedType(type);
-                        if (scenario?.id) selectScenario(scenario.id);
+                        if (scenario?.id) {
+                            selectScenario(scenario.id);
+                            toast.success(`Switched to ${scenario.name || type} scenario`);
+                        }
                     }}
                     className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         selectedType === type

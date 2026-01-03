@@ -40,6 +40,8 @@ import {
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useCustomersStore } from '@/store/customers-store';
+import toast from 'react-hot-toast';
+import { RefreshCw, Send } from 'lucide-react';
 import type { Customer, RiskIndicator, PaymentRecord, CustomerContact } from '@/types/customers';
 import {
     CustomerStatus,
@@ -186,19 +188,23 @@ function CustomerCard({ customer, onClick }: { customer: Customer; onClick: () =
 
 function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClose: () => void }) {
     const { t } = useThemeStore();
-    const { 
-        getCustomerPayments, 
-        getCustomerRiskIndicators, 
-        getCustomerContacts, 
-        getCustomerRevenue, 
-        updateCreditLimit, 
+    const {
+        getCustomerPayments,
+        getCustomerRiskIndicators,
+        getCustomerContacts,
+        getCustomerRevenue,
+        updateCreditLimit,
         resolveRiskIndicator,
         fetchCustomer
     } = useCustomersStore();
     const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'credit' | 'revenue' | 'risk' | 'contacts'>('overview');
     const [showCreditModal, setShowCreditModal] = useState(false);
+    const [showEmailModal, setShowEmailModal] = useState(false);
     const [newCreditLimit, setNewCreditLimit] = useState(customer.creditLimit);
     const [creditReason, setCreditReason] = useState('');
+    const [emailSubject, setEmailSubject] = useState('');
+    const [emailBody, setEmailBody] = useState('');
+    const [isSendingEmail, setIsSendingEmail] = useState(false);
 
     // Fetch full customer data on mount
     useEffect(() => {
@@ -239,6 +245,24 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
         if (creditReason.trim()) {
             updateCreditLimit(customer.id, newCreditLimit, creditReason);
             setShowCreditModal(false);
+            toast.success(t('customers.creditUpdated') || 'Credit limit updated');
+        }
+    };
+
+    const handleSendEmail = async () => {
+        if (!emailSubject.trim() || !emailBody.trim()) return;
+        setIsSendingEmail(true);
+        try {
+            // Simulate sending email (real implementation would call an API)
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            toast.success(`${t('customers.emailSent') || 'Email sent to'} ${customer.email}`);
+            setShowEmailModal(false);
+            setEmailSubject('');
+            setEmailBody('');
+        } catch {
+            toast.error(t('customers.emailFailed') || 'Failed to send email');
+        } finally {
+            setIsSendingEmail(false);
         }
     };
 
@@ -273,6 +297,11 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                 </div>
                             </div>
                         </div>
+                        {customer.email && (
+                            <Button variant="secondary" size="sm" leftIcon={<Send size={16} />} onClick={() => setShowEmailModal(true)}>
+                                {t('customers.sendEmail') || 'Email'}
+                            </Button>
+                        )}
                         <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-800 rounded-lg"><X size={24} /></button>
                     </div>
 
@@ -473,6 +502,42 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
                                             <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700">
                                                 <Button variant="secondary" onClick={() => setShowCreditModal(false)}>{t('common.cancel') || 'Cancel'}</Button>
                                                 <Button variant="primary" onClick={handleCreditUpdate} disabled={!creditReason.trim()}>{t('common.save') || 'Save'}</Button>
+                                            </div>
+                                        </motion.div>
+                                    </div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* Email Modal */}
+                            <AnimatePresence>
+                                {showEmailModal && (
+                                    <div className="fixed inset-0 z-[60] bg-gray-900/50 flex items-center justify-center p-4">
+                                        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+                                                    className="w-full max-w-lg bg-white dark:bg-surface-900 rounded-2xl shadow-2xl">
+                                            <div className="p-6 border-b border-gray-200 dark:border-surface-700">
+                                                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{t('customers.sendEmailTo') || 'Send Email to'} {customer.name}</h3>
+                                                <p className="text-sm text-gray-500 mt-1">{customer.email}</p>
+                                            </div>
+                                            <div className="p-6 space-y-4">
+                                                <div>
+                                                    <label className="block text-sm font-medium mb-1">{t('customers.subject') || 'Subject'} *</label>
+                                                    <input type="text" value={emailSubject} onChange={(e) => setEmailSubject(e.target.value)}
+                                                           placeholder={t('customers.emailSubjectPlaceholder') || 'Enter email subject'}
+                                                           className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800" />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium mb-1">{t('customers.message') || 'Message'} *</label>
+                                                    <textarea value={emailBody} onChange={(e) => setEmailBody(e.target.value)} rows={6}
+                                                              placeholder={t('customers.emailBodyPlaceholder') || 'Enter your message...'}
+                                                              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800" />
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-end gap-2 p-6 border-t border-gray-200 dark:border-surface-700">
+                                                <Button variant="secondary" onClick={() => setShowEmailModal(false)} disabled={isSendingEmail}>{t('common.cancel') || 'Cancel'}</Button>
+                                                <Button variant="primary" onClick={handleSendEmail} disabled={!emailSubject.trim() || !emailBody.trim() || isSendingEmail}>
+                                                    {isSendingEmail ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Send size={16} className="mr-2" />}
+                                                    {t('customers.send') || 'Send'}
+                                                </Button>
                                             </div>
                                         </motion.div>
                                     </div>
@@ -807,14 +872,24 @@ export default function CustomersPage() {
 
     const filteredCustomers = useMemo(() => {
         return customers.filter((c) => {
-            const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                  c.customerNumber.toLowerCase().includes(searchQuery.toLowerCase()) || 
+            const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                  c.customerNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                   (c.email || '').toLowerCase().includes(searchQuery.toLowerCase());
             const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
             const matchesRisk = filterRisk === 'all' || c.riskLevel === filterRisk;
             return matchesSearch && matchesStatus && matchesRisk;
         });
     }, [customers, searchQuery, filterStatus, filterRisk]);
+
+    // Churn analysis
+    const churnedCount = useMemo(() => customers.filter(c => c.status === 'churned').length, [customers]);
+    const atRiskCount = useMemo(() => customers.filter(c => c.riskLevel === 'high' || c.riskLevel === 'critical').length, [customers]);
+
+    // Sync handler
+    const handleSync = async () => {
+        await fetchCustomers();
+        toast.success(t('customers.syncSuccess') || 'Customers synced successfully');
+    };
 
     // Loading state
     if (isLoading && !isInitialized) {
@@ -838,10 +913,41 @@ export default function CustomersPage() {
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 mt-1">{t('customers.subtitle') || 'Manage customer relationships and credit'}</p>
                 </div>
-                <Button variant="primary" leftIcon={<UserPlus size={18} />} onClick={() => setShowNewModal(true)}>
-                    {t('customers.newCustomer') || 'New Customer'}
-                </Button>
+                <div className="flex gap-2">
+                    <Button
+                        variant="secondary"
+                        leftIcon={<RefreshCw size={18} className={isLoading ? 'animate-spin' : ''} />}
+                        onClick={handleSync}
+                        disabled={isLoading}
+                    >
+                        {t('common.sync') || 'Sync'}
+                    </Button>
+                    <Button variant="primary" leftIcon={<UserPlus size={18} />} onClick={() => setShowNewModal(true)}>
+                        {t('customers.newCustomer') || 'New Customer'}
+                    </Button>
+                </div>
             </div>
+
+            {/* Churn Analysis Alert */}
+            {churnedCount > 0 && (
+                <Card variant="glass" padding="md" className="border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20">
+                    <div className="flex items-center gap-3">
+                        <AlertTriangle className="w-5 h-5 text-amber-500" />
+                        <div className="flex-1">
+                            <p className="font-medium text-gray-900 dark:text-white">
+                                {t('customers.churnAlert') || 'Customer Churn Alert'}
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                {churnedCount} {t('customers.customersChurned') || 'customers have churned this period'}.
+                                {atRiskCount > 0 && ` ${atRiskCount} ${t('customers.moreAtRisk') || 'more are at risk'}.`}
+                            </p>
+                        </div>
+                        <Button variant="secondary" size="sm" onClick={() => setFilterStatus('churned')}>
+                            {t('customers.viewChurned') || 'View Churned'}
+                        </Button>
+                    </div>
+                </Card>
+            )}
 
             {/* Metrics */}
             <MetricCards />

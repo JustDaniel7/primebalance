@@ -1,22 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
-import { Card, Button, Badge, Input } from '@/components/ui'
+import { useArchiveStore } from '@/store/archive-store'
+import { Card, Button, Badge } from '@/components/ui'
 import {
   PlusIcon,
   SearchIcon,
-  ChevronDownIcon,
-  TransactionsIcon,
 } from '@/components/ui/Icons'
 import { format } from 'date-fns'
 import type { Transaction } from '@/types'
-
-import { useEffect } from 'react'
 import TransactionModal from '@/components/transactions/TransactionModal'
-import { Loader2, Pencil, Trash2 } from 'lucide-react'
+import { Loader2, Pencil, Trash2, Archive } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function TransactionsPage() {
@@ -28,6 +25,7 @@ export default function TransactionsPage() {
     error
   } = useStore()
   const { t } = useThemeStore()
+  const { createArchive } = useArchiveStore()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('all')
@@ -44,13 +42,42 @@ export default function TransactionsPage() {
     setShowModal(true)
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this transaction?')) return
+  const handleArchive = async (tx: Transaction) => {
+    if (!confirm('Archive this transaction? It will be moved to the Archive.')) return
     try {
-      await deleteTransaction(id)
-      toast.success('Transaction deleted')
-    } catch (e: any) {
-      toast.error(e.message)
+      // First archive the transaction
+      await createArchive({
+        originalObjectId: tx.id,
+        objectType: 'transaction',
+        triggerType: 'manual',
+        triggerReason: 'User requested archive',
+        title: tx.description,
+        description: `Transaction: ${tx.description} - ${tx.amount >= 0 ? '+' : ''}${tx.amount} ${tx.currency}`,
+        content: {
+          originalTransaction: tx,
+          archivedAt: new Date().toISOString(),
+        },
+        amount: Math.abs(tx.amount),
+        currency: tx.currency,
+        category: 'financial',
+        subcategory: tx.category || 'general',
+        tags: [tx.category || 'transaction', tx.status],
+        effectiveDate: tx.date,
+      })
+      // Then delete from active transactions
+      await deleteTransaction(tx.id)
+      toast.success('Transaction archived successfully')
+    } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : 'Failed to archive transaction'
+      toast.error(errorMessage)
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    const tx = transactions.find(t => t.id === id)
+    if (tx) {
+      // Archive instead of permanent delete
+      await handleArchive(tx)
     }
   }
 
@@ -185,10 +212,10 @@ export default function TransactionsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
+              className="px-4 py-2.5 rounded-xl bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30 cursor-pointer"
             >
               {categories.map((cat) => (
-                <option key={cat.value} value={cat.value}>
+                <option key={cat.value} value={cat.value} className="bg-white dark:bg-surface-800 text-gray-900 dark:text-surface-100">
                   {cat.label}
                 </option>
               ))}
@@ -196,10 +223,10 @@ export default function TransactionsPage() {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-surface-800/50 border border-gray-200 dark:border-surface-700/50 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30"
+              className="px-4 py-2.5 rounded-xl bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30 cursor-pointer"
             >
               {statuses.map((status) => (
-                <option key={status.value} value={status.value}>
+                <option key={status.value} value={status.value} className="bg-white dark:bg-surface-800 text-gray-900 dark:text-surface-100">
                   {status.label}
                 </option>
               ))}
@@ -254,12 +281,21 @@ export default function TransactionsPage() {
                     <button
                       onClick={() => handleEdit(transaction)}
                       className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 text-gray-500 hover:text-gray-700 dark:hover:text-surface-300 transition-colors"
+                      title="Edit"
                     >
                       <Pencil className="w-4 h-4" />
                     </button>
                     <button
+                      onClick={() => handleArchive(transaction)}
+                      className="p-1.5 rounded-lg hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 transition-colors"
+                      title="Archive"
+                    >
+                      <Archive className="w-4 h-4" />
+                    </button>
+                    <button
                       onClick={() => handleDelete(transaction.id)}
                       className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-colors"
+                      title="Delete (Archives first)"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

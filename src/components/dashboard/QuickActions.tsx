@@ -83,7 +83,7 @@ export default function QuickActions() {
         description: inv.customerName || 'Customer',
         amount: inv.outstandingAmount,
         dueDate: inv.dueDate,
-        link: `/dashboard/invoices/${inv.id}`,
+        link: `/dashboard/invoices?id=${inv.id}`,
       })
     })
 
@@ -180,13 +180,13 @@ export default function QuickActions() {
     {
       label: 'New Invoice',
       icon: FileText,
-      href: '/dashboard/invoices/new',
+      href: '/dashboard/invoices?action=new',
       color: 'bg-violet-500/10 text-violet-400 hover:bg-violet-500/20',
     },
     {
       label: 'New Transaction',
       icon: Send,
-      href: '/dashboard/transactions/new',
+      href: '/dashboard/transactions?action=new',
       color: 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20',
     },
     {
@@ -311,7 +311,7 @@ export default function QuickActions() {
               </span>
             </div>
             <Link
-              href="/dashboard/tasks"
+              href="/dashboard/task-center"
               className="text-xs text-[var(--accent-primary)] hover:opacity-80 transition-opacity"
             >
               View All Tasks

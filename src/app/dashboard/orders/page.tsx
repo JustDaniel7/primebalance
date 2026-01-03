@@ -72,7 +72,7 @@ function OrderList({
         { value: 'all', label: t('common.all') || 'All' },
         { value: 'draft', label: t('order.status.draft') || 'Draft' },
         { value: 'confirmed', label: t('order.status.confirmed') || 'Confirmed' },
-        { value: 'in_progress', label: t('order.status.inProgress') || 'In Progress' },
+        { value: 'in_progress', label: t('order.status.in_progress') || 'In Progress' },
         { value: 'completed', label: t('order.status.completed') || 'Completed' },
     ];
 

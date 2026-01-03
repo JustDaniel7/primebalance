@@ -27,6 +27,7 @@ import {
 import { Card, Button, Badge, Input } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useLiabilitiesStore } from '@/store/liabilities-store';
+import toast from 'react-hot-toast';
 import type {
     Liability,
     LiabilityPrimaryClass,
@@ -790,15 +791,253 @@ function LiabilitiesWizard({
 }
 
 // =============================================================================
+// LIABILITY DETAIL MODAL
+// =============================================================================
+
+interface LiabilityDetailModalProps {
+    liability: Liability;
+    onClose: () => void;
+    onUpdate: () => void;
+}
+
+function LiabilityDetailModal({ liability, onClose, onUpdate }: LiabilityDetailModalProps) {
+    const { t, language } = useThemeStore();
+    const { updateLiability } = useLiabilitiesStore();
+    const [isEditing, setIsEditing] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [editData, setEditData] = useState({
+        name: liability.name,
+        outstandingPrincipal: liability.outstandingPrincipal,
+        interestRate: liability.interestRate || 0,
+        maturityDate: liability.maturityDate || '',
+        notes: liability.notes || '',
+    });
+
+    const Icon = primaryClassIcons[liability.primaryClass as string] || HelpCircle;
+
+    const formatCurrency = (amount: number, currency: string) => {
+        return new Intl.NumberFormat(language === 'de' ? 'de-DE' : 'en-US', { style: 'currency', currency }).format(amount);
+    };
+
+    const formatDate = (dateStr: string) => {
+        return new Date(dateStr).toLocaleDateString(language === 'de' ? 'de-DE' : 'en-US');
+    };
+
+    const handleSave = async () => {
+        setIsSaving(true);
+        try {
+            await updateLiability(liability.id, {
+                name: editData.name,
+                outstandingPrincipal: editData.outstandingPrincipal,
+                interestRate: editData.interestRate,
+                maturityDate: editData.maturityDate || undefined,
+                notes: editData.notes,
+            });
+            toast.success(t('liabilities.updateSuccess') || 'Liability updated successfully');
+            setIsEditing(false);
+            onUpdate();
+        } catch {
+            toast.error(t('liabilities.updateFailed') || 'Failed to update liability');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+            >
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
+                    <div className="flex items-center gap-3">
+                        <div className={`w-12 h-12 rounded-xl bg-${primaryClassColors[liability.primaryClass as string] || 'gray'}-500/10 flex items-center justify-center`}>
+                            <Icon size={24} className={`text-${primaryClassColors[liability.primaryClass as string] || 'gray'}-500`} />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        value={editData.name}
+                                        onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                                        className="bg-transparent border-b border-gray-300 dark:border-surface-600 focus:outline-none focus:border-[var(--accent-primary)]"
+                                    />
+                                ) : (
+                                    liability.name
+                                )}
+                            </h2>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                {liability.counterpartyName}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        {!isEditing ? (
+                            <Button variant="secondary" size="sm" onClick={() => setIsEditing(true)}>
+                                Edit
+                            </Button>
+                        ) : (
+                            <>
+                                <Button variant="secondary" size="sm" onClick={() => setIsEditing(false)} disabled={isSaving}>
+                                    Cancel
+                                </Button>
+                                <Button variant="primary" size="sm" onClick={handleSave} disabled={isSaving}>
+                                    {isSaving ? 'Saving...' : 'Save'}
+                                </Button>
+                            </>
+                        )}
+                        <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">
+                            <X className="w-5 h-5 text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 space-y-6">
+                    {/* Status & Risk */}
+                    <div className="flex items-center gap-3">
+                        <Badge variant={liability.status === 'active' ? 'success' : liability.status === 'defaulted' ? 'danger' : 'neutral'}>
+                            {t(`liabilities.status.${liability.status}`) || liability.status}
+                        </Badge>
+                        <Badge variant={liability.riskLevel === 'low' ? 'success' : liability.riskLevel === 'high' ? 'danger' : 'warning'}>
+                            {t(`liabilities.risk.${liability.riskLevel}`) || liability.riskLevel} risk
+                        </Badge>
+                        {liability.isInDefault && <Badge variant="danger">In Default</Badge>}
+                        {liability.isDisputed && <Badge variant="warning">Disputed</Badge>}
+                    </div>
+
+                    {/* Amounts */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <Card variant="glass" padding="md">
+                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.originalAmount') || 'Original Principal'}</p>
+                            <p className="text-xl font-bold text-gray-900 dark:text-surface-100 mt-1">
+                                {formatCurrency(liability.originalPrincipal, liability.currency)}
+                            </p>
+                        </Card>
+                        <Card variant="glass" padding="md">
+                            <p className="text-sm text-gray-500 dark:text-surface-400">{t('liabilities.currentBalance') || 'Outstanding'}</p>
+                            {isEditing ? (
+                                <input
+                                    type="number"
+                                    value={editData.outstandingPrincipal}
+                                    onChange={(e) => setEditData({ ...editData, outstandingPrincipal: Number(e.target.value) })}
+                                    className="text-xl font-bold text-[var(--accent-primary)] mt-1 bg-transparent border-b border-gray-300 dark:border-surface-600 w-full focus:outline-none"
+                                />
+                            ) : (
+                                <p className="text-xl font-bold text-[var(--accent-primary)] mt-1">
+                                    {formatCurrency(liability.outstandingPrincipal, liability.currency)}
+                                </p>
+                            )}
+                        </Card>
+                    </div>
+
+                    {/* Details */}
+                    <div className="space-y-4">
+                        <h3 className="font-medium text-gray-900 dark:text-white">{t('liabilities.details') || 'Details'}</h3>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span className="text-gray-500 dark:text-surface-400">{t('liabilities.class.label') || 'Class'}</span>
+                                <p className="font-medium text-gray-900 dark:text-surface-100 mt-0.5">
+                                    {t(`liabilities.class.${liability.primaryClass}`) || liability.primaryClass}
+                                </p>
+                            </div>
+                            <div>
+                                <span className="text-gray-500 dark:text-surface-400">{t('liabilities.counterpartyType') || 'Counterparty Type'}</span>
+                                <p className="font-medium text-gray-900 dark:text-surface-100 mt-0.5 capitalize">
+                                    {liability.counterpartyType}
+                                </p>
+                            </div>
+                            <div>
+                                <span className="text-gray-500 dark:text-surface-400">{t('liabilities.startDate') || 'Inception Date'}</span>
+                                <p className="font-medium text-gray-900 dark:text-surface-100 mt-0.5">
+                                    {formatDate(liability.inceptionDate)}
+                                </p>
+                            </div>
+                            <div>
+                                <span className="text-gray-500 dark:text-surface-400">{t('liabilities.maturityDate') || 'Maturity Date'}</span>
+                                {isEditing ? (
+                                    <input
+                                        type="date"
+                                        value={editData.maturityDate}
+                                        onChange={(e) => setEditData({ ...editData, maturityDate: e.target.value })}
+                                        className="block font-medium text-gray-900 dark:text-surface-100 mt-0.5 bg-transparent border-b border-gray-300 dark:border-surface-600 focus:outline-none"
+                                    />
+                                ) : (
+                                    <p className="font-medium text-gray-900 dark:text-surface-100 mt-0.5">
+                                        {liability.maturityDate ? formatDate(liability.maturityDate) : '-'}
+                                    </p>
+                                )}
+                            </div>
+                            {liability.isInterestBearing && (
+                                <div>
+                                    <span className="text-gray-500 dark:text-surface-400">{t('liabilities.interestRate') || 'Interest Rate'}</span>
+                                    {isEditing ? (
+                                        <input
+                                            type="number"
+                                            step="0.1"
+                                            value={editData.interestRate}
+                                            onChange={(e) => setEditData({ ...editData, interestRate: Number(e.target.value) })}
+                                            className="block font-medium text-gray-900 dark:text-surface-100 mt-0.5 bg-transparent border-b border-gray-300 dark:border-surface-600 focus:outline-none w-20"
+                                        />
+                                    ) : (
+                                        <p className="font-medium text-gray-900 dark:text-surface-100 mt-0.5">
+                                            {liability.interestRate}%
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Notes */}
+                    <div>
+                        <h3 className="font-medium text-gray-900 dark:text-white mb-2">{t('common.notes') || 'Notes'}</h3>
+                        {isEditing ? (
+                            <textarea
+                                value={editData.notes}
+                                onChange={(e) => setEditData({ ...editData, notes: e.target.value })}
+                                rows={3}
+                                className="w-full px-3 py-2 bg-gray-50 dark:bg-surface-900/50 border border-gray-200 dark:border-surface-700 rounded-lg text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/20"
+                                placeholder="Add notes..."
+                            />
+                        ) : (
+                            <p className="text-gray-600 dark:text-surface-400 bg-gray-50 dark:bg-surface-900/50 p-3 rounded-lg">
+                                {liability.notes || 'No notes'}
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
+                    <Button variant="secondary" onClick={onClose}>
+                        {t('common.close') || 'Close'}
+                    </Button>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
+
+// =============================================================================
 // MAIN PAGE
 // =============================================================================
 
 export default function LiabilitiesPage() {
     const [showWizard, setShowWizard] = useState(false);
-    const [_selectedLiability, setSelectedLiability] = useState<Liability | null>(null);
+    const [selectedLiability, setSelectedLiability] = useState<Liability | null>(null);
+    const { fetchLiabilities } = useLiabilitiesStore();
 
     const handleCreateNew = () => {
         setShowWizard(true);
+    };
+
+    const handleLiabilityUpdate = () => {
+        fetchLiabilities();
     };
 
     if (showWizard) {
@@ -806,9 +1045,20 @@ export default function LiabilitiesPage() {
     }
 
     return (
-        <LiabilitiesList
-            onCreateNew={handleCreateNew}
-            onSelectLiability={setSelectedLiability}
-        />
+        <>
+            <LiabilitiesList
+                onCreateNew={handleCreateNew}
+                onSelectLiability={setSelectedLiability}
+            />
+            <AnimatePresence>
+                {selectedLiability && (
+                    <LiabilityDetailModal
+                        liability={selectedLiability}
+                        onClose={() => setSelectedLiability(null)}
+                        onUpdate={handleLiabilityUpdate}
+                    />
+                )}
+            </AnimatePresence>
+        </>
     );
 }

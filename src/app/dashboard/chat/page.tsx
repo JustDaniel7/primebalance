@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { useThemeStore } from '@/store/theme-store'
 import { useStore } from '@/store'
 import { Card, Button } from '@/components/ui'
+import toast from 'react-hot-toast'
 import {
   Send,
   Hash,
@@ -21,11 +22,12 @@ import {
   User
 } from 'lucide-react'
 
-interface DirectMessageUser {
+interface OrganizationMember {
   id: string
-  name: string
-  avatar: string
-  online: boolean
+  name: string | null
+  email: string | null
+  image: string | null
+  role: string
 }
 
 interface DMMessage {
@@ -35,32 +37,6 @@ interface DMMessage {
   senderName: string
   senderAvatar: string
   timestamp: string
-}
-
-// Placeholder DM users
-const dmUsers: DirectMessageUser[] = [
-  { id: 'dm-1', name: 'Sarah Chen', avatar: 'SC', online: true },
-  { id: 'dm-2', name: 'Michael Brown', avatar: 'MB', online: true },
-  { id: 'dm-3', name: 'Emily Davis', avatar: 'ED', online: false },
-]
-
-// Placeholder DM messages
-const initialDMMessages: Record<string, DMMessage[]> = {
-  'dm-1': [
-    { id: '1', content: 'Hey, did you see the Q4 report?', senderId: 'dm-1', senderName: 'Sarah Chen', senderAvatar: 'SC', timestamp: new Date(Date.now() - 3600000).toISOString() },
-    { id: '2', content: 'Yes, I just reviewed it. Looks great!', senderId: 'me', senderName: 'You', senderAvatar: 'ME', timestamp: new Date(Date.now() - 3500000).toISOString() },
-    { id: '3', content: 'Sounds good!', senderId: 'dm-1', senderName: 'Sarah Chen', senderAvatar: 'SC', timestamp: new Date(Date.now() - 3400000).toISOString() },
-  ],
-  'dm-2': [
-    { id: '1', content: 'Can you review the expense report when you get a chance?', senderId: 'dm-2', senderName: 'Michael Brown', senderAvatar: 'MB', timestamp: new Date(Date.now() - 7200000).toISOString() },
-    { id: '2', content: 'Sure, I\'ll take a look this afternoon.', senderId: 'me', senderName: 'You', senderAvatar: 'ME', timestamp: new Date(Date.now() - 7000000).toISOString() },
-    { id: '3', content: 'I\'ll review it today', senderId: 'dm-2', senderName: 'Michael Brown', senderAvatar: 'MB', timestamp: new Date(Date.now() - 6800000).toISOString() },
-  ],
-  'dm-3': [
-    { id: '1', content: 'The tax documents have been uploaded.', senderId: 'dm-3', senderName: 'Emily Davis', senderAvatar: 'ED', timestamp: new Date(Date.now() - 86400000).toISOString() },
-    { id: '2', content: 'Perfect, thank you for handling that.', senderId: 'me', senderName: 'You', senderAvatar: 'ME', timestamp: new Date(Date.now() - 86000000).toISOString() },
-    { id: '3', content: 'Thanks for the update', senderId: 'dm-3', senderName: 'Emily Davis', senderAvatar: 'ED', timestamp: new Date(Date.now() - 85000000).toISOString() },
-  ],
 }
 
 type ChatType = 'channel' | 'dm'
@@ -78,7 +54,11 @@ export default function ChatPage() {
   // Chat type state (channel or DM)
   const [activeChatType, setActiveChatType] = useState<ChatType | null>(null)
   const [activeDMId, setActiveDMId] = useState<string | null>(null)
-  const [dmMessages, setDMMessages] = useState<Record<string, DMMessage[]>>(initialDMMessages)
+  const [dmMessages, setDMMessages] = useState<Record<string, DMMessage[]>>({})
+
+  // Organization members
+  const [orgMembers, setOrgMembers] = useState<OrganizationMember[]>([])
+  const [loadingMembers, setLoadingMembers] = useState(true)
 
   // Store state and actions
   const chatChannels = useStore((s) => s.chatChannels)
@@ -92,12 +72,28 @@ export default function ChatPage() {
   // Get messages for active channel
   const messages = activeChannelId ? channelMessages[activeChannelId] || [] : []
   const activeChannel = chatChannels.find(c => c.id === activeChannelId)
-  const activeDM = dmUsers.find(u => u.id === activeDMId)
+  const activeDM = orgMembers.find(u => u.id === activeDMId)
   const activeDMMessageList = activeDMId ? dmMessages[activeDMId] || [] : []
 
-  // Fetch channels on mount
+  // Fetch channels and organization members on mount
   useEffect(() => {
     fetchChannels()
+
+    // Fetch organization members
+    const fetchMembers = async () => {
+      try {
+        const res = await fetch('/api/organization/members')
+        if (res.ok) {
+          const data = await res.json()
+          setOrgMembers(data.members || [])
+        }
+      } catch (error) {
+        console.error('Failed to fetch organization members:', error)
+      } finally {
+        setLoadingMembers(false)
+      }
+    }
+    fetchMembers()
   }, [fetchChannels])
 
   // Scroll to bottom when messages change
@@ -158,8 +154,10 @@ export default function ChatPage() {
       setShowCreateModal(false)
       setNewChannelName('')
       setNewChannelDescription('')
+      toast.success('Channel created successfully')
     } catch (error) {
       console.error('Failed to create channel:', error)
+      toast.error('Failed to create channel')
     } finally {
       setCreating(false)
     }
@@ -177,7 +175,12 @@ export default function ChatPage() {
 
   const getLastDMMessage = (dmId: string) => {
     const msgs = dmMessages[dmId] || []
-    return msgs.length > 0 ? msgs[msgs.length - 1].content : 'No messages yet'
+    return msgs.length > 0 ? msgs[msgs.length - 1].content : t('chat.noMessages')
+  }
+
+  const getInitialsFromName = (name: string | null) => {
+    if (!name) return '?'
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
   }
 
   const hasActiveChat = (activeChatType === 'channel' && activeChannel) || (activeChatType === 'dm' && activeDM)
@@ -252,54 +255,76 @@ export default function ChatPage() {
               )}
             </div>
 
-            {/* Direct Messages */}
+            {/* Direct Messages - Team Members */}
             <div className="mt-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-semibold text-gray-500 dark:text-surface-500 uppercase tracking-wider">
-                  {t('chat.directMessages')}
+                  {t('chat.teamMembers')}
                 </h3>
-                <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors">
-                  <Plus size={14} className="text-gray-500 dark:text-surface-400" />
-                </button>
+                <span className="text-xs text-gray-400">{orgMembers.length}</span>
               </div>
               <div className="space-y-1">
-                {dmUsers.map((dm) => (
-                  <button
-                    key={dm.id}
-                    onClick={() => handleSelectDM(dm.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-                      activeChatType === 'dm' && activeDMId === dm.id
-                        ? 'bg-[var(--accent-primary)]/10'
-                        : 'hover:bg-gray-100 dark:hover:bg-surface-800/50'
-                    }`}
-                  >
-                    <div className="relative">
-                      <div className={`w-8 h-8 rounded-full bg-[var(--accent-primary)]/10 flex items-center justify-center text-xs font-medium ${
-                        activeChatType === 'dm' && activeDMId === dm.id
-                          ? 'text-[var(--accent-primary)]'
-                          : 'text-[var(--accent-primary)]'
-                      }`}>
-                        {dm.avatar}
+                {loadingMembers ? (
+                  <div className="flex items-center justify-center py-4">
+                    <Loader2 size={16} className="animate-spin text-gray-400" />
+                  </div>
+                ) : orgMembers.length === 0 ? (
+                  <p className="text-sm text-gray-500 dark:text-surface-500 px-3 py-2">
+                    {t('chat.noTeamMembers')}
+                  </p>
+                ) : (
+                  orgMembers.map((member) => (
+                    <button
+                      key={member.id}
+                      onClick={() => handleSelectDM(member.id)}
+                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                        activeChatType === 'dm' && activeDMId === member.id
+                          ? 'bg-[var(--accent-primary)]/10'
+                          : 'hover:bg-gray-100 dark:hover:bg-surface-800/50'
+                      }`}
+                    >
+                      <div className="relative">
+                        {member.image ? (
+                          <img
+                            src={member.image}
+                            alt={member.name || ''}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className={`w-8 h-8 rounded-full bg-[var(--accent-primary)]/10 flex items-center justify-center text-xs font-medium text-[var(--accent-primary)]`}>
+                            {getInitialsFromName(member.name)}
+                          </div>
+                        )}
+                        <Circle
+                          size={10}
+                          className="absolute -bottom-0.5 -right-0.5 text-green-500 fill-green-500"
+                        />
                       </div>
-                      <Circle
-                        size={10}
-                        className={`absolute -bottom-0.5 -right-0.5 ${
-                          dm.online ? 'text-green-500 fill-green-500' : 'text-gray-400 fill-gray-400'
-                        }`}
-                      />
-                    </div>
-                    <div className="flex-1 text-left">
-                      <p className={`font-medium ${
-                        activeChatType === 'dm' && activeDMId === dm.id
-                          ? 'text-[var(--accent-primary)]'
-                          : 'text-gray-900 dark:text-surface-100'
-                      }`}>{dm.name}</p>
-                      <p className="text-xs text-gray-500 dark:text-surface-500 truncate">
-                        {getLastDMMessage(dm.id)}
-                      </p>
-                    </div>
-                  </button>
-                ))}
+                      <div className="flex-1 text-left">
+                        <div className="flex items-center gap-2">
+                          <p className={`font-medium ${
+                            activeChatType === 'dm' && activeDMId === member.id
+                              ? 'text-[var(--accent-primary)]'
+                              : 'text-gray-900 dark:text-surface-100'
+                          }`}>{member.name || member.email}</p>
+                          {member.role === 'admin' && (
+                            <span className="text-[10px] px-1.5 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded">
+                              Admin
+                            </span>
+                          )}
+                          {member.role === 'owner' && (
+                            <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded">
+                              Owner
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500 dark:text-surface-500 truncate">
+                          {getLastDMMessage(member.id)}
+                        </p>
+                      </div>
+                    </button>
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -329,23 +354,36 @@ export default function ChatPage() {
                   ) : activeChatType === 'dm' && activeDM ? (
                     <>
                       <div className="relative">
-                        <div className="w-10 h-10 rounded-full bg-[var(--accent-primary)]/10 flex items-center justify-center text-sm font-medium text-[var(--accent-primary)]">
-                          {activeDM.avatar}
-                        </div>
+                        {activeDM.image ? (
+                          <img
+                            src={activeDM.image}
+                            alt={activeDM.name || ''}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-[var(--accent-primary)]/10 flex items-center justify-center text-sm font-medium text-[var(--accent-primary)]">
+                            {getInitialsFromName(activeDM.name)}
+                          </div>
+                        )}
                         <Circle
                           size={12}
-                          className={`absolute -bottom-0.5 -right-0.5 ${
-                            activeDM.online ? 'text-green-500 fill-green-500' : 'text-gray-400 fill-gray-400'
-                          }`}
+                          className="absolute -bottom-0.5 -right-0.5 text-green-500 fill-green-500"
                         />
                       </div>
                       <div>
                         <h3 className="font-semibold text-gray-900 dark:text-surface-100">
-                          {activeDM.name}
+                          {activeDM.name || activeDM.email}
                         </h3>
-                        <p className="text-xs text-gray-500 dark:text-surface-500">
-                          {activeDM.online ? 'Online' : 'Offline'}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs text-gray-500 dark:text-surface-500">
+                            {t('chat.online')}
+                          </p>
+                          {activeDM.role !== 'member' && (
+                            <span className="text-[10px] px-1.5 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded capitalize">
+                              {activeDM.role}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </>
                   ) : null}

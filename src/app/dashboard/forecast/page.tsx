@@ -59,6 +59,7 @@ import {
 import { Card, Button, Badge, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useForecastStore } from '@/store/forecast-store';
+import toast from 'react-hot-toast';
 import type {
     ForecastTab,
     TimeHorizon,
@@ -1692,6 +1693,7 @@ function ScenariosTab() {
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setActiveScenario(scenario.id);
+                                        toast.success('Scenario set as active');
                                     }}
                                 >
                                     Set Active
@@ -1704,6 +1706,7 @@ function ScenariosTab() {
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         lockScenario(scenario.id);
+                                        toast.success('Scenario locked');
                                     }}
                                 >
                                     <Lock size={14} />
@@ -1845,6 +1848,7 @@ export default function ForecastsPage() {
         const fileName = `forecasts-export-${new Date().toISOString().split('T')[0]}`;
         const { content, mimeType, extension } = convertToFormat(exportData, format, 'forecasts');
         downloadFile(content, `${fileName}.${extension}`, mimeType);
+        toast.success(`Forecasts exported as ${format.toUpperCase()}`);
     };
 
     const tabs: { id: ForecastTab; label: string; icon: React.ElementType; badge?: number }[] = [

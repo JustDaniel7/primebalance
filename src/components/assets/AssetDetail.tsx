@@ -4,12 +4,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     X,
-    Calendar,
     MapPin,
-    Building2,
     TrendingDown,
-    DollarSign,
-    Clock,
     FileText,
     AlertTriangle,
     ArrowRight,
@@ -17,6 +13,7 @@ import {
     Ban,
 } from 'lucide-react';
 import { useAssetStore } from '@/store/asset-store';
+import toast from 'react-hot-toast';
 import { useThemeStore } from '@/store/theme-store';
 import { Asset, AssetStatus, AssetCategory, BookType } from '@/types/asset';
 import { calculateBookValue, canDepreciate } from '@/lib/depreciation-engine';
@@ -82,11 +79,15 @@ export const AssetDetail: React.FC<AssetDetailProps> = ({ asset, onClose }) => {
 
     const handleHoldForSale = () => {
         holdForSale(asset.id, t('assets.event.heldForSale'), 'user');
+        toast.success(t('assets.detail.heldForSaleSuccess') || 'Asset marked as held for sale');
+        onClose();
     };
 
     const handleWriteOff = () => {
         writeOffAsset(asset.id, t('assets.event.writtenOff'), 'user');
         setShowWriteOffConfirm(false);
+        toast.success(t('assets.detail.writeOffSuccess') || 'Asset written off successfully');
+        onClose();
     };
 
     const statusColors: Record<AssetStatus, string> = {

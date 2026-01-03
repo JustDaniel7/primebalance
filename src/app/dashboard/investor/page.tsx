@@ -39,6 +39,7 @@ import {
 import { Card, Button, ExportModal, convertToFormat, downloadFile, type ExportFormat } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useInvestorStore } from '@/store/investor-store';
+import toast from 'react-hot-toast';
 import type { InvestorRiskLevel, TrendDirection, DataQuality, MaterialChange } from '@/types/investor';
 import { REPORTING_PERIODS, INVESTOR_RISK_LEVELS } from '@/types/investor';
 
@@ -638,11 +639,13 @@ function BoardSummarySection() {
                 ],
             };
             await exportDocument(documentData, format, 'board-summary');
+            toast.success(`Board summary exported as ${format.toUpperCase()}`);
         } else {
             // Use generic export for other formats
             const fileName = `board-summary-${new Date().toISOString().split('T')[0]}`;
             const { content, mimeType, extension } = convertToFormat(exportData, format, 'board-summary');
             downloadFile(content, `${fileName}.${extension}`, mimeType);
+            toast.success(`Board summary exported as ${format.toUpperCase()}`);
         }
     };
 
@@ -890,7 +893,10 @@ export default function InvestorPage() {
                     </select>
 
                     {/* Refresh */}
-                    <Button variant="secondary" size="sm" leftIcon={<RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />} onClick={refreshDashboard} disabled={isLoading}>
+                    <Button variant="secondary" size="sm" leftIcon={<RefreshCw size={16} className={isLoading ? 'animate-spin' : ''} />} onClick={async () => {
+                        await refreshDashboard();
+                        toast.success('Dashboard refreshed');
+                    }} disabled={isLoading}>
                         Refresh
                     </Button>
                 </div>

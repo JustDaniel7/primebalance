@@ -129,7 +129,7 @@ export default function ReportsPage() {
     }
   }
 
-  const downloadReport = async (reportData: any, format: 'csv' | 'json' | 'xml' = 'csv') => {
+  const downloadReport = async (reportData: any, format: 'csv' | 'json' | 'xml' | 'pdf' | 'docx' = 'csv') => {
     try {
       const res = await fetch('/api/reports/download', {
         method: 'POST',
@@ -137,7 +137,9 @@ export default function ReportsPage() {
         body: JSON.stringify({
           reportData: reportData.data,
           format,
-          fileName: `${reportData.reportType}_${reportData.period}_${format}`,
+          fileName: `${reportData.reportType}_${reportData.period}`,
+          reportType: reportData.reportType,
+          period: reportData.period,
         }),
       })
 
@@ -441,17 +443,38 @@ export default function ReportsPage() {
                         Generated {format(new Date(viewingReport.generatedAt), 'MMM d, yyyy HH:mm')}
                       </p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
+                      <Button
+                          variant="primary"
+                          size="sm"
+                          leftIcon={<Download size={14} />}
+                          onClick={() => downloadReport(viewingReport, 'pdf')}
+                      >
+                        PDF
+                      </Button>
                       <Button
                           variant="secondary"
                           size="sm"
-                          leftIcon={<Download size={14} />}
+                          onClick={() => downloadReport(viewingReport, 'docx')}
+                      >
+                        DOCX
+                      </Button>
+                      <Button
+                          variant="secondary"
+                          size="sm"
                           onClick={() => downloadReport(viewingReport, 'csv')}
                       >
                         CSV
                       </Button>
                       <Button
                           variant="secondary"
+                          size="sm"
+                          onClick={() => downloadReport(viewingReport, 'xml')}
+                      >
+                        XML
+                      </Button>
+                      <Button
+                          variant="ghost"
                           size="sm"
                           onClick={() => downloadReport(viewingReport, 'json')}
                       >

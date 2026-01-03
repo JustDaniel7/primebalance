@@ -78,6 +78,8 @@ interface ArchiveState {
         includeLineage?: boolean;
     }) => Promise<ArchiveRecord | null>;
     createArchive: (data: CreateArchiveRequest) => Promise<ArchiveRecord | null>;
+    restoreArchive: (id: string) => Promise<{ success: boolean; restoredTo?: string } | null>;
+    deleteArchive: (id: string) => Promise<boolean>;
 
     // ==========================================================================
     // API Actions - Search & Reconstruction
@@ -339,6 +341,57 @@ export const useArchiveStore = create<ArchiveState>()(
                 }
 
                 return newRecord || null;
+            },
+
+            restoreArchive: async (id) => {
+                set({ isLoading: true, error: null });
+
+                const { data, error } = await apiRequest<{ success: boolean; restoredTo?: string }>(
+                    `/api/archive/${id}/restore`,
+                    { method: 'POST' }
+                );
+
+                if (error) {
+                    set({ isLoading: false, error });
+                    return null;
+                }
+
+                if (data?.success) {
+                    // Remove from records list since it's restored
+                    set((state) => ({
+                        records: state.records.filter((r) => r.id !== id),
+                        currentRecord: state.currentRecord?.id === id ? null : state.currentRecord,
+                        isLoading: false,
+                    }));
+                }
+
+                return data || null;
+            },
+
+            deleteArchive: async (id) => {
+                set({ isLoading: true, error: null });
+
+                // Note: Archives are generally immutable, but we can mark them for deletion
+                // if they're not on legal hold and retention has expired
+                const { data, error } = await apiRequest<{ success: boolean }>(
+                    `/api/archive/${id}/delete`,
+                    { method: 'POST' }
+                );
+
+                if (error) {
+                    set({ isLoading: false, error });
+                    return false;
+                }
+
+                if (data?.success) {
+                    set((state) => ({
+                        records: state.records.filter((r) => r.id !== id),
+                        currentRecord: state.currentRecord?.id === id ? null : state.currentRecord,
+                        isLoading: false,
+                    }));
+                }
+
+                return data?.success || false;
             },
 
             // ========================================================================

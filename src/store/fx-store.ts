@@ -51,6 +51,8 @@ interface FXState {
 
   // Rate Actions
   createRate: (rate: Partial<FXRate>) => Promise<void>;
+  fetchLiveRates: (baseCurrency?: string) => Promise<{ success: boolean; message?: string; ratesCount?: number }>;
+  isSyncingLiveRates: boolean;
 
   // Exposure Actions
   createExposure: (exposure: Partial<CurrencyExposure>) => Promise<void>;
@@ -99,6 +101,7 @@ export const useFXStore = create<FXState>((set, get) => ({
   selectedTimeHorizon: 'all',
   selectedExposureType: 'all',
   isLoading: false,
+  isSyncingLiveRates: false,
   error: null,
   isInitialized: false,
 
@@ -194,6 +197,34 @@ export const useFXStore = create<FXState>((set, get) => ({
       await get().fetchRates();
     } catch (error) {
       console.error('Failed to create rate:', error);
+    }
+  },
+
+  fetchLiveRates: async (baseCurrency = 'EUR') => {
+    set({ isSyncingLiveRates: true, error: null });
+    try {
+      const res = await fetch('/api/fx/rates/live', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ baseCurrency }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to fetch live rates');
+      }
+
+      // Refresh rates from database after syncing
+      await get().fetchRates(baseCurrency);
+      await get().fetchDashboard();
+
+      set({ isSyncingLiveRates: false });
+      return { success: true, message: data.message, ratesCount: data.ratesCount };
+    } catch (error) {
+      console.error('Failed to fetch live rates:', error);
+      set({ error: (error as Error).message, isSyncingLiveRates: false });
+      return { success: false, message: (error as Error).message };
     }
   },
 
