@@ -63,7 +63,8 @@
       "Bash(taskkill:*)"
       "Bash(npm run dev:*)",
       "Bash(gcloud run:*)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "Bash(git reset:*)"
     ]
   }
 }

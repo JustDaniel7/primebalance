@@ -3,3 +3,6 @@ node_modules
 .env
 # Sentry Config File
 .claude
+settings.local.json
+package-lock.json
+package.json
