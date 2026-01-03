@@ -34,7 +34,7 @@ export default function VoiceInputButton({ onTranscript, disabled }: VoiceInputB
         whileTap={{ scale: isDisabled ? 1 : 0.98 }}
         className={`
           relative inline-flex items-center justify-center
-          px-3 py-2.5 rounded-xl
+          px-4 py-3 rounded-xl
           font-medium transition-all duration-200
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-950
           disabled:opacity-50 disabled:cursor-not-allowed
@@ -46,10 +46,10 @@ export default function VoiceInputButton({ onTranscript, disabled }: VoiceInputB
         title={isRecording ? 'Stop recording' : isTranscribing ? 'Transcribing...' : error || 'Start voice input'}
       >
         {isTranscribing ? (
-          <Loader2 size={18} className="animate-spin" />
+          <Loader2 size={20} className="animate-spin" />
         ) : (
           <>
-            <Mic size={18} />
+            <Mic size={20} />
             {isRecording && (
               <motion.span
                 className="absolute inset-0 rounded-xl bg-red-500"
