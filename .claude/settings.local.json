@@ -59,7 +59,8 @@
       "Bash(gcloud info:*)",
       "Bash(gcloud projects add-iam-policy-binding:*)",
       "Bash(PRISMA_MIGRATE_LOCK_TIMEOUT=60000 npx prisma migrate dev:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)"
     ]
   }
 }

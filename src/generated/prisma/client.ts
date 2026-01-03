@@ -320,6 +320,71 @@ export type TreasuryScenario = Prisma.TreasuryScenarioModel
  */
 export type TreasuryCashMovement = Prisma.TreasuryCashMovementModel
 /**
+ * Model Dunning
+ * 
+ */
+export type Dunning = Prisma.DunningModel
+/**
+ * Model DunningEvent
+ * 
+ */
+export type DunningEvent = Prisma.DunningEventModel
+/**
+ * Model DunningProposal
+ * 
+ */
+export type DunningProposal = Prisma.DunningProposalModel
+/**
+ * Model DunningCommunication
+ * 
+ */
+export type DunningCommunication = Prisma.DunningCommunicationModel
+/**
+ * Model DunningInterestAccrual
+ * 
+ */
+export type DunningInterestAccrual = Prisma.DunningInterestAccrualModel
+/**
+ * Model DunningFee
+ * 
+ */
+export type DunningFee = Prisma.DunningFeeModel
+/**
+ * Model DunningDisputeRecord
+ * 
+ */
+export type DunningDisputeRecord = Prisma.DunningDisputeRecordModel
+/**
+ * Model DunningImportBatch
+ * 
+ */
+export type DunningImportBatch = Prisma.DunningImportBatchModel
+/**
+ * Model DunningAutomationRule
+ * 
+ */
+export type DunningAutomationRule = Prisma.DunningAutomationRuleModel
+/**
+ * Model DunningException
+ * 
+ */
+export type DunningException = Prisma.DunningExceptionModel
+/**
+ * Model DunningTemplate
+ * 
+ */
+export type DunningTemplate = Prisma.DunningTemplateModel
+/**
+ * Model DunningSavedView
+ * 
+ */
+export type DunningSavedView = Prisma.DunningSavedViewModel
+/**
+ * Model DunningJurisdictionConfig
+ * 
+ */
+export type DunningJurisdictionConfig = Prisma.DunningJurisdictionConfigModel
+/**
  * Model NettingOpportunity
  * 
  */

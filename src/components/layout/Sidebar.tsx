@@ -5,7 +5,7 @@ import { useThemeStore } from '@/store/theme-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, PanelLeftClose, LineChart, Droplets, GitBranch, Gauge, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users, ClipboardList } from 'lucide-react';
+import { ChevronLeft, ChevronRight, AlertTriangle, PanelLeftClose, LineChart, Droplets, GitBranch, Gauge, PanelLeft, FileText, Package, Archive,Globe, Landmark, TablePropertiesIcon, Shield, Wallet, Vault, Boxes, GitMerge, FolderKanban, CalendarCheck, Truck, Users, ClipboardList } from 'lucide-react';
 import {
   DashboardIcon,
   TransactionsIcon,
@@ -42,6 +42,7 @@ export default function Sidebar() {
     { name: t('nav.liabilities'), href: '/dashboard/liabilities', icon: Landmark },
     { name: t('nav.inventory'), href: '/dashboard/inventory', icon: TablePropertiesIcon },
     { name: t('nav.receivables'), href: '/dashboard/receivables', icon: Wallet },
+    { name: t('nav.dunning'), href: '/dashboard/dunning', icon: AlertTriangle },
     { name: t('nav.treasury'), href: '/dashboard/treasury', icon: Vault },
     { name: t('nav.assets'), href: '/dashboard/assets', icon: Boxes },
     { name: t('nav.projects'), href: '/dashboard/projects', icon: FolderKanban },
@@ -57,6 +58,7 @@ export default function Sidebar() {
     { name: t('nav.scenarios'), href: '/dashboard/scenarios', icon: GitBranch },
     { name: t('nav.kpis'), href: '/dashboard/kpi', icon: Gauge },
     { name: t('nav.liquidity'), href: '/dashboard/liquidity', icon: Droplets},
+
   ];
 
   const secondaryNavigation = [

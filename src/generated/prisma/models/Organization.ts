@@ -294,6 +294,12 @@ export type OrganizationWhereInput = {
   risks?: Prisma.RiskListRelationFilter
   taskNotifications?: Prisma.TaskNotificationListRelationFilter
   savedTaskFilters?: Prisma.SavedTaskFilterListRelationFilter
+  dunningImportBatches?: Prisma.DunningImportBatchListRelationFilter
+  dunningAutomationRules?: Prisma.DunningAutomationRuleListRelationFilter
+  dunningExceptions?: Prisma.DunningExceptionListRelationFilter
+  dunningSavedViews?: Prisma.DunningSavedViewListRelationFilter
+  dunningTemplates?: Prisma.DunningTemplateListRelationFilter
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -379,6 +385,12 @@ export type OrganizationOrderByWithRelationInput = {
   risks?: Prisma.RiskOrderByRelationAggregateInput
   taskNotifications?: Prisma.TaskNotificationOrderByRelationAggregateInput
   savedTaskFilters?: Prisma.SavedTaskFilterOrderByRelationAggregateInput
+  dunningImportBatches?: Prisma.DunningImportBatchOrderByRelationAggregateInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleOrderByRelationAggregateInput
+  dunningExceptions?: Prisma.DunningExceptionOrderByRelationAggregateInput
+  dunningSavedViews?: Prisma.DunningSavedViewOrderByRelationAggregateInput
+  dunningTemplates?: Prisma.DunningTemplateOrderByRelationAggregateInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -467,6 +479,12 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   risks?: Prisma.RiskListRelationFilter
   taskNotifications?: Prisma.TaskNotificationListRelationFilter
   savedTaskFilters?: Prisma.SavedTaskFilterListRelationFilter
+  dunningImportBatches?: Prisma.DunningImportBatchListRelationFilter
+  dunningAutomationRules?: Prisma.DunningAutomationRuleListRelationFilter
+  dunningExceptions?: Prisma.DunningExceptionListRelationFilter
+  dunningSavedViews?: Prisma.DunningSavedViewListRelationFilter
+  dunningTemplates?: Prisma.DunningTemplateListRelationFilter
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -584,6 +602,12 @@ export type OrganizationCreateInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -669,6 +693,12 @@ export type OrganizationUncheckedCreateInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -754,6 +784,12 @@ export type OrganizationUpdateInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -839,6 +875,12 @@ export type OrganizationUncheckedUpdateInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -1181,6 +1223,90 @@ export type OrganizationUpdateOneRequiredWithoutTreasuryScenariosNestedInput = {
   upsert?: Prisma.OrganizationUpsertWithoutTreasuryScenariosInput
   connect?: Prisma.OrganizationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutTreasuryScenariosInput, Prisma.OrganizationUpdateWithoutTreasuryScenariosInput>, Prisma.OrganizationUncheckedUpdateWithoutTreasuryScenariosInput>
+}
+
+export type OrganizationCreateNestedOneWithoutDunningImportBatchesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningImportBatchesInput, Prisma.OrganizationUncheckedCreateWithoutDunningImportBatchesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningImportBatchesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutDunningImportBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningImportBatchesInput, Prisma.OrganizationUncheckedCreateWithoutDunningImportBatchesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningImportBatchesInput
+  upsert?: Prisma.OrganizationUpsertWithoutDunningImportBatchesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDunningImportBatchesInput, Prisma.OrganizationUpdateWithoutDunningImportBatchesInput>, Prisma.OrganizationUncheckedUpdateWithoutDunningImportBatchesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutDunningAutomationRulesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningAutomationRulesInput, Prisma.OrganizationUncheckedCreateWithoutDunningAutomationRulesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningAutomationRulesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutDunningAutomationRulesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningAutomationRulesInput, Prisma.OrganizationUncheckedCreateWithoutDunningAutomationRulesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningAutomationRulesInput
+  upsert?: Prisma.OrganizationUpsertWithoutDunningAutomationRulesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDunningAutomationRulesInput, Prisma.OrganizationUpdateWithoutDunningAutomationRulesInput>, Prisma.OrganizationUncheckedUpdateWithoutDunningAutomationRulesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutDunningExceptionsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningExceptionsInput, Prisma.OrganizationUncheckedCreateWithoutDunningExceptionsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningExceptionsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutDunningExceptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningExceptionsInput, Prisma.OrganizationUncheckedCreateWithoutDunningExceptionsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningExceptionsInput
+  upsert?: Prisma.OrganizationUpsertWithoutDunningExceptionsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDunningExceptionsInput, Prisma.OrganizationUpdateWithoutDunningExceptionsInput>, Prisma.OrganizationUncheckedUpdateWithoutDunningExceptionsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutDunningTemplatesInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningTemplatesInput, Prisma.OrganizationUncheckedCreateWithoutDunningTemplatesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningTemplatesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutDunningTemplatesNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningTemplatesInput, Prisma.OrganizationUncheckedCreateWithoutDunningTemplatesInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningTemplatesInput
+  upsert?: Prisma.OrganizationUpsertWithoutDunningTemplatesInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDunningTemplatesInput, Prisma.OrganizationUpdateWithoutDunningTemplatesInput>, Prisma.OrganizationUncheckedUpdateWithoutDunningTemplatesInput>
+}
+
+export type OrganizationCreateNestedOneWithoutDunningSavedViewsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningSavedViewsInput, Prisma.OrganizationUncheckedCreateWithoutDunningSavedViewsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningSavedViewsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutDunningSavedViewsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningSavedViewsInput, Prisma.OrganizationUncheckedCreateWithoutDunningSavedViewsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningSavedViewsInput
+  upsert?: Prisma.OrganizationUpsertWithoutDunningSavedViewsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDunningSavedViewsInput, Prisma.OrganizationUpdateWithoutDunningSavedViewsInput>, Prisma.OrganizationUncheckedUpdateWithoutDunningSavedViewsInput>
+}
+
+export type OrganizationCreateNestedOneWithoutDunningJurisdictionConfigsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUncheckedCreateWithoutDunningJurisdictionConfigsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningJurisdictionConfigsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutDunningJurisdictionConfigsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUncheckedCreateWithoutDunningJurisdictionConfigsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutDunningJurisdictionConfigsInput
+  upsert?: Prisma.OrganizationUpsertWithoutDunningJurisdictionConfigsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUpdateWithoutDunningJurisdictionConfigsInput>, Prisma.OrganizationUncheckedUpdateWithoutDunningJurisdictionConfigsInput>
 }
 
 export type OrganizationCreateNestedOneWithoutNettingOpportunitiesInput = {
@@ -2021,6 +2147,12 @@ export type OrganizationCreateWithoutUsersInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutUsersInput = {
@@ -2105,6 +2237,12 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutUsersInput = {
@@ -2205,6 +2343,12 @@ export type OrganizationUpdateWithoutUsersInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutUsersInput = {
@@ -2289,6 +2433,12 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInvitationsInput = {
@@ -2373,6 +2523,12 @@ export type OrganizationCreateWithoutInvitationsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvitationsInput = {
@@ -2457,6 +2613,12 @@ export type OrganizationUncheckedCreateWithoutInvitationsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInvitationsInput = {
@@ -2557,6 +2719,12 @@ export type OrganizationUpdateWithoutInvitationsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInvitationsInput = {
@@ -2641,6 +2809,12 @@ export type OrganizationUncheckedUpdateWithoutInvitationsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFinancialAccountsInput = {
@@ -2725,6 +2899,12 @@ export type OrganizationCreateWithoutFinancialAccountsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
@@ -2809,6 +2989,12 @@ export type OrganizationUncheckedCreateWithoutFinancialAccountsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFinancialAccountsInput = {
@@ -2909,6 +3095,12 @@ export type OrganizationUpdateWithoutFinancialAccountsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
@@ -2993,6 +3185,12 @@ export type OrganizationUncheckedUpdateWithoutFinancialAccountsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTransactionsInput = {
@@ -3077,6 +3275,12 @@ export type OrganizationCreateWithoutTransactionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTransactionsInput = {
@@ -3161,6 +3365,12 @@ export type OrganizationUncheckedCreateWithoutTransactionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTransactionsInput = {
@@ -3261,6 +3471,12 @@ export type OrganizationUpdateWithoutTransactionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
@@ -3345,6 +3561,12 @@ export type OrganizationUncheckedUpdateWithoutTransactionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReceiptsInput = {
@@ -3429,6 +3651,12 @@ export type OrganizationCreateWithoutReceiptsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReceiptsInput = {
@@ -3513,6 +3741,12 @@ export type OrganizationUncheckedCreateWithoutReceiptsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReceiptsInput = {
@@ -3613,6 +3847,12 @@ export type OrganizationUpdateWithoutReceiptsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
@@ -3697,6 +3937,12 @@ export type OrganizationUncheckedUpdateWithoutReceiptsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutChatChannelsInput = {
@@ -3781,6 +4027,12 @@ export type OrganizationCreateWithoutChatChannelsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
@@ -3865,6 +4117,12 @@ export type OrganizationUncheckedCreateWithoutChatChannelsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutChatChannelsInput = {
@@ -3965,6 +4223,12 @@ export type OrganizationUpdateWithoutChatChannelsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
@@ -4049,6 +4313,12 @@ export type OrganizationUncheckedUpdateWithoutChatChannelsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutWalletsInput = {
@@ -4133,6 +4403,12 @@ export type OrganizationCreateWithoutWalletsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutWalletsInput = {
@@ -4217,6 +4493,12 @@ export type OrganizationUncheckedCreateWithoutWalletsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutWalletsInput = {
@@ -4317,6 +4599,12 @@ export type OrganizationUpdateWithoutWalletsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutWalletsInput = {
@@ -4401,6 +4689,12 @@ export type OrganizationUncheckedUpdateWithoutWalletsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInvoiceInput = {
@@ -4485,6 +4779,12 @@ export type OrganizationCreateWithoutInvoiceInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvoiceInput = {
@@ -4569,6 +4869,12 @@ export type OrganizationUncheckedCreateWithoutInvoiceInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInvoiceInput = {
@@ -4669,6 +4975,12 @@ export type OrganizationUpdateWithoutInvoiceInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
@@ -4753,6 +5065,12 @@ export type OrganizationUncheckedUpdateWithoutInvoiceInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOrdersInput = {
@@ -4837,6 +5155,12 @@ export type OrganizationCreateWithoutOrdersInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOrdersInput = {
@@ -4921,6 +5245,12 @@ export type OrganizationUncheckedCreateWithoutOrdersInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOrdersInput = {
@@ -5021,6 +5351,12 @@ export type OrganizationUpdateWithoutOrdersInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOrdersInput = {
@@ -5105,6 +5441,12 @@ export type OrganizationUncheckedUpdateWithoutOrdersInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutArchiveItemsInput = {
@@ -5189,6 +5531,12 @@ export type OrganizationCreateWithoutArchiveItemsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
@@ -5273,6 +5621,12 @@ export type OrganizationUncheckedCreateWithoutArchiveItemsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutArchiveItemsInput = {
@@ -5373,6 +5727,12 @@ export type OrganizationUpdateWithoutArchiveItemsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
@@ -5457,6 +5817,12 @@ export type OrganizationUncheckedUpdateWithoutArchiveItemsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiabilitiesInput = {
@@ -5541,6 +5907,12 @@ export type OrganizationCreateWithoutLiabilitiesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
@@ -5625,6 +5997,12 @@ export type OrganizationUncheckedCreateWithoutLiabilitiesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiabilitiesInput = {
@@ -5725,6 +6103,12 @@ export type OrganizationUpdateWithoutLiabilitiesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
@@ -5809,6 +6193,12 @@ export type OrganizationUncheckedUpdateWithoutLiabilitiesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInventoryItemsInput = {
@@ -5893,6 +6283,12 @@ export type OrganizationCreateWithoutInventoryItemsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
@@ -5977,6 +6373,12 @@ export type OrganizationUncheckedCreateWithoutInventoryItemsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInventoryItemsInput = {
@@ -6077,6 +6479,12 @@ export type OrganizationUpdateWithoutInventoryItemsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
@@ -6161,6 +6569,12 @@ export type OrganizationUncheckedUpdateWithoutInventoryItemsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutReceivablesInput = {
@@ -6245,6 +6659,12 @@ export type OrganizationCreateWithoutReceivablesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutReceivablesInput = {
@@ -6329,6 +6749,12 @@ export type OrganizationUncheckedCreateWithoutReceivablesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutReceivablesInput = {
@@ -6429,6 +6855,12 @@ export type OrganizationUpdateWithoutReceivablesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
@@ -6513,6 +6945,12 @@ export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryAccountsInput = {
@@ -6597,6 +7035,12 @@ export type OrganizationCreateWithoutTreasuryAccountsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
@@ -6681,6 +7125,12 @@ export type OrganizationUncheckedCreateWithoutTreasuryAccountsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryAccountsInput = {
@@ -6781,6 +7231,12 @@ export type OrganizationUpdateWithoutTreasuryAccountsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
@@ -6865,6 +7321,12 @@ export type OrganizationUncheckedUpdateWithoutTreasuryAccountsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCapitalBucketsInput = {
@@ -6949,6 +7411,12 @@ export type OrganizationCreateWithoutCapitalBucketsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
@@ -7033,6 +7501,12 @@ export type OrganizationUncheckedCreateWithoutCapitalBucketsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCapitalBucketsInput = {
@@ -7133,6 +7607,12 @@ export type OrganizationUpdateWithoutCapitalBucketsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
@@ -7217,6 +7697,12 @@ export type OrganizationUncheckedUpdateWithoutCapitalBucketsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCreditFacilitiesInput = {
@@ -7301,6 +7787,12 @@ export type OrganizationCreateWithoutCreditFacilitiesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
@@ -7385,6 +7877,12 @@ export type OrganizationUncheckedCreateWithoutCreditFacilitiesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCreditFacilitiesInput = {
@@ -7485,6 +7983,12 @@ export type OrganizationUpdateWithoutCreditFacilitiesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
@@ -7569,6 +8073,12 @@ export type OrganizationUncheckedUpdateWithoutCreditFacilitiesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryDecisionsInput = {
@@ -7653,6 +8163,12 @@ export type OrganizationCreateWithoutTreasuryDecisionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
@@ -7737,6 +8253,12 @@ export type OrganizationUncheckedCreateWithoutTreasuryDecisionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryDecisionsInput = {
@@ -7837,6 +8359,12 @@ export type OrganizationUpdateWithoutTreasuryDecisionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
@@ -7921,6 +8449,12 @@ export type OrganizationUncheckedUpdateWithoutTreasuryDecisionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTreasuryScenariosInput = {
@@ -8005,6 +8539,12 @@ export type OrganizationCreateWithoutTreasuryScenariosInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
@@ -8089,6 +8629,12 @@ export type OrganizationUncheckedCreateWithoutTreasuryScenariosInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTreasuryScenariosInput = {
@@ -8189,6 +8735,12 @@ export type OrganizationUpdateWithoutTreasuryScenariosInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
@@ -8273,6 +8825,2268 @@ export type OrganizationUncheckedUpdateWithoutTreasuryScenariosInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutDunningImportBatchesInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutDunningImportBatchesInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutDunningImportBatchesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningImportBatchesInput, Prisma.OrganizationUncheckedCreateWithoutDunningImportBatchesInput>
+}
+
+export type OrganizationUpsertWithoutDunningImportBatchesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningImportBatchesInput, Prisma.OrganizationUncheckedUpdateWithoutDunningImportBatchesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningImportBatchesInput, Prisma.OrganizationUncheckedCreateWithoutDunningImportBatchesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutDunningImportBatchesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningImportBatchesInput, Prisma.OrganizationUncheckedUpdateWithoutDunningImportBatchesInput>
+}
+
+export type OrganizationUpdateWithoutDunningImportBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutDunningImportBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutDunningAutomationRulesInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutDunningAutomationRulesInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutDunningAutomationRulesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningAutomationRulesInput, Prisma.OrganizationUncheckedCreateWithoutDunningAutomationRulesInput>
+}
+
+export type OrganizationUpsertWithoutDunningAutomationRulesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningAutomationRulesInput, Prisma.OrganizationUncheckedUpdateWithoutDunningAutomationRulesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningAutomationRulesInput, Prisma.OrganizationUncheckedCreateWithoutDunningAutomationRulesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutDunningAutomationRulesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningAutomationRulesInput, Prisma.OrganizationUncheckedUpdateWithoutDunningAutomationRulesInput>
+}
+
+export type OrganizationUpdateWithoutDunningAutomationRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutDunningAutomationRulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutDunningExceptionsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutDunningExceptionsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutDunningExceptionsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningExceptionsInput, Prisma.OrganizationUncheckedCreateWithoutDunningExceptionsInput>
+}
+
+export type OrganizationUpsertWithoutDunningExceptionsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningExceptionsInput, Prisma.OrganizationUncheckedUpdateWithoutDunningExceptionsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningExceptionsInput, Prisma.OrganizationUncheckedCreateWithoutDunningExceptionsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutDunningExceptionsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningExceptionsInput, Prisma.OrganizationUncheckedUpdateWithoutDunningExceptionsInput>
+}
+
+export type OrganizationUpdateWithoutDunningExceptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutDunningExceptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutDunningTemplatesInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutDunningTemplatesInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutDunningTemplatesInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningTemplatesInput, Prisma.OrganizationUncheckedCreateWithoutDunningTemplatesInput>
+}
+
+export type OrganizationUpsertWithoutDunningTemplatesInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningTemplatesInput, Prisma.OrganizationUncheckedUpdateWithoutDunningTemplatesInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningTemplatesInput, Prisma.OrganizationUncheckedCreateWithoutDunningTemplatesInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutDunningTemplatesInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningTemplatesInput, Prisma.OrganizationUncheckedUpdateWithoutDunningTemplatesInput>
+}
+
+export type OrganizationUpdateWithoutDunningTemplatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutDunningTemplatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutDunningSavedViewsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutDunningSavedViewsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutDunningSavedViewsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningSavedViewsInput, Prisma.OrganizationUncheckedCreateWithoutDunningSavedViewsInput>
+}
+
+export type OrganizationUpsertWithoutDunningSavedViewsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningSavedViewsInput, Prisma.OrganizationUncheckedUpdateWithoutDunningSavedViewsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningSavedViewsInput, Prisma.OrganizationUncheckedCreateWithoutDunningSavedViewsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutDunningSavedViewsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningSavedViewsInput, Prisma.OrganizationUncheckedUpdateWithoutDunningSavedViewsInput>
+}
+
+export type OrganizationUpdateWithoutDunningSavedViewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutDunningSavedViewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutDunningJurisdictionConfigsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPICreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutDunningJurisdictionConfigsInput = {
+  id?: string
+  name: string
+  slug: string
+  country?: string
+  industry?: string | null
+  fiscalYearEnd?: string
+  defaultCurrency?: string
+  taxId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutOrganizationInput
+  wallets?: Prisma.WalletUncheckedCreateNestedManyWithoutOrganizationInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutOrganizationInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  receipts?: Prisma.ReceiptUncheckedCreateNestedManyWithoutOrganizationInput
+  chatChannels?: Prisma.ChatChannelUncheckedCreateNestedManyWithoutOrganizationInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedCreateNestedManyWithoutOrganizationInput
+  liabilities?: Prisma.LiabilityUncheckedCreateNestedManyWithoutOrganizationInput
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutOrganizationInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedCreateNestedManyWithoutOrganizationInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedCreateNestedManyWithoutOrganizationInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedCreateNestedManyWithoutOrganizationInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedCreateNestedManyWithoutOrganizationInput
+  assets?: Prisma.AssetUncheckedCreateNestedManyWithoutOrganizationInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedCreateNestedManyWithoutOrganizationInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedCreateNestedManyWithoutOrganizationInput
+  Invoice?: Prisma.InvoiceUncheckedCreateNestedManyWithoutOrganizationInput
+  Project?: Prisma.ProjectUncheckedCreateNestedManyWithoutOrganizationInput
+  CostCenter?: Prisma.CostCenterUncheckedCreateNestedManyWithoutOrganizationInput
+  timeEntries?: Prisma.TimeEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedCreateNestedManyWithoutOrganizationInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedCreateNestedManyWithoutOrganizationInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedCreateNestedManyWithoutOrganizationInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedCreateNestedManyWithoutOrganizationInput
+  suppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+  offers?: Prisma.OfferUncheckedCreateNestedManyWithoutOrganizationInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutOrganizationInput
+  scenarios?: Prisma.ScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  kpis?: Prisma.KPIUncheckedCreateNestedManyWithoutOrganizationInput
+  fxexposures?: Prisma.FXExposureUncheckedCreateNestedManyWithoutOrganizationInput
+  fxrates?: Prisma.FXRateUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedCreateNestedManyWithoutOrganizationInput
+  fxconversions?: Prisma.FXConversionUncheckedCreateNestedManyWithoutOrganizationInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  costForecasts?: Prisma.CostForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  cashForecasts?: Prisma.CashForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedCreateNestedManyWithoutOrganizationInput
+  stressTests?: Prisma.StressTestUncheckedCreateNestedManyWithoutOrganizationInput
+  simulationStates?: Prisma.SimulationStateUncheckedCreateNestedManyWithoutOrganizationInput
+  fxscenarios?: Prisma.FXScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  fxforecasts?: Prisma.FXForecastUncheckedCreateNestedManyWithoutOrganizationInput
+  fxcosts?: Prisma.FXCostUncheckedCreateNestedManyWithoutOrganizationInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedCreateNestedManyWithoutOrganizationInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedCreateNestedManyWithoutOrganizationInput
+  boardReports?: Prisma.BoardReportUncheckedCreateNestedManyWithoutOrganizationInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedCreateNestedManyWithoutOrganizationInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedCreateNestedManyWithoutOrganizationInput
+  kpialerts?: Prisma.KPIAlertUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedCreateNestedManyWithoutOrganizationInput
+  nettingSessions?: Prisma.NettingSessionUncheckedCreateNestedManyWithoutOrganizationInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedCreateNestedManyWithoutOrganizationInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  cashflowItems?: Prisma.CashflowItemUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedCreateNestedManyWithoutOrganizationInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+  taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
+  risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutDunningJurisdictionConfigsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUncheckedCreateWithoutDunningJurisdictionConfigsInput>
+}
+
+export type OrganizationUpsertWithoutDunningJurisdictionConfigsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUncheckedUpdateWithoutDunningJurisdictionConfigsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUncheckedCreateWithoutDunningJurisdictionConfigsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutDunningJurisdictionConfigsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutDunningJurisdictionConfigsInput, Prisma.OrganizationUncheckedUpdateWithoutDunningJurisdictionConfigsInput>
+}
+
+export type OrganizationUpdateWithoutDunningJurisdictionConfigsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutDunningJurisdictionConfigsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYearEnd?: Prisma.StringFieldUpdateOperationsInput | string
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutOrganizationNestedInput
+  wallets?: Prisma.WalletUncheckedUpdateManyWithoutOrganizationNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutOrganizationNestedInput
+  financialAccounts?: Prisma.FinancialAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  receipts?: Prisma.ReceiptUncheckedUpdateManyWithoutOrganizationNestedInput
+  chatChannels?: Prisma.ChatChannelUncheckedUpdateManyWithoutOrganizationNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  archiveItems?: Prisma.ArchiveRecordUncheckedUpdateManyWithoutOrganizationNestedInput
+  liabilities?: Prisma.LiabilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryAccounts?: Prisma.TreasuryAccountUncheckedUpdateManyWithoutOrganizationNestedInput
+  capitalBuckets?: Prisma.CapitalBucketUncheckedUpdateManyWithoutOrganizationNestedInput
+  creditFacilities?: Prisma.CreditFacilityUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryDecisions?: Prisma.TreasuryDecisionUncheckedUpdateManyWithoutOrganizationNestedInput
+  treasuryScenarios?: Prisma.TreasuryScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingOpportunities?: Prisma.NettingOpportunityUncheckedUpdateManyWithoutOrganizationNestedInput
+  assets?: Prisma.AssetUncheckedUpdateManyWithoutOrganizationNestedInput
+  assetDisposals?: Prisma.AssetDisposalUncheckedUpdateManyWithoutOrganizationNestedInput
+  capExBudgets?: Prisma.CapExBudgetUncheckedUpdateManyWithoutOrganizationNestedInput
+  Invoice?: Prisma.InvoiceUncheckedUpdateManyWithoutOrganizationNestedInput
+  Project?: Prisma.ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
+  CostCenter?: Prisma.CostCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+  timeEntries?: Prisma.TimeEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  internalChargebacks?: Prisma.InternalChargebackUncheckedUpdateManyWithoutOrganizationNestedInput
+  accountingPeriods?: Prisma.AccountingPeriodUncheckedUpdateManyWithoutOrganizationNestedInput
+  periodAdjustments?: Prisma.PeriodAdjustmentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerPayments?: Prisma.CustomerPaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  customerCreditEvents?: Prisma.CustomerCreditEventUncheckedUpdateManyWithoutOrganizationNestedInput
+  suppliers?: Prisma.SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+  offers?: Prisma.OfferUncheckedUpdateManyWithoutOrganizationNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutOrganizationNestedInput
+  scenarios?: Prisma.ScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpis?: Prisma.KPIUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxexposures?: Prisma.FXExposureUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxrates?: Prisma.FXRateUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityPositions?: Prisma.LiquidityPositionUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxconversions?: Prisma.FXConversionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offerTemplates?: Prisma.OfferTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  revenueForecasts?: Prisma.RevenueForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  costForecasts?: Prisma.CostForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashForecasts?: Prisma.CashForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastScenarios?: Prisma.ForecastScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastAlerts?: Prisma.ForecastAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  forecastVariances?: Prisma.ForecastVarianceUncheckedUpdateManyWithoutOrganizationNestedInput
+  stressTests?: Prisma.StressTestUncheckedUpdateManyWithoutOrganizationNestedInput
+  simulationStates?: Prisma.SimulationStateUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxscenarios?: Prisma.FXScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxforecasts?: Prisma.FXForecastUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxcosts?: Prisma.FXCostUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxriskIndicators?: Prisma.FXRiskIndicatorUncheckedUpdateManyWithoutOrganizationNestedInput
+  fxauditLogs?: Prisma.FXAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorSnapshots?: Prisma.InvestorSnapshotUncheckedUpdateManyWithoutOrganizationNestedInput
+  boardReports?: Prisma.BoardReportUncheckedUpdateManyWithoutOrganizationNestedInput
+  runwayProjections?: Prisma.RunwayProjectionUncheckedUpdateManyWithoutOrganizationNestedInput
+  investorAccessLogs?: Prisma.InvestorAccessLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  kpialerts?: Prisma.KPIAlertUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingAgreements?: Prisma.NettingAgreementUncheckedUpdateManyWithoutOrganizationNestedInput
+  nettingSessions?: Prisma.NettingSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  settlementInstructions?: Prisma.SettlementInstructionUncheckedUpdateManyWithoutOrganizationNestedInput
+  offsetEntries?: Prisma.OffsetEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  cashflowItems?: Prisma.CashflowItemUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityScenarios?: Prisma.LiquidityScenarioUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityGaps?: Prisma.LiquidityGapUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityRiskSignals?: Prisma.LiquidityRiskSignalUncheckedUpdateManyWithoutOrganizationNestedInput
+  liquidityAuditLogs?: Prisma.LiquidityAuditLogUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
+  risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
+  taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutNettingOpportunitiesInput = {
@@ -8357,6 +11171,12 @@ export type OrganizationCreateWithoutNettingOpportunitiesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
@@ -8441,6 +11261,12 @@ export type OrganizationUncheckedCreateWithoutNettingOpportunitiesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutNettingOpportunitiesInput = {
@@ -8541,6 +11367,12 @@ export type OrganizationUpdateWithoutNettingOpportunitiesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
@@ -8625,6 +11457,12 @@ export type OrganizationUncheckedUpdateWithoutNettingOpportunitiesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAssetsInput = {
@@ -8709,6 +11547,12 @@ export type OrganizationCreateWithoutAssetsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAssetsInput = {
@@ -8793,6 +11637,12 @@ export type OrganizationUncheckedCreateWithoutAssetsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAssetsInput = {
@@ -8893,6 +11743,12 @@ export type OrganizationUpdateWithoutAssetsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAssetsInput = {
@@ -8977,6 +11833,12 @@ export type OrganizationUncheckedUpdateWithoutAssetsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAssetDisposalsInput = {
@@ -9061,6 +11923,12 @@ export type OrganizationCreateWithoutAssetDisposalsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
@@ -9145,6 +12013,12 @@ export type OrganizationUncheckedCreateWithoutAssetDisposalsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAssetDisposalsInput = {
@@ -9245,6 +12119,12 @@ export type OrganizationUpdateWithoutAssetDisposalsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
@@ -9329,6 +12209,12 @@ export type OrganizationUncheckedUpdateWithoutAssetDisposalsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCapExBudgetsInput = {
@@ -9413,6 +12299,12 @@ export type OrganizationCreateWithoutCapExBudgetsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
@@ -9497,6 +12389,12 @@ export type OrganizationUncheckedCreateWithoutCapExBudgetsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCapExBudgetsInput = {
@@ -9597,6 +12495,12 @@ export type OrganizationUpdateWithoutCapExBudgetsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
@@ -9681,6 +12585,12 @@ export type OrganizationUncheckedUpdateWithoutCapExBudgetsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCostCenterInput = {
@@ -9765,6 +12675,12 @@ export type OrganizationCreateWithoutCostCenterInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCostCenterInput = {
@@ -9849,6 +12765,12 @@ export type OrganizationUncheckedCreateWithoutCostCenterInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCostCenterInput = {
@@ -9949,6 +12871,12 @@ export type OrganizationUpdateWithoutCostCenterInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
@@ -10033,6 +12961,12 @@ export type OrganizationUncheckedUpdateWithoutCostCenterInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutProjectInput = {
@@ -10117,6 +13051,12 @@ export type OrganizationCreateWithoutProjectInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutProjectInput = {
@@ -10201,6 +13141,12 @@ export type OrganizationUncheckedCreateWithoutProjectInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutProjectInput = {
@@ -10301,6 +13247,12 @@ export type OrganizationUpdateWithoutProjectInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutProjectInput = {
@@ -10385,6 +13337,12 @@ export type OrganizationUncheckedUpdateWithoutProjectInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTimeEntriesInput = {
@@ -10469,6 +13427,12 @@ export type OrganizationCreateWithoutTimeEntriesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTimeEntriesInput = {
@@ -10553,6 +13517,12 @@ export type OrganizationUncheckedCreateWithoutTimeEntriesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTimeEntriesInput = {
@@ -10653,6 +13623,12 @@ export type OrganizationUpdateWithoutTimeEntriesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTimeEntriesInput = {
@@ -10737,6 +13713,12 @@ export type OrganizationUncheckedUpdateWithoutTimeEntriesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInternalChargebacksInput = {
@@ -10821,6 +13803,12 @@ export type OrganizationCreateWithoutInternalChargebacksInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInternalChargebacksInput = {
@@ -10905,6 +13893,12 @@ export type OrganizationUncheckedCreateWithoutInternalChargebacksInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInternalChargebacksInput = {
@@ -11005,6 +13999,12 @@ export type OrganizationUpdateWithoutInternalChargebacksInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInternalChargebacksInput = {
@@ -11089,6 +14089,12 @@ export type OrganizationUncheckedUpdateWithoutInternalChargebacksInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutAccountingPeriodsInput = {
@@ -11173,6 +14179,12 @@ export type OrganizationCreateWithoutAccountingPeriodsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutAccountingPeriodsInput = {
@@ -11257,6 +14269,12 @@ export type OrganizationUncheckedCreateWithoutAccountingPeriodsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutAccountingPeriodsInput = {
@@ -11357,6 +14375,12 @@ export type OrganizationUpdateWithoutAccountingPeriodsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutAccountingPeriodsInput = {
@@ -11441,6 +14465,12 @@ export type OrganizationUncheckedUpdateWithoutAccountingPeriodsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPeriodAdjustmentsInput = {
@@ -11525,6 +14555,12 @@ export type OrganizationCreateWithoutPeriodAdjustmentsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput = {
@@ -11609,6 +14645,12 @@ export type OrganizationUncheckedCreateWithoutPeriodAdjustmentsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPeriodAdjustmentsInput = {
@@ -11709,6 +14751,12 @@ export type OrganizationUpdateWithoutPeriodAdjustmentsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput = {
@@ -11793,6 +14841,12 @@ export type OrganizationUncheckedUpdateWithoutPeriodAdjustmentsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCustomersInput = {
@@ -11877,6 +14931,12 @@ export type OrganizationCreateWithoutCustomersInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCustomersInput = {
@@ -11961,6 +15021,12 @@ export type OrganizationUncheckedCreateWithoutCustomersInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCustomersInput = {
@@ -12061,6 +15127,12 @@ export type OrganizationUpdateWithoutCustomersInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCustomersInput = {
@@ -12145,6 +15217,12 @@ export type OrganizationUncheckedUpdateWithoutCustomersInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCustomerPaymentsInput = {
@@ -12229,6 +15307,12 @@ export type OrganizationCreateWithoutCustomerPaymentsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCustomerPaymentsInput = {
@@ -12313,6 +15397,12 @@ export type OrganizationUncheckedCreateWithoutCustomerPaymentsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCustomerPaymentsInput = {
@@ -12413,6 +15503,12 @@ export type OrganizationUpdateWithoutCustomerPaymentsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCustomerPaymentsInput = {
@@ -12497,6 +15593,12 @@ export type OrganizationUncheckedUpdateWithoutCustomerPaymentsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCustomerCreditEventsInput = {
@@ -12581,6 +15683,12 @@ export type OrganizationCreateWithoutCustomerCreditEventsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCustomerCreditEventsInput = {
@@ -12665,6 +15773,12 @@ export type OrganizationUncheckedCreateWithoutCustomerCreditEventsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCustomerCreditEventsInput = {
@@ -12765,6 +15879,12 @@ export type OrganizationUpdateWithoutCustomerCreditEventsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCustomerCreditEventsInput = {
@@ -12849,6 +15969,12 @@ export type OrganizationUncheckedUpdateWithoutCustomerCreditEventsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSuppliersInput = {
@@ -12933,6 +16059,12 @@ export type OrganizationCreateWithoutSuppliersInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSuppliersInput = {
@@ -13017,6 +16149,12 @@ export type OrganizationUncheckedCreateWithoutSuppliersInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSuppliersInput = {
@@ -13117,6 +16255,12 @@ export type OrganizationUpdateWithoutSuppliersInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSuppliersInput = {
@@ -13201,6 +16345,12 @@ export type OrganizationUncheckedUpdateWithoutSuppliersInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutNettingAgreementsInput = {
@@ -13285,6 +16435,12 @@ export type OrganizationCreateWithoutNettingAgreementsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutNettingAgreementsInput = {
@@ -13369,6 +16525,12 @@ export type OrganizationUncheckedCreateWithoutNettingAgreementsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutNettingAgreementsInput = {
@@ -13469,6 +16631,12 @@ export type OrganizationUpdateWithoutNettingAgreementsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutNettingAgreementsInput = {
@@ -13553,6 +16721,12 @@ export type OrganizationUncheckedUpdateWithoutNettingAgreementsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutNettingSessionsInput = {
@@ -13637,6 +16811,12 @@ export type OrganizationCreateWithoutNettingSessionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutNettingSessionsInput = {
@@ -13721,6 +16901,12 @@ export type OrganizationUncheckedCreateWithoutNettingSessionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutNettingSessionsInput = {
@@ -13821,6 +17007,12 @@ export type OrganizationUpdateWithoutNettingSessionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutNettingSessionsInput = {
@@ -13905,6 +17097,12 @@ export type OrganizationUncheckedUpdateWithoutNettingSessionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSettlementInstructionsInput = {
@@ -13989,6 +17187,12 @@ export type OrganizationCreateWithoutSettlementInstructionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSettlementInstructionsInput = {
@@ -14073,6 +17277,12 @@ export type OrganizationUncheckedCreateWithoutSettlementInstructionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSettlementInstructionsInput = {
@@ -14173,6 +17383,12 @@ export type OrganizationUpdateWithoutSettlementInstructionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSettlementInstructionsInput = {
@@ -14257,6 +17473,12 @@ export type OrganizationUncheckedUpdateWithoutSettlementInstructionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOffsetEntriesInput = {
@@ -14341,6 +17563,12 @@ export type OrganizationCreateWithoutOffsetEntriesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOffsetEntriesInput = {
@@ -14425,6 +17653,12 @@ export type OrganizationUncheckedCreateWithoutOffsetEntriesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOffsetEntriesInput = {
@@ -14525,6 +17759,12 @@ export type OrganizationUpdateWithoutOffsetEntriesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOffsetEntriesInput = {
@@ -14609,6 +17849,12 @@ export type OrganizationUncheckedUpdateWithoutOffsetEntriesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOffersInput = {
@@ -14693,6 +17939,12 @@ export type OrganizationCreateWithoutOffersInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOffersInput = {
@@ -14777,6 +18029,12 @@ export type OrganizationUncheckedCreateWithoutOffersInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOffersInput = {
@@ -14877,6 +18135,12 @@ export type OrganizationUpdateWithoutOffersInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOffersInput = {
@@ -14961,6 +18225,12 @@ export type OrganizationUncheckedUpdateWithoutOffersInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOfferTemplatesInput = {
@@ -15045,6 +18315,12 @@ export type OrganizationCreateWithoutOfferTemplatesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOfferTemplatesInput = {
@@ -15129,6 +18405,12 @@ export type OrganizationUncheckedCreateWithoutOfferTemplatesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOfferTemplatesInput = {
@@ -15229,6 +18511,12 @@ export type OrganizationUpdateWithoutOfferTemplatesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOfferTemplatesInput = {
@@ -15313,6 +18601,12 @@ export type OrganizationUncheckedUpdateWithoutOfferTemplatesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTasksInput = {
@@ -15397,6 +18691,12 @@ export type OrganizationCreateWithoutTasksInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTasksInput = {
@@ -15481,6 +18781,12 @@ export type OrganizationUncheckedCreateWithoutTasksInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTasksInput = {
@@ -15581,6 +18887,12 @@ export type OrganizationUpdateWithoutTasksInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTasksInput = {
@@ -15665,6 +18977,12 @@ export type OrganizationUncheckedUpdateWithoutTasksInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTaskTagsInput = {
@@ -15749,6 +19067,12 @@ export type OrganizationCreateWithoutTaskTagsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTaskTagsInput = {
@@ -15833,6 +19157,12 @@ export type OrganizationUncheckedCreateWithoutTaskTagsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTaskTagsInput = {
@@ -15933,6 +19263,12 @@ export type OrganizationUpdateWithoutTaskTagsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTaskTagsInput = {
@@ -16017,6 +19353,12 @@ export type OrganizationUncheckedUpdateWithoutTaskTagsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutRisksInput = {
@@ -16101,6 +19443,12 @@ export type OrganizationCreateWithoutRisksInput = {
   taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutRisksInput = {
@@ -16185,6 +19533,12 @@ export type OrganizationUncheckedCreateWithoutRisksInput = {
   taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutRisksInput = {
@@ -16285,6 +19639,12 @@ export type OrganizationUpdateWithoutRisksInput = {
   taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutRisksInput = {
@@ -16369,6 +19729,12 @@ export type OrganizationUncheckedUpdateWithoutRisksInput = {
   taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTaskNotificationsInput = {
@@ -16453,6 +19819,12 @@ export type OrganizationCreateWithoutTaskNotificationsInput = {
   taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTaskNotificationsInput = {
@@ -16537,6 +19909,12 @@ export type OrganizationUncheckedCreateWithoutTaskNotificationsInput = {
   taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTaskNotificationsInput = {
@@ -16637,6 +20015,12 @@ export type OrganizationUpdateWithoutTaskNotificationsInput = {
   taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTaskNotificationsInput = {
@@ -16721,6 +20105,12 @@ export type OrganizationUncheckedUpdateWithoutTaskNotificationsInput = {
   taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSavedTaskFiltersInput = {
@@ -16805,6 +20195,12 @@ export type OrganizationCreateWithoutSavedTaskFiltersInput = {
   taskTags?: Prisma.TaskTagCreateNestedManyWithoutOrganizationInput
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSavedTaskFiltersInput = {
@@ -16889,6 +20285,12 @@ export type OrganizationUncheckedCreateWithoutSavedTaskFiltersInput = {
   taskTags?: Prisma.TaskTagUncheckedCreateNestedManyWithoutOrganizationInput
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSavedTaskFiltersInput = {
@@ -16989,6 +20391,12 @@ export type OrganizationUpdateWithoutSavedTaskFiltersInput = {
   taskTags?: Prisma.TaskTagUpdateManyWithoutOrganizationNestedInput
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSavedTaskFiltersInput = {
@@ -17073,6 +20481,12 @@ export type OrganizationUncheckedUpdateWithoutSavedTaskFiltersInput = {
   taskTags?: Prisma.TaskTagUncheckedUpdateManyWithoutOrganizationNestedInput
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutRevenueForecastsInput = {
@@ -17157,6 +20571,12 @@ export type OrganizationCreateWithoutRevenueForecastsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutRevenueForecastsInput = {
@@ -17241,6 +20661,12 @@ export type OrganizationUncheckedCreateWithoutRevenueForecastsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutRevenueForecastsInput = {
@@ -17341,6 +20767,12 @@ export type OrganizationUpdateWithoutRevenueForecastsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutRevenueForecastsInput = {
@@ -17425,6 +20857,12 @@ export type OrganizationUncheckedUpdateWithoutRevenueForecastsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCostForecastsInput = {
@@ -17509,6 +20947,12 @@ export type OrganizationCreateWithoutCostForecastsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCostForecastsInput = {
@@ -17593,6 +21037,12 @@ export type OrganizationUncheckedCreateWithoutCostForecastsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCostForecastsInput = {
@@ -17693,6 +21143,12 @@ export type OrganizationUpdateWithoutCostForecastsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCostForecastsInput = {
@@ -17777,6 +21233,12 @@ export type OrganizationUncheckedUpdateWithoutCostForecastsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCashForecastsInput = {
@@ -17861,6 +21323,12 @@ export type OrganizationCreateWithoutCashForecastsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCashForecastsInput = {
@@ -17945,6 +21413,12 @@ export type OrganizationUncheckedCreateWithoutCashForecastsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCashForecastsInput = {
@@ -18045,6 +21519,12 @@ export type OrganizationUpdateWithoutCashForecastsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCashForecastsInput = {
@@ -18129,6 +21609,12 @@ export type OrganizationUncheckedUpdateWithoutCashForecastsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutForecastScenariosInput = {
@@ -18213,6 +21699,12 @@ export type OrganizationCreateWithoutForecastScenariosInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutForecastScenariosInput = {
@@ -18297,6 +21789,12 @@ export type OrganizationUncheckedCreateWithoutForecastScenariosInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutForecastScenariosInput = {
@@ -18397,6 +21895,12 @@ export type OrganizationUpdateWithoutForecastScenariosInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutForecastScenariosInput = {
@@ -18481,6 +21985,12 @@ export type OrganizationUncheckedUpdateWithoutForecastScenariosInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutForecastAlertsInput = {
@@ -18565,6 +22075,12 @@ export type OrganizationCreateWithoutForecastAlertsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutForecastAlertsInput = {
@@ -18649,6 +22165,12 @@ export type OrganizationUncheckedCreateWithoutForecastAlertsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutForecastAlertsInput = {
@@ -18749,6 +22271,12 @@ export type OrganizationUpdateWithoutForecastAlertsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutForecastAlertsInput = {
@@ -18833,6 +22361,12 @@ export type OrganizationUncheckedUpdateWithoutForecastAlertsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutForecastVariancesInput = {
@@ -18917,6 +22451,12 @@ export type OrganizationCreateWithoutForecastVariancesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutForecastVariancesInput = {
@@ -19001,6 +22541,12 @@ export type OrganizationUncheckedCreateWithoutForecastVariancesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutForecastVariancesInput = {
@@ -19101,6 +22647,12 @@ export type OrganizationUpdateWithoutForecastVariancesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutForecastVariancesInput = {
@@ -19185,6 +22737,12 @@ export type OrganizationUncheckedUpdateWithoutForecastVariancesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutScenariosInput = {
@@ -19269,6 +22827,12 @@ export type OrganizationCreateWithoutScenariosInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutScenariosInput = {
@@ -19353,6 +22917,12 @@ export type OrganizationUncheckedCreateWithoutScenariosInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutScenariosInput = {
@@ -19453,6 +23023,12 @@ export type OrganizationUpdateWithoutScenariosInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutScenariosInput = {
@@ -19537,6 +23113,12 @@ export type OrganizationUncheckedUpdateWithoutScenariosInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutStressTestsInput = {
@@ -19621,6 +23203,12 @@ export type OrganizationCreateWithoutStressTestsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutStressTestsInput = {
@@ -19705,6 +23293,12 @@ export type OrganizationUncheckedCreateWithoutStressTestsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutStressTestsInput = {
@@ -19805,6 +23399,12 @@ export type OrganizationUpdateWithoutStressTestsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutStressTestsInput = {
@@ -19889,6 +23489,12 @@ export type OrganizationUncheckedUpdateWithoutStressTestsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSimulationStatesInput = {
@@ -19973,6 +23579,12 @@ export type OrganizationCreateWithoutSimulationStatesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSimulationStatesInput = {
@@ -20057,6 +23669,12 @@ export type OrganizationUncheckedCreateWithoutSimulationStatesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSimulationStatesInput = {
@@ -20157,6 +23775,12 @@ export type OrganizationUpdateWithoutSimulationStatesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSimulationStatesInput = {
@@ -20241,6 +23865,12 @@ export type OrganizationUncheckedUpdateWithoutSimulationStatesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutKpisInput = {
@@ -20325,6 +23955,12 @@ export type OrganizationCreateWithoutKpisInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutKpisInput = {
@@ -20409,6 +24045,12 @@ export type OrganizationUncheckedCreateWithoutKpisInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutKpisInput = {
@@ -20509,6 +24151,12 @@ export type OrganizationUpdateWithoutKpisInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutKpisInput = {
@@ -20593,6 +24241,12 @@ export type OrganizationUncheckedUpdateWithoutKpisInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutKpialertsInput = {
@@ -20677,6 +24331,12 @@ export type OrganizationCreateWithoutKpialertsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutKpialertsInput = {
@@ -20761,6 +24421,12 @@ export type OrganizationUncheckedCreateWithoutKpialertsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutKpialertsInput = {
@@ -20861,6 +24527,12 @@ export type OrganizationUpdateWithoutKpialertsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutKpialertsInput = {
@@ -20945,6 +24617,12 @@ export type OrganizationUncheckedUpdateWithoutKpialertsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxratesInput = {
@@ -21029,6 +24707,12 @@ export type OrganizationCreateWithoutFxratesInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxratesInput = {
@@ -21113,6 +24797,12 @@ export type OrganizationUncheckedCreateWithoutFxratesInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxratesInput = {
@@ -21213,6 +24903,12 @@ export type OrganizationUpdateWithoutFxratesInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxratesInput = {
@@ -21297,6 +24993,12 @@ export type OrganizationUncheckedUpdateWithoutFxratesInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxexposuresInput = {
@@ -21381,6 +25083,12 @@ export type OrganizationCreateWithoutFxexposuresInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxexposuresInput = {
@@ -21465,6 +25173,12 @@ export type OrganizationUncheckedCreateWithoutFxexposuresInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxexposuresInput = {
@@ -21565,6 +25279,12 @@ export type OrganizationUpdateWithoutFxexposuresInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxexposuresInput = {
@@ -21649,6 +25369,12 @@ export type OrganizationUncheckedUpdateWithoutFxexposuresInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxconversionsInput = {
@@ -21733,6 +25459,12 @@ export type OrganizationCreateWithoutFxconversionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxconversionsInput = {
@@ -21817,6 +25549,12 @@ export type OrganizationUncheckedCreateWithoutFxconversionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxconversionsInput = {
@@ -21917,6 +25655,12 @@ export type OrganizationUpdateWithoutFxconversionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxconversionsInput = {
@@ -22001,6 +25745,12 @@ export type OrganizationUncheckedUpdateWithoutFxconversionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxscenariosInput = {
@@ -22085,6 +25835,12 @@ export type OrganizationCreateWithoutFxscenariosInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxscenariosInput = {
@@ -22169,6 +25925,12 @@ export type OrganizationUncheckedCreateWithoutFxscenariosInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxscenariosInput = {
@@ -22269,6 +26031,12 @@ export type OrganizationUpdateWithoutFxscenariosInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxscenariosInput = {
@@ -22353,6 +26121,12 @@ export type OrganizationUncheckedUpdateWithoutFxscenariosInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxforecastsInput = {
@@ -22437,6 +26211,12 @@ export type OrganizationCreateWithoutFxforecastsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxforecastsInput = {
@@ -22521,6 +26301,12 @@ export type OrganizationUncheckedCreateWithoutFxforecastsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxforecastsInput = {
@@ -22621,6 +26407,12 @@ export type OrganizationUpdateWithoutFxforecastsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxforecastsInput = {
@@ -22705,6 +26497,12 @@ export type OrganizationUncheckedUpdateWithoutFxforecastsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxcostsInput = {
@@ -22789,6 +26587,12 @@ export type OrganizationCreateWithoutFxcostsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxcostsInput = {
@@ -22873,6 +26677,12 @@ export type OrganizationUncheckedCreateWithoutFxcostsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxcostsInput = {
@@ -22973,6 +26783,12 @@ export type OrganizationUpdateWithoutFxcostsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxcostsInput = {
@@ -23057,6 +26873,12 @@ export type OrganizationUncheckedUpdateWithoutFxcostsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxriskIndicatorsInput = {
@@ -23141,6 +26963,12 @@ export type OrganizationCreateWithoutFxriskIndicatorsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxriskIndicatorsInput = {
@@ -23225,6 +27053,12 @@ export type OrganizationUncheckedCreateWithoutFxriskIndicatorsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxriskIndicatorsInput = {
@@ -23325,6 +27159,12 @@ export type OrganizationUpdateWithoutFxriskIndicatorsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxriskIndicatorsInput = {
@@ -23409,6 +27249,12 @@ export type OrganizationUncheckedUpdateWithoutFxriskIndicatorsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutFxauditLogsInput = {
@@ -23493,6 +27339,12 @@ export type OrganizationCreateWithoutFxauditLogsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutFxauditLogsInput = {
@@ -23577,6 +27429,12 @@ export type OrganizationUncheckedCreateWithoutFxauditLogsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutFxauditLogsInput = {
@@ -23677,6 +27535,12 @@ export type OrganizationUpdateWithoutFxauditLogsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutFxauditLogsInput = {
@@ -23761,6 +27625,12 @@ export type OrganizationUncheckedUpdateWithoutFxauditLogsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInvestorSnapshotsInput = {
@@ -23845,6 +27715,12 @@ export type OrganizationCreateWithoutInvestorSnapshotsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvestorSnapshotsInput = {
@@ -23929,6 +27805,12 @@ export type OrganizationUncheckedCreateWithoutInvestorSnapshotsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInvestorSnapshotsInput = {
@@ -24029,6 +27911,12 @@ export type OrganizationUpdateWithoutInvestorSnapshotsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInvestorSnapshotsInput = {
@@ -24113,6 +28001,12 @@ export type OrganizationUncheckedUpdateWithoutInvestorSnapshotsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutBoardReportsInput = {
@@ -24197,6 +28091,12 @@ export type OrganizationCreateWithoutBoardReportsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutBoardReportsInput = {
@@ -24281,6 +28181,12 @@ export type OrganizationUncheckedCreateWithoutBoardReportsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutBoardReportsInput = {
@@ -24381,6 +28287,12 @@ export type OrganizationUpdateWithoutBoardReportsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutBoardReportsInput = {
@@ -24465,6 +28377,12 @@ export type OrganizationUncheckedUpdateWithoutBoardReportsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutRunwayProjectionsInput = {
@@ -24549,6 +28467,12 @@ export type OrganizationCreateWithoutRunwayProjectionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutRunwayProjectionsInput = {
@@ -24633,6 +28557,12 @@ export type OrganizationUncheckedCreateWithoutRunwayProjectionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutRunwayProjectionsInput = {
@@ -24733,6 +28663,12 @@ export type OrganizationUpdateWithoutRunwayProjectionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutRunwayProjectionsInput = {
@@ -24817,6 +28753,12 @@ export type OrganizationUncheckedUpdateWithoutRunwayProjectionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInvestorAccessLogsInput = {
@@ -24901,6 +28843,12 @@ export type OrganizationCreateWithoutInvestorAccessLogsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvestorAccessLogsInput = {
@@ -24985,6 +28933,12 @@ export type OrganizationUncheckedCreateWithoutInvestorAccessLogsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInvestorAccessLogsInput = {
@@ -25085,6 +29039,12 @@ export type OrganizationUpdateWithoutInvestorAccessLogsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInvestorAccessLogsInput = {
@@ -25169,6 +29129,12 @@ export type OrganizationUncheckedUpdateWithoutInvestorAccessLogsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutCashflowItemsInput = {
@@ -25253,6 +29219,12 @@ export type OrganizationCreateWithoutCashflowItemsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutCashflowItemsInput = {
@@ -25337,6 +29309,12 @@ export type OrganizationUncheckedCreateWithoutCashflowItemsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutCashflowItemsInput = {
@@ -25437,6 +29415,12 @@ export type OrganizationUpdateWithoutCashflowItemsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutCashflowItemsInput = {
@@ -25521,6 +29505,12 @@ export type OrganizationUncheckedUpdateWithoutCashflowItemsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiquidityScenariosInput = {
@@ -25605,6 +29595,12 @@ export type OrganizationCreateWithoutLiquidityScenariosInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiquidityScenariosInput = {
@@ -25689,6 +29685,12 @@ export type OrganizationUncheckedCreateWithoutLiquidityScenariosInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiquidityScenariosInput = {
@@ -25789,6 +29791,12 @@ export type OrganizationUpdateWithoutLiquidityScenariosInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiquidityScenariosInput = {
@@ -25873,6 +29881,12 @@ export type OrganizationUncheckedUpdateWithoutLiquidityScenariosInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiquidityGapsInput = {
@@ -25957,6 +29971,12 @@ export type OrganizationCreateWithoutLiquidityGapsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiquidityGapsInput = {
@@ -26041,6 +30061,12 @@ export type OrganizationUncheckedCreateWithoutLiquidityGapsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiquidityGapsInput = {
@@ -26141,6 +30167,12 @@ export type OrganizationUpdateWithoutLiquidityGapsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiquidityGapsInput = {
@@ -26225,6 +30257,12 @@ export type OrganizationUncheckedUpdateWithoutLiquidityGapsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiquidityRiskSignalsInput = {
@@ -26309,6 +30347,12 @@ export type OrganizationCreateWithoutLiquidityRiskSignalsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiquidityRiskSignalsInput = {
@@ -26393,6 +30437,12 @@ export type OrganizationUncheckedCreateWithoutLiquidityRiskSignalsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiquidityRiskSignalsInput = {
@@ -26493,6 +30543,12 @@ export type OrganizationUpdateWithoutLiquidityRiskSignalsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiquidityRiskSignalsInput = {
@@ -26577,6 +30633,12 @@ export type OrganizationUncheckedUpdateWithoutLiquidityRiskSignalsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiquidityAuditLogsInput = {
@@ -26661,6 +30723,12 @@ export type OrganizationCreateWithoutLiquidityAuditLogsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiquidityAuditLogsInput = {
@@ -26745,6 +30813,12 @@ export type OrganizationUncheckedCreateWithoutLiquidityAuditLogsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiquidityAuditLogsInput = {
@@ -26845,6 +30919,12 @@ export type OrganizationUpdateWithoutLiquidityAuditLogsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiquidityAuditLogsInput = {
@@ -26929,6 +31009,12 @@ export type OrganizationUncheckedUpdateWithoutLiquidityAuditLogsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutLiquidityPositionsInput = {
@@ -27013,6 +31099,12 @@ export type OrganizationCreateWithoutLiquidityPositionsInput = {
   risks?: Prisma.RiskCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutLiquidityPositionsInput = {
@@ -27097,6 +31189,12 @@ export type OrganizationUncheckedCreateWithoutLiquidityPositionsInput = {
   risks?: Prisma.RiskUncheckedCreateNestedManyWithoutOrganizationInput
   taskNotifications?: Prisma.TaskNotificationUncheckedCreateNestedManyWithoutOrganizationInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedCreateNestedManyWithoutOrganizationInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutLiquidityPositionsInput = {
@@ -27197,6 +31295,12 @@ export type OrganizationUpdateWithoutLiquidityPositionsInput = {
   risks?: Prisma.RiskUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutLiquidityPositionsInput = {
@@ -27281,6 +31385,12 @@ export type OrganizationUncheckedUpdateWithoutLiquidityPositionsInput = {
   risks?: Prisma.RiskUncheckedUpdateManyWithoutOrganizationNestedInput
   taskNotifications?: Prisma.TaskNotificationUncheckedUpdateManyWithoutOrganizationNestedInput
   savedTaskFilters?: Prisma.SavedTaskFilterUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningImportBatches?: Prisma.DunningImportBatchUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningAutomationRules?: Prisma.DunningAutomationRuleUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningExceptions?: Prisma.DunningExceptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningSavedViews?: Prisma.DunningSavedViewUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningTemplates?: Prisma.DunningTemplateUncheckedUpdateManyWithoutOrganizationNestedInput
+  dunningJurisdictionConfigs?: Prisma.DunningJurisdictionConfigUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -27361,6 +31471,12 @@ export type OrganizationCountOutputType = {
   risks: number
   taskNotifications: number
   savedTaskFilters: number
+  dunningImportBatches: number
+  dunningAutomationRules: number
+  dunningExceptions: number
+  dunningSavedViews: number
+  dunningTemplates: number
+  dunningJurisdictionConfigs: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -27436,6 +31552,12 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   risks?: boolean | OrganizationCountOutputTypeCountRisksArgs
   taskNotifications?: boolean | OrganizationCountOutputTypeCountTaskNotificationsArgs
   savedTaskFilters?: boolean | OrganizationCountOutputTypeCountSavedTaskFiltersArgs
+  dunningImportBatches?: boolean | OrganizationCountOutputTypeCountDunningImportBatchesArgs
+  dunningAutomationRules?: boolean | OrganizationCountOutputTypeCountDunningAutomationRulesArgs
+  dunningExceptions?: boolean | OrganizationCountOutputTypeCountDunningExceptionsArgs
+  dunningSavedViews?: boolean | OrganizationCountOutputTypeCountDunningSavedViewsArgs
+  dunningTemplates?: boolean | OrganizationCountOutputTypeCountDunningTemplatesArgs
+  dunningJurisdictionConfigs?: boolean | OrganizationCountOutputTypeCountDunningJurisdictionConfigsArgs
 }
 
 /**
@@ -27952,6 +32074,48 @@ export type OrganizationCountOutputTypeCountSavedTaskFiltersArgs<ExtArgs extends
   where?: Prisma.SavedTaskFilterWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountDunningImportBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DunningImportBatchWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountDunningAutomationRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DunningAutomationRuleWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountDunningExceptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DunningExceptionWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountDunningSavedViewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DunningSavedViewWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountDunningTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DunningTemplateWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountDunningJurisdictionConfigsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DunningJurisdictionConfigWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -28036,6 +32200,12 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   risks?: boolean | Prisma.Organization$risksArgs<ExtArgs>
   taskNotifications?: boolean | Prisma.Organization$taskNotificationsArgs<ExtArgs>
   savedTaskFilters?: boolean | Prisma.Organization$savedTaskFiltersArgs<ExtArgs>
+  dunningImportBatches?: boolean | Prisma.Organization$dunningImportBatchesArgs<ExtArgs>
+  dunningAutomationRules?: boolean | Prisma.Organization$dunningAutomationRulesArgs<ExtArgs>
+  dunningExceptions?: boolean | Prisma.Organization$dunningExceptionsArgs<ExtArgs>
+  dunningSavedViews?: boolean | Prisma.Organization$dunningSavedViewsArgs<ExtArgs>
+  dunningTemplates?: boolean | Prisma.Organization$dunningTemplatesArgs<ExtArgs>
+  dunningJurisdictionConfigs?: boolean | Prisma.Organization$dunningJurisdictionConfigsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -28152,6 +32322,12 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   risks?: boolean | Prisma.Organization$risksArgs<ExtArgs>
   taskNotifications?: boolean | Prisma.Organization$taskNotificationsArgs<ExtArgs>
   savedTaskFilters?: boolean | Prisma.Organization$savedTaskFiltersArgs<ExtArgs>
+  dunningImportBatches?: boolean | Prisma.Organization$dunningImportBatchesArgs<ExtArgs>
+  dunningAutomationRules?: boolean | Prisma.Organization$dunningAutomationRulesArgs<ExtArgs>
+  dunningExceptions?: boolean | Prisma.Organization$dunningExceptionsArgs<ExtArgs>
+  dunningSavedViews?: boolean | Prisma.Organization$dunningSavedViewsArgs<ExtArgs>
+  dunningTemplates?: boolean | Prisma.Organization$dunningTemplatesArgs<ExtArgs>
+  dunningJurisdictionConfigs?: boolean | Prisma.Organization$dunningJurisdictionConfigsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -28232,6 +32408,12 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     risks: Prisma.$RiskPayload<ExtArgs>[]
     taskNotifications: Prisma.$TaskNotificationPayload<ExtArgs>[]
     savedTaskFilters: Prisma.$SavedTaskFilterPayload<ExtArgs>[]
+    dunningImportBatches: Prisma.$DunningImportBatchPayload<ExtArgs>[]
+    dunningAutomationRules: Prisma.$DunningAutomationRulePayload<ExtArgs>[]
+    dunningExceptions: Prisma.$DunningExceptionPayload<ExtArgs>[]
+    dunningSavedViews: Prisma.$DunningSavedViewPayload<ExtArgs>[]
+    dunningTemplates: Prisma.$DunningTemplatePayload<ExtArgs>[]
+    dunningJurisdictionConfigs: Prisma.$DunningJurisdictionConfigPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -28710,6 +32892,12 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   risks<T extends Prisma.Organization$risksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$risksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RiskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   taskNotifications<T extends Prisma.Organization$taskNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$taskNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   savedTaskFilters<T extends Prisma.Organization$savedTaskFiltersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$savedTaskFiltersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedTaskFilterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dunningImportBatches<T extends Prisma.Organization$dunningImportBatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$dunningImportBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DunningImportBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dunningAutomationRules<T extends Prisma.Organization$dunningAutomationRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$dunningAutomationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DunningAutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dunningExceptions<T extends Prisma.Organization$dunningExceptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$dunningExceptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DunningExceptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dunningSavedViews<T extends Prisma.Organization$dunningSavedViewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$dunningSavedViewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DunningSavedViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dunningTemplates<T extends Prisma.Organization$dunningTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$dunningTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DunningTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dunningJurisdictionConfigs<T extends Prisma.Organization$dunningJurisdictionConfigsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$dunningJurisdictionConfigsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DunningJurisdictionConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30862,6 +35050,150 @@ export type Organization$savedTaskFiltersArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.SavedTaskFilterScalarFieldEnum | Prisma.SavedTaskFilterScalarFieldEnum[]
+}
+
+/**
+ * Organization.dunningImportBatches
+ */
+export type Organization$dunningImportBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DunningImportBatch
+   */
+  select?: Prisma.DunningImportBatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DunningImportBatch
+   */
+  omit?: Prisma.DunningImportBatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DunningImportBatchInclude<ExtArgs> | null
+  where?: Prisma.DunningImportBatchWhereInput
+  orderBy?: Prisma.DunningImportBatchOrderByWithRelationInput | Prisma.DunningImportBatchOrderByWithRelationInput[]
+  cursor?: Prisma.DunningImportBatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DunningImportBatchScalarFieldEnum | Prisma.DunningImportBatchScalarFieldEnum[]
+}
+
+/**
+ * Organization.dunningAutomationRules
+ */
+export type Organization$dunningAutomationRulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DunningAutomationRule
+   */
+  select?: Prisma.DunningAutomationRuleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DunningAutomationRule
+   */
+  omit?: Prisma.DunningAutomationRuleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DunningAutomationRuleInclude<ExtArgs> | null
+  where?: Prisma.DunningAutomationRuleWhereInput
+  orderBy?: Prisma.DunningAutomationRuleOrderByWithRelationInput | Prisma.DunningAutomationRuleOrderByWithRelationInput[]
+  cursor?: Prisma.DunningAutomationRuleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DunningAutomationRuleScalarFieldEnum | Prisma.DunningAutomationRuleScalarFieldEnum[]
+}
+
+/**
+ * Organization.dunningExceptions
+ */
+export type Organization$dunningExceptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DunningException
+   */
+  select?: Prisma.DunningExceptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DunningException
+   */
+  omit?: Prisma.DunningExceptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DunningExceptionInclude<ExtArgs> | null
+  where?: Prisma.DunningExceptionWhereInput
+  orderBy?: Prisma.DunningExceptionOrderByWithRelationInput | Prisma.DunningExceptionOrderByWithRelationInput[]
+  cursor?: Prisma.DunningExceptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DunningExceptionScalarFieldEnum | Prisma.DunningExceptionScalarFieldEnum[]
+}
+
+/**
+ * Organization.dunningSavedViews
+ */
+export type Organization$dunningSavedViewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DunningSavedView
+   */
+  select?: Prisma.DunningSavedViewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DunningSavedView
+   */
+  omit?: Prisma.DunningSavedViewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DunningSavedViewInclude<ExtArgs> | null
+  where?: Prisma.DunningSavedViewWhereInput
+  orderBy?: Prisma.DunningSavedViewOrderByWithRelationInput | Prisma.DunningSavedViewOrderByWithRelationInput[]
+  cursor?: Prisma.DunningSavedViewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DunningSavedViewScalarFieldEnum | Prisma.DunningSavedViewScalarFieldEnum[]
+}
+
+/**
+ * Organization.dunningTemplates
+ */
+export type Organization$dunningTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DunningTemplate
+   */
+  select?: Prisma.DunningTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DunningTemplate
+   */
+  omit?: Prisma.DunningTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DunningTemplateInclude<ExtArgs> | null
+  where?: Prisma.DunningTemplateWhereInput
+  orderBy?: Prisma.DunningTemplateOrderByWithRelationInput | Prisma.DunningTemplateOrderByWithRelationInput[]
+  cursor?: Prisma.DunningTemplateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DunningTemplateScalarFieldEnum | Prisma.DunningTemplateScalarFieldEnum[]
+}
+
+/**
+ * Organization.dunningJurisdictionConfigs
+ */
+export type Organization$dunningJurisdictionConfigsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DunningJurisdictionConfig
+   */
+  select?: Prisma.DunningJurisdictionConfigSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DunningJurisdictionConfig
+   */
+  omit?: Prisma.DunningJurisdictionConfigOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DunningJurisdictionConfigInclude<ExtArgs> | null
+  where?: Prisma.DunningJurisdictionConfigWhereInput
+  orderBy?: Prisma.DunningJurisdictionConfigOrderByWithRelationInput | Prisma.DunningJurisdictionConfigOrderByWithRelationInput[]
+  cursor?: Prisma.DunningJurisdictionConfigWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DunningJurisdictionConfigScalarFieldEnum | Prisma.DunningJurisdictionConfigScalarFieldEnum[]
 }
 
 /**

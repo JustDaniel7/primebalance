@@ -440,6 +440,19 @@ export const ModelName = {
   TreasuryDecision: 'TreasuryDecision',
   TreasuryScenario: 'TreasuryScenario',
   TreasuryCashMovement: 'TreasuryCashMovement',
+  Dunning: 'Dunning',
+  DunningEvent: 'DunningEvent',
+  DunningProposal: 'DunningProposal',
+  DunningCommunication: 'DunningCommunication',
+  DunningInterestAccrual: 'DunningInterestAccrual',
+  DunningFee: 'DunningFee',
+  DunningDisputeRecord: 'DunningDisputeRecord',
+  DunningImportBatch: 'DunningImportBatch',
+  DunningAutomationRule: 'DunningAutomationRule',
+  DunningException: 'DunningException',
+  DunningTemplate: 'DunningTemplate',
+  DunningSavedView: 'DunningSavedView',
+  DunningJurisdictionConfig: 'DunningJurisdictionConfig',
   NettingOpportunity: 'NettingOpportunity',
   Asset: 'Asset',
   AssetDepreciation: 'AssetDepreciation',
@@ -554,7 +567,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "organizationInvitation" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "walletToken" | "walletTransaction" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "invoiceVersion" | "invoiceAccountingEvent" | "invoicePayment" | "order" | "archiveRecord" | "archiveLink" | "archiveVersion" | "archiveAccessLog" | "archiveRetentionPolicy" | "archiveExport" | "archiveImportBatch" | "archiveAutomationRule" | "archiveException" | "archiveSavedView" | "liability" | "liabilityEvent" | "liabilityPayment" | "liabilitySettlement" | "liabilityAccrual" | "liabilityCovenantCheck" | "liabilityImportBatch" | "liabilityAutomationRule" | "liabilityException" | "liabilitySavedView" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry" | "customer" | "customerContact" | "customerPayment" | "customerCreditEvent" | "customerRevenue" | "customerRiskIndicator" | "supplier" | "supplierContact" | "supplierBalance" | "supplierPayment" | "supplierReliability" | "supplierSpend" | "supplierRisk" | "nettingAgreement" | "nettingParty" | "nettingSession" | "nettingPosition" | "nettingTransaction" | "settlementInstruction" | "offsetEntry" | "offer" | "offerVersion" | "offerAuditLog" | "offerTemplate" | "task" | "taskAssignee" | "taskWatcher" | "taskTag" | "taskTagLink" | "taskDependency" | "taskComment" | "taskActivity" | "taskAttachment" | "risk" | "riskMitigationStep" | "taskRiskLink" | "riskComment" | "riskActivity" | "taskNotification" | "savedTaskFilter" | "revenueForecast" | "revenueLineItem" | "costForecast" | "costLineItem" | "cashForecast" | "cashForecastPeriod" | "forecastScenario" | "forecastAssumption" | "forecastAlert" | "forecastAnnotation" | "forecastVariance" | "scenario" | "scenarioAssumption" | "stressTest" | "simulationState" | "scenarioComment" | "scenarioDecision" | "scenarioChangeEvent" | "kPI" | "kPIHistory" | "kPIAlert" | "kPITarget" | "kPIBenchmark" | "fXRate" | "fXExposure" | "fXConversion" | "fXScenario" | "fXForecast" | "fXCost" | "fXRiskIndicator" | "fXAuditLog" | "investorSnapshot" | "boardReport" | "runwayProjection" | "investorAccessLog" | "cashflowItem" | "liquidityScenario" | "liquidityGap" | "liquidityRiskSignal" | "liquidityAuditLog" | "liquidityPosition"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "organization" | "organizationInvitation" | "financialAccount" | "transaction" | "receipt" | "chatChannel" | "chatMessage" | "userSettings" | "wallet" | "walletToken" | "walletTransaction" | "aISuggestion" | "savedReport" | "corporateEntity" | "invoice" | "invoiceVersion" | "invoiceAccountingEvent" | "invoicePayment" | "order" | "archiveRecord" | "archiveLink" | "archiveVersion" | "archiveAccessLog" | "archiveRetentionPolicy" | "archiveExport" | "archiveImportBatch" | "archiveAutomationRule" | "archiveException" | "archiveSavedView" | "liability" | "liabilityEvent" | "liabilityPayment" | "liabilitySettlement" | "liabilityAccrual" | "liabilityCovenantCheck" | "liabilityImportBatch" | "liabilityAutomationRule" | "liabilityException" | "liabilitySavedView" | "inventoryItem" | "inventoryMovement" | "inventoryBatch" | "receivable" | "receivablePayment" | "receivableEvent" | "treasuryAccount" | "capitalBucket" | "creditFacility" | "facilityDrawdown" | "treasuryDecision" | "treasuryScenario" | "treasuryCashMovement" | "dunning" | "dunningEvent" | "dunningProposal" | "dunningCommunication" | "dunningInterestAccrual" | "dunningFee" | "dunningDisputeRecord" | "dunningImportBatch" | "dunningAutomationRule" | "dunningException" | "dunningTemplate" | "dunningSavedView" | "dunningJurisdictionConfig" | "nettingOpportunity" | "asset" | "assetDepreciation" | "assetEvent" | "assetTransfer" | "assetDisposal" | "capExBudget" | "capExItem" | "costCenter" | "project" | "projectMilestone" | "timeEntry" | "internalChargeback" | "accountingPeriod" | "closeChecklistItem" | "periodMissingItem" | "periodAdjustment" | "periodAuditEntry" | "customer" | "customerContact" | "customerPayment" | "customerCreditEvent" | "customerRevenue" | "customerRiskIndicator" | "supplier" | "supplierContact" | "supplierBalance" | "supplierPayment" | "supplierReliability" | "supplierSpend" | "supplierRisk" | "nettingAgreement" | "nettingParty" | "nettingSession" | "nettingPosition" | "nettingTransaction" | "settlementInstruction" | "offsetEntry" | "offer" | "offerVersion" | "offerAuditLog" | "offerTemplate" | "task" | "taskAssignee" | "taskWatcher" | "taskTag" | "taskTagLink" | "taskDependency" | "taskComment" | "taskActivity" | "taskAttachment" | "risk" | "riskMitigationStep" | "taskRiskLink" | "riskComment" | "riskActivity" | "taskNotification" | "savedTaskFilter" | "revenueForecast" | "revenueLineItem" | "costForecast" | "costLineItem" | "cashForecast" | "cashForecastPeriod" | "forecastScenario" | "forecastAssumption" | "forecastAlert" | "forecastAnnotation" | "forecastVariance" | "scenario" | "scenarioAssumption" | "stressTest" | "simulationState" | "scenarioComment" | "scenarioDecision" | "scenarioChangeEvent" | "kPI" | "kPIHistory" | "kPIAlert" | "kPITarget" | "kPIBenchmark" | "fXRate" | "fXExposure" | "fXConversion" | "fXScenario" | "fXForecast" | "fXCost" | "fXRiskIndicator" | "fXAuditLog" | "investorSnapshot" | "boardReport" | "runwayProjection" | "investorAccessLog" | "cashflowItem" | "liquidityScenario" | "liquidityGap" | "liquidityRiskSignal" | "liquidityAuditLog" | "liquidityPosition"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4699,6 +4712,968 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TreasuryCashMovementCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TreasuryCashMovementCountAggregateOutputType> | number
+        }
+      }
+    }
+    Dunning: {
+      payload: Prisma.$DunningPayload<ExtArgs>
+      fields: Prisma.DunningFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>
+        }
+        findMany: {
+          args: Prisma.DunningFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>[]
+        }
+        create: {
+          args: Prisma.DunningCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>
+        }
+        createMany: {
+          args: Prisma.DunningCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>
+        }
+        update: {
+          args: Prisma.DunningUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunning>
+        }
+        groupBy: {
+          args: Prisma.DunningGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningEvent: {
+      payload: Prisma.$DunningEventPayload<ExtArgs>
+      fields: Prisma.DunningEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>
+        }
+        findMany: {
+          args: Prisma.DunningEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>[]
+        }
+        create: {
+          args: Prisma.DunningEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>
+        }
+        createMany: {
+          args: Prisma.DunningEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>
+        }
+        update: {
+          args: Prisma.DunningEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningEventPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningEvent>
+        }
+        groupBy: {
+          args: Prisma.DunningEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningEventCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningProposal: {
+      payload: Prisma.$DunningProposalPayload<ExtArgs>
+      fields: Prisma.DunningProposalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningProposalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningProposalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningProposalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningProposalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>
+        }
+        findMany: {
+          args: Prisma.DunningProposalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>[]
+        }
+        create: {
+          args: Prisma.DunningProposalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>
+        }
+        createMany: {
+          args: Prisma.DunningProposalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningProposalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningProposalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>
+        }
+        update: {
+          args: Prisma.DunningProposalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningProposalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningProposalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningProposalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningProposalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningProposalPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningProposalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningProposal>
+        }
+        groupBy: {
+          args: Prisma.DunningProposalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningProposalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningProposalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningProposalCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningCommunication: {
+      payload: Prisma.$DunningCommunicationPayload<ExtArgs>
+      fields: Prisma.DunningCommunicationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningCommunicationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningCommunicationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningCommunicationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningCommunicationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>
+        }
+        findMany: {
+          args: Prisma.DunningCommunicationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>[]
+        }
+        create: {
+          args: Prisma.DunningCommunicationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>
+        }
+        createMany: {
+          args: Prisma.DunningCommunicationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningCommunicationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningCommunicationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>
+        }
+        update: {
+          args: Prisma.DunningCommunicationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningCommunicationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningCommunicationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningCommunicationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningCommunicationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningCommunicationPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningCommunicationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningCommunication>
+        }
+        groupBy: {
+          args: Prisma.DunningCommunicationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningCommunicationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningCommunicationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningCommunicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningInterestAccrual: {
+      payload: Prisma.$DunningInterestAccrualPayload<ExtArgs>
+      fields: Prisma.DunningInterestAccrualFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningInterestAccrualFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningInterestAccrualFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningInterestAccrualFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningInterestAccrualFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>
+        }
+        findMany: {
+          args: Prisma.DunningInterestAccrualFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>[]
+        }
+        create: {
+          args: Prisma.DunningInterestAccrualCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>
+        }
+        createMany: {
+          args: Prisma.DunningInterestAccrualCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningInterestAccrualCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningInterestAccrualDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>
+        }
+        update: {
+          args: Prisma.DunningInterestAccrualUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningInterestAccrualDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningInterestAccrualUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningInterestAccrualUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningInterestAccrualUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningInterestAccrualPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningInterestAccrualAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningInterestAccrual>
+        }
+        groupBy: {
+          args: Prisma.DunningInterestAccrualGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningInterestAccrualGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningInterestAccrualCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningInterestAccrualCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningFee: {
+      payload: Prisma.$DunningFeePayload<ExtArgs>
+      fields: Prisma.DunningFeeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningFeeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningFeeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>
+        }
+        findFirst: {
+          args: Prisma.DunningFeeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningFeeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>
+        }
+        findMany: {
+          args: Prisma.DunningFeeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>[]
+        }
+        create: {
+          args: Prisma.DunningFeeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>
+        }
+        createMany: {
+          args: Prisma.DunningFeeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningFeeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>[]
+        }
+        delete: {
+          args: Prisma.DunningFeeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>
+        }
+        update: {
+          args: Prisma.DunningFeeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningFeeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningFeeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningFeeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningFeeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningFeePayload>
+        }
+        aggregate: {
+          args: Prisma.DunningFeeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningFee>
+        }
+        groupBy: {
+          args: Prisma.DunningFeeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningFeeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningFeeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningFeeCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningDisputeRecord: {
+      payload: Prisma.$DunningDisputeRecordPayload<ExtArgs>
+      fields: Prisma.DunningDisputeRecordFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningDisputeRecordFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningDisputeRecordFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningDisputeRecordFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningDisputeRecordFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>
+        }
+        findMany: {
+          args: Prisma.DunningDisputeRecordFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>[]
+        }
+        create: {
+          args: Prisma.DunningDisputeRecordCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>
+        }
+        createMany: {
+          args: Prisma.DunningDisputeRecordCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningDisputeRecordCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningDisputeRecordDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>
+        }
+        update: {
+          args: Prisma.DunningDisputeRecordUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningDisputeRecordDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningDisputeRecordUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningDisputeRecordUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningDisputeRecordUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningDisputeRecordPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningDisputeRecordAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningDisputeRecord>
+        }
+        groupBy: {
+          args: Prisma.DunningDisputeRecordGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningDisputeRecordGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningDisputeRecordCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningDisputeRecordCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningImportBatch: {
+      payload: Prisma.$DunningImportBatchPayload<ExtArgs>
+      fields: Prisma.DunningImportBatchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningImportBatchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningImportBatchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningImportBatchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningImportBatchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>
+        }
+        findMany: {
+          args: Prisma.DunningImportBatchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>[]
+        }
+        create: {
+          args: Prisma.DunningImportBatchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>
+        }
+        createMany: {
+          args: Prisma.DunningImportBatchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningImportBatchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningImportBatchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>
+        }
+        update: {
+          args: Prisma.DunningImportBatchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningImportBatchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningImportBatchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningImportBatchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningImportBatchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningImportBatchPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningImportBatchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningImportBatch>
+        }
+        groupBy: {
+          args: Prisma.DunningImportBatchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningImportBatchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningImportBatchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningImportBatchCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningAutomationRule: {
+      payload: Prisma.$DunningAutomationRulePayload<ExtArgs>
+      fields: Prisma.DunningAutomationRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningAutomationRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningAutomationRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>
+        }
+        findFirst: {
+          args: Prisma.DunningAutomationRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningAutomationRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>
+        }
+        findMany: {
+          args: Prisma.DunningAutomationRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>[]
+        }
+        create: {
+          args: Prisma.DunningAutomationRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>
+        }
+        createMany: {
+          args: Prisma.DunningAutomationRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningAutomationRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>[]
+        }
+        delete: {
+          args: Prisma.DunningAutomationRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>
+        }
+        update: {
+          args: Prisma.DunningAutomationRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningAutomationRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningAutomationRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningAutomationRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningAutomationRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningAutomationRulePayload>
+        }
+        aggregate: {
+          args: Prisma.DunningAutomationRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningAutomationRule>
+        }
+        groupBy: {
+          args: Prisma.DunningAutomationRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningAutomationRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningAutomationRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningAutomationRuleCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningException: {
+      payload: Prisma.$DunningExceptionPayload<ExtArgs>
+      fields: Prisma.DunningExceptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningExceptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningExceptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningExceptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningExceptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>
+        }
+        findMany: {
+          args: Prisma.DunningExceptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>[]
+        }
+        create: {
+          args: Prisma.DunningExceptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>
+        }
+        createMany: {
+          args: Prisma.DunningExceptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningExceptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningExceptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>
+        }
+        update: {
+          args: Prisma.DunningExceptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningExceptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningExceptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningExceptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningExceptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningExceptionPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningExceptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningException>
+        }
+        groupBy: {
+          args: Prisma.DunningExceptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningExceptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningExceptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningExceptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningTemplate: {
+      payload: Prisma.$DunningTemplatePayload<ExtArgs>
+      fields: Prisma.DunningTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.DunningTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.DunningTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.DunningTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.DunningTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.DunningTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>
+        }
+        update: {
+          args: Prisma.DunningTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.DunningTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningTemplate>
+        }
+        groupBy: {
+          args: Prisma.DunningTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningSavedView: {
+      payload: Prisma.$DunningSavedViewPayload<ExtArgs>
+      fields: Prisma.DunningSavedViewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningSavedViewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningSavedViewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningSavedViewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningSavedViewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>
+        }
+        findMany: {
+          args: Prisma.DunningSavedViewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>[]
+        }
+        create: {
+          args: Prisma.DunningSavedViewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>
+        }
+        createMany: {
+          args: Prisma.DunningSavedViewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningSavedViewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningSavedViewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>
+        }
+        update: {
+          args: Prisma.DunningSavedViewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningSavedViewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningSavedViewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningSavedViewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningSavedViewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningSavedViewPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningSavedViewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningSavedView>
+        }
+        groupBy: {
+          args: Prisma.DunningSavedViewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningSavedViewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningSavedViewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningSavedViewCountAggregateOutputType> | number
+        }
+      }
+    }
+    DunningJurisdictionConfig: {
+      payload: Prisma.$DunningJurisdictionConfigPayload<ExtArgs>
+      fields: Prisma.DunningJurisdictionConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DunningJurisdictionConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DunningJurisdictionConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.DunningJurisdictionConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DunningJurisdictionConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>
+        }
+        findMany: {
+          args: Prisma.DunningJurisdictionConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>[]
+        }
+        create: {
+          args: Prisma.DunningJurisdictionConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>
+        }
+        createMany: {
+          args: Prisma.DunningJurisdictionConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DunningJurisdictionConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.DunningJurisdictionConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>
+        }
+        update: {
+          args: Prisma.DunningJurisdictionConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.DunningJurisdictionConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DunningJurisdictionConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DunningJurisdictionConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.DunningJurisdictionConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DunningJurisdictionConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.DunningJurisdictionConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDunningJurisdictionConfig>
+        }
+        groupBy: {
+          args: Prisma.DunningJurisdictionConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningJurisdictionConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DunningJurisdictionConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DunningJurisdictionConfigCountAggregateOutputType> | number
         }
       }
     }
@@ -13778,6 +14753,557 @@ export const TreasuryCashMovementScalarFieldEnum = {
 export type TreasuryCashMovementScalarFieldEnum = (typeof TreasuryCashMovementScalarFieldEnum)[keyof typeof TreasuryCashMovementScalarFieldEnum]
 
 
+export const DunningScalarFieldEnum = {
+  id: 'id',
+  dunningId: 'dunningId',
+  dunningNumber: 'dunningNumber',
+  invoiceId: 'invoiceId',
+  customerId: 'customerId',
+  customerName: 'customerName',
+  partyId: 'partyId',
+  legalEntityId: 'legalEntityId',
+  jurisdictionId: 'jurisdictionId',
+  currency: 'currency',
+  reportingCurrency: 'reportingCurrency',
+  status: 'status',
+  previousStatus: 'previousStatus',
+  statusChangedAt: 'statusChangedAt',
+  statusChangedBy: 'statusChangedBy',
+  currentLevel: 'currentLevel',
+  originalAmount: 'originalAmount',
+  outstandingAmount: 'outstandingAmount',
+  interestAccrued: 'interestAccrued',
+  feesAccrued: 'feesAccrued',
+  totalDue: 'totalDue',
+  fxRateAtCreation: 'fxRateAtCreation',
+  amountInReporting: 'amountInReporting',
+  interestRateApplied: 'interestRateApplied',
+  interestRateSource: 'interestRateSource',
+  interestStartDate: 'interestStartDate',
+  interestLastCalculated: 'interestLastCalculated',
+  interestDayCount: 'interestDayCount',
+  flatFeeApplied: 'flatFeeApplied',
+  flatFeeSource: 'flatFeeSource',
+  customFeesApplied: 'customFeesApplied',
+  invoiceDueDate: 'invoiceDueDate',
+  invoiceIssuedDate: 'invoiceIssuedDate',
+  daysPastDue: 'daysPastDue',
+  gracePeriodDays: 'gracePeriodDays',
+  effectiveDueDate: 'effectiveDueDate',
+  reminderProposedAt: 'reminderProposedAt',
+  reminderApprovedAt: 'reminderApprovedAt',
+  reminderApprovedBy: 'reminderApprovedBy',
+  reminderSentAt: 'reminderSentAt',
+  dunningLevel1ProposedAt: 'dunningLevel1ProposedAt',
+  dunningLevel1ApprovedAt: 'dunningLevel1ApprovedAt',
+  dunningLevel1ApprovedBy: 'dunningLevel1ApprovedBy',
+  dunningLevel1SentAt: 'dunningLevel1SentAt',
+  dunningLevel2ProposedAt: 'dunningLevel2ProposedAt',
+  dunningLevel2ApprovedAt: 'dunningLevel2ApprovedAt',
+  dunningLevel2ApprovedBy: 'dunningLevel2ApprovedBy',
+  dunningLevel2SentAt: 'dunningLevel2SentAt',
+  dunningLevel3InitiatedAt: 'dunningLevel3InitiatedAt',
+  dunningLevel3InitiatedBy: 'dunningLevel3InitiatedBy',
+  dunningLevel3ApprovedAt: 'dunningLevel3ApprovedAt',
+  dunningLevel3ApprovedBy: 'dunningLevel3ApprovedBy',
+  dunningLevel3SentAt: 'dunningLevel3SentAt',
+  escalationPreparedAt: 'escalationPreparedAt',
+  escalationPreparedBy: 'escalationPreparedBy',
+  settledAt: 'settledAt',
+  settledBy: 'settledBy',
+  settledAmount: 'settledAmount',
+  settlementReference: 'settlementReference',
+  writtenOffAt: 'writtenOffAt',
+  writtenOffBy: 'writtenOffBy',
+  writtenOffAmount: 'writtenOffAmount',
+  writeOffReason: 'writeOffReason',
+  writeOffReasonCode: 'writeOffReasonCode',
+  isDisputed: 'isDisputed',
+  disputedAt: 'disputedAt',
+  disputedBy: 'disputedBy',
+  disputeReason: 'disputeReason',
+  disputeAmount: 'disputeAmount',
+  disputeResolvedAt: 'disputeResolvedAt',
+  disputeResolvedBy: 'disputeResolvedBy',
+  disputeResolution: 'disputeResolution',
+  customerType: 'customerType',
+  customerJurisdiction: 'customerJurisdiction',
+  customerLanguage: 'customerLanguage',
+  customerDunningBlocked: 'customerDunningBlocked',
+  customerPaymentHistory: 'customerPaymentHistory',
+  customerRiskScore: 'customerRiskScore',
+  contractId: 'contractId',
+  contractPaymentTerms: 'contractPaymentTerms',
+  contractCustomDunningRules: 'contractCustomDunningRules',
+  lastCommunicationAt: 'lastCommunicationAt',
+  lastCommunicationType: 'lastCommunicationType',
+  communicationCount: 'communicationCount',
+  hasActiveProposal: 'hasActiveProposal',
+  activeProposalId: 'activeProposalId',
+  activeProposalLevel: 'activeProposalLevel',
+  lastVerificationAt: 'lastVerificationAt',
+  verificationStatus: 'verificationStatus',
+  verificationErrors: 'verificationErrors',
+  dataSourcesChecked: 'dataSourcesChecked',
+  metadata: 'metadata',
+  tags: 'tags',
+  systemTags: 'systemTags',
+  confidenceScore: 'confidenceScore',
+  validationMode: 'validationMode',
+  locale: 'locale',
+  language: 'language',
+  lastDecisionExplanation: 'lastDecisionExplanation',
+  lastRuleApplied: 'lastRuleApplied',
+  lastRuleVersion: 'lastRuleVersion',
+  version: 'version',
+  eventCount: 'eventCount',
+  lastEventId: 'lastEventId',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  archivedAt: 'archivedAt',
+  archivedBy: 'archivedBy',
+  archiveReason: 'archiveReason',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningScalarFieldEnum = (typeof DunningScalarFieldEnum)[keyof typeof DunningScalarFieldEnum]
+
+
+export const DunningEventScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  dunningId: 'dunningId',
+  eventType: 'eventType',
+  timestamp: 'timestamp',
+  effectiveDate: 'effectiveDate',
+  actorId: 'actorId',
+  actorName: 'actorName',
+  actorType: 'actorType',
+  payload: 'payload',
+  previousState: 'previousState',
+  previousEventId: 'previousEventId',
+  contentHash: 'contentHash',
+  explanation: 'explanation',
+  ruleId: 'ruleId',
+  ruleVersion: 'ruleVersion',
+  dataSourcesChecked: 'dataSourcesChecked',
+  inputSnapshot: 'inputSnapshot',
+  decision: 'decision',
+  metadata: 'metadata',
+  isReversed: 'isReversed',
+  reversedBy: 'reversedBy',
+  reversalOf: 'reversalOf'
+} as const
+
+export type DunningEventScalarFieldEnum = (typeof DunningEventScalarFieldEnum)[keyof typeof DunningEventScalarFieldEnum]
+
+
+export const DunningProposalScalarFieldEnum = {
+  id: 'id',
+  proposalId: 'proposalId',
+  dunningId: 'dunningId',
+  proposalType: 'proposalType',
+  proposalLevel: 'proposalLevel',
+  status: 'status',
+  priority: 'priority',
+  outstandingAmount: 'outstandingAmount',
+  interestProposed: 'interestProposed',
+  feesProposed: 'feesProposed',
+  totalProposed: 'totalProposed',
+  currency: 'currency',
+  verificationStatus: 'verificationStatus',
+  verificationChecks: 'verificationChecks',
+  verificationErrors: 'verificationErrors',
+  invoiceVerified: 'invoiceVerified',
+  paymentVerified: 'paymentVerified',
+  disputeVerified: 'disputeVerified',
+  customerVerified: 'customerVerified',
+  contractVerified: 'contractVerified',
+  priorDunningVerified: 'priorDunningVerified',
+  confidenceScore: 'confidenceScore',
+  confidenceFactors: 'confidenceFactors',
+  ruleId: 'ruleId',
+  ruleVersion: 'ruleVersion',
+  dataSourcesChecked: 'dataSourcesChecked',
+  inputSnapshot: 'inputSnapshot',
+  explanation: 'explanation',
+  templateId: 'templateId',
+  templateVersion: 'templateVersion',
+  generatedContent: 'generatedContent',
+  deadline: 'deadline',
+  expiresAt: 'expiresAt',
+  approvedAt: 'approvedAt',
+  approvedBy: 'approvedBy',
+  rejectedAt: 'rejectedAt',
+  rejectedBy: 'rejectedBy',
+  rejectionReason: 'rejectionReason',
+  sentAt: 'sentAt',
+  sentBy: 'sentBy',
+  proposedAt: 'proposedAt',
+  proposedBy: 'proposedBy',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningProposalScalarFieldEnum = (typeof DunningProposalScalarFieldEnum)[keyof typeof DunningProposalScalarFieldEnum]
+
+
+export const DunningCommunicationScalarFieldEnum = {
+  id: 'id',
+  communicationId: 'communicationId',
+  dunningId: 'dunningId',
+  proposalId: 'proposalId',
+  communicationType: 'communicationType',
+  level: 'level',
+  channel: 'channel',
+  status: 'status',
+  recipientName: 'recipientName',
+  recipientEmail: 'recipientEmail',
+  recipientAddress: 'recipientAddress',
+  recipientLanguage: 'recipientLanguage',
+  templateId: 'templateId',
+  templateVersion: 'templateVersion',
+  subject: 'subject',
+  bodyHtml: 'bodyHtml',
+  bodyText: 'bodyText',
+  attachments: 'attachments',
+  outstandingAmount: 'outstandingAmount',
+  interestAmount: 'interestAmount',
+  feesAmount: 'feesAmount',
+  totalDue: 'totalDue',
+  currency: 'currency',
+  paymentDeadline: 'paymentDeadline',
+  paymentInstructions: 'paymentInstructions',
+  scheduledAt: 'scheduledAt',
+  sentAt: 'sentAt',
+  sentBy: 'sentBy',
+  deliveredAt: 'deliveredAt',
+  failedAt: 'failedAt',
+  failureReason: 'failureReason',
+  retryCount: 'retryCount',
+  lastRetryAt: 'lastRetryAt',
+  externalMessageId: 'externalMessageId',
+  postalTrackingNumber: 'postalTrackingNumber',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningCommunicationScalarFieldEnum = (typeof DunningCommunicationScalarFieldEnum)[keyof typeof DunningCommunicationScalarFieldEnum]
+
+
+export const DunningInterestAccrualScalarFieldEnum = {
+  id: 'id',
+  accrualId: 'accrualId',
+  dunningId: 'dunningId',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  daysInPeriod: 'daysInPeriod',
+  principalBase: 'principalBase',
+  interestRate: 'interestRate',
+  rateSource: 'rateSource',
+  dayCountBasis: 'dayCountBasis',
+  amount: 'amount',
+  currency: 'currency',
+  amountInReporting: 'amountInReporting',
+  fxRate: 'fxRate',
+  jurisdictionId: 'jurisdictionId',
+  statutoryRate: 'statutoryRate',
+  status: 'status',
+  appliedAt: 'appliedAt',
+  appliedBy: 'appliedBy',
+  reversedAt: 'reversedAt',
+  reversedBy: 'reversedBy',
+  calculationDetails: 'calculationDetails',
+  explanation: 'explanation',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type DunningInterestAccrualScalarFieldEnum = (typeof DunningInterestAccrualScalarFieldEnum)[keyof typeof DunningInterestAccrualScalarFieldEnum]
+
+
+export const DunningFeeScalarFieldEnum = {
+  id: 'id',
+  feeId: 'feeId',
+  dunningId: 'dunningId',
+  feeType: 'feeType',
+  feeSource: 'feeSource',
+  description: 'description',
+  amount: 'amount',
+  currency: 'currency',
+  amountInReporting: 'amountInReporting',
+  fxRate: 'fxRate',
+  baseAmount: 'baseAmount',
+  percentage: 'percentage',
+  jurisdictionId: 'jurisdictionId',
+  jurisdictionLimit: 'jurisdictionLimit',
+  dunningLevel: 'dunningLevel',
+  status: 'status',
+  appliedAt: 'appliedAt',
+  appliedBy: 'appliedBy',
+  waivedAt: 'waivedAt',
+  waivedBy: 'waivedBy',
+  waiverReason: 'waiverReason',
+  reversedAt: 'reversedAt',
+  reversedBy: 'reversedBy',
+  explanation: 'explanation',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
+} as const
+
+export type DunningFeeScalarFieldEnum = (typeof DunningFeeScalarFieldEnum)[keyof typeof DunningFeeScalarFieldEnum]
+
+
+export const DunningDisputeRecordScalarFieldEnum = {
+  id: 'id',
+  disputeId: 'disputeId',
+  dunningId: 'dunningId',
+  status: 'status',
+  disputeType: 'disputeType',
+  reason: 'reason',
+  description: 'description',
+  disputedAmount: 'disputedAmount',
+  currency: 'currency',
+  resolution: 'resolution',
+  resolutionType: 'resolutionType',
+  adjustedAmount: 'adjustedAmount',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  attachments: 'attachments',
+  comments: 'comments',
+  escalationNotes: 'escalationNotes',
+  escalatedAt: 'escalatedAt',
+  escalatedTo: 'escalatedTo',
+  escalationLevel: 'escalationLevel',
+  slaDeadline: 'slaDeadline',
+  isOverdue: 'isOverdue',
+  openedAt: 'openedAt',
+  openedBy: 'openedBy',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningDisputeRecordScalarFieldEnum = (typeof DunningDisputeRecordScalarFieldEnum)[keyof typeof DunningDisputeRecordScalarFieldEnum]
+
+
+export const DunningImportBatchScalarFieldEnum = {
+  id: 'id',
+  batchNumber: 'batchNumber',
+  source: 'source',
+  sourceIdentifier: 'sourceIdentifier',
+  sourceHash: 'sourceHash',
+  totalRecords: 'totalRecords',
+  successCount: 'successCount',
+  errorCount: 'errorCount',
+  warningCount: 'warningCount',
+  skippedCount: 'skippedCount',
+  status: 'status',
+  importMode: 'importMode',
+  dateFrom: 'dateFrom',
+  dateTo: 'dateTo',
+  customerFilter: 'customerFilter',
+  fieldMapping: 'fieldMapping',
+  mappingTemplate: 'mappingTemplate',
+  errors: 'errors',
+  warnings: 'warnings',
+  createdDunningIds: 'createdDunningIds',
+  canRollback: 'canRollback',
+  rolledBackAt: 'rolledBackAt',
+  rolledBackBy: 'rolledBackBy',
+  importedBy: 'importedBy',
+  importedByName: 'importedByName',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningImportBatchScalarFieldEnum = (typeof DunningImportBatchScalarFieldEnum)[keyof typeof DunningImportBatchScalarFieldEnum]
+
+
+export const DunningAutomationRuleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  description: 'description',
+  triggerType: 'triggerType',
+  triggerConditions: 'triggerConditions',
+  schedule: 'schedule',
+  dunningLevels: 'dunningLevels',
+  customerTypes: 'customerTypes',
+  jurisdictions: 'jurisdictions',
+  invoiceAmountMin: 'invoiceAmountMin',
+  invoiceAmountMax: 'invoiceAmountMax',
+  reminderDaysAfterDue: 'reminderDaysAfterDue',
+  level1DaysAfterDue: 'level1DaysAfterDue',
+  level2DaysAfterDue: 'level2DaysAfterDue',
+  minimumIntervalDays: 'minimumIntervalDays',
+  actionType: 'actionType',
+  actionConfig: 'actionConfig',
+  confidenceThreshold: 'confidenceThreshold',
+  proposalThreshold: 'proposalThreshold',
+  requiresApproval: 'requiresApproval',
+  approverRoles: 'approverRoles',
+  multiSignatureRequired: 'multiSignatureRequired',
+  multiSignatureCount: 'multiSignatureCount',
+  fallbackRuleId: 'fallbackRuleId',
+  fallbackBehavior: 'fallbackBehavior',
+  explanationTemplate: 'explanationTemplate',
+  isActive: 'isActive',
+  priority: 'priority',
+  lastExecutedAt: 'lastExecutedAt',
+  executionCount: 'executionCount',
+  successCount: 'successCount',
+  failureCount: 'failureCount',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningAutomationRuleScalarFieldEnum = (typeof DunningAutomationRuleScalarFieldEnum)[keyof typeof DunningAutomationRuleScalarFieldEnum]
+
+
+export const DunningExceptionScalarFieldEnum = {
+  id: 'id',
+  dunningId: 'dunningId',
+  proposalId: 'proposalId',
+  sourceObjectId: 'sourceObjectId',
+  sourceObjectType: 'sourceObjectType',
+  sourceModule: 'sourceModule',
+  exceptionType: 'exceptionType',
+  exceptionCode: 'exceptionCode',
+  exceptionMessage: 'exceptionMessage',
+  exceptionDetails: 'exceptionDetails',
+  validationMode: 'validationMode',
+  validationErrors: 'validationErrors',
+  confidenceScore: 'confidenceScore',
+  dataSourcesChecked: 'dataSourcesChecked',
+  assignedTo: 'assignedTo',
+  assignedName: 'assignedName',
+  assignedAt: 'assignedAt',
+  slaDeadline: 'slaDeadline',
+  isOverdue: 'isOverdue',
+  escalationLevel: 'escalationLevel',
+  escalatedTo: 'escalatedTo',
+  escalatedAt: 'escalatedAt',
+  status: 'status',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  resolution: 'resolution',
+  resolutionAction: 'resolutionAction',
+  retryCount: 'retryCount',
+  maxRetries: 'maxRetries',
+  lastRetryAt: 'lastRetryAt',
+  nextRetryAt: 'nextRetryAt',
+  createdAt: 'createdAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningExceptionScalarFieldEnum = (typeof DunningExceptionScalarFieldEnum)[keyof typeof DunningExceptionScalarFieldEnum]
+
+
+export const DunningTemplateScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  dunningLevel: 'dunningLevel',
+  templateType: 'templateType',
+  jurisdictionId: 'jurisdictionId',
+  language: 'language',
+  customerType: 'customerType',
+  subject: 'subject',
+  bodyHtml: 'bodyHtml',
+  bodyText: 'bodyText',
+  headerHtml: 'headerHtml',
+  footerHtml: 'footerHtml',
+  tone: 'tone',
+  availableVariables: 'availableVariables',
+  requiredVariables: 'requiredVariables',
+  legalDisclaimer: 'legalDisclaimer',
+  includesInterest: 'includesInterest',
+  includesFees: 'includesFees',
+  includesLegalWarning: 'includesLegalWarning',
+  version: 'version',
+  isActive: 'isActive',
+  previousVersionId: 'previousVersionId',
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningTemplateScalarFieldEnum = (typeof DunningTemplateScalarFieldEnum)[keyof typeof DunningTemplateScalarFieldEnum]
+
+
+export const DunningSavedViewScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  filters: 'filters',
+  columns: 'columns',
+  sortBy: 'sortBy',
+  sortOrder: 'sortOrder',
+  groupBy: 'groupBy',
+  includeAggregations: 'includeAggregations',
+  aggregationFields: 'aggregationFields',
+  isPublic: 'isPublic',
+  sharedWith: 'sharedWith',
+  isScheduled: 'isScheduled',
+  scheduleFrequency: 'scheduleFrequency',
+  scheduleCron: 'scheduleCron',
+  deliveryMethod: 'deliveryMethod',
+  deliveryTarget: 'deliveryTarget',
+  lastDeliveredAt: 'lastDeliveredAt',
+  defaultExportFormat: 'defaultExportFormat',
+  createdBy: 'createdBy',
+  createdByName: 'createdByName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningSavedViewScalarFieldEnum = (typeof DunningSavedViewScalarFieldEnum)[keyof typeof DunningSavedViewScalarFieldEnum]
+
+
+export const DunningJurisdictionConfigScalarFieldEnum = {
+  id: 'id',
+  jurisdictionId: 'jurisdictionId',
+  jurisdictionName: 'jurisdictionName',
+  country: 'country',
+  region: 'region',
+  statutoryInterestRateB2B: 'statutoryInterestRateB2B',
+  statutoryInterestRateB2C: 'statutoryInterestRateB2C',
+  interestRateReference: 'interestRateReference',
+  flatFeeAllowedB2B: 'flatFeeAllowedB2B',
+  flatFeeAmountB2B: 'flatFeeAmountB2B',
+  flatFeeAllowedB2C: 'flatFeeAllowedB2C',
+  flatFeeAmountB2C: 'flatFeeAmountB2C',
+  maxFeePercentage: 'maxFeePercentage',
+  defaultGracePeriodDays: 'defaultGracePeriodDays',
+  reminderAfterDays: 'reminderAfterDays',
+  level1AfterDays: 'level1AfterDays',
+  level2AfterDays: 'level2AfterDays',
+  level3MinDays: 'level3MinDays',
+  requiresWrittenNotice: 'requiresWrittenNotice',
+  requiresRegisteredMail: 'requiresRegisteredMail',
+  formalRequirements: 'formalRequirements',
+  defaultLanguage: 'defaultLanguage',
+  supportedLanguages: 'supportedLanguages',
+  defaultToneReminder: 'defaultToneReminder',
+  defaultToneLevel1: 'defaultToneLevel1',
+  defaultToneLevel2: 'defaultToneLevel2',
+  defaultToneLevel3: 'defaultToneLevel3',
+  consumerProtectionRules: 'consumerProtectionRules',
+  isActive: 'isActive',
+  updatedAt: 'updatedAt',
+  organizationId: 'organizationId'
+} as const
+
+export type DunningJurisdictionConfigScalarFieldEnum = (typeof DunningJurisdictionConfigScalarFieldEnum)[keyof typeof DunningJurisdictionConfigScalarFieldEnum]
+
+
 export const NettingOpportunityScalarFieldEnum = {
   id: 'id',
   entityAId: 'entityAId',
@@ -16614,6 +18140,19 @@ export type GlobalOmitConfig = {
   treasuryDecision?: Prisma.TreasuryDecisionOmit
   treasuryScenario?: Prisma.TreasuryScenarioOmit
   treasuryCashMovement?: Prisma.TreasuryCashMovementOmit
+  dunning?: Prisma.DunningOmit
+  dunningEvent?: Prisma.DunningEventOmit
+  dunningProposal?: Prisma.DunningProposalOmit
+  dunningCommunication?: Prisma.DunningCommunicationOmit
+  dunningInterestAccrual?: Prisma.DunningInterestAccrualOmit
+  dunningFee?: Prisma.DunningFeeOmit
+  dunningDisputeRecord?: Prisma.DunningDisputeRecordOmit
+  dunningImportBatch?: Prisma.DunningImportBatchOmit
+  dunningAutomationRule?: Prisma.DunningAutomationRuleOmit
+  dunningException?: Prisma.DunningExceptionOmit
+  dunningTemplate?: Prisma.DunningTemplateOmit
+  dunningSavedView?: Prisma.DunningSavedViewOmit
+  dunningJurisdictionConfig?: Prisma.DunningJurisdictionConfigOmit
   nettingOpportunity?: Prisma.NettingOpportunityOmit
   asset?: Prisma.AssetOmit
   assetDepreciation?: Prisma.AssetDepreciationOmit
