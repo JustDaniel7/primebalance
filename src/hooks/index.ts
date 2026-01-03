@@ -3,3 +3,4 @@
 
 export { useDataLoader } from './useDataLoader'
 export { useNotifications } from './useNotifications'
+export { useVoiceInput } from './useVoiceInput'
