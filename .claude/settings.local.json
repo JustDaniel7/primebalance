@@ -61,7 +61,8 @@
       "Bash(PRISMA_MIGRATE_LOCK_TIMEOUT=60000 npx prisma migrate dev:*)",
       "Bash(npm run dev:*)",
       "Bash(gcloud run:*)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "Bash(git reset:*)"
     ]
   }
 }
