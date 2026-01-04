@@ -9,3 +9,4 @@ export { DepreciationScheduleView } from './DepreciationScheduleView';
 export { AssetLifecycleTimeline } from './AssetLifecycleTimeline';
 export { AssetMetricsCards } from './AssetMetricsCards';
 export { DisposalForm } from './DisposalForm';
+export { AssetSettingsPanel } from './AssetSettingsPanel';

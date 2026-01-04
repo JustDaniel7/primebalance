@@ -83,6 +83,29 @@ const getHealthColor = (status: string): string => {
     return colors[status] || 'text-gray-600 bg-gray-100';
 };
 
+// Static class mappings for Tailwind (template literals don't work with Tailwind's purge)
+const metricColorBgClasses: Record<string, string> = {
+    blue: 'bg-blue-500/10',
+    emerald: 'bg-emerald-500/10',
+    purple: 'bg-purple-500/10',
+    amber: 'bg-amber-500/10',
+    green: 'bg-green-500/10',
+    red: 'bg-red-500/10',
+    orange: 'bg-orange-500/10',
+    indigo: 'bg-indigo-500/10',
+};
+
+const metricColorTextClasses: Record<string, string> = {
+    blue: 'text-blue-500',
+    emerald: 'text-emerald-500',
+    purple: 'text-purple-500',
+    amber: 'text-amber-500',
+    green: 'text-green-500',
+    red: 'text-red-500',
+    orange: 'text-orange-500',
+    indigo: 'text-indigo-500',
+};
+
 // =============================================================================
 // METRIC CARD COMPONENT
 // =============================================================================
@@ -119,8 +142,8 @@ function MetricCard({
                         </div>
                     )}
                 </div>
-                <div className={`p-3 rounded-xl bg-${color}-500/10`}>
-                    <Icon className={`w-6 h-6 text-${color}-500`} />
+                <div className={`p-3 rounded-xl ${metricColorBgClasses[color] || 'bg-blue-500/10'}`}>
+                    <Icon className={`w-6 h-6 ${metricColorTextClasses[color] || 'text-blue-500'}`} />
                 </div>
             </div>
         </Card>
@@ -857,8 +880,8 @@ export default function InvestorPage() {
     const [activeTab, setActiveTab] = useState<'overview' | 'burn' | 'risk' | 'summary'>('overview');
 
     useEffect(() => {
-        fetchDashboard();
-    }, [fetchDashboard]);
+        fetchDashboard(selectedPeriod);
+    }, [fetchDashboard, selectedPeriod]);
 
     return (
         <div className="space-y-6">

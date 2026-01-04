@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useTreasuryStore } from '@/store/treasury-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card } from '@/components/ui'
@@ -18,6 +19,7 @@ import {
 import Link from 'next/link'
 
 export default function TreasuryOverview() {
+  const router = useRouter()
   const { t, accentColor } = useThemeStore()
   const {
     cashPosition,
@@ -81,7 +83,12 @@ export default function TreasuryOverview() {
       transition={{ duration: 0.5, delay: 0.1 }}
       className="h-full"
     >
-      <Card variant="glass" className="h-full flex flex-col">
+      <Card
+        variant="glass"
+        className="h-full flex flex-col cursor-pointer"
+        onDoubleClick={() => router.push('/dashboard/treasury')}
+        title="Double-click to open Treasury"
+      >
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">

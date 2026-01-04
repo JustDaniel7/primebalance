@@ -1603,11 +1603,12 @@ export default function ScenariosPage() {
         })),
     });
 
-    const handleExport = (format: ExportFormat) => {
+    const handleExport = async (format: ExportFormat) => {
         const exportData = getExportData();
         const fileName = `scenarios-export-${new Date().toISOString().split('T')[0]}`;
-        const { content, mimeType, extension } = convertToFormat(exportData, format, 'scenarios');
-        downloadFile(content, `${fileName}.${extension}`, mimeType);
+        const result = convertToFormat(exportData, format, 'scenarios');
+        const isDocx = (result as any).isDocx === true;
+        await downloadFile(result.content, `${fileName}.${result.extension}`, result.mimeType, isDocx);
         toast.success(`Scenarios exported as ${format.toUpperCase()}`);
     };
 

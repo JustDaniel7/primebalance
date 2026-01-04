@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useKPIStore } from '@/store/kpi-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card } from '@/components/ui'
@@ -19,6 +20,7 @@ import {
 import Link from 'next/link'
 
 export default function KPIPerformance() {
+  const router = useRouter()
   const { t, accentColor, resolvedTheme } = useThemeStore()
   const {
     kpis,
@@ -129,7 +131,12 @@ export default function KPIPerformance() {
       transition={{ duration: 0.5, delay: 0.4 }}
       className="h-full"
     >
-      <Card variant="glass" className="h-full flex flex-col">
+      <Card
+        variant="glass"
+        className="h-full flex flex-col cursor-pointer"
+        onDoubleClick={() => router.push('/dashboard/kpi')}
+        title="Double-click to open KPIs"
+      >
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center">

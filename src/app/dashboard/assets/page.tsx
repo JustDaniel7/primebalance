@@ -22,6 +22,7 @@ import {
     AssetRegister,
     AssetForm,
     AssetDetail,
+    AssetSettingsPanel,
 } from '@/components/assets';
 import { Asset, BookType } from '@/types/asset';
 
@@ -565,6 +566,7 @@ export default function AssetsPage() {
     const { t } = useThemeStore();
     const [activeTab, setActiveTab] = useState<TabId>('register');
     const [showAssetForm, setShowAssetForm] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
 
     const tabs: { id: TabId; label: string; icon: React.ElementType }[] = [
@@ -605,7 +607,11 @@ export default function AssetsPage() {
               </span>
                         )}
                     </button>
-                    <button className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg">
+                    <button
+                        onClick={() => setShowSettings(true)}
+                        className="p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg"
+                        title={t('assets.settings.title') || 'Asset Settings'}
+                    >
                         <Settings className="w-5 h-5 text-gray-500" />
                     </button>
                 </div>
@@ -678,6 +684,13 @@ export default function AssetsPage() {
                         asset={selectedAsset}
                         onClose={() => setSelectedAsset(null)}
                     />
+                )}
+            </AnimatePresence>
+
+            {/* Settings Panel */}
+            <AnimatePresence>
+                {showSettings && (
+                    <AssetSettingsPanel onClose={() => setShowSettings(false)} />
                 )}
             </AnimatePresence>
         </div>

@@ -1843,11 +1843,12 @@ export default function ForecastsPage() {
         } : null,
     });
 
-    const handleExport = (format: ExportFormat) => {
+    const handleExport = async (format: ExportFormat) => {
         const exportData = getExportData();
         const fileName = `forecasts-export-${new Date().toISOString().split('T')[0]}`;
-        const { content, mimeType, extension } = convertToFormat(exportData, format, 'forecasts');
-        downloadFile(content, `${fileName}.${extension}`, mimeType);
+        const result = convertToFormat(exportData, format, 'forecasts');
+        const isDocx = (result as any).isDocx === true;
+        await downloadFile(result.content, `${fileName}.${result.extension}`, result.mimeType, isDocx);
         toast.success(`Forecasts exported as ${format.toUpperCase()}`);
     };
 

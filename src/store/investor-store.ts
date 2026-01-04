@@ -30,7 +30,7 @@ interface InvestorState {
   lastRefresh: string;
 
   // Fetch Actions
-  fetchDashboard: () => Promise<void>;
+  fetchDashboard: (period?: string) => Promise<void>;
   fetchInvestors: () => Promise<void>;
   fetchSnapshots: (periodType?: string) => Promise<void>;
   fetchRunwayProjections: () => Promise<void>;
@@ -84,10 +84,11 @@ export const useInvestorStore = create<InvestorState>((set, get) => ({
   // FETCH ACTIONS
   // =====================================================================
 
-  fetchDashboard: async () => {
+  fetchDashboard: async (period?: string) => {
     set({ isLoading: true, error: null });
     try {
-      const res = await fetch('/api/investor/dashboard');
+      const url = period ? `/api/investor/dashboard?period=${period}` : '/api/investor/dashboard';
+      const res = await fetch(url);
       if (!res.ok) throw new Error('Failed to fetch investor dashboard');
       const data = await res.json();
       set({

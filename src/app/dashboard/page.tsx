@@ -137,6 +137,7 @@ export default function DashboardPage() {
           icon={<Banknote size={24} className="text-emerald-400" />}
           trend="up"
           delay={0}
+          href="/dashboard/treasury"
         />
         <MetricCard
           title="Receivables"
@@ -146,6 +147,7 @@ export default function DashboardPage() {
           icon={<ArrowDownRight size={24} className="text-violet-400" />}
           trend={receivablesSummary.overdueRate > 20 ? 'down' : 'up'}
           delay={0.05}
+          href="/dashboard/receivables"
         />
         <MetricCard
           title="Liabilities"
@@ -155,6 +157,7 @@ export default function DashboardPage() {
           icon={<ArrowUpRight size={24} className="text-rose-400" />}
           trend="down"
           delay={0.1}
+          href="/dashboard/liabilities"
         />
         <MetricCard
           title="Net Revenue"
@@ -164,6 +167,7 @@ export default function DashboardPage() {
           icon={<TrendingUp size={24} className="text-primary-400" />}
           trend="up"
           delay={0.15}
+          href="/dashboard/reports"
         />
         <MetricCard
           title="Working Capital"
@@ -173,6 +177,7 @@ export default function DashboardPage() {
           icon={<Activity size={24} className="text-cyan-400" />}
           trend={workingCapital > 0 ? 'up' : 'down'}
           delay={0.2}
+          href="/dashboard/kpi"
         />
         <MetricCard
           title={t('wallet.totalValue')}
@@ -182,6 +187,7 @@ export default function DashboardPage() {
           icon={<WalletIcon size={24} className="text-blue-400" />}
           trend="up"
           delay={0.25}
+          href="/dashboard/wallet"
         />
       </div>
 

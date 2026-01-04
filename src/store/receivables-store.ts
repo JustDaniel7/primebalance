@@ -168,7 +168,7 @@ interface ReceivablesState {
 
     // Automation
     processAutomations: () => void;
-    sendReminder: (receivableId: string) => void;
+    sendReminder: (receivableId: string) => Promise<{ success: boolean; sentTo?: string; messageId?: string; error?: string }>;
 }
 
 const initialFilter: ReceivableFilter = {};
@@ -832,19 +832,38 @@ export const useReceivablesStore = create<ReceivablesState>()(
                 // Placeholder for automation processing
             },
 
-            sendReminder: (receivableId) => {
+            sendReminder: async (receivableId) => {
                 const receivable = get().receivables.find((r) => r.id === receivableId);
-                if (!receivable) return;
+                if (!receivable) return { success: false, error: 'Receivable not found' };
 
-                get().updateReceivable(receivableId, {
-                    lastActivityDate: new Date().toISOString(),
-                });
+                try {
+                    const res = await fetch(`/api/receivables/${receivableId}/send-reminder`, {
+                        method: 'POST',
+                    });
 
-                get().recordEvent({
-                    receivableId,
-                    type: 'reminder_sent',
-                    actor: 'user',
-                });
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        return { success: false, error: errorData.error || 'Failed to send reminder' };
+                    }
+
+                    const data = await res.json();
+
+                    // Update local state
+                    get().updateReceivable(receivableId, {
+                        lastActivityDate: new Date().toISOString(),
+                    });
+
+                    get().recordEvent({
+                        receivableId,
+                        type: 'reminder_sent',
+                        actor: 'user',
+                    });
+
+                    return { success: true, sentTo: data.sentTo, messageId: data.messageId };
+                } catch (error) {
+                    console.error('Failed to send reminder:', error);
+                    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+                }
             },
         }),
         {

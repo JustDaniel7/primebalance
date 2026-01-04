@@ -1018,9 +1018,13 @@ function ReceivableDetail({
                                 <Button variant="primary" leftIcon={<CreditCard size={16} />} onClick={() => setShowPaymentForm(true)}>
                                     {t('receivables.recordPayment')}
                                 </Button>
-                                <Button variant="secondary" leftIcon={<Send size={16} />} onClick={() => {
-                                    sendReminder(receivable.id);
-                                    toast.success(t('receivables.reminderSent') || 'Payment reminder sent');
+                                <Button variant="secondary" leftIcon={<Send size={16} />} onClick={async () => {
+                                    const result = await sendReminder(receivable.id);
+                                    if (result?.success) {
+                                        toast.success(t('receivables.reminderSent') || `Payment reminder sent to ${result.sentTo}`);
+                                    } else {
+                                        toast.error(result?.error || 'Failed to send reminder');
+                                    }
                                 }}>
                                     {t('receivables.sendReminder')}
                                 </Button>

@@ -24,11 +24,15 @@ function createMetric(
   };
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const user = await getSessionWithOrg();
   if (!user?.organizationId) return unauthorized();
 
   const orgId = user.organizationId;
+
+  // Get period from query params
+  const { searchParams } = new URL(request.url);
+  const period = searchParams.get('period') || 'ytd';
 
   // Fetch organization
   const org = await prisma.organization.findUnique({
@@ -40,13 +44,37 @@ export async function GET() {
   const yearStart = new Date(now.getFullYear(), 0, 1);
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
   const quarterStart = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1);
+  const ttmStart = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+
+  // Calculate period start based on selected period
+  let periodStart: Date;
+  let periodLabel: string;
+  switch (period) {
+    case 'mtd':
+      periodStart = monthStart;
+      periodLabel = 'mtd';
+      break;
+    case 'qtd':
+      periodStart = quarterStart;
+      periodLabel = 'qtd';
+      break;
+    case 'ttm':
+      periodStart = ttmStart;
+      periodLabel = 'ttm';
+      break;
+    case 'ytd':
+    default:
+      periodStart = yearStart;
+      periodLabel = 'ytd';
+      break;
+  }
 
   // Aggregate revenue from transactions (type: 'income')
   const revenueAgg = await prisma.transaction.aggregate({
     where: {
       organizationId: orgId,
       type: 'income',
-      date: { gte: yearStart },
+      date: { gte: periodStart },
     },
     _sum: { amount: true },
     _count: true,
@@ -75,7 +103,7 @@ export async function GET() {
     where: {
       organizationId: orgId,
       type: 'expense',
-      date: { gte: yearStart },
+      date: { gte: periodStart },
     },
     _sum: { amount: true },
     _count: true,

@@ -53,6 +53,25 @@ const categoryColors: Record<ArchiveCategory | string, string> = {
     [ArchiveCategory.OPERATIONAL]: 'rose',
 };
 
+// Static class mappings for Tailwind (template literals don't work with Tailwind's purge)
+const colorBgClasses: Record<string, string> = {
+    green: 'bg-green-500/10',
+    blue: 'bg-blue-500/10',
+    purple: 'bg-purple-500/10',
+    amber: 'bg-amber-500/10',
+    gray: 'bg-gray-500/10',
+    rose: 'bg-rose-500/10',
+};
+
+const colorTextClasses: Record<string, string> = {
+    green: 'text-green-500',
+    blue: 'text-blue-500',
+    purple: 'text-purple-500',
+    amber: 'text-amber-500',
+    gray: 'text-gray-500',
+    rose: 'text-rose-500',
+};
+
 // =============================================================================
 // ARCHIVE PAGE COMPONENT
 // =============================================================================
@@ -393,8 +412,8 @@ export default function ArchivePage() {
                                 <Card variant="glass" padding="md" hover className="cursor-pointer" onClick={() => setSelectedItem(item)}>
                                     <div className="flex items-center justify-between gap-4">
                                         <div className="flex items-center gap-4 min-w-0">
-                                            <div className={`w-10 h-10 rounded-xl bg-${color}-500/10 flex items-center justify-center flex-shrink-0`}>
-                                                <Icon size={20} className={`text-${color}-500`} />
+                                            <div className={`w-10 h-10 rounded-xl ${colorBgClasses[color] || 'bg-gray-500/10'} flex items-center justify-center flex-shrink-0`}>
+                                                <Icon size={20} className={colorTextClasses[color] || 'text-gray-500'} />
                                             </div>
                                             <div className="min-w-0">
                                                 <div className="flex items-center gap-2">

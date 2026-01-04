@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import Button from './Button';
 import { useThemeStore } from '@/store/theme-store';
+import { jsPDF } from 'jspdf';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle } from 'docx';
 
 export type ExportFormat = 'json' | 'csv' | 'xml' | 'txt' | 'pdf' | 'docx';
 
@@ -363,15 +365,229 @@ export function convertToFormat(
             };
         }
 
-        case 'pdf':
-        case 'docx':
-            // For PDF and DOCX, we return JSON as placeholder
-            // Real implementation would use libraries like jsPDF or docx
-            return {
-                content: JSON.stringify(data, null, 2),
-                mimeType: 'application/json',
-                extension: 'json',
+        case 'pdf': {
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 20;
+            const maxWidth = pageWidth - margin * 2;
+            let yPosition = 20;
+
+            // Title
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text(fileName, margin, yPosition);
+            yPosition += 10;
+
+            // Date
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Exported: ${new Date().toLocaleString()}`, margin, yPosition);
+            yPosition += 15;
+
+            // Content
+            doc.setFontSize(11);
+
+            const addContent = (obj: any, indent = 0) => {
+                const indentStr = '  '.repeat(indent);
+
+                if (Array.isArray(obj)) {
+                    obj.forEach((item, i) => {
+                        if (yPosition > 270) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(`${indentStr}[${i + 1}]`, margin, yPosition);
+                        yPosition += 6;
+                        doc.setFont('helvetica', 'normal');
+                        addContent(item, indent + 1);
+                    });
+                } else if (typeof obj === 'object' && obj !== null) {
+                    Object.entries(obj).forEach(([key, val]) => {
+                        if (yPosition > 270) {
+                            doc.addPage();
+                            yPosition = 20;
+                        }
+                        if (typeof val === 'object' && val !== null) {
+                            doc.setFont('helvetica', 'bold');
+                            doc.text(`${indentStr}${key}:`, margin, yPosition);
+                            yPosition += 6;
+                            doc.setFont('helvetica', 'normal');
+                            addContent(val, indent + 1);
+                        } else {
+                            const text = `${indentStr}${key}: ${val ?? 'N/A'}`;
+                            const lines = doc.splitTextToSize(text, maxWidth - indent * 10);
+                            lines.forEach((line: string) => {
+                                if (yPosition > 270) {
+                                    doc.addPage();
+                                    yPosition = 20;
+                                }
+                                doc.text(line, margin + indent * 5, yPosition);
+                                yPosition += 5;
+                            });
+                        }
+                    });
+                } else {
+                    const text = `${indentStr}${obj}`;
+                    doc.text(text, margin, yPosition);
+                    yPosition += 5;
+                }
             };
+
+            addContent(data);
+
+            return {
+                content: doc.output('blob'),
+                mimeType: option.mimeType,
+                extension: option.extension,
+            };
+        }
+
+        case 'docx': {
+            const children: (Paragraph | Table)[] = [];
+
+            // Title
+            children.push(
+                new Paragraph({
+                    text: fileName,
+                    heading: HeadingLevel.HEADING_1,
+                    spacing: { after: 200 },
+                })
+            );
+
+            // Date
+            children.push(
+                new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: `Exported: ${new Date().toLocaleString()}`,
+                            italics: true,
+                            size: 20,
+                        }),
+                    ],
+                    spacing: { after: 400 },
+                })
+            );
+
+            const addDocxContent = (obj: any, level = 0) => {
+                if (Array.isArray(obj)) {
+                    // Create a table for arrays
+                    if (obj.length > 0 && typeof obj[0] === 'object') {
+                        const headers = Object.keys(obj[0]);
+                        const rows: TableRow[] = [];
+
+                        // Header row
+                        rows.push(
+                            new TableRow({
+                                children: headers.map(
+                                    (h) =>
+                                        new TableCell({
+                                            children: [
+                                                new Paragraph({
+                                                    children: [
+                                                        new TextRun({ text: h, bold: true }),
+                                                    ],
+                                                }),
+                                            ],
+                                            width: { size: Math.floor(100 / headers.length), type: WidthType.PERCENTAGE },
+                                        })
+                                ),
+                            })
+                        );
+
+                        // Data rows
+                        obj.forEach((item) => {
+                            rows.push(
+                                new TableRow({
+                                    children: headers.map(
+                                        (h) =>
+                                            new TableCell({
+                                                children: [
+                                                    new Paragraph({
+                                                        text: String(item[h] ?? ''),
+                                                    }),
+                                                ],
+                                            })
+                                    ),
+                                })
+                            );
+                        });
+
+                        children.push(
+                            new Table({
+                                rows,
+                                width: { size: 100, type: WidthType.PERCENTAGE },
+                            })
+                        );
+                    } else {
+                        obj.forEach((item, i) => {
+                            children.push(
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({ text: `[${i + 1}] `, bold: true }),
+                                        new TextRun({ text: String(item) }),
+                                    ],
+                                    indent: { left: level * 360 },
+                                })
+                            );
+                        });
+                    }
+                } else if (typeof obj === 'object' && obj !== null) {
+                    Object.entries(obj).forEach(([key, val]) => {
+                        if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
+                            children.push(
+                                new Paragraph({
+                                    children: [new TextRun({ text: `${key}:`, bold: true })],
+                                    indent: { left: level * 360 },
+                                    spacing: { before: 200 },
+                                })
+                            );
+                            addDocxContent(val, level + 1);
+                        } else if (Array.isArray(val)) {
+                            children.push(
+                                new Paragraph({
+                                    children: [new TextRun({ text: `${key}:`, bold: true })],
+                                    indent: { left: level * 360 },
+                                    spacing: { before: 200 },
+                                })
+                            );
+                            addDocxContent(val, level + 1);
+                        } else {
+                            children.push(
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({ text: `${key}: `, bold: true }),
+                                        new TextRun({ text: String(val ?? 'N/A') }),
+                                    ],
+                                    indent: { left: level * 360 },
+                                })
+                            );
+                        }
+                    });
+                } else {
+                    children.push(
+                        new Paragraph({
+                            text: String(obj),
+                            indent: { left: level * 360 },
+                        })
+                    );
+                }
+            };
+
+            addDocxContent(data);
+
+            const docxDocument = new Document({
+                sections: [{ children }],
+            });
+
+            // Return a promise-like structure - caller needs to handle async
+            return {
+                content: docxDocument,
+                mimeType: option.mimeType,
+                extension: option.extension,
+                isDocx: true,
+            } as any;
+        }
 
         default:
             return {
@@ -383,8 +599,18 @@ export function convertToFormat(
 }
 
 // Helper function to trigger download
-export function downloadFile(content: string | Blob, fileName: string, mimeType: string) {
-    const blob = typeof content === 'string' ? new Blob([content], { type: mimeType }) : content;
+export async function downloadFile(content: string | Blob | Document, fileName: string, mimeType: string, isDocx = false) {
+    let blob: Blob;
+
+    if (isDocx && content instanceof Document) {
+        // Handle DOCX documents using Packer
+        blob = await Packer.toBlob(content);
+    } else if (typeof content === 'string') {
+        blob = new Blob([content], { type: mimeType });
+    } else {
+        blob = content as Blob;
+    }
+
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

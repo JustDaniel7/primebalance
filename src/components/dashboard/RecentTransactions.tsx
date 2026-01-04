@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Badge } from '@/components/ui'
@@ -9,6 +10,7 @@ import Link from 'next/link'
 import { format } from 'date-fns'
 
 export default function RecentTransactions() {
+  const router = useRouter()
   const { transactions } = useStore()
   const { t } = useThemeStore()
   const recentTransactions = transactions.slice(0, 5)
@@ -41,7 +43,12 @@ export default function RecentTransactions() {
       transition={{ duration: 0.5, delay: 0.4 }}
       className="h-full"
     >
-      <Card variant="glass" className="h-full flex flex-col">
+      <Card
+        variant="glass"
+        className="h-full flex flex-col cursor-pointer"
+        onDoubleClick={() => router.push('/dashboard/transactions')}
+        title="Double-click to open Transactions"
+      >
         <div className="flex items-center justify-between mb-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100">

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui'
 import { TrendUpIcon, TrendDownIcon } from '@/components/ui/Icons'
 
@@ -12,6 +13,7 @@ interface MetricCardProps {
   icon: React.ReactNode
   trend?: 'up' | 'down' | 'neutral'
   delay?: number
+  href?: string
 }
 
 export default function MetricCard({
@@ -22,7 +24,16 @@ export default function MetricCard({
   icon,
   trend = 'neutral',
   delay = 0,
+  href,
 }: MetricCardProps) {
+  const router = useRouter()
+
+  const handleDoubleClick = () => {
+    if (href) {
+      router.push(href)
+    }
+  }
+
   const trendColors = {
     up: 'text-primary-400',
     down: 'text-red-400',
@@ -41,7 +52,13 @@ export default function MetricCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
     >
-      <Card variant="glass" hover className="relative overflow-hidden">
+      <Card
+        variant="glass"
+        hover
+        className={`relative overflow-hidden ${href ? 'cursor-pointer' : ''}`}
+        onDoubleClick={handleDoubleClick}
+        title={href ? 'Double-click to open details' : undefined}
+      >
         {/* Background gradient */}
         <div className="absolute inset-0 opacity-50">
           <div

@@ -1365,11 +1365,12 @@ export default function KPIsPage() {
         })),
     });
 
-    const handleExport = (format: ExportFormat) => {
+    const handleExport = async (format: ExportFormat) => {
         const exportData = getExportData();
         const fileName = `kpi-report-${new Date().toISOString().split('T')[0]}`;
-        const { content, mimeType, extension } = convertToFormat(exportData, format, 'kpi-report');
-        downloadFile(content, `${fileName}.${extension}`, mimeType);
+        const result = convertToFormat(exportData, format, 'kpi-report');
+        const isDocx = (result as any).isDocx === true;
+        await downloadFile(result.content, `${fileName}.${result.extension}`, result.mimeType, isDocx);
         toast.success(`KPI report exported as ${format.toUpperCase()}`);
     };
 

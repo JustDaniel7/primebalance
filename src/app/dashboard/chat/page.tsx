@@ -107,10 +107,24 @@ export default function ChatPage() {
     setActiveChannel(channelId)
   }
 
-  const handleSelectDM = (dmId: string) => {
+  const handleSelectDM = async (dmId: string) => {
     setActiveChatType('dm')
     setActiveChannel(null)
     setActiveDMId(dmId)
+
+    // Fetch DM messages from API
+    try {
+      const res = await fetch(`/api/chat/dm/${dmId}/messages`)
+      if (res.ok) {
+        const data = await res.json()
+        setDMMessages(prev => ({
+          ...prev,
+          [dmId]: data.messages || [],
+        }))
+      }
+    } catch (error) {
+      console.error('Failed to fetch DM messages:', error)
+    }
   }
 
   const handleSend = async () => {
@@ -127,20 +141,29 @@ export default function ChatPage() {
         setSending(false)
       }
     } else if (activeChatType === 'dm' && activeDMId) {
-      // Add message to local DM state
-      const newMessage: DMMessage = {
-        id: Date.now().toString(),
-        content: message.trim(),
-        senderId: 'me',
-        senderName: 'You',
-        senderAvatar: 'ME',
-        timestamp: new Date().toISOString(),
+      // Send DM via API
+      setSending(true)
+      try {
+        const res = await fetch(`/api/chat/dm/${activeDMId}/messages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: message.trim() }),
+        })
+
+        if (!res.ok) throw new Error('Failed to send message')
+
+        const newMessage: DMMessage = await res.json()
+        setDMMessages(prev => ({
+          ...prev,
+          [activeDMId]: [...(prev[activeDMId] || []), newMessage],
+        }))
+        setMessage('')
+      } catch (error) {
+        console.error('Failed to send DM:', error)
+        toast.error('Failed to send message')
+      } finally {
+        setSending(false)
       }
-      setDMMessages(prev => ({
-        ...prev,
-        [activeDMId]: [...(prev[activeDMId] || []), newMessage],
-      }))
-      setMessage('')
     }
   }
 

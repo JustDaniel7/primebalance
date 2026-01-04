@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useReceivablesStore } from '@/store/receivables-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card } from '@/components/ui'
@@ -16,6 +17,7 @@ import {
 import Link from 'next/link'
 
 export default function ReceivablesOverview() {
+  const router = useRouter()
   const { t, accentColor, resolvedTheme } = useThemeStore()
   const {
     receivables,
@@ -77,7 +79,12 @@ export default function ReceivablesOverview() {
       transition={{ duration: 0.5, delay: 0.2 }}
       className="h-full"
     >
-      <Card variant="glass" className="h-full flex flex-col">
+      <Card
+        variant="glass"
+        className="h-full flex flex-col cursor-pointer"
+        onDoubleClick={() => router.push('/dashboard/receivables')}
+        title="Double-click to open Receivables"
+      >
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center">

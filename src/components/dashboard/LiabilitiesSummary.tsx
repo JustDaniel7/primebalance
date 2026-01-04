@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { useLiabilitiesStore } from '@/store/liabilities-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card } from '@/components/ui'
@@ -17,6 +18,7 @@ import {
 import Link from 'next/link'
 
 export default function LiabilitiesSummary() {
+  const router = useRouter()
   const { t, resolvedTheme } = useThemeStore()
   const {
     liabilities,
@@ -85,7 +87,12 @@ export default function LiabilitiesSummary() {
       transition={{ duration: 0.5, delay: 0.3 }}
       className="h-full"
     >
-      <Card variant="glass" className="h-full flex flex-col">
+      <Card
+        variant="glass"
+        className="h-full flex flex-col cursor-pointer"
+        onDoubleClick={() => router.push('/dashboard/liabilities')}
+        title="Double-click to open Liabilities"
+      >
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center">
