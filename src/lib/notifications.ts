@@ -13,6 +13,13 @@ export type NotificationType =
   | 'invoice_created' // New invoice created
   | 'invoice_paid'    // Invoice was paid
   | 'invoice_overdue' // Invoice is overdue
+  | 'dunning_sent'    // Dunning email sent
+  | 'dunning_escalated' // Dunning level escalated
+  | 'dunning_resolved' // Dunning case resolved
+  | 'receivable_overdue' // Receivable is overdue
+  | 'offer_accepted'  // Offer was accepted
+  | 'offer_rejected'  // Offer was rejected
+  | 'offer_expired'   // Offer has expired
   | 'welcome'         // Welcome notification for new users
   | 'system'          // System notifications
 
@@ -422,4 +429,152 @@ export async function notifyOrgAdmins(
   }))
 
   return createBulkNotifications(notifications)
+}
+
+// =============================================================================
+// DUNNING NOTIFICATIONS
+// =============================================================================
+
+interface DunningNotificationParams {
+  dunningId: string
+  dunningNumber: string
+  customerName: string
+  amount: number
+  currency: string
+  level: number
+  organizationId: string
+  actorId?: string
+  actorName?: string
+}
+
+/**
+ * Notify admins when a dunning email is sent
+ */
+export async function notifyDunningSent(params: DunningNotificationParams) {
+  const { dunningNumber, customerName, amount, currency, level, organizationId, actorId, actorName } = params
+
+  return notifyOrgAdmins(
+    organizationId,
+    'dunning_sent',
+    'Dunning Email Sent',
+    `Level ${level} dunning sent to ${customerName} for ${formatCurrency(amount, currency)} (${dunningNumber})`,
+    { actorId, actorName }
+  )
+}
+
+/**
+ * Notify admins when a dunning case is escalated
+ */
+export async function notifyDunningEscalated(params: DunningNotificationParams) {
+  const { dunningNumber, customerName, amount, currency, level, organizationId, actorId, actorName } = params
+
+  return notifyOrgAdmins(
+    organizationId,
+    'dunning_escalated',
+    'Dunning Escalated',
+    `${dunningNumber} for ${customerName} escalated to Level ${level} (${formatCurrency(amount, currency)})`,
+    { actorId, actorName }
+  )
+}
+
+/**
+ * Notify admins when a dunning case is resolved
+ */
+export async function notifyDunningResolved(params: Omit<DunningNotificationParams, 'level'>) {
+  const { dunningNumber, customerName, amount, currency, organizationId, actorId, actorName } = params
+
+  return notifyOrgAdmins(
+    organizationId,
+    'dunning_resolved',
+    'Dunning Resolved',
+    `${dunningNumber} for ${customerName} (${formatCurrency(amount, currency)}) has been resolved`,
+    { actorId, actorName }
+  )
+}
+
+// =============================================================================
+// RECEIVABLE NOTIFICATIONS
+// =============================================================================
+
+interface ReceivableNotificationParams {
+  invoiceNumber: string
+  customerName: string
+  amount: number
+  currency: string
+  daysOverdue: number
+  organizationId: string
+}
+
+/**
+ * Notify admins about overdue receivables
+ */
+export async function notifyReceivableOverdue(params: ReceivableNotificationParams) {
+  const { invoiceNumber, customerName, amount, currency, daysOverdue, organizationId } = params
+
+  return notifyOrgAdmins(
+    organizationId,
+    'receivable_overdue',
+    'Receivable Overdue',
+    `Invoice #${invoiceNumber} from ${customerName} (${formatCurrency(amount, currency)}) is ${daysOverdue} days overdue`
+  )
+}
+
+// =============================================================================
+// OFFER NOTIFICATIONS
+// =============================================================================
+
+interface OfferNotificationParams {
+  offerNumber: string
+  customerName: string
+  amount: number
+  currency: string
+  recipientId: string
+  organizationId: string
+  actorId?: string
+  actorName?: string
+}
+
+/**
+ * Notify when an offer is accepted
+ */
+export async function notifyOfferAccepted(params: OfferNotificationParams) {
+  const { offerNumber, customerName, amount, currency, recipientId, organizationId } = params
+
+  return createNotification({
+    type: 'offer_accepted',
+    title: 'Offer Accepted',
+    message: `${customerName} accepted offer #${offerNumber} for ${formatCurrency(amount, currency)}`,
+    recipientId,
+    organizationId,
+  })
+}
+
+/**
+ * Notify when an offer is rejected
+ */
+export async function notifyOfferRejected(params: OfferNotificationParams) {
+  const { offerNumber, customerName, amount, currency, recipientId, organizationId } = params
+
+  return createNotification({
+    type: 'offer_rejected',
+    title: 'Offer Rejected',
+    message: `${customerName} rejected offer #${offerNumber} for ${formatCurrency(amount, currency)}`,
+    recipientId,
+    organizationId,
+  })
+}
+
+/**
+ * Notify when an offer expires
+ */
+export async function notifyOfferExpired(params: OfferNotificationParams) {
+  const { offerNumber, customerName, amount, currency, recipientId, organizationId } = params
+
+  return createNotification({
+    type: 'offer_expired',
+    title: 'Offer Expired',
+    message: `Offer #${offerNumber} for ${customerName} (${formatCurrency(amount, currency)}) has expired`,
+    recipientId,
+    organizationId,
+  })
 }

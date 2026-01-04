@@ -36,6 +36,7 @@ import {
     Eye,
     History,
     PieChart,
+    Lightbulb,
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
@@ -96,6 +97,259 @@ function MetricCards() {
                 );
             })}
         </div>
+    );
+}
+
+// =============================================================================
+// CHURN ANALYSIS SECTION
+// =============================================================================
+
+function ChurnAnalysisSection() {
+    const { customers, getAnalytics } = useCustomersStore();
+    const { t } = useThemeStore();
+    const [showDetails, setShowDetails] = useState(false);
+
+    const analytics = getAnalytics();
+
+    // Calculate churn metrics
+    const churnMetrics = useMemo(() => {
+        const total = customers.length;
+        const churned = customers.filter(c => c.status === 'churned').length;
+        const atRisk = customers.filter(c => c.riskLevel === 'high' || c.riskLevel === 'critical').length;
+        const inactive = customers.filter(c => c.status === 'inactive').length;
+
+        // Calculate churn rate
+        const churnRate = total > 0 ? (churned / total) * 100 : 0;
+
+        // Calculate revenue at risk from high-risk customers
+        const revenueAtRisk = customers
+            .filter(c => c.riskLevel === 'high' || c.riskLevel === 'critical')
+            .reduce((sum, c) => sum + (c.totalRevenue || 0), 0);
+
+        // Lost revenue from churned customers
+        const lostRevenue = customers
+            .filter(c => c.status === 'churned')
+            .reduce((sum, c) => sum + (c.totalRevenue || 0), 0);
+
+        // Get at-risk customers sorted by revenue (most valuable first)
+        const atRiskCustomers = customers
+            .filter(c => (c.riskLevel === 'high' || c.riskLevel === 'critical') && c.status !== 'churned')
+            .sort((a, b) => (b.totalRevenue || 0) - (a.totalRevenue || 0))
+            .slice(0, 5);
+
+        return {
+            total,
+            churned,
+            churnRate,
+            atRisk,
+            inactive,
+            revenueAtRisk,
+            lostRevenue,
+            atRiskCustomers,
+            retentionRate: 100 - churnRate,
+        };
+    }, [customers]);
+
+    // Churn risk indicators
+    const riskIndicators = useMemo(() => {
+        return customers
+            .filter(c => c.status !== 'churned')
+            .map(customer => {
+                let riskScore = 0;
+                const factors: string[] = [];
+
+                // High risk level
+                if (customer.riskLevel === 'critical') {
+                    riskScore += 40;
+                    factors.push('Critical risk status');
+                } else if (customer.riskLevel === 'high') {
+                    riskScore += 25;
+                    factors.push('High risk status');
+                }
+
+                // Payment behavior
+                if (customer.paymentBehavior === 'poor') {
+                    riskScore += 30;
+                    factors.push('Poor payment history');
+                } else if (customer.paymentBehavior === 'fair') {
+                    riskScore += 15;
+                    factors.push('Fair payment history');
+                }
+
+                // Days since last activity
+                if (customer.lastActivityDate) {
+                    const daysSinceActivity = Math.floor(
+                        (Date.now() - new Date(customer.lastActivityDate).getTime()) / (1000 * 60 * 60 * 24)
+                    );
+                    if (daysSinceActivity > 90) {
+                        riskScore += 25;
+                        factors.push('No activity in 90+ days');
+                    } else if (daysSinceActivity > 60) {
+                        riskScore += 15;
+                        factors.push('No activity in 60+ days');
+                    }
+                }
+
+                // Inactive status
+                if (customer.status === 'inactive') {
+                    riskScore += 20;
+                    factors.push('Inactive status');
+                }
+
+                return {
+                    customer,
+                    riskScore: Math.min(riskScore, 100),
+                    factors,
+                };
+            })
+            .filter(item => item.riskScore > 30)
+            .sort((a, b) => b.riskScore - a.riskScore)
+            .slice(0, 10);
+    }, [customers]);
+
+    if (customers.length === 0) return null;
+
+    return (
+        <Card variant="glass" padding="md">
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                    <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30">
+                        <TrendingDown className="w-5 h-5 text-red-500" />
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-gray-900 dark:text-white">
+                            {t('customers.churnAnalysis') || 'Churn Analysis'}
+                        </h3>
+                        <p className="text-xs text-gray-500">Customer retention insights</p>
+                    </div>
+                </div>
+                <button
+                    onClick={() => setShowDetails(!showDetails)}
+                    className="text-sm text-[var(--accent-primary)] hover:underline"
+                >
+                    {showDetails ? 'Hide Details' : 'Show Details'}
+                </button>
+            </div>
+
+            {/* Key Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                <div className="p-3 bg-gray-50 dark:bg-surface-800 rounded-lg">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Churn Rate</p>
+                    <p className={`text-xl font-bold ${churnMetrics.churnRate > 10 ? 'text-red-600' : churnMetrics.churnRate > 5 ? 'text-amber-600' : 'text-emerald-600'}`}>
+                        {churnMetrics.churnRate.toFixed(1)}%
+                    </p>
+                </div>
+                <div className="p-3 bg-gray-50 dark:bg-surface-800 rounded-lg">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Retention Rate</p>
+                    <p className="text-xl font-bold text-emerald-600">{churnMetrics.retentionRate.toFixed(1)}%</p>
+                </div>
+                <div className="p-3 bg-gray-50 dark:bg-surface-800 rounded-lg">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">At Risk</p>
+                    <p className="text-xl font-bold text-amber-600">{churnMetrics.atRisk}</p>
+                </div>
+                <div className="p-3 bg-gray-50 dark:bg-surface-800 rounded-lg">
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Revenue at Risk</p>
+                    <p className="text-xl font-bold text-red-600">
+                        ${(churnMetrics.revenueAtRisk / 1000).toFixed(0)}K
+                    </p>
+                </div>
+            </div>
+
+            {showDetails && (
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="space-y-4"
+                >
+                    {/* At-Risk Customers */}
+                    {riskIndicators.length > 0 && (
+                        <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
+                            <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                <AlertTriangle size={16} className="text-red-500" />
+                                High Churn Risk Customers
+                            </h4>
+                            <div className="space-y-2">
+                                {riskIndicators.map(({ customer, riskScore, factors }) => (
+                                    <div key={customer.id} className="flex items-center justify-between p-2 bg-white dark:bg-surface-800 rounded-lg">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                                                riskScore >= 70 ? 'bg-red-100 text-red-700' :
+                                                riskScore >= 50 ? 'bg-orange-100 text-orange-700' :
+                                                'bg-amber-100 text-amber-700'
+                                            }`}>
+                                                {riskScore}
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-sm text-gray-900 dark:text-white">{customer.name}</p>
+                                                <p className="text-xs text-gray-500">{factors.slice(0, 2).join(' • ')}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                                ${((customer.totalRevenue || 0) / 1000).toFixed(0)}K
+                                            </p>
+                                            <p className="text-xs text-gray-500">Revenue at risk</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Recommendations */}
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                            <Lightbulb size={16} className="text-blue-500" />
+                            Retention Recommendations
+                        </h4>
+                        <div className="space-y-2">
+                            {churnMetrics.atRisk > 0 && (
+                                <div className="flex items-start gap-2 text-sm">
+                                    <CheckCircle2 size={16} className="text-blue-500 mt-0.5" />
+                                    <span className="text-gray-700 dark:text-gray-300">
+                                        Reach out to {churnMetrics.atRisk} at-risk customers with personalized offers
+                                    </span>
+                                </div>
+                            )}
+                            {churnMetrics.inactive > 0 && (
+                                <div className="flex items-start gap-2 text-sm">
+                                    <CheckCircle2 size={16} className="text-blue-500 mt-0.5" />
+                                    <span className="text-gray-700 dark:text-gray-300">
+                                        Re-engage {churnMetrics.inactive} inactive customers with win-back campaigns
+                                    </span>
+                                </div>
+                            )}
+                            <div className="flex items-start gap-2 text-sm">
+                                <CheckCircle2 size={16} className="text-blue-500 mt-0.5" />
+                                <span className="text-gray-700 dark:text-gray-300">
+                                    Review payment terms for customers with poor payment behavior
+                                </span>
+                            </div>
+                            <div className="flex items-start gap-2 text-sm">
+                                <CheckCircle2 size={16} className="text-blue-500 mt-0.5" />
+                                <span className="text-gray-700 dark:text-gray-300">
+                                    Schedule quarterly business reviews with high-value customers
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Lost Revenue */}
+                    {churnMetrics.lostRevenue > 0 && (
+                        <div className="p-3 bg-gray-50 dark:bg-surface-800 rounded-lg flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-gray-900 dark:text-white">Lost Revenue from Churn</p>
+                                <p className="text-xs text-gray-500">{churnMetrics.churned} customers churned</p>
+                            </div>
+                            <p className="text-xl font-bold text-red-600">
+                                ${(churnMetrics.lostRevenue / 1000).toFixed(0)}K
+                            </p>
+                        </div>
+                    )}
+                </motion.div>
+            )}
+        </Card>
     );
 }
 
@@ -951,6 +1205,9 @@ export default function CustomersPage() {
 
             {/* Metrics */}
             <MetricCards />
+
+            {/* Churn Analysis */}
+            <ChurnAnalysisSection />
 
             {/* Filters */}
             <Card variant="glass" padding="md">

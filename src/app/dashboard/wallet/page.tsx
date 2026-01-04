@@ -7,10 +7,10 @@ import { useWalletStore } from '@/store/wallet-store'
 import { useThemeStore } from '@/store/theme-store'
 import { Card, Button, Badge } from '@/components/ui'
 import { WalletIcon, TrendUpIcon, TrendDownIcon } from '@/components/ui/Icons'
-import { 
-  ArrowUpRight, 
-  ArrowDownLeft, 
-  RefreshCw, 
+import {
+  ArrowUpRight,
+  ArrowDownLeft,
+  RefreshCw,
   Layers,
   Image,
   Wallet,
@@ -29,6 +29,7 @@ import {
   ExternalLink,
   CheckCircle2,
   Clock,
+  ChevronDown,
 } from 'lucide-react';
 import type { CryptoToken } from '@/types';
 import React from "react";
@@ -817,9 +818,25 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
   const [swapping, setSwapping] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [showFromSelector, setShowFromSelector] = useState(false);
+  const [showToSelector, setShowToSelector] = useState(false);
 
   const fromTokenData = tokens.find(t => t.symbol === fromToken);
   const toTokenData = tokens.find(t => t.symbol === toToken);
+
+  // Token icon mapping
+  const tokenIcons: Record<string, string> = {
+    ETH: 'Ξ',
+    BTC: '₿',
+    SOL: '◎',
+    USDC: '$',
+    USDT: '$',
+    MATIC: '⬡',
+    BNB: '🔶',
+    AVAX: '🔺',
+    DOT: '●',
+    ADA: '₳',
+  };
 
   const exchangeRate = fromTokenData && toTokenData ? (fromTokenData.usdValue / fromTokenData.balance) / (toTokenData.usdValue / toTokenData.balance) : 1;
   const toAmount = fromAmount ? (parseFloat(fromAmount) * exchangeRate).toFixed(6) : '';
@@ -904,15 +921,41 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
                     placeholder="0.00"
                     className="flex-1 bg-transparent text-2xl font-semibold text-gray-900 dark:text-white outline-none"
                 />
-                <select
-                    value={fromToken}
-                    onChange={(e) => setFromToken(e.target.value)}
-                    className="px-3 py-2 bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 rounded-lg font-medium"
-                >
-                  {tokens.map(t => (
-                      <option key={t.symbol} value={t.symbol}>{t.symbol}</option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowFromSelector(!showFromSelector)}
+                    className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-surface-700"
+                  >
+                    <span className="w-6 h-6 flex items-center justify-center bg-gray-100 dark:bg-surface-700 rounded-full text-sm">
+                      {tokenIcons[fromToken] || fromToken.charAt(0)}
+                    </span>
+                    <span>{fromToken}</span>
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                  </button>
+                  {showFromSelector && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto">
+                      {tokens.map(t => (
+                        <button
+                          key={t.symbol}
+                          onClick={() => { setFromToken(t.symbol); setShowFromSelector(false); }}
+                          className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-surface-700 transition-colors ${t.symbol === fromToken ? 'bg-[var(--accent-primary)]/10' : ''}`}
+                        >
+                          <span className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-surface-700 rounded-full text-lg">
+                            {tokenIcons[t.symbol] || t.symbol.charAt(0)}
+                          </span>
+                          <div className="flex-1 text-left">
+                            <p className="font-medium text-gray-900 dark:text-white">{t.symbol}</p>
+                            <p className="text-xs text-gray-500">{t.name}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">{t.balance.toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">${t.usdValue.toLocaleString()}</p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex justify-center">
@@ -933,15 +976,41 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
                     placeholder="0.00"
                     className="flex-1 bg-transparent text-2xl font-semibold text-gray-900 dark:text-white outline-none"
                 />
-                <select
-                    value={toToken}
-                    onChange={(e) => setToToken(e.target.value)}
-                    className="px-3 py-2 bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 rounded-lg font-medium"
-                >
-                  {tokens.filter(t => t.symbol !== fromToken).map(t => (
-                      <option key={t.symbol} value={t.symbol}>{t.symbol}</option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowToSelector(!showToSelector)}
+                    className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-surface-700"
+                  >
+                    <span className="w-6 h-6 flex items-center justify-center bg-gray-100 dark:bg-surface-700 rounded-full text-sm">
+                      {tokenIcons[toToken] || toToken.charAt(0)}
+                    </span>
+                    <span>{toToken}</span>
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                  </button>
+                  {showToSelector && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 rounded-xl shadow-xl z-50 max-h-60 overflow-y-auto">
+                      {tokens.filter(t => t.symbol !== fromToken).map(t => (
+                        <button
+                          key={t.symbol}
+                          onClick={() => { setToToken(t.symbol); setShowToSelector(false); }}
+                          className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-surface-700 transition-colors ${t.symbol === toToken ? 'bg-[var(--accent-primary)]/10' : ''}`}
+                        >
+                          <span className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-surface-700 rounded-full text-lg">
+                            {tokenIcons[t.symbol] || t.symbol.charAt(0)}
+                          </span>
+                          <div className="flex-1 text-left">
+                            <p className="font-medium text-gray-900 dark:text-white">{t.symbol}</p>
+                            <p className="text-xs text-gray-500">{t.name}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">{t.balance.toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">${t.usdValue.toLocaleString()}</p>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="p-3 bg-gray-50 dark:bg-surface-900/50 rounded-lg text-sm">
@@ -1308,9 +1377,9 @@ export default function WalletPage() {
           )}
         </AnimatePresence>
 
-        {sendModalOpen && <SendModal tokens={cryptoTokens} onClose={() => setSendModalOpen(false)} />}
+        {sendModalOpen && <SendModal tokens={enrichedTokens} onClose={() => setSendModalOpen(false)} />}
         {receiveModalOpen && <ReceiveModal wallets={wallets} onClose={() => setReceiveModalOpen(false)} />}
-        {swapModalOpen && <SwapModal tokens={cryptoTokens} onClose={() => setSwapModalOpen(false)} />}
+        {swapModalOpen && <SwapModal tokens={enrichedTokens} onClose={() => setSwapModalOpen(false)} />}
 
       </div>
   );

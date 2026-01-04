@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { notifyDunningResolved } from '@/lib/notifications';
 import {
     DunningStatus,
     DunningEventType,
@@ -214,6 +215,18 @@ export async function POST(
         await (prisma as any).dunning.update({
             where: { id: dunning.id },
             data: { lastEventId: eventId },
+        });
+
+        // Notify admins about the resolved dunning
+        await notifyDunningResolved({
+            dunningId: dunning.id,
+            dunningNumber: dunning.dunningNumber,
+            customerName: dunning.customerName || 'Unknown',
+            amount: newOutstanding,
+            currency: dunning.currency,
+            organizationId: session.user.organizationId,
+            actorId: session.user.id,
+            actorName: session.user.name || session.user.email,
         });
 
         return NextResponse.json({

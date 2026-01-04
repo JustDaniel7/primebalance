@@ -40,6 +40,13 @@ import { Card, Button } from '@/components/ui';
 import { useFXStore } from '@/store/fx-store';
 import type { FXRiskLevel, ExposureType, TimeHorizon, CurrencyExposure, FXConversion, FXScenario } from '@/types/fx';
 import { EXPOSURE_TYPES, TIME_HORIZONS, MAJOR_CURRENCIES } from '@/types/fx';
+import {
+    runMonteCarloGBM,
+    generateScenarioAnalysis,
+    getDefaultVolatility,
+    type MonteCarloResult,
+    type ScenarioAnalysis,
+} from '@/lib/monte-carlo';
 import toast from 'react-hot-toast';
 
 // =============================================================================
@@ -620,6 +627,259 @@ function CostsImpactSection() {
 // RISK & SCENARIOS SECTION
 // =============================================================================
 
+// =============================================================================
+// MONTE CARLO SIMULATION SECTION
+// =============================================================================
+
+function MonteCarloSection() {
+    const { dashboard } = useFXStore();
+    const [baseCurrency, setBaseCurrency] = useState('EUR');
+    const [quoteCurrency, setQuoteCurrency] = useState('USD');
+    const [currentRate, setCurrentRate] = useState(1.08);
+    const [timeHorizon, setTimeHorizon] = useState(30);
+    const [numSimulations, setNumSimulations] = useState(1000);
+    const [isRunning, setIsRunning] = useState(false);
+    const [result, setResult] = useState<MonteCarloResult | null>(null);
+    const [analysis, setAnalysis] = useState<ScenarioAnalysis | null>(null);
+
+    // Update rate from dashboard if available
+    useEffect(() => {
+        if (dashboard?.currentRates) {
+            const rate = dashboard.currentRates.find(
+                r => r.baseCurrency === baseCurrency && r.quoteCurrency === quoteCurrency
+            );
+            if (rate) setCurrentRate(rate.midRate);
+        }
+    }, [baseCurrency, quoteCurrency, dashboard?.currentRates]);
+
+    const runSimulation = () => {
+        setIsRunning(true);
+
+        // Use setTimeout to allow UI to update
+        setTimeout(() => {
+            const volatility = getDefaultVolatility(baseCurrency, quoteCurrency);
+            const mcResult = runMonteCarloGBM({
+                currentRate,
+                annualVolatility: volatility,
+                annualDrift: 0, // Assume no drift for FX
+                timeHorizonDays: timeHorizon,
+                numSimulations,
+                numSteps: Math.min(timeHorizon, 100),
+            });
+
+            const scenarioAnalysis = generateScenarioAnalysis(
+                mcResult,
+                baseCurrency,
+                quoteCurrency,
+                currentRate,
+                timeHorizon
+            );
+
+            setResult(mcResult);
+            setAnalysis(scenarioAnalysis);
+            setIsRunning(false);
+            toast.success('Monte Carlo simulation completed');
+        }, 100);
+    };
+
+    return (
+        <Card variant="glass" padding="md">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                    <Activity size={16} className="text-purple-500" />
+                    Monte Carlo Simulation (GBM)
+                </h3>
+                <span className="px-2 py-0.5 text-xs rounded bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                    Stochastic Model
+                </span>
+            </div>
+
+            {/* Configuration */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+                <div>
+                    <label className="text-xs text-gray-500 block mb-1">Base Currency</label>
+                    <select
+                        value={baseCurrency}
+                        onChange={(e) => setBaseCurrency(e.target.value)}
+                        className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-surface-800 border border-gray-200 dark:border-surface-700 rounded-lg"
+                    >
+                        {MAJOR_CURRENCIES.map(c => (
+                            <option key={c} value={c}>{c}</option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label className="text-xs text-gray-500 block mb-1">Quote Currency</label>
+                    <select
+                        value={quoteCurrency}
+                        onChange={(e) => setQuoteCurrency(e.target.value)}
+                        className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-surface-800 border border-gray-200 dark:border-surface-700 rounded-lg"
+                    >
+                        {MAJOR_CURRENCIES.filter(c => c !== baseCurrency).map(c => (
+                            <option key={c} value={c}>{c}</option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label className="text-xs text-gray-500 block mb-1">Current Rate</label>
+                    <input
+                        type="number"
+                        value={currentRate}
+                        onChange={(e) => setCurrentRate(parseFloat(e.target.value) || 1)}
+                        step="0.0001"
+                        className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-surface-800 border border-gray-200 dark:border-surface-700 rounded-lg"
+                    />
+                </div>
+                <div>
+                    <label className="text-xs text-gray-500 block mb-1">Time Horizon (Days)</label>
+                    <select
+                        value={timeHorizon}
+                        onChange={(e) => setTimeHorizon(parseInt(e.target.value))}
+                        className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-surface-800 border border-gray-200 dark:border-surface-700 rounded-lg"
+                    >
+                        <option value={7}>1 Week</option>
+                        <option value={30}>1 Month</option>
+                        <option value={90}>3 Months</option>
+                        <option value={180}>6 Months</option>
+                        <option value={365}>1 Year</option>
+                    </select>
+                </div>
+                <div>
+                    <label className="text-xs text-gray-500 block mb-1">Simulations</label>
+                    <select
+                        value={numSimulations}
+                        onChange={(e) => setNumSimulations(parseInt(e.target.value))}
+                        className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-surface-800 border border-gray-200 dark:border-surface-700 rounded-lg"
+                    >
+                        <option value={100}>100</option>
+                        <option value={500}>500</option>
+                        <option value={1000}>1,000</option>
+                        <option value={5000}>5,000</option>
+                        <option value={10000}>10,000</option>
+                    </select>
+                </div>
+            </div>
+
+            <Button
+                variant="primary"
+                onClick={runSimulation}
+                disabled={isRunning}
+                leftIcon={isRunning ? <RefreshCw size={16} className="animate-spin" /> : <Activity size={16} />}
+            >
+                {isRunning ? 'Running Simulation...' : 'Run Monte Carlo'}
+            </Button>
+
+            {/* Results */}
+            {analysis && result && (
+                <div className="mt-4 space-y-4">
+                    {/* Scenario Outcomes */}
+                    <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+                            Projected Rate Scenarios ({analysis.timeHorizon})
+                        </h4>
+                        <div className="space-y-2">
+                            {analysis.scenarios.map((scenario, idx) => (
+                                <div key={idx} className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-700">
+                                    <div className="flex items-center gap-3">
+                                        <span className={`w-2 h-2 rounded-full ${
+                                            scenario.changePercent > 2 ? 'bg-emerald-500' :
+                                            scenario.changePercent > 0 ? 'bg-green-400' :
+                                            scenario.changePercent > -2 ? 'bg-amber-500' : 'bg-red-500'
+                                        }`} />
+                                        <span className="text-sm text-gray-700 dark:text-gray-300">{scenario.name}</span>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                            {scenario.rate.toFixed(4)}
+                                        </span>
+                                        <span className={`text-sm font-medium ${
+                                            scenario.changePercent >= 0 ? 'text-emerald-600' : 'text-red-600'
+                                        }`}>
+                                            {scenario.changePercent >= 0 ? '+' : ''}{scenario.changePercent.toFixed(2)}%
+                                        </span>
+                                        <span className="text-xs text-gray-500 w-12 text-right">{scenario.probability}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Risk Metrics */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                            <p className="text-xs text-red-600 dark:text-red-400 uppercase tracking-wider">VaR (95%)</p>
+                            <p className="text-lg font-bold text-red-700 dark:text-red-300">
+                                {analysis.riskMetrics.var95.toFixed(4)}
+                            </p>
+                            <p className="text-xs text-red-500">Max loss 5% chance</p>
+                        </div>
+                        <div className="p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                            <p className="text-xs text-orange-600 dark:text-orange-400 uppercase tracking-wider">VaR (99%)</p>
+                            <p className="text-lg font-bold text-orange-700 dark:text-orange-300">
+                                {analysis.riskMetrics.var99.toFixed(4)}
+                            </p>
+                            <p className="text-xs text-orange-500">Max loss 1% chance</p>
+                        </div>
+                        <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <p className="text-xs text-purple-600 dark:text-purple-400 uppercase tracking-wider">Expected Shortfall</p>
+                            <p className="text-lg font-bold text-purple-700 dark:text-purple-300">
+                                {analysis.riskMetrics.expectedShortfall.toFixed(4)}
+                            </p>
+                            <p className="text-xs text-purple-500">Avg worst 5%</p>
+                        </div>
+                        <div className="p-3 bg-gray-50 dark:bg-surface-800 rounded-lg">
+                            <p className="text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider">Max Drawdown</p>
+                            <p className="text-lg font-bold text-gray-700 dark:text-gray-300">
+                                {analysis.riskMetrics.maxDrawdown.toFixed(4)}
+                            </p>
+                            <p className="text-xs text-gray-500">Worst case drop</p>
+                        </div>
+                    </div>
+
+                    {/* Statistics */}
+                    <div className="p-4 bg-gray-50 dark:bg-surface-800 rounded-xl">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Distribution Statistics</h4>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                            <div>
+                                <p className="text-gray-500">Mean</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{result.statistics.mean.toFixed(4)}</p>
+                            </div>
+                            <div>
+                                <p className="text-gray-500">Median</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{result.statistics.median.toFixed(4)}</p>
+                            </div>
+                            <div>
+                                <p className="text-gray-500">Std Dev</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{result.statistics.standardDeviation.toFixed(4)}</p>
+                            </div>
+                            <div>
+                                <p className="text-gray-500">Range</p>
+                                <p className="font-medium text-gray-900 dark:text-white">
+                                    {result.statistics.min.toFixed(4)} - {result.statistics.max.toFixed(4)}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="mt-3 pt-3 border-t border-gray-200 dark:border-surface-700">
+                            <p className="text-xs text-gray-500">
+                                95% CI: [{result.confidenceIntervals.ci95[0].toFixed(4)}, {result.confidenceIntervals.ci95[1].toFixed(4)}]
+                                &nbsp;|&nbsp;
+                                Volatility used: {(getDefaultVolatility(baseCurrency, quoteCurrency) * 100).toFixed(1)}% annual
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {!result && (
+                <p className="text-xs text-gray-500 mt-3">
+                    Run a simulation to generate probabilistic FX rate forecasts using Geometric Brownian Motion (GBM).
+                    Results show potential rate outcomes with associated probabilities and risk metrics.
+                </p>
+            )}
+        </Card>
+    );
+}
+
 function RiskScenariosSection() {
     const { dashboard } = useFXStore();
     const riskSummary = dashboard?.riskSummary;
@@ -630,6 +890,9 @@ function RiskScenariosSection() {
     return (
         <div className="space-y-4">
             <SectionHeader title="FX Risk & Scenarios" icon={AlertTriangle} />
+
+            {/* Monte Carlo Section */}
+            <MonteCarloSection />
 
             {/* Risk Overview */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

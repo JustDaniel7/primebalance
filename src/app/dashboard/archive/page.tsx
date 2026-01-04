@@ -90,9 +90,11 @@ export default function ArchivePage() {
         fetchStatistics,
         restoreArchive,
         deleteArchive,
+        cancelDeletion,
     } = useArchiveStore();
     const [isRestoring, setIsRestoring] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isCancelling, setIsCancelling] = useState(false);
 
     useEffect(() => {
         if (!isInitialized) {
@@ -223,22 +225,45 @@ export default function ArchivePage() {
             return;
         }
 
-        if (!confirm(t('archive.confirmDelete') || 'Delete this archived item? This action cannot be undone.')) return;
+        if (!confirm(t('archive.confirmDelete') || 'Schedule this item for deletion? It will be permanently deleted after 30 days.')) return;
 
         setIsDeleting(true);
         try {
-            const success = await deleteArchive(item.id);
-            if (success) {
-                toast.success(t('archive.deleteSuccess') || 'Item deleted successfully');
+            const result = await deleteArchive(item.id, { warningPeriodDays: 30 });
+            if (result?.success) {
+                const deletionDate = result.permanentDeletionDate
+                    ? new Date(result.permanentDeletionDate).toLocaleDateString()
+                    : '30 days';
+                toast.success(t('archive.deleteScheduled') || `Item scheduled for deletion on ${deletionDate}`);
                 setSelectedItem(null);
             } else {
-                toast.error(t('archive.deleteFailed') || 'Failed to delete item');
+                toast.error(t('archive.deleteFailed') || 'Failed to schedule deletion');
             }
         } catch (e: unknown) {
             const errorMessage = e instanceof Error ? e.message : 'Failed to delete item';
             toast.error(errorMessage);
         } finally {
             setIsDeleting(false);
+        }
+    };
+
+    const handleCancelDeletion = async (item: ArchiveRecord) => {
+        if (!confirm(t('archive.confirmCancelDelete') || 'Cancel the scheduled deletion for this item?')) return;
+
+        setIsCancelling(true);
+        try {
+            const success = await cancelDeletion(item.id);
+            if (success) {
+                toast.success(t('archive.deletionCancelled') || 'Scheduled deletion cancelled');
+                setSelectedItem(null);
+            } else {
+                toast.error(t('archive.cancelFailed') || 'Failed to cancel deletion');
+            }
+        } catch (e: unknown) {
+            const errorMessage = e instanceof Error ? e.message : 'Failed to cancel deletion';
+            toast.error(errorMessage);
+        } finally {
+            setIsCancelling(false);
         }
     };
 
@@ -551,6 +576,21 @@ export default function ArchivePage() {
                                 )}
                             </div>
 
+                            {/* Pending Deletion Warning */}
+                            {selectedItem.status === 'pending_deletion' && (
+                                <div className="px-6 py-3 bg-amber-50 dark:bg-amber-900/20 border-t border-amber-200 dark:border-amber-800">
+                                    <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                                        <Calendar size={16} />
+                                        <span className="text-sm font-medium">
+                                            {t('archive.scheduledForDeletion') || 'Scheduled for permanent deletion'}
+                                            {(selectedItem as any).permanentDeletionDate && (
+                                                <> on {formatDate((selectedItem as any).permanentDeletionDate)}</>
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Actions */}
                             <div className="p-6 border-t border-gray-200 dark:border-surface-700 flex gap-3">
                                 <Button
@@ -566,19 +606,35 @@ export default function ArchivePage() {
                                     )}
                                     {t('archive.restore') || 'Restore'}
                                 </Button>
-                                <Button
-                                    variant="danger"
-                                    className="flex-1"
-                                    onClick={() => handleDelete(selectedItem)}
-                                    disabled={isDeleting || selectedItem.legalHold}
-                                >
-                                    {isDeleting ? (
-                                        <Loader2 size={18} className="mr-2 animate-spin" />
-                                    ) : (
-                                        <Trash2 size={18} className="mr-2" />
-                                    )}
-                                    {t('common.delete') || 'Delete'}
-                                </Button>
+                                {selectedItem.status === 'pending_deletion' ? (
+                                    <Button
+                                        variant="secondary"
+                                        className="flex-1 !bg-amber-500 !text-white hover:!bg-amber-600"
+                                        onClick={() => handleCancelDeletion(selectedItem)}
+                                        disabled={isCancelling}
+                                    >
+                                        {isCancelling ? (
+                                            <Loader2 size={18} className="mr-2 animate-spin" />
+                                        ) : (
+                                            <RotateCcw size={18} className="mr-2" />
+                                        )}
+                                        {t('archive.cancelDeletion') || 'Cancel Deletion'}
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        variant="danger"
+                                        className="flex-1"
+                                        onClick={() => handleDelete(selectedItem)}
+                                        disabled={isDeleting || selectedItem.legalHold}
+                                    >
+                                        {isDeleting ? (
+                                            <Loader2 size={18} className="mr-2 animate-spin" />
+                                        ) : (
+                                            <Trash2 size={18} className="mr-2" />
+                                        )}
+                                        {t('archive.scheduleDelete') || 'Schedule Delete'}
+                                    </Button>
+                                )}
                                 <Button variant="secondary" onClick={() => setSelectedItem(null)}>
                                     <X size={18} className="mr-2" />
                                     {t('common.close') || 'Close'}

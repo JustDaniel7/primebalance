@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSessionWithOrg, unauthorized, notFound, badRequest } from '@/lib/api-utils';
+import { notifyOfferAccepted } from '@/lib/notifications';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -44,6 +45,18 @@ export async function POST(req: NextRequest, { params }: Params) {
       userName: user.name || 'Unknown',
     },
   });
+
+  // Notify the offer creator
+  if (offer.createdBy) {
+    await notifyOfferAccepted({
+      offerNumber: updated.offerNumber,
+      customerName: updated.customerName || 'Unknown',
+      amount: Number(updated.grandTotal),
+      currency: updated.currency,
+      recipientId: offer.createdBy,
+      organizationId: user.organizationId,
+    });
+  }
 
   return NextResponse.json(updated);
 }

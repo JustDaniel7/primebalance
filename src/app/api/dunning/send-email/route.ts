@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { notifyDunningSent } from '@/lib/notifications';
 
 // Configure your email provider here
 // Option 1: Resend
@@ -121,6 +122,24 @@ export async function POST(request: NextRequest) {
                     invoice_id: invoiceId,
                 },
             },
+        });
+
+        // Notify admins about the dunning email
+        const dunning = await prisma.dunning.findUnique({
+            where: { id: dunningId },
+            select: { totalOutstanding: true, currency: true },
+        });
+
+        await notifyDunningSent({
+            dunningId,
+            dunningNumber,
+            customerName,
+            amount: dunning?.totalOutstanding || 0,
+            currency: dunning?.currency || 'EUR',
+            level,
+            organizationId: session.user.organizationId || 'default',
+            actorId: session.user.id,
+            actorName: session.user.name || session.user.email,
         });
 
         return NextResponse.json({

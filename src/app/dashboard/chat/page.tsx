@@ -19,7 +19,13 @@ import {
   Circle,
   X,
   Loader2,
-  User
+  User,
+  PhoneOff,
+  VideoOff,
+  Mic,
+  MicOff,
+  Monitor,
+  MonitorOff,
 } from 'lucide-react'
 
 interface OrganizationMember {
@@ -41,6 +47,174 @@ interface DMMessage {
 
 type ChatType = 'channel' | 'dm'
 
+interface CallState {
+  isActive: boolean
+  type: 'audio' | 'video' | null
+  participant: { id: string; name: string } | null
+  isMuted: boolean
+  isVideoOff: boolean
+  isScreenSharing: boolean
+  startTime: Date | null
+  duration: number
+}
+
+// =============================================================================
+// CALL MODAL
+// =============================================================================
+
+function CallModal({
+  callState,
+  onEndCall,
+  onToggleMute,
+  onToggleVideo,
+  onToggleScreenShare,
+}: {
+  callState: CallState
+  onEndCall: () => void
+  onToggleMute: () => void
+  onToggleVideo: () => void
+  onToggleScreenShare: () => void
+}) {
+  const [elapsed, setElapsed] = useState(0)
+
+  useEffect(() => {
+    if (!callState.isActive || !callState.startTime) return
+
+    const interval = setInterval(() => {
+      setElapsed(Math.floor((Date.now() - callState.startTime!.getTime()) / 1000))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [callState.isActive, callState.startTime])
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  if (!callState.isActive) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="fixed inset-0 z-50 bg-gray-900/95 flex flex-col items-center justify-center"
+    >
+      {/* Video Area */}
+      <div className="flex-1 flex items-center justify-center w-full max-w-4xl px-4">
+        {callState.type === 'video' && !callState.isVideoOff ? (
+          <div className="relative w-full aspect-video bg-gray-800 rounded-2xl overflow-hidden">
+            {/* Placeholder for video stream */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                <User size={64} className="text-white" />
+              </div>
+            </div>
+            {/* Self view */}
+            <div className="absolute bottom-4 right-4 w-40 h-28 bg-gray-700 rounded-lg overflow-hidden border-2 border-gray-600">
+              <div className="w-full h-full flex items-center justify-center">
+                <User size={32} className="text-gray-400" />
+              </div>
+            </div>
+            {/* Screen share indicator */}
+            {callState.isScreenSharing && (
+              <div className="absolute top-4 left-4 px-3 py-1 bg-red-500 rounded-full text-white text-sm flex items-center gap-2">
+                <Monitor size={14} />
+                Screen Sharing
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="text-center">
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mx-auto mb-6">
+              <User size={64} className="text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-2">
+              {callState.participant?.name || 'Unknown'}
+            </h2>
+            <p className="text-gray-400 mb-4">
+              {callState.type === 'audio' ? 'Voice Call' : 'Video Call'}
+            </p>
+            <div className="text-3xl font-mono text-white">
+              {formatTime(elapsed)}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Controls */}
+      <div className="p-8">
+        <div className="flex items-center justify-center gap-4">
+          {/* Mute */}
+          <button
+            onClick={onToggleMute}
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors ${
+              callState.isMuted
+                ? 'bg-red-500 hover:bg-red-600'
+                : 'bg-gray-700 hover:bg-gray-600'
+            }`}
+          >
+            {callState.isMuted ? (
+              <MicOff size={24} className="text-white" />
+            ) : (
+              <Mic size={24} className="text-white" />
+            )}
+          </button>
+
+          {/* Video Toggle (only for video calls) */}
+          {callState.type === 'video' && (
+            <button
+              onClick={onToggleVideo}
+              className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors ${
+                callState.isVideoOff
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-gray-700 hover:bg-gray-600'
+              }`}
+            >
+              {callState.isVideoOff ? (
+                <VideoOff size={24} className="text-white" />
+              ) : (
+                <Video size={24} className="text-white" />
+              )}
+            </button>
+          )}
+
+          {/* Screen Share */}
+          <button
+            onClick={onToggleScreenShare}
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors ${
+              callState.isScreenSharing
+                ? 'bg-blue-500 hover:bg-blue-600'
+                : 'bg-gray-700 hover:bg-gray-600'
+            }`}
+          >
+            {callState.isScreenSharing ? (
+              <MonitorOff size={24} className="text-white" />
+            ) : (
+              <Monitor size={24} className="text-white" />
+            )}
+          </button>
+
+          {/* End Call */}
+          <button
+            onClick={onEndCall}
+            className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center transition-colors"
+          >
+            <PhoneOff size={24} className="text-white" />
+          </button>
+        </div>
+      </div>
+
+      {/* Note about WebRTC */}
+      <div className="absolute bottom-4 text-center text-xs text-gray-500 px-4">
+        Note: This is a demo UI. Full video/voice calls require WebRTC integration with a signaling server.
+      </div>
+    </motion.div>
+  )
+}
+
 export default function ChatPage() {
   const { t } = useThemeStore()
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -59,6 +233,74 @@ export default function ChatPage() {
   // Organization members
   const [orgMembers, setOrgMembers] = useState<OrganizationMember[]>([])
   const [loadingMembers, setLoadingMembers] = useState(true)
+
+  // Call state
+  const [callState, setCallState] = useState<CallState>({
+    isActive: false,
+    type: null,
+    participant: null,
+    isMuted: false,
+    isVideoOff: false,
+    isScreenSharing: false,
+    startTime: null,
+    duration: 0,
+  })
+
+  // Call handlers
+  const startCall = (type: 'audio' | 'video') => {
+    const participant = activeChatType === 'dm' && activeDM
+      ? { id: activeDM.id, name: activeDM.name || activeDM.email || 'Unknown' }
+      : activeChannel
+        ? { id: activeChannel.id, name: activeChannel.name }
+        : null
+
+    if (!participant) {
+      toast.error('No participant selected')
+      return
+    }
+
+    setCallState({
+      isActive: true,
+      type,
+      participant,
+      isMuted: false,
+      isVideoOff: false,
+      isScreenSharing: false,
+      startTime: new Date(),
+      duration: 0,
+    })
+
+    toast.success(`Starting ${type} call with ${participant.name}...`)
+  }
+
+  const endCall = () => {
+    setCallState({
+      isActive: false,
+      type: null,
+      participant: null,
+      isMuted: false,
+      isVideoOff: false,
+      isScreenSharing: false,
+      startTime: null,
+      duration: 0,
+    })
+    toast.success('Call ended')
+  }
+
+  const toggleMute = () => {
+    setCallState(prev => ({ ...prev, isMuted: !prev.isMuted }))
+    toast.success(callState.isMuted ? 'Microphone unmuted' : 'Microphone muted')
+  }
+
+  const toggleVideo = () => {
+    setCallState(prev => ({ ...prev, isVideoOff: !prev.isVideoOff }))
+    toast.success(callState.isVideoOff ? 'Camera on' : 'Camera off')
+  }
+
+  const toggleScreenShare = () => {
+    setCallState(prev => ({ ...prev, isScreenSharing: !prev.isScreenSharing }))
+    toast.success(callState.isScreenSharing ? 'Screen sharing stopped' : 'Screen sharing started')
+  }
 
   // Store state and actions
   const chatChannels = useStore((s) => s.chatChannels)
@@ -412,11 +654,19 @@ export default function ChatPage() {
                   ) : null}
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors">
-                    <Phone size={18} className="text-gray-500 dark:text-surface-400" />
+                  <button
+                    onClick={() => startCall('audio')}
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors group"
+                    title="Start Voice Call"
+                  >
+                    <Phone size={18} className="text-gray-500 dark:text-surface-400 group-hover:text-emerald-500" />
                   </button>
-                  <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors">
-                    <Video size={18} className="text-gray-500 dark:text-surface-400" />
+                  <button
+                    onClick={() => startCall('video')}
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors group"
+                    title="Start Video Call"
+                  >
+                    <Video size={18} className="text-gray-500 dark:text-surface-400 group-hover:text-blue-500" />
                   </button>
                   {activeChatType === 'channel' && (
                     <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-800/50 transition-colors">
@@ -615,6 +865,15 @@ export default function ChatPage() {
           </motion.div>
         </div>
       )}
+
+      {/* Call Modal */}
+      <CallModal
+        callState={callState}
+        onEndCall={endCall}
+        onToggleMute={toggleMute}
+        onToggleVideo={toggleVideo}
+        onToggleScreenShare={toggleScreenShare}
+      />
     </div>
   )
 }

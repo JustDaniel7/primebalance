@@ -79,7 +79,12 @@ interface ArchiveState {
     }) => Promise<ArchiveRecord | null>;
     createArchive: (data: CreateArchiveRequest) => Promise<ArchiveRecord | null>;
     restoreArchive: (id: string) => Promise<{ success: boolean; restoredTo?: string } | null>;
-    deleteArchive: (id: string) => Promise<boolean>;
+    deleteArchive: (id: string, options?: { warningPeriodDays?: number; reason?: string }) => Promise<{
+        success: boolean;
+        permanentDeletionDate?: string;
+        canCancel?: boolean;
+    } | null>;
+    cancelDeletion: (id: string) => Promise<boolean>;
 
     // ==========================================================================
     // API Actions - Search & Reconstruction
@@ -368,14 +373,49 @@ export const useArchiveStore = create<ArchiveState>()(
                 return data || null;
             },
 
-            deleteArchive: async (id) => {
+            deleteArchive: async (id, options) => {
                 set({ isLoading: true, error: null });
 
                 // Note: Archives are generally immutable, but we can mark them for deletion
                 // if they're not on legal hold and retention has expired
+                const { data, error } = await apiRequest<{
+                    success: boolean;
+                    permanentDeletionDate?: string;
+                    canCancel?: boolean;
+                }>(
+                    `/api/archive/${id}/delete`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(options || {}),
+                    }
+                );
+
+                if (error) {
+                    set({ isLoading: false, error });
+                    return null;
+                }
+
+                if (data?.success) {
+                    // Update the record status instead of removing it
+                    set((state) => ({
+                        records: state.records.map((r) =>
+                            r.id === id
+                                ? { ...r, status: 'pending_deletion', permanentDeletionDate: data.permanentDeletionDate }
+                                : r
+                        ),
+                        isLoading: false,
+                    }));
+                }
+
+                return data || null;
+            },
+
+            cancelDeletion: async (id) => {
+                set({ isLoading: true, error: null });
+
                 const { data, error } = await apiRequest<{ success: boolean }>(
                     `/api/archive/${id}/delete`,
-                    { method: 'POST' }
+                    { method: 'DELETE' }
                 );
 
                 if (error) {
@@ -384,9 +424,13 @@ export const useArchiveStore = create<ArchiveState>()(
                 }
 
                 if (data?.success) {
+                    // Update the record status back to active
                     set((state) => ({
-                        records: state.records.filter((r) => r.id !== id),
-                        currentRecord: state.currentRecord?.id === id ? null : state.currentRecord,
+                        records: state.records.map((r) =>
+                            r.id === id
+                                ? { ...r, status: 'active', permanentDeletionDate: undefined }
+                                : r
+                        ),
                         isLoading: false,
                     }));
                 }
