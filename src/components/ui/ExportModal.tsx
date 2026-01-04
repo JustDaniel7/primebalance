@@ -28,6 +28,14 @@ interface ExportOption {
 
 const EXPORT_OPTIONS: ExportOption[] = [
     {
+        format: 'pdf',
+        label: 'PDF',
+        description: 'Printable document',
+        icon: File,
+        mimeType: 'application/pdf',
+        extension: 'pdf',
+    },
+    {
         format: 'json',
         label: 'JSON',
         description: 'Structured data format',
@@ -60,14 +68,6 @@ const EXPORT_OPTIONS: ExportOption[] = [
         extension: 'txt',
     },
     {
-        format: 'pdf',
-        label: 'PDF',
-        description: 'Printable document',
-        icon: File,
-        mimeType: 'application/pdf',
-        extension: 'pdf',
-    },
-    {
         format: 'docx',
         label: 'DOCX',
         description: 'Word document',
@@ -92,10 +92,10 @@ export function ExportModal({
     onExport,
     title = 'Export Data',
     fileName = 'export',
-    availableFormats = ['json', 'csv', 'xml', 'txt', 'pdf', 'docx'],
+    availableFormats = ['pdf', 'json', 'csv', 'xml', 'txt', 'docx'],
 }: ExportModalProps) {
     const { t } = useThemeStore();
-    const [selectedFormat, setSelectedFormat] = useState<ExportFormat>('json');
+    const [selectedFormat, setSelectedFormat] = useState<ExportFormat>('pdf');
     const [isExporting, setIsExporting] = useState(false);
 
     const filteredOptions = EXPORT_OPTIONS.filter((opt) =>

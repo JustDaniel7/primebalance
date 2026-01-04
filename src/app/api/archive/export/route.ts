@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const {
             exportType = 'filtered',
-            exportFormat = 'json',
+            exportFormat = 'pdf',
             archiveRecordIds,
             filters,
             purpose,
