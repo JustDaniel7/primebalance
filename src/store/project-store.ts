@@ -58,9 +58,16 @@ const initialWizardState: ProjectWizardState = {
 // STORE INTERFACE
 // =============================================================================
 
+interface DeletedProject {
+    project: Project;
+    deletedAt: string;
+    expiresAt: string; // 30 days after deletion
+}
+
 interface ProjectState {
     // Data
     projects: Project[];
+    deletedProjects: DeletedProject[];
     costCenters: CostCenter[];
     budgetLines: ProjectBudgetLine[];
     costAttributions: CostAttribution[];
@@ -97,8 +104,14 @@ interface ProjectState {
     // Projects CRUD
     createProject: (projectData: Partial<Project>) => Promise<Project | null>;
     updateProject: (id: string, updates: Partial<Project>) => Promise<Project | null>;
-    deleteProject: (id: string) => Promise<boolean>;
+    deleteProject: (id: string) => Promise<boolean>; // Soft delete
     updateProjectStatus: (id: string, status: ProjectStatus) => Promise<boolean>;
+
+    // Soft delete & restore
+    restoreProject: (id: string) => Promise<boolean>;
+    permanentlyDeleteProject: (id: string) => Promise<boolean>;
+    getDeletedProjects: () => DeletedProject[];
+    cleanupExpiredProjects: () => void;
 
     // Cost Centers CRUD
     createCostCenter: (data: Partial<CostCenter>) => Promise<CostCenter | null>;
@@ -170,6 +183,7 @@ export const useProjectStore = create<ProjectState>()(
         (set, get) => ({
             // Initial Data (empty - fetched from API)
             projects: [],
+            deletedProjects: [],
             costCenters: [],
             budgetLines: [],
             costAttributions: [],
@@ -303,19 +317,36 @@ export const useProjectStore = create<ProjectState>()(
             },
 
             deleteProject: async (id) => {
+                // Soft delete - move to deletedProjects with 30 day expiry
+                const project = get().projects.find((p) => p.id === id);
+                if (!project) return false;
+
                 set({ isSaving: true, error: null });
                 try {
+                    const now = new Date();
+                    const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+                    // API call to soft delete (mark as deleted)
                     const res = await fetch(`/api/projects/${id}`, {
-                        method: 'DELETE',
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'deleted', deletedAt: now.toISOString() }),
                     });
                     if (!res.ok) {
                         const err = await res.json();
                         throw new Error(err.error || 'Failed to delete project');
                     }
+
                     set((state) => ({
                         projects: state.projects.filter((p) => p.id !== id),
-                        timeEntries: state.timeEntries.filter((t) => t.projectId !== id),
-                        milestones: state.milestones.filter((m) => m.projectId !== id),
+                        deletedProjects: [
+                            ...state.deletedProjects,
+                            {
+                                project,
+                                deletedAt: now.toISOString(),
+                                expiresAt: expiresAt.toISOString(),
+                            },
+                        ],
                         isSaving: false,
                         deleteConfirmId: null,
                         deleteConfirmType: null,
@@ -330,6 +361,92 @@ export const useProjectStore = create<ProjectState>()(
 
             updateProjectStatus: async (id, status) => {
                 return !!(await get().updateProject(id, { status }));
+            },
+
+            // =================================================================
+            // SOFT DELETE & RESTORE
+            // =================================================================
+
+            restoreProject: async (id) => {
+                const deletedEntry = get().deletedProjects.find((d) => d.project.id === id);
+                if (!deletedEntry) return false;
+
+                // Check if not expired
+                if (new Date(deletedEntry.expiresAt) < new Date()) {
+                    return false;
+                }
+
+                set({ isSaving: true, error: null });
+                try {
+                    // API call to restore
+                    const res = await fetch(`/api/projects/${id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'active', deletedAt: null }),
+                    });
+                    if (!res.ok) {
+                        throw new Error('Failed to restore project');
+                    }
+
+                    set((state) => ({
+                        projects: [...state.projects, { ...deletedEntry.project, status: 'active' as const }],
+                        deletedProjects: state.deletedProjects.filter((d) => d.project.id !== id),
+                        isSaving: false,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('restoreProject error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
+            },
+
+            permanentlyDeleteProject: async (id) => {
+                set({ isSaving: true, error: null });
+                try {
+                    const res = await fetch(`/api/projects/${id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) {
+                        throw new Error('Failed to permanently delete project');
+                    }
+
+                    set((state) => ({
+                        deletedProjects: state.deletedProjects.filter((d) => d.project.id !== id),
+                        timeEntries: state.timeEntries.filter((t) => t.projectId !== id),
+                        milestones: state.milestones.filter((m) => m.projectId !== id),
+                        isSaving: false,
+                    }));
+                    return true;
+                } catch (error) {
+                    console.error('permanentlyDeleteProject error:', error);
+                    set({ error: (error as Error).message, isSaving: false });
+                    return false;
+                }
+            },
+
+            getDeletedProjects: () => {
+                // Clean up expired projects first
+                get().cleanupExpiredProjects();
+                return get().deletedProjects;
+            },
+
+            cleanupExpiredProjects: () => {
+                const now = new Date();
+                const expiredIds = get().deletedProjects
+                    .filter((d) => new Date(d.expiresAt) < now)
+                    .map((d) => d.project.id);
+
+                if (expiredIds.length > 0) {
+                    set((state) => ({
+                        deletedProjects: state.deletedProjects.filter((d) => new Date(d.expiresAt) >= now),
+                    }));
+
+                    // Permanently delete expired projects from API
+                    expiredIds.forEach((id) => {
+                        fetch(`/api/projects/${id}`, { method: 'DELETE' }).catch(console.error);
+                    });
+                }
             },
 
             // =================================================================
@@ -976,6 +1093,7 @@ export const useProjectStore = create<ProjectState>()(
             partialize: (state) => ({
                 selectedProjectId: state.selectedProjectId,
                 selectedCostCenterId: state.selectedCostCenterId,
+                deletedProjects: state.deletedProjects,
             }),
         }
     )

@@ -46,6 +46,7 @@ interface InvoiceDetailProps {
     onEdit?: () => void;
     onPayment?: () => void;
     onRefresh?: () => void;
+    onArchive?: () => void;
 }
 
 // =============================================================================
@@ -67,7 +68,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bgColor: str
 // COMPONENT
 // =============================================================================
 
-export function InvoiceDetail({ invoice, onClose, onEdit, onPayment, onRefresh }: InvoiceDetailProps) {
+export function InvoiceDetail({ invoice, onClose, onEdit, onPayment, onRefresh, onArchive }: InvoiceDetailProps) {
     const { t } = useThemeStore();
     const { fetchInvoice, confirmInvoice, sendInvoice, isLoading } = useInvoiceStore();
 
@@ -135,6 +136,7 @@ export function InvoiceDetail({ invoice, onClose, onEdit, onPayment, onRefresh }
     const canConfirm = displayInvoice.status === InvoiceStatus.DRAFT;
     const canSend = displayInvoice.status === InvoiceStatus.CONFIRMED;
     const canPay = [InvoiceStatus.CONFIRMED, InvoiceStatus.SENT, InvoiceStatus.PARTIALLY_PAID, InvoiceStatus.OVERDUE].includes(displayInvoice.status as InvoiceStatus);
+    const canArchive = [InvoiceStatus.PAID, InvoiceStatus.CANCELLED].includes(displayInvoice.status as InvoiceStatus);
 
     // Handle actions
     const handleConfirm = async () => {
@@ -199,6 +201,11 @@ export function InvoiceDetail({ invoice, onClose, onEdit, onPayment, onRefresh }
                         {canPay && onPayment && (
                             <Button variant="primary" size="sm" onClick={onPayment} leftIcon={<CreditCard size={16} />}>
                                 Record Payment
+                            </Button>
+                        )}
+                        {canArchive && onArchive && (
+                            <Button variant="secondary" size="sm" onClick={onArchive} leftIcon={<Archive size={16} />}>
+                                Archive
                             </Button>
                         )}
                         <button

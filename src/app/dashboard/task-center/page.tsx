@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Plus,
@@ -23,6 +24,7 @@ import {
     Paperclip,
     Bell,
     BellOff,
+    BellRing,
     Play,
     Pause,
     RotateCcw,
@@ -38,6 +40,7 @@ import {
     Bookmark,
     ExternalLink,
     CheckSquare,
+    CheckCheck,
     Square,
     MinusSquare,
     ArrowRight,
@@ -54,10 +57,12 @@ import {
     Eye,
     EyeOff,
     RefreshCw,
+    Trash2,
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useTaskStore } from '@/store/taskcenter-store';
+import { useNotificationStore } from '@/store/notification-store';
 import toast from 'react-hot-toast';
 import type {
     Task,
@@ -1405,6 +1410,249 @@ function RisksTab() {
 }
 
 // =============================================================================
+// NOTIFICATIONS TAB
+// =============================================================================
+
+function NotificationsTab() {
+    const { t } = useThemeStore();
+    const {
+        notifications,
+        unreadCount,
+        isLoading,
+        markAsRead,
+        markAllAsRead,
+        deleteNotification,
+        fetchNotifications
+    } = useNotificationStore();
+    const [filter, setFilter] = useState<'all' | 'unread'>('all');
+
+    const filteredNotifications = useMemo(() => {
+        if (filter === 'unread') {
+            return notifications.filter(n => !n.isRead);
+        }
+        return notifications;
+    }, [notifications, filter]);
+
+    const getNotificationIcon = (type: string) => {
+        switch (type) {
+            case 'assignment':
+                return <User size={16} className="text-blue-500" />;
+            case 'mention':
+                return <MessageSquare size={16} className="text-purple-500" />;
+            case 'status_change':
+                return <RefreshCw size={16} className="text-cyan-500" />;
+            case 'comment':
+                return <MessageSquare size={16} className="text-green-500" />;
+            case 'due_soon':
+                return <Clock size={16} className="text-amber-500" />;
+            case 'overdue':
+                return <AlertTriangle size={16} className="text-red-500" />;
+            case 'invoice_created':
+            case 'invoice_paid':
+            case 'invoice_overdue':
+                return <FileText size={16} className="text-violet-500" />;
+            default:
+                return <Bell size={16} className="text-gray-500" />;
+        }
+    };
+
+    const formatTime = (timestamp: string) => {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffMs = now.getTime() - date.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+
+        if (diffMins < 1) return 'Just now';
+        if (diffMins < 60) return `${diffMins}m ago`;
+        if (diffHours < 24) return `${diffHours}h ago`;
+        if (diffDays < 7) return `${diffDays}d ago`;
+        return date.toLocaleDateString();
+    };
+
+    const handleMarkAsRead = async (id: string) => {
+        await markAsRead(id);
+        toast.success('Notification marked as read');
+    };
+
+    const handleMarkAllAsRead = async () => {
+        await markAllAsRead();
+        toast.success('All notifications marked as read');
+    };
+
+    const handleDelete = async (id: string) => {
+        await deleteNotification(id);
+        toast.success('Notification deleted');
+    };
+
+    return (
+        <div className="space-y-6">
+            {/* Header Actions */}
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => setFilter('all')}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                            filter === 'all'
+                                ? 'bg-[var(--accent-primary)] text-white'
+                                : 'bg-gray-100 dark:bg-surface-800 text-gray-600 dark:text-surface-400 hover:bg-gray-200 dark:hover:bg-surface-700'
+                        }`}
+                    >
+                        All ({notifications.length})
+                    </button>
+                    <button
+                        onClick={() => setFilter('unread')}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                            filter === 'unread'
+                                ? 'bg-[var(--accent-primary)] text-white'
+                                : 'bg-gray-100 dark:bg-surface-800 text-gray-600 dark:text-surface-400 hover:bg-gray-200 dark:hover:bg-surface-700'
+                        }`}
+                    >
+                        Unread ({unreadCount})
+                    </button>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => fetchNotifications()}
+                        disabled={isLoading}
+                    >
+                        <RefreshCw size={14} className={isLoading ? 'animate-spin' : ''} />
+                        Refresh
+                    </Button>
+                    {unreadCount > 0 && (
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={handleMarkAllAsRead}
+                        >
+                            <CheckCheck size={14} />
+                            Mark All Read
+                        </Button>
+                    )}
+                </div>
+            </div>
+
+            {/* Notifications List */}
+            {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                    <RefreshCw size={24} className="animate-spin text-gray-400" />
+                </div>
+            ) : filteredNotifications.length === 0 ? (
+                <Card variant="glass" className="py-12">
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-surface-800 flex items-center justify-center mb-4">
+                            <BellOff size={32} className="text-gray-400" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-surface-100 mb-2">
+                            {filter === 'unread' ? 'No unread notifications' : 'No notifications yet'}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-surface-500 max-w-sm">
+                            {filter === 'unread'
+                                ? "You're all caught up! Check back later for new updates."
+                                : "When you receive notifications, they'll appear here."}
+                        </p>
+                    </div>
+                </Card>
+            ) : (
+                <div className="space-y-2">
+                    {filteredNotifications.map((notification, index) => (
+                        <motion.div
+                            key={notification.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2, delay: index * 0.03 }}
+                        >
+                            <Card
+                                variant="glass"
+                                className={`p-4 hover:shadow-md transition-shadow cursor-pointer ${
+                                    !notification.isRead
+                                        ? 'border-l-4 border-l-[var(--accent-primary)] bg-[var(--accent-primary)]/5'
+                                        : ''
+                                }`}
+                                onClick={() => !notification.isRead && handleMarkAsRead(notification.id)}
+                            >
+                                <div className="flex items-start gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-surface-800 flex items-center justify-center flex-shrink-0">
+                                        {getNotificationIcon(notification.type)}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div>
+                                                <h4 className={`text-sm font-medium ${
+                                                    notification.isRead
+                                                        ? 'text-gray-700 dark:text-surface-300'
+                                                        : 'text-gray-900 dark:text-surface-100'
+                                                }`}>
+                                                    {notification.title}
+                                                </h4>
+                                                <p className="text-sm text-gray-500 dark:text-surface-500 mt-0.5 line-clamp-2">
+                                                    {notification.message}
+                                                </p>
+                                                {notification.actorName && (
+                                                    <p className="text-xs text-gray-400 dark:text-surface-600 mt-1">
+                                                        by {notification.actorName}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-2 flex-shrink-0">
+                                                <span className="text-xs text-gray-400 dark:text-surface-600">
+                                                    {formatTime(notification.timestamp)}
+                                                </span>
+                                                {!notification.isRead && (
+                                                    <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]" />
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2 mt-3">
+                                            {!notification.isRead && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleMarkAsRead(notification.id);
+                                                    }}
+                                                    className="text-xs text-[var(--accent-primary)] hover:underline"
+                                                >
+                                                    Mark as read
+                                                </button>
+                                            )}
+                                            {notification.taskId && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        // Navigate to task
+                                                    }}
+                                                    className="text-xs text-gray-500 dark:text-surface-500 hover:text-gray-700 dark:hover:text-surface-300 flex items-center gap-1"
+                                                >
+                                                    <ExternalLink size={12} />
+                                                    View Task
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDelete(notification.id);
+                                                }}
+                                                className="text-xs text-red-500 hover:text-red-600 flex items-center gap-1 ml-auto"
+                                            >
+                                                <Trash2 size={12} />
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// =============================================================================
 // SHORTCUTS TAB
 // =============================================================================
 
@@ -1670,7 +1918,13 @@ function TaskWizardModal() {
 export default function TaskCenterPage() {
     const { t } = useThemeStore();
     const { isLoading, fetchTasks, fetchRisks, getTaskSummary, getRiskSummary, taskWizard } = useTaskStore();
-    const [activeTab, setActiveTab] = useState<'today' | 'tasks' | 'risks' | 'shortcuts'>('today');
+    const { notifications, unreadCount, fetchNotifications } = useNotificationStore();
+    const searchParams = useSearchParams();
+
+    // Handle tab from URL query params
+    const tabFromUrl = searchParams.get('tab');
+    const initialTab = tabFromUrl === 'notifications' ? 'notifications' : 'today';
+    const [activeTab, setActiveTab] = useState<'today' | 'tasks' | 'risks' | 'shortcuts' | 'notifications'>(initialTab);
 
     const taskSummary = getTaskSummary();
     const riskSummary = getRiskSummary();
@@ -1679,12 +1933,21 @@ export default function TaskCenterPage() {
         // Attempt to fetch from API (falls back to demo data)
         fetchTasks();
         fetchRisks();
-    }, [fetchTasks, fetchRisks]);
+        fetchNotifications();
+    }, [fetchTasks, fetchRisks, fetchNotifications]);
+
+    // Update tab when URL changes
+    useEffect(() => {
+        if (tabFromUrl === 'notifications') {
+            setActiveTab('notifications');
+        }
+    }, [tabFromUrl]);
 
     const tabs = [
         { id: 'today' as const, label: 'Today', icon: Zap, count: taskSummary.dueToday + taskSummary.overdue },
         { id: 'tasks' as const, label: 'Tasks', icon: CheckSquare, count: taskSummary.total - taskSummary.byStatus.completed },
         { id: 'risks' as const, label: 'Risks', icon: Shield, count: riskSummary.total - riskSummary.byStatus.resolved },
+        { id: 'notifications' as const, label: 'Notifications', icon: BellRing, count: unreadCount },
         { id: 'shortcuts' as const, label: 'Shortcuts', icon: Bookmark },
     ];
 
@@ -1761,6 +2024,7 @@ export default function TaskCenterPage() {
                     {activeTab === 'today' && <TodayOverview />}
                     {activeTab === 'tasks' && <TasksTab />}
                     {activeTab === 'risks' && <RisksTab />}
+                    {activeTab === 'notifications' && <NotificationsTab />}
                     {activeTab === 'shortcuts' && <ShortcutsTab />}
                 </motion.div>
             </AnimatePresence>

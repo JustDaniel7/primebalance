@@ -17,8 +17,15 @@ import type {
 // INVENTORY STORE - API CONNECTED
 // =============================================================================
 
+interface DeletedItem {
+    item: InventoryItem;
+    deletedAt: string;
+    expiresAt: string; // 30 days after deletion
+}
+
 interface InventoryState {
     items: InventoryItem[];
+    deletedItems: DeletedItem[];
     locations: InventoryLocation[];
     movements: StockMovement[];
     reservations: StockReservation[];
@@ -34,7 +41,13 @@ interface InventoryState {
     // Items CRUD
     createItem: (item: Omit<InventoryItem, 'id' | 'createdAt' | 'updatedAt' | 'availableStock' | 'stockByLocation'>) => InventoryItem;
     updateItem: (id: string, updates: Partial<InventoryItem>) => void;
-    deleteItem: (id: string) => void;
+    deleteItem: (id: string) => void; // Soft delete
+
+    // Soft delete & restore
+    restoreItem: (id: string) => boolean;
+    permanentlyDeleteItem: (id: string) => void;
+    getDeletedItems: () => DeletedItem[];
+    cleanupExpiredItems: () => void;
 
     // Locations
     createLocation: (location: Omit<InventoryLocation, 'id'>) => InventoryLocation;
@@ -134,6 +147,7 @@ export const useInventoryStore = create<InventoryState>()(
     persist(
         (set, get) => ({
             items: [],
+            deletedItems: [],
             locations: [],
             movements: [],
             reservations: [],
@@ -223,13 +237,89 @@ export const useInventoryStore = create<InventoryState>()(
             },
 
             deleteItem: (id) => {
+                // Soft delete - move to deletedItems with 30 day expiry
+                const item = get().items.find((i) => i.id === id);
+                if (!item) return;
+
+                const now = new Date();
+                const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
                 set((state) => ({
                     items: state.items.filter((i) => i.id !== id),
+                    deletedItems: [
+                        ...state.deletedItems,
+                        {
+                            item,
+                            deletedAt: now.toISOString(),
+                            expiresAt: expiresAt.toISOString(),
+                        },
+                    ],
+                }));
+
+                // API call to soft delete (mark as deleted, not permanent)
+                fetch(`/api/inventory/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'deleted', deletedAt: now.toISOString() }),
+                }).catch(console.error);
+            },
+
+            restoreItem: (id) => {
+                const deletedEntry = get().deletedItems.find((d) => d.item.id === id);
+                if (!deletedEntry) return false;
+
+                // Check if not expired
+                if (new Date(deletedEntry.expiresAt) < new Date()) {
+                    return false;
+                }
+
+                set((state) => ({
+                    items: [...state.items, { ...deletedEntry.item, status: 'active' }],
+                    deletedItems: state.deletedItems.filter((d) => d.item.id !== id),
+                }));
+
+                // API call to restore
+                fetch(`/api/inventory/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'active', deletedAt: null }),
+                }).catch(console.error);
+
+                return true;
+            },
+
+            permanentlyDeleteItem: (id) => {
+                set((state) => ({
+                    deletedItems: state.deletedItems.filter((d) => d.item.id !== id),
                     movements: state.movements.filter((m) => m.itemId !== id),
                     reservations: state.reservations.filter((r) => r.itemId !== id),
                 }));
 
                 fetch(`/api/inventory/${id}`, { method: 'DELETE' }).catch(console.error);
+            },
+
+            getDeletedItems: () => {
+                // Clean up expired items first
+                get().cleanupExpiredItems();
+                return get().deletedItems;
+            },
+
+            cleanupExpiredItems: () => {
+                const now = new Date();
+                const expiredIds = get().deletedItems
+                    .filter((d) => new Date(d.expiresAt) < now)
+                    .map((d) => d.item.id);
+
+                if (expiredIds.length > 0) {
+                    set((state) => ({
+                        deletedItems: state.deletedItems.filter((d) => new Date(d.expiresAt) >= now),
+                    }));
+
+                    // Permanently delete expired items from API
+                    expiredIds.forEach((id) => {
+                        fetch(`/api/inventory/${id}`, { method: 'DELETE' }).catch(console.error);
+                    });
+                }
             },
 
             createLocation: (locationData) => {
@@ -509,6 +599,7 @@ export const useInventoryStore = create<InventoryState>()(
             name: 'primebalance-inventory',
             partialize: (state) => ({
                 items: state.items,
+                deletedItems: state.deletedItems,
                 locations: state.locations,
                 movements: state.movements,
                 reservations: state.reservations,

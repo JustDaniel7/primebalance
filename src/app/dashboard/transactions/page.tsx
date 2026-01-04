@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { useStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
 import { useArchiveStore } from '@/store/archive-store'
+import { useWalletStore, WalletTransaction } from '@/store/wallet-store'
 import { Card, Button, Badge } from '@/components/ui'
 import {
   PlusIcon,
@@ -26,16 +27,49 @@ export default function TransactionsPage() {
   } = useStore()
   const { t } = useThemeStore()
   const { createArchive } = useArchiveStore()
+  const { wallets, fetchWallets, fetchTransactions: fetchWalletTransactions, isInitialized: walletsInitialized } = useWalletStore()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('all')
+  const [selectedSource, setSelectedSource] = useState<'all' | 'regular' | 'wallet'>('all')
   const [showModal, setShowModal] = useState(false)
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null)
+  const [walletTransactions, setWalletTransactions] = useState<WalletTransaction[]>([])
+  const [loadingWalletTxs, setLoadingWalletTxs] = useState(false)
 
   // Fetch transactions on mount
   useEffect(() => {
     fetchTransactions()
   }, [fetchTransactions])
+
+  // Fetch wallet transactions
+  useEffect(() => {
+    if (!walletsInitialized) {
+      fetchWallets()
+    }
+  }, [walletsInitialized, fetchWallets])
+
+  useEffect(() => {
+    const loadWalletTransactions = async () => {
+      if (wallets.length === 0) return
+      setLoadingWalletTxs(true)
+      try {
+        const allTxs: WalletTransaction[] = []
+        for (const wallet of wallets) {
+          const txs = await fetchWalletTransactions(wallet.id)
+          allTxs.push(...txs)
+        }
+        // Sort by timestamp descending
+        allTxs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+        setWalletTransactions(allTxs)
+      } catch (err) {
+        console.error('Failed to load wallet transactions:', err)
+      } finally {
+        setLoadingWalletTxs(false)
+      }
+    }
+    loadWalletTransactions()
+  }, [wallets, fetchWalletTransactions])
 
   const handleEdit = (tx: Transaction) => {
     setEditingTransaction(tx)
@@ -103,8 +137,43 @@ export default function TransactionsPage() {
     { value: 'failed', label: t('transactions.failed') },
   ]
 
-  // Filter transactions
-  const filteredTransactions = transactions.filter((tx) => {
+  const sources = [
+    { value: 'all', label: 'All Sources' },
+    { value: 'regular', label: 'Regular' },
+    { value: 'wallet', label: 'Wallet/Crypto' },
+  ]
+
+  // Convert wallet transactions to unified format
+  type UnifiedTransaction = Transaction & { source: 'regular' | 'wallet'; walletTxId?: string }
+
+  const unifiedWalletTransactions: UnifiedTransaction[] = walletTransactions.map((wtx) => ({
+    id: `wallet-${wtx.id}`,
+    walletTxId: wtx.id,
+    description: wtx.description || `${wtx.type} - ${wtx.tokenSymbol || wtx.network}`,
+    amount: wtx.isIncoming ? Math.abs(wtx.valueUsd || wtx.value) : -Math.abs(wtx.valueUsd || wtx.value),
+    currency: 'USD',
+    category: 'crypto',
+    status: (wtx.status === 'confirmed' ? 'completed' : wtx.status === 'pending' ? 'pending' : 'completed') as 'completed' | 'pending' | 'failed',
+    date: wtx.timestamp,
+    accountId: '',
+    type: wtx.isIncoming ? 'income' : 'expense',
+    tags: wtx.tags || [],
+    organizationId: '',
+    createdAt: wtx.timestamp,
+    updatedAt: wtx.timestamp,
+    source: 'wallet' as const,
+  }))
+
+  const regularTransactions: UnifiedTransaction[] = transactions.map((tx) => ({
+    ...tx,
+    source: 'regular' as const,
+  }))
+
+  // Combine and filter transactions
+  const allTransactions = [...regularTransactions, ...unifiedWalletTransactions]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  const filteredTransactions = allTransactions.filter((tx) => {
     const matchesSearch = tx.description
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
@@ -112,7 +181,9 @@ export default function TransactionsPage() {
       selectedCategory === 'all' || tx.category === selectedCategory
     const matchesStatus =
       selectedStatus === 'all' || tx.status === selectedStatus
-    return matchesSearch && matchesCategory && matchesStatus
+    const matchesSource =
+      selectedSource === 'all' || tx.source === selectedSource
+    return matchesSearch && matchesCategory && matchesStatus && matchesSource
   })
 
   const formatCurrency = (amount: number, currency: string) => {
@@ -231,6 +302,23 @@ export default function TransactionsPage() {
                 </option>
               ))}
             </select>
+            <select
+              value={selectedSource}
+              onChange={(e) => setSelectedSource(e.target.value as 'all' | 'regular' | 'wallet')}
+              className="px-4 py-2.5 rounded-xl bg-white dark:bg-surface-800 border border-gray-200 dark:border-surface-600 text-gray-900 dark:text-surface-100 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/30 cursor-pointer"
+            >
+              {sources.map((source) => (
+                <option key={source.value} value={source.value} className="bg-white dark:bg-surface-800 text-gray-900 dark:text-surface-100">
+                  {source.label}
+                </option>
+              ))}
+            </select>
+            {loadingWalletTxs && (
+              <div className="flex items-center text-sm text-gray-500">
+                <Loader2 className="w-4 h-4 animate-spin mr-1" />
+                Loading wallet...
+              </div>
+            )}
           </div>
         </div>
       </Card>
@@ -241,6 +329,7 @@ export default function TransactionsPage() {
               <thead className="bg-surface-50 dark:bg-surface-800">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Description</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Source</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Amount</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-surface-400 uppercase tracking-wider">Status</th>
@@ -263,6 +352,11 @@ export default function TransactionsPage() {
                     {transaction.category}
                   </div>
                 </td>
+                <td className="px-6 py-4">
+                  <Badge variant={transaction.source === 'wallet' ? 'info' : 'neutral'}>
+                    {transaction.source === 'wallet' ? '🔗 Wallet' : 'Regular'}
+                  </Badge>
+                </td>
                 <td className="px-6 py-4 text-gray-600 dark:text-surface-300">
                   {format(new Date(transaction.date), 'MMM dd, yyyy')}
                 </td>
@@ -278,27 +372,35 @@ export default function TransactionsPage() {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleEdit(transaction)}
-                      className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 text-gray-500 hover:text-gray-700 dark:hover:text-surface-300 transition-colors"
-                      title="Edit"
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleArchive(transaction)}
-                      className="p-1.5 rounded-lg hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 transition-colors"
-                      title="Archive"
-                    >
-                      <Archive className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(transaction.id)}
-                      className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-colors"
-                      title="Delete (Archives first)"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    {transaction.source === 'regular' ? (
+                      <>
+                        <button
+                          onClick={() => handleEdit(transaction)}
+                          className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 text-gray-500 hover:text-gray-700 dark:hover:text-surface-300 transition-colors"
+                          title="Edit"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleArchive(transaction)}
+                          className="p-1.5 rounded-lg hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 transition-colors"
+                          title="Archive"
+                        >
+                          <Archive className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(transaction.id)}
+                          className="p-1.5 rounded-lg hover:bg-red-500/10 text-gray-500 hover:text-red-500 transition-colors"
+                          title="Delete (Archives first)"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </>
+                    ) : (
+                      <span className="text-xs text-gray-400 dark:text-surface-500 italic">
+                        Blockchain (read-only)
+                      </span>
+                    )}
                   </div>
                 </td>
               </motion.tr>

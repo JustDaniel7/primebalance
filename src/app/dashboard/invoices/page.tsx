@@ -27,6 +27,7 @@ import {
   Receipt,
   CreditCard,
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { Card, Button, Badge } from '@/components/ui';
 import { useInvoiceStore } from '@/store/invoice-store';
 import { useThemeStore } from '@/store/theme-store';
@@ -667,6 +668,13 @@ export default function InvoicesPage() {
                     setViewingInvoice(null);
                   }}
                   onRefresh={() => fetchInvoices()}
+                  onArchive={async () => {
+                    const success = await archiveInvoice(viewingInvoice.id);
+                    if (success) {
+                      setViewingInvoice(null);
+                      toast.success('Invoice archived successfully');
+                    }
+                  }}
               />
           )}
 

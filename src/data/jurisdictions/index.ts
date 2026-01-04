@@ -5,9 +5,9 @@
 import { TaxJurisdictionFull, JurisdictionType } from '@/types/tax';
 import { ALL_US_JURISDICTIONS, US_FEDERAL, US_STATES, US_TERRITORIES, getUSJurisdiction, getNoIncomeTaxStates } from './us-jurisdictions';
 import { INTERNATIONAL_JURISDICTIONS, getInternationalJurisdiction, getJurisdictionsByRegion, getLowTaxJurisdictions } from './international-jurisdictions';
-import { 
-  ALL_OFFSHORE_JURISDICTIONS, 
-  CARIBBEAN_JURISDICTIONS, 
+import {
+  ALL_OFFSHORE_JURISDICTIONS,
+  CARIBBEAN_JURISDICTIONS,
   EUROPEAN_OFFSHORE_JURISDICTIONS,
   PACIFIC_JURISDICTIONS,
   ASIAN_OFFSHORE_JURISDICTIONS,
@@ -18,6 +18,13 @@ import {
   getAssetProtectionJurisdictions,
   getOffshoreJurisdictionsByRegion,
 } from './offshore-jurisdictions';
+import {
+  SWISS_CANTONS,
+  getCantonByCode,
+  getCantonsByLanguage,
+  getLowestTaxCantons,
+  getCantonTaxComparison,
+} from './swiss-cantons';
 
 // =============================================================================
 // COMBINED ALL JURISDICTIONS
@@ -27,6 +34,7 @@ export const ALL_JURISDICTIONS: TaxJurisdictionFull[] = [
   ...ALL_US_JURISDICTIONS,
   ...INTERNATIONAL_JURISDICTIONS,
   ...ALL_OFFSHORE_JURISDICTIONS,
+  ...SWISS_CANTONS,
 ];
 
 // =============================================================================
@@ -574,6 +582,15 @@ export function getGroupedJurisdictions(): {
         rate: j.corporateTax.standardRate,
       })),
     },
+    {
+      label: 'Swiss Cantons',
+      options: SWISS_CANTONS.map(j => ({
+        value: j.code,
+        label: j.name,
+        flag: j.flag || '🇨🇭',
+        rate: j.corporateTax.standardRate,
+      })),
+    },
   ];
 }
 
@@ -690,4 +707,10 @@ export {
   getJurisdictionsWithCBI,
   getAssetProtectionJurisdictions,
   getOffshoreJurisdictionsByRegion,
+  // Swiss Cantons
+  SWISS_CANTONS,
+  getCantonByCode,
+  getCantonsByLanguage,
+  getLowestTaxCantons,
+  getCantonTaxComparison,
 };

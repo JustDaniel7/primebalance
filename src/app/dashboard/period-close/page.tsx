@@ -30,10 +30,17 @@ import {
     Ban,
     Eye,
     Loader2,
+    Search,
+    FileSearch,
+    Activity,
+    User,
+    Calendar,
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { usePeriodCloseStore } from '@/store/period-close-store';
+import jsPDF from 'jspdf';
+import { Download } from 'lucide-react';
 import type {
     AccountingPeriod,
     CloseChecklistItem,
@@ -66,6 +73,148 @@ function LoadingSkeleton() {
             </div>
         </div>
     );
+}
+
+// =============================================================================
+// PDF EXPORT FUNCTION
+// =============================================================================
+
+function generatePeriodClosePDF(
+    period: AccountingPeriod,
+    checklistItems: Array<{ name: string; status: string; completedAt?: string; completedBy?: string }>,
+    adjustments: Array<{ description: string; type: string; amount: number; status: string }>,
+    missingItems: Array<{ title: string; severity: string; status: string }>
+) {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    let yPos = 20;
+
+    // Title
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Period Close Report', pageWidth / 2, yPos, { align: 'center' });
+    yPos += 15;
+
+    // Period Info
+    doc.setFontSize(14);
+    doc.text(period.name, pageWidth / 2, yPos, { align: 'center' });
+    yPos += 8;
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${period.startDate} - ${period.endDate}`, pageWidth / 2, yPos, { align: 'center' });
+    yPos += 5;
+    doc.text(`Status: ${period.status.toUpperCase()}`, pageWidth / 2, yPos, { align: 'center' });
+    yPos += 15;
+
+    // Financial Summary
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Financial Summary', 20, yPos);
+    yPos += 8;
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Total Revenue: €${(period.totalRevenue || 0).toLocaleString()}`, 25, yPos);
+    yPos += 6;
+    doc.text(`Total Expenses: €${(period.totalExpenses || 0).toLocaleString()}`, 25, yPos);
+    yPos += 6;
+    doc.text(`Net Income: €${(period.netIncome || 0).toLocaleString()}`, 25, yPos);
+    yPos += 6;
+    doc.text(`Total Assets: €${(period.totalAssets || 0).toLocaleString()}`, 25, yPos);
+    yPos += 6;
+    doc.text(`Total Liabilities: €${(period.totalLiabilities || 0).toLocaleString()}`, 25, yPos);
+    yPos += 15;
+
+    // Checklist Progress
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Checklist Progress (${period.checklistProgress.toFixed(0)}%)`, 20, yPos);
+    yPos += 8;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+
+    const completedItems = checklistItems.filter(i => i.status === 'completed');
+    const pendingItems = checklistItems.filter(i => i.status !== 'completed');
+
+    doc.text(`Completed: ${completedItems.length} | Pending: ${pendingItems.length}`, 25, yPos);
+    yPos += 10;
+
+    // Completed items
+    completedItems.slice(0, 10).forEach((item) => {
+        if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
+        }
+        doc.text(`✓ ${item.name}`, 25, yPos);
+        yPos += 5;
+    });
+
+    if (completedItems.length > 10) {
+        doc.text(`... and ${completedItems.length - 10} more completed items`, 25, yPos);
+        yPos += 5;
+    }
+    yPos += 10;
+
+    // Adjustments
+    if (yPos > 250) {
+        doc.addPage();
+        yPos = 20;
+    }
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Adjustments (${adjustments.length})`, 20, yPos);
+    yPos += 8;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+
+    adjustments.slice(0, 8).forEach((adj) => {
+        if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
+        }
+        const sign = adj.amount >= 0 ? '+' : '';
+        doc.text(`• ${adj.description} (${adj.type}): ${sign}€${adj.amount.toLocaleString()} [${adj.status}]`, 25, yPos);
+        yPos += 5;
+    });
+    yPos += 10;
+
+    // Missing Items
+    if (yPos > 250) {
+        doc.addPage();
+        yPos = 20;
+    }
+    const openMissing = missingItems.filter(m => m.status === 'open');
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Missing Items (${openMissing.length} open)`, 20, yPos);
+    yPos += 8;
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+
+    openMissing.slice(0, 8).forEach((item) => {
+        if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
+        }
+        doc.text(`• [${item.severity.toUpperCase()}] ${item.title}`, 25, yPos);
+        yPos += 5;
+    });
+
+    // Footer
+    const pageCount = doc.internal.pages.length - 1;
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.text(
+            `Generated: ${new Date().toLocaleString()} | Page ${i} of ${pageCount}`,
+            pageWidth / 2,
+            290,
+            { align: 'center' }
+        );
+    }
+
+    // Save
+    doc.save(`period-close-${period.code}.pdf`);
 }
 
 // =============================================================================
@@ -420,6 +569,331 @@ function ChecklistSection({ periodId }: { periodId: string }) {
 }
 
 // =============================================================================
+// INSPECTOR PANEL
+// =============================================================================
+
+interface InspectorPanelProps {
+    period: AccountingPeriod;
+    onClose: () => void;
+}
+
+function InspectorPanel({ period, onClose }: InspectorPanelProps) {
+    const { checklistItems, adjustments, missingItems } = usePeriodCloseStore();
+    const [activeTab, setActiveTab] = useState<'audit' | 'balances' | 'documents'>('audit');
+
+    const periodChecklist = checklistItems.filter((i) => i.periodId === period.id);
+    const periodAdjustments = adjustments.filter((a) => a.periodId === period.id);
+    const periodMissing = missingItems.filter((m) => m.periodId === period.id);
+
+    // Build audit trail from all activities
+    const auditTrail = useMemo(() => {
+        const events: Array<{
+            id: string;
+            type: string;
+            action: string;
+            user: string;
+            timestamp: string;
+            details?: string;
+        }> = [];
+
+        // Add period events
+        if (period.closedAt) {
+            events.push({
+                id: `period-closed-${period.id}`,
+                type: 'period',
+                action: 'Period Closed',
+                user: period.closedBy || 'System',
+                timestamp: period.closedAt,
+            });
+        }
+        if (period.reopenedAt) {
+            events.push({
+                id: `period-reopened-${period.id}`,
+                type: 'period',
+                action: 'Period Reopened',
+                user: period.reopenedBy || 'System',
+                timestamp: period.reopenedAt,
+                details: period.reopenReason,
+            });
+        }
+
+        // Add checklist completions
+        periodChecklist.forEach((item) => {
+            if (item.completedAt) {
+                events.push({
+                    id: `checklist-${item.id}`,
+                    type: 'checklist',
+                    action: `Completed: ${item.name}`,
+                    user: item.completedBy || 'System',
+                    timestamp: item.completedAt,
+                });
+            }
+        });
+
+        // Add adjustment activities
+        periodAdjustments.forEach((adj) => {
+            if (adj.approvedAt) {
+                events.push({
+                    id: `adj-approved-${adj.id}`,
+                    type: 'adjustment',
+                    action: `Approved: ${adj.description}`,
+                    user: adj.approvedBy || 'System',
+                    timestamp: adj.approvedAt,
+                    details: `€${adj.amount.toLocaleString()}`,
+                });
+            }
+            if (adj.postedAt) {
+                events.push({
+                    id: `adj-posted-${adj.id}`,
+                    type: 'adjustment',
+                    action: `Posted: ${adj.description}`,
+                    user: 'System',
+                    timestamp: adj.postedAt,
+                });
+            }
+        });
+
+        // Sort by timestamp descending
+        return events.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    }, [period, periodChecklist, periodAdjustments]);
+
+    const formatDate = (dateStr: string) => {
+        const date = new Date(dateStr);
+        return date.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    };
+
+    const getTypeIcon = (type: string) => {
+        switch (type) {
+            case 'period':
+                return <Calendar className="w-4 h-4" />;
+            case 'checklist':
+                return <CheckCircle2 className="w-4 h-4" />;
+            case 'adjustment':
+                return <DollarSign className="w-4 h-4" />;
+            default:
+                return <Activity className="w-4 h-4" />;
+        }
+    };
+
+    const getTypeColor = (type: string) => {
+        switch (type) {
+            case 'period':
+                return 'text-blue-500 bg-blue-100 dark:bg-blue-900/30';
+            case 'checklist':
+                return 'text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30';
+            case 'adjustment':
+                return 'text-amber-500 bg-amber-100 dark:bg-amber-900/30';
+            default:
+                return 'text-gray-500 bg-gray-100 dark:bg-gray-900/30';
+        }
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            className="fixed inset-y-0 right-0 w-full max-w-lg bg-white dark:bg-surface-800 shadow-xl z-50 overflow-hidden flex flex-col"
+        >
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-surface-700">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+                        <FileSearch className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Inspector Mode</h2>
+                        <p className="text-sm text-gray-500">{period.name}</p>
+                    </div>
+                </div>
+                <button
+                    onClick={onClose}
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-surface-700 text-gray-500"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex border-b border-gray-200 dark:border-surface-700">
+                {[
+                    { id: 'audit' as const, label: 'Audit Trail', icon: History },
+                    { id: 'balances' as const, label: 'Balances', icon: DollarSign },
+                    { id: 'documents' as const, label: 'Documents', icon: FileText },
+                ].map((tab) => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
+                            activeTab === tab.id
+                                ? 'text-[var(--accent-primary)] border-b-2 border-[var(--accent-primary)]'
+                                : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                        }`}
+                    >
+                        <tab.icon className="w-4 h-4" />
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-4">
+                {activeTab === 'audit' && (
+                    <div className="space-y-3">
+                        {auditTrail.length === 0 ? (
+                            <div className="text-center py-8 text-gray-500">
+                                <History className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                                <p>No audit events recorded</p>
+                            </div>
+                        ) : (
+                            auditTrail.map((event) => (
+                                <div
+                                    key={event.id}
+                                    className="flex gap-3 p-3 rounded-lg bg-gray-50 dark:bg-surface-700/50"
+                                >
+                                    <div className={`p-2 rounded-lg ${getTypeColor(event.type)}`}>
+                                        {getTypeIcon(event.type)}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                            {event.action}
+                                        </p>
+                                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+                                            <User className="w-3 h-3" />
+                                            <span>{event.user}</span>
+                                            <span>•</span>
+                                            <span>{formatDate(event.timestamp)}</span>
+                                        </div>
+                                        {event.details && (
+                                            <p className="text-xs text-gray-500 mt-1">{event.details}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                )}
+
+                {activeTab === 'balances' && (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/20">
+                                <p className="text-xs text-emerald-600 dark:text-emerald-400 mb-1">Total Revenue</p>
+                                <p className="text-xl font-semibold text-emerald-700 dark:text-emerald-300">
+                                    €{(period.totalRevenue || 0).toLocaleString()}
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20">
+                                <p className="text-xs text-red-600 dark:text-red-400 mb-1">Total Expenses</p>
+                                <p className="text-xl font-semibold text-red-700 dark:text-red-300">
+                                    €{(period.totalExpenses || 0).toLocaleString()}
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+                                <p className="text-xs text-blue-600 dark:text-blue-400 mb-1">Net Income</p>
+                                <p className="text-xl font-semibold text-blue-700 dark:text-blue-300">
+                                    €{(period.netIncome || 0).toLocaleString()}
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20">
+                                <p className="text-xs text-purple-600 dark:text-purple-400 mb-1">Total Assets</p>
+                                <p className="text-xl font-semibold text-purple-700 dark:text-purple-300">
+                                    €{(period.totalAssets || 0).toLocaleString()}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="mt-6">
+                            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                Period Adjustments ({periodAdjustments.length})
+                            </h4>
+                            <div className="space-y-2">
+                                {periodAdjustments.map((adj) => (
+                                    <div
+                                        key={adj.id}
+                                        className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-surface-700/50"
+                                    >
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                                {adj.description}
+                                            </p>
+                                            <p className="text-xs text-gray-500">{adj.type}</p>
+                                        </div>
+                                        <p className={`font-medium ${adj.amount >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+                                            {adj.amount >= 0 ? '+' : ''}€{adj.amount.toLocaleString()}
+                                        </p>
+                                    </div>
+                                ))}
+                                {periodAdjustments.length === 0 && (
+                                    <p className="text-sm text-gray-500 text-center py-4">No adjustments</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === 'documents' && (
+                    <div className="space-y-4">
+                        <div className="mb-4">
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Search documents..."
+                                    className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-surface-700 border-0 text-sm focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                Missing Documents ({periodMissing.filter((m) => m.status === 'open').length})
+                            </h4>
+                            <div className="space-y-2">
+                                {periodMissing.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-surface-700/50"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className={`p-2 rounded-lg ${
+                                                item.status === 'open'
+                                                    ? 'bg-red-100 text-red-500 dark:bg-red-900/30'
+                                                    : 'bg-emerald-100 text-emerald-500 dark:bg-emerald-900/30'
+                                            }`}>
+                                                {item.status === 'open' ? <AlertTriangle className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                                    {item.title}
+                                                </p>
+                                                <p className="text-xs text-gray-500">{item.type}</p>
+                                            </div>
+                                        </div>
+                                        <Badge variant={item.severity === 'critical' ? 'danger' : 'warning'}>
+                                            {item.severity === 'critical' ? 'Critical' : item.severity}
+                                        </Badge>
+                                    </div>
+                                ))}
+                                {periodMissing.length === 0 && (
+                                    <p className="text-sm text-gray-500 text-center py-4">All documents complete</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </motion.div>
+    );
+}
+
+// =============================================================================
 // ADJUSTMENTS SECTION
 // =============================================================================
 
@@ -601,8 +1075,12 @@ export default function PeriodClosePage() {
         isLoading,
         isInitialized,
         error,
+        checklistItems,
+        adjustments,
+        missingItems,
     } = usePeriodCloseStore();
     const { t } = useThemeStore();
+    const [showInspector, setShowInspector] = useState(false);
 
     useEffect(() => {
         if (!isInitialized) {
@@ -647,12 +1125,39 @@ export default function PeriodClosePage() {
                         {t('periodClose.description') || 'Manage accounting period closings and adjustments'}
                     </p>
                 </div>
-                {isLoading && (
-                    <div className="flex items-center gap-2 text-gray-500">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span className="text-sm">Syncing...</span>
-                    </div>
-                )}
+                <div className="flex items-center gap-3">
+                    {selectedPeriod && (
+                        <>
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onClick={() => {
+                                    const periodChecklist = checklistItems.filter(i => i.periodId === selectedPeriod.id);
+                                    const periodAdjustments = adjustments.filter(a => a.periodId === selectedPeriod.id);
+                                    const periodMissing = missingItems.filter(m => m.periodId === selectedPeriod.id);
+                                    generatePeriodClosePDF(selectedPeriod, periodChecklist, periodAdjustments, periodMissing);
+                                }}
+                                leftIcon={<Download size={16} />}
+                            >
+                                Export PDF
+                            </Button>
+                            <Button
+                                variant={showInspector ? 'primary' : 'secondary'}
+                                size="sm"
+                                onClick={() => setShowInspector(!showInspector)}
+                                leftIcon={<FileSearch size={16} />}
+                            >
+                                Inspector
+                            </Button>
+                        </>
+                    )}
+                    {isLoading && (
+                        <div className="flex items-center gap-2 text-gray-500">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span className="text-sm">Syncing...</span>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Metrics */}
@@ -707,6 +1212,16 @@ export default function PeriodClosePage() {
                     )}
                 </div>
             </div>
+
+            {/* Inspector Panel */}
+            <AnimatePresence>
+                {showInspector && selectedPeriod && (
+                    <InspectorPanel
+                        period={selectedPeriod}
+                        onClose={() => setShowInspector(false)}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 }

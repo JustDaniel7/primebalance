@@ -115,6 +115,7 @@ export enum JurisdictionType {
   US_FEDERAL = 'US_FEDERAL',
   COUNTRY = 'COUNTRY',
   SPECIAL_ZONE = 'SPECIAL_ZONE',
+  SWISS_CANTON = 'SWISS_CANTON',
 }
 
 // -----------------------------------------------------------------------------

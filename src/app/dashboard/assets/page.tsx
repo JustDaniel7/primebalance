@@ -182,26 +182,88 @@ const DepreciationTab: React.FC = () => {
 // =============================================================================
 
 const CapExTab: React.FC = () => {
-    const { capExBudgets, createCapExBudget } = useAssetStore();
+    const { capExBudgets, createCapExBudget, updateCapExBudget } = useAssetStore();
     const { t } = useThemeStore();
+    const [showBudgetModal, setShowBudgetModal] = useState(false);
+    const [editingBudget, setEditingBudget] = useState<string | null>(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        fiscalYear: String(new Date().getFullYear()),
+        budgetAmount: 100000,
+        currency: 'EUR',
+        entityId: '',
+        projectId: '',
+    });
 
-    const handleCreateBudget = () => {
-        const year = new Date().getFullYear();
-        createCapExBudget({
-            name: `FY${year} CapEx Budget`,
-            fiscalYear: String(year),
+    const handleOpenCreate = () => {
+        setFormData({
+            name: `FY${new Date().getFullYear()} CapEx Budget`,
+            fiscalYear: String(new Date().getFullYear()),
             budgetAmount: 100000,
             currency: 'EUR',
+            entityId: '',
+            projectId: '',
         });
-        toast.success(t('assets.capex.budgetCreated') || 'CapEx budget created successfully');
+        setEditingBudget(null);
+        setShowBudgetModal(true);
     };
+
+    const handleOpenEdit = (budget: typeof capExBudgets[0]) => {
+        setFormData({
+            name: budget.name,
+            fiscalYear: budget.fiscalYear,
+            budgetAmount: budget.budgetAmount,
+            currency: budget.currency,
+            entityId: budget.entityId || '',
+            projectId: budget.projectId || '',
+        });
+        setEditingBudget(budget.id);
+        setShowBudgetModal(true);
+    };
+
+    const handleSaveBudget = () => {
+        if (!formData.name.trim()) {
+            toast.error('Budget name is required');
+            return;
+        }
+        if (formData.budgetAmount <= 0) {
+            toast.error('Budget amount must be greater than 0');
+            return;
+        }
+
+        if (editingBudget) {
+            updateCapExBudget(editingBudget, {
+                name: formData.name,
+                fiscalYear: formData.fiscalYear,
+                budgetAmount: formData.budgetAmount,
+                currency: formData.currency,
+                entityId: formData.entityId || undefined,
+                projectId: formData.projectId || undefined,
+            });
+            toast.success(t('assets.capex.budgetUpdated') || 'CapEx budget updated successfully');
+        } else {
+            createCapExBudget({
+                name: formData.name,
+                fiscalYear: formData.fiscalYear,
+                budgetAmount: formData.budgetAmount,
+                currency: formData.currency,
+                entityId: formData.entityId || undefined,
+                projectId: formData.projectId || undefined,
+            });
+            toast.success(t('assets.capex.budgetCreated') || 'CapEx budget created successfully');
+        }
+        setShowBudgetModal(false);
+    };
+
+    const currencies = ['EUR', 'USD', 'GBP', 'CHF', 'JPY', 'CAD', 'AUD'];
+    const fiscalYears = Array.from({ length: 5 }, (_, i) => String(new Date().getFullYear() - 2 + i));
 
     return (
         <div className="space-y-6">
             {/* Header with Add Budget Button */}
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.capex.title') || 'Capital Expenditure'}</h3>
-                <Button variant="primary" size="sm" leftIcon={<Plus size={16} />} onClick={handleCreateBudget}>
+                <Button variant="primary" size="sm" leftIcon={<Plus size={16} />} onClick={handleOpenCreate}>
                     {t('assets.capex.addBudget') || 'Add Budget'}
                 </Button>
             </div>
@@ -213,22 +275,23 @@ const CapExTab: React.FC = () => {
                     <p className="text-gray-500 dark:text-gray-400 mt-2 mb-4">
                         {t('assets.capex.noBudgetsDesc')}
                     </p>
-                    <Button variant="primary" onClick={handleCreateBudget}>
+                    <Button variant="primary" onClick={handleOpenCreate}>
                         {t('assets.capex.createBudget')}
                     </Button>
                 </Card>
             ) : (
                 <>
                     {capExBudgets.map(budget => (
-                        <Card key={budget.id} variant="glass" padding="md">
+                        <Card key={budget.id} variant="glass" padding="md" hover className="cursor-pointer" onClick={() => handleOpenEdit(budget)}>
                             <div className="flex items-center justify-between mb-4">
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{budget.name}</h3>
-                                    <p className="text-sm text-gray-500">{budget.fiscalYear}</p>
+                                    <p className="text-sm text-gray-500">{budget.fiscalYear} • {budget.currency}</p>
                                 </div>
                                 <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                  €{budget.budgetAmount.toLocaleString('de-DE')}
-                </span>
+                                    {budget.currency === 'EUR' ? '€' : budget.currency === 'USD' ? '$' : budget.currency === 'GBP' ? '£' : budget.currency}
+                                    {budget.budgetAmount.toLocaleString('de-DE')}
+                                </span>
                             </div>
 
                             {/* Progress */}
@@ -236,8 +299,8 @@ const CapExTab: React.FC = () => {
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-500">{t('assets.capex.spent')}</span>
                                     <span className="text-gray-900 dark:text-white">
-                    €{budget.spentAmount.toLocaleString('de-DE')} ({((budget.spentAmount / budget.budgetAmount) * 100).toFixed(1)}%)
-                  </span>
+                                        €{budget.spentAmount.toLocaleString('de-DE')} ({((budget.spentAmount / budget.budgetAmount) * 100).toFixed(1)}%)
+                                    </span>
                                 </div>
                                 <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                     <div className="h-full flex">
@@ -254,6 +317,127 @@ const CapExTab: React.FC = () => {
                     ))}
                 </>
             )}
+
+            {/* Budget Modal */}
+            <AnimatePresence>
+                {showBudgetModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+                        onClick={() => setShowBudgetModal(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl max-w-md w-full p-6"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                                {editingBudget ? 'Edit CapEx Budget' : 'Create CapEx Budget'}
+                            </h3>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Budget Name *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-surface-600 bg-white dark:bg-surface-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                        placeholder="e.g., FY2024 Equipment Budget"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                            Fiscal Year
+                                        </label>
+                                        <select
+                                            value={formData.fiscalYear}
+                                            onChange={(e) => setFormData({ ...formData, fiscalYear: e.target.value })}
+                                            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-surface-600 bg-white dark:bg-surface-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                        >
+                                            {fiscalYears.map((year) => (
+                                                <option key={year} value={year}>{year}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                            Currency
+                                        </label>
+                                        <select
+                                            value={formData.currency}
+                                            onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+                                            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-surface-600 bg-white dark:bg-surface-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                        >
+                                            {currencies.map((currency) => (
+                                                <option key={currency} value={currency}>{currency}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Budget Amount *
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={formData.budgetAmount}
+                                        onChange={(e) => setFormData({ ...formData, budgetAmount: Number(e.target.value) })}
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-surface-600 bg-white dark:bg-surface-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                        min={0}
+                                        step={1000}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Entity/Department (Optional)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.entityId}
+                                        onChange={(e) => setFormData({ ...formData, entityId: e.target.value })}
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-surface-600 bg-white dark:bg-surface-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                        placeholder="e.g., IT Department"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        Project (Optional)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.projectId}
+                                        onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
+                                        className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-surface-600 bg-white dark:bg-surface-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--accent-primary)]"
+                                        placeholder="e.g., Office Renovation"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end gap-3 mt-6">
+                                <Button variant="ghost" onClick={() => setShowBudgetModal(false)}>
+                                    Cancel
+                                </Button>
+                                <Button variant="primary" onClick={handleSaveBudget}>
+                                    {editingBudget ? 'Update' : 'Create'} Budget
+                                </Button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

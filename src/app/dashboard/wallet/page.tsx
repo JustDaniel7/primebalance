@@ -165,7 +165,8 @@ function WalletWizard({ wallet, onClose, onSave, isSaving }: WalletWizardProps) 
     name: wallet?.name || '',
     address: wallet?.address || '',
     network: wallet?.network || 'ethereum',
-    provider: wallet?.provider || '',
+    provider: wallet?.provider && !['metamask', 'coinbase', 'phantom', 'ledger', 'trust'].includes(wallet.provider) ? 'other' : (wallet?.provider || ''),
+    customProvider: wallet?.provider && !['metamask', 'coinbase', 'phantom', 'ledger', 'trust'].includes(wallet.provider) ? wallet.provider : '',
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -179,9 +180,18 @@ function WalletWizard({ wallet, onClose, onSave, isSaving }: WalletWizardProps) 
       setError('Wallet address is required');
       return;
     }
+    if (formData.provider === 'other' && !formData.customProvider.trim()) {
+      setError('Please specify the provider name');
+      return;
+    }
 
     try {
-      await onSave(formData);
+      // Use customProvider when 'other' is selected
+      const submitData = {
+        ...formData,
+        provider: formData.provider === 'other' ? formData.customProvider : formData.provider,
+      };
+      await onSave(submitData);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     }
@@ -266,7 +276,7 @@ function WalletWizard({ wallet, onClose, onSave, isSaving }: WalletWizardProps) 
               </label>
               <select
                   value={formData.provider}
-                  onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, provider: e.target.value, customProvider: e.target.value === 'other' ? formData.customProvider : '' })}
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white capitalize"
               >
                 <option value="">Select provider</option>
@@ -276,6 +286,25 @@ function WalletWizard({ wallet, onClose, onSave, isSaving }: WalletWizardProps) 
               </select>
             </div>
           </div>
+
+          {/* Custom provider input when 'other' is selected */}
+          {formData.provider === 'other' && (
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Custom Provider Name
+              </label>
+              <input
+                type="text"
+                value={formData.customProvider}
+                onChange={(e) => setFormData({ ...formData, customProvider: e.target.value })}
+                placeholder="Enter your wallet provider name"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white placeholder-gray-400"
+              />
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Enter the name of your wallet provider (e.g., Rainbow, Argent, Trezor)
+              </p>
+            </div>
+          )}
 
           <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
             <Button variant="secondary" onClick={onClose} disabled={isSaving}>
