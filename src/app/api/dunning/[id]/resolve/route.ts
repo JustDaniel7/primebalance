@@ -194,7 +194,7 @@ export async function POST(
                 eventType: DunningEventType.DISPUTE_RESOLVED,
                 timestamp: now,
                 actorId: session.user.id,
-                actorName: session.user.name || session.user.email,
+                actorName: session.user.name || session.user.email || undefined,
                 actorType: 'user',
                 payload: {
                     disputeId: dispute.disputeId,
@@ -226,7 +226,7 @@ export async function POST(
             currency: dunning.currency,
             organizationId: session.user.organizationId,
             actorId: session.user.id,
-            actorName: session.user.name || session.user.email,
+            actorName: session.user.name || session.user.email || undefined,
         });
 
         return NextResponse.json({

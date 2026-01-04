@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -1915,7 +1915,7 @@ function TaskWizardModal() {
 // MAIN PAGE COMPONENT
 // =============================================================================
 
-export default function TaskCenterPage() {
+function TaskCenterContent() {
     const { t } = useThemeStore();
     const { isLoading, fetchTasks, fetchRisks, getTaskSummary, getRiskSummary, taskWizard } = useTaskStore();
     const { notifications, unreadCount, fetchNotifications } = useNotificationStore();
@@ -2034,5 +2034,13 @@ export default function TaskCenterPage() {
                 {taskWizard.isOpen && <TaskWizardModal />}
             </AnimatePresence>
         </div>
+    );
+}
+
+export default function TaskCenterPage() {
+    return (
+        <Suspense fallback={<div className="p-6">Loading...</div>}>
+            <TaskCenterContent />
+        </Suspense>
     );
 }

@@ -648,7 +648,7 @@ function MonteCarloSection() {
             const rate = dashboard.currentRates.find(
                 r => r.baseCurrency === baseCurrency && r.quoteCurrency === quoteCurrency
             );
-            if (rate) setCurrentRate(rate.midRate);
+            if (rate) setCurrentRate(Number(rate.rate));
         }
     }, [baseCurrency, quoteCurrency, dashboard?.currentRates]);
 

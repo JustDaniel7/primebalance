@@ -75,7 +75,7 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     const user = await getSessionWithOrg()
-    if (!user) return unauthorized()
+    if (!user?.organizationId) return unauthorized()
 
     const { id } = await params
 
@@ -114,7 +114,7 @@ export async function DELETE(
             retentionStatus: 'active',
             retentionStartDate: now,
             retentionEndDate: permanentDeletionDate,
-            organizationId: user.organizationId || undefined,
+            organizationId: user.organizationId,
         },
     })
 

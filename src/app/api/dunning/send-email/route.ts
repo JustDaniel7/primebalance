@@ -127,19 +127,19 @@ export async function POST(request: NextRequest) {
         // Notify admins about the dunning email
         const dunning = await prisma.dunning.findUnique({
             where: { id: dunningId },
-            select: { totalOutstanding: true, currency: true },
+            select: { outstandingAmount: true, currency: true },
         });
 
         await notifyDunningSent({
             dunningId,
             dunningNumber,
             customerName,
-            amount: dunning?.totalOutstanding || 0,
+            amount: Number(dunning?.outstandingAmount) || 0,
             currency: dunning?.currency || 'EUR',
             level,
             organizationId: session.user.organizationId || 'default',
             actorId: session.user.id,
-            actorName: session.user.name || session.user.email,
+            actorName: session.user.name || session.user.email || undefined,
         });
 
         return NextResponse.json({

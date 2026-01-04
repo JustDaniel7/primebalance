@@ -240,16 +240,11 @@ export async function POST(req: NextRequest) {
                 fileSize: file.size,
                 vendor: analysis.vendor,
                 amount: analysis.amount,
-                currency: analysis.currency || 'EUR',
                 date: analysis.date ? new Date(analysis.date) : null,
                 category: analysis.category,
-                taxAmount: analysis.taxAmount,
-                paymentMethod: analysis.paymentMethod,
                 confidence: analysis.confidence,
                 extractedText: analysis.extractedText,
-                lineItems: analysis.lineItems.length > 0 ? JSON.stringify(analysis.lineItems) : null,
                 status: 'unmatched',
-                ocrProcessed: !!process.env.OPENAI_API_KEY,
                 organizationId: user.organizationId,
             }
         })

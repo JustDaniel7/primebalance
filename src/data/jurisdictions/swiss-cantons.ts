@@ -270,7 +270,7 @@ export function getCantonTaxComparison(): Array<{ name: string; code: string; ra
     return SWISS_CANTONS
         .map(c => ({
             name: c.name,
-            code: c.shortName,
+            code: c.shortName || c.code || '',
             rate: c.corporateTax.standardRate,
         }))
         .sort((a, b) => a.rate - b.rate);

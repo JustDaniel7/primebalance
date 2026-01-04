@@ -86,7 +86,7 @@ export async function POST(
           status: { in: ['pending', 'confirmed', 'in_production'] },
         },
         data: {
-          shippingAddress: recipientAddress,
+          customerAddress: recipientAddress,
           updatedAt: new Date(),
         },
       });

@@ -42,8 +42,6 @@ export async function POST(
 
     if (!supplier) return notFound('Supplier');
 
-    let ordersUpdated = 0;
-
     // Build the address object
     const supplierAddress = {
       street: body.address.street || '',
@@ -53,21 +51,7 @@ export async function POST(
       country: body.address.country || '',
     };
 
-    // Update all pending/confirmed purchase orders for this supplier
-    const orderResult = await prisma.order.updateMany({
-      where: {
-        supplierId: supplierId,
-        organizationId: user.organizationId,
-        status: { in: ['pending', 'confirmed', 'in_production'] },
-      },
-      data: {
-        billingAddress: supplierAddress,
-        updatedAt: new Date(),
-      },
-    });
-    ordersUpdated = orderResult.count;
-
-    // Update the supplier's address as well
+    // Update the supplier's address
     await prisma.supplier.update({
       where: { id: supplierId },
       data: {
@@ -78,8 +62,7 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      message: `Address synced to ${ordersUpdated} purchase orders`,
-      ordersUpdated,
+      message: 'Supplier address updated successfully',
       supplierId,
     });
   } catch (error) {
