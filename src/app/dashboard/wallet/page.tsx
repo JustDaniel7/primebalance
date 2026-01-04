@@ -77,13 +77,68 @@ const NETWORKS = [
 
 const PROVIDERS = ['metamask', 'coinbase', 'phantom', 'ledger', 'trust', 'other'];
 
-// Demo transactions
-const DEMO_TRANSACTIONS: WalletTransaction[] = [
-  { id: '1', type: 'receive', token: 'ETH', amount: 2.5, usdValue: 5000, from: '0x1234...5678', status: 'completed', timestamp: new Date(Date.now() - 3600000).toISOString() },
-  { id: '2', type: 'send', token: 'USDC', amount: 1000, usdValue: 1000, to: '0xabcd...efgh', status: 'completed', timestamp: new Date(Date.now() - 7200000).toISOString() },
-  { id: '3', type: 'swap', token: 'ETH → USDC', amount: 1, usdValue: 2000, status: 'completed', timestamp: new Date(Date.now() - 86400000).toISOString() },
-  { id: '4', type: 'receive', token: 'SOL', amount: 10, usdValue: 1000, from: '7EYn...87aw', status: 'pending', timestamp: new Date(Date.now() - 1800000).toISOString() },
-];
+// Fetch wallet transactions from API
+async function fetchWalletTransactions(walletId: string): Promise<WalletTransaction[]> {
+  try {
+    const res = await fetch(`/api/wallets/${walletId}/transactions?limit=50`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    // Map API response to local type
+    return (data.transactions || []).map((tx: any) => ({
+      id: tx.id,
+      type: tx.type as 'send' | 'receive' | 'swap',
+      token: tx.tokenSymbol || tx.network?.toUpperCase() || 'ETH',
+      amount: Number(tx.value),
+      usdValue: Number(tx.valueUsd || 0),
+      from: tx.isIncoming ? tx.fromAddress : undefined,
+      to: !tx.isIncoming ? tx.toAddress : undefined,
+      status: tx.status === 'confirmed' ? 'completed' : tx.status === 'pending' ? 'pending' : 'failed',
+      timestamp: tx.timestamp,
+      txHash: tx.hash,
+    }));
+  } catch (error) {
+    console.error('Failed to fetch transactions:', error);
+    return [];
+  }
+}
+
+// Create a new transaction
+async function createTransaction(walletId: string, data: {
+  type: 'send' | 'receive' | 'swap';
+  hash: string;
+  value: number;
+  valueUsd?: number;
+  tokenSymbol?: string;
+  fromAddress?: string;
+  toAddress?: string;
+  isIncoming: boolean;
+  description?: string;
+}): Promise<WalletTransaction | null> {
+  try {
+    const res = await fetch(`/api/wallets/${walletId}/transactions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to create transaction');
+    const tx = await res.json();
+    return {
+      id: tx.id,
+      type: data.type,
+      token: data.tokenSymbol || 'ETH',
+      amount: data.value,
+      usdValue: data.valueUsd || 0,
+      from: data.isIncoming ? data.fromAddress : undefined,
+      to: !data.isIncoming ? data.toAddress : undefined,
+      status: 'completed',
+      timestamp: tx.timestamp,
+      txHash: tx.hash,
+    };
+  } catch (error) {
+    console.error('Failed to create transaction:', error);
+    return null;
+  }
+}
 
 // =============================================================================
 // API HELPERS
@@ -1039,6 +1094,213 @@ function SwapModal({ tokens, onClose }: SwapModalProps) {
 }
 
 // =============================================================================
+// ADD TRANSACTION MODAL
+// =============================================================================
+
+interface AddTransactionModalProps {
+  wallets: WalletData[];
+  onClose: () => void;
+  onAdd: (walletId: string, txData: {
+    type: 'send' | 'receive' | 'swap';
+    hash: string;
+    value: number;
+    valueUsd?: number;
+    tokenSymbol?: string;
+    fromAddress?: string;
+    toAddress?: string;
+    description?: string;
+  }) => Promise<boolean>;
+}
+
+function AddTransactionModal({ wallets, onClose, onAdd }: AddTransactionModalProps) {
+  const [formData, setFormData] = useState({
+    walletId: wallets[0]?.id || '',
+    type: 'receive' as 'send' | 'receive' | 'swap',
+    hash: '',
+    value: '',
+    valueUsd: '',
+    tokenSymbol: 'ETH',
+    fromAddress: '',
+    toAddress: '',
+    description: '',
+  });
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!formData.walletId || !formData.hash || !formData.value) {
+      setError('Wallet, transaction hash, and value are required');
+      return;
+    }
+
+    setSaving(true);
+    setError(null);
+
+    const success = await onAdd(formData.walletId, {
+      type: formData.type,
+      hash: formData.hash,
+      value: parseFloat(formData.value),
+      valueUsd: formData.valueUsd ? parseFloat(formData.valueUsd) : undefined,
+      tokenSymbol: formData.tokenSymbol || 'ETH',
+      fromAddress: formData.fromAddress || undefined,
+      toAddress: formData.toAddress || undefined,
+      description: formData.description || undefined,
+    });
+
+    setSaving(false);
+    if (success) {
+      onClose();
+    } else {
+      setError('Failed to add transaction');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        className="bg-white dark:bg-surface-800 rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto"
+      >
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-surface-700">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Add Transaction</h2>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-surface-700 rounded-lg">
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        </div>
+
+        <div className="p-6 space-y-4">
+          {error && (
+            <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-sm">
+              <AlertCircle className="w-4 h-4" />
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Wallet *</label>
+            <select
+              value={formData.walletId}
+              onChange={(e) => setFormData({ ...formData, walletId: e.target.value })}
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+            >
+              {wallets.map((w) => (
+                <option key={w.id} value={w.id}>{w.name} ({w.network})</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type *</label>
+            <select
+              value={formData.type}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value as 'send' | 'receive' | 'swap' })}
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+            >
+              <option value="receive">Receive</option>
+              <option value="send">Send</option>
+              <option value="swap">Swap</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Transaction Hash *</label>
+            <input
+              type="text"
+              value={formData.hash}
+              onChange={(e) => setFormData({ ...formData, hash: e.target.value })}
+              placeholder="0x..."
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white font-mono text-sm"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount *</label>
+              <input
+                type="number"
+                step="0.000001"
+                value={formData.value}
+                onChange={(e) => setFormData({ ...formData, value: e.target.value })}
+                placeholder="0.00"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Token</label>
+              <input
+                type="text"
+                value={formData.tokenSymbol}
+                onChange={(e) => setFormData({ ...formData, tokenSymbol: e.target.value.toUpperCase() })}
+                placeholder="ETH"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">USD Value</label>
+            <input
+              type="number"
+              step="0.01"
+              value={formData.valueUsd}
+              onChange={(e) => setFormData({ ...formData, valueUsd: e.target.value })}
+              placeholder="0.00"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {formData.type === 'receive' ? 'From Address' : 'To Address'}
+            </label>
+            <input
+              type="text"
+              value={formData.type === 'receive' ? formData.fromAddress : formData.toAddress}
+              onChange={(e) => setFormData({
+                ...formData,
+                [formData.type === 'receive' ? 'fromAddress' : 'toAddress']: e.target.value
+              })}
+              placeholder="0x..."
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white font-mono text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+            <input
+              type="text"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              placeholder="Optional note"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-surface-700">
+          <Button variant="secondary" onClick={onClose} disabled={saving}>Cancel</Button>
+          <Button variant="primary" onClick={handleSubmit} disabled={saving || !formData.hash || !formData.value}>
+            {saving ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Adding...
+              </>
+            ) : (
+              <>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Transaction
+              </>
+            )}
+          </Button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// =============================================================================
 // MAIN PAGE
 // =============================================================================
 
@@ -1069,7 +1331,7 @@ export default function WalletPage() {
 
   // Data
   const [wallets, setWallets] = useState<WalletData[]>([]);
-  const [transactions, setTransactions] = useState<WalletTransaction[]>(DEMO_TRANSACTIONS);
+  const [transactions, setTransactions] = useState<WalletTransaction[]>([]);
   const [isSyncingTx, setIsSyncingTx] = useState(false);
 
   // UI State
@@ -1084,14 +1346,24 @@ export default function WalletPage() {
   const [sendModalOpen, setSendModalOpen] = useState(false);
   const [receiveModalOpen, setReceiveModalOpen] = useState(false);
   const [swapModalOpen, setSwapModalOpen] = useState(false);
+  const [addTxModalOpen, setAddTxModalOpen] = useState(false);
 
-  // Load wallets
+  // Load wallets and transactions
   const loadWallets = async () => {
     setIsLoading(true);
     setError(null);
     try {
       const data = await fetchWallets();
       setWallets(data);
+      // Also load transactions for all wallets
+      if (data.length > 0) {
+        const allTxPromises = data.map((wallet: WalletData) => fetchWalletTransactions(wallet.id));
+        const allTxResults = await Promise.all(allTxPromises);
+        const allTx = allTxResults.flat().sort((a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+        setTransactions(allTx);
+      }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -1144,31 +1416,59 @@ export default function WalletPage() {
     }
   };
 
+  // Load transactions for all wallets
+  const loadTransactions = async (walletList: WalletData[]) => {
+    if (walletList.length === 0) return;
+
+    const allTxPromises = walletList.map(wallet => fetchWalletTransactions(wallet.id));
+    const allTxResults = await Promise.all(allTxPromises);
+    const allTx = allTxResults.flat().sort((a, b) =>
+      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    );
+    setTransactions(allTx);
+  };
+
   const handleSyncTransactions = async () => {
+    if (wallets.length === 0) {
+      toast.error('No wallets to sync. Add a wallet first.');
+      return;
+    }
+
     setIsSyncingTx(true);
     try {
-      // Simulate fetching transactions from blockchain/API
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Add a new simulated transaction
-      const newTx: WalletTransaction = {
-        id: `tx-${Date.now()}`,
-        type: 'receive',
-        token: 'ETH',
-        amount: 0.5,
-        usdValue: 1000,
-        from: '0x9876...5432',
-        status: 'completed',
-        timestamp: new Date().toISOString(),
-      };
-
-      setTransactions(prev => [newTx, ...prev]);
+      // Fetch real transactions from all wallets
+      await loadTransactions(wallets);
       toast.success('Transactions synced successfully');
     } catch {
       toast.error('Failed to sync transactions');
     } finally {
       setIsSyncingTx(false);
     }
+  };
+
+  // Add a new transaction manually
+  const handleAddTransaction = async (walletId: string, txData: {
+    type: 'send' | 'receive' | 'swap';
+    hash: string;
+    value: number;
+    valueUsd?: number;
+    tokenSymbol?: string;
+    fromAddress?: string;
+    toAddress?: string;
+    description?: string;
+  }) => {
+    const newTx = await createTransaction(walletId, {
+      ...txData,
+      isIncoming: txData.type === 'receive',
+    });
+
+    if (newTx) {
+      setTransactions(prev => [newTx, ...prev]);
+      toast.success('Transaction added successfully');
+      return true;
+    }
+    toast.error('Failed to add transaction');
+    return false;
   };
 
   const tabs = [
@@ -1322,15 +1622,26 @@ export default function WalletPage() {
             <Card variant="glass" padding="md">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white">Transaction History</h3>
-                <Button
-                    variant="secondary"
-                    size="sm"
-                    leftIcon={<RefreshCw size={14} className={isSyncingTx ? 'animate-spin' : ''} />}
-                    onClick={handleSyncTransactions}
-                    disabled={isSyncingTx}
-                >
-                  {isSyncingTx ? 'Syncing...' : 'Sync'}
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                      variant="secondary"
+                      size="sm"
+                      leftIcon={<Plus size={14} />}
+                      onClick={() => setAddTxModalOpen(true)}
+                      disabled={wallets.length === 0}
+                  >
+                    Add
+                  </Button>
+                  <Button
+                      variant="secondary"
+                      size="sm"
+                      leftIcon={<RefreshCw size={14} className={isSyncingTx ? 'animate-spin' : ''} />}
+                      onClick={handleSyncTransactions}
+                      disabled={isSyncingTx}
+                  >
+                    {isSyncingTx ? 'Syncing...' : 'Sync'}
+                  </Button>
+                </div>
               </div>
               {transactions.length > 0 ? (
                   <div className="divide-y divide-gray-100 dark:divide-surface-700">
@@ -1380,6 +1691,13 @@ export default function WalletPage() {
         {sendModalOpen && <SendModal tokens={enrichedTokens} onClose={() => setSendModalOpen(false)} />}
         {receiveModalOpen && <ReceiveModal wallets={wallets} onClose={() => setReceiveModalOpen(false)} />}
         {swapModalOpen && <SwapModal tokens={enrichedTokens} onClose={() => setSwapModalOpen(false)} />}
+        {addTxModalOpen && (
+          <AddTransactionModal
+            wallets={wallets}
+            onClose={() => setAddTxModalOpen(false)}
+            onAdd={handleAddTransaction}
+          />
+        )}
 
       </div>
   );

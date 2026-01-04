@@ -64,6 +64,15 @@ interface NettingState {
   selectSession: (id: string | null) => void;
   selectAgreement: (id: string | null) => void;
 
+  // Customer/Supplier Sync
+  customers: { id: string; name: string; email?: string; type: string }[];
+  suppliers: { id: string; name: string; email?: string; type: string }[];
+  fetchCustomers: () => Promise<void>;
+  fetchSuppliers: () => Promise<void>;
+  getCustomerById: (id: string) => { id: string; name: string; email?: string; type: string } | undefined;
+  getSupplierById: (id: string) => { id: string; name: string; email?: string; type: string } | undefined;
+  searchParties: (query: string, type?: 'customer' | 'supplier' | 'all') => { id: string; name: string; type: string }[];
+
   // Computed
   getAnalytics: () => NettingAnalytics;
   getSessionPositions: (sessionId: string) => NettingPosition[];
@@ -107,6 +116,8 @@ export const useNettingStore = create<NettingState>()(
       isLoading: false,
       error: null,
       isInitialized: false,
+      customers: [],
+      suppliers: [],
 
       // =====================================================================
       // FETCH ACTIONS
@@ -395,6 +406,76 @@ export const useNettingStore = create<NettingState>()(
 
       selectSession: (id) => set({ selectedSessionId: id }),
       selectAgreement: (id) => set({ selectedAgreementId: id }),
+
+      // =====================================================================
+      // CUSTOMER/SUPPLIER SYNC
+      // =====================================================================
+
+      fetchCustomers: async () => {
+        try {
+          const res = await fetch('/api/customers');
+          if (!res.ok) throw new Error('Failed to fetch customers');
+          const data = await res.json();
+          const customers = (data.customers || data || []).map((c: any) => ({
+            id: c.id,
+            name: c.name || c.companyName || 'Unknown',
+            email: c.email,
+            type: 'customer',
+          }));
+          set({ customers });
+        } catch (error) {
+          console.error('Error fetching customers for netting:', error);
+        }
+      },
+
+      fetchSuppliers: async () => {
+        try {
+          const res = await fetch('/api/suppliers');
+          if (!res.ok) throw new Error('Failed to fetch suppliers');
+          const data = await res.json();
+          const suppliers = (data.suppliers || data || []).map((s: any) => ({
+            id: s.id,
+            name: s.name || s.companyName || 'Unknown',
+            email: s.email,
+            type: 'supplier',
+          }));
+          set({ suppliers });
+        } catch (error) {
+          console.error('Error fetching suppliers for netting:', error);
+        }
+      },
+
+      getCustomerById: (id: string) => {
+        return get().customers.find(c => c.id === id);
+      },
+
+      getSupplierById: (id: string) => {
+        return get().suppliers.find(s => s.id === id);
+      },
+
+      searchParties: (query: string, type: 'customer' | 'supplier' | 'all' = 'all') => {
+        const { customers, suppliers } = get();
+        const q = query.toLowerCase();
+        let results: { id: string; name: string; type: string }[] = [];
+
+        if (type === 'customer' || type === 'all') {
+          results = results.concat(
+            customers
+              .filter(c => c.name.toLowerCase().includes(q))
+              .map(c => ({ id: c.id, name: c.name, type: 'customer' }))
+          );
+        }
+
+        if (type === 'supplier' || type === 'all') {
+          results = results.concat(
+            suppliers
+              .filter(s => s.name.toLowerCase().includes(q))
+              .map(s => ({ id: s.id, name: s.name, type: 'supplier' }))
+          );
+        }
+
+        return results;
+      },
 
       // =====================================================================
       // COMPUTED

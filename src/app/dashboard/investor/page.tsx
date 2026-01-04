@@ -324,13 +324,15 @@ function FinancialPositionSection() {
 // =============================================================================
 
 function BurnRunwaySection() {
-    const { dashboard } = useInvestorStore();
+    const { dashboard, selectedRunwayScenario, setSelectedRunwayScenario } = useInvestorStore();
     const burn = dashboard?.burn;
     const runway = dashboard?.runway;
 
     if (!burn || !runway) return null;
 
-    const primaryScenario = runway.scenarios.find((s) => s.type === runway.primaryScenario);
+    // Use selected scenario or fall back to primary
+    const activeScenarioType = selectedRunwayScenario || runway.primaryScenario;
+    const primaryScenario = runway.scenarios.find((s) => s.type === activeScenarioType);
 
     return (
         <div className="space-y-4">
@@ -356,7 +358,7 @@ function BurnRunwaySection() {
                 <MetricCard
                     label="Cash Runway"
                     value={`${primaryScenario?.runwayMonths.toFixed(1)} mo`}
-                    subtext={`${runway.primaryScenario} case`}
+                    subtext={`${activeScenarioType} case`}
                     icon={Target}
                     color="blue"
                 />
@@ -376,16 +378,17 @@ function BurnRunwaySection() {
                     {runway.scenarios.map((scenario) => (
                         <div
                             key={scenario.type}
-                            className={`p-4 rounded-xl border-2 ${
-                                scenario.type === runway.primaryScenario
+                            onClick={() => setSelectedRunwayScenario(scenario.type as 'conservative' | 'base' | 'optimistic')}
+                            className={`p-4 rounded-xl border-2 cursor-pointer transition-all hover:shadow-md ${
+                                scenario.type === activeScenarioType
                                     ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                                    : 'border-gray-200 dark:border-surface-700'
+                                    : 'border-gray-200 dark:border-surface-700 hover:border-blue-300'
                             }`}
                         >
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 capitalize">{scenario.type}</span>
-                                {scenario.type === runway.primaryScenario && (
-                                    <span className="px-1.5 py-0.5 text-xs rounded bg-blue-500 text-white">Primary</span>
+                                {scenario.type === activeScenarioType && (
+                                    <span className="px-1.5 py-0.5 text-xs rounded bg-blue-500 text-white">Selected</span>
                                 )}
                             </div>
                             <p className="text-2xl font-bold text-gray-900 dark:text-white">{scenario.runwayMonths.toFixed(1)} mo</p>

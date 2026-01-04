@@ -249,7 +249,7 @@ export async function PATCH(
 }
 
 // =============================================================================
-// DELETE - Delete Invoice (DRAFT only)
+// DELETE - Soft Delete Invoice (DRAFT only) with 14-day recovery
 // =============================================================================
 
 export async function DELETE(
@@ -284,25 +284,59 @@ export async function DELETE(
       );
     }
 
-    // Delete related records first (if they exist)
-    try {
-      await (prisma as any).invoiceVersion.deleteMany({ where: { invoiceId: id } });
-    } catch { /* Model doesn't exist */ }
+    // Calculate permanent deletion date (14 days from now)
+    const now = new Date();
+    const permanentDeletionDate = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+    const warningDate = new Date(permanentDeletionDate.getTime() - 2 * 24 * 60 * 60 * 1000); // 2 days before
 
-    try {
-      await (prisma as any).invoicePayment.deleteMany({ where: { invoiceId: id } });
-    } catch { /* Model doesn't exist */ }
+    // Soft delete - move to archive instead of hard delete
+    const archiveRecordId = `AR-INV-${id}-${Date.now()}`;
+    const archiveRecord = await prisma.archiveRecord.create({
+      data: {
+        archiveRecordId,
+        originalObjectId: id,
+        objectType: 'invoice',
+        title: `Invoice ${invoice.invoiceNumber}`,
+        description: `Deleted draft invoice for ${invoice.total} ${invoice.currency}`,
+        category: 'financial',
+        subcategory: 'invoices',
+        content: invoice as any,
+        contentHash: Buffer.from(JSON.stringify(invoice)).toString('base64').slice(0, 64),
+        createdAt: invoice.createdAt,
+        triggerType: 'user_action',
+        triggerReason: 'Draft invoice deleted by user',
+        initiatingActor: user.id,
+        initiatingActorName: user.name || user.email,
+        actorType: 'user',
+        sourceModule: 'invoices',
+        status: 'archived',
+        retentionStatus: 'active',
+        retentionStartDate: now,
+        retentionEndDate: permanentDeletionDate,
+        fiscalYear: now.getFullYear(),
+        amount: invoice.total ? Number(invoice.total) : undefined,
+        currency: invoice.currency,
+        counterpartyName: invoice.customerName,
+        organizationId: user.organizationId,
+      },
+    });
 
-    try {
-      await (prisma as any).invoiceAccountingEvent.deleteMany({ where: { invoiceId: id } });
-    } catch { /* Model doesn't exist */ }
-
-    // Delete invoice
-    await prisma.invoice.delete({ where: { id } });
+    // Update invoice status to deleted (soft delete)
+    await prisma.invoice.update({
+      where: { id },
+      data: {
+        status: 'deleted',
+        updatedAt: now,
+      },
+    });
 
     return NextResponse.json({
-      message: 'Invoice deleted successfully',
+      message: 'Invoice moved to trash. Will be permanently deleted in 14 days.',
       id,
+      archiveId: archiveRecord.id,
+      permanentDeletionDate: permanentDeletionDate.toISOString(),
+      warningDate: warningDate.toISOString(),
+      canRestore: true,
     });
   } catch (error) {
     console.error('Error deleting invoice:', error);

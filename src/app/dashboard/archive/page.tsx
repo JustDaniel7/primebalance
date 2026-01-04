@@ -107,6 +107,41 @@ export default function ArchivePage() {
     const [selectedItem, setSelectedItem] = useState<ArchiveRecord | null>(null);
     const [showYearFilter, setShowYearFilter] = useState(false);
 
+    // Download attachment handler
+    const handleDownloadAttachment = async (attachment: { id: string; name: string; url?: string; mimeType?: string }) => {
+        try {
+            // If we have a direct URL, use it
+            if (attachment.url) {
+                const link = document.createElement('a');
+                link.href = attachment.url;
+                link.download = attachment.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                return;
+            }
+
+            // Otherwise fetch from API
+            const response = await fetch(`/api/archive/attachments/${attachment.id}/download`);
+            if (!response.ok) {
+                throw new Error('Failed to download attachment');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = attachment.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Download error:', error);
+            // Show error toast if available
+        }
+    };
+
     // Get available years
     const availableYears = useMemo(() => {
         const years = Array.from(new Set(records.map((i) => i.fiscalYear).filter((y): y is number => y !== undefined))).sort((a, b) => b - a);
@@ -566,7 +601,11 @@ export default function ArchivePage() {
                                                         <FileText size={16} className="text-gray-400" />
                                                         <span className="text-sm text-gray-900 dark:text-surface-100">{att.name}</span>
                                                     </div>
-                                                    <Button variant="secondary" size="sm">
+                                                    <Button
+                                                        variant="secondary"
+                                                        size="sm"
+                                                        onClick={() => handleDownloadAttachment(att)}
+                                                    >
                                                         <Download size={14} />
                                                     </Button>
                                                 </div>

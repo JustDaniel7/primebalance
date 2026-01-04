@@ -66,6 +66,85 @@ export async function GET(req: NextRequest) {
     lastCalculated: new Date().toISOString(),
   };
 
+  // Compute conversion summary
+  const conversionsByChannel = conversions.reduce((acc, c) => {
+    const channel = c.executionChannel || 'unknown';
+    if (!acc[channel]) {
+      acc[channel] = { count: 0, volume: 0, totalCosts: 0 };
+    }
+    acc[channel].count += 1;
+    acc[channel].volume += Number(c.sourceAmount);
+    acc[channel].totalCosts += Number(c.totalCost);
+    return acc;
+  }, {} as Record<string, { count: number; volume: number; totalCosts: number }>);
+
+  const conversionsByCurrencyPair = conversions.reduce((acc, c) => {
+    const pair = `${c.sourceCurrency}/${c.targetCurrency}`;
+    if (!acc[pair]) {
+      acc[pair] = { count: 0, volume: 0, totalCosts: 0, avgRate: 0 };
+    }
+    acc[pair].count += 1;
+    acc[pair].volume += Number(c.sourceAmount);
+    acc[pair].totalCosts += Number(c.totalCost);
+    acc[pair].avgRate = (acc[pair].avgRate * (acc[pair].count - 1) + Number(c.appliedRate)) / acc[pair].count;
+    return acc;
+  }, {} as Record<string, { count: number; volume: number; totalCosts: number; avgRate: number }>);
+
+  const totalConversionVolume = conversions.reduce((sum, c) => sum + Number(c.sourceAmount), 0);
+  const totalConversionCosts = conversions.reduce((sum, c) => sum + Number(c.totalCost), 0);
+  const avgSpread = conversions.length > 0
+    ? conversions.reduce((sum, c) => sum + Number(c.spreadCost), 0) / conversions.length
+    : 0;
+
+  const conversionSummary = {
+    totalVolume: totalConversionVolume,
+    totalCosts: totalConversionCosts,
+    averageSpread: avgSpread,
+    conversionCount: conversions.length,
+    averageCostPercent: totalConversionVolume > 0 ? (totalConversionCosts / totalConversionVolume) * 100 : 0,
+    byChannel: Object.entries(conversionsByChannel).map(([channel, data]) => ({
+      channel,
+      ...data,
+      percentOfVolume: totalConversionVolume > 0 ? (data.volume / totalConversionVolume) * 100 : 0,
+    })),
+    byCurrencyPair: Object.entries(conversionsByCurrencyPair).map(([pair, data]) => ({
+      pair,
+      ...data,
+      percentOfVolume: totalConversionVolume > 0 ? (data.volume / totalConversionVolume) * 100 : 0,
+    })),
+    periodStart: conversions.length > 0 ? conversions[conversions.length - 1].conversionDate.toISOString() : null,
+    periodEnd: conversions.length > 0 ? conversions[0].conversionDate.toISOString() : null,
+  };
+
+  // Compute impact analysis
+  const budgetRate = 1.10; // Example budget rate EUR/USD
+  const actualAvgRate = conversions.length > 0
+    ? conversions.reduce((sum, c) => sum + Number(c.appliedRate), 0) / conversions.length
+    : budgetRate;
+
+  const rateVariance = actualAvgRate - budgetRate;
+  const volumeForImpact = totalConversionVolume;
+  const rateImpact = rateVariance * volumeForImpact;
+
+  const impactAnalysis = {
+    budgetRate,
+    actualAverageRate: actualAvgRate,
+    rateVariance,
+    rateVariancePercent: budgetRate > 0 ? (rateVariance / budgetRate) * 100 : 0,
+    volumeAnalyzed: volumeForImpact,
+    totalRateImpact: rateImpact,
+    spreadImpact: totalConversionCosts,
+    timingImpact: costs ? Number(costs.timingImpact) : 0,
+    totalImpact: rateImpact + totalConversionCosts + (costs ? Number(costs.timingImpact) : 0),
+    impactOnRevenue: costs ? Number(costs.revenueImpact) : rateImpact * 0.6,
+    impactOnCosts: costs ? Number(costs.costImpact) : rateImpact * 0.4,
+    impactOnCash: costs ? Number(costs.cashImpact) : rateImpact,
+    netPnLImpact: costs ? Number(costs.netPnLImpact) : rateImpact,
+    favorability: rateImpact >= 0 ? 'favorable' : 'unfavorable',
+    analysisDate: new Date().toISOString(),
+    methodology: 'Comparison of actual rates vs budget rates, plus explicit costs',
+  };
+
   // Compute risk summary
   const criticalIndicators = indicators.filter((i) => i.riskLevel === 'critical' || i.riskLevel === 'high');
   const largestExposure = exposures.length > 0 ? exposures[0] : null;
@@ -130,6 +209,8 @@ export async function GET(req: NextRequest) {
     exposures: exposures.map(mapExposure),
     recentConversions: conversions.map(mapConversion),
     riskSummary,
+    conversionSummary,
+    impactAnalysis,
     activeScenarios: scenarios.map(mapScenario),
     currentPeriodCosts: costs ? mapCost(costs) : null,
     dataQuality: 'complete',

@@ -162,6 +162,69 @@ export interface InventoryWizardState {
     description: string;
 }
 
+// =============================================================================
+// STANDING ORDERS - Automatic Reorder Configuration
+// =============================================================================
+
+export type StandingOrderFrequency = 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'on_reorder_point';
+export type StandingOrderStatus = 'active' | 'paused' | 'completed' | 'cancelled';
+
+export interface StandingOrder {
+    id: string;
+    itemId: string;
+    itemName: string;
+    itemSku?: string;
+
+    // Order configuration
+    quantity: number;
+    frequency: StandingOrderFrequency;
+
+    // Trigger conditions
+    triggerOnReorderPoint: boolean; // Auto-order when stock <= reorderPoint
+    reorderPointOverride?: number; // Override item's reorder point
+    reorderQuantityOverride?: number; // Override item's reorder quantity
+
+    // Supplier
+    supplierId?: string;
+    supplierName?: string;
+
+    // Scheduling
+    nextOrderDate?: string;
+    lastOrderDate?: string;
+
+    // Limits
+    maxOrdersPerMonth?: number;
+    ordersThisMonth: number;
+    totalOrdersCreated: number;
+
+    // Financial
+    estimatedUnitCost?: number;
+    estimatedTotalCost?: number;
+    currency: string;
+
+    // Status
+    status: StandingOrderStatus;
+
+    // Meta
+    notes?: string;
+    createdBy?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface StandingOrderTriggerResult {
+    standingOrderId: string;
+    itemId: string;
+    itemName: string;
+    currentStock: number;
+    reorderPoint: number;
+    orderQuantity: number;
+    orderId?: string;
+    success: boolean;
+    message: string;
+    triggeredAt: string;
+}
+
 // Unit options
 export const INVENTORY_UNITS = [
     { value: 'piece', labels: { en: 'Pieces', de: 'Stück', es: 'Piezas', fr: 'Pièces' } },

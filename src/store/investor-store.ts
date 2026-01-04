@@ -24,6 +24,7 @@ interface InvestorState {
 
   // UI State
   selectedPeriod: ReportingPeriod;
+  selectedRunwayScenario: 'conservative' | 'base' | 'optimistic' | null;
   isLoading: boolean;
   error: string | null;
   isInitialized: boolean;
@@ -53,6 +54,7 @@ interface InvestorState {
 
   // UI Actions
   setSelectedPeriod: (period: ReportingPeriod) => void;
+  setSelectedRunwayScenario: (scenario: 'conservative' | 'base' | 'optimistic') => void;
   refreshDashboard: () => Promise<void>;
 
   // Utility
@@ -75,6 +77,7 @@ export const useInvestorStore = create<InvestorState>((set, get) => ({
 
   // UI State
   selectedPeriod: 'ytd',
+  selectedRunwayScenario: null,
   isLoading: false,
   error: null,
   isInitialized: false,
@@ -283,6 +286,10 @@ export const useInvestorStore = create<InvestorState>((set, get) => ({
   setSelectedPeriod: (period) => {
     set({ selectedPeriod: period });
     // Could refetch with different period filter
+  },
+
+  setSelectedRunwayScenario: (scenario) => {
+    set({ selectedRunwayScenario: scenario });
   },
 
   refreshDashboard: async () => {

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Card, Button } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
+import { useDunningStore } from '@/store/dunningStore';
 
 // =============================================================================
 // TYPES
@@ -199,7 +200,7 @@ const INITIAL_TEMPLATES: Template[] = [
 ];
 
 // =============================================================================
-// HELPER: SEND EMAIL (SIMULATED - REPLACE WITH REAL API)
+// HELPER: SEND EMAIL (REAL API CALL)
 // =============================================================================
 
 async function sendDunningEmail(params: {
@@ -207,22 +208,49 @@ async function sendDunningEmail(params: {
     subject: string;
     body: string;
     dunningId: string;
+    dunningNumber?: string;
     level: number;
-}): Promise<{ success: boolean; messageId: string }> {
-    // Simulate API call - REPLACE THIS WITH YOUR ACTUAL EMAIL SERVICE
-    // e.g., SendGrid, AWS SES, Mailgun, etc.
-    console.log('📧 SENDING EMAIL:', params);
+    customerName?: string;
+    invoiceId?: string;
+}): Promise<{ success: boolean; messageId: string; error?: string }> {
+    try {
+        const response = await fetch('/api/dunning/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                to: params.to,
+                subject: params.subject,
+                body: params.body,
+                dunningId: params.dunningId,
+                dunningNumber: params.dunningNumber || `DUN-${params.dunningId.slice(0, 8)}`,
+                level: params.level,
+                customerName: params.customerName || 'Customer',
+                invoiceId: params.invoiceId || '',
+            }),
+        });
 
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            // Simulate 95% success rate
-            const success = Math.random() > 0.05;
-            resolve({
-                success,
-                messageId: success ? `msg-${Date.now()}` : '',
-            });
-        }, 1500);
-    });
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                messageId: '',
+                error: data.error || 'Failed to send email',
+            };
+        }
+
+        return {
+            success: true,
+            messageId: data.messageId || `msg-${Date.now()}`,
+        };
+    } catch (error) {
+        console.error('Email send error:', error);
+        return {
+            success: false,
+            messageId: '',
+            error: error instanceof Error ? error.message : 'Network error',
+        };
+    }
 }
 
 function processTemplate(template: Template, data: Record<string, string>): { subject: string; body: string } {
@@ -1225,9 +1253,12 @@ function EmailTestModal({ onClose, onTest }: { onClose: () => void; onTest: (ema
 
 export default function DunningPage() {
     const { language } = useThemeStore();
+    const { runAutomation } = useDunningStore();
 
     // State
     const [activeTab, setActiveTab] = useState<TabId>('overview');
+    const [isRunningAutomation, setIsRunningAutomation] = useState(false);
+    const [lastAutomationResult, setLastAutomationResult] = useState<{ processed: number; sent: number; errors: number } | null>(null);
     const [dunnings, setDunnings] = useState<Dunning[]>(createInitialDunnings);
     const [proposals, setProposals] = useState<Proposal[]>(createInitialProposals);
     const [exceptions, setExceptions] = useState<Exception[]>(INITIAL_EXCEPTIONS);
@@ -1343,7 +1374,16 @@ export default function DunningPage() {
         });
 
         // Send email
-        const result = await sendDunningEmail({ to: targetEmail, subject, body, dunningId: dunning.id, level: proposal.proposalLevel });
+        const result = await sendDunningEmail({
+            to: targetEmail,
+            subject,
+            body,
+            dunningId: dunning.id,
+            dunningNumber: dunning.dunningNumber,
+            level: proposal.proposalLevel,
+            customerName: dunning.customerName,
+            invoiceId: dunning.invoiceId,
+        });
 
         if (result.success) {
             // Log email
@@ -1433,6 +1473,33 @@ export default function DunningPage() {
         const rule = rules.find(r => r.id === id);
         setRules(prev => prev.map(r => r.id === id ? { ...r, isActive: !r.isActive } : r));
         showToast(`Rule "${rule?.name}" ${rule?.isActive ? 'disabled' : 'enabled'}`, 'info');
+    };
+
+    const handleRunAutomation = async (ruleId?: string, dryRun = false) => {
+        setIsRunningAutomation(true);
+        setLastAutomationResult(null);
+        try {
+            const result = await runAutomation(ruleId, dryRun, 100);
+            if (result) {
+                const processed = result.processed || 0;
+                const sent = result.sent || 0;
+                const errors = result.errors || 0;
+                setLastAutomationResult({ processed, sent, errors });
+
+                if (dryRun) {
+                    showToast(`Dry run: ${processed} dunnings would be processed, ${sent} emails would be sent`, 'info');
+                } else {
+                    showToast(`Automation complete: ${sent} emails sent, ${errors} errors`, sent > 0 ? 'success' : 'info');
+                    // Refresh the data
+                    handleRefresh();
+                }
+            }
+        } catch (error) {
+            console.error('Automation error:', error);
+            showToast('Automation failed: ' + (error instanceof Error ? error.message : 'Unknown error'), 'error');
+        } finally {
+            setIsRunningAutomation(false);
+        }
     };
 
     const handleCreateTemplate = (data: Omit<Template, 'id'>) => {
@@ -1525,7 +1592,7 @@ export default function DunningPage() {
                     {activeTab === 'queue' && <QueueTab dunnings={filteredDunnings} searchQuery={searchQuery} setSearchQuery={setSearchQuery} statusFilter={statusFilter} setStatusFilter={setStatusFilter} levelFilter={levelFilter} setLevelFilter={setLevelFilter} formatCurrency={formatCurrency} formatDate={formatDate} onViewDunning={setSelectedDunning} />}
                     {activeTab === 'proposals' && <ProposalsTab proposals={proposals} formatCurrency={formatCurrency} formatDate={formatDate} onApprove={handleApproveProposal} onReject={handleRejectProposal} isLoading={isLoading} />}
                     {activeTab === 'exceptions' && <ExceptionsTab exceptions={exceptions} formatDate={formatDate} onResolve={handleResolveException} onRetry={handleRetryException} isLoading={isLoading} />}
-                    {activeTab === 'automation' && <AutomationTab rules={rules} onToggleRule={handleToggleRule} onNewRule={() => setShowNewAutomationWizard(true)} />}
+                    {activeTab === 'automation' && <AutomationTab rules={rules} onToggleRule={handleToggleRule} onNewRule={() => setShowNewAutomationWizard(true)} onRunAutomation={handleRunAutomation} isRunning={isRunningAutomation} lastResult={lastAutomationResult} />}
                     {activeTab === 'templates' && <TemplatesTab templates={templates} onEditTemplate={setEditingTemplate} onNewTemplate={() => setShowNewTemplateWizard(true)} />}
                     {activeTab === 'email-log' && <EmailLogTab emailLogs={emailLogs} formatDateTime={formatDateTime} />}
                     {activeTab === 'settings' && <SettingsTab jurisdictions={INITIAL_JURISDICTIONS} onTestEmail={() => setShowEmailTestModal(true)} />}
@@ -1772,7 +1839,9 @@ function ExceptionsTab({ exceptions, formatDate, onResolve, onRetry, isLoading }
     );
 }
 
-function AutomationTab({ rules, onToggleRule, onNewRule }: any) {
+function AutomationTab({ rules, onToggleRule, onNewRule, onRunAutomation, isRunning, lastResult }: any) {
+    const [selectedRuleId, setSelectedRuleId] = useState<string | undefined>(undefined);
+
     return (
         <div className="space-y-6">
             <Card className="p-4 border border-gray-200 dark:border-surface-700">
@@ -1781,8 +1850,44 @@ function AutomationTab({ rules, onToggleRule, onNewRule }: any) {
                         <h3 className="text-lg font-bold text-gray-900 dark:text-white">Automation Rules</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Level 1 & 2 auto-email • Level 3 manual only</p>
                     </div>
-                    <button onClick={onNewRule} className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold"><Plus size={18} />New Rule</button>
+                    <div className="flex items-center gap-3">
+                        <select
+                            value={selectedRuleId || ''}
+                            onChange={(e) => setSelectedRuleId(e.target.value || undefined)}
+                            className="px-3 py-2 bg-gray-100 dark:bg-surface-700 border border-gray-200 dark:border-surface-600 rounded-lg text-sm"
+                        >
+                            <option value="">All Active Rules</option>
+                            {rules.filter((r: Rule) => r.isActive).map((r: Rule) => (
+                                <option key={r.id} value={r.id}>{r.name}</option>
+                            ))}
+                        </select>
+                        <button
+                            onClick={() => onRunAutomation(selectedRuleId, true)}
+                            disabled={isRunning}
+                            className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white rounded-xl font-bold"
+                        >
+                            <Eye size={18} />
+                            Dry Run
+                        </button>
+                        <button
+                            onClick={() => onRunAutomation(selectedRuleId, false)}
+                            disabled={isRunning}
+                            className="flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white rounded-xl font-bold"
+                        >
+                            {isRunning ? <Loader2 size={18} className="animate-spin" /> : <Play size={18} />}
+                            Run Automation
+                        </button>
+                        <button onClick={onNewRule} className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold"><Plus size={18} />New Rule</button>
+                    </div>
                 </div>
+                {lastResult && (
+                    <div className="mt-4 p-3 bg-gray-50 dark:bg-surface-800 rounded-lg flex items-center gap-4 text-sm">
+                        <span className="font-bold text-gray-700 dark:text-gray-300">Last Run:</span>
+                        <span className="text-blue-600 dark:text-blue-400">{lastResult.processed} processed</span>
+                        <span className="text-green-600 dark:text-green-400">{lastResult.sent} sent</span>
+                        {lastResult.errors > 0 && <span className="text-red-600 dark:text-red-400">{lastResult.errors} errors</span>}
+                    </div>
+                )}
             </Card>
             <div className="space-y-4">
                 {rules.map((r: Rule) => (

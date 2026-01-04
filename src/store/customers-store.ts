@@ -198,6 +198,9 @@ interface CustomersState {
   updateCustomer: (id: string, updates: Partial<Customer>) => Promise<void>;
   deleteCustomer: (id: string) => Promise<void>;
 
+  // Address Sync
+  syncAddressToRelated: (customerId: string, address: Customer['address']) => Promise<{ invoicesUpdated: number; ordersUpdated: number }>;
+
   // Credit
   updateCreditLimit: (customerId: string, newLimit: number, reason: string) => Promise<void>;
   updateCreditStatus: (customerId: string, status: CreditStatus | string, reason: string) => Promise<void>;
@@ -359,6 +362,44 @@ export const useCustomersStore = create<CustomersState>()(
           }));
         } catch (error) {
           console.error('Failed to delete customer:', error);
+        }
+      },
+
+      // =======================================================================
+      // ADDRESS SYNC
+      // =======================================================================
+
+      syncAddressToRelated: async (customerId, address) => {
+        let invoicesUpdated = 0;
+        let ordersUpdated = 0;
+
+        try {
+          // Sync address to related invoices
+          const invoicesRes = await fetch(`/api/customers/${customerId}/sync-address`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address, syncTo: ['invoices', 'orders'] }),
+          });
+
+          if (invoicesRes.ok) {
+            const data = await invoicesRes.json();
+            invoicesUpdated = data.invoicesUpdated || 0;
+            ordersUpdated = data.ordersUpdated || 0;
+          }
+
+          // Also update the customer's address in local state
+          set((state) => ({
+            customers: state.customers.map((c) =>
+              c.id === customerId
+                ? { ...c, address, updatedAt: new Date().toISOString() }
+                : c
+            ),
+          }));
+
+          return { invoicesUpdated, ordersUpdated };
+        } catch (error) {
+          console.error('Failed to sync address:', error);
+          return { invoicesUpdated: 0, ordersUpdated: 0 };
         }
       },
 

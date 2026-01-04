@@ -35,6 +35,8 @@ export async function GET(req: NextRequest) {
       scheduleFreq: r.scheduleFreq,
       lastGenerated: r.lastGenerated?.toISOString(),
       archivedAt: r.archivedAt?.toISOString(),
+      permanentDeletionDate: r.cacheExpiry?.toISOString(), // When status is 'deleted', this is when it will be permanently removed
+      daysUntilPermanentDeletion: r.cacheExpiry ? Math.max(0, Math.ceil((r.cacheExpiry.getTime() - Date.now()) / (24 * 60 * 60 * 1000))) : undefined,
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
     })),

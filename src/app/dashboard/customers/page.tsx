@@ -37,7 +37,9 @@ import {
     History,
     PieChart,
     Lightbulb,
+    Sparkles,
 } from 'lucide-react';
+import { createDebouncedLookup, type PostalCodeResult } from '@/lib/postal-code-lookup';
 import { Card, Button, Badge } from '@/components/ui';
 import { useThemeStore } from '@/store/theme-store';
 import { useCustomersStore } from '@/store/customers-store';
@@ -906,6 +908,9 @@ function CustomerDetailModal({ customer, onClose }: { customer: Customer; onClos
 // NEW CUSTOMER MODAL
 // =============================================================================
 
+// Create debounced postal code lookup
+const postalCodeLookup = createDebouncedLookup(500);
+
 function NewCustomerModal({ onClose }: { onClose: () => void }) {
     const { t } = useThemeStore();
     const { createCustomer } = useCustomersStore();
@@ -921,6 +926,33 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
         creditLimit: 50000,
         paymentTerms: 'Net 30',
     });
+    const [postalLookupLoading, setPostalLookupLoading] = useState(false);
+    const [postalLookupSuccess, setPostalLookupSuccess] = useState(false);
+
+    // Handle postal code change with auto-lookup
+    const handlePostalCodeChange = (postalCode: string) => {
+        setFormData({ ...formData, address: { ...formData.address, postalCode } });
+        setPostalLookupSuccess(false);
+
+        if (postalCode.length >= 4) {
+            setPostalLookupLoading(true);
+            postalCodeLookup(postalCode, formData.address.country || undefined, (result: PostalCodeResult | null) => {
+                setPostalLookupLoading(false);
+                if (result) {
+                    setFormData(prev => ({
+                        ...prev,
+                        address: {
+                            ...prev.address,
+                            city: result.city,
+                            state: result.state || result.stateCode || '',
+                            country: result.country,
+                        }
+                    }));
+                    setPostalLookupSuccess(true);
+                }
+            });
+        }
+    };
 
     const handleSubmit = async () => {
         if (!formData.name || !formData.email) return;
@@ -1027,8 +1059,26 @@ function NewCustomerModal({ onClose }: { onClose: () => void }) {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium mb-1">{t('customers.postalCode') || 'Postal Code'}</label>
-                                    <input type="text" value={formData.address.postalCode} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, postalCode: e.target.value } })}
-                                           className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800" />
+                                    <div className="relative">
+                                        <input type="text" value={formData.address.postalCode} onChange={(e) => handlePostalCodeChange(e.target.value)}
+                                               placeholder={t('customers.enterPostalCode') || 'Enter postal code...'}
+                                               className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-surface-600 bg-white dark:bg-surface-800 pr-10" />
+                                        {postalLookupLoading && (
+                                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                                <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+                                            </div>
+                                        )}
+                                        {postalLookupSuccess && !postalLookupLoading && (
+                                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                                <Sparkles className="w-4 h-4 text-green-500" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    {postalLookupSuccess && (
+                                        <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                                            Auto-filled city and country
+                                        </p>
+                                    )}
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium mb-1">{t('customers.country') || 'Country'}</label>

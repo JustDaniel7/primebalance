@@ -85,7 +85,57 @@ export async function DELETE(
 
     if (!existing) return notFound('Report')
 
-    await prisma.savedReport.delete({ where: { id } })
+    // Calculate permanent deletion date (60 days from now)
+    const now = new Date()
+    const permanentDeletionDate = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000)
+    const warningDate = new Date(permanentDeletionDate.getTime() - 7 * 24 * 60 * 60 * 1000) // 7 days before
 
-    return NextResponse.json({ success: true })
+    // Soft delete - move to archive instead of hard delete
+    const archiveRecordId = `AR-RPT-${id}-${Date.now()}`
+    await prisma.archiveRecord.create({
+        data: {
+            archiveRecordId,
+            originalObjectId: id,
+            objectType: 'report',
+            title: `Report: ${existing.name}`,
+            description: `Deleted report of type ${existing.type}`,
+            category: 'reports',
+            subcategory: existing.type,
+            content: existing as any,
+            contentHash: Buffer.from(JSON.stringify(existing)).toString('base64').slice(0, 64),
+            createdAt: existing.createdAt,
+            triggerType: 'user_action',
+            triggerReason: 'Report deleted by user',
+            initiatingActor: user.id,
+            initiatingActorName: user.name || user.email,
+            actorType: 'user',
+            sourceModule: 'reports',
+            status: 'archived',
+            retentionStatus: 'active',
+            retentionStartDate: now,
+            retentionEndDate: permanentDeletionDate,
+            organizationId: user.organizationId || undefined,
+        },
+    })
+
+    // Update report status to deleted (soft delete)
+    await prisma.savedReport.update({
+        where: { id },
+        data: {
+            status: 'deleted',
+            archivedAt: now,
+            cacheExpiry: permanentDeletionDate, // Use cacheExpiry for permanent deletion date
+        } as any,
+    })
+
+    return NextResponse.json({
+        success: true,
+        message: 'Report moved to trash. Will be permanently deleted in 60 days.',
+        id,
+        permanentDeletionDate: permanentDeletionDate.toISOString(),
+        warningDate: warningDate.toISOString(),
+        daysUntilPermanentDeletion: 60,
+        canRestore: true,
+        warning: 'This report will be permanently deleted after 60 days. You can restore it from the Archive before then.',
+    })
 }

@@ -219,6 +219,9 @@ interface SuppliersState {
   updateSupplier: (id: string, updates: Partial<Supplier>) => Promise<void>;
   deleteSupplier: (id: string) => Promise<void>;
 
+  // Address Sync
+  syncAddressToRelated: (supplierId: string, address: Supplier['address']) => Promise<{ ordersUpdated: number }>;
+
   // Risks
   addRisk: (supplierId: string, risk: Partial<DependencyRisk>) => Promise<DependencyRisk | null>;
   updateRisk: (supplierId: string, riskId: string, updates: Partial<DependencyRisk>) => Promise<void>;
@@ -392,6 +395,42 @@ export const useSuppliersStore = create<SuppliersState>()(
           }));
         } catch (error) {
           console.error('Failed to delete supplier:', error);
+        }
+      },
+
+      // =======================================================================
+      // ADDRESS SYNC
+      // =======================================================================
+
+      syncAddressToRelated: async (supplierId, address) => {
+        let ordersUpdated = 0;
+
+        try {
+          // Sync address to related purchase orders
+          const syncRes = await fetch(`/api/suppliers/${supplierId}/sync-address`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address }),
+          });
+
+          if (syncRes.ok) {
+            const data = await syncRes.json();
+            ordersUpdated = data.ordersUpdated || 0;
+          }
+
+          // Also update the supplier's address in local state
+          set((state) => ({
+            suppliers: state.suppliers.map((s) =>
+              s.id === supplierId
+                ? { ...s, address, updatedAt: new Date().toISOString() }
+                : s
+            ),
+          }));
+
+          return { ordersUpdated };
+        } catch (error) {
+          console.error('Failed to sync address:', error);
+          return { ordersUpdated: 0 };
         }
       },
 

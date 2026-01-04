@@ -11,6 +11,8 @@ import type {
     InventoryType,
     MovementType,
     BatchInfo,
+    StandingOrder,
+    StandingOrderTriggerResult,
 } from '@/types/inventory';
 
 // =============================================================================
@@ -30,6 +32,7 @@ interface InventoryState {
     movements: StockMovement[];
     reservations: StockReservation[];
     batches: BatchInfo[];
+    standingOrders: StandingOrder[];
     wizardState: InventoryWizardState;
     isLoading: boolean;
     error: string | null;
@@ -85,6 +88,15 @@ interface InventoryState {
 
     // Adjustments
     adjustStock: (itemId: string, locationId: string, newQuantity: number, reason: string) => void;
+
+    // Standing Orders
+    createStandingOrder: (order: Omit<StandingOrder, 'id' | 'ordersThisMonth' | 'totalOrdersCreated' | 'createdAt' | 'updatedAt'>) => StandingOrder;
+    updateStandingOrder: (id: string, updates: Partial<StandingOrder>) => void;
+    deleteStandingOrder: (id: string) => void;
+    pauseStandingOrder: (id: string) => void;
+    resumeStandingOrder: (id: string) => void;
+    getStandingOrdersByItem: (itemId: string) => StandingOrder[];
+    checkAndTriggerStandingOrders: () => StandingOrderTriggerResult[];
 }
 
 const initialWizardState: InventoryWizardState = {
@@ -152,6 +164,7 @@ export const useInventoryStore = create<InventoryState>()(
             movements: [],
             reservations: [],
             batches: [],
+            standingOrders: [],
             wizardState: initialWizardState,
             isLoading: false,
             error: null,
@@ -594,6 +607,132 @@ export const useInventoryStore = create<InventoryState>()(
                     referenceType: 'adjustment',
                 });
             },
+
+            // =================================================================
+            // STANDING ORDERS
+            // =================================================================
+
+            createStandingOrder: (orderData) => {
+                const now = new Date().toISOString();
+                const newOrder: StandingOrder = {
+                    ...orderData,
+                    id: `so-${Date.now()}`,
+                    ordersThisMonth: 0,
+                    totalOrdersCreated: 0,
+                    createdAt: now,
+                    updatedAt: now,
+                };
+
+                set((state) => ({ standingOrders: [...state.standingOrders, newOrder] }));
+                return newOrder;
+            },
+
+            updateStandingOrder: (id, updates) => {
+                set((state) => ({
+                    standingOrders: state.standingOrders.map((order) =>
+                        order.id === id
+                            ? { ...order, ...updates, updatedAt: new Date().toISOString() }
+                            : order
+                    ),
+                }));
+            },
+
+            deleteStandingOrder: (id) => {
+                set((state) => ({
+                    standingOrders: state.standingOrders.filter((o) => o.id !== id),
+                }));
+            },
+
+            pauseStandingOrder: (id) => {
+                set((state) => ({
+                    standingOrders: state.standingOrders.map((order) =>
+                        order.id === id
+                            ? { ...order, status: 'paused' as const, updatedAt: new Date().toISOString() }
+                            : order
+                    ),
+                }));
+            },
+
+            resumeStandingOrder: (id) => {
+                set((state) => ({
+                    standingOrders: state.standingOrders.map((order) =>
+                        order.id === id
+                            ? { ...order, status: 'active' as const, updatedAt: new Date().toISOString() }
+                            : order
+                    ),
+                }));
+            },
+
+            getStandingOrdersByItem: (itemId) => {
+                return get().standingOrders.filter((o) => o.itemId === itemId);
+            },
+
+            checkAndTriggerStandingOrders: () => {
+                const results: StandingOrderTriggerResult[] = [];
+                const { items, standingOrders } = get();
+                const now = new Date();
+
+                standingOrders
+                    .filter((so) => so.status === 'active' && so.triggerOnReorderPoint)
+                    .forEach((so) => {
+                        const item = items.find((i) => i.id === so.itemId);
+                        if (!item) return;
+
+                        const reorderPoint = so.reorderPointOverride ?? item.reorderPoint ?? 0;
+                        const currentStock = item.availableStock;
+
+                        // Check if stock is at or below reorder point
+                        if (currentStock <= reorderPoint) {
+                            const orderQuantity = so.reorderQuantityOverride ?? so.quantity;
+
+                            // Check monthly limit
+                            if (so.maxOrdersPerMonth && so.ordersThisMonth >= so.maxOrdersPerMonth) {
+                                results.push({
+                                    standingOrderId: so.id,
+                                    itemId: so.itemId,
+                                    itemName: so.itemName,
+                                    currentStock,
+                                    reorderPoint,
+                                    orderQuantity,
+                                    success: false,
+                                    message: 'Monthly order limit reached',
+                                    triggeredAt: now.toISOString(),
+                                });
+                                return;
+                            }
+
+                            // Trigger order - In a real implementation, this would create an order via API
+                            const orderId = `ORD-AUTO-${Date.now()}`;
+
+                            // Update standing order stats
+                            get().updateStandingOrder(so.id, {
+                                lastOrderDate: now.toISOString(),
+                                ordersThisMonth: so.ordersThisMonth + 1,
+                                totalOrdersCreated: so.totalOrdersCreated + 1,
+                            });
+
+                            // Update item's incoming stock
+                            get().updateItem(so.itemId, {
+                                incomingStock: item.incomingStock + orderQuantity,
+                            });
+
+                            results.push({
+                                standingOrderId: so.id,
+                                itemId: so.itemId,
+                                itemName: so.itemName,
+                                currentStock,
+                                reorderPoint,
+                                orderQuantity,
+                                orderId,
+                                success: true,
+                                message: `Auto-order created for ${orderQuantity} ${item.unit}`,
+                                triggeredAt: now.toISOString(),
+                            });
+                        }
+                    });
+
+                return results;
+            },
         }),
         {
             name: 'primebalance-inventory',
@@ -604,6 +743,7 @@ export const useInventoryStore = create<InventoryState>()(
                 movements: state.movements,
                 reservations: state.reservations,
                 batches: state.batches,
+                standingOrders: state.standingOrders,
             }),
         }
     )

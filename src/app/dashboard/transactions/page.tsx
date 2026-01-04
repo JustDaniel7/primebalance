@@ -397,9 +397,18 @@ export default function TransactionsPage() {
                         </button>
                       </>
                     ) : (
-                      <span className="text-xs text-gray-400 dark:text-surface-500 italic">
-                        Blockchain (read-only)
-                      </span>
+                      <>
+                        <span className="text-xs text-gray-400 dark:text-surface-500 italic mr-2">
+                          Blockchain
+                        </span>
+                        <button
+                          onClick={() => handleArchive(transaction)}
+                          className="p-1.5 rounded-lg hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 transition-colors"
+                          title="Archive to records"
+                        >
+                          <Archive className="w-4 h-4" />
+                        </button>
+                      </>
                     )}
                   </div>
                 </td>
